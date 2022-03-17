@@ -52,7 +52,7 @@ namespace Members.Pages {
 
     public IActionResult OnGetAsync() {
       return Redirect(
-          "https://clanovi.glaspoduzetnika.hr/ugp-donacijska-vecera");
+          "https://clanovi.glaspoduzetnika.hr/ozds-donacijska-vecera");
     }
 
     public async Task<IActionResult> OnPost() {

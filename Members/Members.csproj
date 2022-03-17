@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UgpTheme\UgpTheme.csproj" />
+    <ProjectReference Include="..\OzdsTheme\OzdsTheme.csproj" />
   </ItemGroup>
 
   <ItemGroup>
