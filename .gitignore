@@ -209,3 +209,5 @@ UgpWeb/wwwroot/*
 /UgpWeb/Localization/fr
 /UgpWeb/Localization/it
 UgpTheme/package-lock.json
+
+.netcoredbg_hist
