@@ -50,7 +50,8 @@ namespace OrchardCore.Themes.OzdsTheme {
           .SetVersion("1.0.005");
 
       _manifest.DefineStyle("ozdstheme")
-          .SetUrl("~/OzdsTheme/css/styles.min.css", "~/OzdsTheme/css/styles.css")
+          .SetUrl(
+              "~/OzdsTheme/css/styles.min.css", "~/OzdsTheme/css/styles.css")
           .SetVersion("6.0.0");
     }
 
