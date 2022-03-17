@@ -21,7 +21,9 @@
   },
   {
     "generateSourceMaps": false,
-    "inputs": [ "Assets/src/scss/bootstrap-oc.scss" ],
+    "inputs": [
+      "Assets/src/scss/bootstrap-oc.scss"
+    ],
     "output": "wwwroot/css/bootstrap-oc.css"
   },
   {

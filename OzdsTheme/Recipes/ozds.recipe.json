@@ -6,8 +6,12 @@
   "website": "https://orchardcore.net",
   "version": "1.0.0-rc2",
   "issetuprecipe": true,
-  "categories": ["default"],
-  "tags": ["blog"],
+  "categories": [
+    "default"
+  ],
+  "tags": [
+    "blog"
+  ],
 
   // The variables are evaluated the first time they are accessed, and reused across steps
   "variables": {
@@ -100,11 +104,17 @@
         "ContentItemId": "[js: variables('blogContentItemId')]"
       },
       "LayerSettings": {
-        "Zones": ["Content", "Footer"]
+        "Zones": [
+          "Content",
+          "Footer"
+        ]
       },
       "LocalizationSettings": {
         "DefaultCulture": "hr",
-        "SupportedCultures": ["hr", "en"]
+        "SupportedCultures": [
+          "hr",
+          "en"
+        ]
       }
     },
     {
@@ -294,7 +304,9 @@
                 },
                 "ListPartSettings": {
                   "PageSize": 10,
-                  "ContainedContentTypes": ["BlogPost"]
+                  "ContainedContentTypes": [
+                    "BlogPost"
+                  ]
                 }
               }
             }
@@ -891,7 +903,9 @@
       "name": "Settings",
       "LuceneSettings": {
         "SearchIndex": "Search",
-        "DefaultSearchFields": ["Content.ContentItem.FullText"]
+        "DefaultSearchFields": [
+          "Content.ContentItem.FullText"
+        ]
       }
     },
     {
@@ -901,7 +915,10 @@
         {
           "Name": "Anonymous",
           "Description": "Anonymous role",
-          "Permissions": ["ViewContent", "QueryLuceneSearchIndex"]
+          "Permissions": [
+            "ViewContent",
+            "QueryLuceneSearchIndex"
+          ]
         }
       ]
     },
@@ -1197,8 +1214,12 @@
           "ListPart": {},
           "Blog": {
             "Image": {
-              "Paths": ["home-bg.jpg"],
-              "MediaTexts": [""],
+              "Paths": [
+                "home-bg.jpg"
+              ],
+              "MediaTexts": [
+                ""
+              ],
               "Anchors": [
                 {
                   "X": 0.5,
@@ -1234,8 +1255,12 @@
               "Text": "Problems look mighty small from 150 miles up"
             },
             "Image": {
-              "Paths": ["post-bg.jpg"],
-              "MediaTexts": [""],
+              "Paths": [
+                "post-bg.jpg"
+              ],
+              "MediaTexts": [
+                ""
+              ],
               "Anchors": [
                 {
                   "X": 0.5,
@@ -1250,7 +1275,11 @@
                 "[js: variables('spaceTagContentItemId')]"
               ],
               "TaxonomyContentItemId": "[js: variables('tagsContentItemId')]",
-              "TagNames": ["Earth", "Exploration", "Space"]
+              "TagNames": [
+                "Earth",
+                "Exploration",
+                "Space"
+              ]
             },
             "Category": {
               "TermContentItemIds": [
@@ -1283,7 +1312,9 @@
               "Text": "Udruga Glas Poduzetnika"
             },
             "Image": {
-              "Paths": ["about-bg.jpg"]
+              "Paths": [
+                "about-bg.jpg"
+              ]
             }
           }
         },
@@ -1462,8 +1493,12 @@
                           "Value": false
                         },
                         "Image": {
-                          "Paths": ["24sata-300px_162034.png"],
-                          "MediaTexts": [""]
+                          "Paths": [
+                            "24sata-300px_162034.png"
+                          ],
+                          "MediaTexts": [
+                            ""
+                          ]
                         },
                         "ImageClass": {
                           "Text": null
@@ -1493,8 +1528,12 @@
                           "Value": false
                         },
                         "Image": {
-                          "Paths": ["logo_600x600_171449.jpg"],
-                          "MediaTexts": [""]
+                          "Paths": [
+                            "logo_600x600_171449.jpg"
+                          ],
+                          "MediaTexts": [
+                            ""
+                          ]
                         },
                         "ImageClass": {
                           "Text": null
@@ -1527,7 +1566,9 @@
                           "Paths": [
                             "telemach_logo_u_zasticenoj_zoni_171512.jpg"
                           ],
-                          "MediaTexts": [""]
+                          "MediaTexts": [
+                            ""
+                          ]
                         },
                         "ImageClass": {
                           "Text": null
@@ -1859,7 +1900,9 @@
               "Y": 110,
               "IsStart": true,
               "Properties": {
-                "ContentTypeFilter": ["Member"],
+                "ContentTypeFilter": [
+                  "Member"
+                ],
                 "ActivityMetadata": {
                   "Title": "Član odobren"
                 }

@@ -2,3 +2,4 @@
 
 find '.' -regex '.*cs$' -exec clang-format -i '{}' +;
 find '.' -regex '.*js$' -exec clang-format -i '{}' +;
+find '.' -regex '.*json$' -exec clang-format -i '{}' +;
