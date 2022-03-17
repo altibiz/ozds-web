@@ -6,22 +6,28 @@ using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Razor;
 using System.Threading.Tasks;
 
-namespace Members.Base
-{
-    public static class OrchardRazorHelperExtensions
-    {
-        public static async Task<IHtmlContent> EditorAsync(this IOrchardDisplayHelper orchardDisplayHelper, ContentItem content, string groupId = "", IUpdateModel updater = null)
-        {
-            var displayManager = orchardDisplayHelper.HttpContext.RequestServices.GetRequiredService<IContentItemDisplayManager>();
-            var shape = await displayManager.BuildEditorAsync(content, updater,true,groupId);
-            return await orchardDisplayHelper.DisplayHelper.ShapeExecuteAsync(shape);
-        }
-
-        public static async Task<IHtmlContent> EditorAsync(this IOrchardDisplayHelper orchardDisplayHelper, string contentType, string groupId = "", IUpdateModel updater = null)
-        {
-            var contentManager = orchardDisplayHelper.HttpContext.RequestServices.GetRequiredService<IContentManager>();
-            ContentItem content = await contentManager.NewAsync(contentType);
-            return await orchardDisplayHelper.EditorAsync(content, groupId, updater);
-        }
+namespace Members.Base {
+  public static class OrchardRazorHelperExtensions {
+    public static async Task<IHtmlContent>
+    EditorAsync(this IOrchardDisplayHelper orchardDisplayHelper,
+                ContentItem content, string groupId = "",
+                IUpdateModel updater = null) {
+      var displayManager =
+          orchardDisplayHelper.HttpContext.RequestServices
+              .GetRequiredService<IContentItemDisplayManager>();
+      var shape = await displayManager.BuildEditorAsync(content, updater, true,
+                                                        groupId);
+      return await orchardDisplayHelper.DisplayHelper.ShapeExecuteAsync(shape);
     }
+
+    public static async Task<IHtmlContent>
+    EditorAsync(this IOrchardDisplayHelper orchardDisplayHelper,
+                string contentType, string groupId = "",
+                IUpdateModel updater = null) {
+      var contentManager = orchardDisplayHelper.HttpContext.RequestServices
+                               .GetRequiredService<IContentManager>();
+      ContentItem content = await contentManager.NewAsync(contentType);
+      return await orchardDisplayHelper.EditorAsync(content, groupId, updater);
+    }
+  }
 }

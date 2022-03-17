@@ -32,76 +32,80 @@ using OrchardCore.BackgroundTasks;
 using OrchardCore.ContentManagement.Handlers;
 using Members.ContentHandlers;
 
-namespace Members
-{
-    public class Startup : OrchardCore.Modules.StartupBase
-    {
-        public IWebHostEnvironment CurrentEnvironment { get; }
+namespace Members {
+public class Startup : OrchardCore.Modules.StartupBase {
+  public IWebHostEnvironment CurrentEnvironment { get; }
 
-        public Startup(IWebHostEnvironment env)
-        {
-            CurrentEnvironment = env;
-        }
+  public Startup(IWebHostEnvironment env) { CurrentEnvironment = env; }
 
-        public override void ConfigureServices(IServiceCollection services)
-        {
-            services.AddScoped<INavigationProvider, AdminMenu>();
-            services.AddScoped<IDataMigration, Migrations>();
-            services.AddContentPart<Member>();
-            services.AddContentPart<Company>();
-            services.UsePartService<PersonPart, PersonPartService>();
-            services.UsePartService<BankStatPart, BankStatPartService>();
-            services.AddScoped<MemberService>();
-            services.AddScoped<PaymentUtils>();
-            services.AddScoped<IScopedIndexProvider, PersonPartIndexProvider>();
-            services.AddSingleton<IIndexProvider, PaymentIndexProvider>();
-            services.AddSingleton<IIndexProvider, OfferIndexProvider>();
-            services.AddSingleton<IIndexProvider,PaymentByDayIndexProvider>();
-            services.AddContentPart<Payment>();
-            services.AddContentPart<Offer>();
-            services.AddScoped<TaxonomyCachedService>();
-            services.AddSingleton<IContentHandler, MemberHandler>();
-            services.AddSingleton<IContentHandler, UserMenuHandler>();
-            services.AddRecipeExecutionStep<FastImport>();
-            services.AddScoped<Importer>();
-            services.AddTransient<IContentsAdminListFilterProvider, PersonPartAdminListFilterProvider>();
-            services.AddTransient<IContentsAdminListFilterProvider,PaymentAdminListFilterProvider>();
-            services.AddScoped<IDisplayDriver<ContentOptionsViewModel>, PersonOptionsDisplayDriver>();
-            services.UsePartService<Pledge, PledgeService>();
-            services.UsePartService<Payment, PaymentPartService>();
+  public override void ConfigureServices(IServiceCollection services) {
+    services.AddScoped<INavigationProvider, AdminMenu>();
+    services.AddScoped<IDataMigration, Migrations>();
+    services.AddContentPart<Member>();
+    services.AddContentPart<Company>();
+    services.UsePartService<PersonPart, PersonPartService>();
+    services.UsePartService<BankStatPart, BankStatPartService>();
+    services.AddScoped<MemberService>();
+    services.AddScoped<PaymentUtils>();
+    services.AddScoped<IScopedIndexProvider, PersonPartIndexProvider>();
+    services.AddSingleton<IIndexProvider, PaymentIndexProvider>();
+    services.AddSingleton<IIndexProvider, OfferIndexProvider>();
+    services.AddSingleton<IIndexProvider, PaymentByDayIndexProvider>();
+    services.AddContentPart<Payment>();
+    services.AddContentPart<Offer>();
+    services.AddScoped<TaxonomyCachedService>();
+    services.AddSingleton<IContentHandler, MemberHandler>();
+    services.AddSingleton<IContentHandler, UserMenuHandler>();
+    services.AddRecipeExecutionStep<FastImport>();
+    services.AddScoped<Importer>();
+    services.AddTransient<IContentsAdminListFilterProvider,
+                          PersonPartAdminListFilterProvider>();
+    services.AddTransient<IContentsAdminListFilterProvider,
+                          PaymentAdminListFilterProvider>();
+    services.AddScoped<IDisplayDriver<ContentOptionsViewModel>,
+                       PersonOptionsDisplayDriver>();
+    services.UsePartService<Pledge, PledgeService>();
+    services.UsePartService<Payment, PaymentPartService>();
 
-            services.AddScoped<IContentDisplayDriver, ContainedPartDisplayDriver>();
-            services.AddSingleton<IBackgroundTask, FastImportBackgroundTask>();
+    services.AddScoped<IContentDisplayDriver, ContainedPartDisplayDriver>();
+    services.AddSingleton<IBackgroundTask, FastImportBackgroundTask>();
 
-            if (CurrentEnvironment.IsDevelopment()) 
-            {
-                services.AddScoped<IShapeDisplayEvents, ShapeTracingShapeEvents>();
-                services.AddScoped<IContentTypeDefinitionDisplayDriver, CodeGenerationDisplayDriver>();
-            }
-
-            services.AddContentField<TextField>().ForEditor<TextFieldDisplayDriver>(d => false)
-                .ForEditor<PartTextFieldDriver>(d=>true);
-            services.AddContentField<NumericField>().ForEditor<NumericFieldDisplayDriver>(d => false)
-    .ForEditor<PartNumericFieldDriver>(d => true);
-
-            services.AddContentField<TaxonomyField>().ForEditor<TaxonomyFieldTagsDisplayDriver>(d => false)
-                .ForEditor<TaxonomyFieldDisplayDriver>(d=>!string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) && !string.Equals(d, "Disabled", StringComparison.OrdinalIgnoreCase))
-                .ForEditor<PartTaxonomyFieldTagsDriver>(d =>
-                {
-                    return string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) || string.Equals(d, "Disabled", StringComparison.OrdinalIgnoreCase);
-                });
-
-
-        }
-
-        public override void Configure(IApplicationBuilder builder, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
-        {
-            //routes.MapAreaControllerRoute(
-            //    name: "Home",
-            //    areaName: "Members",
-            //    pattern: "Home/Index",
-            //    defaults: new { controller = "Home", action = "Index" }
-            //);
-        }
+    if (CurrentEnvironment.IsDevelopment()) {
+      services.AddScoped<IShapeDisplayEvents, ShapeTracingShapeEvents>();
+      services.AddScoped<IContentTypeDefinitionDisplayDriver,
+                         CodeGenerationDisplayDriver>();
     }
+
+    services.AddContentField<TextField>()
+        .ForEditor<TextFieldDisplayDriver>(d => false)
+        .ForEditor<PartTextFieldDriver>(d => true);
+    services.AddContentField<NumericField>()
+        .ForEditor<NumericFieldDisplayDriver>(d => false)
+        .ForEditor<PartNumericFieldDriver>(d => true);
+
+    services.AddContentField<TaxonomyField>()
+        .ForEditor<TaxonomyFieldTagsDisplayDriver>(d => false)
+        .ForEditor<TaxonomyFieldDisplayDriver>(
+            d =>
+                !string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) &&
+                !string.Equals(d, "Disabled",
+                               StringComparison.OrdinalIgnoreCase))
+        .ForEditor<PartTaxonomyFieldTagsDriver>(d => {
+          return string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) ||
+                 string.Equals(d, "Disabled",
+                               StringComparison.OrdinalIgnoreCase);
+        });
+  }
+
+  public override void Configure(IApplicationBuilder builder,
+                                 IEndpointRouteBuilder routes,
+                                 IServiceProvider serviceProvider) {
+    // routes.MapAreaControllerRoute(
+    //     name: "Home",
+    //     areaName: "Members",
+    //     pattern: "Home/Index",
+    //     defaults: new { controller = "Home", action = "Index" }
+    //);
+  }
+}
 }

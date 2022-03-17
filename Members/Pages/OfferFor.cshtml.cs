@@ -11,25 +11,20 @@ using OrchardCore.ContentManagement.Display;
 using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Notify;
 
-namespace Members.Pages
-{
-    public class OfferForModel : PageModel
-    {
-        private readonly MemberService _memberService;
-        public List<ContentItem> CompanyContentItems { get; set; }
+namespace Members.Pages {
+  public class OfferForModel : PageModel {
+    private readonly MemberService _memberService;
+    public List<ContentItem> CompanyContentItems { get; set; }
 
-        public OfferForModel(MemberService mService)
-        {
-            _memberService = mService;
-        }
+    public OfferForModel(MemberService mService) { _memberService = mService; }
 
-        public async Task<IActionResult> OnGetAsync()
-        {
-            CompanyContentItems = await _memberService.GetUserCompanies();
-            if (CompanyContentItems.Count == 1)
-                return RedirectToPage("MyOffer", new { contentItemId = CompanyContentItems[0].ContentItemId });
-            return Page();
-        }
-
+    public async Task<IActionResult> OnGetAsync() {
+      CompanyContentItems = await _memberService.GetUserCompanies();
+      if (CompanyContentItems.Count == 1)
+        return RedirectToPage(
+            "MyOffer",
+            new { contentItemId = CompanyContentItems[0].ContentItemId });
+      return Page();
     }
+  }
 }

@@ -1,11 +1,8 @@
 using OrchardCore.Modules.Manifest;
 
-[assembly: Module(
-    Name = "Members",
-    Author = "AltiBiz",
-    Website = "https://altibiz.com",
-    Version = "0.0.1",
-    Description = "Members Module",
-    Category = "Content Management",
-    Dependencies =new []{"OrchardCore.Taxonomies","OrchardCore.ContentFields"}
-)]
+[assembly:Module(Name = "Members", Author = "AltiBiz",
+                 Website = "https://altibiz.com", Version = "0.0.1",
+                 Description = "Members Module",
+                 Category = "Content Management",
+                 Dependencies = new[] { "OrchardCore.Taxonomies",
+                                        "OrchardCore.ContentFields" })]

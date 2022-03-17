@@ -6,14 +6,14 @@ using OrchardCore.Data.Migration;
 using Microsoft.AspNetCore.Mvc;
 using UgpTheme;
 
-namespace OrchardCore.Themes.UgpTheme
-{
-    public class Startup : StartupBase
-    {
-        public override void ConfigureServices(IServiceCollection serviceCollection)
-        {
-            serviceCollection.AddTransient<IConfigureOptions<ResourceManagementOptions>, ResourceManagementOptionsConfiguration>();
-            serviceCollection.AddScoped<IDataMigration, Migrations>();
-        }
+namespace OrchardCore.Themes.UgpTheme {
+  public class Startup : StartupBase {
+    public override void
+    ConfigureServices(IServiceCollection serviceCollection) {
+      serviceCollection
+          .AddTransient<IConfigureOptions<ResourceManagementOptions>,
+                        ResourceManagementOptionsConfiguration>();
+      serviceCollection.AddScoped<IDataMigration, Migrations>();
     }
+  }
 }
