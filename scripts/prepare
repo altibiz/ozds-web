@@ -2,6 +2,7 @@
 
 dotnet restore;
 
-if [[ $(which husky) && !$CI ]]; then
+if [[ $(which husky) && !$CI && !$(git config --local core.hooksPath) ]];
+then
   husky install;
 fi;
