@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+dotnet clean;
+rm -rf './OzdsWeb/App_Data/';

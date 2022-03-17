@@ -1,12 +1,13 @@
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
-    var { bcmul, bcadd, bcdiv } = require("./bcmath")
+  var {bcmul, bcadd, bcdiv} = require("./bcmath")
 
-/**
- * PDF417 - 2D Barcode generator (LGPLv3)
- *
- * Ported from PHP - PDF417 class, version 1.0.005, from TCPDF library (http://www.tcpdf.org/)
- */
-var PDF417 = {
+  /**
+   * PDF417 - 2D Barcode generator (LGPLv3)
+   *
+   * Ported from PHP - PDF417 class, version 1.0.005, from TCPDF library
+   * (http://www.tcpdf.org/)
+   */
+  var PDF417 = {
 	ROWHEIGHT: 4,
 	QUIETH: 2,
 	QUIETV: 2,
@@ -1288,4 +1289,4 @@ var PDF417 = {
 };
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
-    module.exports = PDF417
+module.exports = PDF417
