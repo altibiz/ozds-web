@@ -3,3 +3,7 @@
 dotnet clean;
 dotnet restore;
 dotnet build;
+
+if [[ $(which husky) && !$CI ]]; then
+  husky install;
+fi;
