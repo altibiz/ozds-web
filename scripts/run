@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-dotnet run --project './OzdsWeb/OzdsWeb.csproj';
+./build;
+dotnet './OzdsWeb/bin/Debug/net5.0/OzdsWeb.dll';
