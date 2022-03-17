@@ -16,7 +16,7 @@ namespace Members.Pages {
     private readonly IHtmlLocalizer H;
 
     public LogOutModel(SignInManager<IUser> signInManager, INotifier notifier,
-                       IHtmlLocalizer<CreateCompanyModel> htmlLocalizer) {
+        IHtmlLocalizer<CreateCompanyModel> htmlLocalizer) {
       _signInManager = signInManager;
       _notifier = notifier;
 

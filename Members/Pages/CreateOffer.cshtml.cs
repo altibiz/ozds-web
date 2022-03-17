@@ -14,8 +14,7 @@ namespace Members.Pages {
     private readonly INotifier _notifier;
     public IShape Shape { get; set; }
     public CreateOfferModel(MemberService mService,
-                            IHtmlLocalizer<CreateOfferModel> htmlLocalizer,
-                            INotifier notifier) {
+        IHtmlLocalizer<CreateOfferModel> htmlLocalizer, INotifier notifier) {
 
       _notifier = notifier;
       H = htmlLocalizer;
@@ -37,8 +36,8 @@ namespace Members.Pages {
     }
 
     // contentItemId -> company content item
-    private async Task<IActionResult> CreatePOST(string nextPage,
-                                                 string contentItemId) {
+    private async Task<IActionResult> CreatePOST(
+        string nextPage, string contentItemId) {
       ContentItem contentItem;
       (contentItem, Shape) = await _memberService.ModelToNew(ContentType.Offer);
       if (ModelState.IsValid) {

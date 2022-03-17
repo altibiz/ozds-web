@@ -22,8 +22,8 @@ namespace Members.Base {
     }
 
     public Task ExecuteAsync(RecipeExecutionContext context) {
-      if (!string.Equals(context.Name, "fastimport",
-                         StringComparison.OrdinalIgnoreCase)) {
+      if (!string.Equals(
+              context.Name, "fastimport", StringComparison.OrdinalIgnoreCase)) {
         return Task.CompletedTask;
       }
 
@@ -46,7 +46,7 @@ namespace Members.Base {
     private readonly ILogger<DefaultContentManager> _logger;
 
     public Importer(ISession session, ILogger<DefaultContentManager> logger,
-                    IEnumerable<IContentHandler> handlers) {
+        IEnumerable<IContentHandler> handlers) {
       _session = session;
       Handlers = handlers;
       ReversedHandlers = handlers.Reverse().ToArray();
@@ -72,9 +72,9 @@ namespace Members.Base {
             importedVersionIds.Add(importingItem.ContentItemVersionId);
           }
           var context = new ImportContentContext(importingItem);
-          await Handlers.InvokeAsync((handler, context) =>
-                                         handler.ImportingAsync(context),
-                                     context, _logger);
+          await Handlers.InvokeAsync(
+              (handler, context) => handler.ImportingAsync(context), context,
+              _logger);
           _session.Save(importingItem);
         }
         await _session.SaveChangesAsync();
@@ -85,13 +85,13 @@ namespace Members.Base {
     }
   }
 
-  [BackgroundTask(Schedule = "*/1 * * * *",
-                  Description = "Fast import background task.")]
+  [BackgroundTask(
+      Schedule = "*/1 * * * *", Description = "Fast import background task.")]
   public class FastImportBackgroundTask : IBackgroundTask {
     public static readonly ConcurrentQueue<ContentItem[]> PendingImports =
         new();
-    public Task DoWorkAsync(IServiceProvider serviceProvider,
-                            CancellationToken cancellationToken) {
+    public Task DoWorkAsync(
+        IServiceProvider serviceProvider, CancellationToken cancellationToken) {
       if (PendingImports.TryDequeue(out var toImport)) {
         var contentManager = serviceProvider.GetRequiredService<Importer>();
         return contentManager.ImportAsync(toImport);

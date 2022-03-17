@@ -23,11 +23,11 @@ namespace Members.Payments {
           yield return payment.As<Payment>();
     }
 
-    internal async Task<IEnumerable<ContentItem>>
-    GetPersonPayments(string contentItemId) {
+    internal async Task<IEnumerable<ContentItem>> GetPersonPayments(
+        string contentItemId) {
       return await _session
-          .Query<ContentItem, PaymentIndex>(x => x.PersonContentItemId ==
-                                                 contentItemId)
+          .Query<ContentItem, PaymentIndex>(
+              x => x.PersonContentItemId == contentItemId)
           .ListAsync();
     }
   }

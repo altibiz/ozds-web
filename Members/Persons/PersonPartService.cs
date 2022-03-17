@@ -25,9 +25,8 @@ namespace Members.Persons {
     private readonly IUserService _userService;
 
     public PersonPartService(IStringLocalizer<PersonPart> S, ISession session,
-                             IContentDefinitionManager cdm,
-                             IHttpContextAccessor httpContextAccessor,
-                             IUserService service) {
+        IContentDefinitionManager cdm, IHttpContextAccessor httpContextAccessor,
+        IUserService service) {
       this.session = session;
       this.S = S;
       _cdm = cdm;
@@ -35,8 +34,8 @@ namespace Members.Persons {
       _userService = service;
     }
 
-    public async IAsyncEnumerable<ValidationResult>
-    ValidateAsync(PersonPart part) {
+    public async IAsyncEnumerable<ValidationResult> ValidateAsync(
+        PersonPart part) {
       if (part.ContentItem.ContentItemId.StartsWith("nat_")) {
         yield break;
       }
@@ -61,11 +60,12 @@ namespace Members.Persons {
       var typeDef = _cdm.GetSettings<PersonPartSettings>(part);
       var personType = typeDef.Type?.ToString();
       return (await session
-                  .QueryIndex<PersonPartIndex>(
-                      o => o.Oib == oib &&
-                           o.ContentItemId != part.ContentItem.ContentItemId &&
-                           o.PersonType == personType)
-                  .CountAsync()) == 0;
+                     .QueryIndex<PersonPartIndex>(
+                         o => o.Oib == oib &&
+                              o.ContentItemId !=
+                                  part.ContentItem.ContentItemId &&
+                              o.PersonType == personType)
+                     .CountAsync()) == 0;
     }
 
     public async Task<IEnumerable<PersonPartIndex>> GetByOibAsync(string oib) {
@@ -85,18 +85,18 @@ namespace Members.Persons {
       part.Email = new TextField { Text = user.Email };
     }
 
-    public Task PublishedAsync(PersonPart instance,
-                               PublishContentContext context) {
+    public Task PublishedAsync(
+        PersonPart instance, PublishContentContext context) {
       return Task.CompletedTask;
     }
 
-    public System.Action<PersonPart>
-    GetEditModel(PersonPart part, BuildPartEditorContext context) {
+    public System.Action<PersonPart> GetEditModel(
+        PersonPart part, BuildPartEditorContext context) {
       return null;
     }
 
-    public Task UpdatedAsync<TPart>(UpdateContentContext context,
-                                    PersonPart instance) {
+    public Task UpdatedAsync<TPart>(
+        UpdateContentContext context, PersonPart instance) {
       return Task.CompletedTask;
     }
   }

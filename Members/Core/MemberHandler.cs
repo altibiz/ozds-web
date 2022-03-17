@@ -45,12 +45,11 @@ namespace Members.Core {
       if (oldVal?.Value is string strVal &&
           DateTime.TryParseExact(
               Regex.Replace(strVal, "[A-Za-z]", "").Replace("..", "."),
-              new[] { "d.M.yyyy",  "d.M.yyyy.", "d.M.y.",    "d.M.y",
-                      "d-M-yyyy",  "d-M-yy",    "d-M-yyyy.", "ddMMyy",
-                      "ddMMyyyy",  "yyyy-M-d",  "yyyy/M/d",  "d/M/yyyy",
-                      "d/M/yyyy.", "d/M/yy",    "d,M,yyyy,", "d,M,yyyy",
-                      "d M yyyy",  "d.M yyyy",  "d.M yyyy.", "ddMM.yyyy",
-                      "yyyy" },
+              new[] { "d.M.yyyy", "d.M.yyyy.", "d.M.y.", "d.M.y", "d-M-yyyy",
+                "d-M-yy", "d-M-yyyy.", "ddMMyy", "ddMMyyyy", "yyyy-M-d",
+                "yyyy/M/d", "d/M/yyyy", "d/M/yyyy.", "d/M/yy", "d,M,yyyy,",
+                "d,M,yyyy", "d M yyyy", "d.M yyyy", "d.M yyyy.", "ddMM.yyyy",
+                "yyyy" },
               CultureInfo.InvariantCulture,
               DateTimeStyles.AllowLeadingWhite |
                   DateTimeStyles.AllowTrailingWhite |

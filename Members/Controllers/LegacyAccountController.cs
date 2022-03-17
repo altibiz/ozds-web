@@ -19,14 +19,14 @@ namespace Members.Controllers {
   [ApiController]
   [Route("api/legacyaccount")]
   [Authorize(AuthenticationSchemes = "Api"), IgnoreAntiforgeryToken,
-   AllowAnonymous]
+      AllowAnonymous]
   public class LegacyAccountController : Controller {
     private readonly UserManager<IUser> _userManager;
     private readonly ISession _session;
     private readonly IUserService _userService;
 
     public LegacyAccountController(UserManager<IUser> userManager,
-                                   ISession session, IUserService userService) {
+        ISession session, IUserService userService) {
       _userManager = userManager;
       _session = session;
       _userService = userService;
@@ -91,7 +91,7 @@ namespace Members.Controllers {
                 await _userManager.FindByEmailAsync(email) ??
                 await _userService.CreateUserAsync(
                     new User { UserName = newusrname, Email = email,
-                               EmailConfirmed = true, IsEnabled = true },
+                      EmailConfirmed = true, IsEnabled = true },
                     passWord,
                     (key, message) => ModelState.AddModelError(key, message));
 

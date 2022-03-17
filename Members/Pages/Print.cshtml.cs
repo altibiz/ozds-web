@@ -20,8 +20,8 @@ namespace Members.Pages {
     public IShape Shape { get; set; }
 
     public PrintModel(IContentItemDisplayManager cidm, IContentManager cm,
-                      IUpdateModelAccessor updateModelAccessor,
-                      IConfiguration configuration) {
+        IUpdateModelAccessor updateModelAccessor,
+        IConfiguration configuration) {
 
       _contentManager = cm;
       _contentItemDisplayManager = cidm;
@@ -40,8 +40,8 @@ namespace Members.Pages {
 
     public IActionResult OnGetDownload(string contentId, string fileName) {
       fileName = string.IsNullOrWhiteSpace(fileName) ? contentId : fileName;
-      var docUrl = string.Format("https://{0}/Members/Print/{1}/", Request.Host,
-                                 contentId);
+      var docUrl = string.Format(
+          "https://{0}/Members/Print/{1}/", Request.Host, contentId);
       return Redirect(string.Format(downloadFormat, fileName, docUrl));
     }
   }

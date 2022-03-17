@@ -25,8 +25,8 @@ namespace Members.PartFieldSettings {
       _httpCA = httpContextAccessor;
     }
 
-    public override IDisplayResult Edit(NumericField field,
-                                        BuildFieldEditorContext context) {
+    public override IDisplayResult Edit(
+        NumericField field, BuildFieldEditorContext context) {
       var fieldDef = DriverService.GetFieldDef(
           context, AdminAttribute.IsApplied(_httpCA.HttpContext));
       if (fieldDef == null)
@@ -35,10 +35,9 @@ namespace Members.PartFieldSettings {
           GetEditorShapeType(fieldDef), model => {
             var settings =
                 context.PartFieldDefinition.GetSettings<NumericFieldSettings>();
-            model.Value = context.IsNew
-                              ? settings.DefaultValue
-                              : Convert.ToString(field.Value,
-                                                 CultureInfo.CurrentUICulture);
+            model.Value = context.IsNew ? settings.DefaultValue
+                                        : Convert.ToString(field.Value,
+                                              CultureInfo.CurrentUICulture);
 
             model.Field = field;
             model.Part = context.ContentPart;
@@ -46,9 +45,8 @@ namespace Members.PartFieldSettings {
           });
     }
 
-    public override async Task<IDisplayResult>
-    UpdateAsync(NumericField field, IUpdateModel updater,
-                UpdateFieldEditorContext context) {
+    public override async Task<IDisplayResult> UpdateAsync(NumericField field,
+        IUpdateModel updater, UpdateFieldEditorContext context) {
       var fieldDef = DriverService.GetFieldDef(
           context, AdminAttribute.IsApplied(_httpCA.HttpContext));
       if (fieldDef == null)

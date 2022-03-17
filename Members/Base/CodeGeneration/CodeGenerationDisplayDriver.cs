@@ -19,8 +19,8 @@ namespace Lombiq.HelpfulExtensions.Extensions.CodeGeneration {
         stringLocalizer;
 
     public override IDisplayResult Edit(ContentTypeDefinition model) =>
-        Initialize<ContentTypeMigrationsViewModel>("ContentTypeMigrations_Edit",
-                                                   viewModel => {
+        Initialize<ContentTypeMigrationsViewModel>(
+            "ContentTypeMigrations_Edit", viewModel => {
                     viewModel.MigrationCodeLazy = new Lazy<string>(() =>
                     {
                         var codeBuilder = new StringBuilder();
@@ -34,15 +34,15 @@ namespace Lombiq.HelpfulExtensions.Extensions.CodeGeneration {
 
                     GenerateCodeForSettings(
                         codeBuilder, model.GetSettings<ContentTypeSettings>());
-                    AddSettingsWithout<ContentTypeSettings>(codeBuilder,
-                                                            model.Settings, 4);
+                    AddSettingsWithout<ContentTypeSettings>(
+                        codeBuilder, model.Settings, 4);
                     GenerateCodeForParts(codeBuilder, model.Parts);
                     codeBuilder.AppendLine(");");
 
                     GenerateCodeForPartsWithFields(codeBuilder, model.Parts);
 
                     return codeBuilder.ToString();
-                                                   });
+            });
     viewModel.ModelCodeLazy = new Lazy<string>(() => {
       var codeBuilder = new StringBuilder();
       GenerateModelsForParts(codeBuilder, model.Parts);
@@ -61,18 +61,18 @@ namespace Lombiq.HelpfulExtensions.Extensions.CodeGeneration {
       var partStartingLength = codeBuilder.Length;
 
       AddWithLine(codeBuilder, nameof(partSettings.DisplayName),
-                  partSettings.DisplayName);
+          partSettings.DisplayName);
       AddWithLine(codeBuilder, nameof(partSettings.Description),
-                  partSettings.Description);
-      AddWithLine(codeBuilder, nameof(partSettings.Position),
-                  partSettings.Position);
+          partSettings.Description);
+      AddWithLine(
+          codeBuilder, nameof(partSettings.Position), partSettings.Position);
       AddWithLine(codeBuilder, nameof(partSettings.DisplayMode),
-                  partSettings.DisplayMode);
-      AddWithLine(codeBuilder, nameof(partSettings.Editor),
-                  partSettings.Editor);
+          partSettings.DisplayMode);
+      AddWithLine(
+          codeBuilder, nameof(partSettings.Editor), partSettings.Editor);
 
-      AddSettingsWithout<ContentTypePartSettings>(codeBuilder, part.Settings,
-                                                  8);
+      AddSettingsWithout<ContentTypePartSettings>(
+          codeBuilder, part.Settings, 8);
 
       // Checking if anything was added to the part's settings.
       if (codeBuilder.Length == partStartingLength) {
@@ -125,11 +125,11 @@ namespace Lombiq.HelpfulExtensions.Extensions.CodeGeneration {
         codeBuilder.AppendLine("    .Reusable()");
 
       AddWithLine(codeBuilder, nameof(partSettings.DisplayName),
-                  partSettings.DisplayName);
+          partSettings.DisplayName);
       AddWithLine(codeBuilder, nameof(partSettings.Description),
-                  partSettings.Description);
+          partSettings.Description);
       AddWithLine(codeBuilder, nameof(partSettings.DefaultPosition),
-                  partSettings.DefaultPosition);
+          partSettings.DefaultPosition);
 
       AddSettingsWithout<ContentPartSettings>(codeBuilder, part.Settings, 4);
 
@@ -141,18 +141,18 @@ namespace Lombiq.HelpfulExtensions.Extensions.CodeGeneration {
 
         var fieldSettings = field.GetSettings<ContentPartFieldSettings>();
         AddWithLine(codeBuilder, nameof(fieldSettings.DisplayName),
-                    fieldSettings.DisplayName);
+            fieldSettings.DisplayName);
         AddWithLine(codeBuilder, nameof(fieldSettings.Description),
-                    fieldSettings.Description);
-        AddWithLine(codeBuilder, nameof(fieldSettings.Editor),
-                    fieldSettings.Editor);
+            fieldSettings.Description);
+        AddWithLine(
+            codeBuilder, nameof(fieldSettings.Editor), fieldSettings.Editor);
         AddWithLine(codeBuilder, nameof(fieldSettings.DisplayMode),
-                    fieldSettings.DisplayMode);
+            fieldSettings.DisplayMode);
         AddWithLine(codeBuilder, nameof(fieldSettings.Position),
-                    fieldSettings.Position);
+            fieldSettings.Position);
 
-        AddSettingsWithout<ContentPartFieldSettings>(codeBuilder,
-                                                     field.Settings, 8);
+        AddSettingsWithout<ContentPartFieldSettings>(
+            codeBuilder, field.Settings, 8);
 
         codeBuilder.AppendLine("    )");
       }
@@ -177,15 +177,15 @@ namespace Lombiq.HelpfulExtensions.Extensions.CodeGeneration {
       // the rest of the code.
       return T
       ["\"FIX ME! Couldn't determine the actual type to instantiate.\" {0}",
-       jObject.ToString()];
+          jObject.ToString()];
     default:
       throw new NotSupportedException(
           $"Settings values of type {jToken.GetType()} are not supported.");
     }
   }
 
-  private void AddSettingsWithout<T>(StringBuilder codeBuilder,
-                                     JObject settings, int indentationDepth) {
+  private void AddSettingsWithout<T>(
+      StringBuilder codeBuilder, JObject settings, int indentationDepth) {
     var indentation =
         string.Join(string.Empty, Enumerable.Repeat(" ", indentationDepth));
 
@@ -210,8 +210,7 @@ namespace Lombiq.HelpfulExtensions.Extensions.CodeGeneration {
 
             if (propertyValue == null) {
               propertyValue = "\"\"";
-            } else if (propertyValue.Contains(
-                           Environment.NewLine,
+            } else if (propertyValue.Contains(Environment.NewLine,
                            StringComparison.OrdinalIgnoreCase)) {
               propertyValue = "@" + propertyValue;
             }
@@ -242,8 +241,8 @@ namespace Lombiq.HelpfulExtensions.Extensions.CodeGeneration {
     }
   }
 
-  private static void AddWithLine(StringBuilder codeBuilder, string name,
-                                  string value) {
+  private static void AddWithLine(
+      StringBuilder codeBuilder, string name, string value) {
     if (!string.IsNullOrEmpty(value)) {
       codeBuilder.AppendLine($"        .With{name}(\"{value}\")");
     }

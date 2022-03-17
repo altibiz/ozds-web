@@ -42,8 +42,7 @@ namespace Members.Pages {
     public List<ContentItem> PersonList { get; set; }
 
     public BarcodeGenModel(MemberService mService,
-                           IHtmlLocalizer<CreateMemberModel> htmlLocalizer,
-                           INotifier notifier) {
+        IHtmlLocalizer<CreateMemberModel> htmlLocalizer, INotifier notifier) {
       _notifier = notifier;
       H = htmlLocalizer;
       _memberService = mService;

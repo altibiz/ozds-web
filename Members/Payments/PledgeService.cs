@@ -13,13 +13,13 @@ namespace Members.Payments {
     private MemberService _memberService;
 
     public PledgeService(TaxonomyCachedService taxService,
-                         IHttpContextAccessor htp, MemberService memberService)
+        IHttpContextAccessor htp, MemberService memberService)
         : base(htp) {
       _taxService = taxService;
       _memberService = memberService;
     }
-    public override async Task UpdatedAsync<TPart>(UpdateContentContext context,
-                                                   Pledge model) {
+    public override async Task UpdatedAsync<TPart>(
+        UpdateContentContext context, Pledge model) {
       model.InitFields();
       if (!IsAdmin) {
         model.ReferenceNr.Text = "11-" + model.Oib.Text;

@@ -13,16 +13,15 @@ namespace Members.Persons {
       : IContentsAdminListFilterProvider {
     public void Build(QueryEngineBuilder<ContentItem> builder) {
       builder
-          .WithNamedTerm("oib",
-                         builder => builder.OneCondition((val, query) => {
-                           if (!string.IsNullOrEmpty(val)) {
-                             query.With<PersonPartIndex>(i => i.Oib == val);
-                           }
+          .WithNamedTerm(
+              "oib", builder => builder.OneCondition((val, query) => {
+                if (!string.IsNullOrEmpty(val)) {
+                  query.With<PersonPartIndex>(i => i.Oib == val);
+                }
 
-                           return query;
-                         }))
-          .WithDefaultTerm(
-              "text",
+                return query;
+              }))
+          .WithDefaultTerm("text",
               builder => builder.ManyCondition(
                   async (val, query, ctx) => {
                     return await Task.Run<IQuery<ContentItem>>(() => {

@@ -23,8 +23,8 @@ namespace Members.PartFieldSettings {
   }
 
   public static class PartServiceExtensions {
-    public static void
-    UsePartService<TPart, TService>(this IServiceCollection services)
+    public static void UsePartService<TPart, TService>(
+        this IServiceCollection services)
         where TPart : ContentPart, new()
         where TService : class, IPartService<TPart> {
       services.AddScoped<TService, TService>();
@@ -45,13 +45,13 @@ namespace Members.PartFieldSettings {
 
     public virtual Task InitializingAsync(T part) { return Task.CompletedTask; }
 
-    public virtual Action<T> GetEditModel(T part,
-                                          BuildPartEditorContext context) {
+    public virtual Action<T> GetEditModel(
+        T part, BuildPartEditorContext context) {
       return null;
     }
 
-    public virtual Task PublishedAsync(T instance,
-                                       PublishContentContext context) {
+    public virtual Task PublishedAsync(
+        T instance, PublishContentContext context) {
       return Task.CompletedTask;
     }
 
@@ -63,8 +63,8 @@ namespace Members.PartFieldSettings {
       return Array.Empty<ValidationResult>();
     }
 
-    public virtual Task UpdatedAsync<TPart>(UpdateContentContext context,
-                                            T instance) {
+    public virtual Task UpdatedAsync<TPart>(
+        UpdateContentContext context, T instance) {
       return Task.CompletedTask;
     }
   }

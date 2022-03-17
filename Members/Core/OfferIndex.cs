@@ -20,14 +20,11 @@ namespace Members.Indexes {
         var offer = contentItem.AsReal<Offer>();
         if (offer == null)
           return null;
-        var offerIndex =
-            new OfferIndex { ContentItemId = contentItem.ContentItemId,
-                             CompanyContentItemId =
-                                 offer.Company?.ContentItemIds.FirstOrDefault(),
-                             Title = contentItem.DisplayText,
-                             Published = contentItem.Published,
-                             Latest = contentItem.Latest,
-                             Owner = contentItem.Owner };
+        var offerIndex = new OfferIndex { ContentItemId =
+                                              contentItem.ContentItemId,
+          CompanyContentItemId = offer.Company?.ContentItemIds.FirstOrDefault(),
+          Title = contentItem.DisplayText, Published = contentItem.Published,
+          Latest = contentItem.Latest, Owner = contentItem.Owner };
         return offerIndex;
       });
     }
@@ -37,13 +34,13 @@ namespace Members.Indexes {
       SchemaBuilder.CreateMapIndexTable<OfferIndex>(
           table => table
                        .Column<string>(nameof(OfferIndex.ContentItemId),
-                                       c => c.WithLength(50))
+                           c => c.WithLength(50))
                        .Column<string>(nameof(OfferIndex.CompanyContentItemId),
-                                       c => c.WithLength(50))
-                       .Column<string>(nameof(OfferIndex.Title),
-                                       c => c.WithLength(225))
-                       .Column<string>(nameof(OfferIndex.Owner),
-                                       c => c.WithLength(225))
+                           c => c.WithLength(50))
+                       .Column<string>(
+                           nameof(OfferIndex.Title), c => c.WithLength(225))
+                       .Column<string>(
+                           nameof(OfferIndex.Owner), c => c.WithLength(225))
                        .Column<bool>(nameof(OfferIndex.Published))
                        .Column<bool>(nameof(OfferIndex.Latest)));
     }

@@ -14,8 +14,8 @@ namespace Members.Controllers {
     private readonly ISession _session;
     private readonly ILogger<ReindexController> _logger;
 
-    public ReindexController(ISession session,
-                             ILogger<ReindexController> logger) {
+    public ReindexController(
+        ISession session, ILogger<ReindexController> logger) {
 
       _session = session;
       _logger = logger;
@@ -23,8 +23,8 @@ namespace Members.Controllers {
 
     [HttpGet("paymentbyday")]
     public async Task<IActionResult> PaymentByDay() {
-      await _session.RefreshReduceIndex(new PaymentByDayIndexProvider(),
-                                        "Payment", logger: _logger);
+      await _session.RefreshReduceIndex(
+          new PaymentByDayIndexProvider(), "Payment", logger: _logger);
       return Ok(await _session.QueryIndex<PaymentByDayIndex>().ListAsync());
     }
 

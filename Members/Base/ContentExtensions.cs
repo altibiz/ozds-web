@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace Members.Utils {
   public static class ContentExtensions {
-    public static TSetting
-    GetSettings<TSetting>(this IContentDefinitionManager _cdm, ContentPart part)
+    public static TSetting GetSettings<TSetting>(
+        this IContentDefinitionManager _cdm, ContentPart part)
         where TSetting : new() {
       var contentTypeDefinition =
           _cdm.GetTypeDefinition(part.ContentItem.ContentType);
@@ -23,8 +23,8 @@ namespace Members.Utils {
 
     public static void AddToList(this ContentItem parent, ContentItem child) {
       child.Weld<ContainedPart>();
-      child.Alter<ContainedPart>(x => x.ListContentItemId =
-                                     parent.ContentItemId);
+      child.Alter<ContainedPart>(
+          x => x.ListContentItemId = parent.ContentItemId);
     }
 
     // Returns content part only if the item is not deleted (not latest or
@@ -46,8 +46,8 @@ namespace Members.Utils {
           prop.SetValue(part, new TextField { ContentItem = part.ContentItem });
         if (prop.PropertyType == typeof(NumericField) &&
             prop.GetValue(part) == null)
-          prop.SetValue(part,
-                        new NumericField { ContentItem = part.ContentItem });
+          prop.SetValue(
+              part, new NumericField { ContentItem = part.ContentItem });
         if (prop.PropertyType == typeof(DateField) &&
             prop.GetValue(part) == null)
           prop.SetValue(part, new DateField { ContentItem = part.ContentItem });
@@ -56,20 +56,20 @@ namespace Members.Utils {
           prop.SetValue(part, new DateField { ContentItem = part.ContentItem });
         if (prop.PropertyType == typeof(TaxonomyField) &&
             prop.GetValue(part) == null)
-          prop.SetValue(part,
-                        new TaxonomyField { ContentItem = part.ContentItem });
+          prop.SetValue(
+              part, new TaxonomyField { ContentItem = part.ContentItem });
         if (prop.PropertyType == typeof(ContentPickerField) &&
             prop.GetValue(part) == null)
           prop.SetValue(
               part, new ContentPickerField { ContentItem = part.ContentItem });
         if (prop.PropertyType == typeof(UserPickerField) &&
             prop.GetValue(part) == null)
-          prop.SetValue(part,
-                        new UserPickerField { ContentItem = part.ContentItem });
+          prop.SetValue(
+              part, new UserPickerField { ContentItem = part.ContentItem });
         if (prop.PropertyType == typeof(BooleanField) &&
             prop.GetValue(part) == null)
-          prop.SetValue(part,
-                        new BooleanField { ContentItem = part.ContentItem });
+          prop.SetValue(
+              part, new BooleanField { ContentItem = part.ContentItem });
       }
       return part;
     }
@@ -78,8 +78,8 @@ namespace Members.Utils {
       return contentPickerField?.ContentItemIds?.FirstOrDefault();
     }
 
-    public static void SetId(this ContentPickerField contentPickerField,
-                             string value) {
+    public static void SetId(
+        this ContentPickerField contentPickerField, string value) {
       contentPickerField.ContentItemIds = new[] { value };
     }
 
@@ -91,13 +91,13 @@ namespace Members.Utils {
       field.TermContentItemIds = new[] { value };
     }
 
-    public static async Task<ContentItem>
-    GetTerm(this TaxonomyField field, TaxonomyCachedService service) {
+    public static async Task<ContentItem> GetTerm(
+        this TaxonomyField field, TaxonomyCachedService service) {
       return await service.GetFirstTerm(field);
     }
 
-    public static async Task<TPart>
-    GetTerm<TPart>(this TaxonomyField field, TaxonomyCachedService service)
+    public static async Task<TPart> GetTerm<TPart>(
+        this TaxonomyField field, TaxonomyCachedService service)
         where TPart : ContentPart {
       return (await service.GetFirstTerm(field)).As<TPart>();
     }

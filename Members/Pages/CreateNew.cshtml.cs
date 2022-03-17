@@ -14,8 +14,7 @@ namespace Members.Pages {
     private readonly INotifier _notifier;
     public IShape Shape { get; set; }
     public CreateNewModel(MemberService mService,
-                          IHtmlLocalizer<CreateOfferModel> htmlLocalizer,
-                          INotifier notifier) {
+        IHtmlLocalizer<CreateOfferModel> htmlLocalizer, INotifier notifier) {
 
       _notifier = notifier;
       H = htmlLocalizer;
@@ -35,8 +34,8 @@ namespace Members.Pages {
         var result = await _memberService.CreateNew(contentItem, true);
         if (result.Succeeded) {
           await _notifier.SuccessAsync(H["Hvala!"]);
-          return Redirect("~/Contents/ContentItems/" +
-                          contentItem.ContentItemId);
+          return Redirect(
+              "~/Contents/ContentItems/" + contentItem.ContentItemId);
         }
       }
       return Page();

@@ -17,11 +17,11 @@ namespace Members.Base {
     public async Task<List<ContentItem>> GetTaxonomyTerms(TaxonomyField field) {
       var res = new List<ContentItem>();
       foreach (var trm in field?.TermContentItemIds ?? Array.Empty<string>()) {
-        if (!_cached.TryGetValue((field.TaxonomyContentItemId, trm),
-                                 out var contentItem))
+        if (!_cached.TryGetValue(
+                (field.TaxonomyContentItemId, trm), out var contentItem))
           _cached[(field.TaxonomyContentItemId, trm)] = contentItem =
-              await _helper.GetTaxonomyTermAsync(field.TaxonomyContentItemId,
-                                                 trm);
+              await _helper.GetTaxonomyTermAsync(
+                  field.TaxonomyContentItemId, trm);
         res.Add(contentItem);
       }
       return res;
@@ -30,11 +30,11 @@ namespace Members.Base {
     public async Task<ContentItem> GetFirstTerm(TaxonomyField field) {
       var res = new List<ContentItem>();
       foreach (var trm in field?.TermContentItemIds ?? Array.Empty<string>()) {
-        if (!_cached.TryGetValue((field.TaxonomyContentItemId, trm),
-                                 out var contentItem))
+        if (!_cached.TryGetValue(
+                (field.TaxonomyContentItemId, trm), out var contentItem))
           _cached[(field.TaxonomyContentItemId, trm)] = contentItem =
-              await _helper.GetTaxonomyTermAsync(field.TaxonomyContentItemId,
-                                                 trm);
+              await _helper.GetTaxonomyTermAsync(
+                  field.TaxonomyContentItemId, trm);
         res.Add(contentItem);
       }
       return res.FirstOrDefault();

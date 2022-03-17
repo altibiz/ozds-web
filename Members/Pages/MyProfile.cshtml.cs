@@ -20,9 +20,9 @@ namespace Members.Pages {
     public List<ContentItem> CompanyContentItems { get; set; }
 
     public MyProfileModel(MemberService mService,
-                          IContentItemDisplayManager contentItemDisplayManager,
-                          IHtmlLocalizer<CreateMemberModel> htmlLocalizer,
-                          IUpdateModelAccessor updateModelAccessor) {
+        IContentItemDisplayManager contentItemDisplayManager,
+        IHtmlLocalizer<CreateMemberModel> htmlLocalizer,
+        IUpdateModelAccessor updateModelAccessor) {
       _contentItemDisplayManager = contentItemDisplayManager;
       _updateModelAccessor = updateModelAccessor;
 

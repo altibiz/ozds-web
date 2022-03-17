@@ -44,8 +44,7 @@ namespace Members.Pages {
     public bool IsGuest { get; set; }
 
     public DonateModel(MemberService mService,
-                       IHtmlLocalizer<CreateMemberModel> htmlLocalizer,
-                       INotifier notifier) {
+        IHtmlLocalizer<CreateMemberModel> htmlLocalizer, INotifier notifier) {
       _notifier = notifier;
       H = htmlLocalizer;
       _memberService = mService;
@@ -67,10 +66,8 @@ namespace Members.Pages {
       return Page();
     }
     public IActionResult OnGetProccessForm(string legalName = null,
-                                           string oib = null,
-                                           string amount = null,
-                                           string email = null,
-                                           string note = null) {
+        string oib = null, string amount = null, string email = null,
+        string note = null) {
       IsGuest = true;
       LegalName = legalName;
       Amount = amount;

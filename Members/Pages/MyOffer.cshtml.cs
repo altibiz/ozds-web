@@ -19,8 +19,7 @@ namespace Members.Pages {
     public dynamic Shape { get; set; }
 
     public MyOfferModel(MemberService mService,
-                        IHtmlLocalizer<CreateMemberModel> htmlLocalizer,
-                        INotifier notifier) {
+        IHtmlLocalizer<CreateMemberModel> htmlLocalizer, INotifier notifier) {
       _notifier = notifier;
       H = htmlLocalizer;
       _memberService = mService;

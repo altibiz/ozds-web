@@ -17,17 +17,16 @@ namespace Members.Persons {
 
     public PartServiceDisplayDriver(TService service) { _service = service; }
 
-    public override IDisplayResult Edit(TPart part,
-                                        BuildPartEditorContext context) {
+    public override IDisplayResult Edit(
+        TPart part, BuildPartEditorContext context) {
       var initer = _service.GetEditModel(part, context);
       if (initer != null)
         return Initialize(GetEditorShapeType(context), initer);
       return base.Edit(part);
     }
 
-    public override async Task<IDisplayResult>
-    UpdateAsync(TPart model, IUpdateModel updater,
-                UpdatePartEditorContext context) {
+    public override async Task<IDisplayResult> UpdateAsync(
+        TPart model, IUpdateModel updater, UpdatePartEditorContext context) {
       await updater.TryUpdateModelAsync(model, Prefix);
 
       await foreach (var item in _service.ValidateAsync(model)) {

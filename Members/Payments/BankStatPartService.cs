@@ -57,10 +57,8 @@ namespace Members.Payments {
     private readonly YesSql.ISession _session;
 
     public BankStatPartService(IStringLocalizer<BankStatPartService> S,
-                               IContentManager contentManager,
-                               PersonPartService personService,
-                               IHttpContextAccessor htp,
-                               YesSql.ISession session)
+        IContentManager contentManager, PersonPartService personService,
+        IHttpContextAccessor htp, YesSql.ISession session)
         : base(htp) {
       this.S = S;
       _contentManager = contentManager;
@@ -68,8 +66,8 @@ namespace Members.Payments {
       _session = session;
     }
 
-    public override Action<BankStatPart>
-    GetEditModel(BankStatPart part, BuildPartEditorContext context) {
+    public override Action<BankStatPart> GetEditModel(
+        BankStatPart part, BuildPartEditorContext context) {
       return m => { m.StatementJson = part.StatementJson; };
     }
 
@@ -90,8 +88,8 @@ namespace Members.Payments {
       XmlDocument doc = new();
       doc.LoadXml(xmlOrJson);
       xmlOrJson = Regex.Replace(xmlOrJson, "<Document.*?>",
-                                "<Document>"); // get rid of namespaces
-                                               // new test
+          "<Document>"); // get rid of namespaces
+                         // new test
       XElement document = XElement.Parse(xmlOrJson);
 
       BsJson statement = new();
@@ -153,8 +151,8 @@ namespace Members.Payments {
     }
     public override IEnumerable<ValidationResult> Validate(BankStatPart part) {
       if (string.IsNullOrEmpty(part.StatementJson)) {
-        yield return new ValidationResult(S["Statement is required."],
-                                          new[] { nameof(part.StatementJson) });
+        yield return new ValidationResult(
+            S["Statement is required."], new[] { nameof(part.StatementJson) });
       }
       var parsed = true;
 
@@ -165,19 +163,19 @@ namespace Members.Payments {
       }
 
       if (!parsed)
-        yield return new ValidationResult(S["Statement not valid"],
-                                          new[] { nameof(part.StatementJson) });
+        yield return new ValidationResult(
+            S["Statement not valid"], new[] { nameof(part.StatementJson) });
     }
 
-    public override Task UpdatedAsync<TPart>(UpdateContentContext context,
-                                             BankStatPart instance) {
+    public override Task UpdatedAsync<TPart>(
+        UpdateContentContext context, BankStatPart instance) {
       var json = ParseStmt(instance.StatementJson);
       instance.Date.Value = json.Date;
       return Task.CompletedTask;
     }
 
-    public async override Task PublishedAsync(BankStatPart part,
-                                              PublishContentContext context) {
+    public async override Task PublishedAsync(
+        BankStatPart part, PublishContentContext context) {
       var json = ParseStmt(part.StatementJson);
       foreach (var pymnt in json.Data) {
         var ciPayment = await _session.FirstOrDefaultAsync<PaymentIndex>(
@@ -210,8 +208,8 @@ namespace Members.Payments {
             } ciPayment.Apply(payPart);
             if (ciPayment.CreatedUtc != null)
                 await _contentManager.UpdateAsync(ciPayment);
-            else await _contentManager.UpdateValidateAndCreateAsync(ciPayment,
-                                                                    version);
+            else await _contentManager.UpdateValidateAndCreateAsync(
+                ciPayment, version);
       }
     }
   }

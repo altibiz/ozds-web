@@ -28,8 +28,8 @@ namespace Members.PartFieldSettings {
   }
 
   public interface IFieldEditorSettings {
-    string GetFieldLabel(string propertyName, string defaultVale,
-                         bool isAdminTheme);
+    string GetFieldLabel(
+        string propertyName, string defaultVale, bool isAdminTheme);
 
     /// <summary>
     /// Get how field is displayed
@@ -39,8 +39,6 @@ namespace Members.PartFieldSettings {
     /// <param name="context"></param>
     /// <returns>default, Disabled for disabled or null for hidden</returns>
     DisplayModeResult GetFieldDisplayMode(string propertyName,
-                                          string defaultMode,
-                                          BuildFieldEditorContext context,
-                                          bool isAdminTheme);
+        string defaultMode, BuildFieldEditorContext context, bool isAdminTheme);
   }
 }

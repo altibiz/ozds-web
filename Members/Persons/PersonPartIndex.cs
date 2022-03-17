@@ -62,8 +62,8 @@ namespace Members.Persons {
   }
 
   public static class PersonPartIndexExtensions {
-    public static void
-    MigratePersonPartIndex(this ISchemaBuilder SchemaBuilder) {
+    public static void MigratePersonPartIndex(
+        this ISchemaBuilder SchemaBuilder) {
       SchemaBuilder.CreateMapIndexTable<PersonPartIndex>(
           table => table.Column<string>("Oib", col => col.WithLength(50))
                        .Column<string>("ContentItemId", c => c.WithLength(50))
@@ -76,7 +76,7 @@ namespace Members.Persons {
 
       SchemaBuilder.AlterIndexTable<PersonPartIndex>(
           table => table.CreateIndex("IDX_PersonPartIndex_DocumentId",
-                                     "DocumentId", "Oib", "ContentItemId"));
+              "DocumentId", "Oib", "ContentItemId"));
     }
 
     public static void AddPublished(this ISchemaBuilder schemaBuilder) {

@@ -10,8 +10,8 @@ namespace Members.Payments {
     public PaymentPartService(IHttpContextAccessor httpAccessorService)
         : base(httpAccessorService) {}
 
-    public override Task UpdatedAsync<TPart>(UpdateContentContext context,
-                                             Payment instance) {
+    public override Task UpdatedAsync<TPart>(
+        UpdateContentContext context, Payment instance) {
       instance.InitFields();
       if (instance.IsPayout.Value ^ instance.Amount.Value < 0)
         instance.Amount.Value = -instance.Amount.Value;

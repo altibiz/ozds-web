@@ -8,11 +8,11 @@ using UgpTheme;
 
 namespace OrchardCore.Themes.UgpTheme {
   public class Startup : StartupBase {
-    public override void
-    ConfigureServices(IServiceCollection serviceCollection) {
+    public override void ConfigureServices(
+        IServiceCollection serviceCollection) {
       serviceCollection
           .AddTransient<IConfigureOptions<ResourceManagementOptions>,
-                        ResourceManagementOptionsConfiguration>();
+              ResourceManagementOptionsConfiguration>();
       serviceCollection.AddScoped<IDataMigration, Migrations>();
     }
   }

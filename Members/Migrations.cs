@@ -15,8 +15,8 @@ public class Migrations : DataMigration {
   private readonly IRecipeMigrator _recipeMigrator;
   private readonly IContentDefinitionManager _contentDefinitionManager;
 
-  public Migrations(IRecipeMigrator recipeMigrator,
-                    IContentDefinitionManager cdf) {
+  public Migrations(
+      IRecipeMigrator recipeMigrator, IContentDefinitionManager cdf) {
     _recipeMigrator = recipeMigrator;
     _contentDefinitionManager = cdf;
   }

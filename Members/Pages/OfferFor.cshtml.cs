@@ -21,8 +21,7 @@ namespace Members.Pages {
     public async Task<IActionResult> OnGetAsync() {
       CompanyContentItems = await _memberService.GetUserCompanies();
       if (CompanyContentItems.Count == 1)
-        return RedirectToPage(
-            "MyOffer",
+        return RedirectToPage("MyOffer",
             new { contentItemId = CompanyContentItems[0].ContentItemId });
       return Page();
     }

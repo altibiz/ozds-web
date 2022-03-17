@@ -59,11 +59,11 @@ public class Startup : OrchardCore.Modules.StartupBase {
     services.AddRecipeExecutionStep<FastImport>();
     services.AddScoped<Importer>();
     services.AddTransient<IContentsAdminListFilterProvider,
-                          PersonPartAdminListFilterProvider>();
+        PersonPartAdminListFilterProvider>();
     services.AddTransient<IContentsAdminListFilterProvider,
-                          PaymentAdminListFilterProvider>();
+        PaymentAdminListFilterProvider>();
     services.AddScoped<IDisplayDriver<ContentOptionsViewModel>,
-                       PersonOptionsDisplayDriver>();
+        PersonOptionsDisplayDriver>();
     services.UsePartService<Pledge, PledgeService>();
     services.UsePartService<Payment, PaymentPartService>();
 
@@ -73,7 +73,7 @@ public class Startup : OrchardCore.Modules.StartupBase {
     if (CurrentEnvironment.IsDevelopment()) {
       services.AddScoped<IShapeDisplayEvents, ShapeTracingShapeEvents>();
       services.AddScoped<IContentTypeDefinitionDisplayDriver,
-                         CodeGenerationDisplayDriver>();
+          CodeGenerationDisplayDriver>();
     }
 
     services.AddContentField<TextField>()
@@ -88,18 +88,17 @@ public class Startup : OrchardCore.Modules.StartupBase {
         .ForEditor<TaxonomyFieldDisplayDriver>(
             d =>
                 !string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) &&
-                !string.Equals(d, "Disabled",
-                               StringComparison.OrdinalIgnoreCase))
+                !string.Equals(
+                    d, "Disabled", StringComparison.OrdinalIgnoreCase))
         .ForEditor<PartTaxonomyFieldTagsDriver>(d => {
           return string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) ||
-                 string.Equals(d, "Disabled",
-                               StringComparison.OrdinalIgnoreCase);
+                 string.Equals(
+                     d, "Disabled", StringComparison.OrdinalIgnoreCase);
         });
   }
 
   public override void Configure(IApplicationBuilder builder,
-                                 IEndpointRouteBuilder routes,
-                                 IServiceProvider serviceProvider) {
+      IEndpointRouteBuilder routes, IServiceProvider serviceProvider) {
     // routes.MapAreaControllerRoute(
     //     name: "Home",
     //     areaName: "Members",

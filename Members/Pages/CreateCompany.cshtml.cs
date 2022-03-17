@@ -15,8 +15,7 @@ namespace Members.Pages {
     public IShape Shape { get; set; }
 
     public CreateCompanyModel(MemberService mService,
-                              IHtmlLocalizer<CreateCompanyModel> htmlLocalizer,
-                              INotifier notifier) {
+        IHtmlLocalizer<CreateCompanyModel> htmlLocalizer, INotifier notifier) {
 
       _notifier = notifier;
 

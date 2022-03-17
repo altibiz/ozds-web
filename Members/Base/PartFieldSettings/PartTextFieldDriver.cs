@@ -22,8 +22,8 @@ namespace Members.PartFieldSettings {
       _httpCA = httpContextAccessor;
     }
 
-    public override IDisplayResult Edit(TextField field,
-                                        BuildFieldEditorContext context) {
+    public override IDisplayResult Edit(
+        TextField field, BuildFieldEditorContext context) {
       var fieldDef = DriverService.GetFieldDef(
           context, AdminAttribute.IsApplied(_httpCA.HttpContext));
       if (fieldDef == null)
@@ -37,9 +37,8 @@ namespace Members.PartFieldSettings {
           });
     }
 
-    public override async Task<IDisplayResult>
-    UpdateAsync(TextField field, IUpdateModel updater,
-                UpdateFieldEditorContext context) {
+    public override async Task<IDisplayResult> UpdateAsync(TextField field,
+        IUpdateModel updater, UpdateFieldEditorContext context) {
       var fieldDef = DriverService.GetFieldDef(
           context, AdminAttribute.IsApplied(_httpCA.HttpContext));
       if (fieldDef == null)

@@ -16,8 +16,7 @@ namespace Members.Pages {
     public ContentItem ContentItem { get; set; }
     public string DocLink { get; set; }
     public MyCompanyModel(MemberService mService,
-                          IHtmlLocalizer<CreateMemberModel> htmlLocalizer,
-                          INotifier notifier) {
+        IHtmlLocalizer<CreateMemberModel> htmlLocalizer, INotifier notifier) {
       _notifier = notifier;
       H = htmlLocalizer;
       _memberService = mService;
@@ -29,8 +28,8 @@ namespace Members.Pages {
 
       (Shape, ContentItem) = await _memberService.GetEditorById(companyId);
 
-      var docUrl = string.Format("https://{0}/Members/Print/{1}", Request.Host,
-                                 companyId);
+      var docUrl = string.Format(
+          "https://{0}/Members/Print/{1}", Request.Host, companyId);
 
       var fileName = "Membership-" + company.DisplayText;
 

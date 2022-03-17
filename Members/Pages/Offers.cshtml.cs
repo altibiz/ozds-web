@@ -58,8 +58,8 @@ namespace Members.Pages {
         Logos.Add(log);
       }
     }
-    public async Task<IEnumerable<ContentItem>>
-    GetTextFieldIndexRecords(string contentType, string contentField) {
+    public async Task<IEnumerable<ContentItem>> GetTextFieldIndexRecords(
+        string contentType, string contentField) {
       return await _session
           .Query<ContentItem, TextFieldIndex>(
               x => x.ContentType == contentType &&

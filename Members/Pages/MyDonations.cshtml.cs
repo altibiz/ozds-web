@@ -12,8 +12,7 @@ namespace Members.Pages {
 
     public List<Payment> Payments { get; set; }
     public MyDonationsModel(PaymentUtils pService,
-                            IHtmlLocalizer<CreateMemberModel> htmlLocalizer,
-                            INotifier notifier) {
+        IHtmlLocalizer<CreateMemberModel> htmlLocalizer, INotifier notifier) {
       _pService = pService;
     }
 

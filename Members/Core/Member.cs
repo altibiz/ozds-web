@@ -16,16 +16,16 @@ namespace Members.Core {
   }
 
   public class MemberSettings : IFieldEditorSettings {
-    public DisplayModeResult
-    GetFieldDisplayMode(string propertyName, string defaultMode,
-                        BuildFieldEditorContext context, bool isAdminTheme) {
+    public DisplayModeResult GetFieldDisplayMode(string propertyName,
+        string defaultMode, BuildFieldEditorContext context,
+        bool isAdminTheme) {
       if (!isAdminTheme && propertyName == nameof(Member.AdminNotes))
         return false;
       return defaultMode;
     }
 
-    public string GetFieldLabel(string propertyName, string defaultVale,
-                                bool isAdminTheme) {
+    public string GetFieldLabel(
+        string propertyName, string defaultVale, bool isAdminTheme) {
       return defaultVale;
     }
   }

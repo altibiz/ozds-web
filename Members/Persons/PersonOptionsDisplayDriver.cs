@@ -6,8 +6,8 @@ namespace Members.Persons {
   public class PersonOptionsDisplayDriver
       : DisplayDriver<ContentOptionsViewModel> {
     // Maintain the Options prefix for compatability with binding.
-    protected override void BuildPrefix(ContentOptionsViewModel model,
-                                        string htmlFieldPrefix) {
+    protected override void BuildPrefix(
+        ContentOptionsViewModel model, string htmlFieldPrefix) {
       Prefix = "Options";
     }
 

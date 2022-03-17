@@ -27,7 +27,7 @@ namespace Members.Pages {
     private readonly IHtmlLocalizer<PortalModel> H;
     public ContentItem Member;
     public PortalModel(MemberService mService, INotifier notifier,
-                       IHtmlLocalizer<PortalModel> localizer) {
+        IHtmlLocalizer<PortalModel> localizer) {
       _mService = mService;
       _notifier = notifier;
       H = localizer;
@@ -89,25 +89,24 @@ namespace Members.ContentHandlers {
       return Task.CompletedTask;
     }
 
-    public static readonly MenuItem[] json = new[] {
-      new MenuItem { Name = "Moji podaci", Url = "/Members/myprofile",
-                     Text = "far fa-address-card" },
-      new MenuItem { Name = "Moji Dokumenti", Url = "/Members/MyDocuments",
-                     Text = "far fa-file-alt" },
-      new MenuItem { Name = "Doniraj", Url = "/Members/Donate",
-                     Text = "far fa-hand-point-up" },
-      new MenuItem {
+    public static readonly MenuItem[] json =
+        new[] { new MenuItem { Name = "Moji podaci", Url = "/Members/myprofile",
+                 Text = "far fa-address-card" },
+          new MenuItem { Name = "Moji Dokumenti", Url = "/Members/MyDocuments",
+            Text = "far fa-file-alt" },
+          new MenuItem { Name = "Doniraj", Url = "/Members/Donate",
+            Text = "far fa-hand-point-up" },
+          new MenuItem {
 
-        Name = "Moje donacije", Url = "/Members/mydonations",
-        Text = "fas fa-file-contract"
-      },
-      new MenuItem { Name = "Moja ponuda ", Url = "/Members/offerfor",
-                     Text = "fa fa-store" },
-      new MenuItem { Name = "Ponude za članove", Url = "/Members/Offers",
-                     Text = "fas fa-percent" },
-      new MenuItem { Name = "Događanja", Url = "/Members/events",
-                     Text = "far fa-calendar-alt" }
-    };
+            Name = "Moje donacije", Url = "/Members/mydonations",
+            Text = "fas fa-file-contract"
+          },
+          new MenuItem { Name = "Moja ponuda ", Url = "/Members/offerfor",
+            Text = "fa fa-store" },
+          new MenuItem { Name = "Ponude za članove", Url = "/Members/Offers",
+            Text = "fas fa-percent" },
+          new MenuItem { Name = "Događanja", Url = "/Members/events",
+            Text = "far fa-calendar-alt" } };
     private readonly IHttpContextAccessor _httpCA;
   }
 }

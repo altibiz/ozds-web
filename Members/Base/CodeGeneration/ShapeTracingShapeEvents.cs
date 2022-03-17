@@ -49,17 +49,17 @@ namespace Members.Utils {
 
       AddIfNotNullOrEmpty(nameof(ShapeMetadata.Card), shapeMetadata.Card);
       AddIfNotNullOrEmpty(nameof(ShapeMetadata.Column), shapeMetadata.Column);
-      AddIfNotNullOrEmpty(nameof(ShapeMetadata.Differentiator),
-                          shapeMetadata.Differentiator);
-      AddIfNotNullOrEmpty(nameof(ShapeMetadata.DisplayType),
-                          shapeMetadata.DisplayType);
-      AddIfNotNullOrEmpty(nameof(ShapeMetadata.IsCached),
-                          shapeMetadata.IsCached.ToString());
+      AddIfNotNullOrEmpty(
+          nameof(ShapeMetadata.Differentiator), shapeMetadata.Differentiator);
+      AddIfNotNullOrEmpty(
+          nameof(ShapeMetadata.DisplayType), shapeMetadata.DisplayType);
+      AddIfNotNullOrEmpty(
+          nameof(ShapeMetadata.IsCached), shapeMetadata.IsCached.ToString());
       AddIfNotNullOrEmpty(nameof(ShapeMetadata.Name), shapeMetadata.Name);
-      AddIfNotNullOrEmpty(nameof(ShapeMetadata.PlacementSource),
-                          shapeMetadata.PlacementSource);
-      AddIfNotNullOrEmpty(nameof(ShapeMetadata.Position),
-                          shapeMetadata.Position);
+      AddIfNotNullOrEmpty(
+          nameof(ShapeMetadata.PlacementSource), shapeMetadata.PlacementSource);
+      AddIfNotNullOrEmpty(
+          nameof(ShapeMetadata.Position), shapeMetadata.Position);
       AddIfNotNullOrEmpty(nameof(ShapeMetadata.Prefix), shapeMetadata.Prefix);
       AddIfNotNullOrEmpty(nameof(ShapeMetadata.Tab), shapeMetadata.Tab);
 
@@ -72,10 +72,10 @@ namespace Members.Utils {
       return Task.CompletedTask;
     }
 
-    public Task
-    DisplayingAsync(ShapeDisplayContext context) => Task.CompletedTask;
+    public Task DisplayingAsync(
+        ShapeDisplayContext context) => Task.CompletedTask;
 
-    public Task
-    DisplayingFinalizedAsync(ShapeDisplayContext context) => Task.CompletedTask;
+    public Task DisplayingFinalizedAsync(
+        ShapeDisplayContext context) => Task.CompletedTask;
   }
 }

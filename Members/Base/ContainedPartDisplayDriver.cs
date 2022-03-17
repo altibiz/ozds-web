@@ -20,14 +20,14 @@ namespace Members.Base {
     private readonly IContentManager _contentManager;
 
     public ContentItem MemberContentItem { get; set; }
-    public ContainedPartDisplayDriver(IHttpContextAccessor httpContextAccessor,
-                                      IContentManager cman) {
+    public ContainedPartDisplayDriver(
+        IHttpContextAccessor httpContextAccessor, IContentManager cman) {
       _httpCA = httpContextAccessor;
       _contentManager = cman;
     }
 
-    public override async Task<IDisplayResult>
-    EditAsync(ContentItem model, BuildEditorContext context) {
+    public override async Task<IDisplayResult> EditAsync(
+        ContentItem model, BuildEditorContext context) {
       if (!AdminAttribute.IsApplied(_httpCA.HttpContext))
         return null;
 
@@ -39,9 +39,9 @@ namespace Members.Base {
           await _contentManager.GetAsync(part.ListContentItemId);
 
       return Initialize<CpVm>("ContainedPart_Nav", m => {
-               m.ListContentItemId = part.ListContentItemId;
-               m.ParentName = MemberContentItem.DisplayText;
-             }).Location("Content");
+        m.ListContentItemId = part.ListContentItemId;
+        m.ParentName = MemberContentItem.DisplayText;
+      }).Location("Content");
     }
   }
 }

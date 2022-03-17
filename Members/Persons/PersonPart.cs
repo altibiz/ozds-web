@@ -41,9 +41,9 @@ namespace Members.Persons {
   public class PersonPartSettings : IFieldEditorSettings {
     public PersonType? Type { get; set; }
 
-    public DisplayModeResult
-    GetFieldDisplayMode(string propertyName, string displayMode,
-                        BuildFieldEditorContext context, bool isAdminTheme) {
+    public DisplayModeResult GetFieldDisplayMode(string propertyName,
+        string displayMode, BuildFieldEditorContext context,
+        bool isAdminTheme) {
       if (isAdminTheme)
         return displayMode;
       if (propertyName == nameof(PersonPart.Surname) &&
@@ -53,12 +53,12 @@ namespace Members.Persons {
       return context.IsNew ? displayMode : "Disabled";
     }
 
-    public string GetFieldLabel(string propertyName, string displayName,
-                                bool isAdminTheme) {
+    public string GetFieldLabel(
+        string propertyName, string displayName, bool isAdminTheme) {
       return propertyName switch { nameof(PersonPart.Name) =>
                                        Type == PersonType.Legal ? "Naziv"
                                                                 : displayName,
-                                   _ => displayName };
+        _ => displayName };
     }
   }
 }

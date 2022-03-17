@@ -15,9 +15,7 @@ using YesSql.Sql;
 namespace Members.Base {
   public static class YesSqlUtils {
     public static void ClearReduceIndexTable(this DbConnection connection,
-                                             Type indexType,
-                                             IConfiguration configuration,
-                                             string collection = "") {
+        Type indexType, IConfiguration configuration, string collection = "") {
       var indexTable = configuration.TableNameConvention.GetIndexTable(
           indexType, collection);
       var documentTable =
@@ -31,18 +29,16 @@ namespace Members.Base {
     }
 
     public static void ClearMapIndexTable(this DbConnection connection,
-                                          Type indexType,
-                                          IConfiguration configuration,
-                                          string collection = "") {
+        Type indexType, IConfiguration configuration, string collection = "") {
       var indexTable = configuration.TableNameConvention.GetIndexTable(
           indexType, collection);
       connection.Execute(
           $"DELETE FROM {configuration.SqlDialect.QuoteForTableName(configuration.TablePrefix + indexTable)}");
     }
 
-    public async static Task<IEnumerable<Document>>
-    GetContentItems(this DbConnection conn, string contentItemType,
-                    IConfiguration configuration, string collection = "") {
+    public async static Task<IEnumerable<Document>> GetContentItems(
+        this DbConnection conn, string contentItemType,
+        IConfiguration configuration, string collection = "") {
       var sqlBuilder =
           new SqlBuilder(configuration.TablePrefix, configuration.SqlDialect);
       sqlBuilder.Select();
@@ -53,14 +49,14 @@ namespace Members.Base {
           " dd.Type='OrchardCore.ContentManagement.ContentItem, OrchardCore.ContentManagement.Abstractions' ");
       if (!string.IsNullOrEmpty(contentItemType)) {
         sqlBuilder.InnerJoin(configuration.TablePrefix + "ContentItemIndex",
-                             "cix", "DocumentId", "dd", "Id", "cix");
+            "cix", "DocumentId", "dd", "Id", "cix");
         sqlBuilder.WhereAnd("ContentType='" + contentItemType + "'");
       }
       return await conn.QueryAsync<Document>(sqlBuilder.ToSqlString());
     }
 
-    private static IndexDescriptor GetDescriptor(ISession sess,
-                                                 IIndexProvider indexProvider) {
+    private static IndexDescriptor GetDescriptor(
+        ISession sess, IIndexProvider indexProvider) {
       MethodInfo getDesc = sess.GetType().GetMethod(
           "GetDescriptors", BindingFlags.NonPublic | BindingFlags.Instance);
       var descs =
@@ -70,10 +66,8 @@ namespace Members.Base {
     }
 
     public async static Task RefreshReduceIndex(this ISession templateSess,
-                                                IIndexProvider indexProvider,
-                                                string contentItemType = "",
-                                                string collection = "",
-                                                ILogger logger = null) {
+        IIndexProvider indexProvider, string contentItemType = "",
+        string collection = "", ILogger logger = null) {
       templateSess.Store.Configuration.Logger = logger;
       var store = await StoreFactory.CreateAndInitializeAsync(
           templateSess.Store.Configuration);
@@ -86,8 +80,8 @@ namespace Members.Base {
       var conn = await sess.CreateConnectionAsync();
       conn.ClearReduceIndexTable(desc.IndexType, store.Configuration);
       desc.Delete = (ndx, map) => ndx; // disable deletion for new stuff
-      var docs = await conn.GetContentItems(contentItemType,
-                                            store.Configuration, collection);
+      var docs = await conn.GetContentItems(
+          contentItemType, store.Configuration, collection);
       var items = sess.Get<ContentItem>(docs.ToList(), collection);
       int i = 1;
       foreach (var itm in items) {
@@ -100,9 +94,8 @@ namespace Members.Base {
     }
 
     public async static Task RefreshMapIndex(this ISession templateSes,
-                                             IIndexProvider indexProvider,
-                                             string contentItemType = "",
-                                             string collection = "") {
+        IIndexProvider indexProvider, string contentItemType = "",
+        string collection = "") {
       var store = await StoreFactory.CreateAndInitializeAsync(
           templateSes.Store.Configuration);
       using var sess = (Session)store.CreateSession();
@@ -112,8 +105,8 @@ namespace Members.Base {
       if (!typeof(MapIndex).IsAssignableFrom(desc.IndexType))
         throw new InvalidOperationException(
             "Wrong index type expected MapIndex, got " + desc.IndexType);
-      var docs = await conn.GetContentItems(contentItemType,
-                                            store.Configuration, collection);
+      var docs = await conn.GetContentItems(
+          contentItemType, store.Configuration, collection);
       var items = sess.Get<ContentItem>(docs.ToList(), collection);
       foreach (var itm in items) {
         sess.Save(itm);

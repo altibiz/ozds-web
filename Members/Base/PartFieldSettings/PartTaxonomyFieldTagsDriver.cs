@@ -28,8 +28,7 @@ namespace Members.PartFieldSettings {
     private IHttpContextAccessor _httpCA;
     private IContentManager _contentManager;
 
-    public PartTaxonomyFieldTagsDriver(
-        IContentManager cm,
+    public PartTaxonomyFieldTagsDriver(IContentManager cm,
         IStringLocalizer<TaxonomyFieldTagsDisplayDriver> localizer,
         IHttpContextAccessor httpContextAccessor)
         : base(cm, localizer) {
@@ -37,8 +36,8 @@ namespace Members.PartFieldSettings {
       _contentManager = cm;
     }
 
-    public override IDisplayResult Edit(TaxonomyField field,
-                                        BuildFieldEditorContext context) {
+    public override IDisplayResult Edit(
+        TaxonomyField field, BuildFieldEditorContext context) {
       var fieldDef = DriverService.GetFieldDef(
           context, AdminAttribute.IsApplied(_httpCA.HttpContext));
       if (fieldDef == null)
@@ -51,13 +50,12 @@ namespace Members.PartFieldSettings {
 
             if (model.Taxonomy != null) {
               var termEntries = new List<TermEntry>();
-              TaxonomyFieldDriverHelper.PopulateTermEntries(
-                  termEntries, field, model.Taxonomy.As<TaxonomyPart>().Terms,
-                  0);
-              var tagTermEntries = termEntries.Select(te => new TagTermEntry {
-                ContentItemId = te.ContentItemId, Selected = te.Selected,
-                DisplayText = te.Term.DisplayText, IsLeaf = te.IsLeaf
-              });
+              TaxonomyFieldDriverHelper.PopulateTermEntries(termEntries, field,
+                  model.Taxonomy.As<TaxonomyPart>().Terms, 0);
+              var tagTermEntries = termEntries.Select(
+                  te => new TagTermEntry { ContentItemId = te.ContentItemId,
+                    Selected = te.Selected, DisplayText = te.Term.DisplayText,
+                    IsLeaf = te.IsLeaf });
 
               model.TagTermEntries = JsonConvert.SerializeObject(
                   tagTermEntries, SerializerSettings);
@@ -69,9 +67,8 @@ namespace Members.PartFieldSettings {
           });
     }
 
-    public override async Task<IDisplayResult>
-    UpdateAsync(TaxonomyField field, IUpdateModel updater,
-                UpdateFieldEditorContext context) {
+    public override async Task<IDisplayResult> UpdateAsync(TaxonomyField field,
+        IUpdateModel updater, UpdateFieldEditorContext context) {
       var fieldDef = DriverService.GetFieldDef(
           context, AdminAttribute.IsApplied(_httpCA.HttpContext));
       if (fieldDef == null)
