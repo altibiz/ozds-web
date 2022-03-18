@@ -1,0 +1,12 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "Debug",
+            "group": "OZDS",
+            "database": "./App_Data/Sites/Default/yessql.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
