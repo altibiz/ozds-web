@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-dotnet restore;
-
-if [[ $(which husky) && !$CI && !$(git config --local core.hooksPath) ]];
+if [[ $(which husky) && !$CI && !$(git config core.hooksPath) ]];
 then
   husky install;
 fi;
+
+dotnet restore;
