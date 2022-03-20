@@ -1,6 +1,13 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31313.79
+=======
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+>>>>>>> f0936ac (upgraded to .net6):UgpWeb.sln
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OzdsWeb", "OzdsWeb\OzdsWeb.csproj", "{2A0B103D-2921-4912-8605-80DD489AC134}"
 EndProject
