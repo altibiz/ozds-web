@@ -1,7 +1,8 @@
 namespace Elasticsearch.MyEnergyCommunity {
-  public class Measurement : Common.Measurement {};
+  public class Measurement : Elasticsearch.Measurement {};
 
-  public class MeasurementGeoCoordinates : Common.MeasurementGeoCoordinates {};
+  public class MeasurementGeoCoordinates
+      : Elasticsearch.MeasurementGeoCoordinates {};
 
-  public class MeasurementData : Common.MeasurementData {};
+  public class MeasurementData : Elasticsearch.MeasurementData {};
 }

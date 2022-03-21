@@ -4,41 +4,41 @@ using System.Threading.Tasks;
 
 namespace Elasticsearch {
 public partial interface IClient {
-  public IEnumerable<LoaderLog> getLoaderLogs(string type, int? size = null);
+  public IEnumerable<Loader.Log> getLoaderLogs(string type, int? size = null);
 
-  public Task<IEnumerable<LoaderLog>> getLoaderLogsAsync(
+  public Task<IEnumerable<Loader.Log>> getLoaderLogsAsync(
       string type, int? size = null);
 
-  public IEnumerable<LoaderLog> getLoaderLogsSorted(
+  public IEnumerable<Loader.Log> getLoaderLogsSorted(
       string type, int? size = null);
 
-  public Task<IEnumerable<LoaderLog>> getLoaderLogsSortedAsync(
+  public Task<IEnumerable<Loader.Log>> getLoaderLogsSortedAsync(
       string type, int? size = null);
 };
 
 public sealed partial class Client : IClient {
-  public IEnumerable<LoaderLog> getLoaderLogs(string type, int? size = null) =>
+  public IEnumerable<Loader.Log> getLoaderLogs(string type, int? size = null) =>
       this._client
-          .Search<LoaderLog>(
+          .Search<Loader.Log>(
               search => search.Index(Client.LoaderLogIndexName)
                             .Query(q => q.Term(
                                        t => t.Field(f => f.type).Value(type)))
                             .Size(size))
           .Hits.Select(hit => hit.Source);
 
-  public async Task<IEnumerable<LoaderLog>> getLoaderLogsAsync(
+  public async Task<IEnumerable<Loader.Log>> getLoaderLogsAsync(
       string type, int? size = null) =>
-      (await this._client.SearchAsync<LoaderLog>(
+      (await this._client.SearchAsync<Loader.Log>(
            search => search.Index(Client.LoaderLogIndexName)
                          .Query(
                              q => q.Term(t => t.Field(f => f.type).Value(type)))
                          .Size(size)))
           .Hits.Select(hit => hit.Source);
 
-  public IEnumerable<LoaderLog> getLoaderLogsSorted(
+  public IEnumerable<Loader.Log> getLoaderLogsSorted(
       string type, int? size = null) =>
       this._client
-          .Search<LoaderLog>(
+          .Search<Loader.Log>(
               search => search.Index(Client.LoaderLogIndexName)
                             .Query(q => q.Term(
                                        t => t.Field(f => f.type).Value(type)))
@@ -46,9 +46,9 @@ public sealed partial class Client : IClient {
                             .Sort(s => s.Descending(h => h.timestamp)))
           .Hits.Select(hit => hit.Source);
 
-  public async Task<IEnumerable<LoaderLog>> getLoaderLogsSortedAsync(
+  public async Task<IEnumerable<Loader.Log>> getLoaderLogsSortedAsync(
       string type, int? size = null) =>
-      (await this._client.SearchAsync<LoaderLog>(
+      (await this._client.SearchAsync<Loader.Log>(
            search => search.Index(Client.LoaderLogIndexName)
                          .Query(
                              q => q.Term(t => t.Field(f => f.type).Value(type)))
