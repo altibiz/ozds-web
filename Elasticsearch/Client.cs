@@ -3,21 +3,24 @@ using Nest;
 
 namespace Elasticsearch {
 public sealed partial class Client : IClient {
-  public const string MeasurementsIndexName = "measurements";
+  public const string DefaultServerUri = "https://localhost:9200";
 
-  public Client() {
-    var settings =
+  public Client() : this(new Uri(DefaultServerUri)) {}
+
+  public Client(Uri uri) {
+    var settings = new ConnectionSettings(uri)
 #if DEBUG
-        new ConnectionSettings(new Uri("https://localhost:9200"))
-            .PrettyJson(true)
+                       .PrettyJson(true)
 #else
-        new ConnectionSettings(new Uri("https://localhost:9200"))
-            .PrettyJson(false)
+                       .PrettyJson(false)
 #endif
-            .DefaultIndex(MeasurementsIndexName);
+                       .DefaultIndex(MeasurementsIndexName);
 
     _client = new ElasticClient(settings);
   }
+
+  private const string MeasurementsIndexName = "ozdsMeasurements";
+  private const string LoaderLogIndexName = "ozdsLoaderLog";
 
   private IElasticClient _client { get; }
 }
