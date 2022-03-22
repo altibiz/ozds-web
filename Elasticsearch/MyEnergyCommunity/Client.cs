@@ -4,8 +4,14 @@ using System.Net.Http.Headers;
 
 namespace Elasticsearch.MyEnergyCommunity {
   public sealed partial class Client : IClient {
+#if DEBUG
     public const string DefaultServerBaseUri =
-        "http://informel-sense.azurewebsites.net/api";
+        "https://api.myenergycommunity.eu/";
+#else
+    // TODO: something else?
+    public const string DefaultServerBaseUri =
+        "https://api.myenergycommunity.eu/";
+#endif
 
     public Client() : this(new Uri(DefaultServerBaseUri)) {}
 

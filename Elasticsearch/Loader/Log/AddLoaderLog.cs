@@ -2,15 +2,15 @@ using System.Threading.Tasks;
 
 namespace Elasticsearch {
 public partial interface IClient {
-  public void addLoaderLog(Loader.Log log);
-  public Task addLoaderLogAsync(Loader.Log log);
+  public void AddLoaderLog(Loader.Log log);
+  public Task AddLoaderLogAsync(Loader.Log log);
 };
 
 public sealed partial class Client : IClient {
-  public void addLoaderLog(Loader.Log log) => this._client.Index(
+  public void AddLoaderLog(Loader.Log log) => this._client.Index(
       log, s => s.Index(Client.LoaderLogIndexName));
 
-  public async Task addLoaderLogAsync(
+  public async Task AddLoaderLogAsync(
       Loader.Log log) => await this._client.IndexAsync(log,
       s => s.Index(Client.LoaderLogIndexName));
 }

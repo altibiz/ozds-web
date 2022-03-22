@@ -5,20 +5,22 @@ using System.Threading.Tasks;
 
 namespace Elasticsearch {
 public partial interface IClient : IMeasurementProvider {
-  public IEnumerable<Measurement> getMeasurements(DateTime from, DateTime to);
+  public IEnumerable<Measurement> GetMeasurements(
+      DateTime? from = null, DateTime? to = null);
 
-  public Task<IEnumerable<Measurement>> getMeasurementsAsync(
-      DateTime from, DateTime to);
+  public Task<IEnumerable<Measurement>> GetMeasurementsAsync(
+      DateTime? from = null, DateTime? to = null);
 
-  public IEnumerable<Measurement> getMeasurementsSorted(
-      DateTime from, DateTime to);
+  public IEnumerable<Measurement> GetMeasurementsSorted(
+      DateTime? from = null, DateTime? to = null);
 
-  public Task<IEnumerable<Measurement>> getMeasurementsSortedAsync(
-      DateTime from, DateTime to);
+  public Task<IEnumerable<Measurement>> GetMeasurementsSortedAsync(
+      DateTime? from = null, DateTime? to = null);
 };
 
 public sealed partial class Client : IClient {
-  public IEnumerable<Measurement> getMeasurements(DateTime from, DateTime to) =>
+  public IEnumerable<Measurement> GetMeasurements(
+      DateTime? from = null, DateTime? to = null) =>
       this._client
           .Search<Measurement>(
               search => search.Index(Client.MeasurementsIndexName)
@@ -31,8 +33,8 @@ public sealed partial class Client : IClient {
                                                      .LessThanOrEquals(to))))))
           .Hits.Select(hit => hit.Source);
 
-  public async Task<IEnumerable<Measurement>> getMeasurementsAsync(
-      DateTime from, DateTime to) =>
+  public async Task<IEnumerable<Measurement>> GetMeasurementsAsync(
+      DateTime? from = null, DateTime? to = null) =>
       (await this._client.SearchAsync<Measurement>(
            search => search.Index(Client.MeasurementsIndexName)
                          .Query(q => q.Bool(
@@ -43,8 +45,8 @@ public sealed partial class Client : IClient {
                                                      .LessThanOrEquals(to)))))))
           .Hits.Select(hit => hit.Source);
 
-  public IEnumerable<Measurement> getMeasurementsSorted(
-      DateTime from, DateTime to) =>
+  public IEnumerable<Measurement> GetMeasurementsSorted(
+      DateTime? from = null, DateTime? to = null) =>
       this._client
           .Search<Measurement>(
               search => search.Index(Client.MeasurementsIndexName)
@@ -58,8 +60,8 @@ public sealed partial class Client : IClient {
                             .Sort(s => s.Descending(h => h.deviceDateTime)))
           .Hits.Select(hit => hit.Source);
 
-  public async Task<IEnumerable<Measurement>> getMeasurementsSortedAsync(
-      DateTime from, DateTime to) =>
+  public async Task<IEnumerable<Measurement>> GetMeasurementsSortedAsync(
+      DateTime? from = null, DateTime? to = null) =>
       (await this._client.SearchAsync<Measurement>(
            search => search.Index(Client.MeasurementsIndexName)
                          .Query(q => q.Bool(
@@ -71,8 +73,8 @@ public sealed partial class Client : IClient {
                          .Sort(s => s.Descending(h => h.deviceDateTime))))
           .Hits.Select(hit => hit.Source);
 
-  public IEnumerable<Measurement> getMeasurements(
-      string ownerId, string deviceId, DateTime from, DateTime to) =>
+  public IEnumerable<Measurement> GetMeasurements(string ownerId,
+      string deviceId, DateTime? from = null, DateTime? to = null) =>
       this._client
           .Search<Measurement>(
               search =>
@@ -89,8 +91,9 @@ public sealed partial class Client : IClient {
                                                           .Value(deviceId))))))
           .Hits.Select(hit => hit.Source);
 
-  public async Task<IEnumerable<Measurement>> getMeasurementsAsync(
-      string ownerId, string deviceId, DateTime from, DateTime to) =>
+  public async Task<IEnumerable<Measurement>> GetMeasurementsAsync(
+      string ownerId, string deviceId, DateTime? from = null,
+      DateTime? to = null) =>
       (await this._client.SearchAsync<Measurement>(
            search =>
                search.Index(Client.MeasurementsIndexName)
@@ -105,8 +108,8 @@ public sealed partial class Client : IClient {
                                                        .Value(deviceId)))))))
           .Hits.Select(hit => hit.Source);
 
-  public IEnumerable<Measurement> getMeasurementsSorted(
-      string ownerId, string deviceId, DateTime from, DateTime to) =>
+  public IEnumerable<Measurement> GetMeasurementsSorted(string ownerId,
+      string deviceId, DateTime? from = null, DateTime? to = null) =>
       this._client
           .Search<Measurement>(
               search =>
@@ -124,8 +127,9 @@ public sealed partial class Client : IClient {
                       .Sort(s => s.Descending(h => h.deviceDateTime)))
           .Hits.Select(hit => hit.Source);
 
-  public async Task<IEnumerable<Measurement>> getMeasurementsSortedAsync(
-      string ownerId, string deviceId, DateTime from, DateTime to) =>
+  public async Task<IEnumerable<Measurement>> GetMeasurementsSortedAsync(
+      string ownerId, string deviceId, DateTime? from = null,
+      DateTime? to = null) =>
       (await this._client.SearchAsync<Measurement>(
            search =>
                search.Index(Client.MeasurementsIndexName)

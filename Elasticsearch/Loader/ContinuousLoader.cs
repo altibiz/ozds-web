@@ -15,29 +15,29 @@ public static partial class Loader {
       return;
     }
 
-    elasticsearchClient.addLoaderLog(new Log { timestamp = DateTime.Now,
+    elasticsearchClient.AddLoaderLog(new Log { timestamp = DateTime.Now,
       type = LogType.LoadBegin, period = period });
 
     var measurements = new List<Measurement> {};
 
     foreach (var measurementProvider in measurementProviderIterator.Iterate()) {
       var providerMeasurements =
-          await measurementProvider.getMeasurementsSortedAsync(
+          await measurementProvider.GetMeasurementsSortedAsync(
               "", "", period.from, period.from);
 
       measurements.AddRange(providerMeasurements);
     }
 
-    elasticsearchClient.addLoaderLog(
+    elasticsearchClient.AddLoaderLog(
         new Log { timestamp = DateTime.Now, type = LogType.LoadEnd });
 
-    await elasticsearchClient.addMeasurementsAsync(measurements);
+    await elasticsearchClient.AddMeasurementsAsync(measurements);
   }
 
   private static async Task<Period?> GetNextPeriodAsync(
       IClient elasticsearchClient) {
     var lastPeriodEnd =
-        (await elasticsearchClient.getLoaderLogsSortedAsync(LogType.LoadEnd, 1))
+        (await elasticsearchClient.GetLoaderLogsSortedAsync(LogType.LoadEnd, 1))
             .ToList()[0];
     if (lastPeriodEnd == null) {
       return null;

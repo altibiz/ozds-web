@@ -3,7 +3,12 @@ using Nest;
 
 namespace Elasticsearch {
 public sealed partial class Client : IClient {
-  public const string DefaultServerUri = "https://localhost:9200";
+#if DEBUG
+  public const string DefaultServerUri = "http://localhost:9200";
+#else
+  // TODO: something else here
+  public const string DefaultServerUri = "http://localhost:9200";
+#endif
 
   public Client() : this(new Uri(DefaultServerUri)) {}
 
@@ -22,6 +27,6 @@ public sealed partial class Client : IClient {
   private const string MeasurementsIndexName = "ozdsMeasurements";
   private const string LoaderLogIndexName = "ozdsLoaderLog";
 
-  private IElasticClient _client { get; }
+  private IElasticClient _client { get; init; }
 }
 }

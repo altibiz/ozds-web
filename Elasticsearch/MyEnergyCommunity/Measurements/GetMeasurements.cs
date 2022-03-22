@@ -9,44 +9,44 @@ namespace Elasticsearch.MyEnergyCommunity {
   public partial interface IClient : IMeasurementProvider {};
 
   public sealed partial class Client : IClient {
-    public IEnumerable<Elasticsearch.Measurement> getMeasurements(
+    public IEnumerable<Elasticsearch.Measurement> GetMeasurements(
         string ownerId, string deviceId, DateTime? from = null,
         DateTime? to = null) {
-      var task = getMeasurementsListAsync(ownerId, deviceId, from, to);
+      var task = GetMeasurementsListAsync(ownerId, deviceId, from, to);
       task.Wait();
       return task.Result;
     }
 
     public async Task<IEnumerable<Elasticsearch.Measurement>>
-    getMeasurementsAsync(string ownerId, string deviceId, DateTime? from = null,
+    GetMeasurementsAsync(string ownerId, string deviceId, DateTime? from = null,
         DateTime? to = null) {
-      return await getMeasurementsListAsync(ownerId, deviceId, from, to);
+      return await GetMeasurementsListAsync(ownerId, deviceId, from, to);
     }
 
-    public IEnumerable<Elasticsearch.Measurement> getMeasurementsSorted(
+    public IEnumerable<Elasticsearch.Measurement> GetMeasurementsSorted(
         string ownerId, string deviceId, DateTime? from = null,
         DateTime? to = null) {
-      var task = getMeasurementsListAsync(ownerId, deviceId, from, to);
+      var task = GetMeasurementsListAsync(ownerId, deviceId, from, to);
       task.Wait();
       return task.Result.OrderBy(m => m.deviceDateTime);
     }
 
     public async Task<IEnumerable<Elasticsearch.Measurement>>
-    getMeasurementsSortedAsync(string ownerId, string deviceId,
+    GetMeasurementsSortedAsync(string ownerId, string deviceId,
         DateTime? from = null, DateTime? to = null) {
-      return (await getMeasurementsListAsync(ownerId, deviceId, from, to))
+      return (await GetMeasurementsListAsync(ownerId, deviceId, from, to))
           .OrderBy(m => m.deviceDateTime);
     }
 
     private async Task<IReadOnlyList<Elasticsearch.Measurement>>
-    getMeasurementsListAsync(string ownerId, string deviceId,
+    GetMeasurementsListAsync(string ownerId, string deviceId,
         DateTime? from = null, DateTime? to = null) {
       var result = new List<Measurement> {};
       string? continuationToken = null;
 
       do {
-        var request =
-            new HttpRequestMessage(HttpMethod.Get, "measurements/" + deviceId);
+        var request = new HttpRequestMessage(
+            HttpMethod.Get, "measurements/device/" + deviceId);
         request.Headers.Add("OwnerId", ownerId);
         if (from != null && to != null) {
           request.Content = new FormUrlEncodedContent(
@@ -55,12 +55,16 @@ namespace Elasticsearch.MyEnergyCommunity {
                 new KeyValuePair<string ?, string?>("to", to.ToString()), 
               });
         }
+        Console.Write(request);
 
-        var responseContentTask =
-            await this._client.Send(request).Content.ReadAsStringAsync();
+        var response = await this._client.SendAsync(request);
+        Console.Write(response);
+
+        var responseContent = await response.Content.ReadAsStreamAsync();
+
         var measurementsResponse =
-            JsonSerializer.Deserialize<Response<Measurement>>(
-                responseContentTask);
+            await JsonSerializer.DeserializeAsync<Response<Measurement>>(
+                responseContent);
         if (measurementsResponse == null) {
           continue;
         }
