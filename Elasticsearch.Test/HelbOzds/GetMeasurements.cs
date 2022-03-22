@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace Elasticsearch.MyEnergyCommunity.Test {
+namespace Elasticsearch.HelbOzds.Test {
   public partial class Client {
     [Fact]
     public void GetMeasurements() {

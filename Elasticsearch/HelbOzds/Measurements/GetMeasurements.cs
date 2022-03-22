@@ -2,12 +2,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Net.Http;
-using System.Text.Json;
-using System.Globalization;
-using Microsoft.AspNetCore.Http.Extensions;
 
-namespace Elasticsearch.MyEnergyCommunity {
+namespace Elasticsearch.HelbOzds {
   public partial interface IClient : IMeasurementProvider {};
 
   public sealed partial class Client : IClient {
@@ -40,37 +36,12 @@ namespace Elasticsearch.MyEnergyCommunity {
           .OrderBy(m => m.deviceDateTime);
     }
 
+    // TODO: implement
     private async Task<IReadOnlyList<Elasticsearch.Measurement>>
     GetMeasurementsListAsync(string ownerId, string deviceId,
         DateTime? from = null, DateTime? to = null) {
-      var result = new List<Measurement> {};
-      string? continuationToken = null;
-
-      var uri = "v1/measurements/device/" + deviceId;
-      var query = new QueryBuilder();
-      if (from != null)
-        query.Add("from", from?.ToString("o", CultureInfo.InvariantCulture));
-      if (to != null)
-        query.Add("to", to?.ToString("o", CultureInfo.InvariantCulture));
-      uri += query;
-      var request = new HttpRequestMessage(HttpMethod.Get, uri);
-      request.Headers.Add("OwnerId", ownerId);
-
-      do {
-        var response = await this._client.SendAsync(request);
-        var responseContent = await response.Content.ReadAsStreamAsync();
-        var measurementsResponse =
-            await JsonSerializer.DeserializeAsync<Response<Measurement>>(
-                responseContent);
-        if (measurementsResponse == null) {
-          continue;
-        }
-
-        continuationToken = measurementsResponse.continuationToken;
-        result.AddRange(measurementsResponse.items);
-      } while (continuationToken != null);
-
-      return result;
+      return await Task.FromResult<IReadOnlyList<Elasticsearch.Measurement>>(
+          new List<Elasticsearch.Measurement>());
     }
   }
 }

@@ -5,12 +5,10 @@ using System.Net.Http.Headers;
 namespace Elasticsearch.MyEnergyCommunity {
   public sealed partial class Client : IClient {
 #if DEBUG
-    public const string DefaultServerBaseUri =
-        "https://api.myenergycommunity.eu/";
+    public const string DefaultServerBaseUri = "dummy";
 #else
     // TODO: something else?
-    public const string DefaultServerBaseUri =
-        "https://api.myenergycommunity.eu/";
+    public const string DefaultServerBaseUri = "dummy";
 #endif
 
     public Client() : this(new Uri(DefaultServerBaseUri)) {}
