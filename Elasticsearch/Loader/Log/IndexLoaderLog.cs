@@ -12,7 +12,6 @@ public sealed partial class Client : IClient {
       log, s => s);
 
   public async Task<IndexResponse> IndexLoaderLogAsync(
-      Loader.Log log) => await this._client.IndexAsync(log,
-      s => s);
+      Loader.Log log) => await this._client.IndexAsync(log, s => s);
 }
 }

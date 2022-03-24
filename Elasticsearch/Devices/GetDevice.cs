@@ -13,7 +13,6 @@ public sealed partial class Client : IClient {
       id, g => g);
 
   public async Task<IGetResponse<Device>> GetDeviceAsync(
-      Id id) => await _client.GetAsync<Device>(id,
-      g => g);
+      Id id) => await _client.GetAsync<Device>(id, g => g);
 }
 }

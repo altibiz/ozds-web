@@ -16,7 +16,6 @@ public sealed partial class Client : IClient {
 
   public async Task<BulkResponse> IndexMeasurementsAsync(
       IEnumerable<Measurement> measurements) =>
-      await this._client.BulkAsync(
-          s => s.IndexMany(measurements));
+      await this._client.BulkAsync(s => s.IndexMany(measurements));
 }
 }

@@ -10,11 +10,9 @@ public partial interface IClient {
 
 public sealed partial class Client : IClient {
   public IGetResponse<Measurement> GetMeasurement(
-      Id id) => _client.Get<Measurement>(id,
-      g => g);
+      Id id) => _client.Get<Measurement>(id, g => g);
 
   public async Task<IGetResponse<Measurement>> GetMeasurementAsync(
-      Id id) => await _client.GetAsync<Measurement>(id,
-      g => g);
+      Id id) => await _client.GetAsync<Measurement>(id, g => g);
 }
 }
