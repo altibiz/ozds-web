@@ -7,43 +7,60 @@ using OrchardCore.BackgroundTasks;
 
 namespace Elasticsearch {
 public static partial class Loader {
+  public static void LoadContinuously(IClient elasticsearchClient,
+      IMeasurementProviderIterator measurementProviderIterator,
+      Period? period = null) {
+    var task = LoadContinuouslyAsync(
+        elasticsearchClient, measurementProviderIterator, period);
+    task.Wait();
+  }
+
   public static async Task LoadContinuouslyAsync(IClient elasticsearchClient,
-      IMeasurementProviderIterator measurementProviderIterator) {
-    var period = await GetNextPeriodAsync(elasticsearchClient);
+      IMeasurementProviderIterator measurementProviderIterator,
+      Period? period = null) {
     if (period == null) {
-      await LoadInitialAsync(elasticsearchClient, measurementProviderIterator);
-      return;
+      period = await GetNextPeriodAsync(elasticsearchClient);
+      if (period == null) {
+        await LoadInitialAsync(
+            elasticsearchClient, measurementProviderIterator);
+        return;
+      }
     }
 
-    elasticsearchClient.AddLoaderLog(new Log { timestamp = DateTime.Now,
-      type = LogType.LoadBegin, period = period });
+    elasticsearchClient.IndexLoaderLog(new Log { Timestamp = DateTime.Now,
+      Type = LogType.LoadBegin, Period = period });
 
     var measurements = new List<Measurement> {};
 
     foreach (var measurementProvider in measurementProviderIterator.Iterate()) {
-      var providerMeasurements =
-          await measurementProvider.GetMeasurementsSortedAsync(
-              "", "", period.from, period.from);
-
-      measurements.AddRange(providerMeasurements);
+      foreach (var device in elasticsearchClient
+                   .SearchDevices(measurementProvider.Source)
+                   .Sources()) {
+        var providerMeasurements =
+            await measurementProvider.GetMeasurementsAsync(
+                device, period.From, period.To);
+        measurements.AddRange(providerMeasurements);
+      }
     }
 
-    elasticsearchClient.AddLoaderLog(
-        new Log { timestamp = DateTime.Now, type = LogType.LoadEnd });
+    elasticsearchClient.IndexLoaderLog(new Log { Timestamp = DateTime.Now,
+      Type = LogType.LoadEnd, Period = period });
 
-    await elasticsearchClient.AddMeasurementsAsync(measurements);
+    await elasticsearchClient.IndexMeasurementsAsync(measurements);
   }
 
   private static async Task<Period?> GetNextPeriodAsync(
       IClient elasticsearchClient) {
-    var lastPeriodEnd =
-        (await elasticsearchClient.GetLoaderLogsSortedAsync(LogType.LoadEnd, 1))
-            .ToList()[0];
-    if (lastPeriodEnd == null) {
+    var lastLoadEndLog =
+        (await elasticsearchClient.SearchLoaderLogsSortedByPeriodAsync(
+             LogType.LoadEnd, 1))
+            .Sources()
+            .FirstOrDefault();
+    if (lastLoadEndLog == null) {
       return null;
     }
 
-    return new Period { from = lastPeriodEnd.timestamp, to = DateTime.Now };
+    return new Period { From = lastLoadEndLog.Period.To, To = DateTime.Now };
   }
 }
 

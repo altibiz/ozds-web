@@ -6,22 +6,25 @@ namespace Elasticsearch {
 public static partial class Loader {
   public static async Task LoadInitialAsync(IClient elasticsearchClient,
       IMeasurementProviderIterator measurementProviderIterator) {
-    await elasticsearchClient.AddLoaderLogAsync(
-        new Log { timestamp = DateTime.Now, type = LogType.LoadBegin });
+    await elasticsearchClient.IndexLoaderLogAsync(
+        new Log { Timestamp = DateTime.Now, Type = LogType.LoadBegin });
 
     var measurements = new List<Measurement>();
 
     foreach (var measurementProvider in measurementProviderIterator.Iterate()) {
-      var providerMeasurements =
-          await measurementProvider.GetMeasurementsSortedAsync("", "");
-
-      measurements.AddRange(providerMeasurements);
+      foreach (var device in elasticsearchClient
+                   .SearchDevices(measurementProvider.Source)
+                   .Sources()) {
+        var providerMeasurements =
+            await measurementProvider.GetMeasurementsAsync(device);
+        measurements.AddRange(providerMeasurements);
+      }
     }
 
-    await elasticsearchClient.AddMeasurementsAsync(measurements);
+    await elasticsearchClient.IndexMeasurementsAsync(measurements);
 
-    await elasticsearchClient.AddLoaderLogAsync(
-        new Log { timestamp = DateTime.Now, type = LogType.LoadEnd });
+    await elasticsearchClient.IndexLoaderLogAsync(
+        new Log { Timestamp = DateTime.Now, Type = LogType.LoadEnd });
   }
 }
 }
