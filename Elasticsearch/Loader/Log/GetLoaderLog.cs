@@ -10,9 +10,9 @@ public partial interface IClient {
 
 public sealed partial class Client : IClient {
   public IGetResponse<Loader.Log> GetLoaderLog(
-      Id id) => _client.Get<Loader.Log>(id, g => g);
+      Id id) => _client.Get<Loader.Log>(id);
 
   public async Task<IGetResponse<Loader.Log>> GetLoaderLogAsync(
-      Id id) => await _client.GetAsync<Loader.Log>(id, g => g);
+      Id id) => await _client.GetAsync<Loader.Log>(id);
 }
 }

@@ -8,8 +8,13 @@ namespace Elasticsearch {
 public sealed partial class Client : IClient {
 
   public Client()
-      : this(new Uri(s_defaultServerUri), s_defaultCaPath, s_defaultUser,
-            s_defaultPassword) {}
+      : this(new Uri(EnvironmentExtensions.GetEnvironmentVariable(
+                 "ELASTICSEARCH_SERVER_URI")),
+            EnvironmentExtensions.GetEnvironmentVariable(
+                "ELASTICSEARCH_CA_PATH"),
+            EnvironmentExtensions.GetEnvironmentVariable("ELASTICSEARCH_USER"),
+            EnvironmentExtensions.GetEnvironmentVariable(
+                "ELASTICSEARCH_PASSWORD")) {}
 
   public Client(Uri uri, string caPath, string user, string password) {
     var settings =
@@ -31,6 +36,7 @@ public sealed partial class Client : IClient {
                     new X509Certificate(caPath)))
             .BasicAuthentication(user, password);
 
+    Console.WriteLine($"Connecting {Source} to {uri}");
     _client = new ElasticClient(settings);
     var pingResponse = _client.Ping();
     if (!pingResponse.IsValid) {
@@ -50,19 +56,6 @@ public sealed partial class Client : IClient {
     _client.TryCreateIndex<Device>(s_devicesIndexName);
     _client.TryCreateIndex<Loader.Log>(s_loaderLogIndexName);
   }
-
-#if DEBUG
-  private const string s_defaultServerUri = "dummy";
-  private const string s_defaultCaPath = "dummy";
-  private const string s_defaultUser = "dummy";
-  private const string s_defaultPassword = "dummy";
-#else
-  // TODO: something else here
-  private const string s_defaultServerUri = "dummy";
-  private const string s_defaultCaPath = "dummy";
-  private const string s_defaultUser = "dummy";
-  private const string s_defaultPassword = "dummy";
-#endif
 
 #if DEBUG
   private const string s_measurementsIndexName = "ozds.debug.measurements";

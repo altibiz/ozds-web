@@ -5,13 +5,16 @@ using System.Data.SqlClient;
 
 namespace Elasticsearch.HelbOzds {
   public sealed partial class Client : IClient {
-    public Client() : this(s_defaultSqlConnectionString) {}
+    public Client()
+        : this(EnvironmentExtensions.GetEnvironmentVariable(
+              "HELB_OZDS_CONNECTION_STRING")) {}
 
     public Client(
         string sqlConnectionString, bool shouldRetryOpenClose = true) {
       this._connection = new SqlConnection(sqlConnectionString);
       this._shouldRetryOpenClose = shouldRetryOpenClose;
 
+      Console.WriteLine($"Connecting {Source} to {sqlConnectionString}");
       if (this._shouldRetryOpenClose) {
         bool retry = false;
         do {
@@ -19,7 +22,7 @@ namespace Elasticsearch.HelbOzds {
             this._connection.Open();
             retry = false;
           } catch (SqlException sqlException) {
-            Console.WriteLine("Failed opening connection to to", this.Source);
+            Console.WriteLine($"Failed opening connection to {Source}");
             Console.WriteLine("Reason", sqlException.Message);
             Console.WriteLine("Retrying in 5 seconds...");
             retry = true;
@@ -54,13 +57,6 @@ namespace Elasticsearch.HelbOzds {
     }
 
     private const string s_source = "HelbOzds";
-
-#if DEBUG
-    private const string s_defaultSqlConnectionString = @"dummy" + @"dummy";
-#else
-    // TODO: something else?
-    private const string s_defaultSqlConnectionString = @"dummy" + @"dummy";
-#endif
 
     private bool _shouldRetryOpenClose { get; init; }
     private SqlConnection _connection { get; init; }

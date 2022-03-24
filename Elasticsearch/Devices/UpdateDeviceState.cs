@@ -11,12 +11,14 @@ public partial interface IClient {
 public sealed partial class Client : IClient {
   public UpdateResponse<Device> UpdateDeviceState(Id deviceId, string state) =>
       this._client.Update<Device, DeviceStateUpdatePartial>(
-          deviceId, d => d.Doc(new DeviceStateUpdatePartial(state)));
+          deviceId, d => d.Doc(new DeviceStateUpdatePartial(state))
+                             );
 
   public Task<UpdateResponse<Device>> UpdateDeviceStateAsync(
       Id deviceId, string state) =>
       this._client.UpdateAsync<Device, DeviceStateUpdatePartial>(
-          deviceId, d => d.Doc(new DeviceStateUpdatePartial(state)));
+          deviceId, d => d.Doc(new DeviceStateUpdatePartial(state))
+                             );
 }
 
 internal class DeviceStateUpdatePartial {

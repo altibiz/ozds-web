@@ -9,10 +9,9 @@ public partial interface IClient {
 };
 
 public sealed partial class Client : IClient {
-  public IGetResponse<Device> GetDevice(Id id) => _client.Get<Device>(
-      id, g => g);
+  public IGetResponse<Device> GetDevice(Id id) => _client.Get<Device>(id);
 
   public async Task<IGetResponse<Device>> GetDeviceAsync(
-      Id id) => await _client.GetAsync<Device>(id, g => g);
+      Id id) => await _client.GetAsync<Device>(id);
 }
 }

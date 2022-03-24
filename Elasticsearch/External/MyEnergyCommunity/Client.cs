@@ -5,7 +5,9 @@ using System.Net.Http.Headers;
 
 namespace Elasticsearch.MyEnergyCommunity {
   public sealed partial class Client : IClient {
-    public Client() : this(new Uri(s_defaultBaseUri)) {}
+    public Client()
+        : this(new Uri(EnvironmentExtensions.GetEnvironmentVariable(
+              "MY_ENERGY_COMMUNITY_URI"))) {}
 
     public Client(Uri baseUri) {
       _client = new HttpClient();
@@ -13,6 +15,7 @@ namespace Elasticsearch.MyEnergyCommunity {
       _client.DefaultRequestHeaders.Accept.Add(
           new MediaTypeWithQualityHeaderValue("application/json"));
 
+      Console.WriteLine($"Connecting {Source} to {baseUri}");
       var pingTask = _client.GetAsync("/");
       pingTask.Wait();
       if (pingTask.Result.StatusCode != HttpStatusCode.OK) {
@@ -20,13 +23,6 @@ namespace Elasticsearch.MyEnergyCommunity {
                                $"Status code: {pingTask.Result.StatusCode}");
       }
     }
-
-#if DEBUG
-    private const string s_defaultBaseUri = "dummy";
-#else
-    // TODO: something else?
-    private const string s_defaultBaseUri = "dummy";
-#endif
 
     private HttpClient _client;
   }

@@ -12,6 +12,7 @@ public sealed partial class Client : IClient {
       device, s => s);
 
   public Task<IndexResponse> IndexDeviceAsync(
-      Device device) => this._client.IndexAsync(device, s => s);
+      Device device) => this._client.IndexAsync(device,
+      s => s);
 }
 }
