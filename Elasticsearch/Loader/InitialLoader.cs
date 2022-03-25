@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,8 +5,7 @@ namespace Elasticsearch {
 public static partial class Loader {
   public static async Task LoadInitialAsync(IClient elasticsearchClient,
       IMeasurementProviderIterator measurementProviderIterator) {
-    await elasticsearchClient.IndexLoaderLogAsync(
-        new Log { Timestamp = DateTime.Now, Type = LogType.LoadBegin });
+    elasticsearchClient.IndexLoaderLog(new Log(LogType.LoadBegin, Source));
 
     var measurements = new List<Measurement>();
 
@@ -23,8 +21,7 @@ public static partial class Loader {
 
     await elasticsearchClient.IndexMeasurementsAsync(measurements);
 
-    await elasticsearchClient.IndexLoaderLogAsync(
-        new Log { Timestamp = DateTime.Now, Type = LogType.LoadEnd });
+    elasticsearchClient.IndexLoaderLog(new Log(LogType.LoadEnd, Source));
   }
 }
 }

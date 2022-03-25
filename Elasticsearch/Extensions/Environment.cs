@@ -2,8 +2,8 @@ using System;
 
 namespace Elasticsearch {
 public static class EnvironmentExtensions {
-  public static string GetEnvironmentVariable(string key) {
-    var value = Environment.GetEnvironmentVariable(key);
+  public static string AssertEnvironmentVariable(string key) {
+    var value = System.Environment.GetEnvironmentVariable(key);
 
     if (value == null) {
       throw new EnvironmentVariableNotFoundException(

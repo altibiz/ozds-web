@@ -3,6 +3,8 @@ using Nest;
 
 namespace Elasticsearch {
 public static partial class Loader {
+  public const string Source = "loader";
+
   public class LogType {
     public const string LoadBegin = "loadBegin";
     public const string LoadEnd = "loadEnd";
@@ -11,23 +13,30 @@ public static partial class Loader {
     public const string InvalidData = "invalidData";
   };
 
-  [ElasticsearchType(RelationName = "loaderLog")]
+  [ElasticsearchType(RelationName = "loaderLog", IdProperty = nameof(Id))]
   public class Log {
+    public Log(string type, string? source = null, KnownData? data = null) {
+      Timestamp = DateTime.Now;
+      Type = type;
+      Source = source ?? Loader.Source;
+      Data = data ?? new KnownData {};
+    }
+
+    public Log(string type, KnownData? data = null) : this(type, null, data) {}
+
+    public string Id { get; init; } = Guid.NewGuid().ToString();
 
     [Date(Name = "timestamp")]
-    public DateTime Timestamp { get; init; } = default!;
+    public DateTime Timestamp { get; init; }
 
     [Keyword(Name = "type")]
-    public string Type { get; init; } = default!;
-
-    [Object(Name = "period")]
-    public Period Period { get; init; } = default!;
+    public string Type { get; init; }
 
     [Keyword(Name = "source")]
-    public string? Source { get; init; } = default;
+    public string Source { get; init; }
 
-    [Text(Name = "description")]
-    public string? Description { get; init; } = default;
+    [Object(Name = "data")]
+    public KnownData Data { get; init; }
 
     public override bool Equals(object? obj) { return Equals(obj as Log); }
 
@@ -39,15 +48,21 @@ public static partial class Loader {
     public override int GetHashCode() {
       return HashCode.Combine(Type, Timestamp, Source);
     }
+
+    [ElasticsearchType(RelationName = "loaderLogData")]
+    public class KnownData {
+      [Object(Name = "period")]
+      public Period? Period { get; init; } = null;
+    }
   };
 
   [ElasticsearchType(RelationName = "period")]
   public class Period {
     [Date(Name = "from")]
-    public DateTime From { get; init; } = default!;
+    public DateTime From { get; init; } = DateTime.MinValue;
 
     [Date(Name = "to")]
-    public DateTime To { get; init; } = default!;
+    public DateTime To { get; init; } = DateTime.Now;
 
     public override bool Equals(object? obj) { return Equals(obj as Period); }
 

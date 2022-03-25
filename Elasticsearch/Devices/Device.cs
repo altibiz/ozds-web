@@ -10,41 +10,56 @@ public class DeviceState {
   public const string Unhealthy = "unhealthy";
 }
 
-[ElasticsearchType(RelationName = "device")]
+[ElasticsearchType(RelationName = "device", IdProperty = nameof(Id))]
 public class Device {
-  [Keyword(Name = "deviceId")]
-  public string DeviceId { get; init; } = default!;
+  public Device(string source, string sourceDeviceId,
+      KnownSourceDeviceData? sourceDeviceData = null, string? state = null) {
+    Source = source;
+    SourceDeviceId = sourceDeviceId;
+    SourceDeviceData = sourceDeviceData ?? new KnownSourceDeviceData {};
+    State = state ?? DeviceState.Added;
+    Id = MakeId();
+  }
+
+  public string Id { get; init; }
 
   [Keyword(Name = "source")]
-  public string Source { get; init; } = default!;
+  public string Source { get; init; }
 
-  [Object(Name = "sourceData")]
-  public KnownSourceData SourceData { get; init; } = default!;
+  [Keyword(Name = "sourceDeviceId")]
+  public string SourceDeviceId { get; init; }
+
+  [Object(Name = "sourceDeviceData")]
+  public KnownSourceDeviceData SourceDeviceData { get; init; } = new KnownSourceDeviceData{};
 
   [Keyword(Name = "state")]
-  public string State { get; init; } = DeviceState.Added;
+  public string State { get; init; }
 
   [Date(Name = "dateAdded")]
-  public DateTime DateAdded { get; init; } = default!;
+  public DateTime DateAdded { get; init; } = DateTime.Now;
 
   [Date(Name = "dateDiscontinued")]
-  public DateTime? DateDiscontinued { get; init; } = default;
+  public DateTime? DateDiscontinued { get; init; } = null;
 
   public override bool Equals(object? obj) { return Equals(obj as Device); }
 
   public bool Equals(Device? other) {
-    return other != null && DeviceId == other.DeviceId &&
+    return other != null && SourceDeviceId == other.SourceDeviceId &&
            Source == other.Source;
   }
 
   public override int GetHashCode() {
-    return HashCode.Combine(DeviceId, Source);
+    return HashCode.Combine(SourceDeviceId, Source);
   }
 
   [ElasticsearchType(RelationName = "deviceSourceData")]
-  public class KnownSourceData {
+  public class KnownSourceDeviceData {
     [Keyword(Name = "ownerId")]
     public string? ownerId { get; init; } = default;
+  }
+
+  private string MakeId() {
+    return StringExtensions.CombineIntoStringId(Source, SourceDeviceId);
   }
 }
 }

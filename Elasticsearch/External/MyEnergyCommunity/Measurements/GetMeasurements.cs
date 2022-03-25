@@ -40,7 +40,7 @@ namespace Elasticsearch.MyEnergyCommunity {
       string? continuationToken = null;
 
       do {
-        var uri = "v1/measurements/device/" + device.DeviceId;
+        var uri = "v1/measurements/device/" + device.SourceDeviceId;
         var query = new QueryBuilder();
         if (from != null)
           query.Add("from", from?.ToString("o", CultureInfo.InvariantCulture));
@@ -50,7 +50,7 @@ namespace Elasticsearch.MyEnergyCommunity {
           query.Add("continuationToken", continuationToken);
         uri += query;
         var request = new HttpRequestMessage(HttpMethod.Get, uri);
-        request.Headers.Add("OwnerId", device.SourceData.ownerId);
+        request.Headers.Add("OwnerId", device.SourceDeviceData.ownerId);
 
         HttpResponseMessage? response = null;
         try {
@@ -68,8 +68,8 @@ namespace Elasticsearch.MyEnergyCommunity {
               await JsonSerializer.DeserializeAsync<Response<Measurement>>(
                   responseContent);
         } catch (JsonException jsonException) {
-          Console.WriteLine("Failed parsing response of", this.Source);
-          Console.WriteLine("Reason", jsonException.Message);
+          Console.WriteLine($"Failed parsing response of {Source}");
+          Console.WriteLine($"Reason {jsonException.Message}");
           break;
         }
 
@@ -86,58 +86,49 @@ namespace Elasticsearch.MyEnergyCommunity {
 
     private Elasticsearch.Measurement ConvertMeasurement(
         Measurement measurement) {
-      return new Elasticsearch.Measurement {
-        Timestamp = measurement.deviceDateTime,
-        GeoCoordinate =
-            new Nest.GeoCoordinate(measurement.geoCoordinates.longitude,
-                measurement.geoCoordinates.latitude),
-        Source = Source,
-        DeviceId = measurement.deviceId,
-        Data =
-            new Elasticsearch.Measurement.KnownData {
-              dongleId = measurement.measurementData.dongleId,
-              meterIdent = measurement.measurementData.meterIdent,
-              meterSerial = measurement.measurementData.meterSerial,
-              localTime = measurement.measurementData.localTime,
-              localDate = measurement.measurementData.localDate,
-              tariff = measurement.measurementData.tariff,
-              limiter = measurement.measurementData.limiter,
-              fuseSupervisionL1 = measurement.measurementData.fuseSupervisionL1,
-              disconnectControl = measurement.measurementData.disconnectControl,
-              numLongPwrFailures =
-                  measurement.measurementData.numLongPwrFailures,
-              numPwrFailures = measurement.measurementData.numPwrFailures,
-              numVoltageSagsL1 = measurement.measurementData.numVoltageSagsL1,
-              numVoltageSagsL2 = measurement.measurementData.numVoltageSagsL2,
-              numVoltageSagsL3 = measurement.measurementData.numVoltageSagsL3,
-              numVoltageSwellsL1 =
-                  measurement.measurementData.numVoltageSwellsL1,
-              numVoltageSwellsL2 =
-                  measurement.measurementData.numVoltageSwellsL2,
-              numVoltageSwellsL3 =
-                  measurement.measurementData.numVoltageSwellsL3,
-              currentL1 = measurement.measurementData.currentL1,
-              currentL2 = measurement.measurementData.currentL2,
-              currentL3 = measurement.measurementData.currentL3,
-              energyIn = measurement.measurementData.energyIn,
-              energyIn_T1 = measurement.measurementData.energyIn_T1,
-              energyIn_T2 = measurement.measurementData.energyIn_T2,
-              energyOut = measurement.measurementData.energyOut,
-              energyOut_T1 = measurement.measurementData.energyOut_T1,
-              energyOut_T2 = measurement.measurementData.energyOut_T2,
-              powerIn = measurement.measurementData.powerIn,
-              powerInL1 = measurement.measurementData.powerInL1,
-              powerInL2 = measurement.measurementData.powerInL2,
-              powerInL3 = measurement.measurementData.powerInL3,
-              powerOut = measurement.measurementData.powerOut,
-              powerOutL1 = measurement.measurementData.powerOutL1,
-              powerOutL2 = measurement.measurementData.powerOutL2,
-              powerOutL3 = measurement.measurementData.powerOutL3,
-              voltageL1 = measurement.measurementData.voltageL1,
-              voltageL2 = measurement.measurementData.voltageL2,
-              voltageL3 = measurement.measurementData.voltageL3,
-            },
-      };
+      return new Elasticsearch.Measurement(measurement.deviceDateTime,
+          new Nest.GeoCoordinate(measurement.geoCoordinates.longitude,
+              measurement.geoCoordinates.latitude),
+          Source, measurement.deviceId,
+          new Elasticsearch.Measurement.KnownData {
+            dongleId = measurement.measurementData.dongleId,
+            meterIdent = measurement.measurementData.meterIdent,
+            meterSerial = measurement.measurementData.meterSerial,
+            localTime = measurement.measurementData.localTime,
+            localDate = measurement.measurementData.localDate,
+            tariff = measurement.measurementData.tariff,
+            limiter = measurement.measurementData.limiter,
+            fuseSupervisionL1 = measurement.measurementData.fuseSupervisionL1,
+            disconnectControl = measurement.measurementData.disconnectControl,
+            numLongPwrFailures = measurement.measurementData.numLongPwrFailures,
+            numPwrFailures = measurement.measurementData.numPwrFailures,
+            numVoltageSagsL1 = measurement.measurementData.numVoltageSagsL1,
+            numVoltageSagsL2 = measurement.measurementData.numVoltageSagsL2,
+            numVoltageSagsL3 = measurement.measurementData.numVoltageSagsL3,
+            numVoltageSwellsL1 = measurement.measurementData.numVoltageSwellsL1,
+            numVoltageSwellsL2 = measurement.measurementData.numVoltageSwellsL2,
+            numVoltageSwellsL3 = measurement.measurementData.numVoltageSwellsL3,
+            currentL1 = measurement.measurementData.currentL1,
+            currentL2 = measurement.measurementData.currentL2,
+            currentL3 = measurement.measurementData.currentL3,
+            energyIn = measurement.measurementData.energyIn,
+            energyIn_T1 = measurement.measurementData.energyIn_T1,
+            energyIn_T2 = measurement.measurementData.energyIn_T2,
+            energyOut = measurement.measurementData.energyOut,
+            energyOut_T1 = measurement.measurementData.energyOut_T1,
+            energyOut_T2 = measurement.measurementData.energyOut_T2,
+            powerIn = measurement.measurementData.powerIn,
+            powerInL1 = measurement.measurementData.powerInL1,
+            powerInL2 = measurement.measurementData.powerInL2,
+            powerInL3 = measurement.measurementData.powerInL3,
+            powerOut = measurement.measurementData.powerOut,
+            powerOutL1 = measurement.measurementData.powerOutL1,
+            powerOutL2 = measurement.measurementData.powerOutL2,
+            powerOutL3 = measurement.measurementData.powerOutL3,
+            voltageL1 = measurement.measurementData.voltageL1,
+            voltageL2 = measurement.measurementData.voltageL2,
+            voltageL3 = measurement.measurementData.voltageL3,
+          });
     }
 
     private const string s_source = "MyEnergyCommunity";

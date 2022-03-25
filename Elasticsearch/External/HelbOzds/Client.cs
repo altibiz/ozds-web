@@ -6,8 +6,8 @@ using System.Data.SqlClient;
 namespace Elasticsearch.HelbOzds {
   public sealed partial class Client : IClient {
     public Client()
-        : this(EnvironmentExtensions.GetEnvironmentVariable(
-              "HELB_OZDS_CONNECTION_STRING")) {}
+        : this(EnvironmentExtensions.AssertEnvironmentVariable(
+              "HELB_OZDS_SQL_CONNECTION_STRING")) {}
 
     public Client(
         string sqlConnectionString, bool shouldRetryOpenClose = true) {

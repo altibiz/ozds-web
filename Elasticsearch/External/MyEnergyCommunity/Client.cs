@@ -6,8 +6,8 @@ using System.Net.Http.Headers;
 namespace Elasticsearch.MyEnergyCommunity {
   public sealed partial class Client : IClient {
     public Client()
-        : this(new Uri(EnvironmentExtensions.GetEnvironmentVariable(
-              "MY_ENERGY_COMMUNITY_URI"))) {}
+        : this(new Uri(EnvironmentExtensions.AssertEnvironmentVariable(
+              "MY_ENERGY_COMMUNITY_SERVER_URI"))) {}
 
     public Client(Uri baseUri) {
       _client = new HttpClient();

@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Elasticsearch.MyEnergyCommunity.Test {
+namespace Elasticsearch.Test.MyEnergyCommunity {
   public partial class Client {
     [Fact]
     public void GetMeasurements() {

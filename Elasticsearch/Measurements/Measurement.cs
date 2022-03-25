@@ -2,22 +2,35 @@ using System;
 using Nest;
 
 namespace Elasticsearch {
-[ElasticsearchType(RelationName = "measurement")]
+[ElasticsearchType(RelationName = "measurement", IdProperty = nameof(Id))]
 public class Measurement {
-  [Date(Name = "timestamp")]
-  public DateTime Timestamp { get; init; } = default!;
+  public Measurement(DateTime measurementTimestamp,
+      GeoCoordinate? geoCoordinate, string source, string deviceId,
+      KnownData? data = null) {
+    MeasurementTimestamp = measurementTimestamp;
+    GeoCoordinate = geoCoordinate;
+    Source = source;
+    DeviceId = deviceId;
+    Data = data ?? new KnownData {};
+    Id = MakeId();
+  }
+
+  public string Id { get; init; }
+
+  [Date(Name = "measurementTimestamp")]
+  public DateTime MeasurementTimestamp { get; init; }
 
   [GeoPoint(Name = "geo")]
-  public GeoCoordinate? GeoCoordinate { get; init; } = default!;
+  public GeoCoordinate? GeoCoordinate { get; init; } = null;
 
   [Keyword(Name = "source")]
-  public string Source { get; init; } = default!;
+  public string Source { get; init; }
 
   [Keyword(Name = "deviceId")]
-  public string DeviceId { get; init; } = default!;
+  public string DeviceId { get; init; }
 
   [Object(Name = "data")]
-  public KnownData Data { get; init; } = default!;
+  public KnownData Data { get; init; } = new KnownData{};
 
   public override bool Equals(object? obj) {
     return Equals(obj as Measurement);
@@ -25,11 +38,12 @@ public class Measurement {
 
   public bool Equals(Measurement? other) {
     return other != null && DeviceId == other.DeviceId &&
-           Timestamp == other.Timestamp && Source == other.Source;
+           MeasurementTimestamp == other.MeasurementTimestamp &&
+           Source == other.Source;
   }
 
   public override int GetHashCode() {
-    return HashCode.Combine(DeviceId, Timestamp, Source);
+    return HashCode.Combine(DeviceId, MeasurementTimestamp, Source);
   }
 
   [ElasticsearchType(RelationName = "measurementData")]
@@ -72,5 +86,10 @@ public class Measurement {
     public double? voltageL2 { get; init; } = default;
     public double? voltageL3 { get; init; } = default;
   };
+
+  private string MakeId() {
+    return StringExtensions.CombineIntoStringId(
+        Source.ToString(), DeviceId, MeasurementTimestamp.ToString());
+  }
 };
 }

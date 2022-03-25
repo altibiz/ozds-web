@@ -6,14 +6,13 @@ using Elasticsearch.Net;
 
 namespace Elasticsearch {
 public sealed partial class Client : IClient {
-
   public Client()
-      : this(new Uri(EnvironmentExtensions.GetEnvironmentVariable(
+      : this(new Uri(EnvironmentExtensions.AssertEnvironmentVariable(
                  "ELASTICSEARCH_SERVER_URI")),
-            EnvironmentExtensions.GetEnvironmentVariable(
+            EnvironmentExtensions.AssertEnvironmentVariable(
                 "ELASTICSEARCH_CA_PATH"),
-            EnvironmentExtensions.GetEnvironmentVariable("ELASTICSEARCH_USER"),
-            EnvironmentExtensions.GetEnvironmentVariable(
+            EnvironmentExtensions.AssertEnvironmentVariable("ELASTICSEARCH_USER"),
+            EnvironmentExtensions.AssertEnvironmentVariable(
                 "ELASTICSEARCH_PASSWORD")) {}
 
   public Client(Uri uri, string caPath, string user, string password) {
@@ -44,14 +43,30 @@ public sealed partial class Client : IClient {
           $"Could not connect to Elasticsearch. Response: {pingResponse}");
     }
 
-    // NOTE: clear indices for a clean slate
+    // NOTE: this messes up tests because of parallelism
+    // TODO: disable test parallelism?
+    // TryDeleteIndicesIfDebug();
+
+    TryCreateIndices();
+  }
+
+  ~Client() {
+    // NOTE: this messes up tests because of parallelism
+    // TODO: disable test parallelism?
+    // TryDeleteIndicesIfDebug();
+  }
+
+  public void TryDeleteIndicesIfDebug() {
 #if DEBUG
-    // TODO: role with rights for this
+    Console.WriteLine("Trying to delete Elasticsearch indices...");
     _client.TryDeleteIndex(s_measurementsIndexName);
     _client.TryDeleteIndex(s_devicesIndexName);
     _client.TryDeleteIndex(s_loaderLogIndexName);
 #endif
+  }
 
+  public void TryCreateIndices() {
+    Console.WriteLine("Trying to create Elasticsearch indices...");
     _client.TryCreateIndex<Measurement>(s_measurementsIndexName);
     _client.TryCreateIndex<Device>(s_devicesIndexName);
     _client.TryCreateIndex<Loader.Log>(s_loaderLogIndexName);

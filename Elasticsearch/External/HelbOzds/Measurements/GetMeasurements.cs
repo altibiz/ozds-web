@@ -38,8 +38,8 @@ namespace Elasticsearch.HelbOzds {
     // TODO: implement
     private Elasticsearch.Measurement ConvertMeasurement(
         Measurement measurement) {
-      return new Elasticsearch.Measurement { DeviceId = measurement.DeviceId,
-        Timestamp = measurement.Timestamp, Source = this.Source };
+      return new Elasticsearch.Measurement(
+          measurement.Timestamp, null, Source, measurement.DeviceId);
     }
   }
 }

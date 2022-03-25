@@ -27,8 +27,8 @@ public static partial class Loader {
       }
     }
 
-    elasticsearchClient.IndexLoaderLog(new Log { Timestamp = DateTime.Now,
-      Type = LogType.LoadBegin, Period = period });
+    elasticsearchClient.IndexLoaderLog(
+        new Log(LogType.LoadBegin, new Log.KnownData { Period = period }));
 
     var measurements = new List<Measurement> {};
 
@@ -43,8 +43,8 @@ public static partial class Loader {
       }
     }
 
-    elasticsearchClient.IndexLoaderLog(new Log { Timestamp = DateTime.Now,
-      Type = LogType.LoadEnd, Period = period });
+    elasticsearchClient.IndexLoaderLog(
+        new Log(LogType.LoadEnd, new Log.KnownData { Period = period }));
 
     await elasticsearchClient.IndexMeasurementsAsync(measurements);
   }
@@ -56,11 +56,12 @@ public static partial class Loader {
              LogType.LoadEnd, 1))
             .Sources()
             .FirstOrDefault();
-    if (lastLoadEndLog == null) {
+    if (lastLoadEndLog == null || lastLoadEndLog.Data.Period == null) {
       return null;
     }
 
-    return new Period { From = lastLoadEndLog.Period.To, To = DateTime.Now };
+    return new Period { From = lastLoadEndLog.Data.Period.To,
+      To = DateTime.Now };
   }
 }
 
