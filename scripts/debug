@@ -2,5 +2,5 @@
 
 SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")";
 
-"$SCRIPT_DIR/build";
+source "$SCRIPT_DIR/.env";
 dotnet './OzdsWeb/bin/Debug/net5.0/OzdsWeb.dll';

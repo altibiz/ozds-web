@@ -2,5 +2,5 @@
 
 SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")";
 
-"$SCRIPT_DIR/build";
+source "$SCRIPT_DIR/.env";
 dotnet run --project './OzdsWeb/OzdsWeb.csproj';

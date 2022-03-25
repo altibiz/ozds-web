@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 
-if [[ $(which husky) && !$CI && !$(git config core.hooksPath) ]];
+SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")";
+
+if [[ "$(which husky)" && ! "$CI" && ! "$(git config core.hooksPath)" ]];
 then
   husky install;
 fi;
 
-dotnet restore;
+if [[ ! -f "$SCRIPT_DIR/.env" ]]; then
+  cp "$SCRIPT_DIR/example.env" "$SCRIPT_DIR/.env"
+fi;
+
+dotnet restore $@;

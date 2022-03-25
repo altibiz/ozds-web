@@ -13,3 +13,10 @@ Klonirajte kod lokalno, otvorite u konzoli projekt OzdsWeb, i upišite
 dotnet run. To je to!
 
 Za login je default sifra: admin/Admin123!
+
+## TODO
+
+- [ ] better ids for better tests
+- [ ] make mock functions for better tests
+- [ ] IConfigurationProvider configuration
+- [ ] finalize BackgroundTask
