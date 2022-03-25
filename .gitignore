@@ -211,3 +211,4 @@ UgpWeb/wwwroot/*
 UgpTheme/package-lock.json
 
 .netcoredbg_hist
+.env
