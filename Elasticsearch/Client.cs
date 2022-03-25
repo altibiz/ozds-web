@@ -11,7 +11,8 @@ public sealed partial class Client : IClient {
                  "ELASTICSEARCH_SERVER_URI")),
             EnvironmentExtensions.AssertEnvironmentVariable(
                 "ELASTICSEARCH_CA_PATH"),
-            EnvironmentExtensions.AssertEnvironmentVariable("ELASTICSEARCH_USER"),
+            EnvironmentExtensions.AssertEnvironmentVariable(
+                "ELASTICSEARCH_USER"),
             EnvironmentExtensions.AssertEnvironmentVariable(
                 "ELASTICSEARCH_PASSWORD")) {}
 
