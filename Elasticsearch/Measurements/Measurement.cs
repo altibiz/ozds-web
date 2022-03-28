@@ -4,6 +4,11 @@ using Nest;
 namespace Elasticsearch {
 [ElasticsearchType(RelationName = "measurement", IdProperty = nameof(Id))]
 public class Measurement {
+  public static string MakeId(string deviceId, DateTime measurementTimestamp) {
+    return StringExtensions.CombineIntoStringId(
+        "D", deviceId, "TS", measurementTimestamp.ToISOString());
+  }
+
   public Measurement(DateTime measurementTimestamp,
       GeoCoordinate? geoCoordinate, string source, string deviceId,
       KnownData? data = null) {
@@ -12,7 +17,7 @@ public class Measurement {
     Source = source;
     DeviceId = deviceId;
     Data = data ?? new KnownData {};
-    Id = MakeId();
+    Id = MakeId(DeviceId, MeasurementTimestamp);
   }
 
   public string Id { get; init; }
@@ -86,10 +91,5 @@ public class Measurement {
     public double? voltageL2 { get; init; } = default;
     public double? voltageL3 { get; init; } = default;
   };
-
-  private string MakeId() {
-    return StringExtensions.CombineIntoStringId(
-        Source.ToString(), DeviceId, MeasurementTimestamp.ToString());
-  }
 };
 }

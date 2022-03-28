@@ -10,7 +10,7 @@ namespace Elasticsearch.Test {
     public void SearchMeasurements() {
       var measurements = new List<Measurement> { Data.TestMeasurement };
       var measurementIds = measurements.Select(d => new Id(d.Id));
-      var measurementPeriod = measurements.GetMeasurementPeriod();
+      var measurementPeriod = measurements.GetLooseMeasurementPeriod();
 
           var indexResponse = _client.IndexMeasurements(measurements);
           // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
@@ -21,8 +21,7 @@ namespace Elasticsearch.Test {
 
           // NOTE: ES needs some time to prepare for searching
           System.Threading.Thread.Sleep(1000);
-          var searchResponse = _client.SearchMeasurements(
-              measurementPeriod.Min, measurementPeriod.Max);
+          var searchResponse = _client.SearchMeasurements(measurementPeriod);
           Assert.True(searchResponse.IsValid);
 
           var searchedMeasurements = searchResponse.Sources();
@@ -40,7 +39,7 @@ namespace Elasticsearch.Test {
     public async Task SearchMeasurementsAsync() {
       var measurements = new List<Measurement> { Data.TestMeasurement };
       var measurementIds = measurements.Select(d => new Id(d.Id));
-      var measurementPeriod = measurements.GetMeasurementPeriod();
+      var measurementPeriod = measurements.GetLooseMeasurementPeriod();
 
           var indexResponse =
               await _client.IndexMeasurementsAsync(measurements);
@@ -52,8 +51,8 @@ namespace Elasticsearch.Test {
 
           // NOTE: ES needs some time to prepare for searching
           System.Threading.Thread.Sleep(1000);
-          var searchResponse = await _client.SearchMeasurementsAsync(
-              measurementPeriod.Min, measurementPeriod.Max);
+          var searchResponse =
+              await _client.SearchMeasurementsAsync(measurementPeriod);
           Assert.True(searchResponse.IsValid);
 
           var searchedMeasurements = searchResponse.Sources();

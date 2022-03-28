@@ -3,53 +3,53 @@ using Nest;
 
 namespace Elasticsearch {
 public partial interface IClient {
-  public ISearchResponse<Loader.Log> SearchLoaderLogs(
+  public ISearchResponse<Log> SearchLoaderLogs(
       string type, int? size = null);
 
-  public Task<ISearchResponse<Loader.Log>> SearchLoaderLogsAsync(
+  public Task<ISearchResponse<Log>> SearchLoaderLogsAsync(
       string type, int? size = null);
 
-  public ISearchResponse<Loader.Log> SearchLoaderLogsSorted(
+  public ISearchResponse<Log> SearchLoaderLogsSorted(
       string type, int? size = null);
 
-  public Task<ISearchResponse<Loader.Log>> SearchLoaderLogsSortedAsync(
+  public Task<ISearchResponse<Log>> SearchLoaderLogsSortedAsync(
       string type, int? size = null);
 
-  public ISearchResponse<Loader.Log> SearchLoaderLogsSortedByPeriod(
+  public ISearchResponse<Log> SearchLoaderLogsSortedByPeriod(
       string type, int? size = null);
 
-  public Task<ISearchResponse<Loader.Log>> SearchLoaderLogsSortedByPeriodAsync(
+  public Task<ISearchResponse<Log>> SearchLoaderLogsSortedByPeriodAsync(
       string type, int? size = null);
 };
 
 public sealed partial class Client : IClient {
-  public ISearchResponse<Loader.Log> SearchLoaderLogs(
+  public ISearchResponse<Log> SearchLoaderLogs(
       string type, int? size = null) =>
-      this._client.Search<Loader.Log>(
+      this._client.Search<Log>(
           s => s.Query(q => q.Term(t => t.Type, type)).Size(size));
 
-  public async Task<ISearchResponse<Loader.Log>>
+  public async Task<ISearchResponse<Log>>
   SearchLoaderLogsAsync(string type, int? size = null) => (
-      await this._client.SearchAsync<Loader.Log>(
+      await this._client.SearchAsync<Log>(
           s => s.Query(q => q.Term(t => t.Type, type)).Size(size)));
 
-  public ISearchResponse<Loader.Log> SearchLoaderLogsSorted(
+  public ISearchResponse<Log> SearchLoaderLogsSorted(
       string type, int? size = null) =>
-      this._client.Search<Loader.Log>(
+      this._client.Search<Log>(
           s => s.Query(q => q.Term(t => t.Type, type))
                    .Size(size)
                    .Sort(s => s.Descending(h => h.Timestamp)));
 
-  public async Task<ISearchResponse<Loader.Log>>
+  public async Task<ISearchResponse<Log>>
   SearchLoaderLogsSortedAsync(string type, int? size = null) => (
-      await this._client.SearchAsync<Loader.Log>(
+      await this._client.SearchAsync<Log>(
           s => s.Query(q => q.Term(t => t.Type, type))
                    .Size(size)
                    .Sort(s => s.Descending(d => d.Timestamp))));
 
-  public ISearchResponse<Loader.Log> SearchLoaderLogsSortedByPeriod(
+  public ISearchResponse<Log> SearchLoaderLogsSortedByPeriod(
       string type, int? size = null) =>
-      this._client.Search<Loader.Log>(
+      this._client.Search<Log>(
           s => s.Query(q => q.Term(t => t.Type, type))
                    .Size(size)
   // NOTE: null doesn't matter here because NEST just wants to create a query
@@ -57,9 +57,9 @@ public sealed partial class Client : IClient {
                    .Sort(s => s.Descending(d => d.Data.Period.To)));
 #nullable enable
 
-  public async Task<ISearchResponse<Loader.Log>>
+  public async Task<ISearchResponse<Log>>
   SearchLoaderLogsSortedByPeriodAsync(string type, int? size = null) => (
-      await this._client.SearchAsync<Loader.Log>(
+      await this._client.SearchAsync<Log>(
           s => s.Query(q => q.Term(t => t.Type, type))
                    .Size(size)
   // NOTE: null doesn't matter here because NEST just wants to create a query

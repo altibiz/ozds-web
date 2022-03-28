@@ -12,13 +12,18 @@ public class DeviceState {
 
 [ElasticsearchType(RelationName = "device", IdProperty = nameof(Id))]
 public class Device {
+  public static string MakeId(string source, string sourceDeviceId) {
+    return StringExtensions.CombineIntoStringId(
+        "S", source.Substring(0, 3), "ID", sourceDeviceId);
+  }
+
   public Device(string source, string sourceDeviceId,
       KnownSourceDeviceData? sourceDeviceData = null, string? state = null) {
     Source = source;
     SourceDeviceId = sourceDeviceId;
     SourceDeviceData = sourceDeviceData ?? new KnownSourceDeviceData {};
     State = state ?? DeviceState.Added;
-    Id = MakeId();
+    Id = MakeId(Source, SourceDeviceId);
   }
 
   public string Id { get; init; }
@@ -56,10 +61,6 @@ public class Device {
   public class KnownSourceDeviceData {
     [Keyword(Name = "ownerId")]
     public string? ownerId { get; init; } = default;
-  }
-
-  private string MakeId() {
-    return StringExtensions.CombineIntoStringId(Source, SourceDeviceId);
   }
 }
 }

@@ -8,7 +8,7 @@ namespace Elasticsearch.Test {
   public partial class Client {
     [Fact]
     public void IndexLoaderLogs() {
-      var loaderLogs = new List<Loader.Log> { Data.TestLoaderLog };
+      var loaderLogs = new List<Log> { Data.TestLoaderLog };
       var loaderLogIds = loaderLogs.Select(d => new Id(d.Id));
 
       var indexResponse = _client.IndexLoaderLogs(loaderLogs);
@@ -36,7 +36,7 @@ namespace Elasticsearch.Test {
 
     [Fact]
     public async Task IndexLoaderLogsAsync() {
-      var loaderLogs = new List<Loader.Log> { Data.TestLoaderLog };
+      var loaderLogs = new List<Log> { Data.TestLoaderLog };
       var loaderLogIds = loaderLogs.Select(d => new Id(d.Id));
 
       var indexResponse = await _client.IndexLoaderLogsAsync(loaderLogs);

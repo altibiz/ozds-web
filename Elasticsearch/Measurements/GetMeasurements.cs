@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,34 +8,33 @@ public sealed partial class Client : IClient {
   public string Source { get => Client.s_source; }
 
   public IEnumerable<Measurement> GetMeasurements(Device device,
-      DateTime? from = null,
-      DateTime? to = null) => SearchMeasurements(device, from, to).Sources();
+      Period? period = null) => SearchMeasurements(device, period).Sources();
 
   public async Task<IEnumerable<Measurement>> GetMeasurementsAsync(
-      Device device, DateTime? from = null, DateTime? to = null) =>
-      (await SearchMeasurementsAsync(device, from, to)).Sources();
+      Device device, Period? period = null) =>
+      (await SearchMeasurementsAsync(device, period)).Sources();
 
   public IEnumerable<Measurement> GetMeasurementsSorted(
-      Device device, DateTime? from = null, DateTime? to = null) =>
-      SearchMeasurementsSorted(device, from, to).Sources();
+      Device device, Period? period = null) =>
+      SearchMeasurementsSorted(device, period).Sources();
 
   public async Task<IEnumerable<Measurement>> GetMeasurementsSortedAsync(
-      Device device, DateTime? from = null, DateTime? to = null) =>
-      (await SearchMeasurementsSortedAsync(device, from, to)).Sources();
+      Device device, Period? period = null) =>
+      (await SearchMeasurementsSortedAsync(device, period)).Sources();
 
-  public IEnumerable<Measurement> GetMeasurements(DateTime? from = null,
-      DateTime? to = null) => SearchMeasurements(from, to).Sources();
+  public IEnumerable<Measurement> GetMeasurements(
+      Period? period = null) => SearchMeasurements(period).Sources();
 
   public async Task<IEnumerable<Measurement>> GetMeasurementsAsync(
-      DateTime? from = null, DateTime? to = null) =>
-      (await SearchMeasurementsAsync(from, to)).Sources();
+      Period? period = null) =>
+      (await SearchMeasurementsAsync(period)).Sources();
 
-  public IEnumerable<Measurement> GetMeasurementsSorted(DateTime? from = null,
-      DateTime? to = null) => SearchMeasurementsSorted(from, to).Sources();
+  public IEnumerable<Measurement> GetMeasurementsSorted(
+      Period? period = null) => SearchMeasurementsSorted(period).Sources();
 
   public async Task<IEnumerable<Measurement>> GetMeasurementsSortedAsync(
-      DateTime? from = null, DateTime? to = null) =>
-      (await SearchMeasurementsSortedAsync(from, to)).Sources();
+      Period? period = null) =>
+      (await SearchMeasurementsSortedAsync(period)).Sources();
 
   private const string s_source = "Elasticsearch";
 }

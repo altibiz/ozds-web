@@ -15,37 +15,37 @@ namespace Elasticsearch.MyEnergyCommunity {
     public string Source { get => Client.s_source; }
 
     public IEnumerable<Elasticsearch.Measurement> GetMeasurements(
-        Device device, DateTime? from = null, DateTime? to = null) {
-      var task = GetElasticsearchMeasurementsAsync(device, from, to);
+        Device device, Period? period = null) {
+      var task = GetElasticsearchMeasurementsAsync(device, period);
       task.Wait();
       return task.Result;
     }
 
     public async Task<IEnumerable<Elasticsearch.Measurement>>
-    GetMeasurementsAsync(
-        Device device, DateTime? from = null, DateTime? to = null) {
-      return await GetElasticsearchMeasurementsAsync(device, from, to);
+    GetMeasurementsAsync(Device device, Period? period = null) {
+      return await GetElasticsearchMeasurementsAsync(device, period);
     }
 
     private async Task<IEnumerable<Elasticsearch.Measurement>>
-    GetElasticsearchMeasurementsAsync(
-        Device device, DateTime? from = null, DateTime? to = null) {
-      return (await GetNativeMeasurementsAsync(device, from, to))
+    GetElasticsearchMeasurementsAsync(Device device, Period? period = null) {
+      return (await GetNativeMeasurementsAsync(device, period))
           .Select(ConvertMeasurement);
     }
 
     private async Task<List<Measurement>> GetNativeMeasurementsAsync(
-        Device device, DateTime? from = null, DateTime? to = null) {
+        Device device, Period? period = null) {
       var result = new List<Measurement> {};
       string? continuationToken = null;
 
       do {
         var uri = "v1/measurements/device/" + device.SourceDeviceId;
         var query = new QueryBuilder();
-        if (from != null)
-          query.Add("from", from?.ToString("o", CultureInfo.InvariantCulture));
-        if (to != null)
-          query.Add("to", to?.ToString("o", CultureInfo.InvariantCulture));
+        if (period?.From != null)
+          query.Add(
+              "from", period.From.ToString("o", CultureInfo.InvariantCulture));
+        if (period?.To != null)
+          query.Add(
+              "to", period.To.ToString("o", CultureInfo.InvariantCulture));
         if (continuationToken != null)
           query.Add("continuationToken", continuationToken);
         uri += query;
@@ -89,7 +89,7 @@ namespace Elasticsearch.MyEnergyCommunity {
       return new Elasticsearch.Measurement(measurement.deviceDateTime,
           new Nest.GeoCoordinate(measurement.geoCoordinates.longitude,
               measurement.geoCoordinates.latitude),
-          Source, measurement.deviceId,
+          Source, Elasticsearch.Device.MakeId(Source, measurement.deviceId),
           new Elasticsearch.Measurement.KnownData {
             dongleId = measurement.measurementData.dongleId,
             meterIdent = measurement.measurementData.meterIdent,

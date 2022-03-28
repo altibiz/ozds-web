@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -7,9 +6,9 @@ public interface IMeasurementProvider {
   public string Source { get; }
 
   public IEnumerable<Measurement> GetMeasurements(
-      Device device, DateTime? from = null, DateTime? to = null);
+      Device device, Period? period = null);
 
   public Task<IEnumerable<Measurement>> GetMeasurementsAsync(
-      Device device, DateTime? from = null, DateTime? to = null);
+      Device device, Period? period = null);
 }
 }

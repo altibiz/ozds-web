@@ -3,4 +3,4 @@
 SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")";
 
 source "$SCRIPT_DIR/.env";
-dotnet test;
+dotnet test $@;

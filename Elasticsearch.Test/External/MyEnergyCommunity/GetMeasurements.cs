@@ -7,21 +7,21 @@ namespace Elasticsearch.Test.MyEnergyCommunity {
     [Fact]
     public void GetMeasurements() {
       var device = Elasticsearch.Test.Data.TestDevice;
-      var from = DateTime.Now.AddMinutes(-5);
-      var to = DateTime.Now;
+      var period =
+          new Period { From = DateTime.Now.AddMinutes(-5), To = DateTime.Now };
 
-      var measurements = _client.GetMeasurements(device, from, to).ToList();
+      var measurements = _client.GetMeasurements(device, period).ToList();
       Assert.True(measurements.Count > 5);
     }
 
     [Fact]
     public async void GetMeasurementsAsync() {
       var device = Elasticsearch.Test.Data.TestDevice;
-      var from = DateTime.Now.AddMinutes(-5);
-      var to = DateTime.Now;
+      var period =
+          new Period { From = DateTime.Now.AddMinutes(-5), To = DateTime.Now };
 
       var measurements =
-          (await _client.GetMeasurementsAsync(device, from, to)).ToList();
+          (await _client.GetMeasurementsAsync(device, period)).ToList();
       Assert.True(measurements.Count > 5);
     }
   }

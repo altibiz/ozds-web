@@ -3,7 +3,7 @@ using System;
 namespace Elasticsearch {
 public static class StringExtensions {
   public static string ToStringId(this string str) {
-    return str.RemoveSpecialCharacters().ToLowerInvariant();
+    return str.RemoveSpecialCharacters();
   }
 
   public static string CombineIntoStringId(params string[] strs) {

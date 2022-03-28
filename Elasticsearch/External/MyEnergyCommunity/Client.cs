@@ -15,7 +15,7 @@ namespace Elasticsearch.MyEnergyCommunity {
       _client.DefaultRequestHeaders.Accept.Add(
           new MediaTypeWithQualityHeaderValue("application/json"));
 
-      Console.WriteLine($"Connecting {Source} to {baseUri}");
+      Console.WriteLine($"Checking connection of {Source} to {baseUri}...");
       var pingTask = _client.GetAsync("/");
       pingTask.Wait();
       if (pingTask.Result.StatusCode != HttpStatusCode.OK) {
