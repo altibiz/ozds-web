@@ -3,8 +3,7 @@ using Nest;
 
 namespace Elasticsearch {
 public partial interface IClient {
-  public ISearchResponse<Log> SearchLoaderLogs(
-      string type, int? size = null);
+  public ISearchResponse<Log> SearchLoaderLogs(string type, int? size = null);
 
   public Task<ISearchResponse<Log>> SearchLoaderLogsAsync(
       string type, int? size = null);
@@ -23,10 +22,9 @@ public partial interface IClient {
 };
 
 public sealed partial class Client : IClient {
-  public ISearchResponse<Log> SearchLoaderLogs(
-      string type, int? size = null) =>
-      this._client.Search<Log>(
-          s => s.Query(q => q.Term(t => t.Type, type)).Size(size));
+  public ISearchResponse<Log>
+  SearchLoaderLogs(string type, int? size = null) => this._client.Search<Log>(
+      s => s.Query(q => q.Term(t => t.Type, type)).Size(size));
 
   public async Task<ISearchResponse<Log>>
   SearchLoaderLogsAsync(string type, int? size = null) => (
