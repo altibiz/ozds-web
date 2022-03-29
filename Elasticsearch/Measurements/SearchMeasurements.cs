@@ -32,12 +32,12 @@ public sealed partial class Client : IClient {
   public ISearchResponse<Measurement> SearchMeasurements(
       Period? period = null) =>
       this.Elasticsearch.Search<Measurement>(
-          s => s.Query(
-                    q => q.DateRange(
-                        r => r.Field(f => f.MeasurementTimestamp)
-                                 .GreaterThanOrEquals(
-                                     period?.From ?? DateTime.MinValue)
-                                 .LessThanOrEquals(period?.To ?? DateTime.UtcNow)))
+          s => s.Query(q => q.DateRange(
+                           r => r.Field(f => f.MeasurementTimestamp)
+                                    .GreaterThanOrEquals(
+                                        period?.From ?? DateTime.MinValue)
+                                    .LessThanOrEquals(
+                                        period?.To ?? DateTime.UtcNow)))
                    .Index(MeasurementIndexName));
 
   public async Task<ISearchResponse<Measurement>>
@@ -54,12 +54,12 @@ public sealed partial class Client : IClient {
   public ISearchResponse<Measurement> SearchMeasurementsSorted(
       Period? period = null) =>
       this.Elasticsearch.Search<Measurement>(
-          s => s.Query(
-                    q => q.DateRange(
-                        r => r.Field(f => f.MeasurementTimestamp)
-                                 .GreaterThanOrEquals(
-                                     period?.From ?? DateTime.MinValue)
-                                 .LessThanOrEquals(period?.To ?? DateTime.UtcNow)))
+          s => s.Query(q => q.DateRange(
+                           r => r.Field(f => f.MeasurementTimestamp)
+                                    .GreaterThanOrEquals(
+                                        period?.From ?? DateTime.MinValue)
+                                    .LessThanOrEquals(
+                                        period?.To ?? DateTime.UtcNow)))
                    .Sort(s => s.Descending(h => h.MeasurementTimestamp))
                    .Index(MeasurementIndexName));
 

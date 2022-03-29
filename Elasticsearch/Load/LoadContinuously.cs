@@ -33,8 +33,7 @@ public partial class Client : IClient {
       }
     }
 
-    IndexLog(
-        new Log(LogType.LoadBegin, new Log.KnownData { Period = period }));
+    IndexLog(new Log(LogType.LoadBegin, new Log.KnownData { Period = period }));
 
     var measurements = new List<Measurement> {};
 
@@ -48,8 +47,7 @@ public partial class Client : IClient {
       }
     }
 
-    IndexLog(
-        new Log(LogType.LoadEnd, new Log.KnownData { Period = period }));
+    IndexLog(new Log(LogType.LoadEnd, new Log.KnownData { Period = period }));
 
     await IndexMeasurementsAsync(measurements);
   }

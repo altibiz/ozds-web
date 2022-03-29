@@ -106,8 +106,9 @@ namespace Elasticsearch.Test {
       // NOTE: LoadContinuously searches for devices which takes some
       // NOTE: preparation from ES
       Thread.Sleep(1000);
-      var firstLoadPeriod = (new Period { From = DateTime.UtcNow.AddMinutes(-10),
-        To = DateTime.UtcNow.AddMinutes(-5) });
+      var firstLoadPeriod =
+          (new Period { From = DateTime.UtcNow.AddMinutes(-10),
+            To = DateTime.UtcNow.AddMinutes(-5) });
       await Client.LoadContinuouslyAsync(
           MeasurementProviderIterator, firstLoadPeriod);
 
