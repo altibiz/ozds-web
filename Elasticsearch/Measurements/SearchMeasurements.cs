@@ -31,92 +31,98 @@ public partial interface IClient {
 public sealed partial class Client : IClient {
   public ISearchResponse<Measurement> SearchMeasurements(
       Period? period = null) =>
-      this._client.Search<Measurement>(
-          s =>
-
-              s.Query(
-                  q => q.DateRange(
-                      r => r.Field(f => f.MeasurementTimestamp)
-                               .GreaterThanOrEquals(
-                                   period?.From ?? DateTime.MinValue)
-                               .LessThanOrEquals(period?.To ?? DateTime.Now))));
-
-  public async Task<ISearchResponse<Measurement>>
-      SearchMeasurementsAsync(Period? period = null) => (
-          await this._client.SearchAsync<Measurement>(
-              s => s.Query(q => q.DateRange(
-                               r => r.Field(f => f.MeasurementTimestamp)
-                                        .GreaterThanOrEquals(
-                                            period?.From ?? DateTime.MinValue)
-                                        .LessThanOrEquals(
-                                            period?.To ?? DateTime.Now)))));
-
-  public ISearchResponse<Measurement> SearchMeasurementsSorted(
-      Period? period = null) =>
-      this._client.Search<Measurement>(
+      this.Elasticsearch.Search<Measurement>(
           s => s.Query(
                     q => q.DateRange(
                         r => r.Field(f => f.MeasurementTimestamp)
                                  .GreaterThanOrEquals(
                                      period?.From ?? DateTime.MinValue)
-                                 .LessThanOrEquals(period?.To ?? DateTime.Now)))
-                   .Sort(s => s.Descending(h => h.MeasurementTimestamp)));
+                                 .LessThanOrEquals(period?.To ?? DateTime.UtcNow)))
+                   .Index(MeasurementIndexName));
 
   public async Task<ISearchResponse<Measurement>>
-      SearchMeasurementsSortedAsync(Period? period = null) => (
-          await this._client.SearchAsync<Measurement>(
+      SearchMeasurementsAsync(Period? period = null) => (
+          await this.Elasticsearch.SearchAsync<Measurement>(
               s => s.Query(q => q.DateRange(
                                r => r.Field(f => f.MeasurementTimestamp)
                                         .GreaterThanOrEquals(
                                             period?.From ?? DateTime.MinValue)
                                         .LessThanOrEquals(
-                                            period?.To ?? DateTime.Now)))
-                       .Sort(s => s.Descending(h => h.MeasurementTimestamp))));
+                                            period?.To ?? DateTime.UtcNow)))
+                       .Index(MeasurementIndexName)));
+
+  public ISearchResponse<Measurement> SearchMeasurementsSorted(
+      Period? period = null) =>
+      this.Elasticsearch.Search<Measurement>(
+          s => s.Query(
+                    q => q.DateRange(
+                        r => r.Field(f => f.MeasurementTimestamp)
+                                 .GreaterThanOrEquals(
+                                     period?.From ?? DateTime.MinValue)
+                                 .LessThanOrEquals(period?.To ?? DateTime.UtcNow)))
+                   .Sort(s => s.Descending(h => h.MeasurementTimestamp))
+                   .Index(MeasurementIndexName));
+
+  public async Task<ISearchResponse<Measurement>>
+      SearchMeasurementsSortedAsync(Period? period = null) => (
+          await this.Elasticsearch.SearchAsync<Measurement>(
+              s => s.Query(q => q.DateRange(
+                               r => r.Field(f => f.MeasurementTimestamp)
+                                        .GreaterThanOrEquals(
+                                            period?.From ?? DateTime.MinValue)
+                                        .LessThanOrEquals(
+                                            period?.To ?? DateTime.UtcNow)))
+                       .Sort(s => s.Descending(h => h.MeasurementTimestamp))
+                       .Index(MeasurementIndexName)));
 
   public ISearchResponse<Measurement> SearchMeasurements(
       Device device, Period? period = null) =>
-      this._client.Search<Measurement>(
-          s => s.Query(
-              q => q.DateRange(r => r.Field(f => f.MeasurementTimestamp)
-                                        .GreaterThanOrEquals(
-                                            period?.From ?? DateTime.MinValue)
-                                        .LessThanOrEquals(
-                                            period?.To ?? DateTime.Now)) &&
-                   q.Term(t => t.DeviceId, device.SourceDeviceId)));
+      this.Elasticsearch.Search<Measurement>(
+          s => s.Query(q => q.DateRange(
+                                r => r.Field(f => f.MeasurementTimestamp)
+                                         .GreaterThanOrEquals(
+                                             period?.From ?? DateTime.MinValue)
+                                         .LessThanOrEquals(
+                                             period?.To ?? DateTime.UtcNow)) &&
+                            q.Term(t => t.DeviceId, device.SourceDeviceId))
+                   .Index(MeasurementIndexName));
 
   public async Task<ISearchResponse<Measurement>>
   SearchMeasurementsAsync(Device device, Period? period = null) => (
-      await this._client.SearchAsync<Measurement>(
-          s => s.Query(
-              q => q.DateRange(r => r.Field(f => f.MeasurementTimestamp)
-                                        .GreaterThanOrEquals(
-                                            period?.From ?? DateTime.MinValue)
-                                        .LessThanOrEquals(
-                                            period?.To ?? DateTime.Now)) &&
-                   q.Term(t => t.DeviceId, device.SourceDeviceId))));
+      await this.Elasticsearch.SearchAsync<Measurement>(
+          s => s.Query(q => q.DateRange(
+                                r => r.Field(f => f.MeasurementTimestamp)
+                                         .GreaterThanOrEquals(
+                                             period?.From ?? DateTime.MinValue)
+                                         .LessThanOrEquals(
+                                             period?.To ?? DateTime.UtcNow)) &&
+                            q.Term(t => t.DeviceId, device.SourceDeviceId))
+                   .Index(MeasurementIndexName)));
 
   public ISearchResponse<Measurement> SearchMeasurementsSorted(
       Device device, Period? period = null) =>
-      this._client.Search<Measurement>(
+      this.Elasticsearch.Search<Measurement>(
           s => s.Query(q => q.DateRange(
                                 r => r.Field(f => f.MeasurementTimestamp)
                                          .GreaterThanOrEquals(
                                              period?.From ?? DateTime.MinValue)
                                          .LessThanOrEquals(
-                                             period?.To ?? DateTime.Now)) &&
+                                             period?.To ?? DateTime.UtcNow)) &&
                             q.Term(t => t.DeviceId, device.SourceDeviceId))
-                   .Sort(s => s.Descending(h => h.MeasurementTimestamp)));
+                   .Sort(s => s.Descending(h => h.MeasurementTimestamp))
+                   .Index(MeasurementIndexName));
 
   public async Task<ISearchResponse<Measurement>>
   SearchMeasurementsSortedAsync(Device device, Period? period = null) => (
-      await this._client.SearchAsync<Measurement>(
+      await this.Elasticsearch.SearchAsync<Measurement>(
           s => s.Query(q => q.DateRange(
                                 r => r.Field(f => f.MeasurementTimestamp)
                                          .GreaterThanOrEquals(
                                              period?.From ?? DateTime.MinValue)
                                          .LessThanOrEquals(
-                                             period?.To ?? DateTime.Now)) &&
+                                             period?.To ?? DateTime.UtcNow)) &&
                             q.Term(t => t.DeviceId, device.SourceDeviceId))
-                   .Sort(s => s.Descending(h => h.MeasurementTimestamp))));
+                   .Sort(s => s.Descending(h => h.MeasurementTimestamp))
+                   .Index(MeasurementIndexName)));
 }
 }

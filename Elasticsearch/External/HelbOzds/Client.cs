@@ -1,6 +1,6 @@
-using System;
-using System.Threading;
-using System.Data;
+// using System;
+// using System.Threading;
+// using System.Data;
 using System.Data.SqlClient;
 
 namespace Elasticsearch.HelbOzds {
@@ -11,9 +11,9 @@ namespace Elasticsearch.HelbOzds {
 
     public Client(
         string sqlConnectionString, bool shouldRetryOpenClose = true) {
-      _sqlConnectionString = sqlConnectionString;
-      _shouldRetryOpenClose = shouldRetryOpenClose;
-      _connection = new SqlConnection(_sqlConnectionString);
+      SqlConnectionString = sqlConnectionString;
+      ShouldRetryOpenClose = shouldRetryOpenClose;
+      Sql = new SqlConnection(SqlConnectionString);
 
       // Console.WriteLine(
       //     $"Opening {Source} connection to {sqlConnectionString}...");
@@ -60,10 +60,12 @@ namespace Elasticsearch.HelbOzds {
       // }
     }
 
-    private const string s_source = "HelbOzds";
+    private bool ShouldRetryOpenClose { get; init; }
 
-    private bool _shouldRetryOpenClose { get; init; }
-    private string _sqlConnectionString { get; init; }
-    private SqlConnection _connection { get; init; }
+    private string SqlConnectionString { get; init; }
+
+    private SqlConnection Sql { get; init; }
+
+    private const string s_source = "HelbOzds";
   }
 }

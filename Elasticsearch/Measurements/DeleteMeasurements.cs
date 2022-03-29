@@ -11,12 +11,14 @@ public partial interface IClient {
 
 public sealed partial class Client : IClient {
   public BulkResponse
-  DeleteMeasurements(IEnumerable<Id> measurementIds) => this._client.Bulk(
-      s => s.DeleteMany<Measurement>(measurementIds.ToStrings()));
+  DeleteMeasurements(IEnumerable<Id> measurementIds) => this.Elasticsearch.Bulk(
+      s => s.DeleteMany<Measurement>(measurementIds.ToStrings())
+               .Index(MeasurementIndexName));
 
   public Task<BulkResponse> DeleteMeasurementsAsync(
       IEnumerable<Id> measurementIds) =>
-      this._client.BulkAsync(
-          s => s.DeleteMany<Measurement>(measurementIds.ToStrings()));
+      this.Elasticsearch.BulkAsync(
+          s => s.DeleteMany<Measurement>(measurementIds.ToStrings())
+                   .Index(MeasurementIndexName));
 }
 }

@@ -10,13 +10,13 @@ namespace Elasticsearch.MyEnergyCommunity {
               "MY_ENERGY_COMMUNITY_SERVER_URI"))) {}
 
     public Client(Uri baseUri) {
-      _client = new HttpClient();
-      _client.BaseAddress = baseUri;
-      _client.DefaultRequestHeaders.Accept.Add(
+      Http = new HttpClient();
+      Http.BaseAddress = baseUri;
+      Http.DefaultRequestHeaders.Accept.Add(
           new MediaTypeWithQualityHeaderValue("application/json"));
 
       Console.WriteLine($"Checking connection of {Source} to {baseUri}...");
-      var pingTask = _client.GetAsync("/");
+      var pingTask = Http.GetAsync("/");
       pingTask.Wait();
       if (pingTask.Result.StatusCode != HttpStatusCode.OK) {
         throw new WebException($"Could not connect to {Source}\n" +
@@ -24,6 +24,6 @@ namespace Elasticsearch.MyEnergyCommunity {
       }
     }
 
-    private HttpClient _client;
+    private HttpClient Http { get; init; }
   }
 }

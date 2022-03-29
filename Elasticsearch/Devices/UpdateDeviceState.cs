@@ -13,13 +13,15 @@ public partial interface IClient {
 public sealed partial class Client : IClient {
   public UpdateResponse<Device> UpdateDeviceState(
       Id deviceId, string state, DateTime? dateDiscontinued = null) =>
-      this._client.Update<Device, DeviceStateUpdatePartial>(deviceId,
-          d => d.Doc(new DeviceStateUpdatePartial(state, dateDiscontinued)));
+      this.Elasticsearch.Update<Device, DeviceStateUpdatePartial>(deviceId,
+          d => d.Doc(new DeviceStateUpdatePartial(state, dateDiscontinued))
+                   .Index(DeviceIndexName));
 
   public Task<UpdateResponse<Device>> UpdateDeviceStateAsync(
       Id deviceId, string state, DateTime? dateDiscontinued = null) =>
-      this._client.UpdateAsync<Device, DeviceStateUpdatePartial>(deviceId,
-          d => d.Doc(new DeviceStateUpdatePartial(state, dateDiscontinued)));
+      this.Elasticsearch.UpdateAsync<Device, DeviceStateUpdatePartial>(deviceId,
+          d => d.Doc(new DeviceStateUpdatePartial(state, dateDiscontinued))
+                   .Index(DeviceIndexName));
 }
 
 internal class DeviceStateUpdatePartial {

@@ -2,29 +2,29 @@ using System.Threading.Tasks;
 using Xunit;
 
 namespace Elasticsearch.Test {
-  public partial class Client {
+  public partial class ClientTest {
     [Fact]
-    public void UpdateDeviceState() {
-      var device = Data.TestDevice;
+    public void UpdateDeviceStateTest() {
+      var device = Data.MyEnergyCommunityDevice;
       var deviceId = device.Id;
       var deviceState = device.State;
       var newDeviceState = deviceState == DeviceState.Healthy
                                ? DeviceState.Unhealthy
                                : DeviceState.Healthy;
 
-      var indexResponse = _client.IndexDevice(device);
+      var indexResponse = Client.IndexDevice(device);
       Assert.True(indexResponse.IsValid);
 
       var indexedId = indexResponse.Id;
       Assert.Equal(deviceId, indexedId);
 
-      var updateResponse = _client.UpdateDeviceState(deviceId, newDeviceState);
+      var updateResponse = Client.UpdateDeviceState(deviceId, newDeviceState);
       Assert.True(updateResponse.IsValid);
 
       var updatedDeviceId = updateResponse.Id;
       Assert.Equal(deviceId, updatedDeviceId);
 
-      var getResponse = _client.GetDevice(deviceId);
+      var getResponse = Client.GetDevice(deviceId);
       Assert.True(getResponse.IsValid);
 
       var gotDevice = getResponse.Source;
@@ -33,7 +33,7 @@ namespace Elasticsearch.Test {
       Assert.Equal(deviceId, gotDeviceId);
       Assert.Equal(newDeviceState, gotDeviceState);
 
-      var deleteResponse = _client.DeleteDevice(deviceId);
+      var deleteResponse = Client.DeleteDevice(deviceId);
       Assert.True(deleteResponse.IsValid);
 
       var deletedDeviceId = deleteResponse.Id;
@@ -41,28 +41,28 @@ namespace Elasticsearch.Test {
     }
 
     [Fact]
-    public async Task UpdateDeviceStateAsync() {
-      var device = Data.TestDevice;
+    public async Task UpdateDeviceStateAsyncTest() {
+      var device = Data.MyEnergyCommunityDevice;
       var deviceId = device.Id;
       var deviceState = device.State;
       var newDeviceState = deviceState == DeviceState.Healthy
                                ? DeviceState.Unhealthy
                                : DeviceState.Healthy;
 
-      var indexResponse = await _client.IndexDeviceAsync(device);
+      var indexResponse = await Client.IndexDeviceAsync(device);
       Assert.True(indexResponse.IsValid);
 
       var indexedId = indexResponse.Id;
       Assert.Equal(deviceId, indexedId);
 
       var updateResponse =
-          await _client.UpdateDeviceStateAsync(deviceId, newDeviceState);
+          await Client.UpdateDeviceStateAsync(deviceId, newDeviceState);
       Assert.True(updateResponse.IsValid);
 
       var updatedDeviceId = updateResponse.Id;
       Assert.Equal(deviceId, updatedDeviceId);
 
-      var getResponse = await _client.GetDeviceAsync(deviceId);
+      var getResponse = await Client.GetDeviceAsync(deviceId);
       Assert.True(getResponse.IsValid);
 
       var gotDevice = getResponse.Source;
@@ -71,7 +71,7 @@ namespace Elasticsearch.Test {
       Assert.Equal(deviceId, gotDeviceId);
       Assert.Equal(newDeviceState, gotDeviceState);
 
-      var deleteResponse = await _client.DeleteDeviceAsync(deviceId);
+      var deleteResponse = await Client.DeleteDeviceAsync(deviceId);
       Assert.True(deleteResponse.IsValid);
 
       var deletedDeviceId = deleteResponse.Id;

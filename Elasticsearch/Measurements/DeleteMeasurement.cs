@@ -8,10 +8,11 @@ public partial interface IClient {
 };
 
 public sealed partial class Client : IClient {
-  public DeleteResponse DeleteMeasurement(Id id) => this._client.Delete(
-      DocumentPath<Measurement>.Id(id));
+  public DeleteResponse DeleteMeasurement(Id id) => this.Elasticsearch.Delete(
+      DocumentPath<Measurement>.Id(id).Index(MeasurementIndexName));
 
-  public async Task<DeleteResponse> DeleteMeasurementAsync(Id id) =>
-      await this._client.DeleteAsync(DocumentPath<Measurement>.Id(id));
+  public async Task<DeleteResponse>
+  DeleteMeasurementAsync(Id id) => await this.Elasticsearch.DeleteAsync(
+      DocumentPath<Measurement>.Id(id).Index(MeasurementIndexName));
 }
 }

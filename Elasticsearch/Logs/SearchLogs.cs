@@ -3,63 +3,69 @@ using Nest;
 
 namespace Elasticsearch {
 public partial interface IClient {
-  public ISearchResponse<Log> SearchLoaderLogs(string type, int? size = null);
+  public ISearchResponse<Log> SearchLogs(string type, int? size = null);
 
-  public Task<ISearchResponse<Log>> SearchLoaderLogsAsync(
+  public Task<ISearchResponse<Log>> SearchLogsAsync(
       string type, int? size = null);
 
-  public ISearchResponse<Log> SearchLoaderLogsSorted(
+  public ISearchResponse<Log> SearchLogsSorted(string type, int? size = null);
+
+  public Task<ISearchResponse<Log>> SearchLogsSortedAsync(
       string type, int? size = null);
 
-  public Task<ISearchResponse<Log>> SearchLoaderLogsSortedAsync(
+  public ISearchResponse<Log> SearchLogsSortedByPeriod(
       string type, int? size = null);
 
-  public ISearchResponse<Log> SearchLoaderLogsSortedByPeriod(
-      string type, int? size = null);
-
-  public Task<ISearchResponse<Log>> SearchLoaderLogsSortedByPeriodAsync(
+  public Task<ISearchResponse<Log>> SearchLogsSortedByPeriodAsync(
       string type, int? size = null);
 };
 
 public sealed partial class Client : IClient {
   public ISearchResponse<Log>
-  SearchLoaderLogs(string type, int? size = null) => this._client.Search<Log>(
-      s => s.Query(q => q.Term(t => t.Type, type)).Size(size));
+  SearchLogs(string type, int? size = null) => this.Elasticsearch.Search<Log>(
+      s => s.Query(q => q.Term(t => t.Type, type))
+               .Size(size)
+               .Index(LogIndexName));
 
   public async Task<ISearchResponse<Log>>
-  SearchLoaderLogsAsync(string type, int? size = null) => (
-      await this._client.SearchAsync<Log>(
-          s => s.Query(q => q.Term(t => t.Type, type)).Size(size)));
-
-  public ISearchResponse<Log> SearchLoaderLogsSorted(
-      string type, int? size = null) =>
-      this._client.Search<Log>(
+  SearchLogsAsync(string type, int? size = null) => (
+      await this.Elasticsearch.SearchAsync<Log>(
           s => s.Query(q => q.Term(t => t.Type, type))
                    .Size(size)
-                   .Sort(s => s.Descending(h => h.Timestamp)));
+                   .Index(LogIndexName)));
+
+  public ISearchResponse<Log> SearchLogsSorted(string type, int? size = null) =>
+      this.Elasticsearch.Search<Log>(
+          s => s.Query(q => q.Term(t => t.Type, type))
+                   .Size(size)
+                   .Sort(s => s.Descending(h => h.Timestamp))
+                   .Index(LogIndexName));
 
   public async Task<ISearchResponse<Log>>
-  SearchLoaderLogsSortedAsync(string type, int? size = null) => (
-      await this._client.SearchAsync<Log>(
+  SearchLogsSortedAsync(string type, int? size = null) => (
+      await this.Elasticsearch.SearchAsync<Log>(
           s => s.Query(q => q.Term(t => t.Type, type))
                    .Size(size)
-                   .Sort(s => s.Descending(d => d.Timestamp))));
+                   .Sort(s => s.Descending(d => d.Timestamp))
+                   .Index(LogIndexName)));
 
-  public ISearchResponse<Log> SearchLoaderLogsSortedByPeriod(
+  public ISearchResponse<Log> SearchLogsSortedByPeriod(
       string type, int? size = null) =>
-      this._client.Search<Log>(
+      this.Elasticsearch.Search<Log>(
           s => s.Query(q => q.Term(t => t.Type, type))
                    .Size(size)
+                   .Index(LogIndexName)
   // NOTE: null doesn't matter here because NEST just wants to create a query
 #nullable disable
                    .Sort(s => s.Descending(d => d.Data.Period.To)));
 #nullable enable
 
   public async Task<ISearchResponse<Log>>
-  SearchLoaderLogsSortedByPeriodAsync(string type, int? size = null) => (
-      await this._client.SearchAsync<Log>(
+  SearchLogsSortedByPeriodAsync(string type, int? size = null) => (
+      await this.Elasticsearch.SearchAsync<Log>(
           s => s.Query(q => q.Term(t => t.Type, type))
                    .Size(size)
+                   .Index(LogIndexName)
   // NOTE: null doesn't matter here because NEST just wants to create a query
 #nullable disable
                    .Sort(s => s.Descending(d => d.Data.Period.To))));

@@ -1,9 +1,9 @@
 using System;
 
 namespace Elasticsearch.Test {
-  public partial class Data {
-    public static readonly Measurement TestMeasurement =
-        new Measurement(DateTime.Now, null, "test", "M9EQCU59",
+  public static partial class Data {
+    public static readonly Measurement MyEnergyCommunityMeasurement =
+        new Measurement(DateTime.UtcNow, null, "MyEnergyCommunity", "M9EQCU59",
             new Measurement.KnownData {
               dongleId = "M9EQCU59",
               meterIdent = "ISK5/2M550T-2006",
@@ -41,5 +41,9 @@ namespace Elasticsearch.Test {
               fuseSupervisionL1 = 0,
               disconnectControl = 1,
             });
+
+    public static readonly Measurement FakeMeasurement = new Measurement(
+        DateTime.UtcNow, null, Elasticsearch.MeasurementFaker.Client.FakeSource,
+        Elasticsearch.MeasurementFaker.Client.FakeDeviceId);
   };
 }

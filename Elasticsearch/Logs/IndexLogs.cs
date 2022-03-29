@@ -4,15 +4,15 @@ using Nest;
 
 namespace Elasticsearch {
 public partial interface IClient {
-  public BulkResponse IndexLoaderLogs(IEnumerable<Log> devices);
-  public Task<BulkResponse> IndexLoaderLogsAsync(IEnumerable<Log> devices);
+  public BulkResponse IndexLogs(IEnumerable<Log> logs);
+  public Task<BulkResponse> IndexLogsAsync(IEnumerable<Log> logs);
 };
 
 public sealed partial class Client : IClient {
-  public BulkResponse IndexLoaderLogs(
-      IEnumerable<Log> devices) => this._client.Bulk(s => s.IndexMany(devices));
+  public BulkResponse IndexLogs(IEnumerable<Log> logs) =>
+      this.Elasticsearch.Bulk(s => s.IndexMany(logs).Index(LogIndexName));
 
-  public Task<BulkResponse> IndexLoaderLogsAsync(IEnumerable<Log> devices) =>
-      this._client.BulkAsync(s => s.IndexMany(devices));
+  public Task<BulkResponse> IndexLogsAsync(IEnumerable<Log> logs) =>
+      this.Elasticsearch.BulkAsync(s => s.IndexMany(logs).Index(LogIndexName));
 }
 }

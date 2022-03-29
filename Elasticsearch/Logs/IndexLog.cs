@@ -3,15 +3,16 @@ using Nest;
 
 namespace Elasticsearch {
 public partial interface IClient {
-  public IndexResponse IndexLoaderLog(Log log);
-  public Task<IndexResponse> IndexLoaderLogAsync(Log log);
+  public IndexResponse IndexLog(Log log);
+  public Task<IndexResponse> IndexLogAsync(Log log);
 };
 
 public sealed partial class Client : IClient {
-  public IndexResponse IndexLoaderLog(Log log) => this._client.Index(
-      log, s => s);
+  public IndexResponse IndexLog(Log log) => this.Elasticsearch.Index(
+      log, s => s.Index(LogIndexName));
 
-  public async Task<IndexResponse> IndexLoaderLogAsync(
-      Log log) => await this._client.IndexAsync(log, s => s);
+  public async Task<IndexResponse> IndexLogAsync(
+      Log log) => await this.Elasticsearch.IndexAsync(log,
+      s => s.Index(LogIndexName));
 }
 }

@@ -19,7 +19,7 @@ public partial class Client : IClient {
 
   public async Task LoadInitiallyAsync(
       IMeasurementProviderIterator measurementProviderIterator) {
-    IndexLoaderLog(new Log(LogType.LoadBegin, Source));
+    IndexLog(new Log(LogType.LoadBegin, Source));
 
     var measurements = new List<Measurement>();
 
@@ -34,7 +34,7 @@ public partial class Client : IClient {
 
     await IndexMeasurementsAsync(measurements);
 
-    IndexLoaderLog(new Log(LogType.LoadEnd, Source));
+    IndexLog(new Log(LogType.LoadEnd, Source));
   }
 }
 }

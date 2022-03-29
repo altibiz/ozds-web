@@ -6,8 +6,9 @@ using System.Linq;
 namespace Elasticsearch {
 public class ExternalMeasurementProviderIterator
     : IMeasurementProviderIterator {
-  public ExternalMeasurementProviderIterator() {
-    _instances =
+  public IEnumerable<IMeasurementProvider> Iterate() => Instances;
+
+  private IEnumerable<IMeasurementProvider> Instances { get; init; } =
         Assembly.GetExecutingAssembly()
             .GetTypes()
             .Where(
@@ -18,10 +19,5 @@ public class ExternalMeasurementProviderIterator
             .Aggregate(Enumerable.Empty<IMeasurementProvider>(),
                 (accumulator, next) =>
                     next == null ? accumulator : accumulator.Append(next));
-  }
-
-  public IEnumerable<IMeasurementProvider> Iterate() => _instances;
-
-  private IEnumerable<IMeasurementProvider> _instances;
 }
 }

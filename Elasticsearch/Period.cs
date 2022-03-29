@@ -8,7 +8,7 @@ public class Period {
   public DateTime From { get; init; } = DateTime.MinValue;
 
   [Date(Name = "to")]
-  public DateTime To { get; init; } = DateTime.Now;
+  public DateTime To { get; init; } = DateTime.UtcNow;
 
   public override bool Equals(object? obj) { return Equals(obj as Period); }
 
@@ -19,7 +19,7 @@ public class Period {
   public override int GetHashCode() { return HashCode.Combine(From, To); }
 
   public override string ToString() {
-    return $"{From.ToISOString()} - {To.ToISOString()}";
+    return $"{From.ToUtcIsoString()} - {To.ToUtcIsoString()}";
   }
 };
 }

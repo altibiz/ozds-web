@@ -5,7 +5,12 @@ using Nest;
 using Elasticsearch.Net;
 
 namespace Elasticsearch {
+public partial interface IClient {
+  public IClient WithIndexSuffix(string? suffix = null);
+}
+
 public sealed partial class Client : IClient {
+#region Constructors
   public Client(string? indexSuffix = null)
       : this(new Uri(EnvironmentExtensions.AssertEnvironmentVariable(
                  "ELASTICSEARCH_SERVER_URI")),
@@ -19,71 +24,90 @@ public sealed partial class Client : IClient {
 
   public Client(Uri uri, string caPath, string user, string password,
       string? indexSuffix = null) {
-    _indexSuffix = indexSuffix ?? "";
-
-    var settings =
-        new ConnectionSettings(uri)
+    var settings = new ConnectionSettings(uri)
 #if DEBUG
-            .PrettyJson(true)
-            .DisableDirectStreaming()
+                       .PrettyJson(true)
+                       .DisableDirectStreaming()
 #else
-            .PrettyJson(false)
+                       .PrettyJson(false)
 #endif
-            .DefaultIndex(s_measurementsIndexName)
-            .DefaultMappingFor<Measurement>(
-                m => m.IndexName(s_measurementsIndexName))
-            .DefaultMappingFor<Device>(m => m.IndexName(s_devicesIndexName))
-            .DefaultMappingFor<Log>(m => m.IndexName(s_loaderLogIndexName))
-            .ServerCertificateValidationCallback(
-                CertificateValidations.AuthorityIsRoot(
-                    new X509Certificate(caPath)))
-            .BasicAuthentication(user, password);
+                       .ServerCertificateValidationCallback(
+                           CertificateValidations.AuthorityIsRoot(
+                               new X509Certificate(caPath)))
+                       .BasicAuthentication(user, password);
 
     Console.WriteLine($"Checking connection of {Source} to {uri}...");
-    _client = new ElasticClient(settings);
-    var pingResponse = _client.Ping();
+    Elasticsearch = new ElasticClient(settings);
+    var pingResponse = Elasticsearch.Ping();
     if (!pingResponse.IsValid) {
       throw new WebException(
           $"Could not connect to Elasticsearch. Response: {pingResponse}");
     }
 
-    TryDeleteIndicesIfDebug();
-    TryCreateIndices();
+    IndexSuffix = indexSuffix ?? "";
+  }
+#endregion // Constructors
+
+#region WithIndexSuffix
+  public IClient WithIndexSuffix(string? indexSuffix = null) {
+    return new Client(this, indexSuffix);
   }
 
-  public void TryDeleteIndicesIfDebug() {
+  private Client(Client other, string? indexSuffix) {
+    Elasticsearch = other.Elasticsearch;
+    IndexSuffix = indexSuffix ?? "";
+  }
+#endregion // WithIndexSuffix
+
+  private IElasticClient Elasticsearch { get; init; }
+
+#region Index Suffix
+  private string IndexSuffix {
+    get => _indexSuffix;
+    init {
+      _indexSuffix = String.IsNullOrWhiteSpace(value) ? ""
+                     : value.StartsWith('.')          ? value
+                                                      : $".{value}";
+
 #if DEBUG
-    var consoleSuffix =
-        _indexSuffix == null ? "" : $" with suffix '{_indexSuffix}'";
-    Console.WriteLine(
-        $"Trying to delete Elasticsearch indices{consoleSuffix}...");
-    _client.TryDeleteIndex(s_measurementsIndexName + _indexSuffix);
-    _client.TryDeleteIndex(s_devicesIndexName + _indexSuffix);
-    _client.TryDeleteIndex(s_loaderLogIndexName + _indexSuffix);
+      Console.WriteLine($"Trying to delete indices{ConsoleIndexSuffix}...");
+      Elasticsearch.TryDeleteIndex(MeasurementIndexName);
+      Elasticsearch.TryDeleteIndex(DeviceIndexName);
+      Elasticsearch.TryDeleteIndex(LogIndexName);
 #endif
+
+      Console.WriteLine($"Trying to create indices{ConsoleIndexSuffix}...");
+      Elasticsearch.TryCreateIndex<Measurement>(MeasurementIndexName);
+      Elasticsearch.TryCreateIndex<Device>(DeviceIndexName);
+      Elasticsearch.TryCreateIndex<Log>(LogIndexName);
+    }
   }
 
-  public void TryCreateIndices() {
-    var consoleSuffix =
-        _indexSuffix == null ? "" : $" with suffix '{_indexSuffix}'";
-    Console.WriteLine(
-        $"Trying to create Elasticsearch indices{consoleSuffix}...");
-    _client.TryCreateIndex<Measurement>(s_measurementsIndexName + _indexSuffix);
-    _client.TryCreateIndex<Device>(s_devicesIndexName + _indexSuffix);
-    _client.TryCreateIndex<Log>(s_loaderLogIndexName + _indexSuffix);
+  private string ConsoleIndexSuffix {
+    get => String.IsNullOrWhiteSpace(IndexSuffix) ? "" : $" '{IndexSuffix}'";
   }
+
+  private string _indexSuffix = "";
+#endregion // Index Suffix
+
+#region Index Names
+  private string MeasurementIndexName {
+    get => s_measurementIndexPrefix + IndexSuffix;
+  }
+
+  private string DeviceIndexName { get => s_deviceIndexPrefix + IndexSuffix; }
+
+  private string LogIndexName { get => s_logIndexPrefix + IndexSuffix; }
 
 #if DEBUG
-  private const string s_measurementsIndexName = "ozds.debug.measurements";
-  private const string s_devicesIndexName = "ozds.debug.devices";
-  private const string s_loaderLogIndexName = "ozds.debug.loader-log";
+  private const string s_measurementIndexPrefix = "ozds.debug.measurements";
+  private const string s_deviceIndexPrefix = "ozds.debug.devices";
+  private const string s_logIndexPrefix = "ozds.debug.log";
 #else
-  private const string s_measurementsIndexName = "ozds.measurements";
-  private const string s_devicesIndexName = "ozds.devices";
-  private const string s_loaderLogIndexName = "ozds.loader-log";
+  private const string s_measurementIndexPrefix = "ozds.measurements";
+  private const string s_deviceIndexPrefix = "ozds.devices";
+  private const string s_logIndexPrefix = "ozds.log";
 #endif
-
-  private IElasticClient _client { get; init; }
-  private string _indexSuffix { get; init; }
+#endregion // Index Names
 }
 }

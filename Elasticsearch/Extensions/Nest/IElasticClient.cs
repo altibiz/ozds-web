@@ -39,8 +39,7 @@ public static class IElasticClientExtensions {
       return null;
     }
 
-    Console.WriteLine($"Created index {name}");
-        return create;
+    return create;
   }
 
   public static DeleteIndexResponse? TryDeleteIndex(
@@ -71,7 +70,6 @@ public static class IElasticClientExtensions {
       return null;
     }
 
-    Console.WriteLine($"Deleted index {name}");
     return delete;
   }
 }

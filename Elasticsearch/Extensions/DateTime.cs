@@ -3,7 +3,8 @@ using System.Globalization;
 
 namespace Elasticsearch {
 public static class DateTimeExtensions {
-  public static string ToISOString(this DateTime dateTime) => dateTime.ToString(
-      "o", CultureInfo.InvariantCulture);
+  public static string ToUtcIsoString(
+      this DateTime dateTime) => dateTime.ToUniversalTime().ToString("o",
+      CultureInfo.InvariantCulture);
 }
 }

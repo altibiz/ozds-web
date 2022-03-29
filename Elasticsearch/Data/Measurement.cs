@@ -6,7 +6,7 @@ namespace Elasticsearch {
 public class Measurement {
   public static string MakeId(string deviceId, DateTime measurementTimestamp) {
     return StringExtensions.CombineIntoStringId(
-        "D", deviceId, "TS", measurementTimestamp.ToISOString());
+        "D", deviceId, "TS", measurementTimestamp.ToUtcIsoString());
   }
 
   public Measurement(DateTime measurementTimestamp,

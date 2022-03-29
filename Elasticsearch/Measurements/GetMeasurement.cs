@@ -10,9 +10,11 @@ public partial interface IClient {
 
 public sealed partial class Client : IClient {
   public IGetResponse<Measurement> GetMeasurement(
-      Id id) => _client.Get<Measurement>(id);
+      Id id) => Elasticsearch.Get<Measurement>(id,
+      d => d.Index(MeasurementIndexName));
 
   public async Task<IGetResponse<Measurement>> GetMeasurementAsync(
-      Id id) => await _client.GetAsync<Measurement>(id);
+      Id id) => await Elasticsearch.GetAsync<Measurement>(id,
+      d => d.Index(MeasurementIndexName));
 }
 }

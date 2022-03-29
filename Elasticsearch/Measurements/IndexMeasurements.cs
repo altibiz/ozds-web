@@ -10,12 +10,14 @@ public partial interface IClient {
 };
 
 public sealed partial class Client : IClient {
-  public BulkResponse
-  IndexMeasurements(IEnumerable<Measurement> measurements) => this._client.Bulk(
-      s => s.IndexMany(measurements));
+  public BulkResponse IndexMeasurements(
+      IEnumerable<Measurement> measurements) =>
+      this.Elasticsearch.Bulk(
+          s => s.IndexMany(measurements).Index(MeasurementIndexName));
 
   public async Task<BulkResponse> IndexMeasurementsAsync(
       IEnumerable<Measurement> measurements) =>
-      await this._client.BulkAsync(s => s.IndexMany(measurements));
+      await this.Elasticsearch.BulkAsync(
+          s => s.IndexMany(measurements).Index(MeasurementIndexName));
 }
 }

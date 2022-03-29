@@ -8,10 +8,11 @@ public partial interface IClient {
 };
 
 public sealed partial class Client : IClient {
-  public IndexResponse IndexDevice(Device device) => this._client.Index(
-      device, s => s);
+  public IndexResponse IndexDevice(Device device) => this.Elasticsearch.Index(
+      device, s => s.Index(DeviceIndexName));
 
   public Task<IndexResponse> IndexDeviceAsync(
-      Device device) => this._client.IndexAsync(device, s => s);
+      Device device) => this.Elasticsearch.IndexAsync(device,
+      s => s.Index(DeviceIndexName));
 }
 }

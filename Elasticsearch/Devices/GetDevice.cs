@@ -9,9 +9,11 @@ public partial interface IClient {
 };
 
 public sealed partial class Client : IClient {
-  public IGetResponse<Device> GetDevice(Id id) => _client.Get<Device>(id);
+  public IGetResponse<Device> GetDevice(Id id) => Elasticsearch.Get<Device>(
+      id, s => s.Index(DeviceIndexName));
 
   public async Task<IGetResponse<Device>> GetDeviceAsync(
-      Id id) => await _client.GetAsync<Device>(id);
+      Id id) => await Elasticsearch.GetAsync<Device>(id,
+      s => s.Index(DeviceIndexName));
 }
 }

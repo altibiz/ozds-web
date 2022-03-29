@@ -3,15 +3,16 @@ using Nest;
 
 namespace Elasticsearch {
 public partial interface IClient {
-  public DeleteResponse DeleteLoaderLog(Id id);
-  public Task<DeleteResponse> DeleteLoaderLogAsync(Id id);
+  public DeleteResponse DeleteLog(Id id);
+  public Task<DeleteResponse> DeleteLogAsync(Id id);
 };
 
 public sealed partial class Client : IClient {
-  public DeleteResponse DeleteLoaderLog(Id id) => this._client.Delete(
-      DocumentPath<Log>.Id(id));
+  public DeleteResponse DeleteLog(Id id) => this.Elasticsearch.Delete(
+      DocumentPath<Log>.Id(id), s => s.Index(LogIndexName));
 
-  public async Task<DeleteResponse> DeleteLoaderLogAsync(
-      Id id) => await this._client.DeleteAsync(DocumentPath<Log>.Id(id));
+  public async Task<DeleteResponse> DeleteLogAsync(
+      Id id) => await this.Elasticsearch.DeleteAsync(DocumentPath<Log>.Id(id),
+      s => s.Index(LogIndexName));
 }
 }

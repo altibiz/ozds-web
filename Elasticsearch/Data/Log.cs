@@ -10,15 +10,15 @@ public class LogType {
   public const string InvalidData = "invalidData";
 };
 
-[ElasticsearchType(RelationName = "loaderLog", IdProperty = nameof(Id))]
+[ElasticsearchType(RelationName = "Log", IdProperty = nameof(Id))]
 public class Log {
   // TODO: review if timestamp is enough
   public static string MakeId(DateTime timestamp) {
-    return StringExtensions.CombineIntoStringId(timestamp.ToISOString());
+    return StringExtensions.CombineIntoStringId(timestamp.ToUtcIsoString());
   }
 
   public Log(string type, string? source = null, KnownData? data = null) {
-    Timestamp = DateTime.Now;
+    Timestamp = DateTime.UtcNow;
     Type = type;
     Source = source ?? "";
     Data = data ?? new KnownData {};
@@ -52,7 +52,7 @@ public class Log {
     return HashCode.Combine(Type, Timestamp, Source);
   }
 
-  [ElasticsearchType(RelationName = "loaderLogData")]
+  [ElasticsearchType(RelationName = "LogData")]
   public class KnownData {
     [Object(Name = "period")]
     public Period? Period { get; init; } = null;

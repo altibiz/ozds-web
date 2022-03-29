@@ -5,13 +5,14 @@ using Xunit;
 using Nest;
 
 namespace Elasticsearch.Test {
-  public partial class Client {
+  public partial class ClientTest {
     [Fact]
-    public void IndexMeasurements() {
-      var measurements = new List<Measurement> { Data.TestMeasurement };
+    public void IndexMeasurementsTest() {
+      var measurements =
+          new List<Measurement> { Data.MyEnergyCommunityMeasurement };
       var measurementIds = measurements.Select(d => new Id(d.Id));
 
-      var indexResponse = _client.IndexMeasurements(measurements);
+      var indexResponse = Client.IndexMeasurements(measurements);
           // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
           // Assert.True(indexResponse.IsValid);
 
@@ -19,14 +20,14 @@ namespace Elasticsearch.Test {
           AssertExtensions.ElementsEqual(measurementIds, indexedMeasurementIds);
 
           foreach (var measurement in measurements) {
-            var getResponse = _client.GetMeasurement(measurement.Id);
+            var getResponse = Client.GetMeasurement(measurement.Id);
             Assert.True(getResponse.IsValid);
 
             var gotMeasurement = getResponse.Source;
             Assert.Equal(measurement, gotMeasurement);
           }
 
-          var deleteResponse = _client.DeleteMeasurements(measurementIds);
+          var deleteResponse = Client.DeleteMeasurements(measurementIds);
           // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
           // Assert.True(deleteResponse.IsValid);
 
@@ -35,11 +36,12 @@ namespace Elasticsearch.Test {
     }
 
     [Fact]
-    public async Task IndexMeasurementsAsync() {
-      var measurements = new List<Measurement> { Data.TestMeasurement };
+    public async Task IndexMeasurementsAsyncTest() {
+      var measurements =
+          new List<Measurement> { Data.MyEnergyCommunityMeasurement };
       var measurementIds = measurements.Select(d => new Id(d.Id));
 
-      var indexResponse = await _client.IndexMeasurementsAsync(measurements);
+      var indexResponse = await Client.IndexMeasurementsAsync(measurements);
           // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
           // Assert.True(indexResponse.IsValid);
 
@@ -47,7 +49,7 @@ namespace Elasticsearch.Test {
           AssertExtensions.ElementsEqual(measurementIds, indexedMeasurementIds);
 
           foreach (var measurement in measurements) {
-            var getResponse = await _client.GetMeasurementAsync(measurement.Id);
+            var getResponse = await Client.GetMeasurementAsync(measurement.Id);
             Assert.True(getResponse.IsValid);
 
             var gotMeasurement = getResponse.Source;
@@ -55,7 +57,7 @@ namespace Elasticsearch.Test {
           }
 
           var deleteResponse =
-              await _client.DeleteMeasurementsAsync(measurementIds);
+              await Client.DeleteMeasurementsAsync(measurementIds);
           // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
           // Assert.True(deleteResponse.IsValid);
 

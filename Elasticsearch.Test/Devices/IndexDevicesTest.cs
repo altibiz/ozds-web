@@ -5,13 +5,13 @@ using Xunit;
 using Nest;
 
 namespace Elasticsearch.Test {
-  public partial class Client {
+  public partial class ClientTest {
     [Fact]
-    public void IndexDevices() {
-      var devices = new List<Device> { Data.TestDevice };
+    public void IndexDevicesTest() {
+      var devices = new List<Device> { Data.MyEnergyCommunityDevice };
       var deviceIds = devices.Select(d => new Id(d.Id));
 
-      var indexResponse = _client.IndexDevices(devices);
+      var indexResponse = Client.IndexDevices(devices);
           // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
           // Assert.True(indexResponse.IsValid);
 
@@ -19,14 +19,14 @@ namespace Elasticsearch.Test {
           AssertExtensions.ElementsEqual(deviceIds, indexedDeviceIds);
 
           foreach (var device in devices) {
-            var getResponse = _client.GetDevice(device.Id);
+            var getResponse = Client.GetDevice(device.Id);
             Assert.True(getResponse.IsValid);
 
             var gotDevice = getResponse.Source;
             Assert.Equal(device, gotDevice);
           }
 
-          var deleteResponse = _client.DeleteDevices(deviceIds);
+          var deleteResponse = Client.DeleteDevices(deviceIds);
           // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
           // Assert.True(deleteResponse.IsValid);
 
@@ -35,11 +35,11 @@ namespace Elasticsearch.Test {
     }
 
     [Fact]
-    public async Task IndexDevicesAsync() {
-      var devices = new List<Device> { Data.TestDevice };
+    public async Task IndexDevicesAsyncTest() {
+      var devices = new List<Device> { Data.MyEnergyCommunityDevice };
       var deviceIds = devices.Select(d => new Id(d.Id));
 
-      var indexResponse = await _client.IndexDevicesAsync(devices);
+      var indexResponse = await Client.IndexDevicesAsync(devices);
           // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
           // Assert.True(indexResponse.IsValid);
 
@@ -47,14 +47,14 @@ namespace Elasticsearch.Test {
           AssertExtensions.ElementsEqual(deviceIds, indexedDeviceIds);
 
           foreach (var device in devices) {
-            var getResponse = await _client.GetDeviceAsync(device.Id);
+            var getResponse = await Client.GetDeviceAsync(device.Id);
             Assert.True(getResponse.IsValid);
 
             var gotDevice = getResponse.Source;
             Assert.Equal(device, gotDevice);
           }
 
-          var deleteResponse = await _client.DeleteDevicesAsync(deviceIds);
+          var deleteResponse = await Client.DeleteDevicesAsync(deviceIds);
           // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
           // Assert.True(deleteResponse.IsValid);
 

@@ -33,7 +33,7 @@ public partial class Client : IClient {
       }
     }
 
-    IndexLoaderLog(
+    IndexLog(
         new Log(LogType.LoadBegin, new Log.KnownData { Period = period }));
 
     var measurements = new List<Measurement> {};
@@ -48,7 +48,7 @@ public partial class Client : IClient {
       }
     }
 
-    IndexLoaderLog(
+    IndexLog(
         new Log(LogType.LoadEnd, new Log.KnownData { Period = period }));
 
     await IndexMeasurementsAsync(measurements);
@@ -56,7 +56,7 @@ public partial class Client : IClient {
 
   private async Task<Period?> GetNextLoadPeriodAsync() {
     var lastLoadEndLog =
-        (await SearchLoaderLogsSortedByPeriodAsync(LogType.LoadEnd, 1))
+        (await SearchLogsSortedByPeriodAsync(LogType.LoadEnd, 1))
             .Sources()
             .FirstOrDefault();
     if (lastLoadEndLog == null || lastLoadEndLog.Data.Period == null) {
@@ -64,7 +64,7 @@ public partial class Client : IClient {
     }
 
     return new Period { From = lastLoadEndLog.Data.Period.To,
-      To = DateTime.Now };
+      To = DateTime.UtcNow };
   }
 }
 }

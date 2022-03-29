@@ -9,9 +9,11 @@ public partial interface IClient {
 
 public sealed partial class Client : IClient {
   public IndexResponse IndexMeasurement(
-      Measurement measurement) => this._client.Index(measurement, s => s);
+      Measurement measurement) => this.Elasticsearch.Index(measurement,
+      s => s.Index(MeasurementIndexName));
 
   public Task<IndexResponse> IndexMeasurementAsync(
-      Measurement measurement) => this._client.IndexAsync(measurement, s => s);
+      Measurement measurement) => this.Elasticsearch.IndexAsync(measurement,
+      s => s.Index(MeasurementIndexName));
 }
 }

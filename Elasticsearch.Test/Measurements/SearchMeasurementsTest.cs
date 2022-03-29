@@ -5,14 +5,15 @@ using Xunit;
 using Nest;
 
 namespace Elasticsearch.Test {
-  public partial class Client {
+  public partial class ClientTest {
     [Fact]
-    public void SearchMeasurements() {
-      var measurements = new List<Measurement> { Data.TestMeasurement };
+    public void SearchMeasurementsTest() {
+      var measurements =
+          new List<Measurement> { Data.MyEnergyCommunityMeasurement };
       var measurementIds = measurements.Select(d => new Id(d.Id));
       var measurementPeriod = measurements.GetLooseMeasurementPeriod();
 
-          var indexResponse = _client.IndexMeasurements(measurements);
+          var indexResponse = Client.IndexMeasurements(measurements);
           // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
           // Assert.True(indexResponse.IsValid);
 
@@ -21,13 +22,13 @@ namespace Elasticsearch.Test {
 
           // NOTE: ES needs some time to prepare for searching
           System.Threading.Thread.Sleep(1000);
-          var searchResponse = _client.SearchMeasurements(measurementPeriod);
+          var searchResponse = Client.SearchMeasurements(measurementPeriod);
           Assert.True(searchResponse.IsValid);
 
           var searchedMeasurements = searchResponse.Sources();
           AssertExtensions.Superset(measurements, searchedMeasurements);
 
-          var deleteResponse = _client.DeleteMeasurements(measurementIds);
+          var deleteResponse = Client.DeleteMeasurements(measurementIds);
           // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
           // Assert.True(deleteResponse.IsValid);
 
@@ -36,13 +37,13 @@ namespace Elasticsearch.Test {
     }
 
     [Fact]
-    public async Task SearchMeasurementsAsync() {
-      var measurements = new List<Measurement> { Data.TestMeasurement };
+    public async Task SearchMeasurementsAsyncTest() {
+      var measurements =
+          new List<Measurement> { Data.MyEnergyCommunityMeasurement };
       var measurementIds = measurements.Select(d => new Id(d.Id));
       var measurementPeriod = measurements.GetLooseMeasurementPeriod();
 
-          var indexResponse =
-              await _client.IndexMeasurementsAsync(measurements);
+          var indexResponse = await Client.IndexMeasurementsAsync(measurements);
           // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
           // Assert.True(indexResponse.IsValid);
 
@@ -52,14 +53,14 @@ namespace Elasticsearch.Test {
           // NOTE: ES needs some time to prepare for searching
           System.Threading.Thread.Sleep(1000);
           var searchResponse =
-              await _client.SearchMeasurementsAsync(measurementPeriod);
+              await Client.SearchMeasurementsAsync(measurementPeriod);
           Assert.True(searchResponse.IsValid);
 
           var searchedMeasurements = searchResponse.Sources();
           AssertExtensions.Superset(measurements, searchedMeasurements);
 
           var deleteResponse =
-              await _client.DeleteMeasurementsAsync(measurementIds);
+              await Client.DeleteMeasurementsAsync(measurementIds);
           // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
           // Assert.True(deleteResponse.IsValid);
 

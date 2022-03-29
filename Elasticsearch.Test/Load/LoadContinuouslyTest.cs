@@ -5,39 +5,39 @@ using System.Threading.Tasks;
 using Xunit;
 
 namespace Elasticsearch.Test {
-  public partial class Client {
+  public partial class ClientTest {
     [Fact]
-    public void LoadContinuously() {
-      var device = Data.TestDevice;
+    public void LoadContinuouslyTest() {
+      var device = Data.FakeDevice;
 
-      var deviceIndexResponse = _client.IndexDevice(device);
+      var deviceIndexResponse = Client.IndexDevice(device);
       Assert.True(deviceIndexResponse.IsValid);
 
       var indexedDeviceId = deviceIndexResponse.Id;
-      Assert.Equal(indexedDeviceId, device.Id);
+      Assert.Equal(device.Id, indexedDeviceId);
 
-      var deviceGetResponse = _client.GetDevice(device.Id);
+      var deviceGetResponse = Client.GetDevice(device.Id);
       Assert.True(deviceGetResponse.IsValid);
 
       var gotDevice = deviceGetResponse.Source;
-      Assert.Equal(gotDevice, device);
+      Assert.Equal(device, gotDevice);
 
       // NOTE: LoadContinuously searches for devices which takes some
       // NOTE: preparation from ES
       Thread.Sleep(1000);
-      var firstLoadPeriod = new Period { From = DateTime.Now.AddMinutes(-10),
-        To = DateTime.Now.AddMinutes(-5) };
-      _client.LoadContinuously(_measurementProviderIterator, firstLoadPeriod);
+      var firstLoadPeriod = new Period { From = DateTime.UtcNow.AddMinutes(-10),
+        To = DateTime.UtcNow.AddMinutes(-5) };
+      Client.LoadContinuously(MeasurementProviderIterator, firstLoadPeriod);
 
       // NOTE: preparation for searching...
       Thread.Sleep(1000);
-      var firstLoadSearchResponse = _client.SearchMeasurements(firstLoadPeriod);
+      var firstLoadSearchResponse = Client.SearchMeasurements(firstLoadPeriod);
       Assert.True(firstLoadSearchResponse.IsValid);
 
       var firstLoadMeasurements = firstLoadSearchResponse.Sources();
       Assert.NotEmpty(firstLoadMeasurements);
       Assert.All(
-          firstLoadMeasurements, m => Assert.Equal(m.DeviceId, device.Id));
+          firstLoadMeasurements, m => Assert.Equal(device.Id, m.DeviceId));
 
       var firstLoadMeasurementPeriod =
           firstLoadMeasurements.GetMeasurementPeriod();
@@ -47,19 +47,19 @@ namespace Elasticsearch.Test {
                       firstLoadPeriod.To.ToUniversalTime());
 
           var secondLoadPeriod =
-              new Period { From = firstLoadPeriod.To, To = DateTime.Now };
+              new Period { From = firstLoadPeriod.To, To = DateTime.UtcNow };
           // NOTE: not passing in the period this time because it should know
           // NOTE: by the last one
-          _client.LoadContinuously(_measurementProviderIterator);
+          Client.LoadContinuously(MeasurementProviderIterator);
 
           // NOTE: preparation for searching...
           Thread.Sleep(1000); var secondLoadSearchResponse =
-                                  _client.SearchMeasurements(secondLoadPeriod);
+                                  Client.SearchMeasurements(secondLoadPeriod);
           Assert.True(secondLoadSearchResponse.IsValid);
 
           var secondLoadMeasurements = secondLoadSearchResponse.Sources();
           Assert.NotEmpty(secondLoadMeasurements); Assert.All(
-              secondLoadMeasurements, m => Assert.Equal(m.DeviceId, device.Id));
+              secondLoadMeasurements, m => Assert.Equal(device.Id, m.DeviceId));
 
       var secondLoadMeasurementPeriod =
           secondLoadMeasurements.GetMeasurementPeriod();
@@ -73,54 +73,54 @@ namespace Elasticsearch.Test {
                   .Concat(secondLoadMeasurements.Select(m => m.Id))
                   .ToIds();
       var deleteMeasurementsResponse =
-          _client.DeleteMeasurements(measurementIds);
+          Client.DeleteMeasurements(measurementIds);
           // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
           // Assert.True(deleteMeasurementsResponse.IsValid);
 
           var deletedMeasurementIds = deleteMeasurementsResponse.Items.Ids();
-          Assert.Equal(deletedMeasurementIds, measurementIds);
+          AssertExtensions.ElementsEqual(measurementIds, deletedMeasurementIds);
 
-          var deleteDeviceResponse = _client.DeleteDevice(device.Id);
+          var deleteDeviceResponse = Client.DeleteDevice(device.Id);
           Assert.True(deleteDeviceResponse.IsValid);
 
           var deletedDeviceId = deleteDeviceResponse.Id;
-          Assert.Equal(deletedDeviceId, device.Id);
+          Assert.Equal(device.Id, deletedDeviceId);
     }
 
     [Fact]
-    public async Task LoadContinuouslyAsync() {
-      var device = Data.TestDevice;
+    public async Task LoadContinuouslyAsyncTest() {
+      var device = Data.FakeDevice;
 
-      var deviceIndexResponse = await _client.IndexDeviceAsync(device);
+      var deviceIndexResponse = await Client.IndexDeviceAsync(device);
       Assert.True(deviceIndexResponse.IsValid);
 
       var indexedDeviceId = deviceIndexResponse.Id;
-      Assert.Equal(indexedDeviceId, device.Id);
+      Assert.Equal(device.Id, indexedDeviceId);
 
-      var deviceGetResponse = await _client.GetDeviceAsync(device.Id);
+      var deviceGetResponse = await Client.GetDeviceAsync(device.Id);
       Assert.True(deviceGetResponse.IsValid);
 
       var gotDevice = deviceGetResponse.Source;
-      Assert.Equal(gotDevice, device);
+      Assert.Equal(device, gotDevice);
 
       // NOTE: LoadContinuously searches for devices which takes some
       // NOTE: preparation from ES
       Thread.Sleep(1000);
-      var firstLoadPeriod = (new Period { From = DateTime.Now.AddMinutes(-10),
-        To = DateTime.Now.AddMinutes(-5) });
-      await _client.LoadContinuouslyAsync(
-          _measurementProviderIterator, firstLoadPeriod);
+      var firstLoadPeriod = (new Period { From = DateTime.UtcNow.AddMinutes(-10),
+        To = DateTime.UtcNow.AddMinutes(-5) });
+      await Client.LoadContinuouslyAsync(
+          MeasurementProviderIterator, firstLoadPeriod);
 
       // NOTE: preparation for searching...
       Thread.Sleep(1000);
       var firstLoadSearchResponse =
-          await _client.SearchMeasurementsAsync(firstLoadPeriod);
+          await Client.SearchMeasurementsAsync(firstLoadPeriod);
       Assert.True(firstLoadSearchResponse.IsValid);
 
       var firstLoadMeasurements = firstLoadSearchResponse.Sources();
       Assert.NotEmpty(firstLoadMeasurements);
       Assert.All(
-          firstLoadMeasurements, m => Assert.Equal(m.DeviceId, device.Id));
+          firstLoadMeasurements, m => Assert.Equal(device.Id, m.DeviceId));
 
       var firstLoadMeasurementPeriod =
           firstLoadMeasurements.GetMeasurementPeriod();
@@ -130,21 +130,21 @@ namespace Elasticsearch.Test {
                       firstLoadPeriod.To.ToUniversalTime());
 
           var secondLoadPeriod =
-              (new Period { From = DateTime.Now.AddMinutes(-5),
-                To = DateTime.Now });
+              (new Period { From = DateTime.UtcNow.AddMinutes(-5),
+                To = DateTime.UtcNow });
           // NOTE: not passing in the period this time because it should know
           // NOTE: by the last one
-          await _client.LoadContinuouslyAsync(_measurementProviderIterator);
+          await Client.LoadContinuouslyAsync(MeasurementProviderIterator);
 
           // NOTE: preparation for searching...
           Thread.Sleep(1000);
           var secondLoadSearchResponse =
-              await _client.SearchMeasurementsAsync(secondLoadPeriod);
+              await Client.SearchMeasurementsAsync(secondLoadPeriod);
           Assert.True(secondLoadSearchResponse.IsValid);
 
           var secondLoadMeasurements = secondLoadSearchResponse.Sources();
           Assert.NotEmpty(secondLoadMeasurements); Assert.All(
-              secondLoadMeasurements, m => Assert.Equal(m.DeviceId, device.Id));
+              secondLoadMeasurements, m => Assert.Equal(device.Id, m.DeviceId));
 
       var secondLoadMeasurementPeriod =
           secondLoadMeasurements.GetMeasurementPeriod();
@@ -158,14 +158,14 @@ namespace Elasticsearch.Test {
                   .Concat(secondLoadMeasurements.Select(m => m.Id))
                   .ToIds();
       var deleteMeasurementsResponse =
-          _client.DeleteMeasurements(measurementIds);
+          Client.DeleteMeasurements(measurementIds);
           // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
           // Assert.True(deleteMeasurementsResponse.IsValid);
 
           var deletedMeasurementIds = deleteMeasurementsResponse.Items.Ids();
           Assert.Equal(deletedMeasurementIds, measurementIds);
 
-          var deleteDeviceResponse = await _client.DeleteDeviceAsync(device.Id);
+          var deleteDeviceResponse = await Client.DeleteDeviceAsync(device.Id);
           Assert.True(deleteDeviceResponse.IsValid);
 
           var deletedDeviceId = deleteDeviceResponse.Id;

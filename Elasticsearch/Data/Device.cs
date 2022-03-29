@@ -41,7 +41,7 @@ public class Device {
   public string State { get; init; }
 
   [Date(Name = "dateAdded")]
-  public DateTime DateAdded { get; init; } = DateTime.Now;
+  public DateTime DateAdded { get; init; } = DateTime.UtcNow;
 
   [Date(Name = "dateDiscontinued")]
   public DateTime? DateDiscontinued { get; init; } = null;

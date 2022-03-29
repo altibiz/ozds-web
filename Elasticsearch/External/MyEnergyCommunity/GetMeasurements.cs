@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Text.Json;
-using System.Globalization;
 // NOTE: QueryBuilder
 using Microsoft.AspNetCore.Http.Extensions;
 
@@ -41,11 +40,9 @@ namespace Elasticsearch.MyEnergyCommunity {
         var uri = "v1/measurements/device/" + device.SourceDeviceId;
         var query = new QueryBuilder();
         if (period?.From != null)
-          query.Add(
-              "from", period.From.ToString("o", CultureInfo.InvariantCulture));
+          query.Add("from", period.From.ToUtcIsoString());
         if (period?.To != null)
-          query.Add(
-              "to", period.To.ToString("o", CultureInfo.InvariantCulture));
+          query.Add("to", period.To.ToUtcIsoString());
         if (continuationToken != null)
           query.Add("continuationToken", continuationToken);
         uri += query;
@@ -54,7 +51,7 @@ namespace Elasticsearch.MyEnergyCommunity {
 
         HttpResponseMessage? response = null;
         try {
-          response = await this._client.SendAsync(request);
+          response = await this.Http.SendAsync(request);
         } catch (HttpRequestException connectionException) {
           Console.WriteLine("Failed connecting to", this.Source);
           Console.WriteLine("Reason", connectionException.Message);
