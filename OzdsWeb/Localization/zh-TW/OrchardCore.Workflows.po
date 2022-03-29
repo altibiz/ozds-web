@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
-"PO-Revision-Date: 2021-10-07 22:57\n"
+"PO-Revision-Date: 2022-03-05 10:53\n"
 
 #. builder.Add(S["Workflows"], NavigationConstants.AdminMenuWorkflowsPosition, workflow => workflow
 #: OrchardCore.Workflows\AdminMenu.cs:24
@@ -289,13 +289,13 @@ msgid "Done"
 msgstr "完成"
 
 #. await _notifier.SuccessAsync(H["Activity added successfully."]);
-#: OrchardCore.Workflows\Controllers\ActivityController.cs:113
+#: OrchardCore.Workflows\Controllers\ActivityController.cs:112
 msgctxt "OrchardCore.Workflows.Controllers.ActivityController"
 msgid "Activity added successfully."
 msgstr ""
 
 #. await _notifier.SuccessAsync(H["Activity updated successfully."]);
-#: OrchardCore.Workflows\Controllers\ActivityController.cs:169
+#: OrchardCore.Workflows\Controllers\ActivityController.cs:168
 msgctxt "OrchardCore.Workflows.Controllers.ActivityController"
 msgid "Activity updated successfully."
 msgstr ""
@@ -387,19 +387,19 @@ msgid "Done"
 msgstr "完成"
 
 #. public override LocalizedString DisplayText => S["Http Redirect Task"];
-#: OrchardCore.Workflows\Http\Activities\HttpRedirectTask.cs:34
+#: OrchardCore.Workflows\Http\Activities\HttpRedirectTask.cs:33
 msgctxt "OrchardCore.Workflows.Http.Activities.HttpRedirectTask"
 msgid "Http Redirect Task"
 msgstr ""
 
 #. public override LocalizedString Category => S["HTTP"];
-#: OrchardCore.Workflows\Http\Activities\HttpRedirectTask.cs:36
+#: OrchardCore.Workflows\Http\Activities\HttpRedirectTask.cs:35
 msgctxt "OrchardCore.Workflows.Http.Activities.HttpRedirectTask"
 msgid "HTTP"
 msgstr ""
 
 #. return Outcomes(S["Done"]);
-#: OrchardCore.Workflows\Http\Activities\HttpRedirectTask.cs:52
+#: OrchardCore.Workflows\Http\Activities\HttpRedirectTask.cs:51
 msgctxt "OrchardCore.Workflows.Http.Activities.HttpRedirectTask"
 msgid "Done"
 msgstr "完成"
@@ -548,8 +548,8 @@ msgctxt "OrchardCore.Workflows.Views.ActivityMetadata.Edit"
 msgid "Optionally provide a custom title for this activity."
 msgstr "可选提供此活动的自定义标题。"
 
-#. <button class="btn btn-warning" type="submit" name="submit.Save" value="user-task.@action">@T[action] @T["and Save"]</button>
-#. <button type="submit" name="submit.Save" class="dropdown-item" value="user-task.@action">@T[action] @T["and Save"]</button>
+#. <button class="btn btn-warning" type="submit" name="submit.Save" value="user-task.@action">@T[Html.Encode(action)] @T["and Save"]</button>
+#. <button type="submit" name="submit.Save" class="dropdown-item" value="user-task.@action">@T[Html.Encode(action)] @T["and Save"]</button>
 #: OrchardCore.Workflows\Views\Content.UserTaskButton.cshtml:11
 #: OrchardCore.Workflows\Views\Content.UserTaskButton.cshtml:30
 msgctxt "OrchardCore.Workflows.Views.Content.UserTaskButton"
@@ -562,8 +562,8 @@ msgctxt "OrchardCore.Workflows.Views.Content.UserTaskButton"
 msgid "Toggle Dropdown"
 msgstr ""
 
-#. <button type="submit" name="submit.Publish" class="dropdown-item" value="user-task.@action">@T[action] @T["and Publish"]</button>
-#. <button type="submit" name="submit.Publish" class="dropdown-item" value="user-task.@action">@T[action] @T["and Publish"]</button>
+#. <button type="submit" name="submit.Publish" class="dropdown-item" value="user-task.@action">@T[Html.Encode(action)] @T["and Publish"]</button>
+#. <button type="submit" name="submit.Publish" class="dropdown-item" value="user-task.@action">@T[Html.Encode(action)] @T["and Publish"]</button>
 #: OrchardCore.Workflows\Views\Content.UserTaskButton.cshtml:16
 #: OrchardCore.Workflows\Views\Content.UserTaskButton.cshtml:31
 msgctxt "OrchardCore.Workflows.Views.Content.UserTaskButton"
@@ -678,11 +678,11 @@ msgctxt "OrchardCore.Workflows.Views.Items.CorrelateTask.Fields.Edit"
 msgid "Value"
 msgstr "值"
 
-#. <span class="hint">@T["The value to correlate workflow instances with. With Liquid support."]</span>
-#: OrchardCore.Workflows\Views\Items\CorrelateTask.Fields.Edit.cshtml:8
+#. <span class="hint">@T["The value to correlate workflow instances with. With Javascript support."]</span>
+#: OrchardCore.Workflows\Views\Items\CorrelateTask.Fields.Edit.cshtml:9
 msgctxt "OrchardCore.Workflows.Views.Items.CorrelateTask.Fields.Edit"
-msgid "The value to correlate workflow instances with. With Liquid support."
-msgstr "与工作流实例关联的值。液流体支持。"
+msgid "The value to correlate workflow instances with. With Javascript support."
+msgstr ""
 
 #. <h4 class="card-title"><i class="fa fa-link" aria-hidden="true"></i>@T["Correlate"]</h4>
 #: OrchardCore.Workflows\Views\Items\CorrelateTask.Fields.Thumbnail.cshtml:1
@@ -1173,31 +1173,31 @@ msgid "Content Type"
 msgstr "内容类型"
 
 #. <span class="hint">@T["The content type of the response body."]</span>
-#: OrchardCore.Workflows\Views\Items\HttpResponseTask.Fields.Edit.cshtml:20
+#: OrchardCore.Workflows\Views\Items\HttpResponseTask.Fields.Edit.cshtml:21
 msgctxt "OrchardCore.Workflows.Views.Items.HttpResponseTask.Fields.Edit"
 msgid "The content type of the response body."
 msgstr "回复主体的内容类型。"
 
 #. <label asp-for="Content">@T["Content"]</label>
-#: OrchardCore.Workflows\Views\Items\HttpResponseTask.Fields.Edit.cshtml:25
+#: OrchardCore.Workflows\Views\Items\HttpResponseTask.Fields.Edit.cshtml:26
 msgctxt "OrchardCore.Workflows.Views.Items.HttpResponseTask.Fields.Edit"
 msgid "Content"
 msgstr "内容"
 
 #. <span class="hint">@T["The body to send back. With Liquid support."]</span>
-#: OrchardCore.Workflows\Views\Items\HttpResponseTask.Fields.Edit.cshtml:28
+#: OrchardCore.Workflows\Views\Items\HttpResponseTask.Fields.Edit.cshtml:29
 msgctxt "OrchardCore.Workflows.Views.Items.HttpResponseTask.Fields.Edit"
 msgid "The body to send back. With Liquid support."
 msgstr "要回复的主体。有 Liquid 支持。"
 
 #. <label asp-for="Headers">@T["Headers"] </label>
-#: OrchardCore.Workflows\Views\Items\HttpResponseTask.Fields.Edit.cshtml:32
+#: OrchardCore.Workflows\Views\Items\HttpResponseTask.Fields.Edit.cshtml:33
 msgctxt "OrchardCore.Workflows.Views.Items.HttpResponseTask.Fields.Edit"
 msgid "Headers"
 msgstr "头部"
 
 #. <span class="hint">@T["Provide additional HTTP response headers. Enter one key/value pair per line. For example: \"X-MyHeader: Foo\". With Liquid support."]</span>
-#: OrchardCore.Workflows\Views\Items\HttpResponseTask.Fields.Edit.cshtml:35
+#: OrchardCore.Workflows\Views\Items\HttpResponseTask.Fields.Edit.cshtml:36
 msgctxt "OrchardCore.Workflows.Views.Items.HttpResponseTask.Fields.Edit"
 msgid "Provide additional HTTP response headers. Enter one key/value pair per line. For example: \"X-MyHeader: Foo\". With Liquid support."
 msgstr "提供额外的 HTTP 响应头。每行输入一个key/value 对。例如：“X-Myprider: Foo”。有 Liquid 支持。"
@@ -1414,7 +1414,7 @@ msgid "Script"
 msgstr "脚本"
 
 #. <span class="hint">@T["The script to execute. Make sure to call `setOutcome` with any of the specified available outcomes at least once."]</span>
-#: OrchardCore.Workflows\Views\Items\ScriptTask.Fields.Edit.cshtml:15
+#: OrchardCore.Workflows\Views\Items\ScriptTask.Fields.Edit.cshtml:16
 msgctxt "OrchardCore.Workflows.Views.Items.ScriptTask.Fields.Edit"
 msgid "The script to execute. Make sure to call `setOutcome` with any of the specified available outcomes at least once."
 msgstr "要执行的脚本。请确保至少用一次指定的可用结果调用 \"setOutcome\"。"
@@ -1601,13 +1601,13 @@ msgctxt "OrchardCore.Workflows.Views.Items.UserTaskEvent.Fields.Design"
 msgid "Request any user action of <em>{0}</em>"
 msgstr "请求<em> {0} </ em>的任何用户操作"
 
-#. <span>@T["Required roles: <em>{0}</em>", Model.Activity.Roles.Any() ? new LocalizedHtmlString("RequiredRoles", string.Join(", ", Model.Activity.Roles)) : T["Any"]]</span>
+#. <span>@T["Required roles: <em>{0}</em>", Model.Activity.Roles.Any() ? Html.Raw(Html.Encode(string.Join(", ", Model.Activity.Roles))) : T["Any"]]</span>
 #: OrchardCore.Workflows\Views\Items\UserTaskEvent.Fields.Design.cshtml:11
 msgctxt "OrchardCore.Workflows.Views.Items.UserTaskEvent.Fields.Design"
 msgid "Any"
 msgstr "任何"
 
-#. <span>@T["Required roles: <em>{0}</em>", Model.Activity.Roles.Any() ? new LocalizedHtmlString("RequiredRoles", string.Join(", ", Model.Activity.Roles)) : T["Any"]]</span>
+#. <span>@T["Required roles: <em>{0}</em>", Model.Activity.Roles.Any() ? Html.Raw(Html.Encode(string.Join(", ", Model.Activity.Roles))) : T["Any"]]</span>
 #: OrchardCore.Workflows\Views\Items\UserTaskEvent.Fields.Design.cshtml:11
 msgctxt "OrchardCore.Workflows.Views.Items.UserTaskEvent.Fields.Design"
 msgid "Required roles: <em>{0}</em>"
@@ -1743,7 +1743,7 @@ msgstr "相关 ID"
 #: OrchardCore.Workflows\Views\Workflow\Details.cshtml:93
 msgctxt "OrchardCore.Workflows.Views.Workflow.Details"
 msgid "Back"
-msgstr "返回"
+msgstr "回上一頁"
 
 #. <a class="btn btn-danger" data-message="@T["Are you sure you want to delete this workflow instance?"]" data-url-af="RemoveUrl UnsafeUrl" asp-action="Delete" asp-route-id="@Model.Workflow.Id">@T["Delete"]</a>
 #: OrchardCore.Workflows\Views\Workflow\Details.cshtml:94
@@ -1805,7 +1805,7 @@ msgstr[0] ""
 #: OrchardCore.Workflows\Views\Workflow\Index.cshtml:45
 msgctxt "OrchardCore.Workflows.Views.Workflow.Index"
 msgid "Actions"
-msgstr ""
+msgstr "操作"
 
 #. <a class="dropdown-item" href="javascript:void(0)" data-action="@item.Value" data-title="@T["Bulk Action"]" data-message="@T["Are you sure you want to {0} these items?", @item.Text.ToLower()]">@item.Text</a>
 #: OrchardCore.Workflows\Views\Workflow\Index.cshtml:50
@@ -1871,7 +1871,7 @@ msgstr "<strong>这里什么都没有!</strong> 目前没有停止的工作流�
 #: OrchardCore.Workflows\Views\Workflow\Index.cshtml:129
 msgctxt "OrchardCore.Workflows.Views.Workflow.Index"
 msgid "Back"
-msgstr "返回"
+msgstr "回上一頁"
 
 #. selectedItems.text($(":checkbox[name='itemIds']:checked").length + ' @T["selected"]');
 #. selectedItems.text(selectedItemsCount + ' @T["selected"]');
@@ -2233,7 +2233,7 @@ msgstr[0] ""
 #: OrchardCore.Workflows\Views\WorkflowType\Index.cshtml:46
 msgctxt "OrchardCore.Workflows.Views.WorkflowType.Index"
 msgid "Actions"
-msgstr ""
+msgstr "操作"
 
 #. <a class="dropdown-item" href="javascript:void(0)" data-action="@item.Value" data-title="@T["Bulk Action"]" data-message="@T["Are you sure you want to {0} these items?", @item.Text.ToLower()]">@item.Text</a>
 #: OrchardCore.Workflows\Views\WorkflowType\Index.cshtml:51
