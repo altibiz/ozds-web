@@ -13,7 +13,6 @@
     "blog"
   ],
 
-  // The variables are evaluated the first time they are accessed, and reused across steps
   "variables": {
     "adminUrlPrefix": "[js: configuration('OrchardCore_Admin:AdminUrlPrefix', 'Admin')]",
     "blogContentItemId": "[js:uuid()]",
@@ -25,14 +24,12 @@
     "spaceTagContentItemId": "[js:uuid()]",
     "categoriesContentItemId": "[js:uuid()]",
     "categoryTravelContentItemId": "[js:uuid()]"
-    // "now": "[js: new Date().toISOString()]"
   },
 
   "steps": [
     {
       "name": "feature",
       "enable": [
-        // SaaS
         "OrchardCore.HomeRoute",
         "OrchardCore.Admin",
         "OrchardCore.Diagnostics",
@@ -46,8 +43,6 @@
         "OrchardCore.Themes",
         "OrchardCore.Users",
         "OrchardCore.Localization",
-
-        // Content Management
         "OrchardCore.Alias",
         "OrchardCore.AdminMenu",
         "OrchardCore.Autoroute",
@@ -83,8 +78,6 @@
         "OrchardCore.Widgets",
         "OrchardCore.Workflows",
         "Members",
-
-        // Themes
         "OzdsTheme",
         "TheAdmin",
         "SafeMode"
@@ -865,7 +858,6 @@
       ]
     },
     {
-      // Create the indices before the content items so they are indexed automatically.
       "name": "lucene-index",
       "Indices": [
         {
@@ -899,7 +891,6 @@
       ]
     },
     {
-      // Create the search settings.
       "name": "Settings",
       "LuceneSettings": {
         "SearchIndex": "Search",
@@ -909,7 +900,6 @@
       }
     },
     {
-      // Create the search index permissions.
       "name": "Roles",
       "Roles": [
         {
