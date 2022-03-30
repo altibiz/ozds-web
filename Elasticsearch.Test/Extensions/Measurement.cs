@@ -7,13 +7,14 @@ namespace Elasticsearch.Test {
     public static Period GetMeasurementPeriod(
         this IEnumerable<Measurement> measurements) =>
         measurements.Aggregate(
-            new Period { From = DateTime.MaxValue, To = DateTime.MinValue },
+            new Period { From = DateTime.MaxValue.ToUniversalTime(),
+              To = DateTime.MinValue.ToUniversalTime() },
             (period, next) => new Period {
-              From = (next.MeasurementTimestamp < period.From
-                          ? next.MeasurementTimestamp
+              From = (next.MeasurementTimestamp.ToUniversalTime() < period.From
+                          ? next.MeasurementTimestamp.ToUniversalTime()
                           : period.From),
-              To = (next.MeasurementTimestamp > period.To
-                        ? next.MeasurementTimestamp
+              To = (next.MeasurementTimestamp.ToUniversalTime() > period.To
+                        ? next.MeasurementTimestamp.ToUniversalTime()
                         : period.To)
             });
 

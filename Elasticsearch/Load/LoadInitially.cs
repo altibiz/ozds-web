@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,7 +20,13 @@ public partial class Client : IClient {
 
   public async Task LoadInitiallyAsync(
       IMeasurementProviderIterator measurementProviderIterator) {
-    IndexLog(new Log(LogType.LoadBegin, Source));
+    var period = new Period {
+      From = DateTime.MinValue.ToUniversalTime(),
+      To = DateTime.UtcNow,
+    };
+
+    IndexLog(new Log(
+        LogType.LoadBegin, Source, new Log.KnownData { Period = period }));
 
     var measurements = new List<Measurement>();
 
@@ -34,7 +41,8 @@ public partial class Client : IClient {
 
     await IndexMeasurementsAsync(measurements);
 
-    IndexLog(new Log(LogType.LoadEnd, Source));
+    IndexLog(new Log(
+        LogType.LoadEnd, Source, new Log.KnownData { Period = period }));
   }
 }
 }

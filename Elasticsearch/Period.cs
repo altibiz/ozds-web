@@ -5,7 +5,7 @@ namespace Elasticsearch {
 [ElasticsearchType(RelationName = "period")]
 public class Period {
   [Date(Name = "from")]
-  public DateTime From { get; init; } = DateTime.MinValue;
+  public DateTime From { get; init; } = DateTime.MinValue.ToUniversalTime();
 
   [Date(Name = "to")]
   public DateTime To { get; init; } = DateTime.UtcNow;

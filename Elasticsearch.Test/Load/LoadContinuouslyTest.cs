@@ -68,23 +68,21 @@ namespace Elasticsearch.Test {
           Assert.True(secondLoadMeasurementPeriod.To.ToUniversalTime() <=
                       secondLoadPeriod.To.ToUniversalTime());
 
-          var measurementIds =
-              firstLoadMeasurements.Select(m => m.Id)
-                  .Concat(secondLoadMeasurements.Select(m => m.Id))
-                  .ToIds();
-      var deleteMeasurementsResponse =
-          Client.DeleteMeasurements(measurementIds);
-          // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
-          // Assert.True(deleteMeasurementsResponse.IsValid);
+          var continuousLoadLogSearchResponse =
+              Client.SearchLogs(LogType.LoadEnd);
+          Assert.True(continuousLoadLogSearchResponse.IsValid);
 
-          var deletedMeasurementIds = deleteMeasurementsResponse.Items.Ids();
-          AssertExtensions.ElementsEqual(measurementIds, deletedMeasurementIds);
+          var continuousLoadLogs =
+              continuousLoadLogSearchResponse.Sources().ToList();
+          Assert.Equal(2, continuousLoadLogs.Count);
 
-          var deleteDeviceResponse = Client.DeleteDevice(device.Id);
-          Assert.True(deleteDeviceResponse.IsValid);
-
-          var deletedDeviceId = deleteDeviceResponse.Id;
-          Assert.Equal(device.Id, deletedDeviceId);
+          Assert.All(continuousLoadLogs, log => {
+            Assert.Equal(log.Type, LogType.LoadEnd);
+            Assert.NotNull(log.Data);
+            Assert.NotNull(log.Data.Period);
+            Assert.NotNull(log.Data.Period?.From);
+            Assert.NotNull(log.Data.Period?.To);
+          });
     }
 
     [Fact]
@@ -154,23 +152,20 @@ namespace Elasticsearch.Test {
           Assert.True(secondLoadMeasurementPeriod.To.ToUniversalTime() <=
                       secondLoadPeriod.To.ToUniversalTime());
 
-          var measurementIds =
-              firstLoadMeasurements.Select(m => m.Id)
-                  .Concat(secondLoadMeasurements.Select(m => m.Id))
-                  .ToIds();
-      var deleteMeasurementsResponse =
-          Client.DeleteMeasurements(measurementIds);
-          // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
-          // Assert.True(deleteMeasurementsResponse.IsValid);
+          var continuousLoadLogSearchResponse =
+              await Client.SearchLogsAsync(LogType.LoadEnd);
+          Assert.True(continuousLoadLogSearchResponse.IsValid);
 
-          var deletedMeasurementIds = deleteMeasurementsResponse.Items.Ids();
-          Assert.Equal(deletedMeasurementIds, measurementIds);
-
-          var deleteDeviceResponse = await Client.DeleteDeviceAsync(device.Id);
-          Assert.True(deleteDeviceResponse.IsValid);
-
-          var deletedDeviceId = deleteDeviceResponse.Id;
-          Assert.Equal(deletedDeviceId, device.Id);
+          var continuousLoadLogs =
+              continuousLoadLogSearchResponse.Sources().ToList();
+          Assert.Equal(2, continuousLoadLogs.Count);
+          Assert.All(continuousLoadLogs, log => {
+            Assert.Equal(log.Type, LogType.LoadEnd);
+            Assert.NotNull(log.Data);
+            Assert.NotNull(log.Data.Period);
+            Assert.NotNull(log.Data.Period?.From);
+            Assert.NotNull(log.Data.Period?.To);
+          });
     }
   }
 }
