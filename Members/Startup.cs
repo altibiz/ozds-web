@@ -95,6 +95,15 @@ public class Startup : OrchardCore.Modules.StartupBase {
                  string.Equals(
                      d, "Disabled", StringComparison.OrdinalIgnoreCase);
         });
+
+    if (CurrentEnvironment.IsDevelopment()) {
+      services.AddSingleton<Elasticsearch.IMeasurementProviderIterator,
+          Elasticsearch.FakeMeasurementProviderIterator>();
+    } else {
+      services.AddSingleton<Elasticsearch.IMeasurementProviderIterator,
+          Elasticsearch.ExternalMeasurementProviderIterator>();
+    } services.AddSingleton<Elasticsearch.IClient, Elasticsearch.Client>();
+        services.AddSingleton<IBackgroundTask, ContinuousLoadBackgroundTask>();
   }
 
   public override void Configure(IApplicationBuilder builder,
