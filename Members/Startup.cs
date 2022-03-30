@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using OrchardCore.Data.Migration;
 using OrchardCore.Navigation;
 using Microsoft.Extensions.Hosting;
@@ -34,9 +35,13 @@ using Members.ContentHandlers;
 
 namespace Members {
 public class Startup : OrchardCore.Modules.StartupBase {
-  public IWebHostEnvironment CurrentEnvironment { get; }
+  public IWebHostEnvironment Env { get; init; }
+  public ILogger<Startup> Logger { get; init; }
 
-  public Startup(IWebHostEnvironment env) { CurrentEnvironment = env; }
+  public Startup(IWebHostEnvironment env, ILogger<Startup> logger) {
+    Env = env;
+    Logger = logger;
+  }
 
   public override void ConfigureServices(IServiceCollection services) {
     services.AddScoped<INavigationProvider, AdminMenu>();
@@ -70,7 +75,7 @@ public class Startup : OrchardCore.Modules.StartupBase {
     services.AddScoped<IContentDisplayDriver, ContainedPartDisplayDriver>();
     services.AddSingleton<IBackgroundTask, FastImportBackgroundTask>();
 
-    if (CurrentEnvironment.IsDevelopment()) {
+    if (Env.IsDevelopment()) {
       services.AddScoped<IShapeDisplayEvents, ShapeTracingShapeEvents>();
       services.AddScoped<IContentTypeDefinitionDisplayDriver,
           CodeGenerationDisplayDriver>();
@@ -96,13 +101,14 @@ public class Startup : OrchardCore.Modules.StartupBase {
                      d, "Disabled", StringComparison.OrdinalIgnoreCase);
         });
 
-    if (CurrentEnvironment.IsDevelopment()) {
+    if (Env.IsDevelopment()) {
       services.AddSingleton<Elasticsearch.IMeasurementProviderIterator,
           Elasticsearch.FakeMeasurementProviderIterator>();
     } else {
       services.AddSingleton<Elasticsearch.IMeasurementProviderIterator,
           Elasticsearch.ExternalMeasurementProviderIterator>();
     } services.AddSingleton<Elasticsearch.IClient, Elasticsearch.Client>();
+        services.AddSingleton<ContinuousLoader>();
         services.AddSingleton<IBackgroundTask, ContinuousLoadBackgroundTask>();
   }
 

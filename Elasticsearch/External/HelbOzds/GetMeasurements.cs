@@ -38,5 +38,7 @@ namespace Elasticsearch.HelbOzds {
       return new Elasticsearch.Measurement(measurement.Timestamp, null, Source,
           Elasticsearch.Device.MakeId(Source, measurement.DeviceId));
     }
+
+    private const string s_source = "HelbOzds";
   }
 }

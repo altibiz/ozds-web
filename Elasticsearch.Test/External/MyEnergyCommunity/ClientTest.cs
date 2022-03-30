@@ -1,14 +1,15 @@
-using Xunit;
+using Microsoft.Extensions.Logging;
 
-namespace Elasticsearch.Test.MyEnergyCommunity {
-  public class ClientTestFixture {
-    public Elasticsearch.MyEnergyCommunity.IClient Client { get; init; } = 
-      new Elasticsearch.MyEnergyCommunity.Client();
+namespace Elasticsearch.Test.MyEnergyCommunity;
+
+using Elasticsearch.MyEnergyCommunity;
+
+public partial class ClientTest {
+  public ClientTest(IClient client, ILogger<ClientTest> logger) {
+    Logger = logger;
+    Client = client;
   }
 
-  public partial class ClientTest : IClassFixture<ClientTestFixture> {
-    public ClientTest(ClientTestFixture data) { Client = data.Client; }
-
-    private Elasticsearch.MyEnergyCommunity.IClient Client { get; init; }
-  }
+  private IClient Client { get; }
+  private ILogger Logger { get; }
 }

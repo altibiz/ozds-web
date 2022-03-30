@@ -1,14 +1,15 @@
-using Xunit;
+using Microsoft.Extensions.Logging;
 
-namespace Elasticsearch.Test.HelbOzds {
-  public class ClientTestFixture {
-    public Elasticsearch.HelbOzds.IClient Client { get; init; } = 
-      new Elasticsearch.HelbOzds.Client();
+namespace Elasticsearch.Test.HelbOzds;
+
+using Elasticsearch.HelbOzds;
+
+public partial class ClientTest {
+  public ClientTest(IClient client, ILogger<ClientTest> logger) {
+    Logger = logger;
+    Client = client;
   }
 
-  public partial class ClientTest : IClassFixture<ClientTestFixture> {
-    public ClientTest(ClientTestFixture data) { Client = data.Client; }
-
-    private Elasticsearch.HelbOzds.IClient Client { get; init; }
-  }
+  private IClient Client { get; }
+  private ILogger Logger { get; }
 }

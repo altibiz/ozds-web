@@ -1,71 +1,72 @@
-// using System;
-// using System.Threading;
-// using System.Data;
+using System;
+using System.Threading;
+using System.Data;
 using System.Data.SqlClient;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
-namespace Elasticsearch.HelbOzds {
-  public sealed partial class Client : IClient {
-    public Client()
-        : this(EnvironmentExtensions.AssertEnvironmentVariable(
-              "HELB_OZDS_SQL_CONNECTION_STRING")) {}
+namespace Elasticsearch.HelbOzds;
 
-    public Client(
-        string sqlConnectionString, bool shouldRetryOpenClose = true) {
-      SqlConnectionString = sqlConnectionString;
-      ShouldRetryOpenClose = shouldRetryOpenClose;
-      Sql = new SqlConnection(SqlConnectionString);
+public sealed partial class Client : IClient, IDisposable {
+  public Client(IConfiguration conf, ILogger<Client> logger) {
+    var section = conf.GetSection("Elasticsearch")
+                      .GetSection("External")
+                      .GetSection("HelbOzds")
+                      .GetSection("Client");
 
-      // Console.WriteLine(
-      //     $"Opening {Source} connection to {sqlConnectionString}...");
-      // if (_shouldRetryOpenClose) {
-      //   bool retry = false;
-      //   do {
-      //     try {
-      //       _connection.Open();
-      //       retry = false;
-      //     } catch (SqlException sqlException) {
-      //       Console.WriteLine($"Failed opening connection to {Source}");
-      //       Console.WriteLine($"Reason {sqlException.Message}");
-      //       Console.WriteLine("Retrying in 5 seconds...");
-      //       retry = true;
-      //       Thread.Sleep(5000);
-      //     }
-      //   } while (retry);
-      // } else {
-      //   _connection.Open();
-      // }
-    }
+    Db = new SqlConnection(section.GetNonNullValue<string>("connectionString"));
 
-    ~Client() {
-      // if (_connection.State != ConnectionState.Closed) {
-      //   Console.WriteLine(
-      //       $"Closing {Source} connection to {_sqlConnectionString}...");
-      //   if (_shouldRetryOpenClose) {
-      //     bool retry = false;
-      //     do {
-      //       try {
-      //         _connection.Close();
-      //         retry = false;
-      //       } catch (SqlException sqlException) {
-      //         Console.WriteLine("Failed closing connection to", this.Source);
-      //         Console.WriteLine("Reason", sqlException.Message);
-      //         Console.WriteLine("Retrying in 5 seconds...");
-      //         retry = true;
-      //         Thread.Sleep(5000);
-      //       }
-      //     } while (retry);
-      //   } else {
-      //     _connection.Close();
-      //   }
-      // }
-    }
-
-    private bool ShouldRetryOpenClose { get; init; }
-
-    private string SqlConnectionString { get; init; }
-
-    private SqlConnection Sql { get; init; }
-
-    private const string s_source = "HelbOzds";
+    Logger = logger;
+    // OpenSqlConnection();
   }
+
+  public void Dispose() {
+    // CloseSqlConnection();
+  }
+
+  private void OpenSqlConnection() {
+
+    bool retry = false;
+    do {
+      try {
+        Db.Open();
+        retry = false;
+      } catch (SqlException sqlException) {
+        Logger.LogWarning(
+            $"Failed opening {Source} connection to {Db.ConnectionString}\n" +
+                $"Reason: {sqlException.Message}" + "Retrying in 5 seconds...",
+            LogLevel.Warning);
+        retry = true;
+        Thread.Sleep(5000);
+      }
+    } while (retry);
+    Logger.LogInformation(
+        $"Opened {Source} connection to {Db.ConnectionString}");
+  }
+
+  private void CloseSqlConnection() {
+    if (Db.State != ConnectionState.Closed) {
+      bool retry = false;
+      do {
+        try {
+          Db.Close();
+          retry = false;
+        } catch (SqlException sqlException) {
+          Logger.LogWarning($"Failed closing connection to {Source}\n" +
+                                $"Reason: {sqlException.Message}" +
+                                "Retrying in 5 seconds...",
+              LogLevel.Warning);
+          retry = true;
+          Thread.Sleep(5000);
+        }
+      } while (retry);
+    } else {
+      Db.Close();
+    }
+    Logger.LogInformation(
+        $"Closed {Source} connection to {Db.ConnectionString}");
+  }
+
+  private IDbConnection Db { get; }
+  private ILogger Logger { get; }
 }

@@ -27,7 +27,7 @@ namespace Elasticsearch.Test {
       Thread.Sleep(1000);
       var firstLoadPeriod = new Period { From = DateTime.UtcNow.AddMinutes(-10),
         To = DateTime.UtcNow.AddMinutes(-5) };
-      Client.LoadContinuously(MeasurementProviderIterator, firstLoadPeriod);
+      Client.LoadContinuously(Providers, firstLoadPeriod);
 
       // NOTE: preparation for searching...
       Thread.Sleep(1000);
@@ -50,7 +50,7 @@ namespace Elasticsearch.Test {
               new Period { From = firstLoadPeriod.To, To = DateTime.UtcNow };
           // NOTE: not passing in the period this time because it should know
           // NOTE: by the last one
-          Client.LoadContinuously(MeasurementProviderIterator);
+          Client.LoadContinuously(Providers);
 
           // NOTE: preparation for searching...
           Thread.Sleep(1000); var secondLoadSearchResponse =
@@ -107,8 +107,7 @@ namespace Elasticsearch.Test {
       var firstLoadPeriod =
           (new Period { From = DateTime.UtcNow.AddMinutes(-10),
             To = DateTime.UtcNow.AddMinutes(-5) });
-      await Client.LoadContinuouslyAsync(
-          MeasurementProviderIterator, firstLoadPeriod);
+      await Client.LoadContinuouslyAsync(Providers, firstLoadPeriod);
 
       // NOTE: preparation for searching...
       Thread.Sleep(1000);
@@ -133,7 +132,7 @@ namespace Elasticsearch.Test {
                 To = DateTime.UtcNow });
           // NOTE: not passing in the period this time because it should know
           // NOTE: by the last one
-          await Client.LoadContinuouslyAsync(MeasurementProviderIterator);
+          await Client.LoadContinuouslyAsync(Providers);
 
           // NOTE: preparation for searching...
           Thread.Sleep(1000);

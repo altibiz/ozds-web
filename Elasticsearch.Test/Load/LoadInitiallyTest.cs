@@ -24,7 +24,7 @@ namespace Elasticsearch.Test {
       // NOTE: LoadInitially searches for devices which takes some
       // NOTE: preparation from ES
       Thread.Sleep(1000);
-      Client.LoadInitially(MeasurementProviderIterator);
+      Client.LoadInitially(Providers);
 
       // NOTE: preparation for searching...
       Thread.Sleep(1000);
@@ -70,7 +70,7 @@ namespace Elasticsearch.Test {
       // NOTE: LoadInitially searches for devices which takes some
       // NOTE: preparation from ES
       Thread.Sleep(1000);
-      await Client.LoadInitiallyAsync(MeasurementProviderIterator);
+      await Client.LoadInitiallyAsync(Providers);
 
       // NOTE: preparation for searching...
       Thread.Sleep(1000);

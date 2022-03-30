@@ -1,14 +1,15 @@
-using Xunit;
+using Microsoft.Extensions.Logging;
 
-namespace Elasticsearch.Test.MeasurementFaker {
-  public class ClientTestFixture {
-    public Elasticsearch.MeasurementFaker.IClient Client { get; init; } =
-      new Elasticsearch.MeasurementFaker.Client();
+namespace Elasticsearch.Test.MeasurementFaker;
+
+using Elasticsearch.MeasurementFaker;
+
+public partial class ClientTest {
+  public ClientTest(IClient client, ILogger<ClientTest> logger) {
+    Logger = logger;
+    Client = client;
   }
 
-  public partial class ClientTest : IClassFixture<ClientTestFixture> {
-    public ClientTest(ClientTestFixture fixture) { Client = fixture.Client; }
-
-    public Elasticsearch.MeasurementFaker.IClient Client { get; init; }
-  }
+  private IClient Client { get; }
+  private ILogger Logger { get; }
 }

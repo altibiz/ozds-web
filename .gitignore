@@ -213,3 +213,5 @@ UgpTheme/package-lock.json
 .netcoredbg_hist
 .env
 is-cache/
+# TODO: remove
+Elasticsearch.Test/appsettings.json

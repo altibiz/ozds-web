@@ -1,10 +1,11 @@
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 // NOTE: QueryBuilder
+// TODO: dont use AspNetCore?
 using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Elasticsearch.MyEnergyCommunity {
@@ -53,8 +54,8 @@ namespace Elasticsearch.MyEnergyCommunity {
         try {
           response = await this.Http.SendAsync(request);
         } catch (HttpRequestException connectionException) {
-          Console.WriteLine("Failed connecting to", this.Source);
-          Console.WriteLine("Reason", connectionException.Message);
+          Logger.LogWarning($"Failed connecting to {Source}\n" +
+                            $"Reason {connectionException.Message}");
           break;
         }
 
@@ -65,8 +66,8 @@ namespace Elasticsearch.MyEnergyCommunity {
               await JsonSerializer.DeserializeAsync<Response<Measurement>>(
                   responseContent);
         } catch (JsonException jsonException) {
-          Console.WriteLine($"Failed parsing response of {Source}");
-          Console.WriteLine($"Reason {jsonException.Message}");
+          Logger.LogWarning($"Failed parsing response of {Source}\n" +
+                            $"Reason {jsonException.Message}");
           break;
         }
 

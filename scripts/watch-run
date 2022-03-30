@@ -6,4 +6,4 @@ source "$SCRIPT_DIR/.env";
 export ASPNETCORE_ENVIRONMENT=Production;
 export DOTNET_ENVIRONMENT=Production;
 
-dotnet run --project './OzdsWeb/OzdsWeb.csproj';
+dotnet watch run --project './OzdsWeb/OzdsWeb.csproj';

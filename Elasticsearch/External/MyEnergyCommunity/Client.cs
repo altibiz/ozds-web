@@ -2,28 +2,36 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
-namespace Elasticsearch.MyEnergyCommunity {
-  public sealed partial class Client : IClient {
-    public Client()
-        : this(new Uri(EnvironmentExtensions.AssertEnvironmentVariable(
-              "MY_ENERGY_COMMUNITY_SERVER_URI"))) {}
+namespace Elasticsearch.MyEnergyCommunity;
 
-    public Client(Uri baseUri) {
-      Http = new HttpClient();
-      Http.BaseAddress = baseUri;
-      Http.DefaultRequestHeaders.Accept.Add(
-          new MediaTypeWithQualityHeaderValue("application/json"));
+public sealed partial class Client : IClient {
+  public Client(IConfiguration conf, ILogger<Client> logger) {
+    Logger = logger;
 
-      Console.WriteLine($"Checking connection of {Source} to {baseUri}...");
-      var pingTask = Http.GetAsync("/");
-      pingTask.Wait();
-      if (pingTask.Result.StatusCode != HttpStatusCode.OK) {
-        throw new WebException($"Could not connect to {Source}\n" +
-                               $"Status code: {pingTask.Result.StatusCode}");
-      }
+    var section = conf.GetSection("Elasticsearch")
+                      .GetSection("External")
+                      .GetSection("MyEnergyCommunity")
+                      .GetSection("Client");
+
+    Http = new HttpClient();
+    Http.BaseAddress = new Uri(section.GetNonNullValue<string>("serverUri"));
+    Http.DefaultRequestHeaders.Accept.Add(
+        new MediaTypeWithQualityHeaderValue("application/json"));
+
+    var pingTask = Http.GetAsync("/");
+    pingTask.Wait();
+    if (pingTask.Result.StatusCode != HttpStatusCode.OK) {
+      throw new WebException(
+          $"Could not connect to {Source}\n" +
+          $"Ping response code: {pingTask.Result.StatusCode}");
     }
-
-    private HttpClient Http { get; init; }
+    Logger.LogInformation(
+        $"Successfully connected {Source} to {Http.BaseAddress}");
   }
+
+  private HttpClient Http { get; }
+  private ILogger Logger { get; }
 }

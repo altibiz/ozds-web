@@ -13,7 +13,8 @@ public class ExternalMeasurementProviderIterator
             .GetTypes()
             .Where(
                 type => typeof(IMeasurementProvider).IsAssignableFrom(type) &&
-                        !type.IsInterface && !type.Equals(typeof(Client)))
+                        !type.IsInterface && !type.Equals(typeof(Client)) &&
+                        !type.Equals(typeof(MeasurementFaker.Client)))
             .Select(type => Activator.CreateInstance(type))
             .Select(instance => instance as IMeasurementProvider)
             .Aggregate(Enumerable.Empty<IMeasurementProvider>(),

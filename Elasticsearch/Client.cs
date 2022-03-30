@@ -1,63 +1,77 @@
 using System;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 using Nest;
 using Elasticsearch.Net;
 
-namespace Elasticsearch {
-public partial interface IClient {
-  public IClient WithIndexSuffix(string? suffix = null);
+namespace Elasticsearch;
+
+public interface IClientPrototype {
+  public IClient ClonePrototype(string? indexSuffix = null);
 }
 
-public sealed partial class Client : IClient {
+public sealed partial class Client : IClientPrototype, IClient {
 #region Constructors
-  public Client(string? indexSuffix = null)
-      : this(new Uri(EnvironmentExtensions.AssertEnvironmentVariable(
-                 "ELASTICSEARCH_SERVER_URI")),
-            EnvironmentExtensions.AssertEnvironmentVariable(
-                "ELASTICSEARCH_CA_PATH"),
-            EnvironmentExtensions.AssertEnvironmentVariable(
-                "ELASTICSEARCH_USER"),
-            EnvironmentExtensions.AssertEnvironmentVariable(
-                "ELASTICSEARCH_PASSWORD"),
-            indexSuffix) {}
+  public Client(
+      IHostEnvironment env, ILogger<Client> logger, IConfiguration conf) {
+    Env = env;
+    Logger = logger;
 
-  public Client(Uri uri, string caPath, string user, string password,
-      string? indexSuffix = null) {
-    var settings = new ConnectionSettings(uri)
+    var section = conf.GetSection("Elasticsearch").GetSection("Client");
+
+    var settings =
+        new ConnectionSettings(
+            new Uri(section.GetNonNullValue<string>("serverUri")))
 #if DEBUG
-                       .PrettyJson(true)
-                       .DisableDirectStreaming()
+            .PrettyJson(true)
+            .DisableDirectStreaming()
 #else
-                       .PrettyJson(false)
+            .PrettyJson(false)
 #endif
-                       .ServerCertificateValidationCallback(
-                           CertificateValidations.AuthorityIsRoot(
-                               new X509Certificate(caPath)))
-                       .BasicAuthentication(user, password);
+            .ServerCertificateValidationCallback(
+                CertificateValidations.AuthorityIsRoot(new X509Certificate(
+                    section.GetNonNullValue<string>("caPath"))))
+            .BasicAuthentication(section.GetNonNullValue<string>("user"),
+                section.GetNonNullValue<string>("password"));
 
-    Console.WriteLine($"Checking connection of {Source} to {uri}...");
     Elasticsearch = new ElasticClient(settings);
     var pingResponse = Elasticsearch.Ping();
     if (!pingResponse.IsValid) {
-      throw new WebException(
-          $"Could not connect to Elasticsearch. Response: {pingResponse}");
+      if (Env.IsDevelopment()) {
+        throw new WebException(
+            $"Could not connect to {Source}\n" +
+            $"Ping response information: {pingResponse.DebugInformation}");
+      } else {
+        throw new WebException($"Could not connect to {Source}\n" +
+                               $"Ping response: {pingResponse}");
+      }
     }
 
-    IndexSuffix = indexSuffix ?? "";
+    Logger.LogInformation(
+        $"Successfully connected {Source} to {Elasticsearch}");
   }
 #endregion // Constructors
 
-#region WithIndexSuffix
-  public IClient WithIndexSuffix(string? indexSuffix = null) {
+#region Prototype
+  public IClient ClonePrototype(string? indexSuffix = null) {
     return new Client(this, indexSuffix);
   }
 
   private Client(Client other, string? indexSuffix) {
+    Env = other.Env;
+    Logger = other.Logger;
+
     Elasticsearch = other.Elasticsearch;
+
     IndexSuffix = indexSuffix ?? "";
   }
-#endregion // WithIndexSuffix
+#endregion // Prototype
+
+  private IHostEnvironment Env { get; }
+  private ILogger Logger { get; }
 
   private IElasticClient Elasticsearch { get; init; }
 
@@ -69,18 +83,26 @@ public sealed partial class Client : IClient {
                      : value.StartsWith('.')          ? value
                                                       : $".{value}";
 
-#if DEBUG
-      Console.WriteLine($"Trying to delete indices{ConsoleIndexSuffix}...");
-      Elasticsearch.TryDeleteIndex(MeasurementIndexName);
-      Elasticsearch.TryDeleteIndex(DeviceIndexName);
-      Elasticsearch.TryDeleteIndex(LogIndexName);
-#endif
+      if (Env.IsDevelopment()) {
+        TryDeleteIndices();
+      }
 
-      Console.WriteLine($"Trying to create indices{ConsoleIndexSuffix}...");
-      Elasticsearch.TryCreateIndex<Measurement>(MeasurementIndexName);
-      Elasticsearch.TryCreateIndex<Device>(DeviceIndexName);
-      Elasticsearch.TryCreateIndex<Log>(LogIndexName);
+      TryCreateIndices();
     }
+  }
+
+  private void TryDeleteIndices() {
+    Elasticsearch.TryDeleteIndex(MeasurementIndexName);
+    Elasticsearch.TryDeleteIndex(DeviceIndexName);
+    Elasticsearch.TryDeleteIndex(LogIndexName);
+    Logger.LogInformation($"Deleted Elasticsearch indices{ConsoleIndexSuffix}");
+  }
+
+  private void TryCreateIndices() {
+    Elasticsearch.TryCreateIndex<Measurement>(MeasurementIndexName);
+    Elasticsearch.TryCreateIndex<Device>(DeviceIndexName);
+    Elasticsearch.TryCreateIndex<Log>(LogIndexName);
+    Logger.LogInformation($"Created Elasticsearch indices{ConsoleIndexSuffix}");
   }
 
   private string ConsoleIndexSuffix {
@@ -109,5 +131,4 @@ public sealed partial class Client : IClient {
   private const string s_logIndexPrefix = "ozds.log";
 #endif
 #endregion // Index Names
-}
 }
