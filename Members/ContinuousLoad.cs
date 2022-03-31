@@ -11,10 +11,8 @@ namespace Members;
 
 public class ContinuousLoader {
   public ContinuousLoader(IWebHostEnvironment env,
-      ILogger<ContinuousLoader> logger, Elasticsearch.IClient client,
-      Elasticsearch.IMeasurementProviderIterator providers) {
+      ILogger<ContinuousLoader> logger, Elasticsearch.IClient client) {
     Client = client;
-    Providers = providers;
 
     if (env.IsDevelopment()) {
       Client.IndexDevice(new Elasticsearch.Device(
@@ -26,11 +24,10 @@ public class ContinuousLoader {
   }
 
   public async Task LoadContinuouslyAsync() {
-    await Client.LoadContinuouslyAsync(Providers);
+    await Client.LoadContinuouslyAsync();
   }
 
   Elasticsearch.IClient Client { get; init; }
-  Elasticsearch.IMeasurementProviderIterator Providers { get; init; }
 }
 
 [BackgroundTask(

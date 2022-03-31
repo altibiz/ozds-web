@@ -1,7 +1,7 @@
 using System;
-using Microsoft.AspNetCore.Builder;
+using System.Reflection;
+using System.Linq;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OrchardCore.Data.Migration;
@@ -102,24 +102,26 @@ public class Startup : OrchardCore.Modules.StartupBase {
         });
 
     if (Env.IsDevelopment()) {
-      services.AddSingleton<Elasticsearch.IMeasurementProviderIterator,
-          Elasticsearch.FakeMeasurementProviderIterator>();
+      services.AddSingleton<Elasticsearch.IMeasurementProvider,
+          Elasticsearch.MeasurementFaker.Client>();
     } else {
-      services.AddSingleton<Elasticsearch.IMeasurementProviderIterator,
-          Elasticsearch.ExternalMeasurementProviderIterator>();
-    } services.AddSingleton<Elasticsearch.IClient, Elasticsearch.Client>();
+      foreach (var measurementProviderType in Assembly.GetExecutingAssembly()
+                   .GetTypes()
+                   .Where(type =>
+                              typeof(Elasticsearch.IMeasurementProvider)
+                                  .IsAssignableFrom(type) &&
+                              !type.IsInterface &&
+                              !type.Equals(typeof(Elasticsearch.Client)) &&
+                              !type.Equals(typeof(Elasticsearch.MeasurementFaker
+                                                      .Client)))) {
+        services.AddSingleton(typeof(Elasticsearch.IMeasurementProvider),
+            measurementProviderType);
+      }
+    }
+
+    services.AddSingleton<Elasticsearch.IClient, Elasticsearch.Client>();
         services.AddSingleton<ContinuousLoader>();
         services.AddSingleton<IBackgroundTask, ContinuousLoadBackgroundTask>();
-  }
-
-  public override void Configure(IApplicationBuilder builder,
-      IEndpointRouteBuilder routes, IServiceProvider serviceProvider) {
-    // routes.MapAreaControllerRoute(
-    //     name: "Home",
-    //     areaName: "Members",
-    //     pattern: "Home/Index",
-    //     defaults: new { controller = "Home", action = "Index" }
-    //);
   }
 }
 }

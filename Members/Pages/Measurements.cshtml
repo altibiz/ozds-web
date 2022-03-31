@@ -1,0 +1,9 @@
+﻿@page
+@model Members.Pages.MeasurementsModel
+@foreach(var device in Model.Devices) {
+  <li>
+    <p>
+      @device.Id
+    </p>
+  </li>
+}

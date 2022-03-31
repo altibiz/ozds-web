@@ -6,4 +6,6 @@ git clean -Xd \
   -e '!.husky/_/*' \
   -e '!scripts/' \
   -e '!scripts/.env' \
+  -e '!Elasticsearch.Test/' \
+  -e '!Elasticsearch.Test/appsettings.json' \
   $@;

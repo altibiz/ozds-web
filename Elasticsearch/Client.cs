@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Extensions.Configuration;
@@ -15,8 +17,8 @@ public interface IClientPrototype {
 
 public sealed partial class Client : IClientPrototype, IClient {
 #region Constructors
-  public Client(
-      IHostEnvironment env, ILogger<Client> logger, IConfiguration conf) {
+  public Client(IHostEnvironment env, ILogger<Client> logger,
+      IConfiguration conf, IEnumerable<IMeasurementProvider> providers) {
     Env = env;
     Logger = logger;
 
@@ -52,6 +54,8 @@ public sealed partial class Client : IClientPrototype, IClient {
 
     Logger.LogInformation(
         $"Successfully connected {Source} to {Elasticsearch}");
+
+    Providers = providers.ToList();
   }
 #endregion // Constructors
 
@@ -66,6 +70,8 @@ public sealed partial class Client : IClientPrototype, IClient {
 
     Elasticsearch = other.Elasticsearch;
 
+    Providers = other.Providers;
+
     IndexSuffix = indexSuffix ?? "";
   }
 #endregion // Prototype
@@ -74,6 +80,8 @@ public sealed partial class Client : IClientPrototype, IClient {
   private ILogger Logger { get; }
 
   private IElasticClient Elasticsearch { get; init; }
+
+  private List<IMeasurementProvider> Providers { get; }
 
 #region Index Suffix
   private string IndexSuffix {

@@ -7,8 +7,4 @@ then
   husky install;
 fi;
 
-if [[ ! -f "$SCRIPT_DIR/.env" ]]; then
-  cp "$SCRIPT_DIR/example.env" "$SCRIPT_DIR/.env"
-fi;
-
 dotnet restore $@;

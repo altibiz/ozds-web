@@ -16,6 +16,9 @@ public class Startup {
   }
 
   public void ConfigureServices(IServiceCollection services) {
+    services.AddSingleton<Elasticsearch.IMeasurementProvider,
+        Elasticsearch.MeasurementFaker.Client>();
+
     services
         .AddSingleton<Elasticsearch.IClientPrototype, Elasticsearch.Client>();
     services.AddScoped<Elasticsearch.IClient>(
@@ -31,9 +34,6 @@ public class Startup {
             Elasticsearch.MyEnergyCommunity.Client>();
         services.AddSingleton<Elasticsearch.MeasurementFaker.IClient,
             Elasticsearch.MeasurementFaker.Client>();
-
-        services.AddSingleton<Elasticsearch.IMeasurementProviderIterator,
-            Elasticsearch.FakeMeasurementProviderIterator>();
   }
 
   public void Configure(

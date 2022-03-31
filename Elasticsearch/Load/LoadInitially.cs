@@ -1,25 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Elasticsearch {
 public partial interface IClient {
-  public void LoadInitially(
-      IMeasurementProviderIterator measurementProviderIterator);
+  public void LoadInitially();
 
-  public Task LoadInitiallyAsync(
-      IMeasurementProviderIterator measurementProviderIterator);
+  public Task LoadInitiallyAsync();
 }
 
 public partial class Client : IClient {
-  public void LoadInitially(
-      IMeasurementProviderIterator measurementProviderIterator) {
-    var task = LoadInitiallyAsync(measurementProviderIterator);
+  public void LoadInitially() {
+    var task = LoadInitiallyAsync();
     task.Wait();
   }
 
-  public async Task LoadInitiallyAsync(
-      IMeasurementProviderIterator measurementProviderIterator) {
+  public async Task LoadInitiallyAsync() {
     var period = new Period {
       From = DateTime.MinValue.ToUniversalTime(),
       To = DateTime.UtcNow,
@@ -30,19 +27,31 @@ public partial class Client : IClient {
 
     var measurements = new List<Measurement>();
 
-    foreach (var measurementProvider in measurementProviderIterator.Iterate()) {
-      foreach (var device in SearchDevices(measurementProvider.Source)
-                   .Sources()) {
-        var providerMeasurements =
-            await measurementProvider.GetMeasurementsAsync(device);
-        measurements.AddRange(providerMeasurements);
+    foreach (var provider in Providers) {
+      var searchDevicesResponse = SearchDevices(provider.Source);
+      var devices = searchDevicesResponse.Sources();
+
+      var providerMeasurements = new List<Measurement> {};
+
+      foreach (var device in devices) {
+        var deviceMeasurements =
+            await provider.GetMeasurementsAsync(device, period);
+
+        providerMeasurements.AddRange(deviceMeasurements);
       }
+
+      measurements.AddRange(providerMeasurements);
+
+      Logger.LogDebug($"Got {providerMeasurements.Count} measurements " +
+                      $"from {provider.Source}");
     }
 
     await IndexMeasurementsAsync(measurements);
 
     IndexLog(new Log(
         LogType.LoadEnd, Source, new Log.KnownData { Period = period }));
+
+    Logger.LogDebug($"Indexed {measurements.Count} measurements");
   }
 }
 }

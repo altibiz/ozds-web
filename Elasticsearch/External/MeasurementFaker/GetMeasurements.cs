@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Elasticsearch.MeasurementFaker {
   public partial interface IClient : IMeasurementProvider {};
@@ -43,6 +44,8 @@ namespace Elasticsearch.MeasurementFaker {
         currentMeasurementTimestamp =
             currentMeasurementTimestamp.AddSeconds(15);
       }
+
+      Logger.LogDebug($"Faked {measurementCount} measurements for {device.Id}");
 
       return Task.FromResult(result);
     }

@@ -7,8 +7,7 @@ using Members.Core;
 using Members.Payments;
 using Members.Indexes;
 using Members.Base;
-using YesSql;
-using Members.Utils;
+using Members.Devices;
 
 namespace Members {
 public class Migrations : DataMigration {
@@ -103,6 +102,11 @@ public class Migrations : DataMigration {
   public int UpdateFrom11() {
     SchemaBuilder.CreatePaymentByDayIndex();
     return 12;
+  }
+
+  public int UpdateFrom12() {
+    SchemaBuilder.CreateDeviceIndex();
+    return 13;
   }
 }
 }
