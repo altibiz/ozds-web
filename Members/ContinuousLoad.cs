@@ -24,7 +24,7 @@ public class ContinuousLoader {
   }
 
   public async Task LoadContinuouslyAsync() {
-    await Client.LoadContinuouslyAsync();
+    await Client.IndexMeasurementsAsync(await Client.LoadMeasurementsAsync());
   }
 
   Elasticsearch.IClient Client { get; init; }

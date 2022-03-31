@@ -34,18 +34,32 @@ namespace Elasticsearch.MeasurementFaker {
         return Task.FromResult(new List<Measurement>());
       }
 
-      var result = new List<Measurement>();
-      var measurementCount =
-          period == null ? 20 : (period.To - period.From).TotalMinutes * 4;
-      var currentMeasurementTimestamp =
-          period == null ? DateTime.UtcNow.AddMinutes(-5) : period.From;
-      foreach (var _ in Enumerable.Range(0, ((int)measurementCount))) {
-        result.Add(new Measurement(currentMeasurementTimestamp));
-        currentMeasurementTimestamp =
-            currentMeasurementTimestamp.AddSeconds(15);
+      period = period is null ? s_defaultPeriod : period;
+      var timeSpan = period.To - period.From;
+
+      if (timeSpan.TotalMinutes < 0) {
+        timeSpan = s_defaultTimeSpan;
+        period = new Period { From = period.To, To = period.To };
       }
 
-      Logger.LogDebug($"Faked {measurementCount} measurements for {device.Id}");
+      if (timeSpan.TotalMinutes > s_maxTimeSpanMinutes) {
+        timeSpan = s_defaultTimeSpan;
+        period =
+            new Period { From = period.To.Subtract(timeSpan), To = period.To };
+      }
+
+      var measurementCount =
+          (int)(timeSpan.TotalMinutes * s_measurementsPerMinute);
+      var currentMeasurementTimestamp = period.From;
+      Logger.LogDebug($"Faking {measurementCount} measurements " +
+                      $"for {device.Id} " + $"in {period}");
+
+      var result = new List<Measurement>();
+      foreach (var _ in Enumerable.Range(0, (measurementCount))) {
+        result.Add(new Measurement(currentMeasurementTimestamp));
+        currentMeasurementTimestamp = currentMeasurementTimestamp.AddSeconds(
+            60 / s_measurementsPerMinute);
+      }
 
       return Task.FromResult(result);
     }
@@ -55,5 +69,15 @@ namespace Elasticsearch.MeasurementFaker {
       return new Elasticsearch.Measurement(measurement.Timestamp, null, Source,
           Elasticsearch.Device.MakeId(Source, measurement.DeviceId));
     }
+
+    private static int s_measurementsPerMinute = 4;
+
+    private static int s_maxTimeSpanMinutes = 1000;
+
+    private static Period s_defaultPeriod =
+        new Period { From = DateTime.UtcNow.AddMinutes(-5),
+          To = DateTime.UtcNow };
+
+    private static TimeSpan s_defaultTimeSpan = TimeSpan.FromMinutes(5);
   }
 }

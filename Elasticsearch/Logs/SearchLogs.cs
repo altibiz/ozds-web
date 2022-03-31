@@ -18,6 +18,12 @@ public partial interface IClient {
 
   public Task<ISearchResponse<Log>> SearchLogsSortedByPeriodAsync(
       string type, int? size = null);
+
+  public ISearchResponse<Log> SearchLoadLogsSortedByPeriod(
+      string source, int? size = null);
+
+  public Task<ISearchResponse<Log>> SearchLoadLogsSortedByPeriodAsync(
+      string source, int? size = null);
 };
 
 public sealed partial class Client : IClient {
@@ -64,6 +70,30 @@ public sealed partial class Client : IClient {
   SearchLogsSortedByPeriodAsync(string type, int? size = null) => (
       await this.Elasticsearch.SearchAsync<Log>(
           s => s.Query(q => q.Term(t => t.Type, type))
+                   .Size(size)
+                   .Index(LogIndexName)
+  // NOTE: null doesn't matter here because NEST just wants to create a query
+#nullable disable
+                   .Sort(s => s.Descending(d => d.Data.Period.To))));
+#nullable enable
+
+  public ISearchResponse<Log> SearchLoadLogsSortedByPeriod(
+      string source, int? size = null) =>
+      this.Elasticsearch.Search<Log>(
+          s => s.Query(q => q.Term(t => t.Type, LogType.LoadEnd) &&
+                            q.Term(t => t.Data.Source, source))
+                   .Size(size)
+                   .Index(LogIndexName)
+  // NOTE: null doesn't matter here because NEST just wants to create a query
+#nullable disable
+                   .Sort(s => s.Descending(d => d.Data.Period.To)));
+#nullable enable
+
+  public async Task<ISearchResponse<Log>>
+  SearchLoadLogsSortedByPeriodAsync(string source, int? size = null) => (
+      await this.Elasticsearch.SearchAsync<Log>(
+          s => s.Query(q => q.Term(t => t.Type, LogType.LoadEnd) &&
+                            q.Term(t => t.Data.Source, source))
                    .Size(size)
                    .Index(LogIndexName)
   // NOTE: null doesn't matter here because NEST just wants to create a query
