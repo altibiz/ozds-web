@@ -28,7 +28,9 @@ namespace Elasticsearch.Test {
       Assert.NotEmpty(loadedMeasurements);
       Assert.All(loadedMeasurements, m => Assert.Equal(device.Id, m.DeviceId));
 
-      var searchLogsResponse = Client.SearchLogs(LogType.LoadEnd);
+      // NOTE: preparation for searching
+      Thread.Sleep(1000);
+          var searchLogsResponse = Client.SearchLogs(LogType.LoadEnd);
           Assert.True(searchLogsResponse.IsValid);
 
           var logs = searchLogsResponse.Sources().ToList(); Assert.Single(logs);
@@ -63,8 +65,9 @@ namespace Elasticsearch.Test {
       Assert.NotEmpty(loadedMeasurements);
       Assert.All(loadedMeasurements, m => Assert.Equal(device.Id, m.DeviceId));
 
-      var searchLoadLogsResponse =
-          await Client.SearchLogsAsync(LogType.LoadEnd);
+      // NOTE: preparation for searching
+      Thread.Sleep(1000); var searchLoadLogsResponse =
+                              await Client.SearchLogsAsync(LogType.LoadEnd);
           Assert.True(searchLoadLogsResponse.IsValid);
 
           var loadLogs = searchLoadLogsResponse.Sources().ToList();

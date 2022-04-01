@@ -38,6 +38,8 @@ public class Startup {
 
   public void Configure(
       ILoggerFactory loggerFactory, ITestOutputHelperAccessor accessor) {
-    loggerFactory.AddProvider(new XunitTestOutputLoggerProvider(accessor));
+    // NOTE: this one doesn't respect IConfiguration
+    loggerFactory.AddProvider(new XunitTestOutputLoggerProvider(accessor,
+        (_, level) => level is >= LogLevel.Debug and < LogLevel.None));
   }
 }

@@ -23,21 +23,19 @@ public sealed partial class Client : IClientPrototype, IClient {
     Logger = logger;
 
     var section = conf.GetSection("Elasticsearch").GetSection("Client");
+    var serverUri = section.GetNonNullValue<string>("serverUri");
+    var caPath = section.GetNonNullValue<string>("caPath");
+    var user = section.GetNonNullValue<string>("user");
+    var password = section.GetNonNullValue<string>("password");
 
-    var settings =
-        new ConnectionSettings(
-            new Uri(section.GetNonNullValue<string>("serverUri")))
-#if DEBUG
-            .PrettyJson(true)
-            .DisableDirectStreaming()
-#else
-            .PrettyJson(false)
-#endif
-            .ServerCertificateValidationCallback(
-                CertificateValidations.AuthorityIsRoot(new X509Certificate(
-                    section.GetNonNullValue<string>("caPath"))))
-            .BasicAuthentication(section.GetNonNullValue<string>("user"),
-                section.GetNonNullValue<string>("password"));
+    var settings = new ConnectionSettings(new Uri(serverUri))
+                       .ServerCertificateValidationCallback(
+                           CertificateValidations.AuthorityIsRoot(
+                               new X509Certificate(caPath)))
+                       .BasicAuthentication(user, password);
+    if (Env.IsDevelopment()) {
+      settings = settings.PrettyJson(true).DisableDirectStreaming();
+    }
 
     Elasticsearch = new ElasticClient(settings);
     var pingResponse = Elasticsearch.Ping();
@@ -52,8 +50,7 @@ public sealed partial class Client : IClientPrototype, IClient {
       }
     }
 
-    Logger.LogInformation(
-        $"Successfully connected {Source} to {Elasticsearch}");
+    Logger.LogInformation($"Successfully connected {Source} to {serverUri}");
 
     Providers = providers.ToList();
   }
@@ -122,21 +119,24 @@ public sealed partial class Client : IClientPrototype, IClient {
 
 #region Index Names
   private string MeasurementIndexName {
-    get => s_measurementIndexPrefix + IndexSuffix;
+    get => s_measurementIndexDebugPrefix + IndexSuffix;
   }
 
-  private string DeviceIndexName { get => s_deviceIndexPrefix + IndexSuffix; }
+  private string DeviceIndexName {
+    get => s_deviceIndexDebugPrefix + IndexSuffix;
+  }
 
-  private string LogIndexName { get => s_logIndexPrefix + IndexSuffix; }
+  private string LogIndexName { get => s_logIndexDebugPrefix + IndexSuffix; }
 
 #if DEBUG
-  private const string s_measurementIndexPrefix = "ozds.debug.measurements";
-  private const string s_deviceIndexPrefix = "ozds.debug.devices";
-  private const string s_logIndexPrefix = "ozds.debug.log";
+  private const string s_measurementIndexDebugPrefix =
+      "ozds.debug.measurements";
+  private const string s_deviceIndexDebugPrefix = "ozds.debug.devices";
+  private const string s_logIndexDebugPrefix = "ozds.debug.log";
 #else
-  private const string s_measurementIndexPrefix = "ozds.measurements";
-  private const string s_deviceIndexPrefix = "ozds.devices";
-  private const string s_logIndexPrefix = "ozds.log";
+  private const string s_measurementIndexDebugPrefix = "ozds.measurements";
+  private const string s_deviceIndexDebugPrefix = "ozds.devices";
+  private const string s_logIndexDebugPrefix = "ozds.log";
 #endif
 #endregion // Index Names
 }

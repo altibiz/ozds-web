@@ -26,16 +26,16 @@ public partial class Client : IClient {
       string source, Period? period = null) {
     if (period == null) {
       period = await FetchLoadPeriodAsync(source);
-      if (period == null) {
-        return new List<Measurement> {};
-      }
     }
 
     var provider = Providers.Find(p => p.Source == source);
-    if (provider is null) { return new List<Measurement> {}; }
+    if (provider is null) {
+      Logger.LogDebug($"Provider for {source} not found");
+      return new List<Measurement> {};
+    }
 
-    IndexLog(new Log(LogType.LoadBegin,
-        new Log.KnownData { Period = period, Source = provider.Source }));
+    IndexLog(new Log(LogType.LoadBegin, provider.Source,
+        new Log.KnownData { Period = period }));
 
         var searchDevicesResponse = SearchDevices(provider.Source);
         var devices = searchDevicesResponse.Sources();
@@ -50,22 +50,24 @@ public partial class Client : IClient {
         Logger.LogDebug($"Got {measurements.Count} measurements " +
                         $"from {provider.Source}");
 
-        IndexLog(new Log(LogType.LoadEnd,
-            new Log.KnownData { Period = period, Source = provider.Source }));
+        IndexLog(new Log(LogType.LoadEnd, provider.Source,
+            new Log.KnownData { Period = period }));
 
         return measurements;
   }
 
-  private async Task<Period?> FetchLoadPeriodAsync(string source) {
+  private async Task<Period> FetchLoadPeriodAsync(string source) {
     var lastLoadEndLog = (await SearchLoadLogsSortedByPeriodAsync(Source, 1))
                              .Sources()
                              .FirstOrDefault();
+    var now = DateTime.UtcNow;
 
     if (lastLoadEndLog?.Data?.Period?.To is not null) {
-      return new Period { From = lastLoadEndLog.Data.Period.To,
-        To = DateTime.UtcNow };
+      return new Period { From = lastLoadEndLog.Data.Period.To, To = now };
     }
 
-    return null;
+    return new Period { From = now.Subtract(s_fallbackTimeSpan), To = now };
   }
+
+  private static TimeSpan s_fallbackTimeSpan = TimeSpan.FromMinutes(5);
 }

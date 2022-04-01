@@ -81,7 +81,7 @@ public sealed partial class Client : IClient {
       string source, int? size = null) =>
       this.Elasticsearch.Search<Log>(
           s => s.Query(q => q.Term(t => t.Type, LogType.LoadEnd) &&
-                            q.Term(t => t.Data.Source, source))
+                            q.Term(t => t.Source, source))
                    .Size(size)
                    .Index(LogIndexName)
   // NOTE: null doesn't matter here because NEST just wants to create a query
@@ -93,7 +93,7 @@ public sealed partial class Client : IClient {
   SearchLoadLogsSortedByPeriodAsync(string source, int? size = null) => (
       await this.Elasticsearch.SearchAsync<Log>(
           s => s.Query(q => q.Term(t => t.Type, LogType.LoadEnd) &&
-                            q.Term(t => t.Data.Source, source))
+                            q.Term(t => t.Source, source))
                    .Size(size)
                    .Index(LogIndexName)
   // NOTE: null doesn't matter here because NEST just wants to create a query

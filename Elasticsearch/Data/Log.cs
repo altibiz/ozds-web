@@ -56,9 +56,6 @@ public class Log {
   public class KnownData {
     [Object(Name = "period")]
     public Period? Period { get; init; } = null;
-
-    [Keyword(Name = "source")]
-    public string? Source { get; init; } = null;
   }
 };
 }
