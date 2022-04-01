@@ -36,7 +36,6 @@ msgstr "Pravna osoba uspješno dodana"
 msgid "Company Name"
 msgstr "Naziv"
 
-
 msgctxt "Members.Pages.LogOut"
 msgid "LogOut"
 msgstr "Odjava"
@@ -54,7 +53,6 @@ msgid "Download Membership Document"
 msgstr "Preuzmi potvrdu o članstvu"
 msgid "Back To Profile"
 msgstr "Natrag na profil"
-
 
 msgctxt "Members.Pages.MyCompanyModel"
 msgid "Company updated successful"
@@ -125,10 +123,6 @@ msgstr "Traži"
 msgid "Members only, click here to log in"
 msgstr "Samo za članove, klikni ovdje za prijavu"
 
-
-
-
-
 msgctxt "Members.Pages.Portal"
 msgid "User Pages"
 msgstr "Korisničke stranice"
@@ -140,3 +134,7 @@ msgid "Your ID is already in use."
 msgstr "Upisani OIB je već registriran."
 msgid "Surname is required."
 msgstr "Polje Prezime je obvezno."
+
+msgctxt "Members.Pages.Measurements"
+msgid "Measurements"
+msgstr "Mjerenja"
