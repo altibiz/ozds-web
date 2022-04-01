@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -5,28 +6,17 @@ using Xunit;
 
 namespace Elasticsearch.Test {
   public partial class ClientTest {
-    [Fact]
-    public void LoadMeasurementsTest() {
-      var device = Data.FakeDevice;
+    [Theory]
+    [MemberData(nameof(Data.GenerateDevices), MemberType = typeof(Data))]
+    public void LoadMeasurementsTest(IEnumerable<Device> devices) {
+      var deviceIds = devices.Select(d => d.Id).ToList();
+      SetupDevices(devices);
 
-      var deviceIndexResponse = Client.IndexDevice(device);
-      Assert.True(deviceIndexResponse.IsValid);
-
-      var indexedDeviceId = deviceIndexResponse.Id;
-      Assert.Equal(device.Id, indexedDeviceId);
-
-      var deviceGetResponse = Client.GetDevice(device.Id);
-      Assert.True(deviceGetResponse.IsValid);
-
-      var gotDevice = deviceGetResponse.Source;
-      Assert.Equal(device, gotDevice);
-
-      // NOTE: preparation for searching
-      Thread.Sleep(1000);
-
-      var loadedMeasurements = Client.LoadMeasurements();
-      Assert.NotEmpty(loadedMeasurements);
-      Assert.All(loadedMeasurements, m => Assert.Equal(device.Id, m.DeviceId));
+          // NOTE: preparation for searching
+          Thread.Sleep(1000);
+          var loadedMeasurements = Client.LoadMeasurements();
+          Assert.NotEmpty(loadedMeasurements); Assert.All(loadedMeasurements,
+              m => AssertExtensions.OneOf(m.DeviceId, deviceIds));
 
       // NOTE: preparation for searching
       Thread.Sleep(1000);
@@ -43,27 +33,17 @@ namespace Elasticsearch.Test {
           });
     }
 
-    [Fact]
-    public async Task LoadMeasurementsAsyncTest() {
-      var device = Data.FakeDevice;
+    [Theory]
+    [MemberData(nameof(Data.GenerateDevices), MemberType = typeof(Data))]
+    public async Task LoadMeasurementsAsyncTest(IEnumerable<Device> devices) {
+      var deviceIds = devices.Select(d => d.Id).ToList();
+      await SetupDevicesAsync(devices);
 
-      var deviceIndexResponse = await Client.IndexDeviceAsync(device);
-      Assert.True(deviceIndexResponse.IsValid);
-
-      var indexedDeviceId = deviceIndexResponse.Id;
-      Assert.Equal(device.Id, indexedDeviceId);
-
-      var deviceGetResponse = await Client.GetDeviceAsync(device.Id);
-      Assert.True(deviceGetResponse.IsValid);
-
-      var gotDevice = deviceGetResponse.Source;
-      Assert.Equal(device, gotDevice);
-
-      // NOTE: preparation for searching
-      Thread.Sleep(1000);
-      var loadedMeasurements = await Client.LoadMeasurementsAsync();
-      Assert.NotEmpty(loadedMeasurements);
-      Assert.All(loadedMeasurements, m => Assert.Equal(device.Id, m.DeviceId));
+          // NOTE: preparation for searching
+          Thread.Sleep(1000);
+          var loadedMeasurements = await Client.LoadMeasurementsAsync();
+          Assert.NotEmpty(loadedMeasurements); Assert.All(loadedMeasurements,
+              m => AssertExtensions.OneOf(m.DeviceId, deviceIds));
 
       // NOTE: preparation for searching
       Thread.Sleep(1000); var searchLoadLogsResponse =
@@ -77,6 +57,24 @@ namespace Elasticsearch.Test {
             Assert.NotNull(l.Data.Period);
             Assert.NotNull(l.Data.Period?.From);
             Assert.NotNull(l.Data.Period?.To);
+          });
+    }
+
+    [Theory]
+    [MemberData(
+        nameof(Data.GenerateDevicesWithPeriod), MemberType = typeof(Data))]
+    public async Task LoadMeasurementsInPeriodTest(
+        IEnumerable<Device> devices, Period period) {
+      var deviceIds = devices.Select(d => d.Id).ToList();
+      await SetupDevicesAsync(devices);
+
+          // NOTE: preparation for searching
+          Thread.Sleep(1000);
+          var loadedMeasurements = await Client.LoadMeasurementsAsync(period);
+          Assert.NotEmpty(loadedMeasurements);
+          Assert.All(loadedMeasurements, m => {
+            Assert.InRange(m.MeasurementTimestamp, period.From, period.To);
+            AssertExtensions.OneOf(m.DeviceId, deviceIds);
           });
     }
   }

@@ -38,5 +38,9 @@ namespace Elasticsearch.Test {
     public static void Unique<T>(IEnumerable<T> actual) {
       Assert.True(actual.ToHashSet().Count == actual.ToList().Count);
     }
+
+    public static void OneOf<T>(T actual, IEnumerable<T> expected) {
+      Assert.Contains(actual, expected);
+    }
   }
 }
