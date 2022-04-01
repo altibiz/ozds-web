@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using OrchardCore.BackgroundTasks;
 
-namespace Members;
+namespace Members.Measurements;
 
-public class ContinuousLoader {
-  public ContinuousLoader(IWebHostEnvironment env,
-      ILogger<ContinuousLoader> logger, Elasticsearch.IClient client) {
+public class PeriodicMeasurementLoader {
+  public PeriodicMeasurementLoader(IWebHostEnvironment env,
+      ILogger<PeriodicMeasurementLoader> logger, Elasticsearch.IClient client) {
     Client = client;
 
     if (env.IsDevelopment()) {
@@ -32,7 +32,8 @@ public class ContinuousLoader {
 
 [BackgroundTask(
     Schedule = "*/1 * * * *", Description = "Loads measurements periodically")]
-public class ContinuousLoadBackgroundTask : IBackgroundTask {
+public class PeriodicMeasurementLoadBackgroundTask : IBackgroundTask {
   public Task DoWorkAsync(IServiceProvider services, CancellationToken token) =>
-      services.GetRequiredService<ContinuousLoader>().LoadContinuouslyAsync();
+      services.GetRequiredService<PeriodicMeasurementLoader>()
+          .LoadContinuouslyAsync();
 }

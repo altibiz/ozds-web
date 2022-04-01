@@ -49,8 +49,8 @@ namespace Elasticsearch.MeasurementFaker {
       }
 
       var measurementCount =
-          (int)(timeSpan.TotalMinutes * s_measurementsPerMinute);
-      var currentMeasurementTimestamp = period.From;
+          (int)(timeSpan.TotalMinutes * s_measurementsPerMinute) - 1;
+      var currentMeasurementTimestamp = period.From.AddSeconds(1);
       Logger.LogDebug($"Faking {measurementCount} measurements " +
                       $"for {device.Id} " + $"in {period}");
 

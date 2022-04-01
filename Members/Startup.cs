@@ -1,37 +1,38 @@
 using System;
 using System.Reflection;
 using System.Linq;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Hosting;
+using YesSql.Indexes;
 using OrchardCore.Data.Migration;
 using OrchardCore.Navigation;
-using Microsoft.Extensions.Hosting;
-using OrchardCore.DisplayManagement.Implementation;
-using Members.Utils;
-using OrchardCore.ContentManagement;
-using Members.Core;
-using OrchardCore.ContentTypes.Editors;
-using Lombiq.HelpfulExtensions.Extensions.CodeGeneration;
-using Members.Persons;
-using OrchardCore.ContentManagement.Display.ContentDisplay;
-using OrchardCore.ContentFields.Fields;
-using OrchardCore.ContentFields.Drivers;
-using Members.PartFieldSettings;
-using OrchardCore.Data;
-using OrchardCore.Taxonomies.Fields;
-using OrchardCore.Taxonomies.Drivers;
-using Members.Payments;
-using YesSql.Indexes;
-using Members.Indexes;
-using OrchardCore.Recipes;
-using Members.Base;
 using OrchardCore.Contents.Services;
 using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.Contents.ViewModels;
 using OrchardCore.BackgroundTasks;
 using OrchardCore.ContentManagement.Handlers;
+using OrchardCore.DisplayManagement.Implementation;
+using OrchardCore.ContentManagement;
+using OrchardCore.ContentTypes.Editors;
+using OrchardCore.ContentManagement.Display.ContentDisplay;
+using OrchardCore.ContentFields.Fields;
+using OrchardCore.ContentFields.Drivers;
+using OrchardCore.Data;
+using OrchardCore.Taxonomies.Fields;
+using OrchardCore.Taxonomies.Drivers;
+using OrchardCore.Recipes;
+using Lombiq.HelpfulExtensions.Extensions.CodeGeneration;
+using Members.Utils;
+using Members.Core;
+using Members.Persons;
+using Members.PartFieldSettings;
+using Members.Payments;
+using Members.Indexes;
+using Members.Base;
 using Members.ContentHandlers;
+using Members.Measurements;
 
 namespace Members {
 public class Startup : OrchardCore.Modules.StartupBase {
@@ -120,8 +121,9 @@ public class Startup : OrchardCore.Modules.StartupBase {
     }
 
     services.AddSingleton<Elasticsearch.IClient, Elasticsearch.Client>();
-        services.AddSingleton<ContinuousLoader>();
-        services.AddSingleton<IBackgroundTask, ContinuousLoadBackgroundTask>();
+        services.AddSingleton<PeriodicMeasurementLoader>();
+        services.AddSingleton<IBackgroundTask,
+            PeriodicMeasurementLoadBackgroundTask>();
   }
 }
 }

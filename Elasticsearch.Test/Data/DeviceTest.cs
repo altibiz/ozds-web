@@ -21,7 +21,7 @@ public static partial class Data {
   }
 
   public static IEnumerable<object[]> GenerateDevicesWithPeriod() {
-    var now = DateTime.UtcNow;
+    var now = DateTime.UtcNow.AddMinutes(-5);
     yield return new object[] { new Device[] { Data.FakeDevice },
       new Period { From = now.Subtract(s_defaultTimeSpan), To = now } };
   }

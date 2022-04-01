@@ -25,7 +25,7 @@ public partial class Client : IClient {
   public async Task<IEnumerable<Measurement>> LoadSourceMeasurementsAsync(
       string source, Period? period = null) {
     if (period == null) {
-      period = await FetchLoadPeriodAsync(source);
+      period = await DetermineLoadPeriodAsync(source);
     }
 
     var provider = Providers.Find(p => p.Source == source);
@@ -56,18 +56,24 @@ public partial class Client : IClient {
         return measurements;
   }
 
-  private async Task<Period> FetchLoadPeriodAsync(string source) {
-    var lastLoadEndLog = (await SearchLoadLogsSortedByPeriodAsync(Source, 1))
-                             .Sources()
-                             .FirstOrDefault();
-    var now = DateTime.UtcNow;
+  private async Task<Period> DetermineLoadPeriodAsync(string source) {
+    var lastLoadEndLogSearchResponse =
+        await SearchLoadLogsSortedByPeriodAsync(source, 1);
 
-    if (lastLoadEndLog?.Data?.Period?.To is not null) {
-      return new Period { From = lastLoadEndLog.Data.Period.To, To = now };
+    var lastLoadEndLog =
+        lastLoadEndLogSearchResponse.Sources().FirstOrDefault();
+    var lastLoadEnd = lastLoadEndLog?.Data?.Period?.To;
+
+    var begin = lastLoadEnd;
+    var end = DateTime.UtcNow;
+
+    if (begin is null) {
+      Logger.LogDebug($"Last load log not found for {source}");
+      Logger.LogDebug(lastLoadEndLogSearchResponse.DebugInformation);
+      begin = DateTime.MinValue.ToUniversalTime();
     }
 
-    return new Period { From = now.Subtract(s_fallbackTimeSpan), To = now };
+    var period = new Period { From = (DateTime)begin, To = (DateTime)end };
+    return period;
   }
-
-  private static TimeSpan s_fallbackTimeSpan = TimeSpan.FromMinutes(5);
 }

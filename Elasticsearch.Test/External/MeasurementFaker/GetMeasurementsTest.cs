@@ -13,6 +13,10 @@ namespace Elasticsearch.Test.MeasurementFaker {
       var measurements = Client.GetMeasurements(device, period).ToList();
       Assert.NotEmpty(measurements);
       Assert.InRange(measurements.Count, 15, 25);
+      Assert.All(measurements, m => {
+        Assert.Equal(m.DeviceId, device.Id);
+        Assert.InRange(m.MeasurementTimestamp, period.From, period.To);
+      });
     }
 
     [Fact]
@@ -24,6 +28,10 @@ namespace Elasticsearch.Test.MeasurementFaker {
           (await Client.GetMeasurementsAsync(device, period)).ToList();
       Assert.NotEmpty(measurements);
       Assert.InRange(measurements.Count, 15, 25);
+      Assert.All(measurements, m => {
+        Assert.Equal(m.DeviceId, device.Id);
+        Assert.InRange(m.MeasurementTimestamp, period.From, period.To);
+      });
     }
   }
 }

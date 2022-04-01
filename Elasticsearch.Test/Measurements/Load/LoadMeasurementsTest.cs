@@ -77,5 +77,32 @@ namespace Elasticsearch.Test {
             AssertExtensions.OneOf(m.DeviceId, deviceIds);
           });
     }
+
+    [Theory]
+    [MemberData(
+        nameof(Data.GenerateDevicesWithPeriod), MemberType = typeof(Data))]
+    public async Task LoadMeasurementsConsecutivelyTest(
+        IEnumerable<Device> devices, Period period) {
+      var deviceIds = devices.Select(d => d.Id);
+      await SetupDevicesAsync(devices);
+
+          // NOTE: preparation for searching
+          Thread.Sleep(1000); var firstLoadMeasurements =
+                                  await Client.LoadMeasurementsAsync(period);
+          Assert.NotEmpty(firstLoadMeasurements);
+          Assert.All(firstLoadMeasurements, m => {
+            Assert.InRange(m.MeasurementTimestamp, period.From, period.To);
+            AssertExtensions.OneOf(m.DeviceId, deviceIds);
+          });
+
+      // NOTE: preparation for searching
+      Thread.Sleep(1000);
+          var secondLoadMeasurements = await Client.LoadMeasurementsAsync();
+          Assert.NotEmpty(secondLoadMeasurements);
+          Assert.All(secondLoadMeasurements, m => {
+            Assert.True(m.MeasurementTimestamp > period.To);
+            AssertExtensions.OneOf(m.DeviceId, deviceIds);
+          });
+    }
   }
 }

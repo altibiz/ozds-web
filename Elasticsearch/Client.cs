@@ -53,6 +53,8 @@ public sealed partial class Client : IClientPrototype, IClient {
     Logger.LogInformation($"Successfully connected {Source} to {serverUri}");
 
     Providers = providers.ToList();
+
+    TryReconstructIndices();
   }
 #endregion // Constructors
 
@@ -87,13 +89,23 @@ public sealed partial class Client : IClientPrototype, IClient {
       _indexSuffix = String.IsNullOrWhiteSpace(value) ? ""
                      : value.StartsWith('.')          ? value
                                                       : $".{value}";
-
-      if (Env.IsDevelopment()) {
-        TryDeleteIndices();
-      }
-
-      TryCreateIndices();
+      TryReconstructIndices();
     }
+  }
+
+  private string ConsoleIndexSuffix {
+    get => String.IsNullOrWhiteSpace(IndexSuffix) ? "" : $" '{IndexSuffix}'";
+  }
+
+  private string _indexSuffix = "";
+#endregion // Index Suffix
+
+#region Indices
+  private void TryReconstructIndices() {
+    if (Env.IsDevelopment()) {
+      TryDeleteIndices();
+    }
+    TryCreateIndices();
   }
 
   private void TryDeleteIndices() {
@@ -109,13 +121,7 @@ public sealed partial class Client : IClientPrototype, IClient {
     Elasticsearch.TryCreateIndex<Log>(LogIndexName);
     Logger.LogInformation($"Created Elasticsearch indices{ConsoleIndexSuffix}");
   }
-
-  private string ConsoleIndexSuffix {
-    get => String.IsNullOrWhiteSpace(IndexSuffix) ? "" : $" '{IndexSuffix}'";
-  }
-
-  private string _indexSuffix = "";
-#endregion // Index Suffix
+#endregion // Indices
 
 #region Index Names
   private string MeasurementIndexName {

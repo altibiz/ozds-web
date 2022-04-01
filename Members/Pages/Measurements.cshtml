@@ -1,9 +1,19 @@
 ﻿@page
 @model Members.Pages.MeasurementsModel
-@foreach(var device in Model.Devices) {
-  <li>
-    <p>
-      @device.Id
-    </p>
-  </li>
-}
+
+@using Elasticsearch
+
+@{ Html.RenderPartial("_Header", @T["Mjerenja"].Value); }
+
+<ul>
+  @foreach(var measurement in Model.Measurements) {
+    <li>
+      <span>
+        @measurement.Source
+      </span>
+      <span>
+        @measurement.MeasurementTimestamp.ToUtcIsoString()
+      </span>
+    </li>
+  }
+</ul>
