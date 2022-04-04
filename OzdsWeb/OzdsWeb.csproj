@@ -10,7 +10,6 @@
   <ItemGroup>
     <PackageReference Include="OrchardCore.Application.Cms.Targets" Version="1.3.0" />
     <PackageReference Include="OrchardCore.Application.Targets" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Shells.Azure" Version="1.3.0" />
   </ItemGroup>
 
   <ItemGroup>

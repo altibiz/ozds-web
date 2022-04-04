@@ -1,14 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services
-    .AddOrchardCms()
-#if DEBUG
-    .AddSetupFeatures("OrchardCore.AutoSetup")
-#else
-    .AddAzureShellsConfiguration() // put shells info into blob
-#endif
-    ;
+builder.Services.AddOrchardCms().AddSetupFeatures("OrchardCore.AutoSetup");
 
 builder.Services.Configure<IdentityOptions>(options => {
   options.Password.RequireDigit = false;
