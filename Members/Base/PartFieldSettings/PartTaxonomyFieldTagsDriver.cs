@@ -61,12 +61,12 @@ namespace Members.PartFieldSettings
                   model.Taxonomy.As<TaxonomyPart>().Terms, 0);
               var tagTermEntries = termEntries.Select(
                   te => new TagTermEntry
-                {
-                  ContentItemId = te.ContentItemId,
-                  Selected = te.Selected,
-                  DisplayText = te.Term.DisplayText,
-                  IsLeaf = te.IsLeaf
-                });
+                  {
+                    ContentItemId = te.ContentItemId,
+                    Selected = te.Selected,
+                    DisplayText = te.Term.DisplayText,
+                    IsLeaf = te.IsLeaf
+                  });
 
               model.TagTermEntries = JsonConvert.SerializeObject(
                   tagTermEntries, SerializerSettings);

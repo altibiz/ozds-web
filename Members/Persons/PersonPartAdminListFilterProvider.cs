@@ -32,32 +32,32 @@ namespace Members.Persons
                   {
                     return await Task.Run<IQuery<ContentItem>>(() =>
                           {
-                        var context = (ContentQueryContext)ctx;
-                        var accessr =
-                            context.ServiceProvider
-                                .GetRequiredService<IHttpContextAccessor>();
-                        accessr.HttpContext.Request.RouteValues.TryGetValue(
-                            "contentTypeId", out var selectedContentType);
-                        if (selectedContentType?.ToString() == "Member" ||
-                            selectedContentType?.ToString() == "Company")
-                        {
-                          return query.With<PersonPartIndex>(
-                              x => x.Oib == val || x.LegalName.Contains(val));
-                        }
-                        else
-                          return query.With<ContentItemIndex>(
-                              x => x.DisplayText.Contains(val));
-                      });
+                            var context = (ContentQueryContext)ctx;
+                            var accessr =
+                                context.ServiceProvider
+                                    .GetRequiredService<IHttpContextAccessor>();
+                            accessr.HttpContext.Request.RouteValues.TryGetValue(
+                                "contentTypeId", out var selectedContentType);
+                            if (selectedContentType?.ToString() == "Member" ||
+                                selectedContentType?.ToString() == "Company")
+                            {
+                              return query.With<PersonPartIndex>(
+                                  x => x.Oib == val || x.LegalName.Contains(val));
+                            }
+                            else
+                              return query.With<ContentItemIndex>(
+                                  x => x.DisplayText.Contains(val));
+                          });
                   },
                   async (val, query, ctx) =>
                   {
                     return await Task.Run<IQuery<ContentItem>>(() =>
                           {
-                        return query.With<ContentItemIndex>(
-                            x => x.DisplayText.IsNotIn<ContentItemIndex>(
-                                s => s.DisplayText,
-                                w => w.DisplayText.Contains(val)));
-                      });
+                            return query.With<ContentItemIndex>(
+                                x => x.DisplayText.IsNotIn<ContentItemIndex>(
+                                    s => s.DisplayText,
+                                    w => w.DisplayText.Contains(val)));
+                          });
                   }));
     }
   }

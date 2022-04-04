@@ -30,14 +30,14 @@ namespace Members.Payments
             var isPayout = pp.IsPayout?.Value ?? false;
             var res =
                       new PaymentByDayIndex
-                  {
-                    PayOut =
+                      {
+                        PayOut =
                                                   isPayout ? pp.Amount.Value ?? 0 : 0,
-                    PayIn = !isPayout ? pp.Amount.Value ?? 0 : 0,
-                    Date = pp.Date.Value.Value.Date,
-                    CountOut = isPayout ? 1 : 0,
-                    CountIn = isPayout ? 0 : 1
-                  };
+                        PayIn = !isPayout ? pp.Amount.Value ?? 0 : 0,
+                        Date = pp.Date.Value.Value.Date,
+                        CountOut = isPayout ? 1 : 0,
+                        CountIn = isPayout ? 0 : 1
+                      };
             return new[] { res };
           }).Group(x => x.Date)
           .Reduce(g => new PaymentByDayIndex

@@ -51,9 +51,9 @@ namespace Members.Payments
           IsPayout = pp.IsPayout?.Value ?? false,
           Published = contentItem.Published,
 #pragma warning disable 0618
-                TransactionRef = pp.TransactionRef ?? pp.PaymentRef?.Text,
+          TransactionRef = pp.TransactionRef ?? pp.PaymentRef?.Text,
 #pragma warning restore 0618
-              };
+        };
       });
     }
   }

@@ -41,9 +41,9 @@ namespace Members.Persons
         var pp = contentItem.AsReal<PersonPart>();
         if (pp == null)
           return null;
-              // Lazy initialization because of ISession cyclic dependency
-              contentDefinitionManager ??=
-                  _serviceProvider.GetRequiredService<IContentDefinitionManager>();
+        // Lazy initialization because of ISession cyclic dependency
+        contentDefinitionManager ??=
+            _serviceProvider.GetRequiredService<IContentDefinitionManager>();
         var typeDef =
                   contentDefinitionManager.GetSettings<PersonPartSettings>(pp);
         var res = new PersonPartIndex

@@ -26,32 +26,32 @@ namespace Lombiq.HelpfulExtensions.Extensions.CodeGeneration
             {
               viewModel.MigrationCodeLazy = new Lazy<string>(() =>
               {
-              var codeBuilder = new StringBuilder();
+                var codeBuilder = new StringBuilder();
 
-                  // Building the code for the type.
-                  var name = model.Name;
-              codeBuilder.AppendLine(
-                  $"_contentDefinitionManager.AlterTypeDefinition(\"{name}\", type => type");
-              codeBuilder.AppendLine(
-                  $"    .DisplayedAs(\"{model.DisplayName}\")");
+                // Building the code for the type.
+                var name = model.Name;
+                codeBuilder.AppendLine(
+                    $"_contentDefinitionManager.AlterTypeDefinition(\"{name}\", type => type");
+                codeBuilder.AppendLine(
+                    $"    .DisplayedAs(\"{model.DisplayName}\")");
 
-              GenerateCodeForSettings(
-                  codeBuilder, model.GetSettings<ContentTypeSettings>());
-              AddSettingsWithout<ContentTypeSettings>(
-                  codeBuilder, model.Settings, 4);
-              GenerateCodeForParts(codeBuilder, model.Parts);
-              codeBuilder.AppendLine(");");
+                GenerateCodeForSettings(
+                    codeBuilder, model.GetSettings<ContentTypeSettings>());
+                AddSettingsWithout<ContentTypeSettings>(
+                    codeBuilder, model.Settings, 4);
+                GenerateCodeForParts(codeBuilder, model.Parts);
+                codeBuilder.AppendLine(");");
 
-              GenerateCodeForPartsWithFields(codeBuilder, model.Parts);
+                GenerateCodeForPartsWithFields(codeBuilder, model.Parts);
 
-              return codeBuilder.ToString();
-            });
+                return codeBuilder.ToString();
+              });
               viewModel.ModelCodeLazy = new Lazy<string>(() =>
                   {
-                  var codeBuilder = new StringBuilder();
-                  GenerateModelsForParts(codeBuilder, model.Parts);
-                  return codeBuilder.ToString();
-                });
+                    var codeBuilder = new StringBuilder();
+                    GenerateModelsForParts(codeBuilder, model.Parts);
+                    return codeBuilder.ToString();
+                  });
             })
             .Location("Content:7");
 
