@@ -11,14 +11,17 @@ using Elasticsearch.Net;
 
 namespace Elasticsearch;
 
-public interface IClientPrototype {
+public interface IClientPrototype
+{
   public IClient ClonePrototype(string? indexSuffix = null);
 }
 
-public sealed partial class Client : IClientPrototype, IClient {
-#region Constructors
+public sealed partial class Client : IClientPrototype, IClient
+{
+  #region Constructors
   public Client(IHostEnvironment env, ILogger<Client> logger,
-      IConfiguration conf, IEnumerable<IMeasurementProvider> providers) {
+      IConfiguration conf, IEnumerable<IMeasurementProvider> providers)
+  {
     Env = env;
     Logger = logger;
 
@@ -33,18 +36,23 @@ public sealed partial class Client : IClientPrototype, IClient {
                            CertificateValidations.AuthorityIsRoot(
                                new X509Certificate(caPath)))
                        .BasicAuthentication(user, password);
-    if (Env.IsDevelopment()) {
+    if (Env.IsDevelopment())
+    {
       settings = settings.PrettyJson(true).DisableDirectStreaming();
     }
 
     Elasticsearch = new ElasticClient(settings);
     var pingResponse = Elasticsearch.Ping();
-    if (!pingResponse.IsValid) {
-      if (Env.IsDevelopment()) {
+    if (!pingResponse.IsValid)
+    {
+      if (Env.IsDevelopment())
+      {
         throw new WebException(
             $"Could not connect to {Source}\n" +
             $"Ping response information: {pingResponse.DebugInformation}");
-      } else {
+      }
+      else
+      {
         throw new WebException($"Could not connect to {Source}\n" +
                                $"Ping response: {pingResponse}");
       }
@@ -56,14 +64,16 @@ public sealed partial class Client : IClientPrototype, IClient {
 
     TryReconstructIndices();
   }
-#endregion // Constructors
+  #endregion // Constructors
 
-#region Prototype
-  public IClient ClonePrototype(string? indexSuffix = null) {
+  #region Prototype
+  public IClient ClonePrototype(string? indexSuffix = null)
+  {
     return new Client(this, indexSuffix);
   }
 
-  private Client(Client other, string? indexSuffix) {
+  private Client(Client other, string? indexSuffix)
+  {
     Env = other.Env;
     Logger = other.Logger;
 
@@ -73,7 +83,7 @@ public sealed partial class Client : IClientPrototype, IClient {
 
     IndexSuffix = indexSuffix ?? "";
   }
-#endregion // Prototype
+  #endregion // Prototype
 
   private IHostEnvironment Env { get; }
   private ILogger Logger { get; }
@@ -82,53 +92,62 @@ public sealed partial class Client : IClientPrototype, IClient {
 
   private List<IMeasurementProvider> Providers { get; }
 
-#region Index Suffix
-  private string IndexSuffix {
+  #region Index Suffix
+  private string IndexSuffix
+  {
     get => _indexSuffix;
-    init {
+    init
+    {
       _indexSuffix = String.IsNullOrWhiteSpace(value) ? ""
-                     : value.StartsWith('.')          ? value
+                     : value.StartsWith('.') ? value
                                                       : $".{value}";
       TryReconstructIndices();
     }
   }
 
-  private string ConsoleIndexSuffix {
+  private string ConsoleIndexSuffix
+  {
     get => String.IsNullOrWhiteSpace(IndexSuffix) ? "" : $" '{IndexSuffix}'";
   }
 
   private string _indexSuffix = "";
-#endregion // Index Suffix
+  #endregion // Index Suffix
 
-#region Indices
-  private void TryReconstructIndices() {
-    if (Env.IsDevelopment()) {
+  #region Indices
+  private void TryReconstructIndices()
+  {
+    if (Env.IsDevelopment())
+    {
       TryDeleteIndices();
     }
     TryCreateIndices();
   }
 
-  private void TryDeleteIndices() {
+  private void TryDeleteIndices()
+  {
     Elasticsearch.TryDeleteIndex(MeasurementIndexName);
     Elasticsearch.TryDeleteIndex(DeviceIndexName);
     Elasticsearch.TryDeleteIndex(LogIndexName);
     Logger.LogInformation($"Deleted Elasticsearch indices{ConsoleIndexSuffix}");
   }
 
-  private void TryCreateIndices() {
+  private void TryCreateIndices()
+  {
     Elasticsearch.TryCreateIndex<Measurement>(MeasurementIndexName);
     Elasticsearch.TryCreateIndex<Device>(DeviceIndexName);
     Elasticsearch.TryCreateIndex<Log>(LogIndexName);
     Logger.LogInformation($"Created Elasticsearch indices{ConsoleIndexSuffix}");
   }
-#endregion // Indices
+  #endregion // Indices
 
-#region Index Names
-  private string MeasurementIndexName {
+  #region Index Names
+  private string MeasurementIndexName
+  {
     get => s_measurementIndexDebugPrefix + IndexSuffix;
   }
 
-  private string DeviceIndexName {
+  private string DeviceIndexName
+  {
     get => s_deviceIndexDebugPrefix + IndexSuffix;
   }
 
@@ -144,5 +163,5 @@ public sealed partial class Client : IClientPrototype, IClient {
   private const string s_deviceIndexDebugPrefix = "ozds.devices";
   private const string s_logIndexDebugPrefix = "ozds.log";
 #endif
-#endregion // Index Names
+  #endregion // Index Names
 }

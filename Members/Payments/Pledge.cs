@@ -9,8 +9,10 @@ using OrchardCore.Taxonomies.Fields;
 using OrchardCore.Taxonomies.Settings;
 using OrchardCore.Title.Models;
 
-namespace Members.Payments {
-  public class Pledge : ContentPart {
+namespace Members.Payments
+{
+  public class Pledge : ContentPart
+  {
     public TextField PayerName { get; set; }
     public TextField Oib { get; set; }
     public TaxonomyField Variant { get; set; }
@@ -23,10 +25,12 @@ namespace Members.Payments {
     public TextField Note { get; set; }
   }
 
-  public class PledgeSettings : IFieldEditorSettings {
+  public class PledgeSettings : IFieldEditorSettings
+  {
     public DisplayModeResult GetFieldDisplayMode(string propertyName,
         string defaultMode, BuildFieldEditorContext context,
-        bool isAdminTheme) {
+        bool isAdminTheme)
+    {
       if (isAdminTheme)
         return defaultMode;
       if (propertyName == nameof(Pledge.Person) ||
@@ -38,18 +42,22 @@ namespace Members.Payments {
     }
 
     public string GetFieldLabel(
-        string propertyName, string defaultVale, bool isAdminTheme) {
+        string propertyName, string defaultVale, bool isAdminTheme)
+    {
       return defaultVale;
     }
   }
 
-  public class PledgeVariant : ContentPart {
+  public class PledgeVariant : ContentPart
+  {
     public NumericField Price { get; set; }
   }
 
-  public static class PledgeMigrations {
+  public static class PledgeMigrations
+  {
     public static void CreatePledge(
-        this IContentDefinitionManager _contentDefinitionManager) {
+        this IContentDefinitionManager _contentDefinitionManager)
+    {
       _contentDefinitionManager.AlterTypeDefinition("Pledge",
           type =>
               type.DisplayedAs("Uplatnica")
@@ -61,7 +69,8 @@ namespace Members.Payments {
                           new PledgeSettings()))
                   .WithPart("TitlePart",
                       part => part.WithPosition("1").WithSettings(
-                          new TitlePartSettings {
+                          new TitlePartSettings
+                          {
                             Options = TitlePartOptions.GeneratedDisabled,
                             Pattern =
                                 "{{ ContentItem.Content.Pledge.PayerName.Text }} - {{ ContentItem.Content.Pledge.Amount.Value | format_number: \"C\"  }}",
@@ -78,7 +87,8 @@ namespace Members.Payments {
                       field => field.OfType("TextField")
                                    .WithDisplayName("Platitelj")
                                    .WithPosition("1")
-                                   .WithSettings(new TextFieldSettings {
+                                   .WithSettings(new TextFieldSettings
+                                   {
                                      Required = true,
                                    }))
                   .WithField(
@@ -89,14 +99,16 @@ namespace Members.Payments {
                       field => field.OfType("TextField")
                                    .WithDisplayName("Email")
                                    .WithEditor("Email")
-                                   .WithSettings(new TextFieldSettings {
+                                   .WithSettings(new TextFieldSettings
+                                   {
                                      Required = true,
                                    }))
                   .WithField(
                       "Oib", field => field.OfType("TextField")
                                           .WithDisplayName("OIB")
                                           .WithPosition("1")
-                                          .WithSettings(new TextFieldSettings {
+                                          .WithSettings(new TextFieldSettings
+                                          {
                                             Required = true,
                                           }))
                   .WithField("ReferenceNr",
@@ -109,20 +121,24 @@ namespace Members.Payments {
                                    .WithDisplayMode("Tags")
                                    .WithDisplayName("Količina")
                                    .WithPosition("6")
-                                   .WithSettings(new TaxonomyFieldSettings {
+                                   .WithSettings(new TaxonomyFieldSettings
+                                   {
                                      TaxonomyContentItemId =
                                          "5599209fa3d04b0da7482e655",
-                                     Unique = true, Required = true
+                                     Unique = true,
+                                     Required = true
                                    })
                                    .WithSettings(
-                                       new TaxonomyFieldTagsEditorSettings {
+                                       new TaxonomyFieldTagsEditorSettings
+                                       {
                                          Open = false,
                                        }))
                   .WithField("Person",
                       field =>
                           field.OfType("ContentPickerField")
                               .WithDisplayName("Član")
-                              .WithSettings(new ContentPickerFieldSettings {
+                              .WithSettings(new ContentPickerFieldSettings
+                              {
                                 DisplayedContentTypes =
                                     new[] { "Member", "Company" },
                               })));
@@ -134,7 +150,8 @@ namespace Members.Payments {
                           nameof(PledgeVariant), part => part.WithPosition("0"))
                       .WithPart("TitlePart",
                           part => part.WithPosition("1").WithSettings(
-                              new TitlePartSettings {
+                              new TitlePartSettings
+                              {
                                 Options = TitlePartOptions.EditableRequired,
                               })));
 
@@ -144,8 +161,11 @@ namespace Members.Payments {
                   field.OfType("NumericField")
                       .WithDisplayName("Cijena")
                       .WithPosition("0")
-                      .WithSettings(new NumericFieldSettings { Required = true,
-                        Scale = 2 })));
+                      .WithSettings(new NumericFieldSettings
+                      {
+                        Required = true,
+                        Scale = 2
+                      })));
 
       _contentDefinitionManager.AlterTypeDefinition(
           "PledgeForm", type => type.Stereotype("Widget"));

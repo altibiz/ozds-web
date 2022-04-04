@@ -1,3 +1,4 @@
-namespace Elasticsearch {
-public partial interface IClient {};
+namespace Elasticsearch
+{
+  public partial interface IClient { };
 };

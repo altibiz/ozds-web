@@ -10,9 +10,11 @@ using OrchardCore.Taxonomies.Fields;
 using OrchardCore.Taxonomies.Settings;
 using OrchardCore.Title.Models;
 
-namespace Members.Core {
+namespace Members.Core
+{
 
-  public class Offer : ContentPart {
+  public class Offer : ContentPart
+  {
     public TextField ShortDescription { get; set; }
     public TextField Description { get; set; }
     public HtmlField LongDescription { get; set; }
@@ -31,10 +33,12 @@ namespace Members.Core {
     public ContentPickerField Company { get; set; }
   }
 
-  public static class OfferMigration {
+  public static class OfferMigration
+  {
     public static void MigrateOffer(
-        this IContentDefinitionManager _contentDefinitionManager) {
-#region OfferType
+        this IContentDefinitionManager _contentDefinitionManager)
+    {
+      #region OfferType
       _contentDefinitionManager.AlterTypeDefinition("Offer",
           type =>
               type.DisplayedAs("Ponuda")
@@ -44,17 +48,19 @@ namespace Members.Core {
                   .WithPart("Offer", part => part.WithPosition("1"))
                   .WithPart("TitlePart",
                       part => part.WithPosition("0").WithSettings(
-                          new TitlePartSettings {
+                          new TitlePartSettings
+                          {
                             Options = TitlePartOptions.EditableRequired
                           }))
                   .WithPart("AutoroutePart",
                       part => part.WithPosition("2").WithSettings(
-                          new AutoroutePartSettings {
+                          new AutoroutePartSettings
+                          {
                             Pattern =
                                 "offers-{{ ContentItem.DisplayText | slugify }}",
                           })));
-#endregion
-#region OfferPart
+      #endregion
+      #region OfferPart
       _contentDefinitionManager.AlterPartDefinition("Offer",
           part =>
               part.WithField("Category",
@@ -63,21 +69,24 @@ namespace Members.Core {
                                    .WithEditor("Tags")
                                    .WithDisplayMode("Tags")
                                    .WithPosition("0")
-                                   .WithSettings(new TaxonomyFieldSettings {
+                                   .WithSettings(new TaxonomyFieldSettings
+                                   {
                                      Required = true,
                                      TaxonomyContentItemId =
                                          "4a6d7mtpab04yt9yedrsardz4r",
                                      Unique = true,
                                    })
                                    .WithSettings(
-                                       new TaxonomyFieldTagsEditorSettings {
+                                       new TaxonomyFieldTagsEditorSettings
+                                       {
                                          Open = false,
                                        }))
                   .WithField("ShortDescription",
                       field => field.OfType("TextField")
                                    .WithDisplayName("Kratki opis")
                                    .WithPosition("1")
-                                   .WithSettings(new TextFieldSettings {
+                                   .WithSettings(new TextFieldSettings
+                                   {
                                      Required = true,
                                    }))
                   .RemoveField("LongDescription") // some additions
@@ -92,7 +101,8 @@ namespace Members.Core {
                                    .WithDisplayName("Fotografija")
                                    .WithEditor("Attached")
                                    .WithPosition("3")
-                                   .WithSettings(new MediaFieldSettings {
+                                   .WithSettings(new MediaFieldSettings
+                                   {
                                      Multiple = false,
                                      AllowMediaText = false,
                                    }))
@@ -101,7 +111,8 @@ namespace Members.Core {
                           field.OfType("ContentPickerField")
                               .WithPosition("4")
                               .WithDisplayName("Company")
-                              .WithSettings(new ContentPickerFieldSettings {
+                              .WithSettings(new ContentPickerFieldSettings
+                              {
                                 DisplayedContentTypes = new[] { "Company" },
                               }))
                   .WithField("PersonName",
@@ -109,21 +120,24 @@ namespace Members.Core {
                           field.OfType("TextField")
                               .WithDisplayName("Naziv pravne ili fizičke osobe")
                               .WithPosition("5")
-                              .WithSettings(new TextFieldSettings {
+                              .WithSettings(new TextFieldSettings
+                              {
                                 Required = true,
                               }))
                   .WithField("ContactPerson",
                       field => field.OfType("TextField")
                                    .WithDisplayName("Kontakt osoba")
                                    .WithPosition("6")
-                                   .WithSettings(new TextFieldSettings {
+                                   .WithSettings(new TextFieldSettings
+                                   {
                                      Required = true,
                                    }))
                   .WithField("Email",
                       field => field.OfType("TextField")
                                    .WithDisplayName("Email")
                                    .WithPosition("7")
-                                   .WithSettings(new TextFieldSettings {
+                                   .WithSettings(new TextFieldSettings
+                                   {
                                      Required = true,
                                    }))
                   .WithField("Phone", field => field.OfType("TextField")
@@ -136,35 +150,39 @@ namespace Members.Core {
                       "Web", field => field.OfType("LinkField")
                                           .WithDisplayName("Web")
                                           .WithPosition("10")
-                                          .WithSettings(new LinkFieldSettings {
+                                          .WithSettings(new LinkFieldSettings
+                                          {
                                             LinkTextMode = LinkTextMode.Url,
                                           }))
                   .WithField("Instagram",
                       field => field.OfType("LinkField")
                                    .WithDisplayName("Instagram")
                                    .WithPosition("11")
-                                   .WithSettings(new LinkFieldSettings {
+                                   .WithSettings(new LinkFieldSettings
+                                   {
                                      LinkTextMode = LinkTextMode.Url,
                                    }))
                   .WithField("Facebook",
                       field => field.OfType("LinkField")
                                    .WithDisplayName("Facebook")
                                    .WithPosition("12")
-                                   .WithSettings(new LinkFieldSettings {
+                                   .WithSettings(new LinkFieldSettings
+                                   {
                                      LinkTextMode = LinkTextMode.Url,
                                    }))
                   .WithField("LinkedIn",
                       field => field.OfType("LinkField")
                                    .WithDisplayName("LinkedIn")
                                    .WithPosition("13")
-                                   .WithSettings(new LinkFieldSettings {
+                                   .WithSettings(new LinkFieldSettings
+                                   {
                                      LinkTextMode = LinkTextMode.Url,
                                    }))
                   .WithField("YoutubeVideoId",
                       field => field.OfType("TextField")
                                    .WithDisplayName("Youtube video ID")
                                    .WithPosition("14")));
-#endregion
+      #endregion
     }
   }
 }

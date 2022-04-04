@@ -6,8 +6,10 @@ using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
 using System;
 
-namespace Members.Payments {
-  public class Payment : ContentPart {
+namespace Members.Payments
+{
+  public class Payment : ContentPart
+  {
     public NumericField Amount { get; set; }
     public TextField PayerName { get; set; }
     public TextField Address { get; set; }
@@ -22,16 +24,19 @@ namespace Members.Payments {
 
     [Obsolete(
         "Use TransactionRef, this is for initial imports and legacy projections")]
-    public TextField PaymentRef {
+    public TextField PaymentRef
+    {
       get; set;
     }
 
     public BooleanField IsPayout { get; set; }
   }
 
-  public static class PaymentMigration {
+  public static class PaymentMigration
+  {
     public static void MigratePayment(
-        this IContentDefinitionManager _contentDefinitionManager) {
+        this IContentDefinitionManager _contentDefinitionManager)
+    {
       _contentDefinitionManager.AlterTypeDefinition("Payment",
           type =>
               type.DisplayedAs("Plaćanje")
@@ -42,7 +47,8 @@ namespace Members.Payments {
                   .WithPart("Payment", part => part.WithPosition("0"))
                   .WithPart("TitlePart",
                       part => part.WithPosition("1").WithSettings(
-                          new TitlePartSettings {
+                          new TitlePartSettings
+                          {
                             Options = TitlePartOptions.GeneratedDisabled,
                             Pattern =
                                 "{{ ContentItem.Content.Payment.PayerName.Text }} | {{ ContentItem.Content.Payment.Amount.Value | format_number: \"C\"  }} | {{ ContentItem.Content.Payment.Date.Value | date: \"%D\" }}",
@@ -54,21 +60,25 @@ namespace Members.Payments {
                       field => field.OfType("BooleanField")
                                    .WithDisplayName("Isplata")
                                    .WithPosition("0")
-                                   .WithSettings(new BooleanFieldSettings {
+                                   .WithSettings(new BooleanFieldSettings
+                                   {
                                      DefaultValue = false,
                                    }))
                   .WithField("Amount",
                       field => field.OfType("NumericField")
                                    .WithDisplayName("Iznos")
                                    .WithPosition("1")
-                                   .WithSettings(new NumericFieldSettings {
-                                     Required = true, Scale = 2
+                                   .WithSettings(new NumericFieldSettings
+                                   {
+                                     Required = true,
+                                     Scale = 2
                                    }))
                   .WithField("PayerName",
                       field => field.OfType("TextField")
                                    .WithDisplayName("Ime")
                                    .WithPosition("2")
-                                   .WithSettings(new TextFieldSettings {
+                                   .WithSettings(new TextFieldSettings
+                                   {
                                      Required = true,
                                    }))
                   .WithField("Address", field => field.OfType("TextField")
@@ -91,7 +101,8 @@ namespace Members.Payments {
                           field.OfType("ContentPickerField")
                               .WithDisplayName("Član")
                               .WithPosition("6")
-                              .WithSettings(new ContentPickerFieldSettings {
+                              .WithSettings(new ContentPickerFieldSettings
+                              {
                                 DisplayedContentTypes =
                                     new[] { "Member", "Company" },
                               })));

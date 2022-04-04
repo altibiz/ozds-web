@@ -1,3 +1,4 @@
-namespace Elasticsearch.MeasurementFaker {
-  public partial interface IClient {};
+namespace Elasticsearch.MeasurementFaker
+{
+  public partial interface IClient { };
 };

@@ -1,3 +1,4 @@
-namespace Elasticsearch.MyEnergyCommunity {
-  public partial interface IClient {};
+namespace Elasticsearch.MyEnergyCommunity
+{
+  public partial interface IClient { };
 };

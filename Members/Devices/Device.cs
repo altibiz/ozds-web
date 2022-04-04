@@ -3,7 +3,8 @@ using System;
 
 namespace Members.Devices;
 
-public class Device : ContentPart {
+public class Device : ContentPart
+{
   public string Id { get; init; }
   public string MemberId { get; init; }
 

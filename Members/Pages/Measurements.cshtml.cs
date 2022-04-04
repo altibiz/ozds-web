@@ -7,13 +7,16 @@ using Elasticsearch;
 
 namespace Members.Pages;
 
-public class MeasurementsModel : PageModel {
-  public MeasurementsModel(IClient client, ILogger<MeasurementsModel> logger) {
+public class MeasurementsModel : PageModel
+{
+  public MeasurementsModel(IClient client, ILogger<MeasurementsModel> logger)
+  {
     Client = client;
     Logger = logger;
   }
 
-  public void OnGet() {
+  public void OnGet()
+  {
     var now = DateTime.UtcNow;
     Measurements = Client
                        .SearchMeasurementsSorted(

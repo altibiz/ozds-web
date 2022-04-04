@@ -34,96 +34,106 @@ using Members.Base;
 using Members.ContentHandlers;
 using Members.Measurements;
 
-namespace Members {
-public class Startup : OrchardCore.Modules.StartupBase {
-  public IWebHostEnvironment Env { get; init; }
-  public ILogger<Startup> Logger { get; init; }
+namespace Members
+{
+  public class Startup : OrchardCore.Modules.StartupBase
+  {
+    public IWebHostEnvironment Env { get; init; }
+    public ILogger<Startup> Logger { get; init; }
 
-  public Startup(IWebHostEnvironment env, ILogger<Startup> logger) {
-    Env = env;
-    Logger = logger;
-  }
-
-  public override void ConfigureServices(IServiceCollection services) {
-    services.AddScoped<INavigationProvider, AdminMenu>();
-    services.AddScoped<IDataMigration, Migrations>();
-    services.AddContentPart<Member>();
-    services.AddContentPart<Company>();
-    services.UsePartService<PersonPart, PersonPartService>();
-    services.UsePartService<BankStatPart, BankStatPartService>();
-    services.AddScoped<MemberService>();
-    services.AddScoped<PaymentUtils>();
-    services.AddScoped<IScopedIndexProvider, PersonPartIndexProvider>();
-    services.AddSingleton<IIndexProvider, PaymentIndexProvider>();
-    services.AddSingleton<IIndexProvider, OfferIndexProvider>();
-    services.AddSingleton<IIndexProvider, PaymentByDayIndexProvider>();
-    services.AddContentPart<Payment>();
-    services.AddContentPart<Offer>();
-    services.AddScoped<TaxonomyCachedService>();
-    services.AddSingleton<IContentHandler, MemberHandler>();
-    services.AddSingleton<IContentHandler, UserMenuHandler>();
-    services.AddRecipeExecutionStep<FastImport>();
-    services.AddScoped<Importer>();
-    services.AddTransient<IContentsAdminListFilterProvider,
-        PersonPartAdminListFilterProvider>();
-    services.AddTransient<IContentsAdminListFilterProvider,
-        PaymentAdminListFilterProvider>();
-    services.AddScoped<IDisplayDriver<ContentOptionsViewModel>,
-        PersonOptionsDisplayDriver>();
-    services.UsePartService<Pledge, PledgeService>();
-    services.UsePartService<Payment, PaymentPartService>();
-
-    services.AddScoped<IContentDisplayDriver, ContainedPartDisplayDriver>();
-    services.AddSingleton<IBackgroundTask, FastImportBackgroundTask>();
-
-    if (Env.IsDevelopment()) {
-      services.AddScoped<IShapeDisplayEvents, ShapeTracingShapeEvents>();
-      services.AddScoped<IContentTypeDefinitionDisplayDriver,
-          CodeGenerationDisplayDriver>();
+    public Startup(IWebHostEnvironment env, ILogger<Startup> logger)
+    {
+      Env = env;
+      Logger = logger;
     }
 
-    services.AddContentField<TextField>()
-        .ForEditor<TextFieldDisplayDriver>(d => false)
-        .ForEditor<PartTextFieldDriver>(d => true);
-    services.AddContentField<NumericField>()
-        .ForEditor<NumericFieldDisplayDriver>(d => false)
-        .ForEditor<PartNumericFieldDriver>(d => true);
+    public override void ConfigureServices(IServiceCollection services)
+    {
+      services.AddScoped<INavigationProvider, AdminMenu>();
+      services.AddScoped<IDataMigration, Migrations>();
+      services.AddContentPart<Member>();
+      services.AddContentPart<Company>();
+      services.UsePartService<PersonPart, PersonPartService>();
+      services.UsePartService<BankStatPart, BankStatPartService>();
+      services.AddScoped<MemberService>();
+      services.AddScoped<PaymentUtils>();
+      services.AddScoped<IScopedIndexProvider, PersonPartIndexProvider>();
+      services.AddSingleton<IIndexProvider, PaymentIndexProvider>();
+      services.AddSingleton<IIndexProvider, OfferIndexProvider>();
+      services.AddSingleton<IIndexProvider, PaymentByDayIndexProvider>();
+      services.AddContentPart<Payment>();
+      services.AddContentPart<Offer>();
+      services.AddScoped<TaxonomyCachedService>();
+      services.AddSingleton<IContentHandler, MemberHandler>();
+      services.AddSingleton<IContentHandler, UserMenuHandler>();
+      services.AddRecipeExecutionStep<FastImport>();
+      services.AddScoped<Importer>();
+      services.AddTransient<IContentsAdminListFilterProvider,
+          PersonPartAdminListFilterProvider>();
+      services.AddTransient<IContentsAdminListFilterProvider,
+          PaymentAdminListFilterProvider>();
+      services.AddScoped<IDisplayDriver<ContentOptionsViewModel>,
+          PersonOptionsDisplayDriver>();
+      services.UsePartService<Pledge, PledgeService>();
+      services.UsePartService<Payment, PaymentPartService>();
 
-    services.AddContentField<TaxonomyField>()
-        .ForEditor<TaxonomyFieldTagsDisplayDriver>(d => false)
-        .ForEditor<TaxonomyFieldDisplayDriver>(
-            d =>
-                !string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) &&
-                !string.Equals(
-                    d, "Disabled", StringComparison.OrdinalIgnoreCase))
-        .ForEditor<PartTaxonomyFieldTagsDriver>(d => {
-          return string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) ||
+      services.AddScoped<IContentDisplayDriver, ContainedPartDisplayDriver>();
+      services.AddSingleton<IBackgroundTask, FastImportBackgroundTask>();
+
+      if (Env.IsDevelopment())
+      {
+        services.AddScoped<IShapeDisplayEvents, ShapeTracingShapeEvents>();
+        services.AddScoped<IContentTypeDefinitionDisplayDriver,
+            CodeGenerationDisplayDriver>();
+      }
+
+      services.AddContentField<TextField>()
+          .ForEditor<TextFieldDisplayDriver>(d => false)
+          .ForEditor<PartTextFieldDriver>(d => true);
+      services.AddContentField<NumericField>()
+          .ForEditor<NumericFieldDisplayDriver>(d => false)
+          .ForEditor<PartNumericFieldDriver>(d => true);
+
+      services.AddContentField<TaxonomyField>()
+          .ForEditor<TaxonomyFieldTagsDisplayDriver>(d => false)
+          .ForEditor<TaxonomyFieldDisplayDriver>(
+              d =>
+                  !string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) &&
+                  !string.Equals(
+                      d, "Disabled", StringComparison.OrdinalIgnoreCase))
+          .ForEditor<PartTaxonomyFieldTagsDriver>(d =>
+          {
+            return string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) ||
                  string.Equals(
                      d, "Disabled", StringComparison.OrdinalIgnoreCase);
-        });
+          });
 
-    if (Env.IsDevelopment()) {
-      services.AddSingleton<Elasticsearch.IMeasurementProvider,
-          Elasticsearch.MeasurementFaker.Client>();
-    } else {
-      foreach (var measurementProviderType in Assembly.GetExecutingAssembly()
-                   .GetTypes()
-                   .Where(type =>
-                              typeof(Elasticsearch.IMeasurementProvider)
-                                  .IsAssignableFrom(type) &&
-                              !type.IsInterface &&
-                              !type.Equals(typeof(Elasticsearch.Client)) &&
-                              !type.Equals(typeof(Elasticsearch.MeasurementFaker
-                                                      .Client)))) {
-        services.AddSingleton(typeof(Elasticsearch.IMeasurementProvider),
-            measurementProviderType);
+      if (Env.IsDevelopment())
+      {
+        services.AddSingleton<Elasticsearch.IMeasurementProvider,
+            Elasticsearch.MeasurementFaker.Client>();
       }
-    }
+      else
+      {
+        foreach (var measurementProviderType in Assembly.GetExecutingAssembly()
+                     .GetTypes()
+                     .Where(type =>
+                                typeof(Elasticsearch.IMeasurementProvider)
+                                    .IsAssignableFrom(type) &&
+                                !type.IsInterface &&
+                                !type.Equals(typeof(Elasticsearch.Client)) &&
+                                !type.Equals(typeof(Elasticsearch.MeasurementFaker
+                                                        .Client))))
+        {
+          services.AddSingleton(typeof(Elasticsearch.IMeasurementProvider),
+              measurementProviderType);
+        }
+      }
 
-    services.AddSingleton<Elasticsearch.IClient, Elasticsearch.Client>();
-        services.AddSingleton<PeriodicMeasurementLoader>();
-        services.AddSingleton<IBackgroundTask,
-            PeriodicMeasurementLoadBackgroundTask>();
+      services.AddSingleton<Elasticsearch.IClient, Elasticsearch.Client>();
+      services.AddSingleton<PeriodicMeasurementLoader>();
+      services.AddSingleton<IBackgroundTask,
+          PeriodicMeasurementLoadBackgroundTask>();
+    }
   }
-}
 }

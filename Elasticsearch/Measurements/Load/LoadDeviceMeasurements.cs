@@ -5,7 +5,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Elasticsearch;
 
-public partial interface IClient {
+public partial interface IClient
+{
   public IEnumerable<Measurement> LoadDeviceMeasurements(
       Device device, Period? period = null);
 
@@ -13,25 +14,28 @@ public partial interface IClient {
       Device device, Period? period = null);
 }
 
-public partial class Client {
+public partial class Client
+{
   public IEnumerable<Measurement> LoadDeviceMeasurements(
-      Device device, Period? period = null) {
+      Device device, Period? period = null)
+  {
     var task = LoadDeviceMeasurementsAsync(device, period);
     task.Wait();
     return task.Result;
   }
 
   public async Task<IEnumerable<Measurement>> LoadDeviceMeasurementsAsync(
-      Device device, Period? period = null) {
+      Device device, Period? period = null)
+  {
     var provider = Providers.Find(p => p.Source == device.Source);
-    if (provider is null) { return new List<Measurement> {}; }
+    if (provider is null) { return new List<Measurement> { }; }
 
     var measurements =
         (await provider.GetMeasurementsAsync(device, period)).ToList();
 
-        Logger.LogDebug(
-            $"Got {measurements.Count} measurements " + $"from {device.Id}");
+    Logger.LogDebug(
+        $"Got {measurements.Count} measurements " + $"from {device.Id}");
 
-        return measurements;
+    return measurements;
   }
 }

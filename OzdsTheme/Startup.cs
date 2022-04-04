@@ -4,10 +4,13 @@ using OrchardCore.Modules;
 using OrchardCore.ResourceManagement;
 using OrchardCore.Data.Migration;
 
-namespace OrchardCore.Themes.OzdsTheme {
-  public class Startup : StartupBase {
+namespace OrchardCore.Themes.OzdsTheme
+{
+  public class Startup : StartupBase
+  {
     public override void ConfigureServices(
-        IServiceCollection serviceCollection) {
+        IServiceCollection serviceCollection)
+    {
       serviceCollection
           .AddTransient<IConfigureOptions<ResourceManagementOptions>,
               ResourceManagementOptionsConfiguration>();

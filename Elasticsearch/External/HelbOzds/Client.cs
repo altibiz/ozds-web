@@ -7,8 +7,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace Elasticsearch.HelbOzds;
 
-public sealed partial class Client : IClient, IDisposable {
-  public Client(IConfiguration conf, ILogger<Client> logger) {
+public sealed partial class Client : IClient, IDisposable
+{
+  public Client(IConfiguration conf, ILogger<Client> logger)
+  {
     var section = conf.GetSection("Elasticsearch")
                       .GetSection("External")
                       .GetSection("HelbOzds")
@@ -20,18 +22,24 @@ public sealed partial class Client : IClient, IDisposable {
     // OpenSqlConnection();
   }
 
-  public void Dispose() {
+  public void Dispose()
+  {
     // CloseSqlConnection();
   }
 
-  private void OpenSqlConnection() {
+  private void OpenSqlConnection()
+  {
 
     bool retry = false;
-    do {
-      try {
+    do
+    {
+      try
+      {
         Db.Open();
         retry = false;
-      } catch (SqlException sqlException) {
+      }
+      catch (SqlException sqlException)
+      {
         Logger.LogWarning(
             $"Failed opening {Source} connection to {Db.ConnectionString}\n" +
                 $"Reason: {sqlException.Message}" + "Retrying in 5 seconds...",
@@ -44,14 +52,20 @@ public sealed partial class Client : IClient, IDisposable {
         $"Opened {Source} connection to {Db.ConnectionString}");
   }
 
-  private void CloseSqlConnection() {
-    if (Db.State != ConnectionState.Closed) {
+  private void CloseSqlConnection()
+  {
+    if (Db.State != ConnectionState.Closed)
+    {
       bool retry = false;
-      do {
-        try {
+      do
+      {
+        try
+        {
           Db.Close();
           retry = false;
-        } catch (SqlException sqlException) {
+        }
+        catch (SqlException sqlException)
+        {
           Logger.LogWarning($"Failed closing connection to {Source}\n" +
                                 $"Reason: {sqlException.Message}" +
                                 "Retrying in 5 seconds...",
@@ -60,7 +74,9 @@ public sealed partial class Client : IClient, IDisposable {
           Thread.Sleep(5000);
         }
       } while (retry);
-    } else {
+    }
+    else
+    {
       Db.Close();
     }
     Logger.LogInformation(

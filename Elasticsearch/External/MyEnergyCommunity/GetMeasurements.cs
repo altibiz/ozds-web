@@ -8,36 +8,43 @@ using Microsoft.Extensions.Logging;
 // TODO: dont use AspNetCore?
 using Microsoft.AspNetCore.Http.Extensions;
 
-namespace Elasticsearch.MyEnergyCommunity {
-  public partial interface IClient : IMeasurementProvider {};
+namespace Elasticsearch.MyEnergyCommunity
+{
+  public partial interface IClient : IMeasurementProvider { };
 
-  public sealed partial class Client : IClient {
+  public sealed partial class Client : IClient
+  {
     public string Source { get => Client.s_source; }
 
     public IEnumerable<Elasticsearch.Measurement> GetMeasurements(
-        Device device, Period? period = null) {
+        Device device, Period? period = null)
+    {
       var task = GetElasticsearchMeasurementsAsync(device, period);
       task.Wait();
       return task.Result;
     }
 
     public async Task<IEnumerable<Elasticsearch.Measurement>>
-    GetMeasurementsAsync(Device device, Period? period = null) {
+    GetMeasurementsAsync(Device device, Period? period = null)
+    {
       return await GetElasticsearchMeasurementsAsync(device, period);
     }
 
     private async Task<IEnumerable<Elasticsearch.Measurement>>
-    GetElasticsearchMeasurementsAsync(Device device, Period? period = null) {
+    GetElasticsearchMeasurementsAsync(Device device, Period? period = null)
+    {
       return (await GetNativeMeasurementsAsync(device, period))
           .Select(ConvertMeasurement);
     }
 
     private async Task<List<Measurement>> GetNativeMeasurementsAsync(
-        Device device, Period? period = null) {
-      var result = new List<Measurement> {};
+        Device device, Period? period = null)
+    {
+      var result = new List<Measurement> { };
       string? continuationToken = null;
 
-      do {
+      do
+      {
         var uri = "v1/measurements/device/" + device.SourceDeviceId;
         var query = new QueryBuilder();
         if (period?.From != null)
@@ -51,9 +58,12 @@ namespace Elasticsearch.MyEnergyCommunity {
         request.Headers.Add("OwnerId", device.SourceDeviceData.ownerId);
 
         HttpResponseMessage? response = null;
-        try {
+        try
+        {
           response = await this.Http.SendAsync(request);
-        } catch (HttpRequestException connectionException) {
+        }
+        catch (HttpRequestException connectionException)
+        {
           Logger.LogWarning($"Failed connecting to {Source}\n" +
                             $"Reason {connectionException.Message}");
           break;
@@ -61,17 +71,21 @@ namespace Elasticsearch.MyEnergyCommunity {
 
         var responseContent = await response.Content.ReadAsStreamAsync();
         Response<Measurement>? measurementsResponse = null;
-        try {
+        try
+        {
           measurementsResponse =
               await JsonSerializer.DeserializeAsync<Response<Measurement>>(
                   responseContent);
-        } catch (JsonException jsonException) {
+        }
+        catch (JsonException jsonException)
+        {
           Logger.LogWarning($"Failed parsing response of {Source}\n" +
                             $"Reason {jsonException.Message}");
           break;
         }
 
-        if (measurementsResponse == null) {
+        if (measurementsResponse == null)
+        {
           continue;
         }
 
@@ -83,12 +97,14 @@ namespace Elasticsearch.MyEnergyCommunity {
     }
 
     private Elasticsearch.Measurement ConvertMeasurement(
-        Measurement measurement) {
+        Measurement measurement)
+    {
       return new Elasticsearch.Measurement(measurement.deviceDateTime,
           new Nest.GeoCoordinate(measurement.geoCoordinates.longitude,
               measurement.geoCoordinates.latitude),
           Source, Elasticsearch.Device.MakeId(Source, measurement.deviceId),
-          new Elasticsearch.Measurement.KnownData {
+          new Elasticsearch.Measurement.KnownData
+          {
             dongleId = measurement.measurementData.dongleId,
             meterIdent = measurement.measurementData.meterIdent,
             meterSerial = measurement.measurementData.meterSerial,

@@ -6,11 +6,14 @@ using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Razor;
 using System.Threading.Tasks;
 
-namespace Members.Base {
-  public static class OrchardRazorHelperExtensions {
+namespace Members.Base
+{
+  public static class OrchardRazorHelperExtensions
+  {
     public static async Task<IHtmlContent> EditorAsync(
         this IOrchardDisplayHelper orchardDisplayHelper, ContentItem content,
-        string groupId = "", IUpdateModel updater = null) {
+        string groupId = "", IUpdateModel updater = null)
+    {
       var displayManager =
           orchardDisplayHelper.HttpContext.RequestServices
               .GetRequiredService<IContentItemDisplayManager>();
@@ -21,7 +24,8 @@ namespace Members.Base {
 
     public static async Task<IHtmlContent> EditorAsync(
         this IOrchardDisplayHelper orchardDisplayHelper, string contentType,
-        string groupId = "", IUpdateModel updater = null) {
+        string groupId = "", IUpdateModel updater = null)
+    {
       var contentManager = orchardDisplayHelper.HttpContext.RequestServices
                                .GetRequiredService<IContentManager>();
       ContentItem content = await contentManager.NewAsync(contentType);

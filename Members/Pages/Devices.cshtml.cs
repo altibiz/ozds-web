@@ -6,13 +6,16 @@ using Elasticsearch;
 
 namespace Members.Pages;
 
-public class DevicesModel : PageModel {
-  public DevicesModel(IClient client, ILogger<DevicesModel> logger) {
+public class DevicesModel : PageModel
+{
+  public DevicesModel(IClient client, ILogger<DevicesModel> logger)
+  {
     Client = client;
     Logger = logger;
   }
 
-  public void OnGet() {
+  public void OnGet()
+  {
     Devices =
         Client.SearchDevices(Elasticsearch.MeasurementFaker.Client.FakeSource)
             .Sources()

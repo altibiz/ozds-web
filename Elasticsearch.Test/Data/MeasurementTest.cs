@@ -1,10 +1,13 @@
 using System;
 
-namespace Elasticsearch.Test {
-  public static partial class Data {
+namespace Elasticsearch.Test
+{
+  public static partial class Data
+  {
     public static readonly Measurement MyEnergyCommunityMeasurement =
         new Measurement(DateTime.UtcNow, null, "MyEnergyCommunity", "M9EQCU59",
-            new Measurement.KnownData {
+            new Measurement.KnownData
+            {
               dongleId = "M9EQCU59",
               meterIdent = "ISK5/2M550T-2006",
               meterSerial = "83793906",

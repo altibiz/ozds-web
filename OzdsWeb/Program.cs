@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOrchardCms().AddSetupFeatures("OrchardCore.AutoSetup");
 
-builder.Services.Configure<IdentityOptions>(options => {
+builder.Services.Configure<IdentityOptions>(options =>
+{
   options.Password.RequireDigit = false;
   options.Password.RequireLowercase = false;
   options.Password.RequireUppercase = false;

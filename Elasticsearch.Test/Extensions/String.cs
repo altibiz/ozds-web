@@ -1,7 +1,9 @@
 using System.Text.RegularExpressions;
 
-namespace Elasticsearch.Test {
-  public static class StringExtensions {
+namespace Elasticsearch.Test
+{
+  public static class StringExtensions
+  {
     public static string RegexReplace(this string str, Regex pattern,
         string replacement) => pattern.Replace(str, replacement);
 

@@ -1,10 +1,13 @@
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Elasticsearch.Test {
-  public partial class ClientTest {
+namespace Elasticsearch.Test
+{
+  public partial class ClientTest
+  {
     [Fact]
-    public void UpdateDeviceStateTest() {
+    public void UpdateDeviceStateTest()
+    {
       var device = Data.MyEnergyCommunityDevice;
       var deviceId = device.Id;
       var deviceState = device.State;
@@ -41,7 +44,8 @@ namespace Elasticsearch.Test {
     }
 
     [Fact]
-    public async Task UpdateDeviceStateAsyncTest() {
+    public async Task UpdateDeviceStateAsyncTest()
+    {
       var device = Data.MyEnergyCommunityDevice;
       var deviceId = device.Id;
       var deviceState = device.State;

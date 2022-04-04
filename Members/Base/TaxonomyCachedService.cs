@@ -6,17 +6,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Members.Base {
-  public class TaxonomyCachedService {
+namespace Members.Base
+{
+  public class TaxonomyCachedService
+  {
     private IOrchardHelper _helper;
 
     private Dictionary<(string, string), ContentItem> _cached =
         new Dictionary<(string, string), ContentItem>();
 
     public TaxonomyCachedService(IOrchardHelper helper) { _helper = helper; }
-    public async Task<List<ContentItem>> GetTaxonomyTerms(TaxonomyField field) {
+    public async Task<List<ContentItem>> GetTaxonomyTerms(TaxonomyField field)
+    {
       var res = new List<ContentItem>();
-      foreach (var trm in field?.TermContentItemIds ?? Array.Empty<string>()) {
+      foreach (var trm in field?.TermContentItemIds ?? Array.Empty<string>())
+      {
         if (!_cached.TryGetValue(
                 (field.TaxonomyContentItemId, trm), out var contentItem))
           _cached[(field.TaxonomyContentItemId, trm)] = contentItem =
@@ -27,9 +31,11 @@ namespace Members.Base {
       return res;
     }
 
-    public async Task<ContentItem> GetFirstTerm(TaxonomyField field) {
+    public async Task<ContentItem> GetFirstTerm(TaxonomyField field)
+    {
       var res = new List<ContentItem>();
-      foreach (var trm in field?.TermContentItemIds ?? Array.Empty<string>()) {
+      foreach (var trm in field?.TermContentItemIds ?? Array.Empty<string>())
+      {
         if (!_cached.TryGetValue(
                 (field.TaxonomyContentItemId, trm), out var contentItem))
           _cached[(field.TaxonomyContentItemId, trm)] = contentItem =

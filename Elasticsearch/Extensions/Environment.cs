@@ -1,20 +1,25 @@
 using System;
 
-namespace Elasticsearch {
-public static class EnvironmentExtensions {
-  public static string AssertEnvironmentVariable(string key) {
-    var value = System.Environment.GetEnvironmentVariable(key);
+namespace Elasticsearch
+{
+  public static class EnvironmentExtensions
+  {
+    public static string AssertEnvironmentVariable(string key)
+    {
+      var value = System.Environment.GetEnvironmentVariable(key);
 
-    if (value == null) {
-      throw new EnvironmentVariableNotFoundException(
-          $"{key} environment variable not found.");
+      if (value == null)
+      {
+        throw new EnvironmentVariableNotFoundException(
+            $"{key} environment variable not found.");
+      }
+
+      return value;
     }
-
-    return value;
   }
-}
 
-public class EnvironmentVariableNotFoundException : SystemException {
-  public EnvironmentVariableNotFoundException(string message) : base(message) {}
-}
+  public class EnvironmentVariableNotFoundException : SystemException
+  {
+    public EnvironmentVariableNotFoundException(string message) : base(message) { }
+  }
 }

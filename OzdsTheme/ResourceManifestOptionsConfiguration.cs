@@ -1,12 +1,15 @@
 using Microsoft.Extensions.Options;
 using OrchardCore.ResourceManagement;
 
-namespace OrchardCore.Themes.OzdsTheme {
+namespace OrchardCore.Themes.OzdsTheme
+{
   public class ResourceManagementOptionsConfiguration
-      : IConfigureOptions<ResourceManagementOptions> {
+      : IConfigureOptions<ResourceManagementOptions>
+  {
     private static ResourceManifest _manifest;
 
-    static ResourceManagementOptionsConfiguration() {
+    static ResourceManagementOptionsConfiguration()
+    {
       _manifest = new ResourceManifest();
 
       _manifest.DefineScript("ozdstheme-bootstrap-bundle")
@@ -55,7 +58,8 @@ namespace OrchardCore.Themes.OzdsTheme {
           .SetVersion("6.0.0");
     }
 
-    public void Configure(ResourceManagementOptions options) {
+    public void Configure(ResourceManagementOptions options)
+    {
       options.ResourceManifests.Add(_manifest);
     }
   }

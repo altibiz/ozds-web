@@ -4,62 +4,68 @@ using System.Linq;
 using Xunit;
 using Nest;
 
-namespace Elasticsearch.Test {
-  public partial class ClientTest {
+namespace Elasticsearch.Test
+{
+  public partial class ClientTest
+  {
     [Fact]
-    public void IndexDevicesTest() {
+    public void IndexDevicesTest()
+    {
       var devices = new List<Device> { Data.MyEnergyCommunityDevice };
       var deviceIds = devices.Select(d => new Id(d.Id));
 
       var indexResponse = Client.IndexDevices(devices);
-          // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
-          // Assert.True(indexResponse.IsValid);
+      // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
+      // Assert.True(indexResponse.IsValid);
 
-          var indexedDeviceIds = indexResponse.Items.Ids();
-          AssertExtensions.ElementsEqual(deviceIds, indexedDeviceIds);
+      var indexedDeviceIds = indexResponse.Items.Ids();
+      AssertExtensions.ElementsEqual(deviceIds, indexedDeviceIds);
 
-          foreach (var device in devices) {
-            var getResponse = Client.GetDevice(device.Id);
-            Assert.True(getResponse.IsValid);
+      foreach (var device in devices)
+      {
+        var getResponse = Client.GetDevice(device.Id);
+        Assert.True(getResponse.IsValid);
 
-            var gotDevice = getResponse.Source;
-            Assert.Equal(device, gotDevice);
-          }
+        var gotDevice = getResponse.Source;
+        Assert.Equal(device, gotDevice);
+      }
 
-          var deleteResponse = Client.DeleteDevices(deviceIds);
-          // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
-          // Assert.True(deleteResponse.IsValid);
+      var deleteResponse = Client.DeleteDevices(deviceIds);
+      // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
+      // Assert.True(deleteResponse.IsValid);
 
-          var deletedDeviceIds = deleteResponse.Items.Ids();
-          AssertExtensions.ElementsEqual(deviceIds, deletedDeviceIds);
+      var deletedDeviceIds = deleteResponse.Items.Ids();
+      AssertExtensions.ElementsEqual(deviceIds, deletedDeviceIds);
     }
 
     [Fact]
-    public async Task IndexDevicesAsyncTest() {
+    public async Task IndexDevicesAsyncTest()
+    {
       var devices = new List<Device> { Data.MyEnergyCommunityDevice };
       var deviceIds = devices.Select(d => new Id(d.Id));
 
       var indexResponse = await Client.IndexDevicesAsync(devices);
-          // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
-          // Assert.True(indexResponse.IsValid);
+      // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
+      // Assert.True(indexResponse.IsValid);
 
-          var indexedDeviceIds = indexResponse.Items.Ids();
-          AssertExtensions.ElementsEqual(deviceIds, indexedDeviceIds);
+      var indexedDeviceIds = indexResponse.Items.Ids();
+      AssertExtensions.ElementsEqual(deviceIds, indexedDeviceIds);
 
-          foreach (var device in devices) {
-            var getResponse = await Client.GetDeviceAsync(device.Id);
-            Assert.True(getResponse.IsValid);
+      foreach (var device in devices)
+      {
+        var getResponse = await Client.GetDeviceAsync(device.Id);
+        Assert.True(getResponse.IsValid);
 
-            var gotDevice = getResponse.Source;
-            Assert.Equal(device, gotDevice);
-          }
+        var gotDevice = getResponse.Source;
+        Assert.Equal(device, gotDevice);
+      }
 
-          var deleteResponse = await Client.DeleteDevicesAsync(deviceIds);
-          // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
-          // Assert.True(deleteResponse.IsValid);
+      var deleteResponse = await Client.DeleteDevicesAsync(deviceIds);
+      // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
+      // Assert.True(deleteResponse.IsValid);
 
-          var deletedDeviceIds = deleteResponse.Items.Ids();
-          AssertExtensions.ElementsEqual(deviceIds, deletedDeviceIds);
+      var deletedDeviceIds = deleteResponse.Items.Ids();
+      AssertExtensions.ElementsEqual(deviceIds, deletedDeviceIds);
     }
   }
 }

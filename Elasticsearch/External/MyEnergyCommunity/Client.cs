@@ -7,8 +7,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Elasticsearch.MyEnergyCommunity;
 
-public sealed partial class Client : IClient {
-  public Client(IConfiguration conf, ILogger<Client> logger) {
+public sealed partial class Client : IClient
+{
+  public Client(IConfiguration conf, ILogger<Client> logger)
+  {
     Logger = logger;
 
     var section = conf.GetSection("Elasticsearch")
@@ -23,7 +25,8 @@ public sealed partial class Client : IClient {
 
     var pingTask = Http.GetAsync("/");
     pingTask.Wait();
-    if (pingTask.Result.StatusCode != HttpStatusCode.OK) {
+    if (pingTask.Result.StatusCode != HttpStatusCode.OK)
+    {
       throw new WebException(
           $"Could not connect to {Source}\n" +
           $"Ping response code: {pingTask.Result.StatusCode}");

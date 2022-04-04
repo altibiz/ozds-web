@@ -1,8 +1,11 @@
 using System;
 
-namespace Elasticsearch.MeasurementFaker {
-  public class Measurement {
-    public Measurement(DateTime? timestamp = null) {
+namespace Elasticsearch.MeasurementFaker
+{
+  public class Measurement
+  {
+    public Measurement(DateTime? timestamp = null)
+    {
       Timestamp = timestamp ?? DateTime.UtcNow.AddMinutes(-1);
     }
 

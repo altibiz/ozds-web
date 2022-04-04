@@ -1,10 +1,13 @@
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Elasticsearch.Test {
-  public partial class ClientTest {
+namespace Elasticsearch.Test
+{
+  public partial class ClientTest
+  {
     [Fact]
-    public void IndexLogTest() {
+    public void IndexLogTest()
+    {
       var Log = Data.LoadBeginLog;
 
       var indexResponse = Client.IndexLog(Log);
@@ -27,7 +30,8 @@ namespace Elasticsearch.Test {
     }
 
     [Fact]
-    public async Task IndexLogAsyncTest() {
+    public async Task IndexLogAsyncTest()
+    {
       var Log = Data.LoadBeginLog;
 
       var indexResponse = await Client.IndexLogAsync(Log);

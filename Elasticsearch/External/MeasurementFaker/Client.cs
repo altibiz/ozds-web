@@ -2,7 +2,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Elasticsearch.MeasurementFaker;
 
-public sealed partial class Client : IClient {
+public sealed partial class Client : IClient
+{
   public const string FakeSource = "fakeSource";
   public const string FakeDeviceId = "fakeDevice";
 

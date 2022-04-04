@@ -8,11 +8,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Members.Utils {
-  public static class ContentExtensions {
+namespace Members.Utils
+{
+  public static class ContentExtensions
+  {
     public static TSetting GetSettings<TSetting>(
         this IContentDefinitionManager _cdm, ContentPart part)
-        where TSetting : new() {
+        where TSetting : new()
+    {
       var contentTypeDefinition =
           _cdm.GetTypeDefinition(part.ContentItem.ContentType);
       var contentTypePartDefinition =
@@ -21,7 +24,8 @@ namespace Members.Utils {
       return contentTypePartDefinition.GetSettings<TSetting>();
     }
 
-    public static void AddToList(this ContentItem parent, ContentItem child) {
+    public static void AddToList(this ContentItem parent, ContentItem child)
+    {
       child.Weld<ContainedPart>();
       child.Alter<ContainedPart>(
           x => x.ListContentItemId = parent.ContentItemId);
@@ -30,17 +34,20 @@ namespace Members.Utils {
     // Returns content part only if the item is not deleted (not latest or
     // published)
     public static T AsReal<T>(this ContentItem contentItem)
-        where T : ContentPart {
+        where T : ContentPart
+    {
       if (!contentItem.Latest && !contentItem.Published)
         return null;
       return contentItem.As<T>();
     }
 
     public static T InitFields<T>(this T part)
-        where T : ContentPart {
+        where T : ContentPart
+    {
       if (part == null)
         return part;
-      foreach (var prop in part.GetType().GetProperties()) {
+      foreach (var prop in part.GetType().GetProperties())
+      {
         if (prop.PropertyType == typeof(TextField) &&
             prop.GetValue(part) == null)
           prop.SetValue(part, new TextField { ContentItem = part.ContentItem });
@@ -74,34 +81,41 @@ namespace Members.Utils {
       return part;
     }
 
-    public static string GetId(this ContentPickerField contentPickerField) {
+    public static string GetId(this ContentPickerField contentPickerField)
+    {
       return contentPickerField?.ContentItemIds?.FirstOrDefault();
     }
 
     public static void SetId(
-        this ContentPickerField contentPickerField, string value) {
+        this ContentPickerField contentPickerField, string value)
+    {
       contentPickerField.ContentItemIds = new[] { value };
     }
 
-    public static string GetId(this TaxonomyField taxonomyField) {
+    public static string GetId(this TaxonomyField taxonomyField)
+    {
       return taxonomyField.TermContentItemIds?.FirstOrDefault();
     }
 
-    public static void SetId(this TaxonomyField field, string value) {
+    public static void SetId(this TaxonomyField field, string value)
+    {
       field.TermContentItemIds = new[] { value };
     }
 
     public static async Task<ContentItem> GetTerm(
-        this TaxonomyField field, TaxonomyCachedService service) {
+        this TaxonomyField field, TaxonomyCachedService service)
+    {
       return await service.GetFirstTerm(field);
     }
 
     public static async Task<TPart> GetTerm<TPart>(
         this TaxonomyField field, TaxonomyCachedService service)
-        where TPart : ContentPart {
+        where TPart : ContentPart
+    {
       return (await service.GetFirstTerm(field)).As<TPart>();
     }
     public static IEnumerable<T> AsParts<T>(this IEnumerable<ContentItem> items)
-        where T : ContentPart { return items.Select(x => x.As<T>()); }
+        where T : ContentPart
+    { return items.Select(x => x.As<T>()); }
   }
 }

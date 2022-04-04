@@ -1,10 +1,13 @@
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Elasticsearch.Test {
-  public partial class ClientTest {
+namespace Elasticsearch.Test
+{
+  public partial class ClientTest
+  {
     [Fact]
-    public void IndexMeasurementTest() {
+    public void IndexMeasurementTest()
+    {
       var measurement = Data.MyEnergyCommunityMeasurement;
 
       var indexResponse = Client.IndexMeasurement(measurement);
@@ -27,7 +30,8 @@ namespace Elasticsearch.Test {
     }
 
     [Fact]
-    public async Task IndexMeasurementAsyncTest() {
+    public async Task IndexMeasurementAsyncTest()
+    {
       var measurement = Data.MyEnergyCommunityMeasurement;
 
       var indexResponse = await Client.IndexMeasurementAsync(measurement);

@@ -5,8 +5,10 @@ using System.Linq;
 using Members.Core;
 using Members.Utils;
 
-namespace Members.Indexes {
-  public class OfferIndex : MapIndex {
+namespace Members.Indexes
+{
+  public class OfferIndex : MapIndex
+  {
     public string ContentItemId { get; set; }
     public string CompanyContentItemId { get; set; }
     public string Title { get; set; }
@@ -14,23 +16,33 @@ namespace Members.Indexes {
     public bool Latest { get; set; }
     public string Owner { get; set; }
   }
-  public class OfferIndexProvider : IndexProvider<ContentItem> {
-    public override void Describe(DescribeContext<ContentItem> context) {
-      context.For<OfferIndex>().Map(contentItem => {
+  public class OfferIndexProvider : IndexProvider<ContentItem>
+  {
+    public override void Describe(DescribeContext<ContentItem> context)
+    {
+      context.For<OfferIndex>().Map(contentItem =>
+      {
         var offer = contentItem.AsReal<Offer>();
         if (offer == null)
           return null;
-        var offerIndex = new OfferIndex { ContentItemId =
-                                              contentItem.ContentItemId,
+        var offerIndex = new OfferIndex
+        {
+          ContentItemId =
+                                                    contentItem.ContentItemId,
           CompanyContentItemId = offer.Company?.ContentItemIds.FirstOrDefault(),
-          Title = contentItem.DisplayText, Published = contentItem.Published,
-          Latest = contentItem.Latest, Owner = contentItem.Owner };
+          Title = contentItem.DisplayText,
+          Published = contentItem.Published,
+          Latest = contentItem.Latest,
+          Owner = contentItem.Owner
+        };
         return offerIndex;
       });
     }
   }
-  public static class OfferIndexExtensions {
-    public static void CreateOfferIndex(this ISchemaBuilder SchemaBuilder) {
+  public static class OfferIndexExtensions
+  {
+    public static void CreateOfferIndex(this ISchemaBuilder SchemaBuilder)
+    {
       SchemaBuilder.CreateMapIndexTable<OfferIndex>(
           table => table
                        .Column<string>(nameof(OfferIndex.ContentItemId),

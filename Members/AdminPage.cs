@@ -4,7 +4,8 @@ using OrchardCore.Title.Models;
 
 namespace Members;
 
-public static class AdminMigrations {
+public static class AdminMigrations
+{
   public static void AdminPage(
       this IContentDefinitionManager contentDefinitionManager) =>
       contentDefinitionManager.AlterTypeDefinition("AdminPage",
@@ -18,7 +19,8 @@ public static class AdminMigrations {
                       .WithPart("LiquidPart", part => part.WithPosition("2"))
                       .WithPart("TitlePart",
                           part => part.WithPosition("0").WithSettings(
-                              new TitlePartSettings {
+                              new TitlePartSettings
+                              {
                                 Options = TitlePartOptions.EditableRequired,
                               })));
 }
