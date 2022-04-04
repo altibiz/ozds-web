@@ -36,7 +36,7 @@ public class DashboardController : Controller
 
     byte[] originalStream = ReadToByteArray(original.InputStream, 1024);
 
-    Stream reqStream = newRequest .GetRequestStream();
+    Stream reqStream = newRequest.GetRequestStream();
     reqStream.Write(originalStream, 0, originalStream.Length);
     reqStream.Close();
 

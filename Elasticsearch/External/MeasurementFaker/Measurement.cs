@@ -55,11 +55,13 @@ namespace Elasticsearch.MeasurementFaker
       public double? voltageL3 { get; init; } = default;
     };
 
-    public static Measurement Generate(DateTime timestamp) {
+    public static Measurement Generate(DateTime timestamp)
+    {
       var rand = new Random();
 
       return new Measurement(timestamp,
-            new KnownData{
+            new KnownData
+            {
               voltageL1 = rand.Next(s_voltageL1MinMax),
               voltageL2 = 0,
               voltageL3 = 0
