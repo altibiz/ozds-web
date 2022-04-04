@@ -20,7 +20,6 @@ namespace Elasticsearch
       return result;
     }
 
-    // TODO: test ids
     // NOTE: shamelessly copied from
     // https://stackoverflow.com/questions/1120198/most-efficient-way-to-remove-special-characters-from-string
     public static string RemoveSpecialCharacters(this string str)
