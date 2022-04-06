@@ -1,10 +1,17 @@
 using Microsoft.AspNetCore.Identity;
 
+var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+var appData = Environment.GetEnvironmentVariable("ORCHARD_APP_DATA");
+var logPathTemplate = Path.Join(appData, "log-{Date}.txt");
+
+Console.WriteLine($"Env: {env}");
+Console.WriteLine($"AppData: {appData}");
+Console.WriteLine($"Log path template: {logPathTemplate}");
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOrchardCms().AddSetupFeatures("OrchardCore.AutoSetup");
 
-builder.Services.Configure<IdentityOptions>(options =>
-{
+builder.Services.Configure<IdentityOptions>(options => {
   options.Password.RequireDigit = false;
   options.Password.RequireLowercase = false;
   options.Password.RequireUppercase = false;
@@ -13,12 +20,6 @@ builder.Services.Configure<IdentityOptions>(options =>
   options.Password.RequiredLength = 6;
 });
 
-Console.WriteLine(Environment.GetEnvironmentVariable("ORCHARD_APP_DATA"));
+builder.Logging.AddFile(logPathTemplate);
 
-builder.Services.Configure<ILoggerFactory>(factory =>
-{
-  factory.AddFile(Path.Join(
-      Environment.GetEnvironmentVariable("ORCHARD_APP_DATA"), "log"));
-});
-
-var app = builder.Build(); app.UseOrchardCore(); app.Run();
+    var app = builder.Build(); app.UseOrchardCore(); app.Run();
