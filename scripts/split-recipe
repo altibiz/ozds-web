@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+main() {
+  local recipe_path="$(realpath "$1")";
+  [[ -f "$recipe_path" ]] || exit 1;
+
+  local recipe_dir="$(dirname "$recipe_path")";
+  local recipe_name="$(basename "$recipe_path")"
+  local recipe="$(cat "$recipe_path")";
+
+  local out_dir="$([[ -d "$2" ]] && realpath "$2" || realpath "$recipe_dir")";
+  [[ -d "$out_dir" ]] || exit 1;
+
+  local i=0;
+  local n=1;
+
+  while :; do
+    local step_path=".steps[$i]";
+    local step="$(echo "$recipe" | jq "getpath(path($step_path))")";
+    local type="$(get_type "$step")";
+
+    if [[ $type == "null" ]] || [[ $type == "whitespace" ]]; then
+      echo "null";
+      break;
+    fi;
+
+    if [[ $type == "feature" ]]; then
+      ((i=$i+1));
+      echo "[[ $type ]]" $i;
+
+      ((n=$n+1));
+      continue;
+    fi;
+
+    local result="$(echo "{}" | jq "setpath(path(.steps); [$step])")";
+
+    recipe="$(echo "$recipe" | jq "del($step_path)")";
+
+    local step_name="$(echo "$step" | jq -r "getpath(path(.name))")";
+    local name="$( \
+      echo "$recipe_name" | \
+      sd "(.*)\.recipe\.json" "\$1.$n.$step_name.recipe.json")";
+    local path="$out_dir/$name";
+
+    echo "$recipe_dir" "$recipe_name" "$out_dir" "$step_name" "$name" "$path";
+    echo "$result" > "$path";
+
+    ((n=$n+1));
+  done;
+
+  echo -e "$recipe";
+  echo "$recipe" > "$recipe_path";
+}
+
+get_type () {
+  local whitespace=$(printf '\n\t ');
+  local step="$@";
+  local name="$(echo "$step" | jq -r 'getpath(path(.name))')";
+
+  if [[ "$name" == 'feature' ]]; then
+    echo "feature";
+    return;
+  fi;
+
+  case "$step" in
+    null) echo "null";;
+    *[!$whitespace]*) echo "$step";;
+    *) echo "whitespace";;
+  esac;
+};
+
+main $@;

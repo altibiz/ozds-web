@@ -1,0 +1,58 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": {
+        "ContentType": "Menu",
+        "ContentItemId": "[js: variables('menuContentItemId')]",
+        "Owner": "[js: parameters('AdminUserId')]",
+        "Author": "[js: parameters('AdminUsername')]",
+        "DisplayText": "Main Menu",
+        "Latest": true,
+        "Published": true,
+        "MenuPart": {},
+        "TitlePart": {
+          "Title": "Main Menu"
+        },
+        "MenuItemsListPart": {
+          "MenuItems": [
+            {
+              "ContentType": "LinkMenuItem",
+              "ContentItemId": "[js: uuid()]",
+              "DisplayText": "Početna",
+              "LinkMenuItemPart": {
+                "Name": "Home",
+                "Url": "~/"
+              }
+            },
+            {
+              "ContentType": "LinkMenuItem",
+              "ContentItemId": "[js: uuid()]",
+              "DisplayText": "Tko smo mi",
+              "LinkMenuItemPart": {
+                "Name": "Tko smo mi",
+                "Url": "~/o-nama"
+              }
+            },
+            {
+              "ContentType": "LinkMenuItem",
+              "ContentItemId": "[js: uuid()]",
+              "DisplayText": "Novosti",
+              "LinkMenuItemPart": {
+                "Name": "Novosti",
+                "Url": "~/novosti"
+              }
+            }
+          ]
+        },
+        "AliasPart": {
+          "Alias": "main-menu"
+        },
+        "LocalizationPart": {
+          "LocalizationSet": "4hnkvydw4bt1yv5d46r8bwqfc4",
+          "Culture": "hr"
+        }
+      }
+    }
+  ]
+}

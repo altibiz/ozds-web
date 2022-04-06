@@ -6,7 +6,6 @@
         {
           "Name": "Menu",
           "ContentTypePartDefinitionRecords": [
-
             {
               "PartName": "LocalizationPart",
               "Name": "LocalizationPart",

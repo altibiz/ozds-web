@@ -1,0 +1,13 @@
+{
+  "steps": [
+    {
+      "name": "Settings",
+      "LuceneSettings": {
+        "SearchIndex": "Search",
+        "DefaultSearchFields": [
+          "Content.ContentItem.FullText"
+        ]
+      }
+    }
+  ]
+}

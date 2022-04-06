@@ -12,25 +12,18 @@ using Members.Devices;
 
 namespace Members;
 
-public class Migrations : DataMigration
-{
+public class Migrations : DataMigration {
   public Migrations(IRecipeMigrator recipeMigrator,
-      IContentDefinitionManager contentDefinitionManager, ISession session)
-  {
+      IContentDefinitionManager contentDefinitionManager, ISession session) {
     RecipeMigrator = recipeMigrator;
     ContentDefinitionManager = contentDefinitionManager;
     Session = session;
   }
 
-  public async Task<int> CreateAsync()
-  {
+  public async Task<int> CreateAsync() {
     await RecipeMigrator.ExecuteAsync("init.recipe.json", this);
-
-    #region PersonPart
     ContentDefinitionManager.AlterPersonPart();
     SchemaBuilder.MigratePersonPartIndex();
-    #endregion
-
     ContentDefinitionManager.ExecuteMemberMigrations();
     ContentDefinitionManager.MigratePayment();
     SchemaBuilder.CreatePaymentIndex();

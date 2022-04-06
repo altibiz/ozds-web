@@ -1,0 +1,9 @@
+{
+  "steps": [
+    {
+      "name": "themes",
+      "admin": "TheAdmin",
+      "site": "OzdsTheme"
+    }
+  ]
+}

@@ -1,0 +1,264 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": {
+        "ContentItemId": "4ehkyebe6v9zsyqn2nq8ke1z51",
+        "ContentItemVersionId": "4crfvn31zjmm12hjeky0abrd5q",
+        "ContentType": "Page",
+        "DisplayText": "Glas Poduzetnika",
+        "Latest": true,
+        "Published": true,
+        "ModifiedUtc": "2021-07-13T22:05:51.0952106Z",
+        "PublishedUtc": "2021-07-13T22:05:51.1308376Z",
+        "CreatedUtc": "2021-07-12T19:04:01.0255955Z",
+        "Owner": "4276mc6nzpy765nkm6ry7xe8ca",
+        "Author": "admin",
+        "Page": {},
+        "AutoroutePart": {
+          "Path": "home",
+          "SetHomepage": true,
+          "Disabled": false,
+          "RouteContainedItems": false,
+          "Absolute": false
+        },
+        "FlowPart": {
+          "Widgets": [
+            {
+              "ContentItemId": "46b3d8f3qev69wyy17tkmem5mz",
+              "ContentItemVersionId": null,
+              "ContentType": "RawHtml",
+              "DisplayText": "",
+              "Latest": false,
+              "Published": false,
+              "ModifiedUtc": "2021-07-13T22:05:51.1002416Z",
+              "PublishedUtc": null,
+              "CreatedUtc": null,
+              "Owner": "",
+              "Author": "admin",
+              "RawHtml": {
+                "Content": {
+                  "Html": "<div class=\"top-features-section\">\n<div class=\"row\">\n                <div class=\"col-sm-4 col-xs-12 top-features\">\n                    <h2>200.000+ </h2>\n                    <p>Podržavatelja - poduzetnika, obrtnika i zaposlenika u privatnom sektoru</p>\n                </div>\n                <div class=\"col-sm-4 col-xs-12 top-features\">\n                    <h2>17.000+ </h2>\n                    <p>Članova udruge</p>\n                </div>\n                <div class=\"col-sm-4 col-xs-12 top-features\">\n                    <h2>33+ mlrd </h2>\n                    <p>kn prihoda članova i podržavatelja</p>\n                </div>\n            </div>\n</div>"
+                }
+              },
+              "FlowMetadata": {
+                "Alignment": 3,
+                "Size": 100
+              }
+            },
+            {
+              "ContentItemId": "4hkmhjf2bpt3t2ze7j8nz94qnp",
+              "ContentItemVersionId": null,
+              "ContentType": "Blockquote",
+              "DisplayText": "",
+              "Latest": false,
+              "Published": false,
+              "ModifiedUtc": "2021-07-13T22:05:51.1032403Z",
+              "PublishedUtc": null,
+              "CreatedUtc": null,
+              "Owner": "",
+              "Author": "admin",
+              "Blockquote": {
+                "Quote": {
+                  "Text": "Glas Poduzetnika je udruga #mikro, #malih i #srednjih poduzetnika, obrtnika, samozaposlenih, svih zaposlenika u privatnom sektoru i svih drugih koji podržavaju ciljeve i rad Udruge, čiji je cilj konkretnim prijedlozima nužnih i hitnih ekonomskih #mjera i #reformi upućenih Vladi i državnim institucijama, ubrzanje ekonomskog oporavka cijelog društva te izgradnja zdravih temelja za Hrvatsku 2.0"
+                }
+              },
+              "FlowMetadata": {
+                "Alignment": 3,
+                "Size": 100
+              }
+            },
+            {
+              "ContentItemId": "4acgrjmf228awyhc0gy7jvac5p",
+              "ContentItemVersionId": null,
+              "ContentType": "Paragraph",
+              "DisplayText": "",
+              "Latest": false,
+              "Published": false,
+              "ModifiedUtc": "2021-07-13T22:05:51.115841Z",
+              "PublishedUtc": null,
+              "CreatedUtc": null,
+              "Owner": "",
+              "Author": "admin",
+              "Paragraph": {
+                "Content": {
+                  "Html": "<p><span style=\"color: rgba(51, 51, 51, 1); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 14px\">U ovom trenutku bitno je ublažavanje trenutne krize te očuvanje radnih mjesta, ali također ova situacija se treba iskoristiti za smanjenje javnog sektora i optimizaciju državnog aparata, sa svrhom dugoročne održivosti cjelokupnog gospodarstva.</span><br style=\"color: rgba(51, 51, 51, 1); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 14px\"><span style=\"color: rgba(51, 51, 51, 1); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 14px\">Glas Poduzetnika nema i neće imati političke ambicije niti će se ikad povezivati ili biti pod utjecajem ijedne političke opcije.</span><br></p>"
+                }
+              },
+              "FlowMetadata": {
+                "Alignment": 3,
+                "Size": 100
+              }
+            },
+            {
+              "ContentItemId": "4ywxmec8zz4wn0ava36c9kcp4j",
+              "ContentItemVersionId": null,
+              "ContentType": "RecentNews",
+              "DisplayText": "Novosti",
+              "Latest": false,
+              "Published": false,
+              "ModifiedUtc": "2021-07-13T22:05:51.1179279Z",
+              "PublishedUtc": null,
+              "CreatedUtc": null,
+              "Owner": "",
+              "Author": "admin",
+              "RecentNews": {
+                "ShowFirst": {
+                  "Value": 5
+                }
+              },
+              "TitlePart": {
+                "Title": "Novosti"
+              },
+              "FlowMetadata": {
+                "Alignment": 3,
+                "Size": 100
+              }
+            },
+            {
+              "ContentItemId": "45s4a92ykv43y0sx5gr97bvq4m",
+              "ContentItemVersionId": null,
+              "ContentType": "Gallery",
+              "DisplayText": "Partneri",
+              "Latest": false,
+              "Published": false,
+              "ModifiedUtc": "2021-07-13T22:05:51.1208505Z",
+              "PublishedUtc": null,
+              "CreatedUtc": null,
+              "Owner": "",
+              "Author": "admin",
+              "TitlePart": {
+                "Title": "Partneri"
+              },
+              "Gallery": {
+                "DisplayType": {
+                  "Text": null
+                }
+              },
+              "GPieces": {
+                "ContentItems": [
+                  {
+                    "ContentItemId": "4z901jdkg0h6tvsqae67f2nqd3",
+                    "ContentItemVersionId": null,
+                    "ContentType": "GPiece",
+                    "DisplayText": "",
+                    "Latest": false,
+                    "Published": false,
+                    "ModifiedUtc": "2021-07-13T22:05:51.1225495Z",
+                    "PublishedUtc": null,
+                    "CreatedUtc": null,
+                    "Owner": "",
+                    "Author": "admin",
+                    "GPiece": {
+                      "Caption": {
+                        "Html": ""
+                      },
+                      "DisplayCaption": {
+                        "Value": false
+                      },
+                      "Image": {
+                        "Paths": [
+                          "24sata-300px_162034.png"
+                        ],
+                        "MediaTexts": [
+                          ""
+                        ]
+                      },
+                      "ImageClass": {
+                        "Text": null
+                      },
+                      "ImageAltText": {
+                        "Text": null
+                      }
+                    }
+                  },
+                  {
+                    "ContentItemId": "4cb6ktzyq06kw0jh4hj64csyn8",
+                    "ContentItemVersionId": null,
+                    "ContentType": "GPiece",
+                    "DisplayText": "",
+                    "Latest": false,
+                    "Published": false,
+                    "ModifiedUtc": "2021-07-13T22:05:51.1247021Z",
+                    "PublishedUtc": null,
+                    "CreatedUtc": null,
+                    "Owner": "",
+                    "Author": "admin",
+                    "GPiece": {
+                      "Caption": {
+                        "Html": ""
+                      },
+                      "DisplayCaption": {
+                        "Value": false
+                      },
+                      "Image": {
+                        "Paths": [
+                          "logo_600x600_171449.jpg"
+                        ],
+                        "MediaTexts": [
+                          ""
+                        ]
+                      },
+                      "ImageClass": {
+                        "Text": null
+                      },
+                      "ImageAltText": {
+                        "Text": null
+                      }
+                    }
+                  },
+                  {
+                    "ContentItemId": "4z71jpsc5zkrb2dkdg2f727bw4",
+                    "ContentItemVersionId": null,
+                    "ContentType": "GPiece",
+                    "DisplayText": "",
+                    "Latest": false,
+                    "Published": false,
+                    "ModifiedUtc": "2021-07-13T22:05:51.1267066Z",
+                    "PublishedUtc": null,
+                    "CreatedUtc": null,
+                    "Owner": "",
+                    "Author": "admin",
+                    "GPiece": {
+                      "Caption": {
+                        "Html": ""
+                      },
+                      "DisplayCaption": {
+                        "Value": false
+                      },
+                      "Image": {
+                        "Paths": [
+                          "telemach_logo_u_zasticenoj_zoni_171512.jpg"
+                        ],
+                        "MediaTexts": [
+                          ""
+                        ]
+                      },
+                      "ImageClass": {
+                        "Text": null
+                      },
+                      "ImageAltText": {
+                        "Text": null
+                      }
+                    }
+                  }
+                ]
+              },
+              "FlowMetadata": {
+                "Alignment": 3,
+                "Size": 100
+              }
+            }
+          ]
+        },
+        "TitlePart": {
+          "Title": "Glas Poduzetnika"
+        },
+        "LocalizationPart": {
+          "LocalizationSet": "4tnwqtfjtz6x1z2475x5btxdde",
+          "Culture": "hr"
+        }
+      }
+    }
+  ]
+}

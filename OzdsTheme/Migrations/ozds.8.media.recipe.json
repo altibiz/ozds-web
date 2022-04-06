@@ -1,0 +1,49 @@
+{
+  "steps": [
+    {
+      "name": "media",
+      "Files": [
+        {
+          "TargetPath": "about-bg.jpg",
+          "SourcePath": "../wwwroot/assets/img/about-bg.jpg"
+        },
+        {
+          "TargetPath": "home-bg.jpg",
+          "SourcePath": "../wwwroot/assets/img/home-bg.jpg"
+        },
+        {
+          "TargetPath": "post-bg.jpg",
+          "SourcePath": "../wwwroot/assets/img/post-bg.jpg"
+        },
+        {
+          "SourcePath": "24sata-300px_162034.png",
+          "TargetPath": "24sata-300px_162034.png"
+        },
+        {
+          "SourcePath": "doniraj_183712.jpg",
+          "TargetPath": "doniraj_183712.jpg"
+        },
+        {
+          "SourcePath": "logo_600x600_171449.jpg",
+          "TargetPath": "logo_600x600_171449.jpg"
+        },
+        {
+          "SourcePath": "novi_banner_91147.jpeg",
+          "TargetPath": "novi_banner_91147.jpeg"
+        },
+        {
+          "SourcePath": "ovdje-stiti-ozds_18303.jpg",
+          "TargetPath": "ovdje-stiti-ozds_18303.jpg"
+        },
+        {
+          "SourcePath": "saznaj-sto-radimo_183733.jpg",
+          "TargetPath": "saznaj-sto-radimo_183733.jpg"
+        },
+        {
+          "SourcePath": "telemach_logo_u_zasticenoj_zoni_171512.jpg",
+          "TargetPath": "telemach_logo_u_zasticenoj_zoni_171512.jpg"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": {
+        "ContentItemId": "[js: uuid()]",
+        "ContentType": "RawHtml",
+        "Displaytext": "Footer",
+        "Latest": true,
+        "Published": true,
+        "Owner": "[js: parameters('AdminUserId')]",
+        "Author": "[js: parameters('AdminUsername')]",
+        "LayerMetadata": {
+          "Layer": "Always",
+          "Zone": "Footer",
+          "RenderTitle": false,
+          "Position": 10
+        },
+        "RawHtml": {
+          "Content": {
+            "Html": "[file:text('Snippets/footer.html')]"
+          }
+        }
+      }
+    }
+  ]
+}

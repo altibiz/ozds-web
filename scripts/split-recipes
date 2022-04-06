@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+split-recipe ./OzdsTheme/Recipes/ozds.recipe.json ./OzdsTheme/Migrations/
+split-content-data ./OzdsTheme/Migrations/ozds.9.content.recipe.json
