@@ -5,8 +5,6 @@
 
 @{ Html.RenderPartial("_Header", T["Measurements"].Value); }
 
-<iframe src="https://localhost:5601/app/dashboards#/view/5f5030c0-b435-11ec-8e9d-1f460592d582?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3A'2022-04-04T16%3A20%3A55.270Z'%2Cto%3A'2022-04-04T16%3A35%3A53.086Z'))" height="600" width="500"></iframe>
-
 <ul>
   @foreach(var measurement in Model.Measurements) {
     <li>

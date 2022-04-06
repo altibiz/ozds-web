@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
+SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")";
+ROOT_DIR="$(dirname "$SCRIPT_DIR")";
+
 export ASPNETCORE_ENVIRONMENT=Production;
 export DOTNET_ENVIRONMENT=Production;
+export ORCHARD_APP_DATA="$ROOT_DIR/.AppData";
 
 dotnet run --project './OzdsWeb/OzdsWeb.csproj';

@@ -1,10 +1,8 @@
-using OrchardCore.ContentManagement;
 using System;
 
 namespace Members.Devices;
 
-public class Device : ContentPart
-{
+public class Device {
   public string Id { get; init; }
   public string MemberId { get; init; }
 

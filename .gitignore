@@ -213,3 +213,4 @@ OzdsTheme/package-lock.json
 .netcoredbg_hist
 is-cache/
 secrets.json
+.AppData/

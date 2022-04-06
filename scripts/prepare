@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
 
-SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")";
+SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")";
+ROOT_DIR="$(dirname "$SCRIPT_DIR")";
 
 if [[ "$(which husky)" && ! "$CI" && ! "$(git config core.hooksPath)" ]];
 then
   husky install;
+fi;
+
+if [[ ! -f Elasticsearch.Test/secrets.json ]]; then
+  cp Elasticsearch.Test/example.secrets.json Elasticsearch.Test/secrets.json
+fi;
+
+if [[ ! -f OzdsWeb/secrets.json ]]; then
+  cp OzdsWeb/example.secrets.json OzdsWeb/secrets.json
 fi;
 
 dotnet restore $@;

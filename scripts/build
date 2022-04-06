@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
-SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")";
+SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")";
+ROOT_DIR="$(dirname "$SCRIPT_DIR")";
+
+export ASPNETCORE_ENVIRONMENT=Development;
+export DOTNET_ENVIRONMENT=Development;
+export ORCHARD_APP_DATA="$ROOT_DIR/.AppData";
 
 "$SCRIPT_DIR/prepare";
 dotnet build;
