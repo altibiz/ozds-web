@@ -13,15 +13,18 @@ using System.Threading.Tasks;
 using YesSql;
 
 namespace OrchardCore.Themes.OzdsTheme;
-public class Migrations : DataMigration {
+public class Migrations : DataMigration
+{
   public Migrations(IRecipeMigrator recipeMigrator,
-      IContentDefinitionManager contentDefinitionManager, ISession session) {
+      IContentDefinitionManager contentDefinitionManager, ISession session)
+  {
     RecipeMigrator = recipeMigrator;
     ContentDefinitionManager = contentDefinitionManager;
     Session = session;
   }
 
-  public async Task<int> CreateAsync() {
+  public async Task<int> CreateAsync()
+  {
     await RecipeMigrator.ExecuteAsync("ozds.10.layers.recipe.json", this);
     await RecipeMigrator.ExecuteAsync("ozds.11.queries.recipe.json", this);
     await RecipeMigrator.ExecuteAsync("ozds.12.AdminMenu.recipe.json", this);
@@ -70,8 +73,10 @@ public class Migrations : DataMigration {
                 .WithField("Image",
                     fieldBuilder => fieldBuilder.OfType("MediaField")
                                         .WithDisplayName("Image")
-                                        .WithSettings(new MediaFieldSettings {
-                                          Required = true, Multiple = false
+                                        .WithSettings(new MediaFieldSettings
+                                        {
+                                          Required = true,
+                                          Multiple = false
                                         }))
                 .WithField("ImageClass",
                     fieldBuilder => fieldBuilder.OfType("TextField")
@@ -97,9 +102,12 @@ public class Migrations : DataMigration {
                     cfg => cfg.WithDisplayName("GPieces")
                                .WithDescription("GPieces to display in the.")
                                .WithSettings(
-                                   new BagPartSettings { ContainedContentTypes =
+                                   new BagPartSettings
+                                   {
+                                     ContainedContentTypes =
                                                              new[] { "GPiece" },
-                                     DisplayType = "Detail" }))
+                                     DisplayType = "Detail"
+                                   }))
                 .Stereotype("Widget"));
 
     var ci = await Session
@@ -108,31 +116,32 @@ public class Migrations : DataMigration {
                           x.DisplayText == "Categories")
                  .FirstOrDefaultAsync();
     if (ci != null) Session.Delete(ci);
-        ci =
-            await Session
-                .Query<ContentItem, ContentItemIndex>(
-                    x => x.ContentType == "Taxonomy" && x.DisplayText == "Tags")
-                .FirstOrDefaultAsync();
+    ci =
+        await Session
+            .Query<ContentItem, ContentItemIndex>(
+                x => x.ContentType == "Taxonomy" && x.DisplayText == "Tags")
+            .FirstOrDefaultAsync();
     if (ci != null) Session.Delete(ci); await Session.SaveChangesAsync();
 
-        ContentDefinitionManager.AlterTypeDefinition("BlogPost",
-            type =>
-                type.RemovePart("MarkdownBodyPart")
-                    .DisplayedAs("Blog Post")
-                    .Draftable()
-                    .Versionable()
-                    .WithPart("TitlePart", part => part.WithPosition("0"))
-                    .WithPart("AutoroutePart",
-                        part => part.WithPosition("2").WithSettings(
-                            new AutoroutePartSettings {
-                              AllowCustomPath = true,
-                              Pattern =
-                                  "{{ Model.ContentItem | container | display_text | slugify }}/{{ Model.ContentItem | display_text | slugify }}",
-                              ShowHomepageOption = false,
-                            }))
-                    .WithPart("BlogPost", part => part.WithPosition("3"))
-                    .WithPart("HtmlBodyPart",
-                        part => part.WithPosition("1").WithEditor("Wysiwyg")));
+    ContentDefinitionManager.AlterTypeDefinition("BlogPost",
+        type =>
+            type.RemovePart("MarkdownBodyPart")
+                .DisplayedAs("Blog Post")
+                .Draftable()
+                .Versionable()
+                .WithPart("TitlePart", part => part.WithPosition("0"))
+                .WithPart("AutoroutePart",
+                    part => part.WithPosition("2").WithSettings(
+                        new AutoroutePartSettings
+                        {
+                          AllowCustomPath = true,
+                          Pattern =
+                              "{{ Model.ContentItem | container | display_text | slugify }}/{{ Model.ContentItem | display_text | slugify }}",
+                          ShowHomepageOption = false,
+                        }))
+                .WithPart("BlogPost", part => part.WithPosition("3"))
+                .WithPart("HtmlBodyPart",
+                    part => part.WithPosition("1").WithEditor("Wysiwyg")));
 
     ContentDefinitionManager.AlterPartDefinition(
         "BlogPost", part => part.RemoveField("Category").RemoveField("Tags"));
@@ -148,9 +157,14 @@ public class Migrations : DataMigration {
                             .WithDisplayName("Banner Image")
                             .WithPosition("1")
                             .WithSettings(
-                                new ContentIndexSettings { Included = false,
-                                  Stored = false, Analyzed = false })
-                            .WithSettings(new MediaFieldSettings {
+                                new ContentIndexSettings
+                                {
+                                  Included = false,
+                                  Stored = false,
+                                  Analyzed = false
+                                })
+                            .WithSettings(new MediaFieldSettings
+                            {
                               Multiple = false,
                               AllowAnchors = true,
                             }))
@@ -160,7 +174,8 @@ public class Migrations : DataMigration {
                                  .WithEditor("Tags")
                                  .WithDisplayMode("Tags")
                                  .WithPosition("2")
-                                 .WithSettings(new TaxonomyFieldSettings {
+                                 .WithSettings(new TaxonomyFieldSettings
+                                 {
                                    TaxonomyContentItemId =
                                        "45j76cwwz4f4v4hx5zqxfpzvwq",
                                  }))
@@ -168,7 +183,8 @@ public class Migrations : DataMigration {
                     field => field.OfType("TaxonomyField")
                                  .WithDisplayName("Category")
                                  .WithPosition("3")
-                                 .WithSettings(new TaxonomyFieldSettings {
+                                 .WithSettings(new TaxonomyFieldSettings
+                                 {
                                    TaxonomyContentItemId =
                                        "4dgj6ce33vdsbxqz8hw4c4c24d",
                                    Unique = true,
@@ -177,20 +193,20 @@ public class Migrations : DataMigration {
 
     // NOTE: idk how idk why
     if (firstPass)
-        await RecipeMigrator.ExecuteAsync("tags-cats.recipe.json", this);
-        firstPass = false;
+      await RecipeMigrator.ExecuteAsync("tags-cats.recipe.json", this);
+    firstPass = false;
 
-        await RecipeMigrator.ExecuteAsync("localization.recipe.json", this);
+    await RecipeMigrator.ExecuteAsync("localization.recipe.json", this);
 
-        ContentDefinitionManager.AlterPartDefinition(
-            "GPiece", cfg => cfg.WithField("Link",
-                          fieldBuilder => fieldBuilder.OfType("TextField")
-                                              .WithDisplayName("Link")
-                                              .WithEditor("Url")));
+    ContentDefinitionManager.AlterPartDefinition(
+        "GPiece", cfg => cfg.WithField("Link",
+                      fieldBuilder => fieldBuilder.OfType("TextField")
+                                          .WithDisplayName("Link")
+                                          .WithEditor("Url")));
 
     await RecipeMigrator.ExecuteAsync("localizemenu.recipe.json", this);
 
-        return 1;
+    return 1;
   }
 
   public static bool firstPass = true;
