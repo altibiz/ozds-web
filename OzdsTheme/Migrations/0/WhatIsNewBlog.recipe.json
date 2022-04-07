@@ -35,12 +35,8 @@
           "ListPart": {},
           "Blog": {
             "Image": {
-              "Paths": [
-                "home-bg.jpg"
-              ],
-              "MediaTexts": [
-                ""
-              ],
+              "Paths": ["home-bg.jpg"],
+              "MediaTexts": [""],
               "Anchors": [
                 {
                   "X": 0.5,

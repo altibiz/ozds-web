@@ -7,7 +7,7 @@
           "ContentItemId": "414ehn8k0m6f45xq14y3rhzcmd",
           "ContentItemVersionId": "47kdk87a1zttbxsaw3dg25t8n7",
           "ContentType": "Member",
-          "DisplayText": "Hrvoje Juric",
+          "DisplayText": "blah",
           "Latest": true,
           "Published": true,
           "ModifiedUtc": "2022-04-06T10:28:13.6286119Z",
@@ -20,10 +20,10 @@
               "Text": "12345678901"
             },
             "Name": {
-              "Text": "Hrvoje"
+              "Text": "kla"
             },
             "Surname": {
-              "Text": "Juric"
+              "Text": "mak"
             },
             "Address": {
               "Text": "Bla 4"
@@ -33,12 +33,8 @@
             },
             "County": {
               "TaxonomyContentItemId": "4d0dew9ar7h9nsbpcs7jg2egwe",
-              "TermContentItemIds": [
-                "4ty21d9yedb60s8p0da73x90dw"
-              ],
-              "TagNames": [
-                "Brodsko-posavska županija"
-              ]
+              "TermContentItemIds": ["4ty21d9yedb60s8p0da73x90dw"],
+              "TagNames": ["Brodsko-posavska županija"]
             },
             "Phone": {
               "Text": "+3851234567890"
@@ -48,17 +44,13 @@
             },
             "ContribType": {
               "TaxonomyContentItemId": "4k7n3gw5wm7660vqpm0805hedy",
-              "TermContentItemIds": [
-                "4ytg30gg2t8x8rqehn5sv797de"
-              ],
-              "TagNames": [
-                "Neaktivan"
-              ]
+              "TermContentItemIds": ["4ytg30gg2t8x8rqehn5sv797de"],
+              "TagNames": ["Neaktivan"]
             },
             "Skills": {
               "Text": null
             },
-            "LegalName": "Hrvoje Juric",
+            "LegalName": "ajdfkla",
             "OldSalt": null,
             "OldHash": null
           },
@@ -71,13 +63,9 @@
               "Value": "1997-12-12T00:00:00Z"
             },
             "Sex": {
-              "TagNames": [
-                "Muško"
-              ],
+              "TagNames": ["Muško"],
               "TaxonomyContentItemId": "4xgh8bvawx8h2rvyg7vds118w4",
-              "TermContentItemIds": [
-                "4ddfa6p7h5xbysdk7248kkdp4r"
-              ]
+              "TermContentItemIds": ["4ddfa6p7h5xbysdk7248kkdp4r"]
             },
             "AdminNotes": {
               "Text": null
@@ -87,7 +75,7 @@
             "Alias": ""
           },
           "TitlePart": {
-            "Title": "Hrvoje Juric"
+            "Title": "sdafl"
           },
           "ListPart": {
             "FeedProxyUrl": null,

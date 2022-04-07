@@ -13,26 +13,14 @@
   },
   "steps": [
     {
-      "name": "settings",
-      "HomeRoute": {
-        "Action": "Display",
-        "Controller": "Item",
-        "Area": "OrchardCore.Contents",
-        "ContentItemId": "[js: variables('blogContentItemId')]"
-      },
-      "LayerSettings": {
-        "Zones": [
-          "Content",
-          "Footer"
-        ]
-      },
-      "LocalizationSettings": {
-        "DefaultCulture": "hr",
-        "SupportedCultures": [
-          "hr",
-          "en"
-        ]
-      }
+      "name": "Roles",
+      "Roles": [
+        {
+          "Name": "Anonymous",
+          "Description": "Anonymous role",
+          "Permissions": ["ViewContent", "QueryLuceneSearchIndex"]
+        }
+      ]
     }
   ]
 }

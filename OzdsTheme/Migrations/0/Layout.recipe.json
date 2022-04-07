@@ -1,17 +1,4 @@
 {
-  "name": "OzdsWeb",
-  "displayName": "Ozds Web Theme",
-  "description": "Provides a functional Blog with CMS features.",
-  "author": "The Orchard Core Team",
-  "website": "https://orchardcore.net",
-  "version": "1.0.0-rc2",
-  "issetuprecipe": false,
-  "categories": [
-    "default"
-  ],
-  "tags": [
-    "blog"
-  ],
   "variables": {
     "adminUrlPrefix": "[js: configuration('OrchardCore_Admin:AdminUrlPrefix', 'Admin')]",
     "blogContentItemId": "c1c54c24-9a5f-42ed-9668-8c281087f94b",
@@ -24,5 +11,18 @@
     "categoriesContentItemId": "21c7bbbd-5720-4487-a9cc-58396856dc0d",
     "categoryTravelContentItemId": "de7d0c84-8e19-44a0-9203-4a8f739b3f7c"
   },
-  "steps": []
+  "steps": [
+    {
+      "name": "settings",
+      "HomeRoute": {
+        "Action": "Display",
+        "Controller": "Item",
+        "Area": "OrchardCore.Contents",
+        "ContentItemId": "[js: variables('blogContentItemId')]"
+      },
+      "LayerSettings": {
+        "Zones": ["Content", "Footer"]
+      }
+    }
+  ]
 }
