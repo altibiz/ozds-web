@@ -1,9 +1,7 @@
-﻿namespace OzdsTheme.ViewModels
-{
-  public class DropDownViewModel
-  {
-    public string TaxonomyName { get; set; }
+﻿namespace OrchardCore.Themes.OzdsTheme.ViewModels;
 
-    public string Selected { get; set; }
-  }
+public class DropDownViewModel {
+  public string TaxonomyName { get; set; }
+
+  public string Selected { get; set; }
 }

@@ -1,24 +1,20 @@
 ﻿using OrchardCore.ContentFields.Settings;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
-using OrchardCore.Indexing;
 using OrchardCore.Taxonomies.Settings;
 
-namespace Members.Persons
-{
-  public static class PersonPartMigrations
-  {
-    public static void AlterPersonPart(
-        this IContentDefinitionManager contentDefinitionManager)
-    {
+namespace Members.M0;
+
+public static partial class AlterPerson {
+  public static void AlterPersonPart(
+      this IContentDefinitionManager contentDefinitionManager) =>
       contentDefinitionManager.AlterPartDefinition("PersonPart",
           part =>
               part.WithField(
                       "Name", field => field.OfType("TextField")
                                            .WithDisplayName("Ime")
                                            .WithPosition("1")
-                                           .WithSettings(new TextFieldSettings
-                                           {
+                                           .WithSettings(new TextFieldSettings {
                                              Required = true,
                                            }))
                   .WithField("Surname", field => field.OfType("TextField")
@@ -28,8 +24,7 @@ namespace Members.Persons
                       "Oib", field => field.OfType("TextField")
                                           .WithDisplayName("OIB")
                                           .WithPosition("0")
-                                          .WithSettings(new TextFieldSettings
-                                          {
+                                          .WithSettings(new TextFieldSettings {
                                             Required = true,
                                           }))
                   .WithField("Address", field => field.OfType("TextField")
@@ -49,23 +44,20 @@ namespace Members.Persons
                                    .WithEditor("Tags")
                                    .WithDisplayMode("Tags")
                                    .WithPosition("6")
-                                   .WithSettings(new TaxonomyFieldSettings
-                                   {
+                                   .WithSettings(new TaxonomyFieldSettings {
                                      TaxonomyContentItemId =
                                          "4d0dew9ar7h9nsbpcs7jg2egwe",
                                      Unique = true,
                                    })
                                    .WithSettings(
-                                       new TaxonomyFieldTagsEditorSettings
-                                       {
+                                       new TaxonomyFieldTagsEditorSettings {
                                          Open = false,
                                        }))
                   .WithField("Email",
                       field => field.OfType("TextField")
                                    .WithDisplayName("Email")
                                    .WithEditor("Email")
-                                   .WithSettings(new TextFieldSettings
-                                   {
+                                   .WithSettings(new TextFieldSettings {
                                      Required = true,
                                    }))
                   .WithField("ContribType",
@@ -76,15 +68,13 @@ namespace Members.Persons
                               .WithEditor("Tags")
                               .WithDisplayMode("Tags")
                               .WithPosition("10")
-                              .WithSettings(new TaxonomyFieldSettings
-                              {
+                              .WithSettings(new TaxonomyFieldSettings {
                                 TaxonomyContentItemId =
                                     "4k7n3gw5wm7660vqpm0805hedy",
                                 Unique = true,
                               })
                               .WithSettings(
-                                  new TaxonomyFieldTagsEditorSettings
-                                  {
+                                  new TaxonomyFieldTagsEditorSettings {
                                     Open = false,
                                   }))
                   .WithField("Skills",
@@ -94,6 +84,4 @@ namespace Members.Persons
                                    .WithPosition("9"))
 
       );
-    }
-  }
 }

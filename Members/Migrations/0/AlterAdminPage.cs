@@ -1,12 +1,11 @@
-﻿using OrchardCore.ContentManagement.Metadata;
+using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
 
-namespace Members;
+namespace Members.M0;
 
-public static class AdminMigrations
-{
-  public static void AdminPage(
+public static partial class AlterAdminPage {
+  public static void AlterAdminPageType(
       this IContentDefinitionManager contentDefinitionManager) =>
       contentDefinitionManager.AlterTypeDefinition("AdminPage",
           type => type.DisplayedAs("Admin Page")
@@ -19,8 +18,7 @@ public static class AdminMigrations
                       .WithPart("LiquidPart", part => part.WithPosition("2"))
                       .WithPart("TitlePart",
                           part => part.WithPosition("0").WithSettings(
-                              new TitlePartSettings
-                              {
+                              new TitlePartSettings {
                                 Options = TitlePartOptions.EditableRequired,
                               })));
 }

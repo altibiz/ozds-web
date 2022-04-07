@@ -1,180 +1,75 @@
-﻿using System.Threading.Tasks;
 using YesSql;
+using YesSql.Sql;
 using Microsoft.Extensions.Logging;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.Data.Migration;
 using OrchardCore.Recipes.Services;
-using Members.Persons;
-using Members.Core;
-using Members.Payments;
-using Members.Indexes;
-using Members.Base;
-using Members.Devices;
+using Members.M0;
+using Members.M1;
+using Members.M2;
 
 namespace Members;
 
-public class Migrations : DataMigration
-{
-  public Migrations(IRecipeMigrator recipeMigrator,
-      IContentDefinitionManager contentDefinitionManager, ISession session,
-      ILogger<Migrations> logger)
-  {
-    RecipeMigrator = recipeMigrator;
-    ContentDefinitionManager = contentDefinitionManager;
+public sealed class Migrations : DataMigration {
+  public Migrations(IRecipeMigrator recipe, IContentDefinitionManager content,
+      ISession session, ILogger<Migrations> logger) {
+    Recipe = recipe;
+    Content = content;
     Session = session;
     Logger = logger;
   }
 
-  public async Task<int> CreateAsync()
-  {
-    Logger.LogDebug(" >>> Start Member module creation");
+  public int Create() {
+    Recipe.ExecuteInit(this);
 
-    Logger.LogDebug(" >> Start member init.recipe.json");
-    await RecipeMigrator.ExecuteAsync("0/init.recipe.json", this);
-    Logger.LogDebug(" >> Start member init.recipe.json");
+    Content.AlterAdminPageType();
 
-    Logger.LogDebug(
-        " >>  Start Member " + "0/init.1.content.1.Taxonomy.recipe.json");
-    await RecipeMigrator.ExecuteAsync(
-        "0/init.1.content.1.Taxonomy.recipe.json", this);
-    Logger.LogDebug(
-        " >> End Member " + "0/init.1.content.1.Taxonomy.recipe.json");
+    Content.AlterCompanyPart();
+    Content.AlterCompanyType();
+    Content.AlterOfferPart();
+    Content.AlterOfferType();
+    Content.AlterPersonPart();
+    Content.AlterMemberPart();
+    Content.AlterMemberType();
+    Schema.CreateOfferIndex();
+    Schema.CreatePersonPartIndex();
+    Schema.AlterPersonPartIndex();
 
-    Logger.LogDebug(
-        " >> Start Member " + "0/init.1.content.2.Taxonomy.recipe.json");
-    await RecipeMigrator.ExecuteAsync(
-        "0/init.1.content.2.Taxonomy.recipe.json", this);
-    Logger.LogDebug(
-        " >> End Member " + "0/init.1.content.2.Taxonomy.recipe.json");
+    Content.AlterPaymentPart();
+    Content.AlterPaymentType();
+    Schema.CreatePaymentIndex();
+    Schema.AlterPaymentIndex();
+    Schema.CreatePaymentByDayIndex();
 
-    Logger.LogDebug(
-        " >> Start Member " + "0/init.1.content.3.Taxonomy.recipe.json");
-    await RecipeMigrator.ExecuteAsync(
-        "0/init.1.content.3.Taxonomy.recipe.json", this);
-    Logger.LogDebug(
-        " >> End Member " + "0/init.1.content.3.Taxonomy.recipe.json");
+    Content.AlterBankStatementPart();
+    Content.AlterBankStatementType();
 
-    Logger.LogDebug(
-        " >> Start Member " + "0/init.1.content.4.Taxonomy.recipe.json");
-    await RecipeMigrator.ExecuteAsync(
-        "0/init.1.content.4.Taxonomy.recipe.json", this);
-    Logger.LogDebug(
-        " >> End Member " + "0/init.1.content.4.Taxonomy.recipe.json");
+    Content.AlterImagePart();
+    Content.AlterImageType();
 
-    Logger.LogDebug(
-        " >> Start Member " + "0/init.1.content.5.Taxonomy.recipe.json");
-    await RecipeMigrator.ExecuteAsync(
-        "0/init.1.content.5.Taxonomy.recipe.json", this);
-    Logger.LogDebug(
-        " >> End Member " + "0/init.1.content.5.Taxonomy.recipe.json");
-
-    Logger.LogDebug(
-        " >> Start Member " + "0/init.1.content.6.Taxonomy.recipe.json");
-    await RecipeMigrator.ExecuteAsync(
-        "0/init.1.content.6.Taxonomy.recipe.json", this);
-    Logger.LogDebug(
-        " >> End Member " + "0/init.1.content.6.Taxonomy.recipe.json");
-
-    Logger.LogDebug(
-        " >> Start Member " + "0/init.1.content.7.Taxonomy.recipe.json");
-    await RecipeMigrator.ExecuteAsync(
-        "0/init.1.content.7.Taxonomy.recipe.json", this);
-    Logger.LogDebug(
-        " >> End Member " + "0/init.1.content.7.Taxonomy.recipe.json");
-
-    Logger.LogDebug(
-        " >> Start Member " + "0/init.1.content.8.Menu.recipe.json");
-    await RecipeMigrator.ExecuteAsync(
-        "0/init.1.content.8.Menu.recipe.json", this);
-    Logger.LogDebug(" >> End Member " + "0/init.1.content.8.Menu.recipe.json");
-
-    Logger.LogDebug(" >> Start Member " + "0/init.2.Settings.recipe.json");
-    await RecipeMigrator.ExecuteAsync("0/init.2.Settings.recipe.json", this);
-    Logger.LogDebug(" >> End Member " + "0/init.2.Settings.recipe.json");
-
-    Logger.LogDebug(" >> Start Member " + "0/init.3.Templates.recipe.json");
-    await RecipeMigrator.ExecuteAsync("0/init.3.Templates.recipe.json", this);
-    Logger.LogDebug(" >> End Member " + "0/init.3.Templates.recipe.json");
-
-    Logger.LogDebug(" >> Start Member " + "AlterPersonPart");
-    ContentDefinitionManager.AlterPersonPart();
-    Logger.LogDebug(" >> End Member " + "AlterPersonPart");
-
-    Logger.LogDebug(" >> Start Member " + "MigratePersonPartIndex");
-    SchemaBuilder.MigratePersonPartIndex();
-    Logger.LogDebug(" >> End Member " + "MigratePersonPartIndex");
-
-    Logger.LogDebug(" >> Start Member " + "ExecuteMemberMigrations");
-    ContentDefinitionManager.ExecuteMemberMigrations();
-    Logger.LogDebug(" >> End Member " + "ExecuteMemberMigrations");
-
-    Logger.LogDebug(" >> Start Member " + "MigratePayment");
-    ContentDefinitionManager.MigratePayment();
-    Logger.LogDebug(" >> End Member " + "MigratePayment");
-
-    Logger.LogDebug(" >> Start Member " + "CreatePaymentIndex");
-    SchemaBuilder.CreatePaymentIndex();
-    Logger.LogDebug(" >> End Member " + "CreatePaymentIndex");
-
-    Logger.LogDebug(" >> Start Member " + "MigrateOffer");
-    ContentDefinitionManager.MigrateOffer();
-    Logger.LogDebug(" >> End Member " + "MigrateOffer");
-
-    Logger.LogDebug(" >> Start Member " + "CreateOfferIndex");
-    SchemaBuilder.CreateOfferIndex();
-    Logger.LogDebug(" >> End Member " + "CreateOfferIndex");
-
-    Logger.LogDebug(" >> Start Member " + "CreateBankStatement");
-    ContentDefinitionManager.CreateBankStatement();
-    Logger.LogDebug(" >> End Member " + "CreateBankStatement");
-
-    Logger.LogDebug(" >> Start Member " + "0/pledge.recipe.json");
-    await RecipeMigrator.ExecuteAsync("0/pledge.recipe.json", this);
-    Logger.LogDebug(" >> End Member " + "0/pledge.recipe.json");
-
-    Logger.LogDebug(" >> Start Member " + "CreatePledge");
-    ContentDefinitionManager.CreatePledge();
-    Logger.LogDebug(" >> End Member " + "CreatePledge");
-
-    Logger.LogDebug(" >> Start Member " + "DefineImageBanner");
-    ContentDefinitionManager.DefineImageBanner();
-    Logger.LogDebug(" >> End Member " + "DefineImageBanner");
-
-    Logger.LogDebug(" >> Start Member " + "AddPayoutField");
-    SchemaBuilder.AddPayoutField();
-    Logger.LogDebug(" >> End Member " + "AddPayoutField");
-
-    Logger.LogDebug(" >> Start Member " + "AddPaymentPublished");
-    SchemaBuilder.AddPaymentPublished();
-    Logger.LogDebug(" >> End Member " + "AddPaymentPublished");
-
-    Logger.LogDebug(" >> Start Member " + "AdminPage");
-    ContentDefinitionManager.AdminPage();
-    Logger.LogDebug(" >> End Member " + "AdminPage");
-
-    Logger.LogDebug(" >> Start Member " + "AddTransactionRef");
-    SchemaBuilder.AddTransactionRef();
-    Logger.LogDebug(" >> End Member " + "AddTransactionRef");
-
-    Logger.LogDebug(" >> Start Member " + "CreatePaymentByDayIndex");
-    SchemaBuilder.CreatePaymentByDayIndex();
-    Logger.LogDebug(" >> End Member " + "CreatePaymentByDayIndex");
-
-    Logger.LogDebug(" >> Start Member " + "CreateDeviceIndex");
-    SchemaBuilder.CreateDeviceIndex();
-    Logger.LogDebug(" >> End Member " + "CreateDeviceIndex");
-
-    Logger.LogDebug(" >> Start Member " + "0/test-owner.recipe.json");
-    await RecipeMigrator.ExecuteAsync("0/test-owner.recipe.json", this);
-    Logger.LogDebug(" >> End Member " + "0/test-owner.recipe.json");
-
-    Logger.LogDebug(" >>> End Member module creation");
     return 1;
   }
 
-  private ILogger Logger { get; }
+  public int UpdateFrom1() {
+    Content.AlterPledgePart();
+    Content.AlterPledgeType();
+    Content.AlterPledgeVariantPart();
+    Content.AlterPledgeVariantType();
+    Recipe.ExecutePledge(this);
 
-  private IRecipeMigrator RecipeMigrator { get; }
-  private IContentDefinitionManager ContentDefinitionManager { get; }
+    return 2;
+  }
+
+  public int UpdateFrom2() {
+    Schema.CreateDeviceIndex();
+    Recipe.ExecuteTestOwner(this);
+
+    return 3;
+  }
+
+  private ILogger Logger { get; }
+  private IRecipeMigrator Recipe { get; }
+  private IContentDefinitionManager Content { get; }
   private ISession Session { get; }
+  private ISchemaBuilder Schema { get => SchemaBuilder; }
 }
