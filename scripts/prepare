@@ -8,12 +8,16 @@ then
   husky install;
 fi;
 
-if [[ ! -f Elasticsearch.Test/secrets.json ]]; then
-  cp Elasticsearch.Test/example.secrets.json Elasticsearch.Test/secrets.json
+elasticsearch_test_dir="$ROOT_DIR/test/Ozds.Elasticsearch.Test";
+if [[ ! -f "$elasticsearch_test_dir/secrets.json" ]]; then
+  cp "$elasticsearch_test_dir/example.secrets.json" \
+     "$elasticsearch_test_dir/secrets.json"
 fi;
 
-if [[ ! -f OzdsWeb/secrets.json ]]; then
-  cp OzdsWeb/example.secrets.json OzdsWeb/secrets.json
+ozds_web_dir="$ROOT_DIR/src/Ozds.Web/secrets.json";
+if [[ ! -f "$ozds_web_dir/secrets.json" ]]; then
+  cp "$ozds_web_dir/example.secrets.json" \
+     "$ozds_web_dir/secrets.json"
 fi;
 
 dotnet restore $@;

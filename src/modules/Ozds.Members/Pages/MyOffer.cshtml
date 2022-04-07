@@ -1,0 +1,20 @@
+﻿@page "{contentItemId}"
+@model Ozds.Members.Pages.MyOfferModel
+@{
+
+}
+
+@{ Html.RenderPartial("_Header", T["My Offer"].Value); }
+
+@await RenderSectionAsync("Messages", required: false)
+
+<form method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    @await DisplayAsync(Model.Shape)
+
+    @if (Model.Shape != null)
+    {
+        <button type="submit" class="btn btn-success publish mt-2">@T["Save Changes"]</button>
+    }
+</form>

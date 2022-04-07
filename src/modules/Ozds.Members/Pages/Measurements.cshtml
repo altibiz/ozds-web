@@ -1,0 +1,19 @@
+﻿@page
+@model Ozds.Members.Pages.MeasurementsModel
+
+@using Ozds.Elasticsearch
+
+@{ Html.RenderPartial("_Header", T["Measurements"].Value); }
+
+<ul>
+  @foreach(var measurement in Model.Measurements) {
+    <li>
+      <span>
+        @measurement.Source
+      </span>
+      <span>
+        @measurement.MeasurementTimestamp.ToUtcIsoString()
+      </span>
+    </li>
+  }
+</ul>

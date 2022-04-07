@@ -7,4 +7,4 @@ export ASPNETCORE_ENVIRONMENT=Production;
 export DOTNET_ENVIRONMENT=Production;
 export ORCHARD_APP_DATA="$ROOT_DIR/.AppData";
 
-dotnet watch run --project './OzdsWeb/OzdsWeb.csproj';
+dotnet watch run --project "$ROOT_DIR/src/Ozds.Web/Ozds.Web.csproj";
