@@ -1,0 +1,18 @@
+@page
+
+@model Ozds.Users.Pages.DevicesModel
+
+@{ Html.RenderPartial("_Header", @T["Uredjaji"].Value); }
+
+<ul>
+  @foreach(var device in Model.Devices) {
+    <li>
+      <span>
+        @device.Source
+      </span>
+      <span>
+        @device.Id
+      </span>
+    </li>
+  }
+</ul>

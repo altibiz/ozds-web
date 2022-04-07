@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../modules/Ozds.Members/Ozds.Members.csproj" />
+    <ProjectReference Include="../modules/Ozds.Users/Ozds.Users.csproj" />
   </ItemGroup>
 
   <ItemGroup>
