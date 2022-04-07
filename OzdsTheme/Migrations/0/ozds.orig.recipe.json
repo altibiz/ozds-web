@@ -6,12 +6,8 @@
   "website": "https://orchardcore.net",
   "version": "1.0.0-rc2",
   "issetuprecipe": false,
-  "categories": [
-    "default"
-  ],
-  "tags": [
-    "blog"
-  ],
+  "categories": ["default"],
+  "tags": ["blog"],
 
   "variables": {
     "adminUrlPrefix": "[js: configuration('OrchardCore_Admin:AdminUrlPrefix', 'Admin')]",
@@ -36,17 +32,11 @@
         "ContentItemId": "[js: variables('blogContentItemId')]"
       },
       "LayerSettings": {
-        "Zones": [
-          "Content",
-          "Footer"
-        ]
+        "Zones": ["Content", "Footer"]
       },
       "LocalizationSettings": {
         "DefaultCulture": "hr",
-        "SupportedCultures": [
-          "hr",
-          "en"
-        ]
+        "SupportedCultures": ["hr", "en"]
       }
     },
     {
@@ -236,9 +226,7 @@
                 },
                 "ListPartSettings": {
                   "PageSize": 10,
-                  "ContainedContentTypes": [
-                    "BlogPost"
-                  ]
+                  "ContainedContentTypes": ["BlogPost"]
                 }
               }
             }
@@ -833,9 +821,7 @@
       "name": "Settings",
       "LuceneSettings": {
         "SearchIndex": "Search",
-        "DefaultSearchFields": [
-          "Content.ContentItem.FullText"
-        ]
+        "DefaultSearchFields": ["Content.ContentItem.FullText"]
       }
     },
     {
@@ -844,10 +830,7 @@
         {
           "Name": "Anonymous",
           "Description": "Anonymous role",
-          "Permissions": [
-            "ViewContent",
-            "QueryLuceneSearchIndex"
-          ]
+          "Permissions": ["ViewContent", "QueryLuceneSearchIndex"]
         }
       ]
     },
@@ -855,44 +838,44 @@
       "name": "media",
       "Files": [
         {
-          "TargetPath": "Assets/about-bg.jpg",
-          "SourcePath": "../wwwroot/assets/img/about-bg.jpg"
+          "TargetPath": "0/Assets/about-bg.jpg",
+          "SourcePath": "../../wwwroot/assets/img/about-bg.jpg"
         },
         {
-          "TargetPath": "Assets/home-bg.jpg",
-          "SourcePath": "../wwwroot/assets/img/home-bg.jpg"
+          "TargetPath": "0/Assets/home-bg.jpg",
+          "SourcePath": "../../wwwroot/assets/img/home-bg.jpg"
         },
         {
-          "TargetPath": "Assets/post-bg.jpg",
-          "SourcePath": "../wwwroot/assets/img/post-bg.jpg"
+          "TargetPath": "0/Assets/post-bg.jpg",
+          "SourcePath": "../../wwwroot/assets/img/post-bg.jpg"
         },
         {
-          "SourcePath": "Assets/24sata-300px_162034.png",
-          "TargetPath": "24sata-300px_162034.png"
+          "SourcePath": "0/Assets/24sata-300px_162034.png",
+          "TargetPath": "../../wwwroot/24sata-300px_162034.png"
         },
         {
-          "SourcePath": "Assets/doniraj_183712.jpg",
-          "TargetPath": "doniraj_183712.jpg"
+          "SourcePath": "0/Assets/doniraj_183712.jpg",
+          "TargetPath": "../../wwwroot/doniraj_183712.jpg"
         },
         {
-          "SourcePath": "Assets/logo_600x600_171449.jpg",
-          "TargetPath": "logo_600x600_171449.jpg"
+          "SourcePath": "0/Assets/logo_600x600_171449.jpg",
+          "TargetPath": "../../wwwroot/logo_600x600_171449.jpg"
         },
         {
-          "SourcePath": "Assets/novi_banner_91147.jpeg",
-          "TargetPath": "novi_banner_91147.jpeg"
+          "SourcePath": "0/Assets/novi_banner_91147.jpeg",
+          "TargetPath": "../../wwwroot/novi_banner_91147.jpeg"
         },
         {
-          "SourcePath": "Assets/ovdje-stiti-ozds_18303.jpg",
-          "TargetPath": "ovdje-stiti-ozds_18303.jpg"
+          "SourcePath": "0/Assets/ovdje-stiti-ozds_18303.jpg",
+          "TargetPath": "../../wwwroot/ovdje-stiti-ozds_18303.jpg"
         },
         {
-          "SourcePath": "Assets/saznaj-sto-radimo_183733.jpg",
-          "TargetPath": "saznaj-sto-radimo_183733.jpg"
+          "SourcePath": "0/Assets/saznaj-sto-radimo_183733.jpg",
+          "TargetPath": "../../wwwroot/saznaj-sto-radimo_183733.jpg"
         },
         {
-          "SourcePath": "Assets/telemach_logo_u_zasticenoj_zoni_171512.jpg",
-          "TargetPath": "telemach_logo_u_zasticenoj_zoni_171512.jpg"
+          "SourcePath": "0/Assets/telemach_logo_u_zasticenoj_zoni_171512.jpg",
+          "TargetPath": "../../wwwroot/telemach_logo_u_zasticenoj_zoni_171512.jpg"
         }
       ]
     },
@@ -1015,115 +998,6 @@
           }
         },
         {
-          "ContentItemId": "[js: variables('tagsContentItemId')]",
-          "Owner": "[js: parameters('AdminUserId')]",
-          "Author": "[js: parameters('AdminUsername')]",
-          "ContentType": "Taxonomy",
-          "DisplayText": "Tags",
-          "Latest": true,
-          "Published": true,
-          "TitlePart": {
-            "Title": "Tags"
-          },
-          "AliasPart": {
-            "Alias": "tags"
-          },
-          "TaxonomyPart": {
-            "Terms": [
-              {
-                "ContentItemId": "[js: variables('earthTagContentItemId')]",
-                "ContentType": "Tag",
-                "DisplayText": "Earth",
-                "TitlePart": {
-                  "Title": "Earth"
-                },
-                "AutoroutePart": {
-                  "Path": "earth"
-                },
-                "TermPart": {
-                  "TaxonomyContentItemId": "[js: variables('tagsContentItemId')]"
-                }
-              },
-              {
-                "ContentItemId": "[js: variables('explorationTagContentItemId')]",
-                "ContentType": "Tag",
-                "DisplayText": "Exploration",
-                "TitlePart": {
-                  "Title": "Exploration"
-                },
-                "AutoroutePart": {
-                  "Path": "exploration"
-                },
-                "TermPart": {
-                  "TaxonomyContentItemId": "[js: variables('tagsContentItemId')]"
-                }
-              },
-              {
-                "ContentItemId": "[js: variables('spaceTagContentItemId')]",
-                "ContentType": "Tag",
-                "DisplayText": "Space",
-                "TitlePart": {
-                  "Title": "Space"
-                },
-                "AutoroutePart": {
-                  "Path": "space"
-                },
-                "TermPart": {
-                  "TaxonomyContentItemId": "[js: variables('tagsContentItemId')]"
-                }
-              }
-            ],
-            "TermContentType": "Tag"
-          },
-          "AutoroutePart": {
-            "Path": "tags",
-            "RouteContainedItems": true
-          }
-        },
-        {
-          "ContentItemId": "[js: variables('categoriesContentItemId')]",
-          "Owner": "[js: parameters('AdminUserId')]",
-          "Author": "[js: parameters('AdminUsername')]",
-          "ContentType": "Taxonomy",
-          "DisplayText": "Categories",
-          "Latest": true,
-          "Published": true,
-          "TitlePart": {
-            "Title": "Categories"
-          },
-          "AliasPart": {
-            "Alias": "categories"
-          },
-          "TaxonomyPart": {
-            "Terms": [
-              {
-                "ContentItemId": "[js: variables('categoryTravelContentItemId')]",
-                "ContentType": "Category",
-                "DisplayText": "Travel",
-                "Category": {
-                  "Icon": {
-                    "Text": "fas fa-globe-americas"
-                  }
-                },
-                "TitlePart": {
-                  "Title": "Travel"
-                },
-                "AutoroutePart": {
-                  "Path": "travel"
-                },
-                "TermPart": {
-                  "TaxonomyContentItemId": "[js: variables('categoriesContentItemId')]"
-                }
-              }
-            ],
-            "TermContentType": "Category"
-          },
-          "AutoroutePart": {
-            "Path": "categories",
-            "RouteContainedItems": true
-          }
-        },
-        {
           "ContentType": "Blog",
           "ContentItemId": "[js: variables('blogContentItemId')]",
           "DisplayText": "Novosti",
@@ -1143,12 +1017,8 @@
           "ListPart": {},
           "Blog": {
             "Image": {
-              "Paths": [
-                "home-bg.jpg"
-              ],
-              "MediaTexts": [
-                ""
-              ],
+              "Paths": ["home-bg.jpg"],
+              "MediaTexts": [""],
               "Anchors": [
                 {
                   "X": 0.5,
@@ -1184,12 +1054,8 @@
               "Text": "Problems look mighty small from 150 miles up"
             },
             "Image": {
-              "Paths": [
-                "post-bg.jpg"
-              ],
-              "MediaTexts": [
-                ""
-              ],
+              "Paths": ["post-bg.jpg"],
+              "MediaTexts": [""],
               "Anchors": [
                 {
                   "X": 0.5,
@@ -1204,11 +1070,7 @@
                 "[js: variables('spaceTagContentItemId')]"
               ],
               "TaxonomyContentItemId": "[js: variables('tagsContentItemId')]",
-              "TagNames": [
-                "Earth",
-                "Exploration",
-                "Space"
-              ]
+              "TagNames": ["Earth", "Exploration", "Space"]
             },
             "Category": {
               "TermContentItemIds": [
@@ -1241,9 +1103,7 @@
               "Text": "Udruga Glas Poduzetnika"
             },
             "Image": {
-              "Paths": [
-                "about-bg.jpg"
-              ]
+              "Paths": ["about-bg.jpg"]
             }
           }
         },
@@ -1263,7 +1123,7 @@
           },
           "RawHtml": {
             "Content": {
-              "Html": "[file:text('Assets/footer.html')]"
+              "Html": "[file:text('0/Assets/footer.html')]"
             }
           }
         },
@@ -1422,12 +1282,8 @@
                           "Value": false
                         },
                         "Image": {
-                          "Paths": [
-                            "24sata-300px_162034.png"
-                          ],
-                          "MediaTexts": [
-                            ""
-                          ]
+                          "Paths": ["24sata-300px_162034.png"],
+                          "MediaTexts": [""]
                         },
                         "ImageClass": {
                           "Text": null
@@ -1457,12 +1313,8 @@
                           "Value": false
                         },
                         "Image": {
-                          "Paths": [
-                            "logo_600x600_171449.jpg"
-                          ],
-                          "MediaTexts": [
-                            ""
-                          ]
+                          "Paths": ["logo_600x600_171449.jpg"],
+                          "MediaTexts": [""]
                         },
                         "ImageClass": {
                           "Text": null
@@ -1495,9 +1347,7 @@
                           "Paths": [
                             "telemach_logo_u_zasticenoj_zoni_171512.jpg"
                           ],
-                          "MediaTexts": [
-                            ""
-                          ]
+                          "MediaTexts": [""]
                         },
                         "ImageClass": {
                           "Text": null
@@ -1666,7 +1516,7 @@
           "Source": "Lucene",
           "Name": "RecentBlogPosts",
           "Index": "Search",
-          "Template": "[file:text('Assets/recentBlogPosts.json')]",
+          "Template": "[file:text('0/Assets/recentBlogPosts.json')]",
           "Schema": "[js:base64('ew0KICAgICJ0eXBlIjogIkNvbnRlbnRJdGVtL0Jsb2dQb3N0Ig0KfQ==')]",
           "ReturnContentItems": true
         }
@@ -1829,9 +1679,7 @@
               "Y": 110,
               "IsStart": true,
               "Properties": {
-                "ContentTypeFilter": [
-                  "Member"
-                ],
+                "ContentTypeFilter": ["Member"],
                 "ActivityMetadata": {
                   "Title": "Član odobren"
                 }

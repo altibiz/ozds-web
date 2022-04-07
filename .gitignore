@@ -215,3 +215,4 @@ is-cache/
 secrets.json
 .AppData/
 scripts/repl
+scripts/split-recipes

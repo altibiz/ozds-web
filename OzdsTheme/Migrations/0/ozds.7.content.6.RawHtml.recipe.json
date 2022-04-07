@@ -31,7 +31,7 @@
           },
           "RawHtml": {
             "Content": {
-              "Html": "[file:text('Assets/footer.html')]"
+              "Html": "[file:text('0/Assets/footer.html')]"
             }
           }
         }

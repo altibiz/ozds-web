@@ -15,118 +15,65 @@ using YesSql;
 
 namespace OrchardCore.Themes.OzdsTheme;
 
-public class Migrations : DataMigration
-{
+public class Migrations : DataMigration {
   public Migrations(IRecipeMigrator recipeMigrator,
       IContentDefinitionManager contentDefinitionManager, ISession session,
-      ILogger<Migrations> logger)
-  {
+      ILogger<Migrations> logger) {
     RecipeMigrator = recipeMigrator;
     ContentDefinitionManager = contentDefinitionManager;
     Session = session;
     Logger = logger;
   }
 
-  public async Task<int> CreateAsync()
-  {
-    Logger.LogDebug(" >>> Start OzdsTheme creation");
+  public async Task<int> CreateAsync() {
 
-    Logger.LogDebug(" >> Start OzdsTheme " + "ozds.1.settings.recipe.json");
-    await RecipeMigrator.ExecuteAsync("ozds.1.settings.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "ozds.1.settings.recipe.json");
+    await RecipeMigrator.ExecuteAsync("0/ozds.1.settings.recipe.json", this);
 
-    Logger.LogDebug(
-        " >> Start OzdsTheme " + "ozds.2.ContentDefinition.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "ozds.2.ContentDefinition.recipe.json", this);
-    Logger.LogDebug(
-        " >> End OzdsTheme " + "ozds.2.ContentDefinition.recipe.json");
+        "0/ozds.2.ContentDefinition.recipe.json", this);
 
-    Logger.LogDebug(" >> Start OzdsTheme " + "ozds.3.lucene-index.recipe.json");
-    await RecipeMigrator.ExecuteAsync("ozds.3.lucene-index.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "ozds.3.lucene-index.recipe.json");
-
-    Logger.LogDebug(" >> Start OzdsTheme " + "ozds.4.Settings.recipe.json");
-    await RecipeMigrator.ExecuteAsync("ozds.4.Settings.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "ozds.4.Settings.recipe.json");
-
-    Logger.LogDebug(" >> Start OzdsTheme " + "ozds.5.Roles.recipe.json");
-    await RecipeMigrator.ExecuteAsync("ozds.5.Roles.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "ozds.5.Roles.recipe.json");
-
-    Logger.LogDebug(" >> Start OzdsTheme " + "ozds.6.media.recipe.json");
-    await RecipeMigrator.ExecuteAsync("ozds.6.media.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "ozds.6.media.recipe.json");
-
-    Logger.LogDebug(
-        " >> Start OzdsTheme " + "ozds.7.content.1.Menu.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "ozds.7.content.1.Menu.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "ozds.7.content.1.Menu.recipe.json");
+        "0/ozds.3.lucene-index.recipe.json", this);
 
-    Logger.LogDebug(
-        " >> Start OzdsTheme " + "ozds.7.content.2.Menu.recipe.json");
+    await RecipeMigrator.ExecuteAsync("0/ozds.4.Settings.recipe.json", this);
+
+    await RecipeMigrator.ExecuteAsync("0/ozds.5.Roles.recipe.json", this);
+
+    await RecipeMigrator.ExecuteAsync("0/ozds.6.media.recipe.json", this);
+
     await RecipeMigrator.ExecuteAsync(
-        "ozds.7.content.2.Menu.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "ozds.7.content.2.Menu.recipe.json");
+        "0/ozds.7.content.1.Menu.recipe.json", this);
 
-    Logger.LogDebug(
-        " >> Start OzdsTheme " + "ozds.7.content.5.Blog.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "ozds.7.content.5.Blog.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "ozds.7.content.5.Blog.recipe.json");
+        "0/ozds.7.content.2.Menu.recipe.json", this);
 
-    Logger.LogDebug(
-        " >> Start OzdsTheme " + "ozds.7.content.6.BlogPost.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "ozds.7.content.6.BlogPost.recipe.json", this);
-    Logger.LogDebug(
-        " >> End OzdsTheme " + "ozds.7.content.6.BlogPost.recipe.json");
+        "0/ozds.7.content.3.Blog.recipe.json", this);
 
-    Logger.LogDebug(
-        " >> Start OzdsTheme " + "ozds.7.content.7.Article.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "ozds.7.content.7.Article.recipe.json", this);
-    Logger.LogDebug(
-        " >> End OzdsTheme " + "ozds.7.content.7.Article.recipe.json");
+        "0/ozds.7.content.4.BlogPost.recipe.json", this);
 
-    Logger.LogDebug(
-        " >> Start OzdsTheme " + "ozds.7.content.8.RawHtml.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "ozds.7.content.8.RawHtml.recipe.json", this);
-    Logger.LogDebug(
-        " >> End OzdsTheme " + "ozds.7.content.8.RawHtml.recipe.json");
+        "0/ozds.7.content.5.Article.recipe.json", this);
 
-    Logger.LogDebug(
-        " >> Start OzdsTheme " + "ozds.7.content.9.Page.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "ozds.7.content.9.Page.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "ozds.7.content.9.Page.recipe.json");
+        "0/ozds.7.content.6.RawHtml.recipe.json", this);
 
-    Logger.LogDebug(" >> Start OzdsTheme " + "ozds.8.layers.recipe.json");
-    await RecipeMigrator.ExecuteAsync("ozds.8.layers.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "ozds.8.layers.recipe.json");
-
-    Logger.LogDebug(" >> Start OzdsTheme " + "ozds.9.queries.recipe.json");
-    await RecipeMigrator.ExecuteAsync("ozds.9.queries.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "ozds.9.queries.recipe.json");
-
-    Logger.LogDebug(" >> Start OzdsTheme " + "ozds.10.AdminMenu.recipe.json");
-    await RecipeMigrator.ExecuteAsync("ozds.10.AdminMenu.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "ozds.10.AdminMenu.recipe.json");
-
-    Logger.LogDebug(
-        " >> Start OzdsTheme " + "ozds.11.MediaProfiles.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "ozds.11.MediaProfiles.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "ozds.11.MediaProfiles.recipe.json");
+        "0/ozds.7.content.7.Page.recipe.json", this);
 
-    Logger.LogDebug(
-        " >> Start OzdsTheme " + "ozds.12.WorkflowType.recipe.json");
-    await RecipeMigrator.ExecuteAsync("ozds.12.WorkflowType.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "ozds.12.WorkflowType.recipe.json");
+    await RecipeMigrator.ExecuteAsync("0/ozds.8.layers.recipe.json", this);
 
-    Logger.LogDebug(" >> Start OzdsTheme " + "GPiece");
+    await RecipeMigrator.ExecuteAsync("0/ozds.9.queries.recipe.json", this);
+
+    await RecipeMigrator.ExecuteAsync("0/ozds.10.AdminMenu.recipe.json", this);
+
+    await RecipeMigrator.ExecuteAsync(
+        "0/ozds.11.MediaProfiles.recipe.json", this);
+
+    await RecipeMigrator.ExecuteAsync(
+        "0/ozds.12.WorkflowType.recipe.json", this);
+
     ContentDefinitionManager.AlterPartDefinition("GPiece",
         cfg =>
             cfg.WithDescription("Contains the fields for the current type")
@@ -140,10 +87,8 @@ public class Migrations : DataMigration
                 .WithField("Image",
                     fieldBuilder => fieldBuilder.OfType("MediaField")
                                         .WithDisplayName("Image")
-                                        .WithSettings(new MediaFieldSettings
-                                        {
-                                          Required = true,
-                                          Multiple = false
+                                        .WithSettings(new MediaFieldSettings {
+                                          Required = true, Multiple = false
                                         }))
                 .WithField("ImageClass",
                     fieldBuilder => fieldBuilder.OfType("TextField")
@@ -160,15 +105,12 @@ public class Migrations : DataMigration
                       "Link", fieldBuilder => fieldBuilder.OfType("TextField")
                                                   .WithDisplayName("Link")
                                                   .WithEditor("Url")));
-    Logger.LogDebug(" >> End OzdsTheme " + "GPiece");
 
-    Logger.LogDebug(" >> start OzdsTheme " + "Gallery");
     ContentDefinitionManager.AlterPartDefinition("Gallery",
-        cfg =>
-            cfg.WithDescription("Contains the fields for the current type")
-                .WithField("DisplayType",
-                    fieldBuilder => fieldBuilder.OfType("TextField")
-                                        .WithDisplayName("Display Type")));
+        cfg => cfg.WithDescription("Contains the fields for the current type")
+                   .WithField("DisplayType",
+                       fieldBuilder => fieldBuilder.OfType("TextField")
+                                           .WithDisplayName("Display Type")));
 
     ContentDefinitionManager.AlterTypeDefinition("Gallery",
         type =>
@@ -178,50 +120,42 @@ public class Migrations : DataMigration
                     cfg => cfg.WithDisplayName("GPieces")
                                .WithDescription("GPieces to display in the.")
                                .WithSettings(
-                                   new BagPartSettings
-                                   {
-                                     ContainedContentTypes =
+                                   new BagPartSettings { ContainedContentTypes =
                                                              new[] { "GPiece" },
-                                     DisplayType = "Detail"
-                                   }))
+                                     DisplayType = "Detail" }))
                 .Stereotype("Widget"));
-    Logger.LogDebug(" >> End OzdsTheme " + "Gallery");
 
-    Logger.LogDebug(" >> Start OzdsTheme " + "Taxonomy");
     var ci = await Session
                  .Query<ContentItem, ContentItemIndex>(
                      x => x.ContentType == "Taxonomy" &&
                           x.DisplayText == "Categories")
                  .FirstOrDefaultAsync();
     if (ci != null) Session.Delete(ci);
-    ci =
-        await Session
-            .Query<ContentItem, ContentItemIndex>(
-                x => x.ContentType == "Taxonomy" && x.DisplayText == "Tags")
-            .FirstOrDefaultAsync();
+        ci =
+            await Session
+                .Query<ContentItem, ContentItemIndex>(
+                    x => x.ContentType == "Taxonomy" && x.DisplayText == "Tags")
+                .FirstOrDefaultAsync();
     if (ci != null) Session.Delete(ci); await Session.SaveChangesAsync();
-    Logger.LogDebug(" >> End OzdsTheme " + "Taxonomy");
 
-    Logger.LogDebug(" >> Start OzdsTheme " + "BlogPost");
-    ContentDefinitionManager.AlterTypeDefinition("BlogPost",
-        type =>
-            type.RemovePart("MarkdownBodyPart")
-                .DisplayedAs("Blog Post")
-                .Draftable()
-                .Versionable()
-                .WithPart("TitlePart", part => part.WithPosition("0"))
-                .WithPart("AutoroutePart",
-                    part => part.WithPosition("2").WithSettings(
-                        new AutoroutePartSettings
-                        {
-                          AllowCustomPath = true,
-                          Pattern =
-                              "{{ Model.ContentItem | container | display_text | slugify }}/{{ Model.ContentItem | display_text | slugify }}",
-                          ShowHomepageOption = false,
-                        }))
-                .WithPart("BlogPost", part => part.WithPosition("3"))
-                .WithPart("HtmlBodyPart",
-                    part => part.WithPosition("1").WithEditor("Wysiwyg")));
+        ContentDefinitionManager.AlterTypeDefinition("BlogPost",
+            type =>
+                type.RemovePart("MarkdownBodyPart")
+                    .DisplayedAs("Blog Post")
+                    .Draftable()
+                    .Versionable()
+                    .WithPart("TitlePart", part => part.WithPosition("0"))
+                    .WithPart("AutoroutePart",
+                        part => part.WithPosition("2").WithSettings(
+                            new AutoroutePartSettings {
+                              AllowCustomPath = true,
+                              Pattern =
+                                  "{{ Model.ContentItem | container | display_text | slugify }}/{{ Model.ContentItem | display_text | slugify }}",
+                              ShowHomepageOption = false,
+                            }))
+                    .WithPart("BlogPost", part => part.WithPosition("3"))
+                    .WithPart("HtmlBodyPart",
+                        part => part.WithPosition("1").WithEditor("Wysiwyg")));
 
     ContentDefinitionManager.AlterPartDefinition(
         "BlogPost", part => part.RemoveField("Category").RemoveField("Tags"));
@@ -237,14 +171,9 @@ public class Migrations : DataMigration
                             .WithDisplayName("Banner Image")
                             .WithPosition("1")
                             .WithSettings(
-                                new ContentIndexSettings
-                                {
-                                  Included = false,
-                                  Stored = false,
-                                  Analyzed = false
-                                })
-                            .WithSettings(new MediaFieldSettings
-                            {
+                                new ContentIndexSettings { Included = false,
+                                  Stored = false, Analyzed = false })
+                            .WithSettings(new MediaFieldSettings {
                               Multiple = false,
                               AllowAnchors = true,
                             }))
@@ -254,8 +183,7 @@ public class Migrations : DataMigration
                                  .WithEditor("Tags")
                                  .WithDisplayMode("Tags")
                                  .WithPosition("2")
-                                 .WithSettings(new TaxonomyFieldSettings
-                                 {
+                                 .WithSettings(new TaxonomyFieldSettings {
                                    TaxonomyContentItemId =
                                        "45j76cwwz4f4v4hx5zqxfpzvwq",
                                  }))
@@ -263,28 +191,20 @@ public class Migrations : DataMigration
                     field => field.OfType("TaxonomyField")
                                  .WithDisplayName("Category")
                                  .WithPosition("3")
-                                 .WithSettings(new TaxonomyFieldSettings
-                                 {
+                                 .WithSettings(new TaxonomyFieldSettings {
                                    TaxonomyContentItemId =
                                        "4dgj6ce33vdsbxqz8hw4c4c24d",
                                    Unique = true,
                                    LeavesOnly = true,
                                  })));
-    Logger.LogDebug(" >> End OzdsTheme " + "BlogPost");
 
-    Logger.LogDebug(" >> Start OzdsTheme " + "tags-cats.recipe.json");
-    await RecipeMigrator.ExecuteAsync("tags-cats.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "tags-cats.recipe.json");
+    await RecipeMigrator.ExecuteAsync("0/tags-cats.recipe.json", this);
 
-    Logger.LogDebug(" >> Start OzdsTheme " + "localization.recipe.json");
-    await RecipeMigrator.ExecuteAsync("localization.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "localization.recipe.json");
+        await RecipeMigrator.ExecuteAsync("0/localization.recipe.json", this);
 
-    Logger.LogDebug(" >> Start OzdsTheme " + "localizemenu.recipe.json");
-    await RecipeMigrator.ExecuteAsync("localizemenu.recipe.json", this);
-    Logger.LogDebug(" >> End OzdsTheme " + "localizemenu.recipe.json");
+        await RecipeMigrator.ExecuteAsync("0/localizemenu.recipe.json", this);
 
-    Logger.LogDebug(" >>> End OzdsTheme creation"); return 1;
+        return 1;
   }
 
   private ILogger Logger { get; }
