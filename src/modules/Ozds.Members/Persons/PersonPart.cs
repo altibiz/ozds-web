@@ -4,11 +4,13 @@ using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.Taxonomies.Fields;
 
-namespace Ozds.Members.Persons {
+namespace Ozds.Members.Persons
+{
 
   public enum PersonType { Natural, Legal }
 
-  public class PersonPart : ContentPart {
+  public class PersonPart : ContentPart
+  {
     public TextField Oib { get; set; }
 
     public TextField Name { get; set; }
@@ -29,7 +31,8 @@ namespace Ozds.Members.Persons {
 
     public TextField Skills { get; set; }
 
-    public string LegalName {
+    public string LegalName
+    {
       get => Name?.Text +
              (string.IsNullOrEmpty(Surname?.Text) ? "" : " " + Surname?.Text);
     }
@@ -38,12 +41,14 @@ namespace Ozds.Members.Persons {
     public string OldHash { get; set; }
   }
 
-  public class PersonPartSettings : IFieldEditorSettings {
+  public class PersonPartSettings : IFieldEditorSettings
+  {
     public PersonType? Type { get; set; }
 
     public DisplayModeResult GetFieldDisplayMode(string propertyName,
         string displayMode, BuildFieldEditorContext context,
-        bool isAdminTheme) {
+        bool isAdminTheme)
+    {
       if (isAdminTheme)
         return displayMode;
       if (propertyName == nameof(PersonPart.Surname) &&
@@ -54,11 +59,15 @@ namespace Ozds.Members.Persons {
     }
 
     public string GetFieldLabel(
-        string propertyName, string displayName, bool isAdminTheme) {
-      return propertyName switch { nameof(PersonPart.Name) =>
-                                       Type == PersonType.Legal ? "Naziv"
-                                                                : displayName,
-        _ => displayName };
+        string propertyName, string displayName, bool isAdminTheme)
+    {
+      return propertyName switch
+      {
+        nameof(PersonPart.Name) =>
+            Type == PersonType.Legal ? "Naziv"
+                                     : displayName,
+        _ => displayName
+      };
     }
   }
 }

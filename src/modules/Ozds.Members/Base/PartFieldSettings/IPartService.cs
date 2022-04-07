@@ -12,8 +12,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ozds.Members.PartFieldSettings {
-  public interface IPartService<T> {
+namespace Ozds.Members.PartFieldSettings
+{
+  public interface IPartService<T>
+  {
     IAsyncEnumerable<ValidationResult> ValidateAsync(T part);
 
     Task InitializingAsync(T part);
@@ -22,11 +24,13 @@ namespace Ozds.Members.PartFieldSettings {
     Task UpdatedAsync<TPart>(UpdateContentContext context, T instance);
   }
 
-  public static class PartServiceExtensions {
+  public static class PartServiceExtensions
+  {
     public static void UsePartService<TPart, TService>(
         this IServiceCollection services)
         where TPart : ContentPart, new()
-        where TService : class, IPartService<TPart> {
+        where TService : class, IPartService<TPart>
+    {
       services.AddScoped<TService, TService>();
       services.AddContentPart<TPart>()
           .AddHandler<PartServiceHandler<TPart, TService>>()
@@ -34,10 +38,12 @@ namespace Ozds.Members.PartFieldSettings {
     }
   }
 
-  public abstract class PartService<T> : IPartService<T> {
+  public abstract class PartService<T> : IPartService<T>
+  {
     private IHttpContextAccessor _httpCa;
 
-    public PartService(IHttpContextAccessor httpContextAccessor) {
+    public PartService(IHttpContextAccessor httpContextAccessor)
+    {
       _httpCa = httpContextAccessor;
     }
 
@@ -46,25 +52,30 @@ namespace Ozds.Members.PartFieldSettings {
     public virtual Task InitializingAsync(T part) { return Task.CompletedTask; }
 
     public virtual Action<T> GetEditModel(
-        T part, BuildPartEditorContext context) {
+        T part, BuildPartEditorContext context)
+    {
       return null;
     }
 
     public virtual Task PublishedAsync(
-        T instance, PublishContentContext context) {
+        T instance, PublishContentContext context)
+    {
       return Task.CompletedTask;
     }
 
-    public virtual IAsyncEnumerable<ValidationResult> ValidateAsync(T part) {
+    public virtual IAsyncEnumerable<ValidationResult> ValidateAsync(T part)
+    {
       return Validate(part).ToAsyncEnumerable();
     }
 
-    public virtual IEnumerable<ValidationResult> Validate(T part) {
+    public virtual IEnumerable<ValidationResult> Validate(T part)
+    {
       return Array.Empty<ValidationResult>();
     }
 
     public virtual Task UpdatedAsync<TPart>(
-        UpdateContentContext context, T instance) {
+        UpdateContentContext context, T instance)
+    {
       return Task.CompletedTask;
     }
   }

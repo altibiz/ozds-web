@@ -1,11 +1,15 @@
 using System;
 
-namespace Ozds.Elasticsearch {
-  public static class EnvironmentExtensions {
-    public static string AssertEnvironmentVariable(string key) {
+namespace Ozds.Elasticsearch
+{
+  public static class EnvironmentExtensions
+  {
+    public static string AssertEnvironmentVariable(string key)
+    {
       var value = System.Environment.GetEnvironmentVariable(key);
 
-      if (value == null) {
+      if (value == null)
+      {
         throw new EnvironmentVariableNotFoundException(
             $"{key} environment variable not found.");
       }
@@ -14,8 +18,9 @@ namespace Ozds.Elasticsearch {
     }
   }
 
-  public class EnvironmentVariableNotFoundException : SystemException {
+  public class EnvironmentVariableNotFoundException : SystemException
+  {
     public EnvironmentVariableNotFoundException(string message)
-        : base(message) {}
+        : base(message) { }
   }
 }

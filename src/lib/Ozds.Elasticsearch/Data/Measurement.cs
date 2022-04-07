@@ -1,23 +1,27 @@
 using System;
 using Nest;
 
-namespace Ozds.Elasticsearch {
+namespace Ozds.Elasticsearch
+{
   [ElasticsearchType(RelationName = "measurement", IdProperty = nameof(Id))]
-  public class Measurement {
+  public class Measurement
+  {
     public static string MakeId(
-        string deviceId, DateTime measurementTimestamp) {
+        string deviceId, DateTime measurementTimestamp)
+    {
       return StringExtensions.CombineIntoStringId(
           "D", deviceId, "TS", measurementTimestamp.ToUtcIsoString());
     }
 
     public Measurement(DateTime measurementTimestamp,
         GeoCoordinate? geoCoordinate, string source, string deviceId,
-        KnownData? data = null) {
+        KnownData? data = null)
+    {
       MeasurementTimestamp = measurementTimestamp;
       GeoCoordinate = geoCoordinate;
       Source = source;
       DeviceId = deviceId;
-      Data = data ?? new KnownData {};
+      Data = data ?? new KnownData { };
       Id = MakeId(DeviceId, MeasurementTimestamp);
     }
 
@@ -38,22 +42,26 @@ namespace Ozds.Elasticsearch {
     [Object(Name = "data")]
     public KnownData Data { get; init; } = new KnownData { };
 
-    public override bool Equals(object? obj) {
+    public override bool Equals(object? obj)
+    {
       return Equals(obj as Measurement);
     }
 
-    public bool Equals(Measurement? other) {
+    public bool Equals(Measurement? other)
+    {
       return other != null && DeviceId == other.DeviceId &&
              MeasurementTimestamp == other.MeasurementTimestamp &&
              Source == other.Source;
     }
 
-    public override int GetHashCode() {
+    public override int GetHashCode()
+    {
       return HashCode.Combine(DeviceId, MeasurementTimestamp, Source);
     }
 
     [ElasticsearchType(RelationName = "measurementData")]
-    public class KnownData {
+    public class KnownData
+    {
       public string? dongleId { get; init; } = default;
       public string? meterIdent { get; init; } = default;
       public string? meterSerial { get; init; } = default;

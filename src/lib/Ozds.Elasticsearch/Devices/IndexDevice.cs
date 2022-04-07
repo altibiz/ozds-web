@@ -1,13 +1,16 @@
 using System.Threading.Tasks;
 using Nest;
 
-namespace Ozds.Elasticsearch {
-  public partial interface IClient {
+namespace Ozds.Elasticsearch
+{
+  public partial interface IClient
+  {
     public IndexResponse IndexDevice(Device device);
     public Task<IndexResponse> IndexDeviceAsync(Device device);
   };
 
-  public sealed partial class Client : IClient {
+  public sealed partial class Client : IClient
+  {
     public IndexResponse IndexDevice(Device device) => this.Elasticsearch.Index(
         device, s => s.Index(DeviceIndexName));
 

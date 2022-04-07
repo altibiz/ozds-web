@@ -9,20 +9,24 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using OrchardCore.DisplayManagement.Notify;
 using OrchardCore.Users;
 
-namespace Ozds.Members.Pages {
-  public class LogOutModel : PageModel {
+namespace Ozds.Members.Pages
+{
+  public class LogOutModel : PageModel
+  {
     private readonly SignInManager<IUser> _signInManager;
     private readonly INotifier _notifier;
     private readonly IHtmlLocalizer H;
 
     public LogOutModel(SignInManager<IUser> signInManager, INotifier notifier,
-        IHtmlLocalizer<CreateCompanyModel> htmlLocalizer) {
+        IHtmlLocalizer<CreateCompanyModel> htmlLocalizer)
+    {
       _signInManager = signInManager;
       _notifier = notifier;
 
       H = htmlLocalizer;
     }
-    public async Task<IActionResult> OnGetAsync() {
+    public async Task<IActionResult> OnGetAsync()
+    {
       await _signInManager.SignOutAsync();
       await _notifier.SuccessAsync(H["SignOut Success"]);
       return Page();

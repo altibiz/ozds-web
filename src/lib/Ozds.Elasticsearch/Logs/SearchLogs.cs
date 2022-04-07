@@ -1,8 +1,10 @@
 using System.Threading.Tasks;
 using Nest;
 
-namespace Ozds.Elasticsearch {
-  public partial interface IClient {
+namespace Ozds.Elasticsearch
+{
+  public partial interface IClient
+  {
     public ISearchResponse<Log> SearchLogs(string type, int? size = null);
 
     public Task<ISearchResponse<Log>> SearchLogsAsync(
@@ -26,7 +28,8 @@ namespace Ozds.Elasticsearch {
         string source, int? size = null);
   };
 
-  public sealed partial class Client : IClient {
+  public sealed partial class Client : IClient
+  {
     public ISearchResponse<Log>
     SearchLogs(string type, int? size = null) => this.Elasticsearch.Search<Log>(
         s => s.Query(q => q.Term(t => t.Type, type))
@@ -62,7 +65,7 @@ namespace Ozds.Elasticsearch {
             s => s.Query(q => q.Term(t => t.Type, type))
                      .Size(size)
                      .Index(LogIndexName)
-    // NOTE: null doesn't matter here because NEST just wants to create a query
+                     // NOTE: null doesn't matter here because NEST just wants to create a query
 #nullable disable
                      .Sort(s => s.Descending(d => d.Data.Period.To)));
 #nullable enable
@@ -73,7 +76,7 @@ namespace Ozds.Elasticsearch {
             s => s.Query(q => q.Term(t => t.Type, type))
                      .Size(size)
                      .Index(LogIndexName)
-    // NOTE: null doesn't matter here because NEST just wants to create a query
+                     // NOTE: null doesn't matter here because NEST just wants to create a query
 #nullable disable
                      .Sort(s => s.Descending(d => d.Data.Period.To))));
 #nullable enable
@@ -85,7 +88,7 @@ namespace Ozds.Elasticsearch {
                               q.Term(t => t.Source, source))
                      .Size(size)
                      .Index(LogIndexName)
-    // NOTE: null doesn't matter here because NEST just wants to create a query
+                     // NOTE: null doesn't matter here because NEST just wants to create a query
 #nullable disable
                      .Sort(s => s.Descending(d => d.Data.Period.To)));
 #nullable enable
@@ -97,7 +100,7 @@ namespace Ozds.Elasticsearch {
                               q.Term(t => t.Source, source))
                      .Size(size)
                      .Index(LogIndexName)
-    // NOTE: null doesn't matter here because NEST just wants to create a query
+                     // NOTE: null doesn't matter here because NEST just wants to create a query
 #nullable disable
                      .Sort(s => s.Descending(d => d.Data.Period.To))));
 #nullable enable

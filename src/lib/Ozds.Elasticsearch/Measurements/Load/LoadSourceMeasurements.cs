@@ -6,7 +6,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient {
+public partial interface IClient
+{
   public IEnumerable<Measurement> LoadSourceMeasurements(
       string source, Period? period = null);
 
@@ -14,49 +15,56 @@ public partial interface IClient {
       string source, Period? period = null);
 }
 
-public partial class Client : IClient {
+public partial class Client : IClient
+{
   public IEnumerable<Measurement> LoadSourceMeasurements(
-      string source, Period? period = null) {
+      string source, Period? period = null)
+  {
     var task = LoadSourceMeasurementsAsync(source, period);
     task.Wait();
     return task.Result;
   }
 
   public async Task<IEnumerable<Measurement>> LoadSourceMeasurementsAsync(
-      string source, Period? period = null) {
-    if (period == null) {
+      string source, Period? period = null)
+  {
+    if (period == null)
+    {
       period = await DetermineLoadPeriodAsync(source);
     }
 
     var provider = Providers.Find(p => p.Source == source);
-    if (provider is null) {
+    if (provider is null)
+    {
       Logger.LogDebug($"Provider for {source} not found");
-      return new List<Measurement> {};
+      return new List<Measurement> { };
     }
 
     IndexLog(new Log(LogType.LoadBegin, provider.Source,
         new Log.KnownData { Period = period }));
 
-        var searchDevicesResponse = SearchDevices(provider.Source);
-        var devices = searchDevicesResponse.Sources();
+    var searchDevicesResponse = SearchDevices(provider.Source);
+    var devices = searchDevicesResponse.Sources();
 
-        var measurements = new List<Measurement> {};
+    var measurements = new List<Measurement> { };
 
-        foreach (var device in devices) {
-          measurements.AddRange(
-              await LoadDeviceMeasurementsAsync(device, period));
-        }
+    foreach (var device in devices)
+    {
+      measurements.AddRange(
+          await LoadDeviceMeasurementsAsync(device, period));
+    }
 
-        Logger.LogDebug($"Got {measurements.Count} measurements " +
-                        $"from {provider.Source}");
+    Logger.LogDebug($"Got {measurements.Count} measurements " +
+                    $"from {provider.Source}");
 
-        IndexLog(new Log(LogType.LoadEnd, provider.Source,
-            new Log.KnownData { Period = period }));
+    IndexLog(new Log(LogType.LoadEnd, provider.Source,
+        new Log.KnownData { Period = period }));
 
-        return measurements;
+    return measurements;
   }
 
-  private async Task<Period> DetermineLoadPeriodAsync(string source) {
+  private async Task<Period> DetermineLoadPeriodAsync(string source)
+  {
     var lastLoadEndLogSearchResponse =
         await SearchLoadLogsSortedByPeriodAsync(source, 1);
 
@@ -67,7 +75,8 @@ public partial class Client : IClient {
     var begin = lastLoadEnd;
     var end = DateTime.UtcNow;
 
-    if (begin is null) {
+    if (begin is null)
+    {
       Logger.LogDebug($"Last load log not found for {source}");
       Logger.LogDebug(lastLoadEndLogSearchResponse.DebugInformation);
       begin = DateTime.MinValue.ToUniversalTime();

@@ -1,3 +1,4 @@
-namespace Ozds.Elasticsearch.MyEnergyCommunity {
-  public partial interface IClient {};
+namespace Ozds.Elasticsearch.MyEnergyCommunity
+{
+  public partial interface IClient { };
 };

@@ -6,17 +6,21 @@ using System.Collections.Generic;
 using Ozds.Members.Payments;
 using System.Linq;
 
-namespace Ozds.Members.Pages {
-  public class MyDonationsModel : PageModel {
+namespace Ozds.Members.Pages
+{
+  public class MyDonationsModel : PageModel
+  {
     private readonly PaymentUtils _pService;
 
     public List<Payment> Payments { get; set; }
     public MyDonationsModel(PaymentUtils pService,
-        IHtmlLocalizer<CreateMemberModel> htmlLocalizer, INotifier notifier) {
+        IHtmlLocalizer<CreateMemberModel> htmlLocalizer, INotifier notifier)
+    {
       _pService = pService;
     }
 
-    public async Task OnGetAsync(string companyId) {
+    public async Task OnGetAsync(string companyId)
+    {
       Payments = await _pService.GetUserPayments().ToListAsync();
     }
   }

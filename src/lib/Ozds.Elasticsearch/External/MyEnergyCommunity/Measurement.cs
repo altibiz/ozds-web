@@ -4,33 +4,40 @@ using System;
 // deserialization
 // TODO: find a way to make field names more conventional
 
-namespace Ozds.Elasticsearch.MyEnergyCommunity {
-  public class Measurement {
+namespace Ozds.Elasticsearch.MyEnergyCommunity
+{
+  public class Measurement
+  {
     public string deviceId { get; init; } = default!;
     public double deviceType { get; init; } = default!;
     public DateTime deviceDateTime { get; init; } = default!;
     public GeoCoordinates geoCoordinates { get; init; } = default!;
     public Data measurementData { get; init; } = default!;
 
-    public override bool Equals(object? obj) {
+    public override bool Equals(object? obj)
+    {
       return Equals(obj as Measurement);
     }
 
-    public bool Equals(Measurement? other) {
+    public bool Equals(Measurement? other)
+    {
       return other != null && deviceId == other.deviceId &&
              deviceDateTime == other.deviceDateTime;
     }
 
-    public override int GetHashCode() {
+    public override int GetHashCode()
+    {
       return HashCode.Combine(deviceId, deviceDateTime);
     }
 
-    public class GeoCoordinates {
+    public class GeoCoordinates
+    {
       public double longitude { get; init; } = default!;
       public double latitude { get; init; } = default!;
     }
 
-    public class Data {
+    public class Data
+    {
       public string? dongleId { get; init; } = default;
       public string? meterIdent { get; init; } = default;
       public string? meterSerial { get; init; } = default;

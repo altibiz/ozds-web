@@ -2,8 +2,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Ozds.Elasticsearch.Test;
 
-public partial class ClientTest {
-  public ClientTest(Elasticsearch.IClient client, ILogger<ClientTest> logger) {
+public partial class ClientTest
+{
+  public ClientTest(Elasticsearch.IClient client, ILogger<ClientTest> logger)
+  {
     Logger = logger;
 
     Client = client;

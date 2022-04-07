@@ -9,13 +9,16 @@ using OrchardCore.BackgroundTasks;
 
 namespace Ozds.Members.Measurements;
 
-public class PeriodicMeasurementLoader {
+public class PeriodicMeasurementLoader
+{
   public PeriodicMeasurementLoader(IWebHostEnvironment env,
       ILogger<PeriodicMeasurementLoader> logger,
-      Ozds.Elasticsearch.IClient client) {
+      Ozds.Elasticsearch.IClient client)
+  {
     Client = client;
 
-    if (env.IsDevelopment()) {
+    if (env.IsDevelopment())
+    {
       Client.IndexDevice(new Ozds.Elasticsearch.Device(
           Ozds.Elasticsearch.MeasurementFaker.Client.FakeSource,
           Ozds.Elasticsearch.MeasurementFaker.Client.FakeDeviceId, null,
@@ -24,7 +27,8 @@ public class PeriodicMeasurementLoader {
     }
   }
 
-  public async Task LoadContinuouslyAsync() {
+  public async Task LoadContinuouslyAsync()
+  {
     await Client.IndexMeasurementsAsync(await Client.LoadMeasurementsAsync());
   }
 
@@ -33,7 +37,8 @@ public class PeriodicMeasurementLoader {
 
 [BackgroundTask(
     Schedule = "*/1 * * * *", Description = "Loads measurements periodically")]
-public class PeriodicMeasurementLoadBackgroundTask : IBackgroundTask {
+public class PeriodicMeasurementLoadBackgroundTask : IBackgroundTask
+{
   public Task DoWorkAsync(IServiceProvider services, CancellationToken token) =>
       services.GetRequiredService<PeriodicMeasurementLoader>()
           .LoadContinuouslyAsync();

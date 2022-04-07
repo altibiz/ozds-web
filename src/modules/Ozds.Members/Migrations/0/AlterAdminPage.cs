@@ -4,7 +4,8 @@ using OrchardCore.Title.Models;
 
 namespace Ozds.Members.M0;
 
-public static partial class AlterAdminPage {
+public static partial class AlterAdminPage
+{
   public static void AlterAdminPageType(
       this IContentDefinitionManager contentDefinitionManager) =>
       contentDefinitionManager.AlterTypeDefinition("AdminPage",
@@ -18,7 +19,8 @@ public static partial class AlterAdminPage {
                       .WithPart("LiquidPart", part => part.WithPosition("2"))
                       .WithPart("TitlePart",
                           part => part.WithPosition("0").WithSettings(
-                              new TitlePartSettings {
+                              new TitlePartSettings
+                              {
                                 Options = TitlePartOptions.EditableRequired,
                               })));
 }

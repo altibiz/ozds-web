@@ -2,26 +2,32 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace Ozds.Elasticsearch {
-  public partial interface IClient {
+namespace Ozds.Elasticsearch
+{
+  public partial interface IClient
+  {
     public IEnumerable<Measurement> LoadMeasurements(Period? period = null);
 
     public Task<IEnumerable<Measurement>> LoadMeasurementsAsync(
         Period? period = null);
   };
 
-  public partial class Client : IClient {
-    public IEnumerable<Measurement> LoadMeasurements(Period? period = null) {
+  public partial class Client : IClient
+  {
+    public IEnumerable<Measurement> LoadMeasurements(Period? period = null)
+    {
       var task = LoadMeasurementsAsync(period);
       task.Wait();
       return task.Result;
     }
 
     public async Task<IEnumerable<Measurement>> LoadMeasurementsAsync(
-        Period? period = null) {
-      var measurements = new List<Measurement> {};
+        Period? period = null)
+    {
+      var measurements = new List<Measurement> { };
 
-      foreach (var provider in Providers) {
+      foreach (var provider in Providers)
+      {
         measurements.AddRange(
             await LoadSourceMeasurementsAsync(provider.Source, period));
       }

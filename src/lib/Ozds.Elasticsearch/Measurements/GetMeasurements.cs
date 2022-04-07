@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Ozds.Elasticsearch {
-  public partial interface IClient : IBulkSortedMeasurementProvider {};
+namespace Ozds.Elasticsearch
+{
+  public partial interface IClient : IBulkSortedMeasurementProvider { };
 
-  public sealed partial class Client : IClient {
+  public sealed partial class Client : IClient
+  {
     public string Source { get => Client.s_source; }
 
     public IEnumerable<Measurement> GetMeasurements(Device device,

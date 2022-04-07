@@ -4,10 +4,13 @@ using YesSql;
 using YesSql.Sql;
 using YesSql.Sql.Schema;
 
-namespace Ozds.Members.Base {
-  public static class SchemaBuilderExtensions {
+namespace Ozds.Members.Base
+{
+  public static class SchemaBuilderExtensions
+  {
     public static void ExecuteSql(
-        this ISchemaBuilder schemaBuilder, string sql) {
+        this ISchemaBuilder schemaBuilder, string sql)
+    {
       var interpreter = (ICommandInterpreter)schemaBuilder.GetType()
                             .GetField("_commandInterpreter",
                                 System.Reflection.BindingFlags.NonPublic |

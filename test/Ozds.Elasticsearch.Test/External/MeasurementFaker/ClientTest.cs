@@ -4,8 +4,10 @@ namespace Ozds.Elasticsearch.Test.MeasurementFaker;
 
 using Ozds.Elasticsearch.MeasurementFaker;
 
-public partial class ClientTest {
-  public ClientTest(IClient client, ILogger<ClientTest> logger) {
+public partial class ClientTest
+{
+  public ClientTest(IClient client, ILogger<ClientTest> logger)
+  {
     Logger = logger;
     Client = client;
   }

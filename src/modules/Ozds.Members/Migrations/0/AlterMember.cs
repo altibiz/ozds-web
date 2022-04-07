@@ -9,7 +9,8 @@ using Ozds.Members.Core;
 
 namespace Ozds.Members.M0;
 
-public static partial class Migration0AlterMember {
+public static partial class Migration0AlterMember
+{
   public static void AlterMemberType(this IContentDefinitionManager
           content) => content.AlterTypeDefinition("Member",
       type =>
@@ -25,14 +26,16 @@ public static partial class Migration0AlterMember {
               .WithPart("AliasPart", part => part.WithPosition("2"))
               .WithPart("TitlePart",
                   part => part.WithPosition("1").WithSettings(
-                      new TitlePartSettings {
+                      new TitlePartSettings
+                      {
                         Options = TitlePartOptions.GeneratedDisabled,
                         Pattern =
                             "{{ ContentItem.Content.PersonPart.Name.Text }} {{ ContentItem.Content.PersonPart.Surname.Text }}",
                       }))
               .WithPart(
                   "ListPart", part => part.WithPosition("3").WithSettings(
-                                  new ListPartSettings {
+                                  new ListPartSettings
+                                  {
                                     PageSize = 10,
                                     ContainedContentTypes = new[] { "Company" },
                                   })));
@@ -50,9 +53,10 @@ public static partial class Migration0AlterMember {
                                        .WithDisplayName("User")
                                        .WithPosition("11")
                                        .WithSettings(
-                                           new UserPickerFieldSettings {
+                                           new UserPickerFieldSettings
+                                           {
                                              DisplayAllUsers = true,
-                                             DisplayedRoles = new string[] {},
+                                             DisplayedRoles = new string[] { },
                                            }))
                       .WithField("Sex",
                           field => field.OfType("TaxonomyField")
@@ -60,7 +64,8 @@ public static partial class Migration0AlterMember {
                                        .WithEditor("Tags")
                                        .WithDisplayMode("Tags")
                                        .WithPosition("8")
-                                       .WithSettings(new TaxonomyFieldSettings {
+                                       .WithSettings(new TaxonomyFieldSettings
+                                       {
                                          TaxonomyContentItemId =
                                              "4xgh8bvawx8h2rvyg7vds118w4",
                                          Unique = true,

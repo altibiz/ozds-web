@@ -19,25 +19,31 @@ using Ozds.Members.Utils;
 using Ozds.Members.Payments;
 using Ozds.Members.Base;
 
-namespace Ozds.Members.Pages {
+namespace Ozds.Members.Pages
+{
   [Authorize]
-  public class PortalModel : PageModel {
+  public class PortalModel : PageModel
+  {
     private readonly MemberService _mService;
     private readonly INotifier _notifier;
     private readonly IHtmlLocalizer<PortalModel> H;
     public ContentItem Member;
     public PortalModel(MemberService mService, INotifier notifier,
-        IHtmlLocalizer<PortalModel> localizer) {
+        IHtmlLocalizer<PortalModel> localizer)
+    {
       _mService = mService;
       _notifier = notifier;
       H = localizer;
     }
-    public async Task<IActionResult> OnGetAsync() {
+    public async Task<IActionResult> OnGetAsync()
+    {
       Member = await _mService.GetUserMember(true);
-      if (Member == null) {
+      if (Member == null)
+      {
         return RedirectToPage("CreateMember");
       }
-      if (!Member.Published) {
+      if (!Member.Published)
+      {
         await _notifier.InformationAsync(
             H["Molimo pričekajte da naši administratori potvrde prijavu"]);
       }
@@ -46,23 +52,31 @@ namespace Ozds.Members.Pages {
   }
 }
 
-namespace Ozds.Members.ContentHandlers {
-  public class LinkMenuItem : ContentPart {
+namespace Ozds.Members.ContentHandlers
+{
+  public class LinkMenuItem : ContentPart
+  {
     public TextField Icon { get; set; }
   }
 
-  public class MenuItem {
+  public class MenuItem
+  {
     public string Name { get; set; }
     public string Url { get; set; }
     public string Text { get; set; }
   }
-  public class UserMenuHandler : ContentHandlerBase {
-    public UserMenuHandler(IHttpContextAccessor httpContextAccessor) {
+  public class UserMenuHandler : ContentHandlerBase
+  {
+    public UserMenuHandler(IHttpContextAccessor httpContextAccessor)
+    {
       _httpCA = httpContextAccessor;
     }
-    public static IEnumerable<ContentItem> GetMenuCi() {
-      return json.Select(x => {
-        var ci = new ContentItem {
+    public static IEnumerable<ContentItem> GetMenuCi()
+    {
+      return json.Select(x =>
+      {
+        var ci = new ContentItem
+        {
           ContentItemId = Guid.NewGuid().ToString(),
           Published = true,
           ContentType = "LinkMenuItem",
@@ -74,12 +88,16 @@ namespace Ozds.Members.ContentHandlers {
       });
     }
 
-    public override Task LoadedAsync(LoadContentContext context) {
+    public override Task LoadedAsync(LoadContentContext context)
+    {
       if (context.ContentItem.ContentType == "Menu" &&
-          !AdminAttribute.IsApplied(_httpCA.HttpContext)) {
+          !AdminAttribute.IsApplied(_httpCA.HttpContext))
+      {
         var alias = context.ContentItem.As<AliasPart>();
-        if (alias != null) {
-          if (alias.Alias == "user-landing-page-menu") {
+        if (alias != null)
+        {
+          if (alias.Alias == "user-landing-page-menu")
+          {
             var menulist = context.ContentItem.As<MenuItemsListPart>();
             menulist.MenuItems =
                 GetMenuCi().Concat(menulist.MenuItems).ToList();

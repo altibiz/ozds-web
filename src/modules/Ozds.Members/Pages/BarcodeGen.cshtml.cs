@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using OrchardCore.ContentManagement;
 using OrchardCore.DisplayManagement.Notify;
 
-namespace Ozds.Members.Pages {
-  public class BarcodeGenModel : PageModel {
+namespace Ozds.Members.Pages
+{
+  public class BarcodeGenModel : PageModel
+  {
     private readonly IHtmlLocalizer H;
     private readonly MemberService _memberService;
     private readonly INotifier _notifier;
@@ -16,31 +18,37 @@ namespace Ozds.Members.Pages {
     [BindProperty]
     public string LegalName { get; set; }
     [BindProperty]
-    public string Oib {
+    public string Oib
+    {
       get; set;
     }
     [BindProperty]
-    public decimal Amount {
+    public decimal Amount
+    {
       get; set;
     }
     [BindProperty]
-    public string Note {
+    public string Note
+    {
       get; set;
     }
     [BindProperty]
-    public string PersonId {
+    public string PersonId
+    {
       get; set;
     }
 
     [BindProperty]
-    public string OriginalId {
+    public string OriginalId
+    {
       get; set;
     }
 
     public List<ContentItem> PersonList { get; set; }
 
     public BarcodeGenModel(MemberService mService,
-        IHtmlLocalizer<CreateMemberModel> htmlLocalizer, INotifier notifier) {
+        IHtmlLocalizer<CreateMemberModel> htmlLocalizer, INotifier notifier)
+    {
       _notifier = notifier;
       H = htmlLocalizer;
       _memberService = mService;
@@ -48,13 +56,16 @@ namespace Ozds.Members.Pages {
       Note = "Donatorska vecera";
     }
 
-    public IActionResult OnGetAsync() {
+    public IActionResult OnGetAsync()
+    {
       return Redirect(
           "https://clanovi.glaspoduzetnika.hr/ozds-donacijska-vecera");
     }
 
-    public async Task<IActionResult> OnPost() {
-      if (PersonId != OriginalId) {
+    public async Task<IActionResult> OnPost()
+    {
+      if (PersonId != OriginalId)
+      {
         ContentItem person = await _memberService.GetContentItemById(PersonId);
         LegalName = person.Content.PersonPart.LegalName.ToString();
         Oib = person.Content.PersonPart.Oib.Text;
@@ -65,15 +76,18 @@ namespace Ozds.Members.Pages {
       return Page();
     }
 
-    public async Task SetPersonList() {
+    public async Task SetPersonList()
+    {
       PersonList = new List<ContentItem>();
 
       ContentItem ci = await _memberService.GetUserMember();
-      if (ci != null) {
+      if (ci != null)
+      {
         PersonList.Add(ci);
 
         var companies = await _memberService.GetUserCompanies();
-        foreach (ContentItem item in companies) {
+        foreach (ContentItem item in companies)
+        {
           PersonList.Add(item);
         }
       }

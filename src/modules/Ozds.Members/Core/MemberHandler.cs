@@ -10,25 +10,32 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement.Metadata;
 
-namespace Ozds.Members.Core {
-  class MemberHandler : ContentHandlerBase {
+namespace Ozds.Members.Core
+{
+  class MemberHandler : ContentHandlerBase
+  {
     private IServiceProvider _spr;
 
-    public MemberHandler(IServiceProvider serviceProvider) {
+    public MemberHandler(IServiceProvider serviceProvider)
+    {
       _spr = serviceProvider;
     }
-    public override Task ImportingAsync(ImportContentContext context) {
-      if (context.ContentItem.ContentType == "Member") {
+    public override Task ImportingAsync(ImportContentContext context)
+    {
+      if (context.ContentItem.ContentType == "Member")
+      {
         FixMemberDate(context.ContentItem);
       }
       if (context.ContentItem.ContentType == "Offer")
-        using (var scope = _spr.CreateScope()) {
+        using (var scope = _spr.CreateScope())
+        {
           var cdm = scope.ServiceProvider
                         .GetRequiredService<IContentDefinitionManager>();
           var type = cdm.GetTypeDefinition(context.ContentItem.ContentType);
           var routeDef =
               type.Parts.FirstOrDefault(x => x.Name == "AutoroutePart");
-          if (routeDef != null && context.ContentItem.ContentType == "Offer") {
+          if (routeDef != null && context.ContentItem.ContentType == "Offer")
+          {
             var part =
                 context.ContentItem.As<AutoroutePart>() ?? new AutoroutePart();
             part.Path =
@@ -39,7 +46,8 @@ namespace Ozds.Members.Core {
       return Task.CompletedTask;
     }
 
-    public static void FixMemberDate(ContentItem cItem) {
+    public static void FixMemberDate(ContentItem cItem)
+    {
       if (cItem.Content.Member?.DateOfBirth?.Value is not JValue oldVal)
         return;
       if (oldVal?.Value is string strVal &&
@@ -54,9 +62,12 @@ namespace Ozds.Members.Core {
               DateTimeStyles.AllowLeadingWhite |
                   DateTimeStyles.AllowTrailingWhite |
                   DateTimeStyles.AllowInnerWhite,
-              out DateTime dejt)) {
+              out DateTime dejt))
+      {
         cItem.Content.Member.DateOfBirth.Value = dejt.ToString("s");
-      } else if (!string.IsNullOrEmpty(oldVal?.Value?.ToString())) {
+      }
+      else if (!string.IsNullOrEmpty(oldVal?.Value?.ToString()))
+      {
         cItem.Content.Member.DateOfBirthImport = oldVal?.Value;
         cItem.Content.Member.DateOfBirth.Value = null;
       }

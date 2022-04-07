@@ -1,8 +1,10 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace Ozds.Elasticsearch {
-  public interface IMeasurementProvider {
+namespace Ozds.Elasticsearch
+{
+  public interface IMeasurementProvider
+  {
     public string Source { get; }
 
     public IEnumerable<Measurement> GetMeasurements(

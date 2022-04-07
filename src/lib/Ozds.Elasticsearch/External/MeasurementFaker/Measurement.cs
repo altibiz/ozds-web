@@ -1,17 +1,21 @@
 using System;
 
-namespace Ozds.Elasticsearch.MeasurementFaker {
-  public class Measurement {
-    public Measurement(DateTime? timestamp = null, KnownData? data = null) {
+namespace Ozds.Elasticsearch.MeasurementFaker
+{
+  public class Measurement
+  {
+    public Measurement(DateTime? timestamp = null, KnownData? data = null)
+    {
       Timestamp = timestamp ?? DateTime.UtcNow.AddMinutes(-1);
-      Data = data ?? new KnownData {};
+      Data = data ?? new KnownData { };
     }
 
     public DateTime Timestamp { get; init; } = DateTime.UtcNow.AddMinutes(-1);
     public string DeviceId { get; init; } = Client.FakeDeviceId;
     public KnownData Data { get; init; } = new KnownData { };
 
-    public class KnownData {
+    public class KnownData
+    {
       public string? dongleId { get; init; } = default;
       public string? meterIdent { get; init; } = default;
       public string? meterSerial { get; init; } = default;
@@ -51,12 +55,17 @@ namespace Ozds.Elasticsearch.MeasurementFaker {
       public double? voltageL3 { get; init; } = default;
     };
 
-    public static Measurement Generate(DateTime timestamp) {
+    public static Measurement Generate(DateTime timestamp)
+    {
       var rand = new Random();
 
       return new Measurement(
-          timestamp, new KnownData { voltageL1 = rand.Next(s_voltageL1MinMax),
-            voltageL2 = 0, voltageL3 = 0 });
+          timestamp, new KnownData
+          {
+            voltageL1 = rand.Next(s_voltageL1MinMax),
+            voltageL2 = 0,
+            voltageL3 = 0
+          });
     }
 
     private static MinMax s_voltageL1MinMax = new MinMax(150, 250);

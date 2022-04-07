@@ -1,3 +1,4 @@
-namespace Ozds.Elasticsearch {
-  public partial interface IClient {};
+namespace Ozds.Elasticsearch
+{
+  public partial interface IClient { };
 };

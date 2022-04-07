@@ -1,10 +1,13 @@
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Ozds.Elasticsearch.Test {
-  public partial class ClientTest {
+namespace Ozds.Elasticsearch.Test
+{
+  public partial class ClientTest
+  {
     [Fact]
-    public void IndexDeviceTest() {
+    public void IndexDeviceTest()
+    {
       var device = Data.MyEnergyCommunityDevice;
 
       var indexResponse = Client.IndexDevice(device);
@@ -27,7 +30,8 @@ namespace Ozds.Elasticsearch.Test {
     }
 
     [Fact]
-    public async Task IndexDeviceAsyncTest() {
+    public async Task IndexDeviceAsyncTest()
+    {
       var device = Data.MyEnergyCommunityDevice;
 
       var indexResponse = await Client.IndexDeviceAsync(device);
