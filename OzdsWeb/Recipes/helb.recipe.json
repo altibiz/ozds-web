@@ -65,7 +65,12 @@
     },
     {
       "name": "feature",
-      "enable": ["TheAdmin", "SafeMode", "OzdsTheme", "Members"]
+      "enable": [
+        "TheAdmin",
+        "SafeMode",
+        "OzdsTheme",
+        "Members"
+      ]
     },
     {
       "name": "themes",

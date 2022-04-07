@@ -15,17 +15,20 @@ using YesSql;
 
 namespace OrchardCore.Themes.OzdsTheme;
 
-public class Migrations : DataMigration {
+public class Migrations : DataMigration
+{
   public Migrations(IRecipeMigrator recipeMigrator,
       IContentDefinitionManager contentDefinitionManager, ISession session,
-      ILogger<Migrations> logger) {
+      ILogger<Migrations> logger)
+  {
     RecipeMigrator = recipeMigrator;
     ContentDefinitionManager = contentDefinitionManager;
     Session = session;
     Logger = logger;
   }
 
-  public async Task<int> CreateAsync() {
+  public async Task<int> CreateAsync()
+  {
     Logger.LogDebug(" >>> Start OzdsTheme creation");
 
     Logger.LogDebug(" >> Start OzdsTheme " + "ozds.1.settings.recipe.json");
@@ -137,8 +140,10 @@ public class Migrations : DataMigration {
                 .WithField("Image",
                     fieldBuilder => fieldBuilder.OfType("MediaField")
                                         .WithDisplayName("Image")
-                                        .WithSettings(new MediaFieldSettings {
-                                          Required = true, Multiple = false
+                                        .WithSettings(new MediaFieldSettings
+                                        {
+                                          Required = true,
+                                          Multiple = false
                                         }))
                 .WithField("ImageClass",
                     fieldBuilder => fieldBuilder.OfType("TextField")
@@ -157,13 +162,13 @@ public class Migrations : DataMigration {
                                                   .WithEditor("Url")));
     Logger.LogDebug(" >> End OzdsTheme " + "GPiece");
 
-        Logger.LogDebug(" >> start OzdsTheme " + "Gallery");
-        ContentDefinitionManager.AlterPartDefinition("Gallery",
-            cfg =>
-                cfg.WithDescription("Contains the fields for the current type")
-                    .WithField("DisplayType",
-                        fieldBuilder => fieldBuilder.OfType("TextField")
-                                            .WithDisplayName("Display Type")));
+    Logger.LogDebug(" >> start OzdsTheme " + "Gallery");
+    ContentDefinitionManager.AlterPartDefinition("Gallery",
+        cfg =>
+            cfg.WithDescription("Contains the fields for the current type")
+                .WithField("DisplayType",
+                    fieldBuilder => fieldBuilder.OfType("TextField")
+                                        .WithDisplayName("Display Type")));
 
     ContentDefinitionManager.AlterTypeDefinition("Gallery",
         type =>
@@ -173,46 +178,50 @@ public class Migrations : DataMigration {
                     cfg => cfg.WithDisplayName("GPieces")
                                .WithDescription("GPieces to display in the.")
                                .WithSettings(
-                                   new BagPartSettings { ContainedContentTypes =
+                                   new BagPartSettings
+                                   {
+                                     ContainedContentTypes =
                                                              new[] { "GPiece" },
-                                     DisplayType = "Detail" }))
+                                     DisplayType = "Detail"
+                                   }))
                 .Stereotype("Widget"));
     Logger.LogDebug(" >> End OzdsTheme " + "Gallery");
 
-        Logger.LogDebug(" >> Start OzdsTheme " + "Taxonomy");
-        var ci = await Session
-                     .Query<ContentItem, ContentItemIndex>(
-                         x => x.ContentType == "Taxonomy" &&
-                              x.DisplayText == "Categories")
-                     .FirstOrDefaultAsync();
+    Logger.LogDebug(" >> Start OzdsTheme " + "Taxonomy");
+    var ci = await Session
+                 .Query<ContentItem, ContentItemIndex>(
+                     x => x.ContentType == "Taxonomy" &&
+                          x.DisplayText == "Categories")
+                 .FirstOrDefaultAsync();
     if (ci != null) Session.Delete(ci);
-        ci =
-            await Session
-                .Query<ContentItem, ContentItemIndex>(
-                    x => x.ContentType == "Taxonomy" && x.DisplayText == "Tags")
-                .FirstOrDefaultAsync();
+    ci =
+        await Session
+            .Query<ContentItem, ContentItemIndex>(
+                x => x.ContentType == "Taxonomy" && x.DisplayText == "Tags")
+            .FirstOrDefaultAsync();
     if (ci != null) Session.Delete(ci); await Session.SaveChangesAsync();
-        Logger.LogDebug(" >> End OzdsTheme " + "Taxonomy");
+    Logger.LogDebug(" >> End OzdsTheme " + "Taxonomy");
 
-        Logger.LogDebug(" >> Start OzdsTheme " + "BlogPost");
-        ContentDefinitionManager.AlterTypeDefinition("BlogPost",
-            type =>
-                type.RemovePart("MarkdownBodyPart")
-                    .DisplayedAs("Blog Post")
-                    .Draftable()
-                    .Versionable()
-                    .WithPart("TitlePart", part => part.WithPosition("0"))
-                    .WithPart("AutoroutePart",
-                        part => part.WithPosition("2").WithSettings(
-                            new AutoroutePartSettings {
-                              AllowCustomPath = true,
-                              Pattern =
-                                  "{{ Model.ContentItem | container | display_text | slugify }}/{{ Model.ContentItem | display_text | slugify }}",
-                              ShowHomepageOption = false,
-                            }))
-                    .WithPart("BlogPost", part => part.WithPosition("3"))
-                    .WithPart("HtmlBodyPart",
-                        part => part.WithPosition("1").WithEditor("Wysiwyg")));
+    Logger.LogDebug(" >> Start OzdsTheme " + "BlogPost");
+    ContentDefinitionManager.AlterTypeDefinition("BlogPost",
+        type =>
+            type.RemovePart("MarkdownBodyPart")
+                .DisplayedAs("Blog Post")
+                .Draftable()
+                .Versionable()
+                .WithPart("TitlePart", part => part.WithPosition("0"))
+                .WithPart("AutoroutePart",
+                    part => part.WithPosition("2").WithSettings(
+                        new AutoroutePartSettings
+                        {
+                          AllowCustomPath = true,
+                          Pattern =
+                              "{{ Model.ContentItem | container | display_text | slugify }}/{{ Model.ContentItem | display_text | slugify }}",
+                          ShowHomepageOption = false,
+                        }))
+                .WithPart("BlogPost", part => part.WithPosition("3"))
+                .WithPart("HtmlBodyPart",
+                    part => part.WithPosition("1").WithEditor("Wysiwyg")));
 
     ContentDefinitionManager.AlterPartDefinition(
         "BlogPost", part => part.RemoveField("Category").RemoveField("Tags"));
@@ -228,9 +237,14 @@ public class Migrations : DataMigration {
                             .WithDisplayName("Banner Image")
                             .WithPosition("1")
                             .WithSettings(
-                                new ContentIndexSettings { Included = false,
-                                  Stored = false, Analyzed = false })
-                            .WithSettings(new MediaFieldSettings {
+                                new ContentIndexSettings
+                                {
+                                  Included = false,
+                                  Stored = false,
+                                  Analyzed = false
+                                })
+                            .WithSettings(new MediaFieldSettings
+                            {
                               Multiple = false,
                               AllowAnchors = true,
                             }))
@@ -240,7 +254,8 @@ public class Migrations : DataMigration {
                                  .WithEditor("Tags")
                                  .WithDisplayMode("Tags")
                                  .WithPosition("2")
-                                 .WithSettings(new TaxonomyFieldSettings {
+                                 .WithSettings(new TaxonomyFieldSettings
+                                 {
                                    TaxonomyContentItemId =
                                        "45j76cwwz4f4v4hx5zqxfpzvwq",
                                  }))
@@ -248,7 +263,8 @@ public class Migrations : DataMigration {
                     field => field.OfType("TaxonomyField")
                                  .WithDisplayName("Category")
                                  .WithPosition("3")
-                                 .WithSettings(new TaxonomyFieldSettings {
+                                 .WithSettings(new TaxonomyFieldSettings
+                                 {
                                    TaxonomyContentItemId =
                                        "4dgj6ce33vdsbxqz8hw4c4c24d",
                                    Unique = true,
@@ -256,19 +272,19 @@ public class Migrations : DataMigration {
                                  })));
     Logger.LogDebug(" >> End OzdsTheme " + "BlogPost");
 
-        Logger.LogDebug(" >> Start OzdsTheme " + "tags-cats.recipe.json");
-        await RecipeMigrator.ExecuteAsync("tags-cats.recipe.json", this);
-        Logger.LogDebug(" >> End OzdsTheme " + "tags-cats.recipe.json");
+    Logger.LogDebug(" >> Start OzdsTheme " + "tags-cats.recipe.json");
+    await RecipeMigrator.ExecuteAsync("tags-cats.recipe.json", this);
+    Logger.LogDebug(" >> End OzdsTheme " + "tags-cats.recipe.json");
 
-        Logger.LogDebug(" >> Start OzdsTheme " + "localization.recipe.json");
-        await RecipeMigrator.ExecuteAsync("localization.recipe.json", this);
-        Logger.LogDebug(" >> End OzdsTheme " + "localization.recipe.json");
+    Logger.LogDebug(" >> Start OzdsTheme " + "localization.recipe.json");
+    await RecipeMigrator.ExecuteAsync("localization.recipe.json", this);
+    Logger.LogDebug(" >> End OzdsTheme " + "localization.recipe.json");
 
-        Logger.LogDebug(" >> Start OzdsTheme " + "localizemenu.recipe.json");
-        await RecipeMigrator.ExecuteAsync("localizemenu.recipe.json", this);
-        Logger.LogDebug(" >> End OzdsTheme " + "localizemenu.recipe.json");
+    Logger.LogDebug(" >> Start OzdsTheme " + "localizemenu.recipe.json");
+    await RecipeMigrator.ExecuteAsync("localizemenu.recipe.json", this);
+    Logger.LogDebug(" >> End OzdsTheme " + "localizemenu.recipe.json");
 
-        Logger.LogDebug(" >>> End OzdsTheme creation"); return 1;
+    Logger.LogDebug(" >>> End OzdsTheme creation"); return 1;
   }
 
   private ILogger Logger { get; }
