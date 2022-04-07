@@ -199,7 +199,9 @@
                 },
                 "ListPartSettings": {
                   "PageSize": 10,
-                  "ContainedContentTypes": ["BlogPost"]
+                  "ContainedContentTypes": [
+                    "BlogPost"
+                  ]
                 }
               }
             }

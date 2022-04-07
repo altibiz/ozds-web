@@ -170,8 +170,12 @@
                           "Value": false
                         },
                         "Image": {
-                          "Paths": ["24sata-300px_162034.png"],
-                          "MediaTexts": [""]
+                          "Paths": [
+                            "24sata-300px_162034.png"
+                          ],
+                          "MediaTexts": [
+                            ""
+                          ]
                         },
                         "ImageClass": {
                           "Text": null
@@ -201,8 +205,12 @@
                           "Value": false
                         },
                         "Image": {
-                          "Paths": ["logo_600x600_171449.jpg"],
-                          "MediaTexts": [""]
+                          "Paths": [
+                            "logo_600x600_171449.jpg"
+                          ],
+                          "MediaTexts": [
+                            ""
+                          ]
                         },
                         "ImageClass": {
                           "Text": null
@@ -235,7 +243,9 @@
                           "Paths": [
                             "telemach_logo_u_zasticenoj_zoni_171512.jpg"
                           ],
-                          "MediaTexts": [""]
+                          "MediaTexts": [
+                            ""
+                          ]
                         },
                         "ImageClass": {
                           "Text": null

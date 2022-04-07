@@ -38,7 +38,9 @@
               "Text": "Udruga Glas Poduzetnika"
             },
             "Image": {
-              "Paths": ["about-bg.jpg"]
+              "Paths": [
+                "about-bg.jpg"
+              ]
             }
           }
         }

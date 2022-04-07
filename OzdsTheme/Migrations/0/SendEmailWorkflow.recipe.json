@@ -19,7 +19,9 @@
               "Y": 110,
               "IsStart": true,
               "Properties": {
-                "ContentTypeFilter": ["Member"],
+                "ContentTypeFilter": [
+                  "Member"
+                ],
                 "ActivityMetadata": {
                   "Title": "Član odobren"
                 }

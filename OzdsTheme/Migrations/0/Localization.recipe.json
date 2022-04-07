@@ -4,7 +4,10 @@
       "name": "settings",
       "LocalizationSettings": {
         "DefaultCulture": "hr",
-        "SupportedCultures": ["hr", "en"]
+        "SupportedCultures": [
+          "hr",
+          "en"
+        ]
       }
     },
     {

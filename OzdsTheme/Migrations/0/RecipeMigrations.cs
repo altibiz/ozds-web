@@ -4,9 +4,11 @@ using OrchardCore.Themes.OzdsTheme.Extensions.OrchardCore;
 
 namespace OrchardCore.Themes.OzdsTheme.M0;
 
-public static partial class RecipeMigrations {
+public static partial class RecipeMigrations
+{
   public static void ExecuteInit(this IRecipeMigrator recipe,
-      IDataMigration migration, bool isDevelopment) {
+      IDataMigration migration, bool isDevelopment)
+  {
     recipe.Execute("0/AboutUsArticle.recipe.json", migration);
     recipe.Execute("0/AdminMenu.recipe.json", migration);
     recipe.Execute("0/AnonymousRole.recipe.json", migration);
@@ -27,7 +29,8 @@ public static partial class RecipeMigrations {
     recipe.Execute("0/SendEmailWorkflow.recipe.json", migration);
     recipe.Execute("0/WhatIsNewBlog.recipe.json", migration);
 
-    if (isDevelopment) {
+    if (isDevelopment)
+    {
       recipe.Execute("0/TestBlogPost.recipe.json", migration);
     }
   }

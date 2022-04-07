@@ -18,7 +18,10 @@
         {
           "Name": "Anonymous",
           "Description": "Anonymous role",
-          "Permissions": ["ViewContent", "QueryLuceneSearchIndex"]
+          "Permissions": [
+            "ViewContent",
+            "QueryLuceneSearchIndex"
+          ]
         }
       ]
     }

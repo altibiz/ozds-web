@@ -41,8 +41,12 @@
               "Text": "Problems look mighty small from 150 miles up"
             },
             "Image": {
-              "Paths": ["post-bg.jpg"],
-              "MediaTexts": [""],
+              "Paths": [
+                "post-bg.jpg"
+              ],
+              "MediaTexts": [
+                ""
+              ],
               "Anchors": [
                 {
                   "X": 0.5,
@@ -57,7 +61,11 @@
                 "[js: variables('spaceTagContentItemId')]"
               ],
               "TaxonomyContentItemId": "[js: variables('tagsContentItemId')]",
-              "TagNames": ["Earth", "Exploration", "Space"]
+              "TagNames": [
+                "Earth",
+                "Exploration",
+                "Space"
+              ]
             },
             "Category": {
               "TermContentItemIds": [
