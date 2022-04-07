@@ -13,17 +13,20 @@ using Members.Devices;
 
 namespace Members;
 
-public class Migrations : DataMigration {
+public class Migrations : DataMigration
+{
   public Migrations(IRecipeMigrator recipeMigrator,
       IContentDefinitionManager contentDefinitionManager, ISession session,
-      ILogger<Migrations> logger) {
+      ILogger<Migrations> logger)
+  {
     RecipeMigrator = recipeMigrator;
     ContentDefinitionManager = contentDefinitionManager;
     Session = session;
     Logger = logger;
   }
 
-  public async Task<int> CreateAsync() {
+  public async Task<int> CreateAsync()
+  {
     Logger.LogDebug(" >>> Start Member module creation");
 
     Logger.LogDebug(" >> Start member init.recipe.json");
