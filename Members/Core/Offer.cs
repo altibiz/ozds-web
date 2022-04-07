@@ -5,7 +5,8 @@ using OrchardCore.Taxonomies.Fields;
 
 namespace Members.Core;
 
-public class Offer : ContentPart {
+public class Offer : ContentPart
+{
   public TextField ShortDescription { get; set; }
   public TextField Description { get; set; }
   public HtmlField LongDescription { get; set; }

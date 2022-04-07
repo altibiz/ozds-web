@@ -7,8 +7,10 @@ using Members.Utils;
 using OrchardCore.Data;
 using Members.Core;
 
-namespace Members.Persons {
-  public class PersonPartIndex : MapIndex {
+namespace Members.Persons
+{
+  public class PersonPartIndex : MapIndex
+  {
     public string ContentItemId { get; set; }
     public string Oib { get; set; }
     public string LegalName { get; set; }
@@ -20,16 +22,20 @@ namespace Members.Persons {
   }
 
   public class PersonPartIndexProvider : IndexProvider<ContentItem>,
-                                         IScopedIndexProvider {
+                                         IScopedIndexProvider
+  {
     private IServiceProvider _serviceProvider;
     private IContentDefinitionManager contentDefinitionManager;
 
-    public PersonPartIndexProvider(IServiceProvider serviceProvider) {
+    public PersonPartIndexProvider(IServiceProvider serviceProvider)
+    {
       _serviceProvider = serviceProvider;
     }
 
-    public override void Describe(DescribeContext<ContentItem> context) {
-      context.For<PersonPartIndex>().Map(contentItem => {
+    public override void Describe(DescribeContext<ContentItem> context)
+    {
+      context.For<PersonPartIndex>().Map(contentItem =>
+      {
         var pp = contentItem.AsReal<PersonPart>();
         if (pp == null)
           return null;
@@ -38,7 +44,8 @@ namespace Members.Persons {
             _serviceProvider.GetRequiredService<IContentDefinitionManager>();
         var typeDef =
             contentDefinitionManager.GetSettings<PersonPartSettings>(pp);
-        var res = new PersonPartIndex {
+        var res = new PersonPartIndex
+        {
           ContentItemId = contentItem.ContentItemId,
           Oib = pp.Oib.Text,
           LegalName = pp.LegalName,
@@ -48,7 +55,8 @@ namespace Members.Persons {
 
         var company = contentItem.AsReal<Company>();
 
-        if (company != null) {
+        if (company != null)
+        {
           res.Revenue2019 = company.Revenue2019?.Value;
           res.Employees = company.EmployeeNumber?.Value;
           res.Associates = company.PermanentAssociates?.Value;

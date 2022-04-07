@@ -4,8 +4,10 @@ using System;
 using System.Linq;
 using Members.Utils;
 
-namespace Members.Payments {
-  public class PaymentIndex : MapIndex {
+namespace Members.Payments
+{
+  public class PaymentIndex : MapIndex
+  {
     public string ContentItemId { get; set; }
 
     public string PersonContentItemId { get; set; }
@@ -25,13 +27,17 @@ namespace Members.Payments {
     public string TransactionRef { get; set; }
   }
 
-  public class PaymentIndexProvider : IndexProvider<ContentItem> {
-    public override void Describe(DescribeContext<ContentItem> context) {
-      context.For<PaymentIndex>().Map(contentItem => {
+  public class PaymentIndexProvider : IndexProvider<ContentItem>
+  {
+    public override void Describe(DescribeContext<ContentItem> context)
+    {
+      context.For<PaymentIndex>().Map(contentItem =>
+      {
         var pp = contentItem.AsReal<Payment>();
         if (pp == null)
           return null;
-        return new PaymentIndex {
+        return new PaymentIndex
+        {
           ContentItemId = contentItem.ContentItemId,
           Amount = pp.Amount.Value,
           Date = pp.Date.Value,

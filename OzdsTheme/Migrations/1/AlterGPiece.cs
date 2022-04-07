@@ -4,7 +4,8 @@ using OrchardCore.Media.Settings;
 
 namespace OrchardCore.Themes.OzdsTheme.M1;
 
-public static partial class AlgerGPiece {
+public static partial class AlgerGPiece
+{
   public static void AlterGPieceType(this IContentDefinitionManager content) =>
       content.AlterTypeDefinition("GPiece", type => type.WithPart("GPiece"));
 
@@ -21,8 +22,10 @@ public static partial class AlgerGPiece {
                  .WithField("Image",
                      fieldBuilder => fieldBuilder.OfType("MediaField")
                                          .WithDisplayName("Image")
-                                         .WithSettings(new MediaFieldSettings {
-                                           Required = true, Multiple = false
+                                         .WithSettings(new MediaFieldSettings
+                                         {
+                                           Required = true,
+                                           Multiple = false
                                          }))
                  .WithField("ImageClass",
                      fieldBuilder => fieldBuilder.OfType("TextField")

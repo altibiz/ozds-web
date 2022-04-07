@@ -4,7 +4,8 @@ using OrchardCore.Flows.Models;
 
 namespace OrchardCore.Themes.OzdsTheme.M1;
 
-public static partial class AlterGallery {
+public static partial class AlterGallery
+{
   public static void AlterGalleryType(
       this IContentDefinitionManager ContentDefinitionManager) =>
       ContentDefinitionManager.AlterTypeDefinition("Gallery",
@@ -14,7 +15,8 @@ public static partial class AlterGallery {
                   .WithPart("GPieces", "BagPart",
                       cfg => cfg.WithDisplayName("GPieces")
                                  .WithDescription("GPieces to display in the.")
-                                 .WithSettings(new BagPartSettings {
+                                 .WithSettings(new BagPartSettings
+                                 {
                                    ContainedContentTypes = new[] { "GPiece" },
                                    DisplayType = "Detail"
                                  }))

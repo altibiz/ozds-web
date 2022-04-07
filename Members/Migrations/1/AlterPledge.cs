@@ -7,7 +7,8 @@ using Members.Payments;
 
 namespace Members.M1;
 
-public static partial class AlterPledge {
+public static partial class AlterPledge
+{
   public static void AlterPledgeType(this IContentDefinitionManager
           content) => content.AlterTypeDefinition("Pledge",
       type =>
@@ -20,7 +21,8 @@ public static partial class AlterPledge {
                                       new PledgeSettings()))
               .WithPart("TitlePart",
                   part => part.WithPosition("1").WithSettings(
-                      new TitlePartSettings {
+                      new TitlePartSettings
+                      {
                         Options = TitlePartOptions.GeneratedDisabled,
                         Pattern =
                             "{{ ContentItem.Content.Pledge.PayerName.Text }} - {{ ContentItem.Content.Pledge.Amount.Value | format_number: \"C\"  }}",
@@ -39,7 +41,8 @@ public static partial class AlterPledge {
                   field => field.OfType("TextField")
                                .WithDisplayName("Platitelj")
                                .WithPosition("1")
-                               .WithSettings(new TextFieldSettings {
+                               .WithSettings(new TextFieldSettings
+                               {
                                  Required = true,
                                }))
               .WithField("Note", field => field.OfType("TextField")
@@ -49,14 +52,16 @@ public static partial class AlterPledge {
                   "Email", field => field.OfType("TextField")
                                         .WithDisplayName("Email")
                                         .WithEditor("Email")
-                                        .WithSettings(new TextFieldSettings {
+                                        .WithSettings(new TextFieldSettings
+                                        {
                                           Required = true,
                                         }))
               .WithField(
                   "Oib", field => field.OfType("TextField")
                                       .WithDisplayName("OIB")
                                       .WithPosition("1")
-                                      .WithSettings(new TextFieldSettings {
+                                      .WithSettings(new TextFieldSettings
+                                      {
                                         Required = true,
                                       }))
               .WithField(
@@ -70,17 +75,21 @@ public static partial class AlterPledge {
                           .WithDisplayMode("Tags")
                           .WithDisplayName("Količina")
                           .WithPosition("6")
-                          .WithSettings(new TaxonomyFieldSettings {
+                          .WithSettings(new TaxonomyFieldSettings
+                          {
                             TaxonomyContentItemId = "5599209fa3d04b0da7482e655",
-                            Unique = true, Required = true
+                            Unique = true,
+                            Required = true
                           })
-                          .WithSettings(new TaxonomyFieldTagsEditorSettings {
+                          .WithSettings(new TaxonomyFieldTagsEditorSettings
+                          {
                             Open = false,
                           }))
               .WithField("Person",
                   field => field.OfType("ContentPickerField")
                                .WithDisplayName("Član")
-                               .WithSettings(new ContentPickerFieldSettings {
+                               .WithSettings(new ContentPickerFieldSettings
+                               {
                                  DisplayedContentTypes = new[] { "Member",
                                    "Company" },
                                })));

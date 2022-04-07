@@ -4,9 +4,11 @@ using OrchardCore.Themes.OzdsTheme.Extensions.OrchardCore;
 
 namespace OrchardCore.Themes.OzdsTheme.M0;
 
-public static partial class RecipeMigrations {
+public static partial class RecipeMigrations
+{
   public static void ExecuteInit(
-      this IRecipeMigrator recipe, IDataMigration migration) {
+      this IRecipeMigrator recipe, IDataMigration migration)
+  {
     recipe.Execute("0/ozds.1.settings.recipe.json", migration);
     recipe.Execute("0/ozds.2.ContentDefinition.recipe.json", migration);
     recipe.Execute("0/ozds.3.lucene-index.recipe.json", migration);

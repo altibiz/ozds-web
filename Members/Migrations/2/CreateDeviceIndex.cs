@@ -4,7 +4,8 @@ using Members.Devices;
 
 namespace Members.M2;
 
-public static partial class CreateDeviceIndexClass {
+public static partial class CreateDeviceIndexClass
+{
   public static void CreateDeviceIndex(this ISchemaBuilder SchemaBuilder) =>
       SchemaBuilder.CreateMapIndexTable<DeviceIndex>(
           table => table.Column<string>(nameof(DeviceIndex.MemberId))

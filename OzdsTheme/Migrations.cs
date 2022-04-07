@@ -9,22 +9,26 @@ using OrchardCore.Themes.OzdsTheme.M1;
 
 namespace OrchardCore.Themes.OzdsTheme;
 
-public partial class Migrations : DataMigration {
+public partial class Migrations : DataMigration
+{
   public Migrations(IRecipeMigrator recipe, IContentDefinitionManager content,
-      ISession session, ILogger<Migrations> logger) {
+      ISession session, ILogger<Migrations> logger)
+  {
     Recipe = recipe;
     Content = content;
     Session = session;
     Logger = logger;
   }
 
-  public int Create() {
+  public int Create()
+  {
     Recipe.ExecuteInit(this);
 
     return 1;
   }
 
-  public int UpdateFrom1() {
+  public int UpdateFrom1()
+  {
     Content.AlterGPiecePart();
     Content.AlterGPieceType();
     Content.AlterGalleryPart();

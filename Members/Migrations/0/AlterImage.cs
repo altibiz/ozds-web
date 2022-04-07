@@ -5,7 +5,8 @@ using OrchardCore.Media.Settings;
 
 namespace Members.M0;
 
-public static class AlterImage {
+public static class AlterImage
+{
   public static void AlterImageType(this IContentDefinitionManager content) =>
       content.AlterTypeDefinition("Image",
           type => type.DisplayedAs("Image")
@@ -22,7 +23,8 @@ public static class AlterImage {
                   "Media", field => field.OfType("MediaField")
                                         .WithDisplayName("Image")
                                         .WithPosition("0")
-                                        .WithSettings(new MediaFieldSettings {
+                                        .WithSettings(new MediaFieldSettings
+                                        {
                                           Multiple = false,
                                           Required = true,
                                         }))
@@ -31,7 +33,8 @@ public static class AlterImage {
                       field.OfType("TextField")
                           .WithDisplayName("Caption")
                           .WithPosition("2")
-                          .WithSettings(new TextFieldSettings {
+                          .WithSettings(new TextFieldSettings
+                          {
                             Hint =
                                 "A description of the image used as title or alternate text",
                           }))
@@ -39,7 +42,8 @@ public static class AlterImage {
                   "Link", field => field.OfType("LinkField")
                                        .WithDisplayName("Link")
                                        .WithPosition("1")
-                                       .WithSettings(new LinkFieldSettings {
+                                       .WithSettings(new LinkFieldSettings
+                                       {
                                          LinkTextMode = LinkTextMode.Url,
                                        })));
 }

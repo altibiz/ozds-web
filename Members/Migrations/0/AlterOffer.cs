@@ -8,7 +8,8 @@ using OrchardCore.Title.Models;
 
 namespace Members.M0;
 
-public static partial class AlterOffer {
+public static partial class AlterOffer
+{
   public static void AlterOfferType(this IContentDefinitionManager
           content) => content.AlterTypeDefinition("Offer",
       type =>
@@ -19,12 +20,14 @@ public static partial class AlterOffer {
               .WithPart("Offer", part => part.WithPosition("1"))
               .WithPart(
                   "TitlePart", part => part.WithPosition("0").WithSettings(
-                                   new TitlePartSettings {
+                                   new TitlePartSettings
+                                   {
                                      Options = TitlePartOptions.EditableRequired
                                    }))
               .WithPart("AutoroutePart",
                   part => part.WithPosition("2").WithSettings(
-                      new AutoroutePartSettings {
+                      new AutoroutePartSettings
+                      {
                         Pattern =
                             "offers-{{ ContentItem.DisplayText | slugify }}",
                       })));
@@ -38,21 +41,24 @@ public static partial class AlterOffer {
                                .WithEditor("Tags")
                                .WithDisplayMode("Tags")
                                .WithPosition("0")
-                               .WithSettings(new TaxonomyFieldSettings {
+                               .WithSettings(new TaxonomyFieldSettings
+                               {
                                  Required = true,
                                  TaxonomyContentItemId =
                                      "4a6d7mtpab04yt9yedrsardz4r",
                                  Unique = true,
                                })
                                .WithSettings(
-                                   new TaxonomyFieldTagsEditorSettings {
+                                   new TaxonomyFieldTagsEditorSettings
+                                   {
                                      Open = false,
                                    }))
               .WithField("ShortDescription",
                   field => field.OfType("TextField")
                                .WithDisplayName("Kratki opis")
                                .WithPosition("1")
-                               .WithSettings(new TextFieldSettings {
+                               .WithSettings(new TextFieldSettings
+                               {
                                  Required = true,
                                }))
               .RemoveField("LongDescription") // some additions
@@ -67,7 +73,8 @@ public static partial class AlterOffer {
                                .WithDisplayName("Fotografija")
                                .WithEditor("Attached")
                                .WithPosition("3")
-                               .WithSettings(new MediaFieldSettings {
+                               .WithSettings(new MediaFieldSettings
+                               {
                                  Multiple = false,
                                  AllowMediaText = false,
                                }))
@@ -75,7 +82,8 @@ public static partial class AlterOffer {
                   field => field.OfType("ContentPickerField")
                                .WithPosition("4")
                                .WithDisplayName("Company")
-                               .WithSettings(new ContentPickerFieldSettings {
+                               .WithSettings(new ContentPickerFieldSettings
+                               {
                                  DisplayedContentTypes = new[] { "Company" },
                                }))
               .WithField("PersonName",
@@ -83,21 +91,24 @@ public static partial class AlterOffer {
                                .WithDisplayName(
                                    "Naziv pravne ili fizičke osobe")
                                .WithPosition("5")
-                               .WithSettings(new TextFieldSettings {
+                               .WithSettings(new TextFieldSettings
+                               {
                                  Required = true,
                                }))
               .WithField("ContactPerson",
                   field => field.OfType("TextField")
                                .WithDisplayName("Kontakt osoba")
                                .WithPosition("6")
-                               .WithSettings(new TextFieldSettings {
+                               .WithSettings(new TextFieldSettings
+                               {
                                  Required = true,
                                }))
               .WithField(
                   "Email", field => field.OfType("TextField")
                                         .WithDisplayName("Email")
                                         .WithPosition("7")
-                                        .WithSettings(new TextFieldSettings {
+                                        .WithSettings(new TextFieldSettings
+                                        {
                                           Required = true,
                                         }))
               .WithField("Phone", field => field.OfType("TextField")
@@ -110,28 +121,32 @@ public static partial class AlterOffer {
                   "Web", field => field.OfType("LinkField")
                                       .WithDisplayName("Web")
                                       .WithPosition("10")
-                                      .WithSettings(new LinkFieldSettings {
+                                      .WithSettings(new LinkFieldSettings
+                                      {
                                         LinkTextMode = LinkTextMode.Url,
                                       }))
               .WithField("Instagram",
                   field => field.OfType("LinkField")
                                .WithDisplayName("Instagram")
                                .WithPosition("11")
-                               .WithSettings(new LinkFieldSettings {
+                               .WithSettings(new LinkFieldSettings
+                               {
                                  LinkTextMode = LinkTextMode.Url,
                                }))
               .WithField(
                   "Facebook", field => field.OfType("LinkField")
                                            .WithDisplayName("Facebook")
                                            .WithPosition("12")
-                                           .WithSettings(new LinkFieldSettings {
+                                           .WithSettings(new LinkFieldSettings
+                                           {
                                              LinkTextMode = LinkTextMode.Url,
                                            }))
               .WithField(
                   "LinkedIn", field => field.OfType("LinkField")
                                            .WithDisplayName("LinkedIn")
                                            .WithPosition("13")
-                                           .WithSettings(new LinkFieldSettings {
+                                           .WithSettings(new LinkFieldSettings
+                                           {
                                              LinkTextMode = LinkTextMode.Url,
                                            }))
               .WithField("YoutubeVideoId",

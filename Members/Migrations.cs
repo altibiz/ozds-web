@@ -10,16 +10,19 @@ using Members.M2;
 
 namespace Members;
 
-public sealed class Migrations : DataMigration {
+public sealed class Migrations : DataMigration
+{
   public Migrations(IRecipeMigrator recipe, IContentDefinitionManager content,
-      ISession session, ILogger<Migrations> logger) {
+      ISession session, ILogger<Migrations> logger)
+  {
     Recipe = recipe;
     Content = content;
     Session = session;
     Logger = logger;
   }
 
-  public int Create() {
+  public int Create()
+  {
     Recipe.ExecuteInit(this);
 
     Content.AlterAdminPageType();
@@ -50,7 +53,8 @@ public sealed class Migrations : DataMigration {
     return 1;
   }
 
-  public int UpdateFrom1() {
+  public int UpdateFrom1()
+  {
     Content.AlterPledgePart();
     Content.AlterPledgeType();
     Content.AlterPledgeVariantPart();
@@ -60,7 +64,8 @@ public sealed class Migrations : DataMigration {
     return 2;
   }
 
-  public int UpdateFrom2() {
+  public int UpdateFrom2()
+  {
     Schema.CreateDeviceIndex();
     Recipe.ExecuteTestOwner(this);
 

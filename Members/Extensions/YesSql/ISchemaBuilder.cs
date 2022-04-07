@@ -1,3 +1,3 @@
 namespace Members.Extensions.YesSql;
 
-public static class ISchemaBuilderExtensions {}
+public static class ISchemaBuilderExtensions { }

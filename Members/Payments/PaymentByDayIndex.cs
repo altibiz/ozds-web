@@ -4,8 +4,10 @@ using System;
 using System.Linq;
 using Members.Utils;
 
-namespace Members.Payments {
-  public class PaymentByDayIndex : ReduceIndex {
+namespace Members.Payments
+{
+  public class PaymentByDayIndex : ReduceIndex
+  {
     public decimal PayOut { get; set; }
 
     public decimal PayIn { get; set; }
@@ -14,22 +16,28 @@ namespace Members.Payments {
     public int CountIn { get; set; }
   }
 
-  public class PaymentByDayIndexProvider : IndexProvider<ContentItem> {
-    public override void Describe(DescribeContext<ContentItem> context) {
+  public class PaymentByDayIndexProvider : IndexProvider<ContentItem>
+  {
+    public override void Describe(DescribeContext<ContentItem> context)
+    {
       context.For<PaymentByDayIndex>()
           .Map(contentItem =>
           {
-        var pp = contentItem.AsReal<Payment>();
-        if (pp == null)
-          return Enumerable.Empty<PaymentByDayIndex>();
-        var isPayout = pp.IsPayout?.Value ?? false;
-        var res =
-            new PaymentByDayIndex { PayOut =
-                                        isPayout ? pp.Amount.Value ?? 0 : 0,
-              PayIn = !isPayout ? pp.Amount.Value ?? 0 : 0,
-              Date = pp.Date.Value.Value.Date, CountOut = isPayout ? 1 : 0,
-              CountIn = isPayout ? 0 : 1 };
-        return new[] { res };
+            var pp = contentItem.AsReal<Payment>();
+            if (pp == null)
+              return Enumerable.Empty<PaymentByDayIndex>();
+            var isPayout = pp.IsPayout?.Value ?? false;
+            var res =
+                new PaymentByDayIndex
+                {
+                  PayOut =
+                                            isPayout ? pp.Amount.Value ?? 0 : 0,
+                  PayIn = !isPayout ? pp.Amount.Value ?? 0 : 0,
+                  Date = pp.Date.Value.Value.Date,
+                  CountOut = isPayout ? 1 : 0,
+                  CountIn = isPayout ? 0 : 1
+                };
+            return new[] { res };
           }).Group(x => x.Date)
           .Reduce(g => new PaymentByDayIndex
           {
@@ -41,11 +49,11 @@ namespace Members.Payments {
           }).
           Delete((ndx, map) =>
           {
-        ndx.PayOut -= map.Sum(x => x.PayOut);
-        ndx.PayIn -= map.Sum(x => x.PayIn);
-        ndx.CountIn -= map.Sum(x => x.CountIn);
-        ndx.CountOut -= map.Sum(x => x.CountOut);
-        return ndx.CountIn > 0 || ndx.CountOut > 0 ? ndx : null;
+            ndx.PayOut -= map.Sum(x => x.PayOut);
+            ndx.PayIn -= map.Sum(x => x.PayIn);
+            ndx.CountIn -= map.Sum(x => x.CountIn);
+            ndx.CountOut -= map.Sum(x => x.CountOut);
+            return ndx.CountIn > 0 || ndx.CountOut > 0 ? ndx : null;
           });
     }
   }

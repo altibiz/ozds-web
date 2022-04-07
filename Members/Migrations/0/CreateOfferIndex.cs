@@ -3,8 +3,10 @@ using Members.Indexes;
 
 namespace Members.M0;
 
-public static partial class CreateOfferIndexClass {
-  public static void CreateOfferIndex(this ISchemaBuilder SchemaBuilder) {
+public static partial class CreateOfferIndexClass
+{
+  public static void CreateOfferIndex(this ISchemaBuilder SchemaBuilder)
+  {
     SchemaBuilder.CreateMapIndexTable<OfferIndex>(
         table => table
                      .Column<string>(nameof(OfferIndex.ContentItemId),
