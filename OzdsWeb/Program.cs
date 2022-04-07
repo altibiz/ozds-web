@@ -11,7 +11,8 @@ Console.WriteLine($"Log path template: {logPathTemplate}");
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOrchardCms().AddSetupFeatures("OrchardCore.AutoSetup");
 
-builder.Services.Configure<IdentityOptions>(options => {
+builder.Services.Configure<IdentityOptions>(options =>
+{
   options.Password.RequireDigit = false;
   options.Password.RequireLowercase = false;
   options.Password.RequireUppercase = false;
@@ -21,7 +22,7 @@ builder.Services.Configure<IdentityOptions>(options => {
 });
 
 builder.Logging.AddFile(logPathTemplate,
-    builder.Environment.IsDevelopment()? LogLevel.Debug: LogLevel.Information,
+    builder.Environment.IsDevelopment() ? LogLevel.Debug : LogLevel.Information,
     builder.Configuration.GetSection("Logging")
         .GetSection("LogLevel")
         .GetChildren()

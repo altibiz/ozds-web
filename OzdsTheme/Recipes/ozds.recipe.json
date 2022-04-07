@@ -6,8 +6,12 @@
   "website": "https://orchardcore.net",
   "version": "1.0.0-rc2",
   "issetuprecipe": true,
-  "categories": ["default"],
-  "tags": ["blog"],
+  "categories": [
+    "default"
+  ],
+  "tags": [
+    "blog"
+  ],
   "variables": {
     "adminUrlPrefix": "[js: configuration('OrchardCore_Admin:AdminUrlPrefix', 'Admin')]",
     "blogContentItemId": "c1c54c24-9a5f-42ed-9668-8c281087f94b",
