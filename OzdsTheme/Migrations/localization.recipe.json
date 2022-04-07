@@ -3,7 +3,6 @@
     {
       "name": "feature",
       "enable": [
-        // SaaS
         "OrchardCore.Localization",
         "OrchardCore.ContentLocalization.ContentCulturePicker"
       ]
@@ -14,7 +13,6 @@
         {
           "Name": "Article",
           "ContentTypePartDefinitionRecords": [
-
             {
               "PartName": "LocalizationPart",
               "Name": "LocalizationPart",

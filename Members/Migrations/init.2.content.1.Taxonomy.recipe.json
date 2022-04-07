@@ -1,0 +1,101 @@
+{
+  "variables": {},
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "4xgh8bvawx8h2rvyg7vds118w4",
+          "ContentItemVersionId": "4249jznhjabs461nwny1s2qwxj",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Spol",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2021-07-14T10:35:08.6453742Z",
+          "PublishedUtc": "2021-07-14T10:35:08.6736933Z",
+          "CreatedUtc": "2021-06-16T08:53:47.0544775Z",
+          "Owner": "4qj457jqgfg0ht62psxyg33ydk",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Spol"
+          },
+          "AliasPart": {
+            "Alias": "spol"
+          },
+          "AutoroutePart": {
+            "Path": "spol",
+            "SetHomepage": false,
+            "Disabled": false,
+            "RouteContainedItems": false,
+            "Absolute": false
+          },
+          "TaxonomyPart": {
+            "TermContentType": "Tag",
+            "Terms": [
+              {
+                "ContentItemId": "4ddfa6p7h5xbysdk7248kkdp4r",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Muško",
+                "Latest": true,
+                "Published": false,
+                "ModifiedUtc": "2021-06-16T08:54:43.7116751Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Muško"
+                },
+                "AutoroutePart": {
+                  "Path": "musko",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "Tag": {},
+                "TermPart": {
+                  "TaxonomyContentItemId": "4xgh8bvawx8h2rvyg7vds118w4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "49t5cfyp8ex2zrhregq102245b",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Žensko",
+                "Latest": true,
+                "Published": false,
+                "ModifiedUtc": "2021-06-16T08:59:09.506719Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Žensko"
+                },
+                "AutoroutePart": {
+                  "Path": "zensko",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "Tag": {},
+                "TermPart": {
+                  "TaxonomyContentItemId": "4xgh8bvawx8h2rvyg7vds118w4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

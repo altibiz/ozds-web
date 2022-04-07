@@ -1,4 +1,16 @@
 {
+  "variables": {
+    "adminUrlPrefix": "[js: configuration('OrchardCore_Admin:AdminUrlPrefix', 'Admin')]",
+    "blogContentItemId": "c1c54c24-9a5f-42ed-9668-8c281087f94b",
+    "menuContentItemId": "e4eea60c-8845-40f2-a2e1-8479b763c161",
+    "tagsContentItemId": "3a05218b-fefa-43db-90e5-010f0785b199",
+    "tagContentItemId": "f8ac74c5-c212-4f5a-b3a4-57c06644ba3b",
+    "earthTagContentItemId": "3d2d7877-fadb-44d8-8313-6182751f4513",
+    "explorationTagContentItemId": "cb300530-7b09-4ba4-a535-3d33163455b9",
+    "spaceTagContentItemId": "c64c21d9-d10d-46bb-917f-10dc8030c6c9",
+    "categoriesContentItemId": "21c7bbbd-5720-4487-a9cc-58396856dc0d",
+    "categoryTravelContentItemId": "de7d0c84-8e19-44a0-9203-4a8f739b3f7c"
+  },
   "steps": [
     {
       "name": "themes",

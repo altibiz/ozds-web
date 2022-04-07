@@ -11,9 +11,11 @@ main() {
   local out_dir="$([[ -d "$2" ]] && realpath "$2" || realpath "$recipe_dir")";
   [[ -d "$out_dir" ]] || exit 1;
 
+  local variables_path=".variables";
+  local variables="$(echo "$recipe" | jq "getpath(path($variables_path))")";
+
   local i=0;
   local n=1;
-
   while :; do
     local data_path=".steps[0].Data[$i]";
     local data="$(echo "$recipe" | jq "getpath(path($data_path))")";
@@ -24,14 +26,13 @@ main() {
       break;
     fi;
 
-    local result="$(echo "{
-          \"steps\": [
-            {
-              \"name\": \"content\",
-              \"Data\": $data
-            }
-          ]
-        }" | jq)";
+    local result='{"variables":{},"steps":[{"name":"content"}]}';
+    if [[ $variables != "null" ]]; then
+      local result="$(echo '{}' | \
+          jq "setpath(path($variables_path); $variables)")";
+    fi;
+    local result="$(echo "$result" | \
+        jq "setpath(path($data_path); $data)")";
     recipe="$(echo "$recipe" | jq "del($data_path)")";
 
     local content_type="$(echo $data | jq -r "getpath(path(.ContentType))")";
@@ -47,7 +48,7 @@ main() {
   done;
 
   echo -e "$recipe";
-  echo "$recipe" > "$recipe_path";
+  rm "$recipe_path";
 }
 
 get_type () {

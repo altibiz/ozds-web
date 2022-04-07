@@ -1,71 +1,84 @@
 {
+  "variables": {
+    "adminUrlPrefix": "[js: configuration('OrchardCore_Admin:AdminUrlPrefix', 'Admin')]",
+    "blogContentItemId": "c1c54c24-9a5f-42ed-9668-8c281087f94b",
+    "menuContentItemId": "e4eea60c-8845-40f2-a2e1-8479b763c161",
+    "tagsContentItemId": "3a05218b-fefa-43db-90e5-010f0785b199",
+    "tagContentItemId": "f8ac74c5-c212-4f5a-b3a4-57c06644ba3b",
+    "earthTagContentItemId": "3d2d7877-fadb-44d8-8313-6182751f4513",
+    "explorationTagContentItemId": "cb300530-7b09-4ba4-a535-3d33163455b9",
+    "spaceTagContentItemId": "c64c21d9-d10d-46bb-917f-10dc8030c6c9",
+    "categoriesContentItemId": "21c7bbbd-5720-4487-a9cc-58396856dc0d",
+    "categoryTravelContentItemId": "de7d0c84-8e19-44a0-9203-4a8f739b3f7c"
+  },
   "steps": [
     {
-      "name": "content",
-      "Data": {
-        "ContentItemId": "4xdc3p0r98bpjxnj93v0sc2sxe",
-        "ContentItemVersionId": "4x2hsqrxdfax92m9et93zmdpwh",
-        "ContentType": "Menu",
-        "DisplayText": "Main Menu",
-        "Latest": true,
-        "Published": true,
-        "ModifiedUtc": "2022-01-31T13:34:42.5499757Z",
-        "PublishedUtc": "2022-01-31T13:34:42.8606149Z",
-        "CreatedUtc": "2022-01-31T13:33:55.0409898Z",
-        "Owner": "4ws2zjebw5pw5rp9xnk3h6q5mp",
-        "Author": "admin",
-        "MenuPart": {},
-        "TitlePart": {
-          "Title": "Main Menu"
-        },
-        "MenuItemsListPart": {
-          "MenuItems": [
-            {
-              "ContentItemId": "4yrerj2cjdsfn1n7knzat2q151",
-              "ContentItemVersionId": null,
-              "ContentType": "LinkMenuItem",
-              "DisplayText": "Home",
-              "Latest": false,
-              "Published": false,
-              "ModifiedUtc": null,
-              "PublishedUtc": null,
-              "CreatedUtc": null,
-              "Owner": null,
-              "Author": null,
-              "LinkMenuItemPart": {
-                "Name": "Home",
-                "Url": "~/en/home"
+      "Data": [
+        {
+          "ContentItemId": "4xdc3p0r98bpjxnj93v0sc2sxe",
+          "ContentItemVersionId": "4x2hsqrxdfax92m9et93zmdpwh",
+          "ContentType": "Menu",
+          "DisplayText": "Main Menu",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-01-31T13:34:42.5499757Z",
+          "PublishedUtc": "2022-01-31T13:34:42.8606149Z",
+          "CreatedUtc": "2022-01-31T13:33:55.0409898Z",
+          "Owner": "4ws2zjebw5pw5rp9xnk3h6q5mp",
+          "Author": "admin",
+          "MenuPart": {},
+          "TitlePart": {
+            "Title": "Main Menu"
+          },
+          "MenuItemsListPart": {
+            "MenuItems": [
+              {
+                "ContentItemId": "4yrerj2cjdsfn1n7knzat2q151",
+                "ContentItemVersionId": null,
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Home",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": null,
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": null,
+                "LinkMenuItemPart": {
+                  "Name": "Home",
+                  "Url": "~/en/home"
+                },
+                "LinkMenuItem": {}
               },
-              "LinkMenuItem": {}
-            },
-            {
-              "ContentItemId": "43wmd8qzxedcz7dv8hjdyw4ydz",
-              "ContentItemVersionId": null,
-              "ContentType": "LinkMenuItem",
-              "DisplayText": "News",
-              "Latest": false,
-              "Published": false,
-              "ModifiedUtc": null,
-              "PublishedUtc": null,
-              "CreatedUtc": null,
-              "Owner": null,
-              "Author": null,
-              "LinkMenuItemPart": {
-                "Name": "News",
-                "Url": "~/novosti"
-              },
-              "LinkMenuItem": {}
-            }
-          ]
-        },
-        "AliasPart": {
-          "Alias": "main-menu-en"
-        },
-        "LocalizationPart": {
-          "LocalizationSet": "4hnkvydw4bt1yv5d46r8bwqfc4",
-          "Culture": "en"
+              {
+                "ContentItemId": "43wmd8qzxedcz7dv8hjdyw4ydz",
+                "ContentItemVersionId": null,
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "News",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": null,
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": null,
+                "LinkMenuItemPart": {
+                  "Name": "News",
+                  "Url": "~/novosti"
+                },
+                "LinkMenuItem": {}
+              }
+            ]
+          },
+          "AliasPart": {
+            "Alias": "main-menu-en"
+          },
+          "LocalizationPart": {
+            "LocalizationSet": "4hnkvydw4bt1yv5d46r8bwqfc4",
+            "Culture": "en"
+          }
         }
-      }
+      ]
     }
   ]
 }

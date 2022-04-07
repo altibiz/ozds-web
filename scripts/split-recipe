@@ -3,20 +3,25 @@
 main() {
   local recipe_path="$(realpath "$1")";
   [[ -f "$recipe_path" ]] || exit 1;
-
   local recipe_dir="$(dirname "$recipe_path")";
-  local recipe_name="$(basename "$recipe_path")"
   local recipe="$(cat "$recipe_path")";
+
+  local out_recipe="$([[ "$3" ]] && realpath "$3" || realpath "$recipe_path")";
+  [[ "$out_recipe" ]] || exit 1;
 
   local out_dir="$([[ -d "$2" ]] && realpath "$2" || realpath "$recipe_dir")";
   [[ -d "$out_dir" ]] || exit 1;
 
+  local recipe_name="$(basename "$out_recipe")"
+
+  local variables_path=".variables";
+  local variables="$(echo "$recipe" | jq "getpath(path($variables_path))")";
+
   local i=0;
   local n=1;
-
   while :; do
-    local step_path=".steps[$i]";
-    local step="$(echo "$recipe" | jq "getpath(path($step_path))")";
+    local step_path=".steps";
+    local step="$(echo "$recipe" | jq "getpath(path($step_path[$i]))")";
     local type="$(get_type "$step")";
 
     if [[ $type == "null" ]] || [[ $type == "whitespace" ]]; then
@@ -32,9 +37,14 @@ main() {
       continue;
     fi;
 
-    local result="$(echo "{}" | jq "setpath(path(.steps); [$step])")";
-
-    recipe="$(echo "$recipe" | jq "del($step_path)")";
+    local result='{}';
+    if [[ $variables != "null" ]]; then
+      local result="$(echo '{}' | \
+          jq "setpath(path($variables_path); $variables)")";
+    fi;
+    local result="$(echo "$result" | \
+        jq "setpath(path($step_path); [$step])")";
+    recipe="$(echo "$recipe" | jq "del($step_path[$i])")";
 
     local step_name="$(echo "$step" | jq -r "getpath(path(.name))")";
     local name="$( \
@@ -49,7 +59,7 @@ main() {
   done;
 
   echo -e "$recipe";
-  echo "$recipe" > "$recipe_path";
+  echo "$recipe" > "$out_recipe";
 }
 
 get_type () {

@@ -1,4 +1,19 @@
 #!/usr/bin/env bash
 
-split-recipe ./OzdsTheme/Recipes/ozds.recipe.json ./OzdsTheme/Migrations/
-split-content-data ./OzdsTheme/Migrations/ozds.9.content.recipe.json
+fd '(.*)?.[0-9]+(.*)?.recipe.json' | xargs rm -f
+
+split-recipe \
+  ./OzdsTheme/Recipes/ozds.orig.recipe.json \
+  ./OzdsTheme/Migrations/ \
+  ./OzdsTheme/Recipes/ozds.recipe.json;
+
+split-content-data \
+  ./OzdsTheme/Migrations/ozds.9.content.recipe.json;
+
+split-recipe \
+  ./Members/Migrations/init.orig.recipe.json \
+  ./Members/Migrations/ \
+  ./Members/Migrations/init.recipe.json;
+
+split-content-data \
+  ./Members/Migrations/init.2.content.recipe.json;

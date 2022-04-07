@@ -1,0 +1,191 @@
+{
+  "variables": {},
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "4cet7kh16f89cxpk2zp9gz4353",
+          "ContentItemVersionId": "4kavckzenbpd30jrq9hqc273dq",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Funkcija",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2021-07-14T10:06:18.9137852Z",
+          "PublishedUtc": "2021-07-14T10:06:19.0105254Z",
+          "CreatedUtc": "2021-06-18T13:10:12.3489453Z",
+          "Owner": "4qj457jqgfg0ht62psxyg33ydk",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Funkcija"
+          },
+          "AliasPart": {
+            "Alias": "funkcija"
+          },
+          "AutoroutePart": {
+            "Path": "funkcija",
+            "SetHomepage": false,
+            "Disabled": false,
+            "RouteContainedItems": false,
+            "Absolute": false
+          },
+          "TaxonomyPart": {
+            "TermContentType": "Tag",
+            "Terms": [
+              {
+                "ContentItemId": "42btqesbjw0ry4xy3wb2f0evnz",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Direktor/Član uprave",
+                "Latest": true,
+                "Published": false,
+                "ModifiedUtc": "2021-06-18T13:10:46.8365887Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Direktor/Član uprave"
+                },
+                "AutoroutePart": {
+                  "Path": "direktor-clan-uprave",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "Tag": {},
+                "TermPart": {
+                  "TaxonomyContentItemId": "4cet7kh16f89cxpk2zp9gz4353"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4tqegk09rqtck3yw00zvcxy4cz",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Ovlašteni zastupnik udruge/zadruge",
+                "Latest": true,
+                "Published": false,
+                "ModifiedUtc": "2021-06-18T13:11:12.8279284Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Ovlašteni zastupnik udruge/zadruge"
+                },
+                "AutoroutePart": {
+                  "Path": "ovlasteni-zastupnik-udruge-zadruge",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "Tag": {},
+                "TermPart": {
+                  "TaxonomyContentItemId": "4cet7kh16f89cxpk2zp9gz4353"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4ar30cb4mv31bxdfrgtvfmd8m9",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Prokurist",
+                "Latest": true,
+                "Published": false,
+                "ModifiedUtc": "2021-06-18T13:11:28.4191506Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Prokurist"
+                },
+                "AutoroutePart": {
+                  "Path": "prokurist",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "Tag": {},
+                "TermPart": {
+                  "TaxonomyContentItemId": "4cet7kh16f89cxpk2zp9gz4353"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "41x4d7ppb4c1evsz65ew4c97cj",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Ravnatelj/ica",
+                "Latest": true,
+                "Published": false,
+                "ModifiedUtc": "2021-06-18T13:11:43.298594Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Ravnatelj/ica"
+                },
+                "AutoroutePart": {
+                  "Path": "ravnatelj-ica",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "Tag": {},
+                "TermPart": {
+                  "TaxonomyContentItemId": "4cet7kh16f89cxpk2zp9gz4353"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4wyjj40cv9s9tsgfwh6eppwenq",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Vlasnik",
+                "Latest": true,
+                "Published": false,
+                "ModifiedUtc": "2021-06-18T13:11:53.0031406Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Vlasnik"
+                },
+                "AutoroutePart": {
+                  "Path": "vlasnik",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "Tag": {},
+                "TermPart": {
+                  "TaxonomyContentItemId": "4cet7kh16f89cxpk2zp9gz4353"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
