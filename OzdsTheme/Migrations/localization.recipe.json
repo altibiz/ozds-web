@@ -1,13 +1,6 @@
 {
   "steps": [
     {
-      "name": "feature",
-      "enable": [
-        "OrchardCore.Localization",
-        "OrchardCore.ContentLocalization.ContentCulturePicker"
-      ]
-    },
-    {
       "name": "ContentDefinition",
       "ContentTypes": [
         {

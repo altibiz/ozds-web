@@ -13,20 +13,17 @@ using Members.Devices;
 
 namespace Members;
 
-public class Migrations : DataMigration
-{
+public class Migrations : DataMigration {
   public Migrations(IRecipeMigrator recipeMigrator,
       IContentDefinitionManager contentDefinitionManager, ISession session,
-      ILogger<Migrations> logger)
-  {
+      ILogger<Migrations> logger) {
     RecipeMigrator = recipeMigrator;
     ContentDefinitionManager = contentDefinitionManager;
     Session = session;
     Logger = logger;
   }
 
-  public async Task<int> CreateAsync()
-  {
+  public async Task<int> CreateAsync() {
     Logger.LogDebug(" >>> Start Member module creation");
 
     Logger.LogDebug(" >> Start member init.recipe.json");
@@ -34,66 +31,66 @@ public class Migrations : DataMigration
     Logger.LogDebug(" >> Start member init.recipe.json");
 
     Logger.LogDebug(
-        " >>  Start Member " + "init.2.content.1.Taxonomy.recipe.json");
+        " >>  Start Member " + "init.1.content.1.Taxonomy.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "init.2.content.1.Taxonomy.recipe.json", this);
+        "init.1.content.1.Taxonomy.recipe.json", this);
     Logger.LogDebug(
-        " >> End Member " + "init.2.content.1.Taxonomy.recipe.json");
+        " >> End Member " + "init.1.content.1.Taxonomy.recipe.json");
 
     Logger.LogDebug(
-        " >> Start Member " + "init.2.content.2.Taxonomy.recipe.json");
+        " >> Start Member " + "init.1.content.2.Taxonomy.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "init.2.content.2.Taxonomy.recipe.json", this);
+        "init.1.content.2.Taxonomy.recipe.json", this);
     Logger.LogDebug(
-        " >> End Member " + "init.2.content.2.Taxonomy.recipe.json");
+        " >> End Member " + "init.1.content.2.Taxonomy.recipe.json");
 
     Logger.LogDebug(
-        " >> Start Member " + "init.2.content.3.Taxonomy.recipe.json");
+        " >> Start Member " + "init.1.content.3.Taxonomy.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "init.2.content.3.Taxonomy.recipe.json", this);
+        "init.1.content.3.Taxonomy.recipe.json", this);
     Logger.LogDebug(
-        " >> End Member " + "init.2.content.3.Taxonomy.recipe.json");
+        " >> End Member " + "init.1.content.3.Taxonomy.recipe.json");
 
     Logger.LogDebug(
-        " >> Start Member " + "init.2.content.4.Taxonomy.recipe.json");
+        " >> Start Member " + "init.1.content.4.Taxonomy.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "init.2.content.4.Taxonomy.recipe.json", this);
+        "init.1.content.4.Taxonomy.recipe.json", this);
     Logger.LogDebug(
-        " >> End Member " + "init.2.content.4.Taxonomy.recipe.json");
+        " >> End Member " + "init.1.content.4.Taxonomy.recipe.json");
 
     Logger.LogDebug(
-        " >> Start Member " + "init.2.content.5.Taxonomy.recipe.json");
+        " >> Start Member " + "init.1.content.5.Taxonomy.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "init.2.content.5.Taxonomy.recipe.json", this);
+        "init.1.content.5.Taxonomy.recipe.json", this);
     Logger.LogDebug(
-        " >> End Member " + "init.2.content.5.Taxonomy.recipe.json");
+        " >> End Member " + "init.1.content.5.Taxonomy.recipe.json");
 
     Logger.LogDebug(
-        " >> Start Member " + "init.2.content.6.Taxonomy.recipe.json");
+        " >> Start Member " + "init.1.content.6.Taxonomy.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "init.2.content.6.Taxonomy.recipe.json", this);
+        "init.1.content.6.Taxonomy.recipe.json", this);
     Logger.LogDebug(
-        " >> End Member " + "init.2.content.6.Taxonomy.recipe.json");
+        " >> End Member " + "init.1.content.6.Taxonomy.recipe.json");
 
     Logger.LogDebug(
-        " >> Start Member " + "init.2.content.7.Taxonomy.recipe.json");
+        " >> Start Member " + "init.1.content.7.Taxonomy.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "init.2.content.7.Taxonomy.recipe.json", this);
+        "init.1.content.7.Taxonomy.recipe.json", this);
     Logger.LogDebug(
-        " >> End Member " + "init.2.content.7.Taxonomy.recipe.json");
+        " >> End Member " + "init.1.content.7.Taxonomy.recipe.json");
 
-    Logger.LogDebug(" >> Start Member " + "init.2.content.8.Menu.recipe.json");
+    Logger.LogDebug(" >> Start Member " + "init.1.content.8.Menu.recipe.json");
     await RecipeMigrator.ExecuteAsync(
-        "init.2.content.8.Menu.recipe.json", this);
-    Logger.LogDebug(" >> End Member " + "init.2.content.8.Menu.recipe.json");
+        "init.1.content.8.Menu.recipe.json", this);
+    Logger.LogDebug(" >> End Member " + "init.1.content.8.Menu.recipe.json");
 
-    Logger.LogDebug(" >> Start Member " + "init.3.Settings.recipe.json");
-    await RecipeMigrator.ExecuteAsync("init.3.Settings.recipe.json", this);
-    Logger.LogDebug(" >> End Member " + "init.3.Settings.recipe.json");
+    Logger.LogDebug(" >> Start Member " + "init.2.Settings.recipe.json");
+    await RecipeMigrator.ExecuteAsync("init.2.Settings.recipe.json", this);
+    Logger.LogDebug(" >> End Member " + "init.2.Settings.recipe.json");
 
-    Logger.LogDebug(" >> Start Member " + "init.4.Templates.recipe.json");
-    await RecipeMigrator.ExecuteAsync("init.4.Templates.recipe.json", this);
-    Logger.LogDebug(" >> End Member " + "init.4.Templates.recipe.json");
+    Logger.LogDebug(" >> Start Member " + "init.3.Templates.recipe.json");
+    await RecipeMigrator.ExecuteAsync("init.3.Templates.recipe.json", this);
+    Logger.LogDebug(" >> End Member " + "init.3.Templates.recipe.json");
 
     Logger.LogDebug(" >> Start Member " + "AlterPersonPart");
     ContentDefinitionManager.AlterPersonPart();

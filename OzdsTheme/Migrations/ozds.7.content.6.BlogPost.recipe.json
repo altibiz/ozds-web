@@ -13,6 +13,7 @@
   },
   "steps": [
     {
+      "name": "content",
       "Data": [
         {
           "ContentType": "BlogPost",

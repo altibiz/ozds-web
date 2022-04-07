@@ -3,12 +3,12 @@
 fd '(.*)?.[0-9]+(.*)?.recipe.json' | xargs rm -f
 
 split-recipe \
-  ./OzdsTheme/Recipes/ozds.orig.recipe.json \
+  ./OzdsTheme/Migrations/ozds.orig.recipe.json \
   ./OzdsTheme/Migrations/ \
-  ./OzdsTheme/Recipes/ozds.recipe.json;
+  ./OzdsTheme/Migrations/ozds.recipe.json;
 
 split-content-data \
-  ./OzdsTheme/Migrations/ozds.9.content.recipe.json;
+  ./OzdsTheme/Migrations/ozds.7.content.recipe.json;
 
 split-recipe \
   ./Members/Migrations/init.orig.recipe.json \
@@ -16,4 +16,4 @@ split-recipe \
   ./Members/Migrations/init.recipe.json;
 
 split-content-data \
-  ./Members/Migrations/init.2.content.recipe.json;
+  ./Members/Migrations/init.1.content.recipe.json;

@@ -13,6 +13,7 @@
   },
   "steps": [
     {
+      "name": "content",
       "Data": [
         {
           "ContentItemId": "4ehkyebe6v9zsyqn2nq8ke1z51",

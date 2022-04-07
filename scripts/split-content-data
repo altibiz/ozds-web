@@ -28,7 +28,7 @@ main() {
 
     local result='{"variables":{},"steps":[{"name":"content"}]}';
     if [[ $variables != "null" ]]; then
-      local result="$(echo '{}' | \
+      local result="$(echo "$result" | \
           jq "setpath(path($variables_path); $variables)")";
     fi;
     local result="$(echo "$result" | \

@@ -13,15 +13,20 @@
   },
   "steps": [
     {
+      "name": "content",
       "Data": [
         {
+          "ContentItemId": "4xdc3p0r98bpjxnj93v0sc2sxe",
+          "ContentItemVersionId": "4x2hsqrxdfax92m9et93zmdpwh",
           "ContentType": "Menu",
-          "ContentItemId": "[js: variables('menuContentItemId')]",
-          "Owner": "[js: parameters('AdminUserId')]",
-          "Author": "[js: parameters('AdminUsername')]",
           "DisplayText": "Main Menu",
           "Latest": true,
           "Published": true,
+          "ModifiedUtc": "2022-01-31T13:34:42.5499757Z",
+          "PublishedUtc": "2022-01-31T13:34:42.8606149Z",
+          "CreatedUtc": "2022-01-31T13:33:55.0409898Z",
+          "Owner": "4ws2zjebw5pw5rp9xnk3h6q5mp",
+          "Author": "admin",
           "MenuPart": {},
           "TitlePart": {
             "Title": "Main Menu"
@@ -29,40 +34,49 @@
           "MenuItemsListPart": {
             "MenuItems": [
               {
+                "ContentItemId": "4yrerj2cjdsfn1n7knzat2q151",
+                "ContentItemVersionId": null,
                 "ContentType": "LinkMenuItem",
-                "ContentItemId": "[js: uuid()]",
-                "DisplayText": "Početna",
+                "DisplayText": "Home",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": null,
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": null,
                 "LinkMenuItemPart": {
                   "Name": "Home",
-                  "Url": "~/"
-                }
+                  "Url": "~/en/home"
+                },
+                "LinkMenuItem": {}
               },
               {
+                "ContentItemId": "43wmd8qzxedcz7dv8hjdyw4ydz",
+                "ContentItemVersionId": null,
                 "ContentType": "LinkMenuItem",
-                "ContentItemId": "[js: uuid()]",
-                "DisplayText": "Tko smo mi",
+                "DisplayText": "News",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": null,
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": null,
                 "LinkMenuItemPart": {
-                  "Name": "Tko smo mi",
-                  "Url": "~/o-nama"
-                }
-              },
-              {
-                "ContentType": "LinkMenuItem",
-                "ContentItemId": "[js: uuid()]",
-                "DisplayText": "Novosti",
-                "LinkMenuItemPart": {
-                  "Name": "Novosti",
+                  "Name": "News",
                   "Url": "~/novosti"
-                }
+                },
+                "LinkMenuItem": {}
               }
             ]
           },
           "AliasPart": {
-            "Alias": "main-menu"
+            "Alias": "main-menu-en"
           },
           "LocalizationPart": {
             "LocalizationSet": "4hnkvydw4bt1yv5d46r8bwqfc4",
-            "Culture": "hr"
+            "Culture": "en"
           }
         }
       ]

@@ -6,12 +6,8 @@
   "website": "https://orchardcore.net",
   "version": "1.0.0-rc2",
   "issetuprecipe": false,
-  "categories": [
-    "default"
-  ],
-  "tags": [
-    "blog"
-  ],
+  "categories": ["default"],
+  "tags": ["blog"],
 
   "variables": {
     "adminUrlPrefix": "[js: configuration('OrchardCore_Admin:AdminUrlPrefix', 'Admin')]",
@@ -28,67 +24,6 @@
 
   "steps": [
     {
-      "name": "feature",
-      "enable": [
-        "OrchardCore.HomeRoute",
-        "OrchardCore.Admin",
-        "OrchardCore.Diagnostics",
-        "OrchardCore.DynamicCache",
-        "OrchardCore.Features",
-        "OrchardCore.Navigation",
-        "OrchardCore.Recipes",
-        "OrchardCore.Resources",
-        "OrchardCore.Roles",
-        "OrchardCore.Settings",
-        "OrchardCore.Themes",
-        "OrchardCore.Users",
-        "OrchardCore.Localization",
-        "OrchardCore.Alias",
-        "OrchardCore.AdminMenu",
-        "OrchardCore.Autoroute",
-        "OrchardCore.Html",
-        "OrchardCore.ContentFields",
-        "OrchardCore.ContentFields.Indexing.SQL.UserPicker",
-        "OrchardCore.ContentPreview",
-        "OrchardCore.Contents",
-        "OrchardCore.Contents.FileContentDefinition",
-        "OrchardCore.ContentTypes",
-        "OrchardCore.CustomSettings",
-        "OrchardCore.Deployment",
-        "OrchardCore.Deployment.Remote",
-        "OrchardCore.Feeds",
-        "OrchardCore.Flows",
-        "OrchardCore.Indexing",
-        "OrchardCore.Layers",
-        "OrchardCore.Lucene",
-        "OrchardCore.Lists",
-        "OrchardCore.Markdown",
-        "[js: configuration('Media_Module')]",
-        "OrchardCore.Menu",
-        "OrchardCore.Placements",
-        "OrchardCore.Queries",
-        "OrchardCore.Shortcodes.Templates",
-        "OrchardCore.Rules",
-        "OrchardCore.Taxonomies",
-        "OrchardCore.Title",
-        "OrchardCore.Templates",
-        "OrchardCore.Users",
-        "OrchardCore.Users.Registration",
-        "OrchardCore.Users.ResetPassword",
-        "OrchardCore.Widgets",
-        "OrchardCore.Workflows",
-        "Members",
-        "OzdsTheme",
-        "TheAdmin",
-        "SafeMode"
-      ]
-    },
-    {
-      "name": "themes",
-      "admin": "TheAdmin",
-      "site": "OzdsTheme"
-    },
-    {
       "name": "settings",
       "HomeRoute": {
         "Action": "Display",
@@ -97,17 +32,11 @@
         "ContentItemId": "[js: variables('blogContentItemId')]"
       },
       "LayerSettings": {
-        "Zones": [
-          "Content",
-          "Footer"
-        ]
+        "Zones": ["Content", "Footer"]
       },
       "LocalizationSettings": {
         "DefaultCulture": "hr",
-        "SupportedCultures": [
-          "hr",
-          "en"
-        ]
+        "SupportedCultures": ["hr", "en"]
       }
     },
     {
@@ -297,9 +226,7 @@
                 },
                 "ListPartSettings": {
                   "PageSize": 10,
-                  "ContainedContentTypes": [
-                    "BlogPost"
-                  ]
+                  "ContainedContentTypes": ["BlogPost"]
                 }
               }
             }
@@ -894,9 +821,7 @@
       "name": "Settings",
       "LuceneSettings": {
         "SearchIndex": "Search",
-        "DefaultSearchFields": [
-          "Content.ContentItem.FullText"
-        ]
+        "DefaultSearchFields": ["Content.ContentItem.FullText"]
       }
     },
     {
@@ -905,10 +830,7 @@
         {
           "Name": "Anonymous",
           "Description": "Anonymous role",
-          "Permissions": [
-            "ViewContent",
-            "QueryLuceneSearchIndex"
-          ]
+          "Permissions": ["ViewContent", "QueryLuceneSearchIndex"]
         }
       ]
     },
@@ -916,43 +838,43 @@
       "name": "media",
       "Files": [
         {
-          "TargetPath": "about-bg.jpg",
+          "TargetPath": "Assets/about-bg.jpg",
           "SourcePath": "../wwwroot/assets/img/about-bg.jpg"
         },
         {
-          "TargetPath": "home-bg.jpg",
+          "TargetPath": "Assets/home-bg.jpg",
           "SourcePath": "../wwwroot/assets/img/home-bg.jpg"
         },
         {
-          "TargetPath": "post-bg.jpg",
+          "TargetPath": "Assets/post-bg.jpg",
           "SourcePath": "../wwwroot/assets/img/post-bg.jpg"
         },
         {
-          "SourcePath": "24sata-300px_162034.png",
+          "SourcePath": "Assets/24sata-300px_162034.png",
           "TargetPath": "24sata-300px_162034.png"
         },
         {
-          "SourcePath": "doniraj_183712.jpg",
+          "SourcePath": "Assets/doniraj_183712.jpg",
           "TargetPath": "doniraj_183712.jpg"
         },
         {
-          "SourcePath": "logo_600x600_171449.jpg",
+          "SourcePath": "Assets/logo_600x600_171449.jpg",
           "TargetPath": "logo_600x600_171449.jpg"
         },
         {
-          "SourcePath": "novi_banner_91147.jpeg",
+          "SourcePath": "Assets/novi_banner_91147.jpeg",
           "TargetPath": "novi_banner_91147.jpeg"
         },
         {
-          "SourcePath": "ovdje-stiti-ozds_18303.jpg",
+          "SourcePath": "Assets/ovdje-stiti-ozds_18303.jpg",
           "TargetPath": "ovdje-stiti-ozds_18303.jpg"
         },
         {
-          "SourcePath": "saznaj-sto-radimo_183733.jpg",
+          "SourcePath": "Assets/saznaj-sto-radimo_183733.jpg",
           "TargetPath": "saznaj-sto-radimo_183733.jpg"
         },
         {
-          "SourcePath": "telemach_logo_u_zasticenoj_zoni_171512.jpg",
+          "SourcePath": "Assets/telemach_logo_u_zasticenoj_zoni_171512.jpg",
           "TargetPath": "telemach_logo_u_zasticenoj_zoni_171512.jpg"
         }
       ]
@@ -1204,12 +1126,8 @@
           "ListPart": {},
           "Blog": {
             "Image": {
-              "Paths": [
-                "home-bg.jpg"
-              ],
-              "MediaTexts": [
-                ""
-              ],
+              "Paths": ["home-bg.jpg"],
+              "MediaTexts": [""],
               "Anchors": [
                 {
                   "X": 0.5,
@@ -1245,12 +1163,8 @@
               "Text": "Problems look mighty small from 150 miles up"
             },
             "Image": {
-              "Paths": [
-                "post-bg.jpg"
-              ],
-              "MediaTexts": [
-                ""
-              ],
+              "Paths": ["post-bg.jpg"],
+              "MediaTexts": [""],
               "Anchors": [
                 {
                   "X": 0.5,
@@ -1265,11 +1179,7 @@
                 "[js: variables('spaceTagContentItemId')]"
               ],
               "TaxonomyContentItemId": "[js: variables('tagsContentItemId')]",
-              "TagNames": [
-                "Earth",
-                "Exploration",
-                "Space"
-              ]
+              "TagNames": ["Earth", "Exploration", "Space"]
             },
             "Category": {
               "TermContentItemIds": [
@@ -1302,9 +1212,7 @@
               "Text": "Udruga Glas Poduzetnika"
             },
             "Image": {
-              "Paths": [
-                "about-bg.jpg"
-              ]
+              "Paths": ["about-bg.jpg"]
             }
           }
         },
@@ -1324,7 +1232,7 @@
           },
           "RawHtml": {
             "Content": {
-              "Html": "[file:text('Snippets/footer.html')]"
+              "Html": "[file:text('Assets/footer.html')]"
             }
           }
         },
@@ -1483,12 +1391,8 @@
                           "Value": false
                         },
                         "Image": {
-                          "Paths": [
-                            "24sata-300px_162034.png"
-                          ],
-                          "MediaTexts": [
-                            ""
-                          ]
+                          "Paths": ["24sata-300px_162034.png"],
+                          "MediaTexts": [""]
                         },
                         "ImageClass": {
                           "Text": null
@@ -1518,12 +1422,8 @@
                           "Value": false
                         },
                         "Image": {
-                          "Paths": [
-                            "logo_600x600_171449.jpg"
-                          ],
-                          "MediaTexts": [
-                            ""
-                          ]
+                          "Paths": ["logo_600x600_171449.jpg"],
+                          "MediaTexts": [""]
                         },
                         "ImageClass": {
                           "Text": null
@@ -1556,9 +1456,7 @@
                           "Paths": [
                             "telemach_logo_u_zasticenoj_zoni_171512.jpg"
                           ],
-                          "MediaTexts": [
-                            ""
-                          ]
+                          "MediaTexts": [""]
                         },
                         "ImageClass": {
                           "Text": null
@@ -1727,7 +1625,7 @@
           "Source": "Lucene",
           "Name": "RecentBlogPosts",
           "Index": "Search",
-          "Template": "[file:text('Snippets/recentBlogPosts.json')]",
+          "Template": "[file:text('Assets/recentBlogPosts.json')]",
           "Schema": "[js:base64('ew0KICAgICJ0eXBlIjogIkNvbnRlbnRJdGVtL0Jsb2dQb3N0Ig0KfQ==')]",
           "ReturnContentItems": true
         }
@@ -1890,9 +1788,7 @@
               "Y": 110,
               "IsStart": true,
               "Properties": {
-                "ContentTypeFilter": [
-                  "Member"
-                ],
+                "ContentTypeFilter": ["Member"],
                 "ActivityMetadata": {
                   "Title": "Član odobren"
                 }

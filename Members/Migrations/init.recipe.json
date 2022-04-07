@@ -1,11 +1,3 @@
 {
-  "steps": [
-    {
-      "name": "feature",
-      "enable": [
-        "OrchardCore.ContentFields.Indexing.SQL.UserPicker",
-        "OrchardCore.BackgroundTasks"
-      ]
-    }
-  ]
+  "steps": []
 }
