@@ -12,12 +12,10 @@ using Ozds.Users.M3;
 
 namespace Ozds.Users;
 
-public sealed class Migrations : DataMigration
-{
+public sealed class Migrations : DataMigration {
   public Migrations(IHostEnvironment env, ILogger<Migrations> logger,
       IRecipeMigrator recipe, IContentDefinitionManager content,
-      ISession session)
-  {
+      ISession session) {
     Env = env;
     Logger = logger;
 
@@ -27,8 +25,7 @@ public sealed class Migrations : DataMigration
     Content = content;
   }
 
-  public int Create()
-  {
+  public int Create() {
     Recipe.ExecuteInit(this);
 
     Content.AlterAdminPageType();
@@ -59,8 +56,7 @@ public sealed class Migrations : DataMigration
     return 1;
   }
 
-  public int UpdateFrom1()
-  {
+  public int UpdateFrom1() {
     Content.AlterPledgePart();
     Content.AlterPledgeType();
     Content.AlterPledgeVariantPart();
@@ -70,16 +66,14 @@ public sealed class Migrations : DataMigration
     return 2;
   }
 
-  public int UpdateFrom2()
-  {
+  public int UpdateFrom2() {
     Schema.CreateDeviceIndex();
     Recipe.ExecuteTestOwner(this, Env.IsDevelopment());
 
     return 3;
   }
 
-  public int UpdateFrom3()
-  {
+  public int UpdateFrom3() {
     Recipe.ExecuteOzdsContentDefinitions(this);
 
     return 4;

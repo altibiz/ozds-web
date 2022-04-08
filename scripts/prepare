@@ -14,7 +14,7 @@ if [[ ! -f "$elasticsearch_test_dir/secrets.json" ]]; then
      "$elasticsearch_test_dir/secrets.json"
 fi;
 
-ozds_web_dir="$ROOT_DIR/src/Ozds.Web/secrets.json";
+ozds_web_dir="$ROOT_DIR/src/Ozds.Web";
 if [[ ! -f "$ozds_web_dir/secrets.json" ]]; then
   cp "$ozds_web_dir/example.secrets.json" \
      "$ozds_web_dir/secrets.json"

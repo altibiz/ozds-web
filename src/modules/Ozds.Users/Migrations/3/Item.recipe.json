@@ -19,17 +19,9 @@
             {
               "PartName": "Item",
               "Name": "Item",
-              "Settings": {}
-            },
-            {
-              "PartName": "ItemPart",
-              "Name": "ItemPart",
               "Settings": {
                 "ContentTypePartSettings": {
                   "Position": "0"
-                },
-                "ContentIndexSettings": {
-                  "Included": true
                 }
               }
             }
@@ -38,7 +30,7 @@
       ],
       "ContentParts": [
         {
-          "Name": "ItemPart",
+          "Name": "Item",
           "Settings": {
             "ContentPartSettings": {
               "Attachable": true,

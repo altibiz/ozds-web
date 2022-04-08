@@ -2,10 +2,34 @@
   "steps": [
     {
       "name": "ContentDefinition",
-      "ContentTypes": [],
+      "ContentTypes": [
+        {
+          "Name": "OMM",
+          "DisplayName": "Obračunsko mjerno mjesto",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Securable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "OMM",
+              "Name": "OMM",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        }
+      ],
       "ContentParts": [
         {
-          "Name": "OMMPart",
+          "Name": "OMM",
           "Settings": {
             "ContentPartSettings": {
               "Attachable": true

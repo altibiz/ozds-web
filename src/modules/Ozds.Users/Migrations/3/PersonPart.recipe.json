@@ -7,7 +7,11 @@
         {
           "Name": "PersonPart",
           "Settings": {
-            "ContentPartSettings": {}
+            "ContentPartSettings": {
+              "Attachable": true,
+              "DisplayName": "Osoba",
+              "Description": "Poslovni i kontakt podaci osobe."
+            }
           },
           "ContentPartFieldDefinitionRecords": [
             {
@@ -103,10 +107,40 @@
                 "ContentPartFieldSettings": {
                   "DisplayName": "Email",
                   "Editor": "Email",
-                  "Position": "10"
+                  "Position": "11"
                 },
                 "TextFieldSettings": {
                   "Required": true
+                }
+              }
+            },
+            {
+              "FieldName": "TaxonomyField",
+              "Name": "ContribType",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Aktivan/neaktivan doprinos radu udruge?",
+                  "Editor": "Tags",
+                  "DisplayMode": "Tags",
+                  "Position": "12"
+                },
+                "TaxonomyFieldSettings": {
+                  "TaxonomyContentItemId": "4k7n3gw5wm7660vqpm0805hedy",
+                  "Unique": true
+                },
+                "TaxonomyFieldTagsEditorSettings": {
+                  "Open": false
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Skills",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Vještine i znanja",
+                  "Editor": "TextArea",
+                  "Position": "10"
                 }
               }
             },

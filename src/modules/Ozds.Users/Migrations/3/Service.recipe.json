@@ -15,8 +15,8 @@
           },
           "ContentTypePartDefinitionRecords": [
             {
-              "PartName": "ServicePart",
-              "Name": "ServicePart",
+              "PartName": "Service",
+              "Name": "Service",
               "Settings": {
                 "ContentTypePartSettings": {
                   "Position": "0"
@@ -28,7 +28,7 @@
       ],
       "ContentParts": [
         {
-          "Name": "ServicePart",
+          "Name": "Service",
           "Settings": {
             "ContentPartSettings": {
               "Attachable": true,
