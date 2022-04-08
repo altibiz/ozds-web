@@ -15,5 +15,7 @@ public static partial class RecipeMigrations
     recipe.Execute("3/Item.recipe.json", migration);
     recipe.Execute("3/Bill.recipe.json", migration);
     recipe.Execute("3/OMM.recipe.json", migration);
+    recipe.Execute("3/Member.recipe.json", migration);
+    recipe.Execute("3/ZDS.recipe.json", migration);
   }
 }
