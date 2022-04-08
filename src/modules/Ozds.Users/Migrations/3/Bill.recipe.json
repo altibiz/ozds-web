@@ -44,7 +44,9 @@
                   "Description": "Obračun računa."
                 },
                 "BagPartSettings": {
-                  "ContainedContentTypes": ["Calculation"]
+                  "ContainedContentTypes": [
+                    "Calculation"
+                  ]
                 },
                 "ContentIndexSettings": {}
               }

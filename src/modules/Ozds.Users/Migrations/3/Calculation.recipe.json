@@ -34,7 +34,9 @@
                   "Description": "Stavke mjesečnog obračuna"
                 },
                 "BagPartSettings": {
-                  "ContainedContentTypes": ["Item"]
+                  "ContainedContentTypes": [
+                    "Item"
+                  ]
                 },
                 "ContentIndexSettings": {}
               }
