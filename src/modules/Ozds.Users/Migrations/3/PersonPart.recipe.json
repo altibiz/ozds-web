@@ -1,0 +1,148 @@
+{
+  "steps": [
+    {
+      "name": "ContentDefinition",
+      "ContentTypes": [],
+      "ContentParts": [
+        {
+          "Name": "PersonPart",
+          "Settings": {
+            "ContentPartSettings": {}
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Name",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Ime",
+                  "Position": "2"
+                },
+                "TextFieldSettings": {
+                  "Required": true
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Surname",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Prezime",
+                  "Position": "4"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Oib",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "OIB",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {
+                  "Required": true
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Address",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Adresa",
+                  "Position": "6"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "City",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Grad/Općina",
+                  "Position": "7"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Phone",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Telefon",
+                  "Editor": "Tel",
+                  "Position": "9"
+                }
+              }
+            },
+            {
+              "FieldName": "TaxonomyField",
+              "Name": "County",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Županija",
+                  "Editor": "Tags",
+                  "DisplayMode": "Tags",
+                  "Position": "8"
+                },
+                "TaxonomyFieldSettings": {
+                  "TaxonomyContentItemId": "4d0dew9ar7h9nsbpcs7jg2egwe",
+                  "Unique": true
+                },
+                "TaxonomyFieldTagsEditorSettings": {
+                  "Open": false
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Email",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Email",
+                  "Editor": "Email",
+                  "Position": "10"
+                },
+                "TextFieldSettings": {
+                  "Required": true
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "MiddleName",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Srednje ime",
+                  "Position": "3"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Naziv",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Naziv",
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "Lgal",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Pravna",
+                  "Position": "5"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

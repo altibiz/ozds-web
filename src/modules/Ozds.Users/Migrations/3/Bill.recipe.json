@@ -1,0 +1,277 @@
+{
+  "steps": [
+    {
+      "name": "ContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "Bill",
+          "DisplayName": "Račun",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "Bill",
+              "Name": "Bill",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Calculation",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "DisplayName": "Obračun",
+                  "Description": "Obračun računa."
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": ["Calculation"]
+                },
+                "ContentIndexSettings": {}
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "BagPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": true,
+              "Description": "Provides a collection behavior for your content item where you can place other content items."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "TitlePart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Provides a Title for your content item.",
+              "DefaultPosition": "0"
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "Bill",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "NumericField",
+              "Name": "DocumentNumber",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Broj dokumenta",
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Partner",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Partner",
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "PartnerAdress",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Adresa partnera",
+                  "Position": "2"
+                }
+              }
+            },
+            {
+              "FieldName": "NumericField",
+              "Name": "PartnerPostalCode",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Poštanski broj partnera",
+                  "Position": "3"
+                }
+              }
+            },
+            {
+              "FieldName": "NumericField",
+              "Name": "PartnerOIB",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "OIB patnera",
+                  "Position": "4"
+                }
+              }
+            },
+            {
+              "FieldName": "DateField",
+              "Name": "DeliveryDate",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Datum isporuke",
+                  "Position": "5"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "PaymentCurrency",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Valuta plaćanja",
+                  "Position": "6"
+                }
+              }
+            },
+            {
+              "FieldName": "DateField",
+              "Name": "ContractDate",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Datum ugovora",
+                  "Position": "7"
+                }
+              }
+            },
+            {
+              "FieldName": "NumericField",
+              "Name": "ContractNumber",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Broj ugovora",
+                  "Position": "8"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "ProjectCode",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Šifra projekta",
+                  "Position": "9"
+                }
+              }
+            },
+            {
+              "FieldName": "DateField",
+              "Name": "FromDate",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Datum od",
+                  "Position": "10"
+                }
+              }
+            },
+            {
+              "FieldName": "DateField",
+              "Name": "ToDate",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Datum do",
+                  "Position": "11"
+                }
+              }
+            },
+            {
+              "FieldName": "NumericField",
+              "Name": "InTotal",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Ukupno",
+                  "Position": "12"
+                }
+              }
+            },
+            {
+              "FieldName": "NumericField",
+              "Name": "PDV",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "PDV",
+                  "Position": "13"
+                }
+              }
+            },
+            {
+              "FieldName": "NumericField",
+              "Name": "InTotalWithPDV",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Ukupni iznos",
+                  "Position": "14"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Remark",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Napomena",
+                  "Position": "15"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "OperatorName",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Ime operatera",
+                  "Position": "16"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "OperatorSurname",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Prezime operatera",
+                  "Position": "17"
+                }
+              }
+            },
+            {
+              "FieldName": "DateField",
+              "Name": "BillDate",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Datum računa",
+                  "Position": "18"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
