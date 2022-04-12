@@ -9,10 +9,12 @@ using Ozds.Themes.Ozds.M0;
 
 namespace Ozds.Themes.Ozds;
 
-public partial class Migrations : DataMigration {
+public partial class Migrations : DataMigration
+{
   public Migrations(IHostEnvironment env, ILogger<Migrations> logger,
       IRecipeMigrator recipe, IContentDefinitionManager content,
-      ISession session) {
+      ISession session)
+  {
     Env = env;
     Logger = logger;
 
@@ -22,7 +24,8 @@ public partial class Migrations : DataMigration {
     Content = content;
   }
 
-  public int Create() {
+  public int Create()
+  {
     Recipe.ExecuteInit(this, Env.IsDevelopment());
 
     Content.AlterGPiecePart();

@@ -6,7 +6,8 @@ using Ozds.Modules.Members.Payments;
 
 namespace Ozds.Modules.Members.M0;
 
-public static partial class AlterPledgeVariant {
+public static partial class AlterPledgeVariant
+{
   public static void AlterPledgeVariantType(
       this IContentDefinitionManager content) =>
       content.AlterTypeDefinition("PledgeVariant",
@@ -17,7 +18,8 @@ public static partial class AlterPledgeVariant {
                           nameof(PledgeVariant), part => part.WithPosition("0"))
                       .WithPart("TitlePart",
                           part => part.WithPosition("1").WithSettings(
-                              new TitlePartSettings {
+                              new TitlePartSettings
+                              {
                                 Options = TitlePartOptions.EditableRequired,
                               })));
 
@@ -27,6 +29,9 @@ public static partial class AlterPledgeVariant {
           field => field.OfType("NumericField")
                        .WithDisplayName("Cijena")
                        .WithPosition("0")
-                       .WithSettings(new NumericFieldSettings { Required = true,
-                         Scale = 2 })));
+                       .WithSettings(new NumericFieldSettings
+                       {
+                         Required = true,
+                         Scale = 2
+                       })));
 }
