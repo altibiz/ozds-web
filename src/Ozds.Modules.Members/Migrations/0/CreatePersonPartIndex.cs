@@ -1,10 +1,9 @@
 using YesSql.Sql;
-using Ozds.Users.Persons;
+using Ozds.Modules.Members.Persons;
 
-namespace Ozds.Users.M0;
+namespace Ozds.Modules.Members.M0;
 
-public static class CreatePersonPartIndexClass
-{
+public static class CreatePersonPartIndexClass {
   public static void CreatePersonPartIndex(this ISchemaBuilder schema) =>
       schema.CreateMapIndexTable<PersonPartIndex>(
           table => table.Column<string>("Oib", col => col.WithLength(50))

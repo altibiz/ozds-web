@@ -1,9 +1,8 @@
 using System;
 
-namespace Ozds.Users.Devices;
+namespace Ozds.Modules.Members.Devices;
 
-public class Device
-{
+public class Device {
   public string Id { get; init; }
   public string MemberId { get; init; }
 

@@ -1,12 +1,11 @@
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
-using Ozds.Users.Payments;
+using Ozds.Modules.Members.Payments;
 
-namespace Ozds.Users.M0;
+namespace Ozds.Modules.Members.M0;
 
-public static partial class AlterBankStatement
-{
+public static partial class AlterBankStatement {
   public static void AlterBankStatementPart(this IContentDefinitionManager
           content) => content.AlterTypeDefinition("BankStatement",
       type =>
@@ -16,8 +15,7 @@ public static partial class AlterBankStatement
               .Creatable()
               .WithPart(nameof(BankStatPart), part => part.WithPosition("0"))
               .WithPart("TitlePart",
-                  part => part.WithPosition("1").WithSettings(new TitlePartSettings
-                  {
+                  part => part.WithPosition("1").WithSettings(new TitlePartSettings {
                     Options = TitlePartOptions.GeneratedDisabled,
                     Pattern =
                         "{{ ContentItem.Content.BankStatPart.Date.Value | date: \"%D\" }}",

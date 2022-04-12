@@ -1,16 +1,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Ozds.Users.Core;
+using Ozds.Modules.Members.Core;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display;
 using OrchardCore.DisplayManagement.ModelBinding;
 
-namespace Ozds.Users.Pages
-{
-  public class MyProfileModel : PageModel
-  {
+namespace Ozds.Modules.Members.Pages {
+  public class MyProfileModel : PageModel {
     private const string contentType = "Member";
 
     private readonly IContentItemDisplayManager _contentItemDisplayManager;
@@ -24,8 +22,7 @@ namespace Ozds.Users.Pages
     public MyProfileModel(MemberService mService,
         IContentItemDisplayManager contentItemDisplayManager,
         IHtmlLocalizer<CreateMemberModel> htmlLocalizer,
-        IUpdateModelAccessor updateModelAccessor)
-    {
+        IUpdateModelAccessor updateModelAccessor) {
       _contentItemDisplayManager = contentItemDisplayManager;
       _updateModelAccessor = updateModelAccessor;
 
@@ -34,8 +31,7 @@ namespace Ozds.Users.Pages
       _memberService = mService;
     }
 
-    public async Task OnGetAsync()
-    {
+    public async Task OnGetAsync() {
       var member = await _memberService.GetUserMember();
 
       CompanyContentItems = await _memberService.GetUserCompanies();

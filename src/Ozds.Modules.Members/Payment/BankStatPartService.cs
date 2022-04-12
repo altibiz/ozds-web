@@ -1,7 +1,7 @@
-﻿using Ozds.Users.Base;
-using Ozds.Users.PartFieldSettings;
-using Ozds.Users.Persons;
-using Ozds.Users.Utils;
+﻿using Ozds.Modules.Members.Base;
+using Ozds.Modules.Members.PartFieldSettings;
+using Ozds.Modules.Members.Persons;
+using Ozds.Modules.Members.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
@@ -20,21 +20,15 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
-namespace Ozds.Users.Payments
-{
-  public class BsJson
-  {
-    public class Stat
-    {
-      public class Rrn
-      {
+namespace Ozds.Modules.Members.Payments {
+  public class BsJson {
+    public class Stat {
+      public class Rrn {
         public string Model { get; set; }
         public string Number { get; set; }
       }
-      public class CPartner
-      {
-        public class CAddress
-        {
+      public class CPartner {
+        public class CAddress {
           public string Street { get; set; }
           public string City { get; set; }
         }
@@ -54,8 +48,7 @@ namespace Ozds.Users.Payments
     public List<Stat> Data { get; set; }
     public DateTime? Date { get; set; }
   }
-  public class BankStatPartService : PartService<BankStatPart>
-  {
+  public class BankStatPartService : PartService<BankStatPart> {
 
     public IStringLocalizer<BankStatPartService> S { get; }
 
@@ -66,8 +59,7 @@ namespace Ozds.Users.Payments
     public BankStatPartService(IStringLocalizer<BankStatPartService> S,
         IContentManager contentManager, PersonPartService personService,
         IHttpContextAccessor htp, YesSql.ISession session)
-        : base(htp)
-    {
+        : base(htp) {
       this.S = S;
       _contentManager = contentManager;
       _pService = personService;
@@ -75,27 +67,21 @@ namespace Ozds.Users.Payments
     }
 
     public override Action<BankStatPart> GetEditModel(
-        BankStatPart part, BuildPartEditorContext context)
-    {
+        BankStatPart part, BuildPartEditorContext context) {
       return m => { m.StatementJson = part.StatementJson; };
     }
 
-    public override Task InitializingAsync(BankStatPart part)
-    {
+    public override Task InitializingAsync(BankStatPart part) {
       part.Date = new DateField() { Value = DateTime.Now };
       return Task.CompletedTask;
     }
 
-    public static BsJson ParseStmt(string xmlOrJson)
-    {
-      try
-      {
+    public static BsJson ParseStmt(string xmlOrJson) {
+      try {
         var res = JsonConvert.DeserializeObject<BsJson>(xmlOrJson);
         res.Date = res.Data.FirstOrDefault()?.Date;
         return res;
-      }
-      catch
-      {
+      } catch {
       }
       // if it continues, try xml;
 
@@ -113,8 +99,7 @@ namespace Ozds.Users.Payments
               ?.Value;
       statement.Date = strDate != null ? DateTime.Parse(strDate) : null;
       foreach (XElement nTry in document.XPathSelectElements(
-                   "/BkToCstmrStmt/Stmt/Ntry"))
-      {
+                   "/BkToCstmrStmt/Stmt/Ntry")) {
 
         BsJson.Stat stat = new();
         BsJson.Stat.Rrn rrn = new();
@@ -164,21 +149,16 @@ namespace Ozds.Users.Payments
 
       return statement;
     }
-    public override IEnumerable<ValidationResult> Validate(BankStatPart part)
-    {
-      if (string.IsNullOrEmpty(part.StatementJson))
-      {
+    public override IEnumerable<ValidationResult> Validate(BankStatPart part) {
+      if (string.IsNullOrEmpty(part.StatementJson)) {
         yield return new ValidationResult(
             S["Statement is required."], new[] { nameof(part.StatementJson) });
       }
       var parsed = true;
 
-      try
-      {
+      try {
         ParseStmt(part.StatementJson);
-      }
-      catch
-      {
+      } catch {
         parsed = false;
       }
 
@@ -188,54 +168,48 @@ namespace Ozds.Users.Payments
     }
 
     public override Task UpdatedAsync<TPart>(
-        UpdateContentContext context, BankStatPart instance)
-    {
+        UpdateContentContext context, BankStatPart instance) {
       var json = ParseStmt(instance.StatementJson);
       instance.Date.Value = json.Date;
       return Task.CompletedTask;
     }
 
     public async override Task PublishedAsync(
-        BankStatPart part, PublishContentContext context)
-    {
+        BankStatPart part, PublishContentContext context) {
       var json = ParseStmt(part.StatementJson);
-      foreach (var pymnt in json.Data)
-      {
+      foreach (var pymnt in json.Data) {
         var ciPayment = await _session.FirstOrDefaultAsync<PaymentIndex>(
             _contentManager, x => x.TransactionRef == pymnt.Number);
         if (ciPayment == null) ciPayment =
             await _contentManager.NewAsync("Payment");
-        var payPart = ciPayment.As<Payment>().InitFields();
-        payPart.Amount.Value = pymnt.Amount;
-        payPart.Address.Text = pymnt.Partner.Address.Street;
-        payPart.PayerName.Text = pymnt.Partner.Name;
-        payPart.ReferenceNr.Text = pymnt.RRN.Number;
-        payPart.BankContentItemId = part.ContentItem.ContentItemId;
-        payPart.Description.Text = pymnt.PaymentDescription;
-        payPart.IsPayout.Value = pymnt.Type != "Uplata";
-        payPart.Date.Value = part.Date.Value;
-        payPart.TransactionRef = pymnt.Number;
-        if (payPart.IsPayout.Value && payPart.Amount.Value > 0)
-          payPart.Amount.Value =
-          -payPart.Amount.Value; // payouts are negative values
-        var version = payPart.IsPayout.Value ? VersionOptions.Published
-                                             : VersionOptions.Draft;
-        if (pymnt.RRN.Number?.Length >= 11)
-        {
-          var person =
-              (await _pService.GetByOibAsync(pymnt.RRN.Number?[^11..]))
-                  .FirstOrDefault();
-          if (person != null)
-          {
-            payPart.Person.ContentItemIds = new[] { person.ContentItemId };
-            version = VersionOptions.Published;
-          }
-        }
-        ciPayment.Apply(payPart);
-        if (ciPayment.CreatedUtc != null)
-          await _contentManager.UpdateAsync(ciPayment);
-        else await _contentManager.UpdateValidateAndCreateAsync(
-            ciPayment, version);
+            var payPart = ciPayment.As<Payment>().InitFields();
+            payPart.Amount.Value = pymnt.Amount;
+            payPart.Address.Text = pymnt.Partner.Address.Street;
+            payPart.PayerName.Text = pymnt.Partner.Name;
+            payPart.ReferenceNr.Text = pymnt.RRN.Number;
+            payPart.BankContentItemId = part.ContentItem.ContentItemId;
+            payPart.Description.Text = pymnt.PaymentDescription;
+            payPart.IsPayout.Value = pymnt.Type != "Uplata";
+            payPart.Date.Value = part.Date.Value;
+            payPart.TransactionRef = pymnt.Number;
+            if (payPart.IsPayout.Value && payPart.Amount.Value > 0)
+                payPart.Amount.Value =
+                -payPart.Amount.Value; // payouts are negative values
+            var version = payPart.IsPayout.Value ? VersionOptions.Published
+                                                 : VersionOptions.Draft;
+            if (pymnt.RRN.Number?.Length >= 11) {
+              var person =
+                  (await _pService.GetByOibAsync(pymnt.RRN.Number?[^11..]))
+                      .FirstOrDefault();
+              if (person != null) {
+                payPart.Person.ContentItemIds = new[] { person.ContentItemId };
+                version = VersionOptions.Published;
+              }
+            } ciPayment.Apply(payPart);
+            if (ciPayment.CreatedUtc != null)
+                await _contentManager.UpdateAsync(ciPayment);
+            else await _contentManager.UpdateValidateAndCreateAsync(
+                ciPayment, version);
       }
     }
   }

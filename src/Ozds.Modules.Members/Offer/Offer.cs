@@ -3,10 +3,9 @@ using OrchardCore.ContentManagement;
 using OrchardCore.Media.Fields;
 using OrchardCore.Taxonomies.Fields;
 
-namespace Ozds.Users.Core;
+namespace Ozds.Modules.Members.Core;
 
-public class Offer : ContentPart
-{
+public class Offer : ContentPart {
   public TextField ShortDescription { get; set; }
   public TextField Description { get; set; }
   public HtmlField LongDescription { get; set; }

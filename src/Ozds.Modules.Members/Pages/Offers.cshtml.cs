@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Ozds.Users.Base;
-using Ozds.Users.Core;
-using Ozds.Users.Utils;
+using Ozds.Modules.Members.Base;
+using Ozds.Modules.Members.Core;
+using Ozds.Modules.Members.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
@@ -13,47 +13,37 @@ using OrchardCore.ContentManagement;
 using OrchardCore.DisplayManagement.Notify;
 using YesSql;
 
-namespace Ozds.Users.Pages
-{
+namespace Ozds.Modules.Members.Pages {
   [Authorize]
-  public class OffersModel : PageModel
-  {
+  public class OffersModel : PageModel {
     private readonly MemberService _memberService;
     private readonly ISession _session;
 
     public List<ContentItem> OfferContentItems { get; set; }
     [BindProperty(SupportsGet = true)]
-    public string SearchString
-    {
+    public string SearchString {
       get; set;
     }
     public List<LogoUrl> Logos { get; set; }
 
-    public OffersModel(ISession session, MemberService mService)
-    {
+    public OffersModel(ISession session, MemberService mService) {
       _memberService = mService;
       _session = session;
     }
 
-    public async Task OnGetAsync(string catId = null)
-    {
+    public async Task OnGetAsync(string catId = null) {
       Logos = new List<LogoUrl>();
-      if (catId != null)
-      {
+      if (catId != null) {
         OfferContentItems = await _memberService.GetAllOffersByTag(catId);
-      }
-      else
-      {
+      } else {
         OfferContentItems = await _memberService.GetAllOffers();
       }
 
-      if (SearchString != null)
-      {
+      if (SearchString != null) {
         OfferContentItems =
             await _memberService.GetAllOffersSearch(SearchString);
       }
-      foreach (var item in OfferContentItems.AsParts<Offer>())
-      {
+      foreach (var item in OfferContentItems.AsParts<Offer>()) {
         var cid = item.Company.GetId();
         if (cid == null)
           continue;
@@ -69,8 +59,7 @@ namespace Ozds.Users.Pages
       }
     }
     public async Task<IEnumerable<ContentItem>> GetTextFieldIndexRecords(
-        string contentType, string contentField)
-    {
+        string contentType, string contentField) {
       return await _session
           .Query<ContentItem, TextFieldIndex>(
               x => x.ContentType == contentType &&
@@ -78,8 +67,7 @@ namespace Ozds.Users.Pages
           .ListAsync();
     }
   }
-  public class LogoUrl
-  {
+  public class LogoUrl {
     public string CompanyID { get; set; }
     public string Url { get; set; }
   }

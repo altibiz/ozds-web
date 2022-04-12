@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Options;
 using OrchardCore.ResourceManagement;
 
-namespace OrchardCore.Themes.Ozds
+namespace Ozds.Themes.Ozds
 {
   public class ResourceManagementOptionsConfiguration
       : IConfigureOptions<ResourceManagementOptions>
@@ -30,31 +30,31 @@ namespace OrchardCore.Themes.Ozds
           .SetVersion("3.4.1");
 
       _manifest.DefineStyle("ozdstheme-bootstrap-oc")
-          .SetUrl("~/OrchardCore.Themes.Ozds/css/bootstrap-oc.min.css",
-              "~/OrchardCore.Themes.Ozds/css/bootstrap-oc.css")
+          .SetUrl("~/Ozds.Themes.Ozds/css/bootstrap-oc.min.css",
+              "~/Ozds.Themes.Ozds/css/bootstrap-oc.css")
           .SetVersion("1.0.0");
 
       _manifest.DefineScript("ozdstheme")
           .SetDependencies("ozdstheme-bootstrap-bundle")
-          .SetUrl("~/OrchardCore.Themes.Ozds/js/scripts.min.js", "~/OrchardCore.Themes.Ozds/js/scripts.js")
+          .SetUrl("~/Ozds.Themes.Ozds/js/scripts.min.js", "~/Ozds.Themes.Ozds/js/scripts.js")
           .SetVersion("6.0.0");
 
       _manifest.DefineScript("ozdstheme-custom")
           .SetDependencies("ozdstheme-jQuery")
-          .SetUrl("~/OrchardCore.Themes.Ozds/js/custom.js")
+          .SetUrl("~/Ozds.Themes.Ozds/js/custom.js")
           .SetVersion("6.0.0");
 
       _manifest.DefineScript("ozdstheme-libbcmath")
-          .SetUrl("~/OrchardCore.Themes.Ozds/js/libbcmath.js");
+          .SetUrl("~/Ozds.Themes.Ozds/js/libbcmath.js");
       _manifest.DefineScript("ozdstheme-bcmath")
-          .SetUrl("~/OrchardCore.Themes.Ozds/js/bcmath.js");
+          .SetUrl("~/Ozds.Themes.Ozds/js/bcmath.js");
       _manifest.DefineScript("ozdstheme-pdf417")
-          .SetUrl("~/OrchardCore.Themes.Ozds/js/pdf417.js")
+          .SetUrl("~/Ozds.Themes.Ozds/js/pdf417.js")
           .SetVersion("1.0.005");
 
       _manifest.DefineStyle("ozdstheme")
           .SetUrl(
-              "~/OrchardCore.Themes.Ozds/css/styles.min.css", "~/OrchardCore.Themes.Ozds/css/styles.css")
+              "~/Ozds.Themes.Ozds/css/styles.min.css", "~/Ozds.Themes.Ozds/css/styles.css")
           .SetVersion("6.0.0");
     }
 

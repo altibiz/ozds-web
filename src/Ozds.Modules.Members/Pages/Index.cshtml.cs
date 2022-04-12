@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Ozds.Users.Pages
-{
-  public class IndexModel : PageModel
-  {
+namespace Ozds.Modules.Members.Pages {
+  public class IndexModel : PageModel {
     public IActionResult OnGet() { return RedirectToPage("Portal"); }
   }
 }

@@ -2,12 +2,10 @@
 using YesSql.Indexes;
 using System;
 using System.Linq;
-using Ozds.Users.Utils;
+using Ozds.Modules.Members.Utils;
 
-namespace Ozds.Users.Payments
-{
-  public class PaymentIndex : MapIndex
-  {
+namespace Ozds.Modules.Members.Payments {
+  public class PaymentIndex : MapIndex {
     public string ContentItemId { get; set; }
 
     public string PersonContentItemId { get; set; }
@@ -27,17 +25,13 @@ namespace Ozds.Users.Payments
     public string TransactionRef { get; set; }
   }
 
-  public class PaymentIndexProvider : IndexProvider<ContentItem>
-  {
-    public override void Describe(DescribeContext<ContentItem> context)
-    {
-      context.For<PaymentIndex>().Map(contentItem =>
-      {
+  public class PaymentIndexProvider : IndexProvider<ContentItem> {
+    public override void Describe(DescribeContext<ContentItem> context) {
+      context.For<PaymentIndex>().Map(contentItem => {
         var pp = contentItem.AsReal<Payment>();
         if (pp == null)
           return null;
-        return new PaymentIndex
-        {
+        return new PaymentIndex {
           ContentItemId = contentItem.ContentItemId,
           Amount = pp.Amount.Value,
           Date = pp.Date.Value,

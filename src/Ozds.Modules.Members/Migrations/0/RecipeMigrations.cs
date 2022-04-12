@@ -1,14 +1,12 @@
 using OrchardCore.Data.Migration;
 using OrchardCore.Recipes.Services;
-using Ozds.Users.Extensions.OrchardCore;
+using Ozds.Modules.Members.Extensions.OrchardCore;
 
-namespace Ozds.Users.M0;
+namespace Ozds.Modules.Members.M0;
 
-public static partial class RecipeMigrations
-{
+public static partial class RecipeMigrations {
   public static void ExecuteInit(
-      this IRecipeMigrator recipe, IDataMigration migration)
-  {
+      this IRecipeMigrator recipe, IDataMigration migration) {
     recipe.Execute("0/AuthSettings.recipe.json", migration);
     recipe.Execute("0/CompanyTemplate.recipe.json", migration);
     recipe.Execute("0/CountyTaxonomy.recipe.json", migration);

@@ -1,11 +1,10 @@
 using System;
 using YesSql.Sql;
-using Ozds.Users.Payments;
+using Ozds.Modules.Members.Payments;
 
-namespace Ozds.Users.M0;
+namespace Ozds.Modules.Members.M0;
 
-public static partial class CreatePaymentIndexClass
-{
+public static partial class CreatePaymentIndexClass {
   public static void CreatePaymentIndex(this ISchemaBuilder schema) =>
       schema.CreateMapIndexTable<PaymentIndex>(
           table => table.Column<DateTime>(nameof(PaymentIndex.Date))

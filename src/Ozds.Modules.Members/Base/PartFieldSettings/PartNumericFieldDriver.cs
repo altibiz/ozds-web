@@ -1,4 +1,4 @@
-﻿using Ozds.Users.Base;
+﻿using Ozds.Modules.Members.Base;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using OrchardCore.Admin;
@@ -14,30 +14,25 @@ using System;
 using System.Globalization;
 using System.Threading.Tasks;
 
-namespace Ozds.Users.PartFieldSettings
-{
-  public class PartNumericFieldDriver : NumericFieldDisplayDriver
-  {
+namespace Ozds.Modules.Members.PartFieldSettings {
+  public class PartNumericFieldDriver : NumericFieldDisplayDriver {
     private IHttpContextAccessor _httpCA;
 
     public PartNumericFieldDriver(
         IStringLocalizer<NumericFieldDisplayDriver> localizer,
         IHttpContextAccessor httpContextAccessor)
-        : base(localizer)
-    {
+        : base(localizer) {
       _httpCA = httpContextAccessor;
     }
 
     public override IDisplayResult Edit(
-        NumericField field, BuildFieldEditorContext context)
-    {
+        NumericField field, BuildFieldEditorContext context) {
       var fieldDef = DriverService.GetFieldDef(
           context, AdminAttribute.IsApplied(_httpCA.HttpContext));
       if (fieldDef == null)
         return null;
       return Initialize<EditNumericFieldViewModel>(
-          GetEditorShapeType(fieldDef), model =>
-          {
+          GetEditorShapeType(fieldDef), model => {
             var settings =
                 context.PartFieldDefinition.GetSettings<NumericFieldSettings>();
             model.Value = context.IsNew ? settings.DefaultValue
@@ -51,8 +46,7 @@ namespace Ozds.Users.PartFieldSettings
     }
 
     public override async Task<IDisplayResult> UpdateAsync(NumericField field,
-        IUpdateModel updater, UpdateFieldEditorContext context)
-    {
+        IUpdateModel updater, UpdateFieldEditorContext context) {
       var fieldDef = DriverService.GetFieldDef(
           context, AdminAttribute.IsApplied(_httpCA.HttpContext));
       if (fieldDef == null)

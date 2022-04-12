@@ -5,16 +5,13 @@ using OrchardCore.DisplayManagement.Shapes;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ozds.Users.Utils
-{
-  public class ShapeTracingShapeEvents : IShapeDisplayEvents
-  {
+namespace Ozds.Modules.Members.Utils {
+  public class ShapeTracingShapeEvents : IShapeDisplayEvents {
     private readonly IHttpContextAccessor _hca;
 
     public ShapeTracingShapeEvents(IHttpContextAccessor hca) => _hca = hca;
 
-    public Task DisplayedAsync(ShapeDisplayContext context)
-    {
+    public Task DisplayedAsync(ShapeDisplayContext context) {
 
       // We could also use _orchardHelper.ConsoleLog(context.Shape) here but
       // that causes an OutOfMemoryException.
@@ -27,30 +24,25 @@ namespace Ozds.Users.Utils
       builder.AppendHtmlLine(shapeMetadata.Type);
       builder.AppendLine();
 
-      void AddIfNotNullOrEmpty(string name, string value)
-      {
-        if (!string.IsNullOrEmpty(value))
-        {
+      void AddIfNotNullOrEmpty(string name, string value) {
+        if (!string.IsNullOrEmpty(value)) {
           builder.AppendHtml(name);
           builder.AppendHtml(": ");
           builder.AppendHtmlLine(value);
         }
       }
 
-      if (shapeMetadata.Alternates.Any())
-      {
+      if (shapeMetadata.Alternates.Any()) {
         builder.AppendHtml("Alternates: ");
         builder.AppendHtmlLine(string.Join(", ", shapeMetadata.Alternates));
       }
 
-      if (shapeMetadata.BindingSources.Any())
-      {
+      if (shapeMetadata.BindingSources.Any()) {
         builder.AppendHtml("Binding sources: ");
         builder.AppendHtmlLine(string.Join(", ", shapeMetadata.BindingSources));
       }
 
-      if (shapeMetadata.Wrappers.Any())
-      {
+      if (shapeMetadata.Wrappers.Any()) {
         builder.AppendHtml("Wrappers: ");
         builder.AppendHtmlLine(string.Join(", ", shapeMetadata.Wrappers));
       }

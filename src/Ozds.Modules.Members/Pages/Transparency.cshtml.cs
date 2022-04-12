@@ -1,18 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Ozds.Users.Core;
-using Ozds.Users.Payments;
+using Ozds.Modules.Members.Core;
+using Ozds.Modules.Members.Payments;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using YesSql;
 
-namespace Ozds.Users.Pages
-{
-  public class TransparencyModel : PageModel
-  {
+namespace Ozds.Modules.Members.Pages {
+  public class TransparencyModel : PageModel {
     private readonly ISession _session;
-    public IEnumerable<PaymentByDayIndex> PaymentsByDay
-    {
+    public IEnumerable<PaymentByDayIndex> PaymentsByDay {
       get; set;
     } = new List<PaymentByDayIndex>();
 
@@ -24,20 +21,17 @@ namespace Ozds.Users.Pages
 
     public decimal PayOuts { get => PaymentsByDay.Sum(x => x.CountOut); }
 
-    public decimal AverageIn { get => PayIns > 0 ? TotalIncome / PayIns : 0; }
+    public decimal AverageIn { get => PayIns > 0? TotalIncome / PayIns : 0; }
 
-    public decimal AverageOut
-    {
-      get => PayOuts > 0 ? TotalExpense / PayOuts : 0;
+    public decimal AverageOut {
+      get => PayOuts > 0? TotalExpense / PayOuts : 0;
     }
 
-    public TransparencyModel(ISession session, MemberService mService)
-    {
+    public TransparencyModel(ISession session, MemberService mService) {
       _session = session;
     }
 
-    public async Task OnGetAsync()
-    {
+    public async Task OnGetAsync() {
       PaymentsByDay =
           (await _session.QueryIndex<PaymentByDayIndex>().ListAsync())
               .OrderByDescending(x => x.Date);

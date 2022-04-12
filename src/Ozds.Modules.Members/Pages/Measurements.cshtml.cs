@@ -5,18 +5,15 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Ozds.Elasticsearch;
 
-namespace Ozds.Users.Pages;
+namespace Ozds.Modules.Members.Pages;
 
-public class MeasurementsModel : PageModel
-{
-  public MeasurementsModel(IClient client, ILogger<MeasurementsModel> logger)
-  {
+public class MeasurementsModel : PageModel {
+  public MeasurementsModel(IClient client, ILogger<MeasurementsModel> logger) {
     Client = client;
     Logger = logger;
   }
 
-  public void OnGet()
-  {
+  public void OnGet() {
     var now = DateTime.UtcNow;
     Measurements = Client
                        .SearchMeasurementsSorted(

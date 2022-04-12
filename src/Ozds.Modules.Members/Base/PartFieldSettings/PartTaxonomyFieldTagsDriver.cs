@@ -1,4 +1,4 @@
-﻿using Ozds.Users.Base;
+﻿using Ozds.Modules.Members.Base;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
@@ -18,13 +18,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ozds.Users.PartFieldSettings
-{
-  public class PartTaxonomyFieldTagsDriver : TaxonomyFieldTagsDisplayDriver
-  {
+namespace Ozds.Modules.Members.PartFieldSettings {
+  public class PartTaxonomyFieldTagsDriver : TaxonomyFieldTagsDisplayDriver {
     private static readonly JsonSerializerSettings SerializerSettings =
-        new JsonSerializerSettings
-        {
+        new JsonSerializerSettings {
           ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
 
@@ -34,39 +31,31 @@ namespace Ozds.Users.PartFieldSettings
     public PartTaxonomyFieldTagsDriver(IContentManager cm,
         IStringLocalizer<TaxonomyFieldTagsDisplayDriver> localizer,
         IHttpContextAccessor httpContextAccessor)
-        : base(cm, localizer)
-    {
+        : base(cm, localizer) {
       _httpCA = httpContextAccessor;
       _contentManager = cm;
     }
 
     public override IDisplayResult Edit(
-        TaxonomyField field, BuildFieldEditorContext context)
-    {
+        TaxonomyField field, BuildFieldEditorContext context) {
       var fieldDef = DriverService.GetFieldDef(
           context, AdminAttribute.IsApplied(_httpCA.HttpContext));
       if (fieldDef == null)
         return null;
       return Initialize<EditTagTaxonomyFieldViewModel>(
-          GetEditorShapeType(fieldDef), async model =>
-          {
+          GetEditorShapeType(fieldDef), async model => {
             var settings = fieldDef.GetSettings<TaxonomyFieldSettings>();
             model.Taxonomy = await _contentManager.GetAsync(
                 settings.TaxonomyContentItemId, VersionOptions.Latest);
 
-            if (model.Taxonomy != null)
-            {
+            if (model.Taxonomy != null) {
               var termEntries = new List<TermEntry>();
               TaxonomyFieldDriverHelper.PopulateTermEntries(termEntries, field,
                   model.Taxonomy.As<TaxonomyPart>().Terms, 0);
               var tagTermEntries = termEntries.Select(
-                  te => new TagTermEntry
-                  {
-                    ContentItemId = te.ContentItemId,
-                    Selected = te.Selected,
-                    DisplayText = te.Term.DisplayText,
-                    IsLeaf = te.IsLeaf
-                  });
+                  te => new TagTermEntry { ContentItemId = te.ContentItemId,
+                    Selected = te.Selected, DisplayText = te.Term.DisplayText,
+                    IsLeaf = te.IsLeaf });
 
               model.TagTermEntries = JsonConvert.SerializeObject(
                   tagTermEntries, SerializerSettings);
@@ -79,8 +68,7 @@ namespace Ozds.Users.PartFieldSettings
     }
 
     public override async Task<IDisplayResult> UpdateAsync(TaxonomyField field,
-        IUpdateModel updater, UpdateFieldEditorContext context)
-    {
+        IUpdateModel updater, UpdateFieldEditorContext context) {
       var fieldDef = DriverService.GetFieldDef(
           context, AdminAttribute.IsApplied(_httpCA.HttpContext));
       if (fieldDef == null)

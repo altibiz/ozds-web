@@ -1,7 +1,7 @@
 using OrchardCore.Data.Migration;
 using OrchardCore.Recipes.Services;
 
-namespace OrchardCore.Themes.Ozds.Extensions.OrchardCore;
+namespace Ozds.Themes.Ozds.Extensions.OrchardCore;
 
 public static class IRecipeMigratorExtensions
 {

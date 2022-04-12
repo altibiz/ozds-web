@@ -3,10 +3,9 @@ using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
 
-namespace Ozds.Users.M0;
+namespace Ozds.Modules.Members.M0;
 
-public static class AlterPayment
-{
+public static class AlterPayment {
   public static void AlterPaymentType(this IContentDefinitionManager
           content) => content.AlterTypeDefinition("Payment",
       type =>
@@ -18,8 +17,7 @@ public static class AlterPayment
               .WithPart("Payment", part => part.WithPosition("0"))
               .WithPart("TitlePart",
                   part => part.WithPosition("1").WithSettings(
-                      new TitlePartSettings
-                      {
+                      new TitlePartSettings {
                         Options = TitlePartOptions.GeneratedDisabled,
                         Pattern =
                             "{{ ContentItem.Content.Payment.PayerName.Text }} | {{ ContentItem.Content.Payment.Amount.Value | format_number: \"C\"  }} | {{ ContentItem.Content.Payment.Date.Value | date: \"%D\" }}",
@@ -32,25 +30,21 @@ public static class AlterPayment
                           field => field.OfType("BooleanField")
                                        .WithDisplayName("Isplata")
                                        .WithPosition("0")
-                                       .WithSettings(new BooleanFieldSettings
-                                       {
+                                       .WithSettings(new BooleanFieldSettings {
                                          DefaultValue = false,
                                        }))
                       .WithField("Amount",
                           field => field.OfType("NumericField")
                                        .WithDisplayName("Iznos")
                                        .WithPosition("1")
-                                       .WithSettings(new NumericFieldSettings
-                                       {
-                                         Required = true,
-                                         Scale = 2
+                                       .WithSettings(new NumericFieldSettings {
+                                         Required = true, Scale = 2
                                        }))
                       .WithField("PayerName",
                           field => field.OfType("TextField")
                                        .WithDisplayName("Ime")
                                        .WithPosition("2")
-                                       .WithSettings(new TextFieldSettings
-                                       {
+                                       .WithSettings(new TextFieldSettings {
                                          Required = true,
                                        }))
                       .WithField(
@@ -74,8 +68,7 @@ public static class AlterPayment
                                        .WithDisplayName("Član")
                                        .WithPosition("6")
                                        .WithSettings(
-                                           new ContentPickerFieldSettings
-                                           {
+                                           new ContentPickerFieldSettings {
                                              DisplayedContentTypes =
                                                  new[] { "Member", "Company" },
                                            })));

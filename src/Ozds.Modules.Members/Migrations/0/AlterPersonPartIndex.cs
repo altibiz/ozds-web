@@ -1,15 +1,12 @@
 using YesSql.Sql;
-using Ozds.Users.Base;
-using Ozds.Users.Persons;
+using Ozds.Modules.Members.Base;
+using Ozds.Modules.Members.Persons;
 
-namespace Ozds.Users.M0;
+namespace Ozds.Modules.Members.M0;
 
-public static class AlterPersonPartIndexClass
-{
-  public static void AlterPersonPartIndex(this ISchemaBuilder schema)
-  {
-    schema.AlterIndexTable<PersonPartIndex>(table =>
-    {
+public static class AlterPersonPartIndexClass {
+  public static void AlterPersonPartIndex(this ISchemaBuilder schema) {
+    schema.AlterIndexTable<PersonPartIndex>(table => {
       table.CreateIndex("IDX_PersonPartIndex_DocumentId", "DocumentId", "Oib",
           "ContentItemId");
     });

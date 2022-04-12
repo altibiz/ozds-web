@@ -2,9 +2,6 @@
   "name": "Helb",
   "displayName": "OZDS Helb",
   "description": "OZDS Helb Tenant Recipe",
-  "author": "AltiBiz",
-  "website": "https://altibiz.com",
-  "version": "1.0.0",
   "issetuprecipe": true,
   "steps": [
     {
@@ -43,7 +40,7 @@
         "OrchardCore.Lucene",
         "OrchardCore.Lists",
         "OrchardCore.Markdown",
-        "[js: configuration('Media_Module')]",
+        "OrchardCore.Media",
         "OrchardCore.Menu",
         "OrchardCore.Placements",
         "OrchardCore.Queries",
@@ -68,14 +65,14 @@
       "enable": [
         "TheAdmin",
         "SafeMode",
-        "OrchardCore.Themes.Ozds",
-        "Ozds.Users"
+        "Ozds.Modules.Members",
+        "Ozds.Themes.Ozds"
       ]
     },
     {
       "name": "themes",
       "admin": "TheAdmin",
-      "site": "OrchardCore.Themes.Ozds"
+      "site": "Ozds.Themes.Ozds"
     }
   ]
 }

@@ -5,10 +5,10 @@ using Microsoft.Extensions.Hosting;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.Data.Migration;
 using OrchardCore.Recipes.Services;
-using OrchardCore.Themes.Ozds.M0;
-using OrchardCore.Themes.Ozds.M1;
+using Ozds.Themes.Ozds.M0;
+using Ozds.Themes.Ozds.M1;
 
-namespace OrchardCore.Themes.Ozds;
+namespace Ozds.Themes.Ozds;
 
 public partial class Migrations : DataMigration
 {

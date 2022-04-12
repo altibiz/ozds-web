@@ -3,10 +3,8 @@ using OrchardCore.ContentManagement;
 using OrchardCore.Media.Fields;
 using OrchardCore.Taxonomies.Fields;
 
-namespace Ozds.Users.Core
-{
-  public class Company : ContentPart
-  {
+namespace Ozds.Modules.Members.Core {
+  public class Company : ContentPart {
     public TextField AuthorizedRep { get; set; }
     public TaxonomyField RepRole { get; set; }
     public NumericField Revenue2019 { get; set; }

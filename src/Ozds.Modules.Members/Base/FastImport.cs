@@ -15,20 +15,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using YesSql;
 
-namespace Ozds.Users.Base
-{
-  public class FastImport : IRecipeStepHandler
-  {
-    public class ContentStepModel
-    {
+namespace Ozds.Modules.Members.Base {
+  public class FastImport : IRecipeStepHandler {
+    public class ContentStepModel {
       public JArray Data { get; set; }
     }
 
-    public Task ExecuteAsync(RecipeExecutionContext context)
-    {
+    public Task ExecuteAsync(RecipeExecutionContext context) {
       if (!string.Equals(
-              context.Name, "fastimport", StringComparison.OrdinalIgnoreCase))
-      {
+              context.Name, "fastimport", StringComparison.OrdinalIgnoreCase)) {
         return Task.CompletedTask;
       }
 
@@ -40,8 +35,7 @@ namespace Ozds.Users.Base
     }
   }
 
-  public class Importer
-  {
+  public class Importer {
 
     private const int ImportBatchSize = 500;
     private readonly ISession _session;
@@ -52,32 +46,26 @@ namespace Ozds.Users.Base
     private readonly ILogger<DefaultContentManager> _logger;
 
     public Importer(ISession session, ILogger<DefaultContentManager> logger,
-        IEnumerable<IContentHandler> handlers)
-    {
+        IEnumerable<IContentHandler> handlers) {
       _session = session;
       Handlers = handlers;
       ReversedHandlers = handlers.Reverse().ToArray();
       _logger = logger;
     }
 
-    public async Task ImportAsync(IEnumerable<ContentItem> contentItems)
-    {
+    public async Task ImportAsync(IEnumerable<ContentItem> contentItems) {
       var skip = 0;
 
       var importedVersionIds = new HashSet<string>();
 
       var batchedContentItems = contentItems.Take(ImportBatchSize);
 
-      while (batchedContentItems.Any())
-      {
+      while (batchedContentItems.Any()) {
 
-        foreach (var importingItem in batchedContentItems)
-        {
-          if (!string.IsNullOrEmpty(importingItem.ContentItemVersionId))
-          {
+        foreach (var importingItem in batchedContentItems) {
+          if (!string.IsNullOrEmpty(importingItem.ContentItemVersionId)) {
             if (importedVersionIds.Contains(
-                    importingItem.ContentItemVersionId))
-            {
+                    importingItem.ContentItemVersionId)) {
               continue;
             }
 
@@ -99,15 +87,12 @@ namespace Ozds.Users.Base
 
   [BackgroundTask(
       Schedule = "*/1 * * * *", Description = "Fast import background task.")]
-  public class FastImportBackgroundTask : IBackgroundTask
-  {
+  public class FastImportBackgroundTask : IBackgroundTask {
     public static readonly ConcurrentQueue<ContentItem[]> PendingImports =
         new();
     public Task DoWorkAsync(
-        IServiceProvider serviceProvider, CancellationToken cancellationToken)
-    {
-      if (PendingImports.TryDequeue(out var toImport))
-      {
+        IServiceProvider serviceProvider, CancellationToken cancellationToken) {
+      if (PendingImports.TryDequeue(out var toImport)) {
         var contentManager = serviceProvider.GetRequiredService<Importer>();
         return contentManager.ImportAsync(toImport);
       }

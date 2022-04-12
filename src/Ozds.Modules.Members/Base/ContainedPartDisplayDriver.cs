@@ -1,4 +1,4 @@
-﻿using Ozds.Users.Core;
+﻿using Ozds.Modules.Members.Core;
 using Microsoft.AspNetCore.Http;
 using OrchardCore.Admin;
 using OrchardCore.ContentManagement;
@@ -8,31 +8,26 @@ using OrchardCore.DisplayManagement.Views;
 using OrchardCore.Lists.Models;
 using System.Threading.Tasks;
 
-namespace Ozds.Users.Base
-{
-  public class CpVm
-  {
+namespace Ozds.Modules.Members.Base {
+  public class CpVm {
     public string ListContentItemId { get; set; }
     public string ParentName { get; set; }
   }
 
-  public class ContainedPartDisplayDriver : ContentDisplayDriver
-  {
+  public class ContainedPartDisplayDriver : ContentDisplayDriver {
     private readonly IHttpContextAccessor _httpCA;
 
     private readonly IContentManager _contentManager;
 
     public ContentItem MemberContentItem { get; set; }
     public ContainedPartDisplayDriver(
-        IHttpContextAccessor httpContextAccessor, IContentManager cman)
-    {
+        IHttpContextAccessor httpContextAccessor, IContentManager cman) {
       _httpCA = httpContextAccessor;
       _contentManager = cman;
     }
 
     public override async Task<IDisplayResult> EditAsync(
-        ContentItem model, BuildEditorContext context)
-    {
+        ContentItem model, BuildEditorContext context) {
       if (!AdminAttribute.IsApplied(_httpCA.HttpContext))
         return null;
 
@@ -43,8 +38,7 @@ namespace Ozds.Users.Base
       MemberContentItem =
           await _contentManager.GetAsync(part.ListContentItemId);
 
-      return Initialize<CpVm>("ContainedPart_Nav", m =>
-      {
+      return Initialize<CpVm>("ContainedPart_Nav", m => {
         m.ListContentItemId = part.ListContentItemId;
         m.ParentName = MemberContentItem.DisplayText;
       }).Location("Content");

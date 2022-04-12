@@ -5,7 +5,7 @@ using OrchardCore.Indexing;
 using OrchardCore.Media.Settings;
 using OrchardCore.Taxonomies.Settings;
 
-namespace OrchardCore.Themes.Ozds.M1;
+namespace Ozds.Themes.Ozds.M1;
 
 public static partial class AlterBlogPost
 {

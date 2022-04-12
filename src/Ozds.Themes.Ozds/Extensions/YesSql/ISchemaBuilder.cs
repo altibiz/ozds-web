@@ -1,3 +1,3 @@
-namespace OrchardCore.Themes.Ozds.Extensions.YesSql;
+namespace Ozds.Themes.Ozds.Extensions.YesSql;
 
 public static class ISchemaBuilderExtensions { }

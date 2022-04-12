@@ -1,8 +1,8 @@
 using OrchardCore.Data.Migration;
 using OrchardCore.Recipes.Services;
-using OrchardCore.Themes.Ozds.Extensions.OrchardCore;
+using Ozds.Themes.Ozds.Extensions.OrchardCore;
 
-namespace OrchardCore.Themes.Ozds.M0;
+namespace Ozds.Themes.Ozds.M0;
 
 public static partial class RecipeMigrations
 {

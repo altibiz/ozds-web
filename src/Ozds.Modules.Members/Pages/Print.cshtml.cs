@@ -7,10 +7,8 @@ using OrchardCore.ContentManagement.Display;
 using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.ModelBinding;
 
-namespace Ozds.Users.Pages
-{
-  public class PrintModel : PageModel
-  {
+namespace Ozds.Modules.Members.Pages {
+  public class PrintModel : PageModel {
     // this is a url used for fetching printed doc
     private readonly string downloadFormat;
 
@@ -23,8 +21,7 @@ namespace Ozds.Users.Pages
 
     public PrintModel(IContentItemDisplayManager cidm, IContentManager cm,
         IUpdateModelAccessor updateModelAccessor,
-        IConfiguration configuration)
-    {
+        IConfiguration configuration) {
 
       _contentManager = cm;
       _contentItemDisplayManager = cidm;
@@ -32,8 +29,7 @@ namespace Ozds.Users.Pages
       downloadFormat = configuration.GetValue<string>("PrintPdfUrl");
     }
 
-    public async Task<IActionResult> OnGetAsync(string contentId)
-    {
+    public async Task<IActionResult> OnGetAsync(string contentId) {
       var content = await _contentManager.GetAsync(contentId);
       Shape = await _contentItemDisplayManager.BuildDisplayAsync(
           content, _updateModelAccessor.ModelUpdater, "Print");
@@ -42,8 +38,7 @@ namespace Ozds.Users.Pages
       return Page();
     }
 
-    public IActionResult OnGetDownload(string contentId, string fileName)
-    {
+    public IActionResult OnGetDownload(string contentId, string fileName) {
       fileName = string.IsNullOrWhiteSpace(fileName) ? contentId : fileName;
       var docUrl = string.Format(
           "https://{0}/Members/Print/{1}/", Request.Host, contentId);

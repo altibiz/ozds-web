@@ -2,7 +2,7 @@ using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Flows.Models;
 
-namespace OrchardCore.Themes.Ozds.M1;
+namespace Ozds.Themes.Ozds.M1;
 
 public static partial class AlterGallery
 {

@@ -16,44 +16,44 @@
       "name": "media",
       "Files": [
         {
-          "TargetPath": "0/Assets/about-bg.jpg",
-          "SourcePath": "../../wwwroot/assets/img/about-bg.jpg"
+          "SourcePath": "0/Assets/about-bg.jpg",
+          "TargetPath": "assets/img/about-bg.jpg"
         },
         {
-          "TargetPath": "0/Assets/home-bg.jpg",
-          "SourcePath": "../../wwwroot/assets/img/home-bg.jpg"
+          "SourcePath": "0/Assets/home-bg.jpg",
+          "TargetPath": "assets/img/home-bg.jpg"
         },
         {
-          "TargetPath": "0/Assets/post-bg.jpg",
-          "SourcePath": "../../wwwroot/assets/img/post-bg.jpg"
+          "SourcePath": "0/Assets/post-bg.jpg",
+          "TargetPath": "assets/img/post-bg.jpg"
         },
         {
           "SourcePath": "0/Assets/24sata-300px_162034.png",
-          "TargetPath": "../../wwwroot/24sata-300px_162034.png"
+          "TargetPath": "24sata-300px_162034.png"
         },
         {
           "SourcePath": "0/Assets/doniraj_183712.jpg",
-          "TargetPath": "../../wwwroot/doniraj_183712.jpg"
+          "TargetPath": "doniraj_183712.jpg"
         },
         {
           "SourcePath": "0/Assets/logo_600x600_171449.jpg",
-          "TargetPath": "../../wwwroot/logo_600x600_171449.jpg"
+          "TargetPath": "logo_600x600_171449.jpg"
         },
         {
           "SourcePath": "0/Assets/novi_banner_91147.jpeg",
-          "TargetPath": "../../wwwroot/novi_banner_91147.jpeg"
+          "TargetPath": "novi_banner_91147.jpeg"
         },
         {
           "SourcePath": "0/Assets/ovdje-stiti-ozds_18303.jpg",
-          "TargetPath": "../../wwwroot/ovdje-stiti-ozds_18303.jpg"
+          "TargetPath": "ovdje-stiti-ozds_18303.jpg"
         },
         {
           "SourcePath": "0/Assets/saznaj-sto-radimo_183733.jpg",
-          "TargetPath": "../../wwwroot/saznaj-sto-radimo_183733.jpg"
+          "TargetPath": "saznaj-sto-radimo_183733.jpg"
         },
         {
           "SourcePath": "0/Assets/telemach_logo_u_zasticenoj_zoni_171512.jpg",
-          "TargetPath": "../../wwwroot/telemach_logo_u_zasticenoj_zoni_171512.jpg"
+          "TargetPath": "telemach_logo_u_zasticenoj_zoni_171512.jpg"
         }
       ]
     }

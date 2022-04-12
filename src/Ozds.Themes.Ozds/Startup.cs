@@ -4,7 +4,7 @@ using OrchardCore.Modules;
 using OrchardCore.ResourceManagement;
 using OrchardCore.Data.Migration;
 
-namespace OrchardCore.Themes.Ozds
+namespace Ozds.Themes.Ozds
 {
   public class Startup : StartupBase
   {

@@ -1,11 +1,10 @@
 using YesSql.Sql;
 using System;
-using Ozds.Users.Payments;
+using Ozds.Modules.Members.Payments;
 
-namespace Ozds.Users.M0;
+namespace Ozds.Modules.Members.M0;
 
-public static class CreatePaymentByDayIndexClass
-{
+public static class CreatePaymentByDayIndexClass {
   public static void CreatePaymentByDayIndex(this ISchemaBuilder schema) =>
       schema.CreateReduceIndexTable<PaymentByDayIndex>(
           table => table.Column<DateTime>(nameof(PaymentByDayIndex.Date))
