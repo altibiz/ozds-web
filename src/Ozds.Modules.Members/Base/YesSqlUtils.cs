@@ -12,10 +12,13 @@ using YesSql;
 using YesSql.Indexes;
 using YesSql.Sql;
 
-namespace Ozds.Modules.Members.Base {
-  public static class YesSqlUtils {
+namespace Ozds.Modules.Members.Base
+{
+  public static class YesSqlUtils
+  {
     public static void ClearReduceIndexTable(this DbConnection connection,
-        Type indexType, IConfiguration configuration, string collection = "") {
+        Type indexType, IConfiguration configuration, string collection = "")
+    {
       var indexTable = configuration.TableNameConvention.GetIndexTable(
           indexType, collection);
       var documentTable =
@@ -29,7 +32,8 @@ namespace Ozds.Modules.Members.Base {
     }
 
     public static void ClearMapIndexTable(this DbConnection connection,
-        Type indexType, IConfiguration configuration, string collection = "") {
+        Type indexType, IConfiguration configuration, string collection = "")
+    {
       var indexTable = configuration.TableNameConvention.GetIndexTable(
           indexType, collection);
       connection.Execute(
@@ -38,7 +42,8 @@ namespace Ozds.Modules.Members.Base {
 
     public async static Task<IEnumerable<Document>> GetContentItems(
         this DbConnection conn, string contentItemType,
-        IConfiguration configuration, string collection = "") {
+        IConfiguration configuration, string collection = "")
+    {
       var sqlBuilder =
           new SqlBuilder(configuration.TablePrefix, configuration.SqlDialect);
       sqlBuilder.Select();
@@ -47,7 +52,8 @@ namespace Ozds.Modules.Members.Base {
           configuration.TableNameConvention.GetDocumentTable(collection), "dd");
       sqlBuilder.WhereAnd(
           " dd.Type='OrchardCore.ContentManagement.ContentItem, OrchardCore.ContentManagement.Abstractions' ");
-      if (!string.IsNullOrEmpty(contentItemType)) {
+      if (!string.IsNullOrEmpty(contentItemType))
+      {
         sqlBuilder.InnerJoin(configuration.TablePrefix + "ContentItemIndex",
             "cix", "DocumentId", "dd", "Id", "cix");
         sqlBuilder.WhereAnd("ContentType='" + contentItemType + "'");
@@ -56,7 +62,8 @@ namespace Ozds.Modules.Members.Base {
     }
 
     private static IndexDescriptor GetDescriptor(
-        ISession sess, IIndexProvider indexProvider) {
+        ISession sess, IIndexProvider indexProvider)
+    {
       MethodInfo getDesc = sess.GetType().GetMethod(
           "GetDescriptors", BindingFlags.NonPublic | BindingFlags.Instance);
       var descs =
@@ -67,7 +74,8 @@ namespace Ozds.Modules.Members.Base {
 
     public async static Task RefreshReduceIndex(this ISession templateSess,
         IIndexProvider indexProvider, string contentItemType = "",
-        string collection = "", ILogger logger = null) {
+        string collection = "", ILogger logger = null)
+    {
       templateSess.Store.Configuration.Logger = logger;
       var store = await StoreFactory.CreateAndInitializeAsync(
           templateSess.Store.Configuration);
@@ -84,7 +92,8 @@ namespace Ozds.Modules.Members.Base {
           contentItemType, store.Configuration, collection);
       var items = sess.Get<ContentItem>(docs.ToList(), collection);
       int i = 1;
-      foreach (var itm in items) {
+      foreach (var itm in items)
+      {
         sess.Save(itm);
         if (i % 100 == 0)
           await sess.SaveChangesAsync();
@@ -95,7 +104,8 @@ namespace Ozds.Modules.Members.Base {
 
     public async static Task RefreshMapIndex(this ISession templateSes,
         IIndexProvider indexProvider, string contentItemType = "",
-        string collection = "") {
+        string collection = "")
+    {
       var store = await StoreFactory.CreateAndInitializeAsync(
           templateSes.Store.Configuration);
       using var sess = (Session)store.CreateSession();
@@ -108,7 +118,8 @@ namespace Ozds.Modules.Members.Base {
       var docs = await conn.GetContentItems(
           contentItemType, store.Configuration, collection);
       var items = sess.Get<ContentItem>(docs.ToList(), collection);
-      foreach (var itm in items) {
+      foreach (var itm in items)
+      {
         sess.Save(itm);
       }
       await sess.SaveChangesAsync();

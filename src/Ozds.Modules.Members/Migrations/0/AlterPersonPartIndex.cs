@@ -4,9 +4,12 @@ using Ozds.Modules.Members.Persons;
 
 namespace Ozds.Modules.Members.M0;
 
-public static class AlterPersonPartIndexClass {
-  public static void AlterPersonPartIndex(this ISchemaBuilder schema) {
-    schema.AlterIndexTable<PersonPartIndex>(table => {
+public static class AlterPersonPartIndexClass
+{
+  public static void AlterPersonPartIndex(this ISchemaBuilder schema)
+  {
+    schema.AlterIndexTable<PersonPartIndex>(table =>
+    {
       table.CreateIndex("IDX_PersonPartIndex_DocumentId", "DocumentId", "Oib",
           "ContentItemId");
     });

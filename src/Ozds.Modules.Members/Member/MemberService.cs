@@ -21,10 +21,12 @@ using System.Threading.Tasks;
 using YesSql;
 using ISession = YesSql.ISession;
 
-namespace Ozds.Modules.Members.Core {
+namespace Ozds.Modules.Members.Core
+{
   public enum ContentType { Member, Company, Offer }
 
-  public class MemberService {
+  public class MemberService
+  {
     private readonly IUserService _userService;
     public ISession _session;
 
@@ -38,7 +40,8 @@ namespace Ozds.Modules.Members.Core {
         IContentManager contentManager, IOrchardHelper orchardHelper,
         IContentItemDisplayManager contentItemDisplayManager,
         IUpdateModelAccessor updateModelAccessor,
-        IHttpContextAccessor httpContextAccessor) {
+        IHttpContextAccessor httpContextAccessor)
+    {
       _userService = userService;
       _session = session;
       _oHelper = orchardHelper;
@@ -48,7 +51,8 @@ namespace Ozds.Modules.Members.Core {
       _httpContextAccessor = httpContextAccessor;
     }
     public async Task<ContentItem> GetUserMember(
-        bool includeDraft = false, ClaimsPrincipal cUSer = null) {
+        bool includeDraft = false, ClaimsPrincipal cUSer = null)
+    {
       var user = await GetCurrentUser(cUSer);
       var query = _session.Query<ContentItem, UserPickerFieldIndex>(
           x => x.ContentType == nameof(Member) &&
@@ -56,7 +60,8 @@ namespace Ozds.Modules.Members.Core {
       if (!includeDraft) query = query.Where(x => x.Published);
       var member = await query.ListAsync(); return member.FirstOrDefault();
     }
-    public async Task<List<ContentItem>> GetUserCompanies() {
+    public async Task<List<ContentItem>> GetUserCompanies()
+    {
       ContentItem member = await GetUserMember();
       var companyContentItem = new List<ContentItem>();
 
@@ -67,18 +72,21 @@ namespace Ozds.Modules.Members.Core {
       return companies.ToList();
     }
 
-    public async Task<ContentItem> GetContentItemById(string contentItemId) {
+    public async Task<ContentItem> GetContentItemById(string contentItemId)
+    {
       return await _session.GetItemById(contentItemId);
     }
 
-    public async Task<ContentItem> GetByOib(string oib) {
+    public async Task<ContentItem> GetByOib(string oib)
+    {
       return await _session.Query<ContentItem>()
           .With<PersonPartIndex>(x => x.Oib == oib)
           .FirstOrDefaultAsync();
     }
 
     public async Task<ContentItem> GetCompanyOffers(
-        string companyContentItemId, bool includeDraft = false) {
+        string companyContentItemId, bool includeDraft = false)
+    {
       var company = await GetContentItemById(companyContentItemId);
 
       var query = _session.Query<ContentItem, OfferIndex>(
@@ -87,18 +95,22 @@ namespace Ozds.Modules.Members.Core {
       var member = await query.ListAsync(); return member.FirstOrDefault();
     }
 
-    private async Task<User> GetCurrentUser(ClaimsPrincipal user = null) {
+    private async Task<User> GetCurrentUser(ClaimsPrincipal user = null)
+    {
       return await _userService.GetAuthenticatedUserAsync(
           user ?? _httpContextAccessor.HttpContext.User) as User;
     }
 
-    public async Task<(ContentItem, IShape)> GetNewItem(ContentType cType) {
+    public async Task<(ContentItem, IShape)> GetNewItem(ContentType cType)
+    {
       return await GetNewItem(cType.ToString());
     }
 
-    public async Task<(ContentItem, IShape)> GetNewItem(string cType) {
+    public async Task<(ContentItem, IShape)> GetNewItem(string cType)
+    {
       var contentItem = await _contentManager.NewAsync(cType.ToString());
-      if (cType.Equals(ContentType.Company)) {
+      if (cType.Equals(ContentType.Company))
+      {
         ContentItem mem = await GetUserMember(true);
         contentItem.Content.PersonPart.Address = mem.Content.PersonPart.Address;
         contentItem.Content.PersonPart.County = mem.Content.PersonPart.County;
@@ -110,31 +122,37 @@ namespace Ozds.Modules.Members.Core {
     }
 
     public async Task<(ContentItem, IShape)> ModelToNew(
-        ContentType memberType) {
+        ContentType memberType)
+    {
       return await ModelToNew(memberType.ToString());
     }
 
-    public async Task<(ContentItem, IShape)> ModelToNew(string memberType) {
+    public async Task<(ContentItem, IShape)> ModelToNew(string memberType)
+    {
       return await ModelToItem(await _contentManager.NewAsync(memberType));
     }
 
-    public async Task<(ContentItem, IShape)> ModelToItem(string id = null) {
+    public async Task<(ContentItem, IShape)> ModelToItem(string id = null)
+    {
       return await ModelToItem(
           await _contentManager.GetAsync(id, VersionOptions.Latest));
     }
 
     public async Task<(ContentItem, IShape)> ModelToItem(
-        ContentItem contentItem) {
+        ContentItem contentItem)
+    {
       var shape = await _contentItemDisplayManager.UpdateEditorAsync(
           contentItem, _updateModelAccessor.ModelUpdater, true);
 
-      if (!_updateModelAccessor.ModelUpdater.ModelState.IsValid) {
+      if (!_updateModelAccessor.ModelUpdater.ModelState.IsValid)
+      {
         await _session.CancelAsync();
       }
       return (contentItem, shape);
     }
 
-    public async Task<(IShape, ContentItem)> GetEditorById(string contentId) {
+    public async Task<(IShape, ContentItem)> GetEditorById(string contentId)
+    {
       var contentItem =
           await _contentManager.GetAsync(contentId, VersionOptions.Latest);
 
@@ -143,7 +161,8 @@ namespace Ozds.Modules.Members.Core {
       return (shape, contentItem);
     }
     public async Task<ContentValidateResult> CreateMemberCompany(
-        ContentItem companyItem) {
+        ContentItem companyItem)
+    {
       var member = await GetUserMember(true);
       if (member == null)
         return new ContentValidateResult { Succeeded = false };
@@ -153,13 +172,15 @@ namespace Ozds.Modules.Members.Core {
     }
 
     public async Task<ContentValidateResult> UpdateContentItem(
-        ContentItem contentItem) {
+        ContentItem contentItem)
+    {
       await _contentManager.UpdateAsync(contentItem);
       return await _contentManager.ValidateAsync(contentItem);
     }
 
     public async Task<ContentValidateResult> CreateMemberDraft(
-        ContentItem memberItem) {
+        ContentItem memberItem)
+    {
 
       var user = await GetCurrentUser();
       // Set the current user as the owner to check for ownership permissions on
@@ -173,19 +194,22 @@ namespace Ozds.Modules.Members.Core {
     }
 
     public async Task<ContentValidateResult> CreateNew(
-        ContentItem memberItem, bool published = false) {
+        ContentItem memberItem, bool published = false)
+    {
       return await _contentManager.UpdateValidateAndCreateAsync(memberItem,
           published ? VersionOptions.Published : VersionOptions.Draft);
     }
 
     public async Task<ContentValidateResult> CreateOfferDraft(
-        ContentItem offerItem, string parentContentItemId) {
+        ContentItem offerItem, string parentContentItemId)
+    {
       var parentContentItem = await GetContentItemById(parentContentItemId);
       if (parentContentItem == null)
         return new ContentValidateResult { Succeeded = false };
 
       // DORADITI !!!!
-      offerItem.Alter<Offer>(offer => {
+      offerItem.Alter<Offer>(offer =>
+      {
         offer.Company.ContentItemIds =
             new[] { parentContentItem.ContentItemId };
       });
@@ -194,31 +218,34 @@ namespace Ozds.Modules.Members.Core {
           offerItem, VersionOptions.Draft);
     }
 
-    public async Task<List<ContentItem>> GetAllOffers() {
+    public async Task<List<ContentItem>> GetAllOffers()
+    {
       var query = _session.Query<ContentItem, ContentItemIndex>(
           x => x.ContentType == nameof(Offer) && x.Published);
 
       var list = await query.ListAsync();
 
-          return list.ToList();
+      return list.ToList();
     }
-    public async Task<List<ContentItem>> GetAllOffersByTag(string tagId) {
+    public async Task<List<ContentItem>> GetAllOffersByTag(string tagId)
+    {
       var query = _session.Query<ContentItem, TaxonomyIndex>(
           x => x.ContentType == nameof(Offer) && x.Published &&
                x.TermContentItemId.Contains(tagId));
 
       var list = await query.ListAsync();
 
-          return list.ToList();
+      return list.ToList();
     }
     public async Task<List<ContentItem>> GetAllOffersSearch(
-        string searchString) {
+        string searchString)
+    {
       var query = _session.Query<ContentItem, OfferIndex>(
           x => x.Published && x.Title.Contains(searchString));
 
       var list = await query.ListAsync();
 
-          return list.ToList();
+      return list.ToList();
     }
   }
 }

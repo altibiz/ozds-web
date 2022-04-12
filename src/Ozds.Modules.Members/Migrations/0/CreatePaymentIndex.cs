@@ -4,7 +4,8 @@ using Ozds.Modules.Members.Payments;
 
 namespace Ozds.Modules.Members.M0;
 
-public static partial class CreatePaymentIndexClass {
+public static partial class CreatePaymentIndexClass
+{
   public static void CreatePaymentIndex(this ISchemaBuilder schema) =>
       schema.CreateMapIndexTable<PaymentIndex>(
           table => table.Column<DateTime>(nameof(PaymentIndex.Date))

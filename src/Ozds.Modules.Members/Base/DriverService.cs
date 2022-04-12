@@ -7,8 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Ozds.Modules.Members.Base {
-  public class DriverService {
+namespace Ozds.Modules.Members.Base
+{
+  public class DriverService
+  {
     private static IEnumerable<Type> _implementingTypes;
     private static IEnumerable<Type> implementingTypes = _implementingTypes ??=
         AppDomain.CurrentDomain.GetAssemblies()
@@ -17,23 +19,27 @@ namespace Ozds.Modules.Members.Base {
                         t.IsClass)
             .ToList();
 
-    public static IEnumerable<Type> ImplementingTypes {
+    public static IEnumerable<Type> ImplementingTypes
+    {
       get => implementingTypes;
       set => implementingTypes = value;
     }
 
     public static ContentPartFieldDefinition GetFieldDef(
-        BuildFieldEditorContext context, bool isAdminTheme) {
+        BuildFieldEditorContext context, bool isAdminTheme)
+    {
       IFieldEditorSettings partSettings = null;
       var oldDef = context.PartFieldDefinition;
-      foreach (var typ in ImplementingTypes) {
+      foreach (var typ in ImplementingTypes)
+      {
         context.TypePartDefinition.Settings.TryGetValue(
             typ.Name, out JToken val);
         if (val == null)
           continue;
         partSettings = val.ToObject(typ) as IFieldEditorSettings;
       }
-      if (partSettings != null) {
+      if (partSettings != null)
+      {
         var textset = oldDef.GetSettings<ContentPartFieldSettings>();
         var newEditor =
             partSettings.GetFieldDisplayMode(context.PartFieldDefinition.Name,
@@ -43,10 +49,12 @@ namespace Ozds.Modules.Members.Base {
         var newDispName =
             partSettings.GetFieldLabel(context.PartFieldDefinition.Name,
                 textset.DisplayName, isAdminTheme);
-        if (textset.Editor != newEditor || textset.DisplayName != newDispName) {
+        if (textset.Editor != newEditor || textset.DisplayName != newDispName)
+        {
           var newDef = new ContentPartFieldDefinition(oldDef.FieldDefinition,
               oldDef.Name,
-              oldDef.Settings) { PartDefinition = oldDef.PartDefinition };
+              oldDef.Settings)
+          { PartDefinition = oldDef.PartDefinition };
           var newSett = newDef.GetSettings<ContentPartFieldSettings>();
           newSett.Editor = newEditor;
           newSett.DisplayName = newDispName;

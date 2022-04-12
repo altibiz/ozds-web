@@ -36,16 +36,19 @@ using Ozds.Modules.Members.Measurements;
 
 namespace Ozds.Modules.Members;
 
-public class Startup : OrchardCore.Modules.StartupBase {
+public class Startup : OrchardCore.Modules.StartupBase
+{
   public IWebHostEnvironment Env { get; init; }
   public ILogger<Startup> Logger { get; init; }
 
-  public Startup(IWebHostEnvironment env, ILogger<Startup> logger) {
+  public Startup(IWebHostEnvironment env, ILogger<Startup> logger)
+  {
     Env = env;
     Logger = logger;
   }
 
-  public override void ConfigureServices(IServiceCollection services) {
+  public override void ConfigureServices(IServiceCollection services)
+  {
     services.AddScoped<INavigationProvider, AdminMenu>();
     services.AddScoped<IDataMigration, Migrations>();
     services.AddContentPart<Member>();
@@ -77,7 +80,8 @@ public class Startup : OrchardCore.Modules.StartupBase {
     services.AddScoped<IContentDisplayDriver, ContainedPartDisplayDriver>();
     services.AddSingleton<IBackgroundTask, FastImportBackgroundTask>();
 
-    if (Env.IsDevelopment()) {
+    if (Env.IsDevelopment())
+    {
       services.AddScoped<IShapeDisplayEvents, ShapeTracingShapeEvents>();
       services.AddScoped<IContentTypeDefinitionDisplayDriver,
           CodeGenerationDisplayDriver>();
@@ -97,16 +101,20 @@ public class Startup : OrchardCore.Modules.StartupBase {
                 !string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) &&
                 !string.Equals(
                     d, "Disabled", StringComparison.OrdinalIgnoreCase))
-        .ForEditor<PartTaxonomyFieldTagsDriver>(d => {
+        .ForEditor<PartTaxonomyFieldTagsDriver>(d =>
+        {
           return string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) ||
                  string.Equals(
                      d, "Disabled", StringComparison.OrdinalIgnoreCase);
         });
 
-    if (Env.IsDevelopment()) {
+    if (Env.IsDevelopment())
+    {
       services.AddSingleton<Ozds.Elasticsearch.IMeasurementProvider,
           Ozds.Elasticsearch.MeasurementFaker.Client>();
-    } else {
+    }
+    else
+    {
       foreach (var measurementProviderType in Assembly.GetExecutingAssembly()
                    .GetTypes()
                    .Where(type =>
@@ -116,7 +124,8 @@ public class Startup : OrchardCore.Modules.StartupBase {
                               !type.Equals(typeof(Ozds.Elasticsearch.Client)) &&
                               !type.Equals(
                                   typeof(Ozds.Elasticsearch.MeasurementFaker
-                                             .Client)))) {
+                                             .Client))))
+      {
         services.AddSingleton(typeof(Ozds.Elasticsearch.IMeasurementProvider),
             measurementProviderType);
       }
@@ -124,8 +133,8 @@ public class Startup : OrchardCore.Modules.StartupBase {
 
     services
         .AddSingleton<Ozds.Elasticsearch.IClient, Ozds.Elasticsearch.Client>();
-        services.AddSingleton<PeriodicMeasurementLoader>();
-        services.AddSingleton<IBackgroundTask,
-            PeriodicMeasurementLoadBackgroundTask>();
+    services.AddSingleton<PeriodicMeasurementLoader>();
+    services.AddSingleton<IBackgroundTask,
+        PeriodicMeasurementLoadBackgroundTask>();
   }
 }

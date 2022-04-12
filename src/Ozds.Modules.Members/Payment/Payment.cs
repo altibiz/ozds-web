@@ -2,8 +2,10 @@
 using OrchardCore.ContentManagement;
 using System;
 
-namespace Ozds.Modules.Members.Payments {
-  public class Payment : ContentPart {
+namespace Ozds.Modules.Members.Payments
+{
+  public class Payment : ContentPart
+  {
     public NumericField Amount { get; set; }
     public TextField PayerName { get; set; }
     public TextField Address { get; set; }
@@ -18,7 +20,8 @@ namespace Ozds.Modules.Members.Payments {
 
     [Obsolete(
         "Use TransactionRef, this is for initial imports and legacy projections")]
-    public TextField PaymentRef {
+    public TextField PaymentRef
+    {
       get; set;
     }
 

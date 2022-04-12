@@ -12,8 +12,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using OrchardCore.ContentManagement;
 using OrchardCore.DisplayManagement.Notify;
 
-namespace Ozds.Modules.Members.Pages {
-  public class DonateModel : PageModel {
+namespace Ozds.Modules.Members.Pages
+{
+  public class DonateModel : PageModel
+  {
     private readonly IHtmlLocalizer H;
     private readonly MemberService _memberService;
     private readonly INotifier _notifier;
@@ -21,39 +23,47 @@ namespace Ozds.Modules.Members.Pages {
     [BindProperty]
     public string LegalName { get; set; }
     [BindProperty]
-    public string Oib {
+    public string Oib
+    {
       get; set;
     }
     [BindProperty]
-    public string Amount {
+    public string Amount
+    {
       get; set;
     }
     [BindProperty]
-    public string Email {
+    public string Email
+    {
       get; set;
     }
     [BindProperty]
-    public string Note {
+    public string Note
+    {
       get; set;
     }
     [BindProperty]
-    public string PersonId {
+    public string PersonId
+    {
       get; set;
     }
     public List<ContentItem> PersonList { get; set; }
     public bool IsGuest { get; set; }
 
     public DonateModel(MemberService mService,
-        IHtmlLocalizer<CreateMemberModel> htmlLocalizer, INotifier notifier) {
+        IHtmlLocalizer<CreateMemberModel> htmlLocalizer, INotifier notifier)
+    {
       _notifier = notifier;
       H = htmlLocalizer;
       _memberService = mService;
       IsGuest = true;
     }
 
-    public async Task<IActionResult> OnGetAsync() {
+    public async Task<IActionResult> OnGetAsync()
+    {
       ContentItem ci = await _memberService.GetUserMember(true);
-      if (ci != null) {
+      if (ci != null)
+      {
         var pp = ci.As<PersonPart>().InitFields();
         await SetPersonList();
         IsGuest = false;
@@ -67,7 +77,8 @@ namespace Ozds.Modules.Members.Pages {
     }
     public IActionResult OnGetProccessForm(string legalName = null,
         string oib = null, string amount = null, string email = null,
-        string note = null) {
+        string note = null)
+    {
       IsGuest = true;
       LegalName = legalName;
       Amount = amount;
@@ -77,7 +88,8 @@ namespace Ozds.Modules.Members.Pages {
 
       return Page();
     }
-    public async Task<IActionResult> OnPost(string amount = null) {
+    public async Task<IActionResult> OnPost(string amount = null)
+    {
       ContentItem person = await _memberService.GetContentItemById(PersonId);
       IsGuest = false;
       LegalName = person.Content.PersonPart.LegalName.ToString();
@@ -88,15 +100,18 @@ namespace Ozds.Modules.Members.Pages {
 
       return Page();
     }
-    public async Task SetPersonList() {
+    public async Task SetPersonList()
+    {
       PersonList = new List<ContentItem>();
 
       ContentItem ci = await _memberService.GetUserMember();
-      if (ci != null) {
+      if (ci != null)
+      {
         PersonList.Add(ci);
 
         var companies = await _memberService.GetUserCompanies();
-        foreach (ContentItem item in companies) {
+        foreach (ContentItem item in companies)
+        {
           PersonList.Add(item);
         }
       }

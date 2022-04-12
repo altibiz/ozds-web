@@ -7,8 +7,10 @@ using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display;
 using OrchardCore.DisplayManagement.ModelBinding;
 
-namespace Ozds.Modules.Members.Pages {
-  public class MyProfileModel : PageModel {
+namespace Ozds.Modules.Members.Pages
+{
+  public class MyProfileModel : PageModel
+  {
     private const string contentType = "Member";
 
     private readonly IContentItemDisplayManager _contentItemDisplayManager;
@@ -22,7 +24,8 @@ namespace Ozds.Modules.Members.Pages {
     public MyProfileModel(MemberService mService,
         IContentItemDisplayManager contentItemDisplayManager,
         IHtmlLocalizer<CreateMemberModel> htmlLocalizer,
-        IUpdateModelAccessor updateModelAccessor) {
+        IUpdateModelAccessor updateModelAccessor)
+    {
       _contentItemDisplayManager = contentItemDisplayManager;
       _updateModelAccessor = updateModelAccessor;
 
@@ -31,7 +34,8 @@ namespace Ozds.Modules.Members.Pages {
       _memberService = mService;
     }
 
-    public async Task OnGetAsync() {
+    public async Task OnGetAsync()
+    {
       var member = await _memberService.GetUserMember();
 
       CompanyContentItems = await _memberService.GetUserCompanies();

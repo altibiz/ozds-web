@@ -7,21 +7,25 @@ using OrchardCore.ContentManagement;
 using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.Notify;
 
-namespace Ozds.Modules.Members.Pages {
-  public class CreateOfferModel : PageModel {
+namespace Ozds.Modules.Members.Pages
+{
+  public class CreateOfferModel : PageModel
+  {
     private readonly IHtmlLocalizer H;
     private readonly MemberService _memberService;
     private readonly INotifier _notifier;
     public IShape Shape { get; set; }
     public CreateOfferModel(MemberService mService,
-        IHtmlLocalizer<CreateOfferModel> htmlLocalizer, INotifier notifier) {
+        IHtmlLocalizer<CreateOfferModel> htmlLocalizer, INotifier notifier)
+    {
 
       _notifier = notifier;
       H = htmlLocalizer;
       _memberService = mService;
     }
 
-    public async Task<IActionResult> OnGetAsync(string contentItemId) {
+    public async Task<IActionResult> OnGetAsync(string contentItemId)
+    {
       var offer = await _memberService.GetCompanyOffers(contentItemId);
 
       if (offer != null)
@@ -31,19 +35,23 @@ namespace Ozds.Modules.Members.Pages {
     }
 
     // contentItemId -> company content item
-    public async Task<IActionResult> OnPostCreateAsync(string contentItemId) {
+    public async Task<IActionResult> OnPostCreateAsync(string contentItemId)
+    {
       return await CreatePOST("Portal", contentItemId);
     }
 
     // contentItemId -> company content item
     private async Task<IActionResult> CreatePOST(
-        string nextPage, string contentItemId) {
+        string nextPage, string contentItemId)
+    {
       ContentItem contentItem;
       (contentItem, Shape) = await _memberService.ModelToNew(ContentType.Offer);
-      if (ModelState.IsValid) {
+      if (ModelState.IsValid)
+      {
         var result =
             await _memberService.CreateOfferDraft(contentItem, contentItemId);
-        if (result.Succeeded) {
+        if (result.Succeeded)
+        {
           await _notifier.SuccessAsync(H["Offer created successful"]);
           return RedirectToPage(nextPage);
         }

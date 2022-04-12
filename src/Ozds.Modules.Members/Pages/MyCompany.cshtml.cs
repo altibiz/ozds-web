@@ -7,8 +7,10 @@ using OrchardCore.DisplayManagement.Notify;
 using Ozds.Modules.Members.Core;
 using OrchardCore.DisplayManagement;
 
-namespace Ozds.Modules.Members.Pages {
-  public class MyCompanyModel : PageModel {
+namespace Ozds.Modules.Members.Pages
+{
+  public class MyCompanyModel : PageModel
+  {
     private readonly IHtmlLocalizer H;
     private readonly MemberService _memberService;
     private readonly INotifier _notifier;
@@ -16,13 +18,15 @@ namespace Ozds.Modules.Members.Pages {
     public ContentItem ContentItem { get; set; }
     public string DocLink { get; set; }
     public MyCompanyModel(MemberService mService,
-        IHtmlLocalizer<CreateMemberModel> htmlLocalizer, INotifier notifier) {
+        IHtmlLocalizer<CreateMemberModel> htmlLocalizer, INotifier notifier)
+    {
       _notifier = notifier;
       H = htmlLocalizer;
       _memberService = mService;
     }
 
-    public async Task OnGetAsync(string companyId) {
+    public async Task OnGetAsync(string companyId)
+    {
 
       ContentItem company = await _memberService.GetContentItemById(companyId);
 
@@ -38,11 +42,13 @@ namespace Ozds.Modules.Members.Pages {
           fileName, docUrl);
     }
 
-    public async Task<IActionResult> OnPostAsync(string companyId) {
+    public async Task<IActionResult> OnPostAsync(string companyId)
+    {
       ContentItem contentItem;
       (contentItem, Shape) = await _memberService.ModelToItem(companyId);
 
-      if (ModelState.IsValid) {
+      if (ModelState.IsValid)
+      {
         var result = await _memberService.UpdateContentItem(contentItem);
 
         if (result.Succeeded)
