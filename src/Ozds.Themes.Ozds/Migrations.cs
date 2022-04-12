@@ -6,16 +6,13 @@ using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.Data.Migration;
 using OrchardCore.Recipes.Services;
 using Ozds.Themes.Ozds.M0;
-using Ozds.Themes.Ozds.M1;
 
 namespace Ozds.Themes.Ozds;
 
-public partial class Migrations : DataMigration
-{
+public partial class Migrations : DataMigration {
   public Migrations(IHostEnvironment env, ILogger<Migrations> logger,
       IRecipeMigrator recipe, IContentDefinitionManager content,
-      ISession session)
-  {
+      ISession session) {
     Env = env;
     Logger = logger;
 
@@ -25,15 +22,9 @@ public partial class Migrations : DataMigration
     Content = content;
   }
 
-  public int Create()
-  {
+  public int Create() {
     Recipe.ExecuteInit(this, Env.IsDevelopment());
 
-    return 1;
-  }
-
-  public int UpdateFrom1()
-  {
     Content.AlterGPiecePart();
     Content.AlterGPieceType();
     Content.AlterGalleryPart();
@@ -41,7 +32,7 @@ public partial class Migrations : DataMigration
     Content.AlterBlogPostType();
     Content.AlterBlogPostPart();
 
-    return 2;
+    return 1;
   }
 
   private IHostEnvironment Env { get; }

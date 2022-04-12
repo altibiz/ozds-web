@@ -1,11 +1,9 @@
-using System;
 using YesSql.Sql;
 using Ozds.Modules.Members.Devices;
 
-namespace Ozds.Modules.Members.M2;
+namespace Ozds.Modules.Members.M0;
 
-public static partial class CreateDeviceIndexClass
-{
+public static partial class CreateDeviceIndexClass {
   public static void CreateDeviceIndex(this ISchemaBuilder SchemaBuilder) =>
       SchemaBuilder.CreateMapIndexTable<DeviceIndex>(
           table => table.Column<string>(nameof(DeviceIndex.MemberId))

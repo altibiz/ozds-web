@@ -5,10 +5,9 @@ using OrchardCore.Indexing;
 using OrchardCore.Media.Settings;
 using OrchardCore.Taxonomies.Settings;
 
-namespace Ozds.Themes.Ozds.M1;
+namespace Ozds.Themes.Ozds.M0;
 
-public static partial class AlterBlogPost
-{
+public static partial class AlterBlogPost {
   public static void AlterBlogPostType(this IContentDefinitionManager
           content) => content.AlterTypeDefinition("BlogPost",
       type =>
@@ -19,8 +18,7 @@ public static partial class AlterBlogPost
               .WithPart("TitlePart", part => part.WithPosition("0"))
               .WithPart("AutoroutePart",
                   part => part.WithPosition("2").WithSettings(
-                      new AutoroutePartSettings
-                      {
+                      new AutoroutePartSettings {
                         AllowCustomPath = true,
                         Pattern =
                             "{{ Model.ContentItem | container | display_text | slugify }}/{{ Model.ContentItem | display_text | slugify }}",
@@ -30,8 +28,7 @@ public static partial class AlterBlogPost
               .WithPart("HtmlBodyPart",
                   part => part.WithPosition("1").WithEditor("Wysiwyg")));
 
-  public static void AlterBlogPostPart(this IContentDefinitionManager content)
-  {
+  public static void AlterBlogPostPart(this IContentDefinitionManager content) {
     content.AlterPartDefinition(
         "BlogPost", part => part.RemoveField("Category").RemoveField("Tags"));
 
@@ -46,14 +43,9 @@ public static partial class AlterBlogPost
                             .WithDisplayName("Banner Image")
                             .WithPosition("1")
                             .WithSettings(
-                                new ContentIndexSettings
-                                {
-                                  Included = false,
-                                  Stored = false,
-                                  Analyzed = false
-                                })
-                            .WithSettings(new MediaFieldSettings
-                            {
+                                new ContentIndexSettings { Included = false,
+                                  Stored = false, Analyzed = false })
+                            .WithSettings(new MediaFieldSettings {
                               Multiple = false,
                               AllowAnchors = true,
                             }))
@@ -63,8 +55,7 @@ public static partial class AlterBlogPost
                                  .WithEditor("Tags")
                                  .WithDisplayMode("Tags")
                                  .WithPosition("2")
-                                 .WithSettings(new TaxonomyFieldSettings
-                                 {
+                                 .WithSettings(new TaxonomyFieldSettings {
                                    TaxonomyContentItemId =
                                        "45j76cwwz4f4v4hx5zqxfpzvwq",
                                  }))
@@ -72,8 +63,7 @@ public static partial class AlterBlogPost
                     field => field.OfType("TaxonomyField")
                                  .WithDisplayName("Category")
                                  .WithPosition("3")
-                                 .WithSettings(new TaxonomyFieldSettings
-                                 {
+                                 .WithSettings(new TaxonomyFieldSettings {
                                    TaxonomyContentItemId =
                                        "4dgj6ce33vdsbxqz8hw4c4c24d",
                                    Unique = true,

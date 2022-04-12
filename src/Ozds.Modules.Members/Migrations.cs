@@ -6,18 +6,13 @@ using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.Data.Migration;
 using OrchardCore.Recipes.Services;
 using Ozds.Modules.Members.M0;
-using Ozds.Modules.Members.M1;
-using Ozds.Modules.Members.M2;
-using Ozds.Modules.Members.M3;
 
 namespace Ozds.Modules.Members;
 
-public sealed class Migrations : DataMigration
-{
+public sealed class Migrations : DataMigration {
   public Migrations(IHostEnvironment env, ILogger<Migrations> logger,
       IRecipeMigrator recipe, IContentDefinitionManager content,
-      ISession session)
-  {
+      ISession session) {
     Env = env;
     Logger = logger;
 
@@ -27,8 +22,7 @@ public sealed class Migrations : DataMigration
     Content = content;
   }
 
-  public int Create()
-  {
+  public int Create() {
     Recipe.ExecuteInit(this);
 
     Content.AlterAdminPageType();
@@ -56,33 +50,14 @@ public sealed class Migrations : DataMigration
     Content.AlterImagePart();
     Content.AlterImageType();
 
-    return 1;
-  }
-
-  public int UpdateFrom1()
-  {
     Content.AlterPledgePart();
     Content.AlterPledgeType();
     Content.AlterPledgeVariantPart();
     Content.AlterPledgeVariantType();
-    Recipe.ExecutePledge(this);
 
-    return 2;
-  }
-
-  public int UpdateFrom2()
-  {
     Schema.CreateDeviceIndex();
-    Recipe.ExecuteTestOwner(this, Env.IsDevelopment());
 
-    return 3;
-  }
-
-  public int UpdateFrom3()
-  {
-    Recipe.ExecuteOzdsContentDefinitions(this);
-
-    return 4;
+    return 1;
   }
 
   private IHostEnvironment Env { get; }
