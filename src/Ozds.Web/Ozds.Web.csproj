@@ -13,10 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../modules/Ozds.Users/Ozds.Users.csproj" />
+    <ProjectReference Include="../Ozds.Modules.Members/Ozds.Modules.Members.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../themes/OrchardCore.Themes.Ozds/OrchardCore.Themes.Ozds.csproj" />
+    <ProjectReference Include="../Ozds.Themes.Ozds/Ozds.Themes.Ozds.csproj" />
   </ItemGroup>
 </Project>

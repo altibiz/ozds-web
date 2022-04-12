@@ -23,6 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../src/lib/Ozds.Elasticsearch/Ozds.Elasticsearch.csproj" />
+    <ProjectReference Include="../../src/Ozds.Elasticsearch/Ozds.Elasticsearch.csproj" />
   </ItemGroup>
 </Project>

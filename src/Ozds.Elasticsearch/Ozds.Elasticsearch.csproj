@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
     <OutputType>Library</OutputType>
   </PropertyGroup>
 
@@ -11,6 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="../../../test/Ozds.Elasticsearch.Test/Ozds.Elasticsearch.Test.csproj" />
+    <InternalsVisibleTo Include="../../test/Ozds.Elasticsearch.Test/Ozds.Elasticsearch.Test.csproj" />
   </ItemGroup>
 </Project>

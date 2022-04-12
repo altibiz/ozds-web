@@ -5,6 +5,6 @@ ROOT_DIR="$(dirname "$SCRIPT_DIR")";
 
 export ASPNETCORE_ENVIRONMENT=Production;
 export DOTNET_ENVIRONMENT=Production;
-export ORCHARD_APP_DATA="$ROOT_DIR/.AppData";
+export ORCHARD_APP_DATA="$ROOT_DIR/App_Data";
 
 dotnet watch run --project "$ROOT_DIR/src/Ozds.Web/Ozds.Web.csproj";
