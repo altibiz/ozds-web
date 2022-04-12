@@ -15,13 +15,13 @@
 	<h3>@lnk.Key</h3>
 
 	<div class="list-group-flush">
-		@foreach (var doc in lnk.Value)
-		{
-			<div class="list-group-item d-flex justify-content-between align-items-center">
-				@doc.Item1
-				<a asp-page="./Print" asp-page-handler="Download" asp-route-fileName="Member-@doc.Item2" asp-route-contentId="@doc.Item2" class="badge badge-primary bg-secondary badge-pill">Download</a>
-			</div>
-		}
+  @foreach (var doc in lnk.Value)
+  {
+  	<div class="list-group-item d-flex justify-content-between align-items-center">
+    @doc.Item1
+    <a asp-page="./Print" asp-page-handler="Download" asp-route-fileName="Member-@doc.Item2" asp-route-contentId="@doc.Item2" class="badge badge-primary bg-secondary badge-pill">Download</a>
+  	</div>
+  }
 	</div>
 }
 <h3>@T["Donations"]</h3>

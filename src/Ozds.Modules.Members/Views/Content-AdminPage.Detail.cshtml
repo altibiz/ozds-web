@@ -5,12 +5,12 @@
 	Html.RenderPartial("_Header", contentItem.DisplayText);
 	if (!User.IsInRole("Administrator"))
 	{
-		<div>Access denied</div>
+  <div>Access denied</div>
 	}
 	else
 	{
-		<div class="col primary">
-			@await DisplayAsync(Model.Content)
-		</div>
+  <div class="col primary">
+  	@await DisplayAsync(Model.Content)
+  </div>
 	}
 }

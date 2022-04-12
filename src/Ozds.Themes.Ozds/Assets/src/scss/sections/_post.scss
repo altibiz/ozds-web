@@ -21,35 +21,35 @@
 
 .post-preview {
 	> a {
-		color: $gray-900;
+  color: $gray-900;
 
-		&:focus,
-		&:hover {
-			text-decoration: none;
-			color: $primary;
-		}
+  &:focus,
+  &:hover {
+  	text-decoration: none;
+  	color: $primary;
+  }
 
-		> .post-title {
-			font-size: 1.875rem;
-			margin-top: 1.875rem;
-			margin-bottom: 0.625rem;
-		}
+  > .post-title {
+  	font-size: 1.875rem;
+  	margin-top: 1.875rem;
+  	margin-bottom: 0.625rem;
+  }
 
-		> .post-subtitle {
-			font-weight: 300;
-			margin-bottom: 0.625rem;
-		}
+  > .post-subtitle {
+  	font-weight: 300;
+  	margin-bottom: 0.625rem;
+  }
 	}
 
 	> .post-meta {
-		font-size: 1.125rem;
-		font-style: italic;
-		margin-top: 0;
-		color: $gray-600;
+  font-size: 1.125rem;
+  font-style: italic;
+  margin-top: 0;
+  color: $gray-600;
 
-		> a {
-			text-decoration: none;
-		}
+  > a {
+  	text-decoration: none;
+  }
 	}
 }
 
@@ -73,6 +73,6 @@
 	width: 100%;
 
 	img{
-		width:100%;
+  width:100%;
 	}
 }

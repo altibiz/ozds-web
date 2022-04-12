@@ -9,7 +9,7 @@
 	<input disabled="disabled" asp-for="Text" placeholder="smth" class="form-control content-preview-text" dir="@culture.GetLanguageDirection()" />
 	@if (!String.IsNullOrEmpty(settings.Hint))
 	{
-		<span class="hint">@settings.Hint</span>
+  <span class="hint">@settings.Hint</span>
 	}
 	<label asp-for="Text">@Model.PartFieldDefinition.DisplayName()</label>
 </div>

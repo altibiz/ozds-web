@@ -19,7 +19,7 @@
 	<div asp-validation-summary="All" class="text-danger"></div>
 	@if (!Model.ContentItem.Published)
 	{
-		<span class="badge badge-primary bg-secondary badge-pill">Čeka provjeru</span>
+  <span class="badge badge-primary bg-secondary badge-pill">Čeka provjeru</span>
 	}
 	@await DisplayAsync(Model.Shape)
 
