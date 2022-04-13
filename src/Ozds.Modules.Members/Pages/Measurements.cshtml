@@ -1,8 +1,6 @@
 ﻿@page
 @model Ozds.Modules.Members.Pages.MeasurementsModel
 
-@using Ozds.Elasticsearch
-
 @{ Html.RenderPartial("_Header", T["Measurements"].Value); }
 
 <ul>
@@ -12,7 +10,7 @@
         @measurement.Source
       </span>
       <span>
-        @measurement.MeasurementTimestamp.ToUtcIsoString()
+        @measurement.MeasurementTimestamp.ToString()
       </span>
     </li>
   }

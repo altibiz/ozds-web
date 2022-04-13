@@ -1,10 +1,10 @@
-using System;
 using System.Reflection;
-using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Builder;
 using YesSql.Indexes;
 using OrchardCore.Data.Migration;
 using OrchardCore.Navigation;
@@ -136,5 +136,14 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddSingleton<PeriodicMeasurementLoader>();
     services.AddSingleton<IBackgroundTask,
         PeriodicMeasurementLoadBackgroundTask>();
+
+    services.AddScoped<LocalizedRouteTransformer>();
+  }
+
+  public override void Configure(IApplicationBuilder app,
+      IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
+  {
+    routes.MapDynamicPageRoute<LocalizedRouteTransformer>("clanovi");
+    routes.MapDynamicPageRoute<LocalizedRouteTransformer>("clanovi/{page?}");
   }
 }

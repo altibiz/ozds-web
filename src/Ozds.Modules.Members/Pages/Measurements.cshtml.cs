@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Ozds.Elasticsearch;
@@ -13,6 +10,8 @@ public class MeasurementsModel : PageModel
   {
     Client = client;
     Logger = logger;
+
+    Measurements = new List<Measurement> { };
   }
 
   public void OnGet()
