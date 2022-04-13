@@ -9,10 +9,12 @@ using Ozds.Modules.Members.M0;
 
 namespace Ozds.Modules.Members;
 
-public sealed class Migrations : DataMigration {
+public sealed class Migrations : DataMigration
+{
   public Migrations(IHostEnvironment env, ILogger<Migrations> logger,
       IRecipeMigrator recipe, IContentDefinitionManager content,
-      ISession session) {
+      ISession session)
+  {
     Env = env;
     Logger = logger;
 
@@ -22,7 +24,8 @@ public sealed class Migrations : DataMigration {
     Content = content;
   }
 
-  public int Create() {
+  public int Create()
+  {
     Recipe.ExecuteInit(this);
 
     Content.AlterAdminPageType();

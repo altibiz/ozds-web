@@ -7,7 +7,8 @@ using Ozds.Modules.Members.Core;
 
 namespace Ozds.Modules.Members.M0;
 
-public static partial class Migration0AlterMember {
+public static partial class Migration0AlterMember
+{
   public static void AlterMemberType(this IContentDefinitionManager
           content) => content.AlterTypeDefinition("Member",
       type =>
@@ -19,11 +20,12 @@ public static partial class Migration0AlterMember {
                   part => part.WithPosition("0").WithSettings(
                       new PersonPartSettings { Type = PersonType.Natural }))
               .WithPart("Member", part => part.WithPosition("1").WithSettings(
-                                      new MemberSettings {}))
+                                      new MemberSettings { }))
               .WithPart("AliasPart", part => part.WithPosition("2"))
               .WithPart("TitlePart",
                   part => part.WithPosition("3").WithSettings(
-                      new TitlePartSettings {
+                      new TitlePartSettings
+                      {
                         Options = TitlePartOptions.GeneratedDisabled,
                         Pattern =
                             @"{{ ContentItem.Content.PersonPart.Title.Text }}",
@@ -35,8 +37,9 @@ public static partial class Migration0AlterMember {
                         field => field.OfType("UserPickerField")
                                      .WithDisplayName("Korisnik")
                                      .WithPosition("0")
-                                     .WithSettings(new UserPickerFieldSettings {
+                                     .WithSettings(new UserPickerFieldSettings
+                                     {
                                        DisplayAllUsers = true,
-                                       DisplayedRoles = new string[] {},
+                                       DisplayedRoles = new string[] { },
                                      })));
 }

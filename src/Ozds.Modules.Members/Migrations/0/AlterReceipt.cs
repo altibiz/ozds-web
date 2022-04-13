@@ -4,7 +4,8 @@ using OrchardCore.Flows.Models;
 
 namespace Ozds.Modules.Members.M0;
 
-public static partial class AlterReceipt {
+public static partial class AlterReceipt
+{
   public static void AlterReceiptType(
       this IContentDefinitionManager contentDefinitionManager) =>
       contentDefinitionManager.AlterTypeDefinition("Receipt",
@@ -19,7 +20,8 @@ public static partial class AlterReceipt {
                       .WithPart("Calculation",
                           part => part.WithDisplayName("Obračun")
                                       .WithDescription("Obračun računa.")
-                                      .WithSettings(new BagPartSettings {
+                                      .WithSettings(new BagPartSettings
+                                      {
                                         ContainedContentTypes =
                                             new[] { "Calculation" },
                                       })));

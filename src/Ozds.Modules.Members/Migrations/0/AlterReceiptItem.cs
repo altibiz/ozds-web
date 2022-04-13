@@ -3,7 +3,8 @@ using OrchardCore.ContentManagement.Metadata.Settings;
 
 namespace Ozds.Modules.Members.M0;
 
-public static partial class AlterReceiptItem {
+public static partial class AlterReceiptItem
+{
   public static void AlterReceiptItemType(
       this IContentDefinitionManager contentDefinitionManager) =>
       contentDefinitionManager.AlterTypeDefinition("ReceiptItem",

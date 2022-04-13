@@ -3,7 +3,8 @@ using OrchardCore.ContentManagement.Metadata.Settings;
 
 namespace Ozds.Modules.Members.M0;
 
-public static partial class AlterCalculationItem {
+public static partial class AlterCalculationItem
+{
   public static void AlterCalculationItemType(
       this IContentDefinitionManager contentDefinitionManager) =>
       contentDefinitionManager.AlterTypeDefinition("CalculationItem",

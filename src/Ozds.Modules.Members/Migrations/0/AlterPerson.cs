@@ -4,7 +4,8 @@ using OrchardCore.ContentFields.Settings;
 
 namespace Ozds.Modules.Members.M0;
 
-public static partial class AlterPerson {
+public static partial class AlterPerson
+{
   public static void AlterPersonPart(
       this IContentDefinitionManager contentDefinitionManager) =>
       contentDefinitionManager.AlterPartDefinition("PersonPart",
@@ -16,7 +17,8 @@ public static partial class AlterPerson {
                       "Name", field => field.OfType("TextField")
                                            .WithDisplayName("Ime")
                                            .WithPosition("1")
-                                           .WithSettings(new TextFieldSettings {
+                                           .WithSettings(new TextFieldSettings
+                                           {
                                              Required = true,
                                            }))
                   .WithField("Surname", field => field.OfType("TextField")
@@ -26,7 +28,8 @@ public static partial class AlterPerson {
                       "Oib", field => field.OfType("TextField")
                                           .WithDisplayName("OIB")
                                           .WithPosition("0")
-                                          .WithSettings(new TextFieldSettings {
+                                          .WithSettings(new TextFieldSettings
+                                          {
                                             Required = true,
                                           }))
                   .WithField("Address", field => field.OfType("TextField")
@@ -46,13 +49,15 @@ public static partial class AlterPerson {
                                    .WithEditor("Tags")
                                    .WithDisplayMode("Tags")
                                    .WithPosition("6")
-                                   .WithSettings(new TaxonomyFieldSettings {
+                                   .WithSettings(new TaxonomyFieldSettings
+                                   {
                                      TaxonomyContentItemId =
                                          "4d0dew9ar7h9nsbpcs7jg2egwe",
                                      Unique = true,
                                    })
                                    .WithSettings(
-                                       new TaxonomyFieldTagsEditorSettings {
+                                       new TaxonomyFieldTagsEditorSettings
+                                       {
                                          Open = false,
                                        }))
                   .WithField("Email",
@@ -60,7 +65,8 @@ public static partial class AlterPerson {
                                    .WithDisplayName("Email")
                                    .WithEditor("Email")
                                    .WithPosition("11")
-                                   .WithSettings(new TextFieldSettings {
+                                   .WithSettings(new TextFieldSettings
+                                   {
                                      Required = true,
                                    }))
                   .WithField("ContribType",
@@ -71,13 +77,15 @@ public static partial class AlterPerson {
                               .WithEditor("Tags")
                               .WithDisplayMode("Tags")
                               .WithPosition("10")
-                              .WithSettings(new TaxonomyFieldSettings {
+                              .WithSettings(new TaxonomyFieldSettings
+                              {
                                 TaxonomyContentItemId =
                                     "4k7n3gw5wm7660vqpm0805hedy",
                                 Unique = true,
                               })
                               .WithSettings(
-                                  new TaxonomyFieldTagsEditorSettings {
+                                  new TaxonomyFieldTagsEditorSettings
+                                  {
                                     Open = false,
                                   }))
                   .WithField("Skills",

@@ -4,7 +4,8 @@ using OrchardCore.Title.Models;
 
 namespace Ozds.Modules.Members.M0;
 
-public static partial class AlterCenter {
+public static partial class AlterCenter
+{
   public static void AlterCenterType(
       this IContentDefinitionManager contentDefinitionManager) =>
       contentDefinitionManager.AlterTypeDefinition("Center",
@@ -15,14 +16,16 @@ public static partial class AlterCenter {
                   .Draftable()
                   .Securable()
                   .WithPart("PersonPart",
-                      part => part.WithPosition("0").WithSettings(new {
+                      part => part.WithPosition("0").WithSettings(new
+                      {
                         Type = 1,
                       }))
                   .WithPart("Center", part => part.WithPosition("2"))
                   .WithPart("AliasPart", part => part.WithPosition("3"))
                   .WithPart("TitlePart",
                       part => part.WithPosition("1").WithSettings(
-                          new TitlePartSettings {
+                          new TitlePartSettings
+                          {
                             Options = TitlePartOptions.GeneratedDisabled,
                             Pattern =
                                 "{{ ContentItem.Content.PersonPart.Title.Text }}",

@@ -4,7 +4,8 @@ using OrchardCore.ContentFields.Settings;
 
 namespace Ozds.Modules.Members.M0;
 
-public static partial class AlterSite {
+public static partial class AlterSite
+{
   public static void AlterSiteType(
       this IContentDefinitionManager contentDefinitionManager) =>
       contentDefinitionManager.AlterTypeDefinition(
@@ -23,21 +24,24 @@ public static partial class AlterSite {
                           field => field.OfType("TextField")
                                        .WithDisplayName("Šifra")
                                        .WithPosition("0")
-                                       .WithSettings(new TextFieldSettings {
+                                       .WithSettings(new TextFieldSettings
+                                       {
                                          Required = true,
                                        }))
                       .WithField("Type",
                           field => field.OfType("TextField")
                                        .WithDisplayName("Tip")
                                        .WithPosition("1")
-                                       .WithSettings(new TextFieldSettings {
+                                       .WithSettings(new TextFieldSettings
+                                       {
                                          Required = true,
                                        }))
                       .WithField("ZDSCode",
                           field => field.OfType("TextField")
                                        .WithDisplayName("Šifra ZDS-a")
                                        .WithPosition("7")
-                                       .WithSettings(new TextFieldSettings {
+                                       .WithSettings(new TextFieldSettings
+                                       {
                                          Required = true,
                                        }))
                       .WithField("DeviceCode",

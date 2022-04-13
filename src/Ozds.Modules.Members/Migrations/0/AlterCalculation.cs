@@ -4,7 +4,8 @@ using OrchardCore.Flows.Models;
 
 namespace Ozds.Modules.Members.M0;
 
-public static partial class AlterCalculation {
+public static partial class AlterCalculation
+{
   public static void AlterCalculationType(
       this IContentDefinitionManager contentDefinitionManager) =>
       contentDefinitionManager.AlterTypeDefinition("Calculation",
@@ -18,7 +19,8 @@ public static partial class AlterCalculation {
                   .WithPart("Items",
                       part => part.WithDisplayName("Stavke")
                                   .WithDescription("Stavke mjesečnog obračuna")
-                                  .WithSettings(new BagPartSettings {
+                                  .WithSettings(new BagPartSettings
+                                  {
                                     ContainedContentTypes = new[] { "Item" },
                                   })));
 
