@@ -1,45 +1,23 @@
-﻿using Ozds.Modules.Members.PartFieldSettings;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.ContentManagement.Metadata.Models;
 using OrchardCore.ContentManagement.Metadata.Settings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Ozds.Modules.Members.PartFieldSettings;
 
-namespace Ozds.Modules.Members.Base
-{
-  public class DriverService
-  {
-    private static IEnumerable<Type> _implementingTypes;
-    private static IEnumerable<Type> implementingTypes = _implementingTypes ??=
-        AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(x => x.GetTypes())
-            .Where(t => typeof(IFieldEditorSettings).IsAssignableFrom(t) &&
-                        t.IsClass)
-            .ToList();
-
-    public static IEnumerable<Type> ImplementingTypes
-    {
-      get => implementingTypes;
-      set => implementingTypes = value;
-    }
-
-    public static ContentPartFieldDefinition GetFieldDef(
-        BuildFieldEditorContext context, bool isAdminTheme)
-    {
-      IFieldEditorSettings partSettings = null;
+namespace Ozds.Modules.Members.Base {
+  public class DriverService {
+    public static ContentPartFieldDefinition? GetFieldDef(
+        BuildFieldEditorContext context, bool isAdminTheme) {
+      IFieldEditorSettings? partSettings = null;
       var oldDef = context.PartFieldDefinition;
-      foreach (var typ in ImplementingTypes)
-      {
+      foreach (var typ in ImplementingTypes) {
         context.TypePartDefinition.Settings.TryGetValue(
-            typ.Name, out JToken val);
+            typ.Name, out JToken? val);
         if (val == null)
           continue;
         partSettings = val.ToObject(typ) as IFieldEditorSettings;
       }
-      if (partSettings != null)
-      {
+      if (partSettings != null) {
         var textset = oldDef.GetSettings<ContentPartFieldSettings>();
         var newEditor =
             partSettings.GetFieldDisplayMode(context.PartFieldDefinition.Name,
@@ -49,12 +27,10 @@ namespace Ozds.Modules.Members.Base
         var newDispName =
             partSettings.GetFieldLabel(context.PartFieldDefinition.Name,
                 textset.DisplayName, isAdminTheme);
-        if (textset.Editor != newEditor || textset.DisplayName != newDispName)
-        {
+        if (textset.Editor != newEditor || textset.DisplayName != newDispName) {
           var newDef = new ContentPartFieldDefinition(oldDef.FieldDefinition,
               oldDef.Name,
-              oldDef.Settings)
-          { PartDefinition = oldDef.PartDefinition };
+              oldDef.Settings) { PartDefinition = oldDef.PartDefinition };
           var newSett = newDef.GetSettings<ContentPartFieldSettings>();
           newSett.Editor = newEditor;
           newSett.DisplayName = newDispName;
@@ -63,5 +39,14 @@ namespace Ozds.Modules.Members.Base
       }
       return oldDef;
     }
+
+    private static IEnumerable<Type> ImplementingTypes {
+      get;
+    } = AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(assembly => assembly.GetTypes())
+            .Where(
+                type => typeof(IFieldEditorSettings).IsAssignableFrom(type) &&
+                        type.IsClass)
+            .ToList();
   }
 }

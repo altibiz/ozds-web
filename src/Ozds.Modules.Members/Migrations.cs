@@ -9,12 +9,10 @@ using Ozds.Modules.Members.M0;
 
 namespace Ozds.Modules.Members;
 
-public sealed class Migrations : DataMigration
-{
+public sealed class Migrations : DataMigration {
   public Migrations(IHostEnvironment env, ILogger<Migrations> logger,
       IRecipeMigrator recipe, IContentDefinitionManager content,
-      ISession session)
-  {
+      ISession session) {
     Env = env;
     Logger = logger;
 
@@ -24,41 +22,46 @@ public sealed class Migrations : DataMigration
     Content = content;
   }
 
-  public int Create()
-  {
+  public int Create() {
     Recipe.ExecuteInit(this);
 
     Content.AlterAdminPageType();
 
-    Content.AlterCompanyPart();
-    Content.AlterCompanyType();
     Content.AlterOfferPart();
     Content.AlterOfferType();
-    Content.AlterPersonPart();
-    Content.AlterMemberPart();
-    Content.AlterMemberType();
     Schema.CreateOfferIndex();
     Schema.CreatePersonPartIndex();
-    Schema.AlterPersonPartIndex();
 
-    Content.AlterPaymentPart();
-    Content.AlterPaymentType();
     Schema.CreatePaymentIndex();
-    Schema.AlterPaymentIndex();
     Schema.CreatePaymentByDayIndex();
-
-    Content.AlterBankStatementPart();
-    Content.AlterBankStatementType();
 
     Content.AlterImagePart();
     Content.AlterImageType();
 
-    Content.AlterPledgePart();
-    Content.AlterPledgeType();
-    Content.AlterPledgeVariantPart();
-    Content.AlterPledgeVariantType();
-
     Schema.CreateDeviceIndex();
+
+    Content.AlterReceiptPart();
+    Content.AlterReceiptType();
+
+    Content.AlterReceiptItemPart();
+    Content.AlterReceiptItemType();
+
+    Content.AlterCalculationPart();
+    Content.AlterCalculationType();
+
+    Content.AlterCalculationItemPart();
+    Content.AlterCalculationItemType();
+
+    Content.AlterMemberPart();
+    Content.AlterMemberType();
+
+    Content.AlterPersonPart();
+
+    Content.AlterSiteType();
+    Content.AlterSitePart();
+
+    Content.AlterCenterType();
+    Content.AlterCenterPart();
 
     return 1;
   }
