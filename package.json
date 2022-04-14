@@ -1,13 +1,17 @@
 {
   "private": true,
   "scripts": {
-    "build": "gulp build",
-    "rebuild": "gulp rebuild",
-    "watch": "gulp build && gulp watch",
-    "wait:watch": "wait-on http://localhost:3000 && npm run watch",
-    "postinstall": "yarn install --cwd Assets",
-    "bootstrap:start": "yarn start --cwd Assets",
-    "start": "concurrently \"npm:bootstrap:start\" \"npm:wait:watch\""
+    "prebuild": "yarn --cwd src/Ozds.Themes.Ozds/Assets build",
+    "build": "yarn gulp build",
+    "prerebuild": "yarn --cwd src/Ozds.Themes.Ozds/Assets rebuild",
+    "rebuild": "yarn gulp rebuild",
+    "watch": "yarn gulp build && gulp watch",
+    "wait:watch": "yarn wait-on http://localhost:3000 && yarn watch",
+    "postinstall": "yarn --cwd src/Ozds.Themes.Ozds/Assets install",
+    "bootstrap:start": "yarn --cwd src/Ozds.Themes.Ozds/Assets start ",
+    "bootstrap:start:debug": "yarn start:debug --cwd src/Ozds.Themes.Ozds/Assets",
+    "start": "concurrently \"npm:bootstrap:start\" \"npm:wait:watch\"",
+    "start:debug": "concurrently \"npm:bootstrap:start:debug\" \"npm:wait:watch\""
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",

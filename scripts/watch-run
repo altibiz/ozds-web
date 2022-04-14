@@ -7,4 +7,8 @@ export ASPNETCORE_ENVIRONMENT=Production;
 export DOTNET_ENVIRONMENT=Production;
 export ORCHARD_APP_DATA="$ROOT_DIR/App_Data";
 
-dotnet watch run --project "$ROOT_DIR/src/Ozds.Web/Ozds.Web.csproj";
+yarn --cwd "$ROOT_DIR" start &;
+export THEME_WATCH_PID="$!";
+
+dotnet watch run --project "$ROOT_DIR/src/Ozds.Web/Ozds.Web.csproj" &;
+export SOLUTION_WATCH_PID="$!";

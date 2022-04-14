@@ -182,6 +182,7 @@ nuget.exe
 !lib/*/*.*
 
 node_modules
+dist
 wwwroot
 src/Ozds.Web/Localization
 is-cache
