@@ -183,7 +183,7 @@ function buildCssPipeline(assetGroup, doConcat, doRebuild) {
 
   var minifiedStream =
       gulp.src(assetGroup.inputPaths) // Minified output, source mapping
-          // completely disabled.
+                                      // completely disabled.
           .pipe(gulpif(!doRebuild,
               gulpif(doConcat, newer(assetGroup.outputPath),
                   newer({dest : assetGroup.outputDir, ext : ".css"}))))

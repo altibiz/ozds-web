@@ -12,5 +12,5 @@ if [[ ! -f "$ROOT_DIR/secrets.json" ]]; then
   cp "$ROOT_DIR/example.secrets.json" "$ROOT_DIR/secrets.json"
 fi;
 
-yarn  --cwd "$ROOT_DIR" install;
+yarn install;
 dotnet restore $@;

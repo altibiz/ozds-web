@@ -1,13 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "prebuild": "yarn --cwd src/Ozds.Themes.Ozds/Assets build",
     "build": "yarn gulp build",
-    "prerebuild": "yarn --cwd src/Ozds.Themes.Ozds/Assets rebuild",
     "rebuild": "yarn gulp rebuild",
     "watch": "yarn gulp build && gulp watch",
     "wait:watch": "yarn wait-on http://localhost:3000 && yarn watch",
-    "postinstall": "yarn --cwd src/Ozds.Themes.Ozds/Assets install",
     "bootstrap:start": "yarn --cwd src/Ozds.Themes.Ozds/Assets start ",
     "bootstrap:start:debug": "yarn start:debug --cwd src/Ozds.Themes.Ozds/Assets",
     "start": "concurrently \"npm:bootstrap:start\" \"npm:wait:watch\"",
@@ -18,8 +15,8 @@
     "@babel/preset-env": "^7.14.5",
     "@babel/preset-flow": "7.14.5",
     "all-contributors-cli": "^6.20.0",
-    "concurrently": "6.2.0",
     "bootstrap": "5.0.1",
+    "concurrently": "6.2.0",
     "es6-promise": "4.2.8",
     "glob": "^7.1.7",
     "graceful-fs": "4.2.6",
@@ -52,5 +49,8 @@
     "typescript": "^4.3.4",
     "wait-on": "^5.3.0"
   },
-  "dependencies": {}
+  "packageManager": "yarn@3.2.0",
+  "workspaces": [
+    "src/Ozds.Themes.Ozds/Assets"
+  ]
 }
