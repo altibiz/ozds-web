@@ -1,14 +1,15 @@
 {
+  "name": "ozds-themes-ozds-assets",
   "private": true,
   "scripts": {
     "build": "yarn clean && yarn build:pug && yarn build:scss && yarn build:scripts && yarn build:assets",
-    "build:assets": "node scripts/build-assets.js",
-    "build:pug": "node scripts/build-pug.js",
-    "build:scripts": "node scripts/build-scripts.js",
-    "build:scss": "node scripts/build-scss.js",
-    "clean": "node scripts/clean.js",
+    "build:assets": "yarn node scripts/build-assets.js",
+    "build:pug": "yarn node scripts/build-pug.js",
+    "build:scripts": "yarn node scripts/build-scripts.js",
+    "build:scss": "yarn node scripts/build-scss.js",
+    "clean": "yarn node scripts/clean.js",
     "start": "yarn build && yarn scripts/start.js",
-    "start:debug": "yarn build && node scripts/start-debug.js"
+    "start:debug": "yarn build && yarn node scripts/start-debug.js"
   },
   "dependencies": {
     "bootstrap": "5.0.1"

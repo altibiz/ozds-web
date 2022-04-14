@@ -2,33 +2,33 @@
   {
     "copy": true,
     "inputs": [
-      "src/Ozds.Themes.Ozds/Assets/dist/assets/*"
+      "src/Ozds.Themes.Ozds.Assets/dist/assets/*"
     ],
     "output": "src/Ozds.Themes.Ozds/wwwroot/assets/@"
   },
   {
     "copy": true,
     "inputs": [
-      "src/Ozds.Themes.Ozds/Assets/dist/assets/img/*"
+      "src/Ozds.Themes.Ozds.Assets/dist/assets/img/*"
     ],
     "output": "src/Ozds.Themes.Ozds/wwwroot/assets/img/@"
   },
   {
     "inputs": [
-      "src/Ozds.Themes.Ozds/Assets/dist/css/styles.css"
+      "src/Ozds.Themes.Ozds.Assets/dist/css/styles.css"
     ],
     "output": "src/Ozds.Themes.Ozds/wwwroot/css/styles.css"
   },
   {
     "generateSourceMaps": false,
     "inputs": [
-      "src/Ozds.Themes.Ozds/Assets/src/scss/bootstrap-oc.scss"
+      "src/Ozds.Themes.Ozds.Assets/src/scss/bootstrap-oc.scss"
     ],
     "output": "src/Ozds.Themes.Ozds/wwwroot/css/bootstrap-oc.css"
   },
   {
     "inputs": [
-      "src/Ozds.Themes.Ozds/Assets/dist/js/scripts.js"
+      "src/Ozds.Themes.Ozds.Assets/dist/js/scripts.js"
     ],
     "output": "src/Ozds.Themes.Ozds/wwwroot/js/scripts.js"
   }

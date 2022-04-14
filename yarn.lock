@@ -1407,24 +1407,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"Assets-6fc7e6@workspace:src/Ozds.Themes.Ozds/Assets":
-  version: 0.0.0-use.local
-  resolution: "Assets-6fc7e6@workspace:src/Ozds.Themes.Ozds/Assets"
-  dependencies:
-    autoprefixer: 10.2.6
-    bootstrap: 5.0.1
-    browser-sync: 2.26.14
-    chokidar: 3.5.1
-    concurrently: 6.2.0
-    postcss: 8.3.0
-    prettier: 2.3.1
-    pug: 3.0.2
-    sass: 1.34.1
-    shelljs: 0.8.4
-    upath: 2.0.1
-  languageName: unknown
-  linkType: soft
-
 "abbrev@npm:1":
   version: 1.1.1
   resolution: "abbrev@npm:1.1.1"
@@ -2342,7 +2324,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^2.0.0, chalk@npm:^2.3.0, chalk@npm:^2.4.1, chalk@npm:^2.4.2":
+"chalk@npm:^2.0.0, chalk@npm:^2.3.0, chalk@npm:^2.4.1":
   version: 2.4.2
   resolution: "chalk@npm:2.4.2"
   dependencies:
@@ -2646,13 +2628,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"colors@npm:~0.6.0-1":
-  version: 0.6.2
-  resolution: "colors@npm:0.6.2"
-  checksum: 3f48cadb26ef1809847f3c0ff1e1dc4b2e2af4ace54dd9cd7491bfcaafef3abaac7cb063cb91f98f305bba8a6fa74720a8856610629f9c889b1eb4cd84a120a3
-  languageName: node
-  linkType: hard
-
 "commander@npm:^2.2.0, commander@npm:^2.20.0":
   version: 2.20.3
   resolution: "commander@npm:2.20.3"
@@ -2664,13 +2639,6 @@ __metadata:
   version: 4.1.1
   resolution: "commander@npm:4.1.1"
   checksum: d7b9913ff92cae20cb577a4ac6fcc121bd6223319e54a40f51a14740a681ad5c574fd29a57da478a5f234a6fa6c52cbf0b7c641353e03c648b1ae85ba670b977
-  languageName: node
-  linkType: hard
-
-"commander@npm:~2.1.0":
-  version: 2.1.0
-  resolution: "commander@npm:2.1.0"
-  checksum: 147dab340ff5fbdb85d749dffebb49c95e2d6998fd01791ea92132b87af1ea09c69dd2edd1916fab6c9f6634653b5af39cb9b006e7c775b6804eead425478bdf
   languageName: node
   linkType: hard
 
@@ -3653,16 +3621,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"find-up@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "find-up@npm:5.0.0"
-  dependencies:
-    locate-path: ^6.0.0
-    path-exists: ^4.0.0
-  checksum: 07955e357348f34660bde7920783204ff5a26ac2cafcaa28bace494027158a97b9f56faaf2d89a6106211a8174db650dd9f503f9c0d526b1202d5554a00b9095
-  languageName: node
-  linkType: hard
-
 "findup-sync@npm:^2.0.0":
   version: 2.0.0
   resolution: "findup-sync@npm:2.0.0"
@@ -3684,18 +3642,6 @@ __metadata:
     micromatch: ^3.0.4
     resolve-dir: ^1.0.1
   checksum: cafd706255f3c0e3491e4ee2eb9e585e6e76999bdc50e1ecde6d4ef7316d8dbcae77eb49d27b1f61ff011971933de43e90cb7cb535620b2616eb2ff89baf9347
-  languageName: node
-  linkType: hard
-
-"findup@npm:^0.1.5":
-  version: 0.1.5
-  resolution: "findup@npm:0.1.5"
-  dependencies:
-    colors: ~0.6.0-1
-    commander: ~2.1.0
-  bin:
-    findup: bin/findup.js
-  checksum: 9a66429660efbc18a656c7d8ab1d4b613d76433149f7efa5d4fd23bd6a7497ab747fb7368921366c7397ad6355549e3900693f01d0ca9dad1d02215b2db34f19
   languageName: node
   linkType: hard
 
@@ -5541,15 +5487,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"locate-path@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "locate-path@npm:6.0.0"
-  dependencies:
-    p-locate: ^5.0.0
-  checksum: 72eb661788a0368c099a184c59d2fee760b3831c9c1c33955e8a19ae4a21b4116e53fa736dc086cdeb9fce9f7cc508f2f92d2d3aae516f133e16a2bb59a39f5a
-  languageName: node
-  linkType: hard
-
 "lodash._basecopy@npm:^3.0.0":
   version: 3.0.1
   resolution: "lodash._basecopy@npm:3.0.1"
@@ -5951,7 +5888,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimist@npm:^1.1.0, minimist@npm:^1.2.5, minimist@npm:^1.2.6":
+"minimist@npm:^1.1.0, minimist@npm:^1.2.5":
   version: 1.2.6
   resolution: "minimist@npm:1.2.6"
   checksum: d15428cd1e11eb14e1233bcfb88ae07ed7a147de251441d61158619dfb32c4d7e9061d09cab4825fdee18ecd6fce323228c8c47b5ba7cd20af378ca4048fb3fb
@@ -6045,17 +5982,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mkdirp@npm:^0.5.1":
-  version: 0.5.6
-  resolution: "mkdirp@npm:0.5.6"
-  dependencies:
-    minimist: ^1.2.6
-  bin:
-    mkdirp: bin/cmd.js
-  checksum: 0c91b721bb12c3f9af4b77ebf73604baf350e64d80df91754dc509491ae93bf238581e59c7188360cec7cb62fc4100959245a42cfe01834efedc5e9d068376c2
-  languageName: node
-  linkType: hard
-
 "mkdirp@npm:^1.0.3, mkdirp@npm:^1.0.4":
   version: 1.0.4
   resolution: "mkdirp@npm:1.0.4"
@@ -6118,7 +6044,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.1.23, nanoid@npm:^3.3.1":
+"nanoid@npm:^3.1.23":
   version: 3.3.2
   resolution: "nanoid@npm:3.3.2"
   bin:
@@ -6509,6 +6435,68 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ozds-themes-ozds-assets@workspace:src/Ozds.Themes.Ozds.Assets":
+  version: 0.0.0-use.local
+  resolution: "ozds-themes-ozds-assets@workspace:src/Ozds.Themes.Ozds.Assets"
+  dependencies:
+    autoprefixer: 10.2.6
+    bootstrap: 5.0.1
+    browser-sync: 2.26.14
+    chokidar: 3.5.1
+    concurrently: 6.2.0
+    postcss: 8.3.0
+    prettier: 2.3.1
+    pug: 3.0.2
+    sass: 1.34.1
+    shelljs: 0.8.4
+    upath: 2.0.1
+  languageName: unknown
+  linkType: soft
+
+"ozds-web@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "ozds-web@workspace:."
+  dependencies:
+    "@babel/core": ^7.14.6
+    "@babel/preset-env": ^7.14.5
+    "@babel/preset-flow": 7.14.5
+    all-contributors-cli: ^6.20.0
+    bootstrap: 5.0.1
+    concurrently: 6.2.0
+    es6-promise: 4.2.8
+    glob: ^7.1.7
+    graceful-fs: 4.2.6
+    gulp: ^4.0.2
+    gulp-babel: 8.0.0
+    gulp-cli: ^2.3.0
+    gulp-concat: 2.6.1
+    gulp-dart-sass: 1.0.2
+    gulp-debug: 4.0.0
+    gulp-eol: 0.2.0
+    gulp-header: 2.0.9
+    gulp-if: 3.0.0
+    gulp-less: 5.0.0
+    gulp-minifier: ^3.5.0
+    gulp-newer: 1.4.0
+    gulp-plumber: 1.2.1
+    gulp-postcss: ^9.0.0
+    gulp-print: 5.0.2
+    gulp-rename: 2.0.0
+    gulp-sourcemaps: ^3.0.0
+    gulp-terser: 2.0.1
+    gulp-typescript: 5.0.1
+    gulp-util: 3.0.8
+    merge-stream: 2.0.0
+    npm-run-all: ^4.1.5
+    path-posix: 1.0.0
+    typescript: ^4.3.4
+    wait-on: ^5.3.0
+  dependenciesMeta:
+    bootstrap@5.0.1:
+      unplugged: true
+  languageName: unknown
+  linkType: soft
+
 "p-limit@npm:^2.2.0":
   version: 2.3.0
   resolution: "p-limit@npm:2.3.0"
@@ -6518,30 +6506,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"p-limit@npm:^3.0.2":
-  version: 3.1.0
-  resolution: "p-limit@npm:3.1.0"
-  dependencies:
-    yocto-queue: ^0.1.0
-  checksum: 7c3690c4dbf62ef625671e20b7bdf1cbc9534e83352a2780f165b0d3ceba21907e77ad63401708145ca4e25bfc51636588d89a8c0aeb715e6c37d1c066430360
-  languageName: node
-  linkType: hard
-
 "p-locate@npm:^4.1.0":
   version: 4.1.0
   resolution: "p-locate@npm:4.1.0"
   dependencies:
     p-limit: ^2.2.0
   checksum: 513bd14a455f5da4ebfcb819ef706c54adb09097703de6aeaa5d26fe5ea16df92b48d1ac45e01e3944ce1e6aa2a66f7f8894742b8c9d6e276e16cd2049a2b870
-  languageName: node
-  linkType: hard
-
-"p-locate@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "p-locate@npm:5.0.0"
-  dependencies:
-    p-limit: ^3.0.2
-  checksum: 1623088f36cf1cbca58e9b61c4e62bf0c60a07af5ae1ca99a720837356b5b6c5ba3eb1b2127e47a06865fee59dd0453cad7cc844cda9d5a62ac1a5a51b7c86d3
   languageName: node
   linkType: hard
 
@@ -6904,15 +6874,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-rtl@npm:^1.7.3":
-  version: 1.7.3
-  resolution: "postcss-rtl@npm:1.7.3"
-  dependencies:
-    rtlcss: 2.5.0
-  checksum: e6d39fbba87872f0a3fee5eb0fe7a7398dd44a9052a26d2eb18c2832e37326e8e60230e6c50f3bf20d4d7718564423b6fe0aa2ae652d730e626f3dd53ac8db54
-  languageName: node
-  linkType: hard
-
 "postcss-value-parser@npm:^4.1.0":
   version: 4.2.0
   resolution: "postcss-value-parser@npm:4.2.0"
@@ -6931,28 +6892,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.3.5":
-  version: 8.3.5
-  resolution: "postcss@npm:8.3.5"
-  dependencies:
-    colorette: ^1.2.2
-    nanoid: ^3.1.23
-    source-map-js: ^0.6.2
-  checksum: c73fc4825ed27396d453a942628cd8e34dd43c11b724f43f65f376d3900037736013b6446f1d9947ce5a847837cf96649e9a3f200ca2bd94a884e91e56ee1ceb
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^6.0.23":
-  version: 6.0.23
-  resolution: "postcss@npm:6.0.23"
-  dependencies:
-    chalk: ^2.4.1
-    source-map: ^0.6.1
-    supports-color: ^5.4.0
-  checksum: cc6cb2c1dbcdefa6f57a71d67fe535c9e96543298bbe28f9a6a64c4f1e21b6127113890dd4cda8873d3f4e6613a0566b7b4bbb230204f3a9a309190bda065d81
-  languageName: node
-  linkType: hard
-
 "postcss@npm:^7.0.16":
   version: 7.0.39
   resolution: "postcss@npm:7.0.39"
@@ -6960,17 +6899,6 @@ __metadata:
     picocolors: ^0.2.1
     source-map: ^0.6.1
   checksum: 4ac793f506c23259189064bdc921260d869a115a82b5e713973c5af8e94fbb5721a5cc3e1e26840500d7e1f1fa42a209747c5b1a151918a9bc11f0d7ed9048e3
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.2.4":
-  version: 8.4.12
-  resolution: "postcss@npm:8.4.12"
-  dependencies:
-    nanoid: ^3.3.1
-    picocolors: ^1.0.0
-    source-map-js: ^1.0.2
-  checksum: 248e3d0f9bbb8efaafcfda7f91627a29bdc9a19f456896886330beb28c5abea0e14c7901b35191928602e2eccbed496b1e94097d27a0b2a980854cd00c7a835f
   languageName: node
   linkType: hard
 
@@ -7616,82 +7544,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"root-workspace-0b6124@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "root-workspace-0b6124@workspace:."
-  dependencies:
-    "@babel/core": ^7.14.6
-    "@babel/preset-env": ^7.14.5
-    "@babel/preset-flow": 7.14.5
-    all-contributors-cli: ^6.20.0
-    bootstrap: 5.0.1
-    concurrently: 6.2.0
-    es6-promise: 4.2.8
-    glob: ^7.1.7
-    graceful-fs: 4.2.6
-    gulp: ^4.0.2
-    gulp-babel: 8.0.0
-    gulp-cli: ^2.3.0
-    gulp-concat: 2.6.1
-    gulp-dart-sass: 1.0.2
-    gulp-debug: 4.0.0
-    gulp-eol: 0.2.0
-    gulp-header: 2.0.9
-    gulp-if: 3.0.0
-    gulp-less: 5.0.0
-    gulp-minifier: ^3.5.0
-    gulp-newer: 1.4.0
-    gulp-plumber: 1.2.1
-    gulp-postcss: ^9.0.0
-    gulp-print: 5.0.2
-    gulp-rename: 2.0.0
-    gulp-sourcemaps: ^3.0.0
-    gulp-terser: 2.0.1
-    gulp-typescript: 5.0.1
-    gulp-util: 3.0.8
-    merge-stream: 2.0.0
-    npm-run-all: ^4.1.5
-    path-posix: 1.0.0
-    postcss: 8.3.5
-    postcss-rtl: ^1.7.3
-    rtlcss: 3.2.0
-    typescript: ^4.3.4
-    wait-on: ^5.3.0
-  languageName: unknown
-  linkType: soft
-
-"rtlcss@npm:2.5.0":
-  version: 2.5.0
-  resolution: "rtlcss@npm:2.5.0"
-  dependencies:
-    chalk: ^2.4.2
-    findup: ^0.1.5
-    mkdirp: ^0.5.1
-    postcss: ^6.0.23
-    strip-json-comments: ^2.0.0
-  bin:
-    rtlcss: ./bin/rtlcss.js
-  checksum: 55be1dedff55430a5ac5a5585c822af4f4162832f1148807eae2bde355e27954f9754832271f259e74737430689c19545287957465c603bf42f76b7c55cb1cb3
-  languageName: node
-  linkType: hard
-
-"rtlcss@npm:3.2.0":
-  version: 3.2.0
-  resolution: "rtlcss@npm:3.2.0"
-  dependencies:
-    chalk: ^4.1.0
-    find-up: ^5.0.0
-    mkdirp: ^1.0.4
-    postcss: ^8.2.4
-    strip-json-comments: ^3.1.1
-  peerDependencies:
-    postcss: ^8.2.4
-  bin:
-    rtlcss: bin/rtlcss.js
-  checksum: 9b1b88d7bd9b33bd0e7967d84ea017f5ea0492f6f059c6aab510025bbd55904fc808277cf0f332b0d7c2795d844f9d8d96d4c6406d587c262ba6e4b97546aeac
-  languageName: node
-  linkType: hard
-
 "run-async@npm:^2.4.0":
   version: 2.4.1
   resolution: "run-async@npm:2.4.1"
@@ -8124,7 +7976,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-js@npm:>=0.6.2 <2.0.0, source-map-js@npm:^1.0.2":
+"source-map-js@npm:>=0.6.2 <2.0.0":
   version: 1.0.2
   resolution: "source-map-js@npm:1.0.2"
   checksum: c049a7fc4deb9a7e9b481ae3d424cc793cb4845daa690bc5a05d428bf41bf231ced49b4cf0c9e77f9d42fdb3d20d6187619fc586605f5eabe995a316da8d377c
@@ -8475,20 +8327,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strip-json-comments@npm:^2.0.0":
-  version: 2.0.1
-  resolution: "strip-json-comments@npm:2.0.1"
-  checksum: 1074ccb63270d32ca28edfb0a281c96b94dc679077828135141f27d52a5a398ef5e78bcf22809d23cadc2b81dfbe345eb5fd8699b385c8b1128907dec4a7d1e1
-  languageName: node
-  linkType: hard
-
-"strip-json-comments@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "strip-json-comments@npm:3.1.1"
-  checksum: 492f73e27268f9b1c122733f28ecb0e7e8d8a531a6662efbd08e22cccb3f9475e90a1b82cab06a392f6afae6d2de636f977e231296400d0ec5304ba70f166443
-  languageName: node
-  linkType: hard
-
 "supports-color@npm:^2.0.0":
   version: 2.0.0
   resolution: "supports-color@npm:2.0.0"
@@ -8496,7 +8334,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supports-color@npm:^5.3.0, supports-color@npm:^5.4.0":
+"supports-color@npm:^5.3.0":
   version: 5.5.0
   resolution: "supports-color@npm:5.5.0"
   dependencies:
@@ -9504,12 +9342,5 @@ __metadata:
   version: 0.1.2
   resolution: "yeast@npm:0.1.2"
   checksum: 81a250b69f601fed541e9518eb2972e75631dd81231689503d7f288612d4eec793b29c208d6807fd6bfc4c2a43614d0c6db233739a4ae6223e244aaed6a885c0
-  languageName: node
-  linkType: hard
-
-"yocto-queue@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "yocto-queue@npm:0.1.0"
-  checksum: f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
   languageName: node
   linkType: hard

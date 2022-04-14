@@ -16,7 +16,4 @@ Za login je default sifra: admin/Admin123!
 
 ## TODO
 
-- [ ] better ids for better tests
-- [ ] make mock functions for better tests
-- [ ] IConfigurationProvider configuration
-- [ ] finalize BackgroundTask
+- fix that horrible asset mess
