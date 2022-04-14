@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
@@ -7,47 +6,44 @@ using OrchardCore.ContentManagement.Display;
 using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.ModelBinding;
 
-namespace Ozds.Modules.Members.Pages
+namespace Ozds.Modules.Members.Pages;
+
+public class PrintModel : PageModel
 {
-  public class PrintModel : PageModel
+  public async Task<IActionResult> OnGetAsync(string contentId)
   {
-    // this is a url used for fetching printed doc
-    private readonly string downloadFormat;
-
-    private readonly IContentManager _contentManager;
-    private readonly IContentItemDisplayManager _contentItemDisplayManager;
-    private readonly IUpdateModelAccessor _updateModelAccessor;
-
-    public IShape PrintHeader { get; set; }
-    public IShape Shape { get; set; }
-
-    public PrintModel(IContentItemDisplayManager cidm, IContentManager cm,
-        IUpdateModelAccessor updateModelAccessor,
-        IConfiguration configuration)
-    {
-
-      _contentManager = cm;
-      _contentItemDisplayManager = cidm;
-      _updateModelAccessor = updateModelAccessor;
-      downloadFormat = configuration.GetValue<string>("PrintPdfUrl");
-    }
-
-    public async Task<IActionResult> OnGetAsync(string contentId)
-    {
-      var content = await _contentManager.GetAsync(contentId);
-      Shape = await _contentItemDisplayManager.BuildDisplayAsync(
-          content, _updateModelAccessor.ModelUpdater, "Print");
-      PrintHeader = await _contentItemDisplayManager.BuildDisplayAsync(
-          content, _updateModelAccessor.ModelUpdater, "PrintHeader");
-      return Page();
-    }
-
-    public IActionResult OnGetDownload(string contentId, string fileName)
-    {
-      fileName = string.IsNullOrWhiteSpace(fileName) ? contentId : fileName;
-      var docUrl = string.Format(
-          "https://{0}/Members/Print/{1}/", Request.Host, contentId);
-      return Redirect(string.Format(downloadFormat, fileName, docUrl));
-    }
+    var content = await ContentManger.GetAsync(contentId);
+    Shape = await ContentDisplay.BuildDisplayAsync(
+        content, UpdateModel.ModelUpdater, "Print");
+    PrintHeader = await ContentDisplay.BuildDisplayAsync(
+        content, UpdateModel.ModelUpdater, "PrintHeader");
+    return Page();
   }
+
+  public IActionResult OnGetDownload(string contentId, string fileName)
+  {
+    fileName = string.IsNullOrWhiteSpace(fileName) ? contentId : fileName;
+    var docUrl = string.Format(
+        "https://{0}/Members/Print/{1}/", Request.Host, contentId);
+    return Redirect(string.Format(DownloadFormat, fileName, docUrl));
+  }
+
+  public IShape? PrintHeader { get; set; }
+  public IShape? Shape { get; set; }
+
+  public PrintModel(IContentItemDisplayManager contentDisplay,
+      IContentManager content, IUpdateModelAccessor updateModel,
+      IConfiguration conf)
+  {
+    ContentManger = content;
+    ContentDisplay = contentDisplay;
+    UpdateModel = updateModel;
+    DownloadFormat = conf.GetValue<string>("PrintPdfUrl");
+  }
+
+  private string DownloadFormat { get; }
+
+  private IContentManager ContentManger { get; }
+  private IContentItemDisplayManager ContentDisplay { get; }
+  private IUpdateModelAccessor UpdateModel { get; }
 }

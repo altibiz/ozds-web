@@ -1,68 +1,54 @@
 ﻿using OrchardCore.ContentManagement;
 using YesSql.Indexes;
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement.Metadata;
 using Ozds.Modules.Members.Utils;
 using OrchardCore.Data;
-using Ozds.Modules.Members.Core;
 
 namespace Ozds.Modules.Members.Persons
 {
   public class PersonPartIndex : MapIndex
   {
-    public string ContentItemId { get; set; }
-    public string Oib { get; set; }
-    public string LegalName { get; set; }
-    public decimal? Revenue2019 { get; set; }
-    public string PersonType { get; set; }
-    public decimal? Employees { get; set; }
-    public decimal? Associates { get; set; }
-    public bool Published { get; set; }
+    public string ContentItemId { get; init; } = default!;
+    public string Oib { get; init; } = default!;
+    public string LegalName { get; init; } = default!;
+    public string PersonType { get; init; } = default!;
+    public bool Published { get; init; } = default!;
   }
 
   public class PersonPartIndexProvider : IndexProvider<ContentItem>,
                                          IScopedIndexProvider
   {
-    private IServiceProvider _serviceProvider;
-    private IContentDefinitionManager contentDefinitionManager;
+    private IServiceProvider Services;
+    private IContentDefinitionManager Content;
 
-    public PersonPartIndexProvider(IServiceProvider serviceProvider)
+    public PersonPartIndexProvider(
+        IServiceProvider services, IContentDefinitionManager content)
     {
-      _serviceProvider = serviceProvider;
+      Services = services;
+      Content = content;
     }
 
     public override void Describe(DescribeContext<ContentItem> context)
     {
-      context.For<PersonPartIndex>().Map(contentItem =>
+      context.For<PersonPartIndex?>().Map(contentItem =>
       {
-        var pp = contentItem.AsReal<PersonPart>();
-        if (pp == null)
+        var person = contentItem.AsReal<PersonPart>();
+        if (person is null)
+        {
           return null;
-        // Lazy initialization because of ISession cyclic dependency
-        contentDefinitionManager ??=
-            _serviceProvider.GetRequiredService<IContentDefinitionManager>();
-        var typeDef =
-            contentDefinitionManager.GetSettings<PersonPartSettings>(pp);
-        var res = new PersonPartIndex
+        }
+
+        Content ??= Services.GetRequiredService<IContentDefinitionManager>();
+        var typeDef = Content.GetSettings<PersonPartSettings>(person);
+        return new PersonPartIndex
         {
           ContentItemId = contentItem.ContentItemId,
-          Oib = pp.Oib.Text,
-          LegalName = pp.LegalName,
+          Oib = person.Oib.Text,
+          LegalName = person.LegalName,
           PersonType = typeDef.Type?.ToString(),
           Published = contentItem.Published,
         };
-
-        var company = contentItem.AsReal<Company>();
-
-        if (company != null)
-        {
-          res.Revenue2019 = company.Revenue2019?.Value;
-          res.Employees = company.EmployeeNumber?.Value;
-          res.Associates = company.PermanentAssociates?.Value;
-        }
-
-        return res;
       });
     }
   }

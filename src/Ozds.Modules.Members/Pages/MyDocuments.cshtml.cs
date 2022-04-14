@@ -1,40 +1,48 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Localization;
 using OrchardCore.DisplayManagement.Notify;
 using Ozds.Modules.Members.Core;
-using System.Collections.Generic;
 
-namespace Ozds.Modules.Members.Pages
+namespace Ozds.Modules.Members.Pages;
+
+public class MyDocumentsModel : PageModel
 {
-  public class MyDocumentsModel : PageModel
+  public async Task OnGetAsync()
   {
-    private readonly IHtmlLocalizer H;
-    private readonly MemberService _memberService;
-    public Dictionary<string, List<(string, string)>> DocLinks { get; } = new();
-    public MyDocumentsModel(MemberService mService,
-        IHtmlLocalizer<MyDocumentsModel> htmlLocalizer, INotifier notifier)
+    var member = await Members.GetUserMember();
+    if (member is null)
     {
-      H = htmlLocalizer;
-      _memberService = mService;
+      return;
     }
 
-    public async Task OnGetAsync()
+    AddDocument(
+        H["Membership"].Value, member.DisplayText, member.ContentItemId);
+  }
+
+  public Dictionary<string, List<(string name, string id)>> Documents
+  {
+    get;
+  } = new();
+
+  public MyDocumentsModel(MemberService members,
+      IHtmlLocalizer<MyDocumentsModel> localizer, INotifier notifier)
+  {
+    Members = members;
+    H = localizer;
+    Notifier = notifier;
+  }
+
+  private IHtmlLocalizer H { get; }
+  private MemberService Members { get; }
+  private INotifier Notifier { get; }
+
+  private void AddDocument(string group, string name, string id)
+  {
+    if (!Documents.TryGetValue(group, out var links))
     {
-      var companies = await _memberService.GetUserCompanies();
-      var member = await _memberService.GetUserMember();
-      AddLink(H["Membership"].Value, member.DisplayText, member.ContentItemId);
-      foreach (var cmp in companies)
-      {
-        AddLink(H["Membership"].Value, cmp.DisplayText, cmp.ContentItemId);
-      }
+      Documents[group] = links = new List<(string, string)>();
     }
 
-    private void AddLink(string group, string name, string id)
-    {
-      if (!DocLinks.TryGetValue(group, out var links))
-        DocLinks[group] = links = new List<(string, string)>();
-      links.Add((name, id));
-    }
+    links.Add((name, id));
   }
 }

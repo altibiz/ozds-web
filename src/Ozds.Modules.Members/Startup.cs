@@ -5,7 +5,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Builder;
-using YesSql.Indexes;
 using OrchardCore.Data.Migration;
 using OrchardCore.Navigation;
 using OrchardCore.Contents.Services;
@@ -28,11 +27,7 @@ using Ozds.Modules.Members.Utils;
 using Ozds.Modules.Members.Core;
 using Ozds.Modules.Members.Persons;
 using Ozds.Modules.Members.PartFieldSettings;
-using Ozds.Modules.Members.Payments;
-using Ozds.Modules.Members.Indexes;
 using Ozds.Modules.Members.Base;
-using Ozds.Modules.Members.ContentHandlers;
-using Ozds.Modules.Members.Measurements;
 
 namespace Ozds.Modules.Members;
 
@@ -52,30 +47,17 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddScoped<INavigationProvider, AdminMenu>();
     services.AddScoped<IDataMigration, Migrations>();
     services.AddContentPart<Member>();
-    services.AddContentPart<Company>();
     services.UsePartService<PersonPart, PersonPartService>();
-    services.UsePartService<BankStatPart, BankStatPartService>();
     services.AddScoped<MemberService>();
-    services.AddScoped<PaymentUtils>();
     services.AddScoped<IScopedIndexProvider, PersonPartIndexProvider>();
-    services.AddSingleton<IIndexProvider, PaymentIndexProvider>();
-    services.AddSingleton<IIndexProvider, OfferIndexProvider>();
-    services.AddSingleton<IIndexProvider, PaymentByDayIndexProvider>();
-    services.AddContentPart<Payment>();
-    services.AddContentPart<Offer>();
     services.AddScoped<TaxonomyCachedService>();
     services.AddSingleton<IContentHandler, MemberHandler>();
-    services.AddSingleton<IContentHandler, UserMenuHandler>();
     services.AddRecipeExecutionStep<FastImport>();
     services.AddScoped<Importer>();
     services.AddTransient<IContentsAdminListFilterProvider,
         PersonPartAdminListFilterProvider>();
-    services.AddTransient<IContentsAdminListFilterProvider,
-        PaymentAdminListFilterProvider>();
     services.AddScoped<IDisplayDriver<ContentOptionsViewModel>,
         PersonOptionsDisplayDriver>();
-    services.UsePartService<Pledge, PledgeService>();
-    services.UsePartService<Payment, PaymentPartService>();
 
     services.AddScoped<IContentDisplayDriver, ContainedPartDisplayDriver>();
     services.AddSingleton<IBackgroundTask, FastImportBackgroundTask>();

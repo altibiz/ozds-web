@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Ozds.Modules.Members.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
@@ -7,45 +6,45 @@ using OrchardCore.ContentManagement;
 using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.Notify;
 
-namespace Ozds.Modules.Members.Pages
+namespace Ozds.Modules.Members.Pages;
+
+public class CreateNewModel : PageModel
 {
-  public class CreateNewModel : PageModel
+  public async Task<IActionResult> OnGetAsync(string contentType)
   {
-    private readonly IHtmlLocalizer H;
-    private readonly MemberService _memberService;
-    private readonly INotifier _notifier;
-    public IShape Shape { get; set; }
-    public CreateNewModel(MemberService mService,
-        IHtmlLocalizer<CreateOfferModel> htmlLocalizer, INotifier notifier)
-    {
-
-      _notifier = notifier;
-      H = htmlLocalizer;
-      _memberService = mService;
-    }
-
-    public async Task<IActionResult> OnGetAsync(string contentType)
-    {
-      (_, Shape) = await _memberService.GetNewItem(contentType);
-      return Page();
-    }
-
-    // contentItemId -> company content item
-    public async Task<IActionResult> OnPostAsync(string contentType)
-    {
-      ContentItem contentItem;
-      (contentItem, Shape) = await _memberService.ModelToNew(contentType);
-      if (ModelState.IsValid)
-      {
-        var result = await _memberService.CreateNew(contentItem, true);
-        if (result.Succeeded)
-        {
-          await _notifier.SuccessAsync(H["Hvala!"]);
-          return Redirect(
-              "~/Contents/ContentItems/" + contentItem.ContentItemId);
-        }
-      }
-      return Page();
-    }
+    (_, Shape) = await Members.GetNewItem(contentType);
+    return Page();
   }
+
+  // contentItemId -> company content item
+  public async Task<IActionResult> OnPostAsync(string contentType)
+  {
+    ContentItem contentItem;
+    (contentItem, Shape) = await Members.ModelToNew(contentType);
+    if (ModelState.IsValid)
+    {
+      var result = await Members.CreateNew(contentItem, true);
+      if (result.Succeeded)
+      {
+        await Notifier.SuccessAsync(H["Hvala!"]);
+        return Redirect("~/Contents/ContentItems/" + contentItem.ContentItemId);
+      }
+    }
+    return Page();
+  }
+
+  public IShape? Shape { get; set; }
+
+  public CreateNewModel(MemberService mService, IHtmlLocalizer htmlLocalizer,
+      INotifier notifier)
+  {
+    Notifier = notifier;
+    Members = mService;
+
+    H = htmlLocalizer;
+  }
+
+  private IHtmlLocalizer H { get; }
+  private MemberService Members { get; }
+  private INotifier Notifier { get; }
 }

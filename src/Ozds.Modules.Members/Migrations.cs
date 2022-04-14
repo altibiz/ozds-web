@@ -26,22 +26,14 @@ public sealed class Migrations : DataMigration
 
   public int Create()
   {
-    Recipe.ExecuteInit(this);
+    Recipe.ExecuteAuthSettings(this);
+    Recipe.ExecuteUserLandingPageMenu(this);
+    Recipe.ExecuteCountyTaxonomy(this);
 
     Content.AlterAdminPageType();
 
-    Content.AlterOfferPart();
-    Content.AlterOfferType();
-    Schema.CreateOfferIndex();
-    Schema.CreatePersonPartIndex();
-
-    Schema.CreatePaymentIndex();
-    Schema.CreatePaymentByDayIndex();
-
     Content.AlterImagePart();
     Content.AlterImageType();
-
-    Schema.CreateDeviceIndex();
 
     Content.AlterReceiptPart();
     Content.AlterReceiptType();

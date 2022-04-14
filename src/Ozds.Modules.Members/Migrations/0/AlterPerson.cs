@@ -1,6 +1,7 @@
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.ContentFields.Settings;
+using OrchardCore.Taxonomies.Settings;
 
 namespace Ozds.Modules.Members.M0;
 
