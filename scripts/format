@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-find '.' -regex '.*\.js$' -exec clang-format -i '{}' $@ +;
-find '.' -regex '.*\.json$' -exec clang-format -i '{}' $@ +;
+git ls-files '*.js' | xargs clang-format -i;
+git ls-files '*.json' | xargs clang-format -i;
 
 dotnet format whitespace;

@@ -181,10 +181,8 @@ nuget.exe
 #enable all /lib artifacts
 !lib/*/*.*
 
-#exclude node modules
-node_modules/*
-
-src/Ozds.Web/wwwroot
+node_modules
+wwwroot
 src/Ozds.Web/Localization
 is-cache
 secrets.json
