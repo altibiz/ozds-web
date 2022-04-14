@@ -13,3 +13,4 @@ if [[ ! -f "$ROOT_DIR/secrets.json" ]]; then
 fi;
 
 dotnet restore $@;
+yarn install --cwd "$ROOT_DIR/src/Ozds.Themes.Ozds/";

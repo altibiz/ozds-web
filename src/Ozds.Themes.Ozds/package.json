@@ -5,8 +5,8 @@
     "rebuild": "gulp rebuild",
     "watch": "gulp build && gulp watch",
     "wait:watch": "wait-on http://localhost:3000 && npm run watch",
-    "postinstall": "cd Assets && npm install",
-    "bootstrap:start": "cd Assets && npm start",
+    "postinstall": "yarn install --cwd Assets",
+    "bootstrap:start": "yarn start --cwd Assets",
     "start": "concurrently \"npm:bootstrap:start\" \"npm:wait:watch\""
   },
   "devDependencies": {
