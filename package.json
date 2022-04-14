@@ -2,8 +2,8 @@
   "name": "ozds-web",
   "private": true,
   "scripts": {
-    "build": "yarn gulp build",
-    "rebuild": "yarn gulp rebuild",
+    "build": "yarn workspace ozds-themes-ozds-assets build && yarn gulp build",
+    "rebuild": "yarn workspace ozds-themes-ozds-assets rebuild && yarn gulp rebuild",
     "watch": "yarn gulp build && gulp watch",
     "wait:watch": "yarn wait-on http://localhost:3000 && yarn watch",
     "bootstrap:start": "yarn --cwd src/Ozds.Themes.Ozds/Assets start ",
