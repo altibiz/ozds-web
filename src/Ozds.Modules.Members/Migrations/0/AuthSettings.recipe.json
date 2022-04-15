@@ -16,7 +16,7 @@
         "UseSiteTheme": true,
         "UseExternalProviderIfOnlyOneDefined": false,
         "DisableLocalLogin": false,
-        "UseScriptToSyncRoles": null
+        "UseScriptToSyncRoles": false
       }
     }
   ]
