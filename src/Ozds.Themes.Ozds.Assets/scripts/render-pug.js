@@ -1,4 +1,5 @@
 "use strict";
+
 const fs = require("fs");
 const upath = require("upath");
 const pug = require("pug");
@@ -10,8 +11,7 @@ module.exports = function renderPug(filePath) {
       filePath.replace(/src\/pug\//, "dist/").replace(/\.pug$/, ".html");
   const srcPath = upath.resolve(upath.dirname(__filename), "../src");
 
-  console.log(
-      `[ozds-themes-ozds-assets] INFO: Rendering ${filePath} to ${destPath}`);
+  console.log(`[render] INFO: Rendering ${filePath} to ${destPath}`);
   const html = pug.renderFile(filePath, {
     doctype : "html",
     filename : filePath,

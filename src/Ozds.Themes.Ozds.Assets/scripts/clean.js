@@ -1,6 +1,8 @@
-const sh = require('shelljs');
-const upath = require('upath');
+"use strict";
 
-const destPath = upath.resolve(upath.dirname(__filename), '../dist');
+const sh = require("shelljs");
+const upath = require("upath");
 
-sh.rm('-rf', `${destPath}/*`)
+const destPath = upath.resolve(upath.dirname(__filename), "../dist");
+
+sh.rm("-rf", `${destPath}/*`);

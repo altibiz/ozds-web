@@ -4,8 +4,8 @@
   "scripts": {
     "build": "yarn workspace ozds-themes-ozds-assets build && yarn gulp build",
     "watch": "yarn wait-on http://localhost:3000 && yarn build && yarn gulp watch",
-    "start": "concurrently \"yarn workspace ozds-themes-ozds-assets start\" \"yarn watch\"",
-    "debug": "concurrently \"yarn workspace ozds-themes-ozds-assets debug\" \"yarn watch\""
+    "start": "yarn concurrently -n ozds-themes-ozds-assets,gulp-watch -c blue.bold,red.bold \"yarn workspace ozds-themes-ozds-assets start\" \"yarn watch\"",
+    "debug": "yarn concurrently -n ozds-themes-ozds-assets,gulp-watch -c blue.bold,red.bold \"yarn workspace ozds-themes-ozds-assets debug\" \"yarn watch\""
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",

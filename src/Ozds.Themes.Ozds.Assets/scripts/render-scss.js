@@ -1,4 +1,5 @@
 "use strict";
+
 const autoprefixer = require("autoprefixer");
 const fs = require("fs");
 const upath = require("upath");
@@ -24,8 +25,7 @@ module.exports = function renderSCSS() {
     sh.mkdir("-p", destPathDirname);
   }
 
-  console.log(
-      `[ozds-themes-ozds-assets] INFO: Rendering ${stylesPath} to ${destPath}`);
+  console.log(`[render] INFO: Rendering ${stylesPath} to ${destPath}`);
   postcss([ autoprefixer ])
       .process(results.css, {from : "styles.css", to : "styles.css"})
       .then((result) => {

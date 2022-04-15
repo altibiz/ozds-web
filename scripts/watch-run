@@ -7,6 +7,13 @@ export ASPNETCORE_ENVIRONMENT=Production;
 export DOTNET_ENVIRONMENT=Production;
 export ORCHARD_APP_DATA="$ROOT_DIR/App_Data";
 export NODE_OPTIONS="--no-warnings";
+export DOTNET_WATCH_RESTART_ON_RUDE_EDIT=1;
+
+function stop() {
+  echo "Giving everything 1 second to stop properly...";
+  sleep 1s;
+}
+trap 'stop' SIGINT;
 
 echo "
 yarn --cwd '$ROOT_DIR' start

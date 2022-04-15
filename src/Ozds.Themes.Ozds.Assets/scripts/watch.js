@@ -3,6 +3,7 @@
 const _ = require("lodash");
 const chokidar = require("chokidar");
 const upath = require("upath");
+
 const renderAssets = require("./render-assets");
 const renderPug = require("./render-pug");
 const renderScripts = require("./render-scripts");
@@ -23,10 +24,8 @@ watcher.on(
     "change", (filePath) => _processFile(upath.normalize(filePath), "change"));
 watcher.on("ready", () => {
   READY = true;
-  console.log(" READY TO ROLL!");
+  console.log("READY TO ROLL!");
 });
-
-_handleSCSS();
 
 function _processFile(filePath, watchEvent) {
   if (!READY) {
@@ -40,7 +39,8 @@ function _processFile(filePath, watchEvent) {
     return;
   }
 
-  console.log(`### INFO: File event: ${watchEvent}: ${filePath}`);
+  console.log(
+      `[ozds-themes-ozds-assets] INFO: File event: ${watchEvent}: ${filePath}`);
 
   if (filePath.match(/\.pug$/)) {
     return _handlePug(filePath, watchEvent);
@@ -77,7 +77,7 @@ function _handlePug(filePath, watchEvent) {
 }
 
 function _renderAllPug() {
-  console.log("### INFO: Rendering All");
+  console.log(`[ozds-themes-ozds-assets] INFO: rendering all pug files`);
   _.each(allPugFiles, (_, filePath) => { renderPug(filePath); });
 }
 

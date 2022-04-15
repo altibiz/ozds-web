@@ -1,16 +1,19 @@
+"use strict";
+
 const concurrently = require("concurrently");
 
 concurrently(
     [
       {
         command : "yarn node --inspect scripts/watch.js",
-        name : "ozds-themes-ozds-assets scripts/watch.js",
-        prefixColor : "bgBlue.bold",
+        name : "scripts/watch.js",
+        prefixColor : "magenta",
       },
       {
-        command : `yarn browser-sync dist -w --no-online`,
-        name : "ozds-themes-ozds-assets browser-sync",
-        prefixColor : "bgMagenta.bold",
+        command : "yarn browser-sync " +
+                      "dist --watch --no-online --no-open",
+        name : "browser-sync",
+        prefixColor : "yellow",
       },
     ],
     {
