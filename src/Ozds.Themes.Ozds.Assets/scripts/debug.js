@@ -3,14 +3,14 @@ const concurrently = require("concurrently");
 concurrently(
     [
       {
-        command : "yarn node --inspect scripts/sb-watch.js",
-        name : "SB_WATCH",
+        command : "yarn node --inspect scripts/watch.js",
+        name : "ozds-themes-ozds-assets scripts/watch.js",
         prefixColor : "bgBlue.bold",
       },
       {
         command : `yarn browser-sync dist -w --no-online`,
-        name : "SB_BROWSER_SYNC",
-        prefixColor : "bgBlue.bold",
+        name : "ozds-themes-ozds-assets browser-sync",
+        prefixColor : "bgMagenta.bold",
       },
     ],
     {

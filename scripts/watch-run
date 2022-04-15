@@ -6,9 +6,9 @@ ROOT_DIR="$(dirname "$SCRIPT_DIR")";
 export ASPNETCORE_ENVIRONMENT=Production;
 export DOTNET_ENVIRONMENT=Production;
 export ORCHARD_APP_DATA="$ROOT_DIR/App_Data";
+export NODE_OPTIONS="--no-warnings";
 
-yarn --cwd "$ROOT_DIR" start &;
-export THEME_WATCH_PID="$!";
-
-dotnet watch run --project "$ROOT_DIR/src/Ozds.Web/Ozds.Web.csproj" &;
-export SOLUTION_WATCH_PID="$!";
+echo "
+yarn --cwd '$ROOT_DIR' start
+dotnet watch run --project '$ROOT_DIR/src/Ozds.Web/Ozds.Web.csproj'
+" | xargs -P2 -IR /usr/bin/env bash -c R;

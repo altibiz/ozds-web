@@ -2,27 +2,24 @@
   "name": "ozds-themes-ozds-assets",
   "private": true,
   "scripts": {
-    "build": "yarn clean && yarn build:pug && yarn build:scss && yarn build:scripts && yarn build:assets",
-    "build:assets": "yarn node scripts/build-assets.js",
-    "build:pug": "yarn node scripts/build-pug.js",
-    "build:scripts": "yarn node scripts/build-scripts.js",
-    "build:scss": "yarn node scripts/build-scss.js",
-    "clean": "yarn node scripts/clean.js",
-    "start": "yarn build && yarn scripts/start.js",
-    "start:debug": "yarn build && yarn node scripts/start-debug.js"
+    "build": "yarn node scripts/clean.js && yarn node scripts/build-pug.js && yarn node scripts/build-scss.js && yarn node scripts/build-scripts.js && yarn node scripts/build-assets.js",
+    "start": "yarn build && yarn node scripts/start.js",
+    "debug": "yarn build && yarn node scripts/debug.js"
   },
   "dependencies": {
     "bootstrap": "5.0.1"
   },
   "devDependencies": {
+    "@popperjs/core": "^2.11.5",
     "autoprefixer": "10.2.6",
     "browser-sync": "2.26.14",
     "chokidar": "3.5.1",
     "concurrently": "6.2.0",
+    "lodash": "^4.17.21",
     "postcss": "8.3.0",
     "prettier": "2.3.1",
     "pug": "3.0.2",
-    "sass": "1.34.1",
+    "sass": "^1.50.0",
     "shelljs": "0.8.4",
     "upath": "2.0.1"
   },

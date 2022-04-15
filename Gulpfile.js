@@ -9,7 +9,8 @@ var fs = require("graceful-fs"), glob = require("glob"),
     typescript = require("gulp-typescript"), terser = require("gulp-terser"),
     rename = require("gulp-rename"), concat = require("gulp-concat"),
     header = require("gulp-header"), eol = require("gulp-eol"),
-    util = require("gulp-util"), babel = require("gulp-babel");
+    util = require("gulp-util"), babel = require("gulp-babel"),
+    upath = require("upath");
 
 // For compat with older versions of Node.js.
 require("es6-promise").polyfill();
@@ -185,6 +186,7 @@ function buildCssPipeline(assetGroup, doConcat, doRebuild) {
           .pipe(gulpif("*.less", less()))
           .pipe(gulpif("*.scss", scss({
             precision : 10,
+            includePaths : [ bootstrapIncludePath ],
           })))
           .pipe(gulpif(doConcat, concat(assetGroup.outputFileName)))
           .pipe(minify({
@@ -210,7 +212,8 @@ function buildCssPipeline(assetGroup, doConcat, doRebuild) {
           .pipe(plumber())
           .pipe(gulpif(generateSourceMaps, sourcemaps.init()))
           .pipe(gulpif("*.less", less()))
-          .pipe(gulpif("*.scss", scss({precision : 10})))
+          .pipe(gulpif("*.scss",
+              scss({precision : 10, includePaths : [ bootstrapIncludePath ]})))
           .pipe(gulpif(doConcat, concat(assetGroup.outputFileName)))
           .pipe(header(
               "/*\n" +
@@ -297,3 +300,6 @@ function buildCopyPipeline(assetGroup, doRebuild) {
 
   return stream;
 }
+
+const bootstrapIncludePath = upath.resolve(upath.dirname(__filename),
+    ".yarn/unplugged/bootstrap-virtual-43b2c55e14/node_modules");

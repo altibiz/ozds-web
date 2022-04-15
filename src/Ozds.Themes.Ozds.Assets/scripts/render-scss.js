@@ -11,12 +11,12 @@ const stylesPath =
 const destPath =
     upath.resolve(upath.dirname(__filename), "../dist/css/styles.css");
 const bootstrapIncludePath = upath.resolve(upath.dirname(__filename),
-    "../../../.yarn/unplugged/bootstrap-virtual-f5d2d4de49/node_modules/");
+    "../../../.yarn/unplugged/bootstrap-virtual-43b2c55e14/node_modules");
 
 module.exports = function renderSCSS() {
-  const results = sass.renderSync({
-    data : `@import "${stylesPath}"`,
-    includePaths : [ bootstrapIncludePath ],
+  const results = sass.compile(stylesPath, {
+    loadPaths : [ bootstrapIncludePath ],
+    quietDeps : true,
   });
 
   const destPathDirname = upath.dirname(destPath);
@@ -24,10 +24,12 @@ module.exports = function renderSCSS() {
     sh.mkdir("-p", destPathDirname);
   }
 
+  console.log(
+      `[ozds-themes-ozds-assets] INFO: Rendering ${stylesPath} to ${destPath}`);
   postcss([ autoprefixer ])
       .process(results.css, {from : "styles.css", to : "styles.css"})
       .then((result) => {
-        result.warnings().forEach((warn) => { console.warn(warn.toString()); });
+        result.warnings().forEach(console.warn);
         fs.writeFileSync(destPath, result.css.toString());
       });
 };

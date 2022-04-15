@@ -26,14 +26,12 @@ public partial class Migrations : DataMigration
 
   public int Create()
   {
-    Recipe.ExecuteInit(this, Env.IsDevelopment());
-
-    Content.AlterGPiecePart();
-    Content.AlterGPieceType();
-    Content.AlterGalleryPart();
-    Content.AlterGalleryType();
-    Content.AlterBlogPostType();
-    Content.AlterBlogPostPart();
+    Recipe.ExecuteLayers(this);
+    Recipe.ExecuteLayout(this);
+    Recipe.ExecuteAdminMenu(this);
+    Recipe.ExecuteLocalization(this);
+    Recipe.ExecuteAnonymousRole(this);
+    Recipe.ExecuteLuceneFullTextSearch(this);
 
     return 1;
   }

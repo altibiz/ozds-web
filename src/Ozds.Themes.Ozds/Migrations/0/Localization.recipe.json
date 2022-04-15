@@ -9,41 +9,6 @@
           "en"
         ]
       }
-    },
-    {
-      "name": "ContentDefinition",
-      "ContentTypes": [
-        {
-          "Name": "Menu",
-          "ContentTypePartDefinitionRecords": [
-            {
-              "PartName": "LocalizationPart",
-              "Name": "LocalizationPart",
-              "Settings": {}
-            }
-          ]
-        },
-        {
-          "Name": "Article",
-          "ContentTypePartDefinitionRecords": [
-            {
-              "PartName": "LocalizationPart",
-              "Name": "LocalizationPart",
-              "Settings": {}
-            }
-          ]
-        },
-        {
-          "Name": "Page",
-          "ContentTypePartDefinitionRecords": [
-            {
-              "PartName": "LocalizationPart",
-              "Name": "LocalizationPart",
-              "Settings": {}
-            }
-          ]
-        }
-      ]
     }
   ]
 }

@@ -14,12 +14,12 @@
   "steps": [
     {
       "name": "settings",
-      "HomeRoute": {
-        "Action": "Display",
-        "Controller": "Item",
-        "Area": "OrchardCore.Contents",
-        "ContentItemId": "[js: variables('blogContentItemId')]"
-      },
+      // "HomeRoute": {
+      //   "Action": "Display",
+      //   "Controller": "Item",
+      //   "Area": "OrchardCore.Contents",
+      //   "ContentItemId": "[js: variables('blogContentItemId')]"
+      // },
       "LayerSettings": {
         "Zones": [
           "Content",
