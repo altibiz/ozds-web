@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+echo -e "
+[OZDS] Cleaning artifacts...
+";
 git clean -Xd \
   -e '!.husky/' \
   -e '!.husky/_/' \
