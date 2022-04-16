@@ -3,8 +3,7 @@
 SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")";
 ROOT_DIR="$(dirname "$SCRIPT_DIR")";
 
-if [[ "$(which husky)" && ! "$CI" && ! "$(git config core.hooksPath)" ]];
-then
+if [[ "$(which husky)" && ! "$CI" && ! "$(git config core.hooksPath)" ]]; then
   husky install;
 fi;
 
