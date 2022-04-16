@@ -14,6 +14,7 @@ consumption in the system.
 
 ## Dependencies
 
+- [`bash`](https://www.gnu.org/software/bash/)
 - [`dotnet@6.0.202`](https://dotnet.microsoft.com/en-us/)
 - [`node@17.9.0`](https://nodejs.org/en/)
 - [`yarn@3.2.0`](https://yarnpkg.com/)
@@ -35,7 +36,7 @@ To start the development process locally, follow these steps:
    are properly stored.
 4. Run the [watch-debug script](scripts/watch-debug) to start
    [the development server](https://localhost:5001),
-   [the browser-sync server](http://localhost:3000) and to start file
+   [the browser-sync server](http://localhost:3000), and to start file
    watchers for hot reload. Open [the site](https://localhost:5001) if it
    didn't automatically open.
 
