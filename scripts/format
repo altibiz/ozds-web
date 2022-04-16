@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
 
-git ls-files '*.js' | xargs yarn prettier --write;
-git ls-files '*.json' | xargs yarn prettier --write;
-
+yarn format;
 dotnet format whitespace;

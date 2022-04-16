@@ -1,13 +1,13 @@
 .gallery {
-	display: flex;
-	width: 100%;
-	flex-wrap:wrap;
-	img {
-  max-height: 100px;
-	}
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  img {
+    max-height: 100px;
+  }
 
-	.gallery-item {
-  margin: auto;
-  padding: 0 20px 20px 0;
-	}
+  .gallery-item {
+    margin: auto;
+    padding: 0 20px 20px 0;
+  }
 }

@@ -1,5 +1,8 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-./scripts/format
-git add .
+HUSKY_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")";
+ROOT_DIR="$(dirname "$HUSKY_DIR")";
+
+"$ROOT_DIR/scripts/format";
+git add "$ROOT_DIR";

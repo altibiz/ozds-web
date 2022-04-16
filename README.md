@@ -39,4 +39,3 @@ To start the development process locally, follow these steps:
    [the browser-sync server](http://localhost:3000), and to start file
    watchers for hot reload. Open [the site](https://localhost:5001) if it
    didn't automatically open.
-

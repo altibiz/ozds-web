@@ -1,43 +1,43 @@
 // Set horizontal rule color to border color
 
 hr {
-    background-color: $border-color;
-    opacity: 1;
+  background-color: $border-color;
+  opacity: 1;
 }
 
 // Set defaults for the paragraph element
 
 p {
-    margin: 2rem 0;
+  margin: 2rem 0;
 
-    a {
-        text-decoration: underline;
-    }
+  a {
+    text-decoration: underline;
+  }
 }
 
 blockquote {
-    font-style: italic;
-    color: $gray-600;
+  font-style: italic;
+  color: $gray-600;
 }
 
 .articleBody {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 #mainNav .navbar-cust > li.nav-item > a.nav-link {
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.0625em;
-    text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.0625em;
+  text-transform: uppercase;
 }
 
 ul.dropdown-menu.navbar-cust.show,
 .dropdown-menu.navbar-cust {
-    border: 0px;
-    min-width: 16rem;
+  border: 0px;
+  min-width: 16rem;
 
-    top: 70%;
-    margin-top: 0;
+  top: 70%;
+  margin-top: 0;
 }
 p {
   img {
