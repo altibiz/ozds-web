@@ -1,5 +1,4 @@
-﻿using Ozds.Modules.Members.Base;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using OrchardCore.Admin;
 using OrchardCore.ContentFields.Drivers;
@@ -10,56 +9,45 @@ using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.ContentManagement.Metadata.Models;
 using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Views;
-using System;
 using System.Globalization;
-using System.Threading.Tasks;
 
-namespace Ozds.Modules.Members.PartFieldSettings
+namespace Ozds.Modules.Members;
+
+public class PartNumericFieldDriver : NumericFieldDisplayDriver
 {
-  public class PartNumericFieldDriver : NumericFieldDisplayDriver
-  {
-    private IHttpContextAccessor _httpCA;
+  public override IDisplayResult? Edit(
+      NumericField field, BuildFieldEditorContext context) =>
+      context
+          .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
+          .SelectOrDefault(
+              fieldDefinition => Initialize<EditNumericFieldViewModel>(
+                  GetEditorShapeType(fieldDefinition), model =>
+                  {
+                    model.Value = context.IsNew
+                                      ? context.PartFieldDefinition
+                                            .GetSettings<NumericFieldSettings>()
+                                            .DefaultValue
+                                      : Convert.ToString(field.Value,
+                                            CultureInfo.CurrentUICulture);
+                    model.Field = field;
+                    model.Part = context.ContentPart;
+                    model.PartFieldDefinition = fieldDefinition;
+                  }));
 
-    public PartNumericFieldDriver(
-        IStringLocalizer<NumericFieldDisplayDriver> localizer,
-        IHttpContextAccessor httpContextAccessor)
-        : base(localizer)
-    {
-      _httpCA = httpContextAccessor;
-    }
+  public override Task<IDisplayResult?> UpdateAsync(NumericField field,
+      IUpdateModel updater, UpdateFieldEditorContext context) =>
+      context
+          .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
+          .SelectOrDefault(
+              fieldDefinition => fieldDefinition.Editor() == "Disabled"
+                                     ? Edit(field, context).ToTask()
+                                     : base.UpdateAsync(
+                                           field, updater, context));
 
-    public override IDisplayResult Edit(
-        NumericField field, BuildFieldEditorContext context)
-    {
-      var fieldDef = DriverService.GetFieldDef(
-          context, AdminAttribute.IsApplied(_httpCA.HttpContext));
-      if (fieldDef == null)
-        return null;
-      return Initialize<EditNumericFieldViewModel>(
-          GetEditorShapeType(fieldDef), model =>
-          {
-            var settings =
-                context.PartFieldDefinition.GetSettings<NumericFieldSettings>();
-            model.Value = context.IsNew ? settings.DefaultValue
-                                        : Convert.ToString(field.Value,
-                                              CultureInfo.CurrentUICulture);
+  public PartNumericFieldDriver(
+      IStringLocalizer<NumericFieldDisplayDriver> localizer,
+      IHttpContextAccessor httpContextAccessor)
+      : base(localizer) { HttpContext = httpContextAccessor; }
 
-            model.Field = field;
-            model.Part = context.ContentPart;
-            model.PartFieldDefinition = fieldDef;
-          });
-    }
-
-    public override async Task<IDisplayResult> UpdateAsync(NumericField field,
-        IUpdateModel updater, UpdateFieldEditorContext context)
-    {
-      var fieldDef = DriverService.GetFieldDef(
-          context, AdminAttribute.IsApplied(_httpCA.HttpContext));
-      if (fieldDef == null)
-        return null;
-      if (fieldDef.Editor() == "Disabled")
-        return Edit(field, context);
-      return await base.UpdateAsync(field, updater, context);
-    }
-  }
+  private IHttpContextAccessor HttpContext { get; }
 }

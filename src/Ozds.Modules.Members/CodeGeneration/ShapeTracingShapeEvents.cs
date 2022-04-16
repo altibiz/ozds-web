@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using OrchardCore.DisplayManagement.Implementation;
 using OrchardCore.DisplayManagement.Shapes;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ozds.Modules.Members.Utils
 {

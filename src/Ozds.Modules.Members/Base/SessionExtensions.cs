@@ -1,39 +1,36 @@
 ﻿using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Records;
 using OrchardCore.Lists.Models;
-using System;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using YesSql;
 using YesSql.Indexes;
 
-namespace Ozds.Modules.Members.Base
+namespace Ozds.Modules.Members;
+
+public static class SessionExtensions
 {
-  public static class SessionExtensions
+  public async static Task<ContentItem> GetItemById(this ISession session,
+      string contentItemId) => await session
+                                   .Query<ContentItem, ContentItemIndex>(
+                                       x => x.ContentItemId == contentItemId)
+                                   .FirstOrDefaultAsync();
+
+  public async static Task<ContentItem?> GetListParent(
+      this ISession session, ContentItem child)
   {
-    public async static Task<ContentItem> GetItemById(
-        this ISession session, string contentItemId)
+    var listId = child.As<ContainedPart>()?.ListContentItemId;
+    if (listId is null)
     {
-      return await session
-          .Query<ContentItem, ContentItemIndex>(
-              x => x.ContentItemId == contentItemId)
-          .FirstOrDefaultAsync();
+      throw new InvalidOperationException($"{child} must be part of a list");
     }
 
-    public async static Task<ContentItem> GetListParent(
-        this ISession session, ContentItem childItem)
-    {
-      return await session.GetItemById(
-          childItem.As<ContainedPart>()?.ListContentItemId);
-    }
-
-    public async static Task<ContentItem> FirstOrDefaultAsync<TIndex>(
-        this ISession session, IContentManager manager,
-        Expression<Func<TIndex, bool>> query)
-        where TIndex : class, IIndex
-    {
-      return await session.Query<ContentItem, TIndex>(query)
-          .FirstOrDefaultAsync(manager);
-    }
+    return await session.GetItemById(listId);
   }
+
+  public async static Task<ContentItem> FirstOrDefaultAsync<TIndex>(
+      this ISession session, IContentManager manager,
+      Expression<Func<TIndex, bool>> query)
+      where TIndex : class,
+                     IIndex => await session.Query<ContentItem
+                     , TIndex>(query).FirstOrDefaultAsync(manager);
 }

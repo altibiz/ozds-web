@@ -31,12 +31,12 @@ namespace Ozds.Modules.Members.Persons
 
     public override void Describe(DescribeContext<ContentItem> context)
     {
-      context.For<PersonPartIndex?>().Map(contentItem =>
+      context.For<PersonPartIndex>().Map(contentItem =>
       {
         var person = contentItem.AsReal<PersonPart>();
         if (person is null)
         {
-          return null;
+          return null!;
         }
 
         Content ??= Services.GetRequiredService<IContentDefinitionManager>();

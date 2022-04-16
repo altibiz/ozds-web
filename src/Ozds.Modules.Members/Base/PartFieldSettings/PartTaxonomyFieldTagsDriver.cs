@@ -1,5 +1,4 @@
-﻿using Ozds.Modules.Members.Base;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -14,9 +13,6 @@ using OrchardCore.Taxonomies.Fields;
 using OrchardCore.Taxonomies.Models;
 using OrchardCore.Taxonomies.Settings;
 using OrchardCore.Taxonomies.ViewModels;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ozds.Modules.Members.PartFieldSettings
 {
@@ -43,8 +39,8 @@ namespace Ozds.Modules.Members.PartFieldSettings
     public override IDisplayResult Edit(
         TaxonomyField field, BuildFieldEditorContext context)
     {
-      var fieldDef = DriverService.GetFieldDef(
-          context, AdminAttribute.IsApplied(_httpCA.HttpContext));
+      var fieldDef = context.GetFieldDefinition(
+          AdminAttribute.IsApplied(_httpCA.HttpContext));
       if (fieldDef == null)
         return null;
       return Initialize<EditTagTaxonomyFieldViewModel>(
@@ -81,8 +77,8 @@ namespace Ozds.Modules.Members.PartFieldSettings
     public override async Task<IDisplayResult> UpdateAsync(TaxonomyField field,
         IUpdateModel updater, UpdateFieldEditorContext context)
     {
-      var fieldDef = DriverService.GetFieldDef(
-          context, AdminAttribute.IsApplied(_httpCA.HttpContext));
+      var fieldDef = context.GetFieldDefinition(
+          AdminAttribute.IsApplied(_httpCA.HttpContext));
       if (fieldDef == null)
         return null;
       if (fieldDef.Editor() == "Disabled")

@@ -1,46 +1,28 @@
-﻿using Ozds.Modules.Members.PartFieldSettings;
-using OrchardCore.ContentManagement;
+﻿using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Handlers;
-using System.Threading.Tasks;
 
-namespace Ozds.Modules.Members.Persons
+namespace Ozds.Modules.Members;
+
+public class PartServiceHandler<TPart, TService> : ContentPartHandler<TPart>
+    where TPart : ContentPart, new()
+    where TService : IPartService<TPart>
 {
-  public class PartServiceHandler<TPart, TService> : ContentPartHandler<TPart>
-      where TPart : ContentPart, new()
-      where TService : IPartService<TPart>
-  {
-    private readonly TService _service;
+  public override Task ValidatingAsync(
+      ValidateContentContext context, TPart part) =>
+      Service.ValidateAsync(part).ForEachAsync(item => context.Fail(item));
 
-    public PartServiceHandler(TService service) { _service = service; }
+  public override Task InitializingAsync(InitializingContentContext context,
+      TPart instance) => Service.InitializingAsync(instance)
+                             .Then(() => context.ContentItem.Apply(instance));
 
-    public override async Task ValidatingAsync(
-        ValidateContentContext context, TPart part)
-    {
+  public override Task PublishedAsync(PublishContentContext context,
+      TPart instance) => Service.PublishedAsync(instance, context);
 
-      await foreach (var item in _service.ValidateAsync(part))
-      {
-        context.Fail(item);
-      }
-    }
+  public override Task UpdatedAsync(UpdateContentContext context,
+      TPart instance) => Service.UpdatedAsync<TPart>(context, instance)
+                             .Then(() => instance.ContentItem.Apply(instance));
 
-    public override async Task InitializingAsync(
-        InitializingContentContext context, TPart instance)
-    {
-      await _service.InitializingAsync(instance);
-      context.ContentItem.Apply(instance);
-    }
+  public PartServiceHandler(TService service) { Service = service; }
 
-    public override async Task PublishedAsync(
-        PublishContentContext context, TPart instance)
-    {
-      await _service.PublishedAsync(instance, context);
-    }
-
-    public override async Task UpdatedAsync(
-        UpdateContentContext context, TPart instance)
-    {
-      await _service.UpdatedAsync<TPart>(context, instance);
-      instance.ContentItem.Apply(instance);
-    }
-  }
+  private TService Service { get; }
 }
