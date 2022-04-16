@@ -3,4 +3,5 @@
 SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")";
 
 "$SCRIPT_DIR/clean" -f;
+"$SCRIPT_DIR/build";
 "$SCRIPT_DIR/watch-debug";
