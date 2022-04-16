@@ -10,7 +10,7 @@ const renderScripts = require("./render-scripts");
 const renderSCSS = require("./render-scss");
 
 const watcher = chokidar.watch("src", {
-  persistent : true,
+  persistent: true,
 });
 
 let READY = false;
@@ -20,8 +20,9 @@ process.stdout.write("Loading");
 let allPugFiles = {};
 
 watcher.on("add", (filePath) => _processFile(upath.normalize(filePath), "add"));
-watcher.on(
-    "change", (filePath) => _processFile(upath.normalize(filePath), "change"));
+watcher.on("change", (filePath) =>
+  _processFile(upath.normalize(filePath), "change"),
+);
 watcher.on("ready", () => {
   READY = true;
   console.log("READY TO ROLL!");
@@ -30,8 +31,11 @@ watcher.on("ready", () => {
 function _processFile(filePath, watchEvent) {
   if (!READY) {
     if (filePath.match(/\.pug$/)) {
-      if (!filePath.match(/includes/) && !filePath.match(/mixins/) &&
-          !filePath.match(/\/pug\/layouts\//)) {
+      if (
+        !filePath.match(/includes/) &&
+        !filePath.match(/mixins/) &&
+        !filePath.match(/\/pug\/layouts\//)
+      ) {
         allPugFiles[filePath] = true;
       }
     }
@@ -40,7 +44,8 @@ function _processFile(filePath, watchEvent) {
   }
 
   console.log(
-      `[ozds-themes-ozds-assets] INFO: File event: ${watchEvent}: ${filePath}`);
+    `[ozds-themes-ozds-assets] INFO: File event: ${watchEvent}: ${filePath}`,
+  );
 
   if (filePath.match(/\.pug$/)) {
     return _handlePug(filePath, watchEvent);
@@ -64,21 +69,31 @@ function _processFile(filePath, watchEvent) {
 
 function _handlePug(filePath, watchEvent) {
   if (watchEvent === "change") {
-    if (filePath.match(/includes/) || filePath.match(/mixins/) ||
-        filePath.match(/\/pug\/layouts\//)) {
+    if (
+      filePath.match(/includes/) ||
+      filePath.match(/mixins/) ||
+      filePath.match(/\/pug\/layouts\//)
+    ) {
       return _renderAllPug();
     }
     return renderPug(filePath);
   }
-  if (!filePath.match(/includes/) && !filePath.match(/mixins/) &&
-      !filePath.match(/\/pug\/layouts\//)) {
+  if (
+    !filePath.match(/includes/) &&
+    !filePath.match(/mixins/) &&
+    !filePath.match(/\/pug\/layouts\//)
+  ) {
     return renderPug(filePath);
   }
 }
 
 function _renderAllPug() {
   console.log(`[ozds-themes-ozds-assets] INFO: rendering all pug files`);
-  _.each(allPugFiles, (_, filePath) => { renderPug(filePath); });
+  _.each(allPugFiles, (_, filePath) => {
+    renderPug(filePath);
+  });
 }
 
-function _handleSCSS() { renderSCSS(); }
+function _handleSCSS() {
+  renderSCSS();
+}

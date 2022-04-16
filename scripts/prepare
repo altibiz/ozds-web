@@ -3,13 +3,13 @@
 SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")";
 ROOT_DIR="$(dirname "$SCRIPT_DIR")";
 
+yarn install;
+dotnet restore;
+
 if [[ ! "$CI" ]]; then
-  yarn dlx husky install;
+  yarn husky install;
 fi;
 
 if [[ ! -f "$ROOT_DIR/secrets.json" ]]; then
   cp "$ROOT_DIR/example.secrets.json" "$ROOT_DIR/secrets.json"
 fi;
-
-yarn install;
-dotnet restore $@;

@@ -5,7 +5,8 @@
     "build": "yarn workspace ozds-themes-ozds-assets build && yarn gulp build",
     "watch": "yarn wait-on http://localhost:3000 && yarn build && yarn gulp watch",
     "start": "yarn concurrently -n ozds-themes-ozds-assets,gulp-watch -c blue.bold,red.bold \"yarn workspace ozds-themes-ozds-assets start\" \"yarn watch\"",
-    "debug": "yarn concurrently -n ozds-themes-ozds-assets,gulp-watch -c blue.bold,red.bold \"yarn workspace ozds-themes-ozds-assets debug\" \"yarn watch\""
+    "debug": "yarn concurrently -n ozds-themes-ozds-assets,gulp-watch -c blue.bold,red.bold \"yarn workspace ozds-themes-ozds-assets debug\" \"yarn watch\"",
+    "format": "yarn prettier --write --ignore-path .gitignore ./**/*.{js,ts,css,scss,graphql,yml,json,md}"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
@@ -36,10 +37,12 @@
     "gulp-terser": "2.0.1",
     "gulp-typescript": "5.0.1",
     "gulp-util": "3.0.8",
+    "husky": "^7.0.4",
     "merge-stream": "2.0.0",
     "npm-run-all": "^4.1.5",
     "path-posix": "1.0.0",
     "postcss": "^8.4.12",
+    "prettier": "^2.6.2",
     "typescript": "^4.3.4",
     "upath": "^2.0.1",
     "wait-on": "^5.3.0"

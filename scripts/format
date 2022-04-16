@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-git ls-files '*.js' | xargs clang-format -i;
-git ls-files '*.json' | xargs clang-format -i;
+git ls-files '*.js' | xargs yarn prettier --write;
+git ls-files '*.json' | xargs yarn prettier --write;
 
 dotnet format whitespace;

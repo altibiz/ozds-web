@@ -62,10 +62,7 @@
     },
     {
       "name": "feature",
-      "enable": [
-        "TheAdmin",
-        "SafeMode"
-      ]
+      "enable": ["TheAdmin", "SafeMode"]
     },
     {
       "name": "feature",

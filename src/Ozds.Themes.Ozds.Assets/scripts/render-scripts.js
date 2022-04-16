@@ -11,13 +11,18 @@ module.exports = function renderScripts() {
   console.log(`[render] INFO: Rendering ${sourcePath} to ${destPath}`);
   sh.cp("-R", sourcePath, destPath);
 
-  const sourcePathScriptsJS =
-      upath.resolve(upath.dirname(__filename), "../src/js/scripts.js");
-  const destPathScriptsJS =
-      upath.resolve(upath.dirname(__filename), "../dist/js/scripts.js");
+  const sourcePathScriptsJS = upath.resolve(
+    upath.dirname(__filename),
+    "../src/js/scripts.js",
+  );
+  const destPathScriptsJS = upath.resolve(
+    upath.dirname(__filename),
+    "../dist/js/scripts.js",
+  );
 
-  console.log(`[render] INFO: Rendering ${sourcePathScriptsJS} to ${
-      destPathScriptsJS}`);
+  console.log(
+    `[render] INFO: Rendering ${sourcePathScriptsJS} to ${destPathScriptsJS}`,
+  );
   const scriptsJS = fs.readFileSync(sourcePathScriptsJS);
 
   fs.writeFileSync(destPathScriptsJS, scriptsJS);
