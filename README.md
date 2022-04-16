@@ -1,19 +1,41 @@
-# OZDS Web 
+# `OZDS` Web
 
-OZDS Web projekt je open source implementacija web sustava za vođenje
-članova i web stranice OZDS sustava.
- 
-Projekt je napravljen na platformi Orchard Core.
+System for managing closed electricity distribution systems.
 
-## Instalacija
+The system acts as a middleman between the open distribution system, owners
+of closed distribution systems, and their members.
 
-Kako bi mogli pokrenuti projekt morate imati instaliran .NET 5.
-Poželjno je imati Visual Studio 2019 ili Visual Studio Code.
-Klonirajte kod lokalno, otvorite u konzoli projekt OzdsWeb, i upišite
-dotnet run. To je to!
+Owners of closed distribution systems can use the system to manage their
+systems. The primary concern of owners is their consumption from open
+distribution systems and the consumption of members of their system.
 
-Za login je default sifra: admin/Admin123!
+Members of closed distribution systems can use the system to view their
+consumption in the system.
 
-## TODO
+## Dependencies
 
-- fix that horrible asset mess
+- [`dotnet@6.0.202`](https://dotnet.microsoft.com/en-us/)
+- [`node@17.9.0`](https://nodejs.org/en/)
+- [`yarn@3.2.0`](https://yarnpkg.com/)
+
+## Development
+
+The development process mostly involves pulling changes,
+running [scripts](scripts), changing source and test files, committing, and
+pushing changes.
+
+To start the development process locally, follow these steps:
+
+1. Run the [prepare script](scripts/prepare) to setup `git hooks`, install
+   dependencies and generate the [secrets file](secrets.json).
+2. Populate the generated [secrets file](secrets.json).
+3. Run the [set-secrets script](scripts/set-secrets) to set
+   `dotnet user-secrets`. You can run the
+   [list-secrets script](scripts/list-secrets) to make sure that your secrets
+   are properly stored.
+4. Run the [watch-debug script](scripts/watch-debug) to start
+   [the development server](https://localhost:5001),
+   [the browser-sync server](http://localhost:3000) and to start file
+   watchers for hot reload. Open [the site](https://localhost:5001) if it
+   didn't automatically open.
+
