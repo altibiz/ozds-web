@@ -6,12 +6,13 @@
     "watch": "yarn wait-on http://localhost:3000 && yarn build && yarn gulp watch",
     "start": "yarn concurrently -n ozds-themes-ozds-assets,gulp-watch -c blue.bold,red.bold \"yarn workspace ozds-themes-ozds-assets start\" \"yarn watch\"",
     "debug": "yarn concurrently -n ozds-themes-ozds-assets,gulp-watch -c blue.bold,red.bold \"yarn workspace ozds-themes-ozds-assets debug\" \"yarn watch\"",
-    "format": "yarn prettier --write --ignore-path .gitignore ./**/*.{js,ts,css,scss,graphql,yml,json,md}"
+    "format": "yarn prettier --write --ignore-path .gitignore ./**/*.{js,ts,css,scss,graphql,yml,json,md,pug}"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.5",
     "@babel/preset-flow": "7.14.5",
+    "@prettier/plugin-pug": "^1.20.1",
     "all-contributors-cli": "^6.20.0",
     "concurrently": "6.2.0",
     "es6-promise": "4.2.8",
