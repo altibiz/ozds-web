@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
 using OrchardCore.Navigation;
-using System;
-using System.Threading.Tasks;
 
 namespace Ozds.Modules.Members
 {
@@ -24,60 +22,45 @@ namespace Ozds.Modules.Members
       builder
           .Add(S["Članstvo"], "0",
               rootView => rootView
-                              .Add(S["Fizičke osobe"], "5",
+                              .Add(S["Clanovi"], "0",
                                   childOne => childOne.Action("List", "Admin",
                                       new
                                       {
                                         area = "OrchardCore.Contents",
                                         contentTypeId = "Member"
                                       }))
-                              .Add(S["Pravne osobe"], "6",
+                              .Add(S["ZDS"], "1",
                                   childTwo => childTwo.Action("List", "Admin",
                                       new
                                       {
                                         area = "OrchardCore.Contents",
-                                        contentTypeId = "Company"
+                                        contentTypeId = "Center"
                                       }))
-                              .Add(S["Ponude"], "8",
+                              .Add(S["OMM"], "2",
                                   childTwo => childTwo.Action("List", "Admin",
                                       new
                                       {
                                         area = "OrchardCore.Contents",
-                                        contentTypeId = "Offer"
+                                        contentTypeId = "Site"
                                       })),
               new[] { "icon-class-fas", "icon-class-fa-users" })
           .Add(S["Financije"], "0",
               rootView =>
                   rootView
-                      .Add(S["Uplate"], "7",
+                      .Add(S["Obracuni"], "0",
                           childTwo => childTwo.Action("List", "Admin",
                               new
                               {
                                 area = "OrchardCore.Contents",
-                                contentTypeId = "Payment",
-                                q = "payout:false"
+                                contentTypeId = "Calculation"
                               }))
-                      .Add(S["Isplate"], "7",
+                      .Add(S["Racuni"], "1",
                           childTwo => childTwo.Action("List", "Admin",
                               new
                               {
                                 area = "OrchardCore.Contents",
-                                contentTypeId = "Payment",
+                                contentTypeId = "Receipt",
                                 q = "payout:true"
-                              }))
-                      .Add(S["Izvodi"], "9",
-                          childTwo => childTwo.Action("List", "Admin",
-                              new
-                              {
-                                area = "OrchardCore.Contents",
-                                contentTypeId = "BankStatement"
-                              }))
-                      .Add(S["Uplatnice"], "10",
-                          childTwo => childTwo.Action("List", "Admin",
-                              new
-                              {
-                                area = "OrchardCore.Contents",
-                                contentTypeId = "Pledge"
                               })),
               new[] { "icon-class-fas", "icon-class-fa-coins" });
 
