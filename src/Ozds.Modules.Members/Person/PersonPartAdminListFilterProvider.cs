@@ -6,6 +6,7 @@ using OrchardCore.Contents.Services;
 using YesSql;
 using YesSql.Filters.Query;
 using YesSql.Services;
+using Ozds.Util;
 
 namespace Ozds.Modules.Members.Persons
 {
@@ -18,13 +19,12 @@ namespace Ozds.Modules.Members.Persons
           "oib",
           builder => builder.OneCondition(
             (val, query) =>
-            val
-              .When(val =>
-              {
-                query.With<PersonPartIndex>(i => i.Oib == val);
-              })
-              .Return(query)
-          ))
+              val
+                .When(val =>
+                  query
+                    .With<PersonPartIndex>(
+                      i => i.Oib == val))
+                .Return(query)))
         .WithDefaultTerm(
           "text",
           builder => builder.ManyCondition(

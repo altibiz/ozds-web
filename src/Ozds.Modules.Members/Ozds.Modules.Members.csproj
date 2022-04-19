@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../Ozds.Elasticsearch/Ozds.Elasticsearch.csproj" />
+    <ProjectReference Include="../Ozds.Util/Ozds.Util.csproj" />
   </ItemGroup>
 
   <ItemGroup>
