@@ -18,72 +18,74 @@ namespace Ozds.Modules.Members.PartFieldSettings
 {
   public class PartTaxonomyFieldTagsDriver : TaxonomyFieldTagsDisplayDriver
   {
-    private static readonly JsonSerializerSettings SerializerSettings =
-        new JsonSerializerSettings
-        {
-          ContractResolver = new CamelCasePropertyNamesContractResolver()
-        };
+    public override IDisplayResult? Edit(
+        TaxonomyField field, BuildFieldEditorContext context) =>
+      context
+        .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
+        .When(fieldDefinition =>
+            Initialize<EditTagTaxonomyFieldViewModel>(
+              GetEditorShapeType(fieldDefinition),
+              async model =>
+              {
+                var settings = fieldDefinition
+                  .GetSettings<TaxonomyFieldSettings>();
 
-    private IHttpContextAccessor _httpCA;
-    private IContentManager _contentManager;
+                model.Taxonomy = await Content.GetAsync(
+                  settings.TaxonomyContentItemId,
+                  VersionOptions.Latest);
+                if (model.Taxonomy != null)
+                {
+                  var termEntries = new List<TermEntry>();
+                  TaxonomyFieldDriverHelper.PopulateTermEntries(
+                      termEntries,
+                      field,
+                      ContentItemExtensions
+                        .As<TaxonomyPart>(model.Taxonomy)
+                        .Terms,
+                      0);
 
-    public PartTaxonomyFieldTagsDriver(IContentManager cm,
+                  model.TagTermEntries = JsonConvert.SerializeObject(
+                      termEntries.Select(
+                      termEntry => new TagTermEntry
+                      {
+                        ContentItemId = termEntry.ContentItemId,
+                        Selected = termEntry.Selected,
+                        DisplayText = termEntry.Term.DisplayText,
+                        IsLeaf = termEntry.IsLeaf
+                      }), SerializerSettings);
+                }
+
+                model.Field = field;
+                model.Part = context.ContentPart;
+                model.PartFieldDefinition = fieldDefinition;
+              }));
+
+    public override Task<IDisplayResult?> UpdateAsync(TaxonomyField field,
+        IUpdateModel updater, UpdateFieldEditorContext context) =>
+    context
+      .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
+      .When(_ => _
+        .When(fieldDefinition => fieldDefinition.Editor() != "Disabled",
+          _ => base.UpdateAsync(field, updater, context),
+          () => Edit(field, context)));
+
+    public PartTaxonomyFieldTagsDriver(
         IStringLocalizer<TaxonomyFieldTagsDisplayDriver> localizer,
-        IHttpContextAccessor httpContextAccessor)
-        : base(cm, localizer)
+        IContentManager content,
+        IHttpContextAccessor httpContext)
+        : base(content, localizer)
     {
-      _httpCA = httpContextAccessor;
-      _contentManager = cm;
+      HttpContext = httpContext;
+      Content = content;
     }
 
-    public override IDisplayResult Edit(
-        TaxonomyField field, BuildFieldEditorContext context)
-    {
-      var fieldDef = context.GetFieldDefinition(
-          AdminAttribute.IsApplied(_httpCA.HttpContext));
-      if (fieldDef == null)
-        return null;
-      return Initialize<EditTagTaxonomyFieldViewModel>(
-          GetEditorShapeType(fieldDef), async model =>
-          {
-            var settings = fieldDef.GetSettings<TaxonomyFieldSettings>();
-            model.Taxonomy = await _contentManager.GetAsync(
-                settings.TaxonomyContentItemId, VersionOptions.Latest);
+    private IHttpContextAccessor HttpContext { get; }
+    private IContentManager Content { get; }
 
-            if (model.Taxonomy != null)
-            {
-              var termEntries = new List<TermEntry>();
-              TaxonomyFieldDriverHelper.PopulateTermEntries(termEntries, field,
-                  model.Taxonomy.As<TaxonomyPart>().Terms, 0);
-              var tagTermEntries = termEntries.Select(
-                  te => new TagTermEntry
-                  {
-                    ContentItemId = te.ContentItemId,
-                    Selected = te.Selected,
-                    DisplayText = te.Term.DisplayText,
-                    IsLeaf = te.IsLeaf
-                  });
-
-              model.TagTermEntries = JsonConvert.SerializeObject(
-                  tagTermEntries, SerializerSettings);
-            }
-
-            model.Field = field;
-            model.Part = context.ContentPart;
-            model.PartFieldDefinition = fieldDef;
-          });
-    }
-
-    public override async Task<IDisplayResult> UpdateAsync(TaxonomyField field,
-        IUpdateModel updater, UpdateFieldEditorContext context)
-    {
-      var fieldDef = context.GetFieldDefinition(
-          AdminAttribute.IsApplied(_httpCA.HttpContext));
-      if (fieldDef == null)
-        return null;
-      if (fieldDef.Editor() == "Disabled")
-        return Edit(field, context);
-      return await base.UpdateAsync(field, updater, context);
-    }
+    private static JsonSerializerSettings SerializerSettings { get; } =
+      new JsonSerializerSettings
+      {
+        ContractResolver = new CamelCasePropertyNamesContractResolver()
+      };
   }
 }

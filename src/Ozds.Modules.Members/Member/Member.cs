@@ -1,5 +1,4 @@
-﻿using Ozds.Modules.Members.PartFieldSettings;
-using OrchardCore.ContentFields.Fields;
+﻿using OrchardCore.ContentFields.Fields;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.Taxonomies.Fields;
@@ -8,13 +7,13 @@ namespace Ozds.Modules.Members.Core
 {
   public class Member : ContentPart
   {
-    public UserPickerField User { get; set; }
+    public UserPickerField User { get; set; } = default!;
 
-    public DateField DateOfBirth { get; set; }
+    public DateField DateOfBirth { get; set; } = default!;
 
-    public TaxonomyField Sex { get; set; }
+    public TaxonomyField Sex { get; set; } = default!;
 
-    public TextField AdminNotes { get; set; }
+    public TextField AdminNotes { get; set; } = default!;
   }
 
   public class MemberSettings : IFieldEditorSettings

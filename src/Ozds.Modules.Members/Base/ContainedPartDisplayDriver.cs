@@ -16,33 +16,32 @@ public class ContainedPartViewModel
 
 public class ContainedPartDisplayDriver : ContentDisplayDriver
 {
-  public override async Task<IDisplayResult?> EditAsync(
-      ContentItem model, BuildEditorContext context)
-  {
-    if (!AdminAttribute.IsApplied(HttpContext.HttpContext))
-    {
-      return null;
-    }
-
-    var part = model.As<ContainedPart>();
-    if (part is null)
-    {
-      return null;
-    }
-
-    MemberContentItem = await Content.GetAsync(part.ListContentItemId);
-
-    return Initialize<ContainedPartViewModel>("ContainedPart_Nav", model =>
-    {
-      model.ListContentItemId = part.ListContentItemId;
-      model.ParentName = MemberContentItem.DisplayText;
-    }).Location("Content");
-  }
-
-  public ContentItem? MemberContentItem { get; private set; }
+  public override Task<IDisplayResult?> EditAsync(
+      ContentItem model, BuildEditorContext context) =>
+    model
+      .When(
+        _ => AdminAttribute.IsApplied(HttpContext.HttpContext),
+        model => ContentItemExtensions
+          .As<ContainedPart>(model)
+          .When(part => Initialize<ContainedPartViewModel>(
+            "ContainedPart_Nav",
+            model => Content
+              .GetAsync(part.ListContentItemId)
+              .Then(list =>
+              {
+                model.ListContentItemId = part.ListContentItemId;
+                model.ParentName = list.DisplayText;
+              })
+              // NOTE: it needs to be a ValueTask for the Initialize method
+              .ToValueTask())
+            .Location("Content"))
+          .As<IDisplayResult>()
+          // NOTE: it has to be a task for the override
+          .ToTask());
 
   public ContainedPartDisplayDriver(
-      IHttpContextAccessor httpContext, IContentManager content)
+      IHttpContextAccessor httpContext,
+      IContentManager content)
   {
     HttpContext = httpContext;
     Content = content;

@@ -15,7 +15,7 @@ public class PartServiceDisplayDriver<TPart, TService>
   public override IDisplayResult Edit(
       TPart part, BuildPartEditorContext context) =>
       Service.GetEditModel(part, context)
-          .SelectOrDefault(
+          .When(
               model => Initialize(GetEditorShapeType(context), model),
               () => base.Edit(part));
 

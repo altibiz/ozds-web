@@ -111,12 +111,13 @@ namespace Ozds.Modules.Members.ContentHandlers
       if (context.ContentItem.ContentType == "Menu" &&
           !AdminAttribute.IsApplied(Http.HttpContext))
       {
-        var alias = context.ContentItem.As<AliasPart>();
+        var alias = ContentItemExtensions.As<AliasPart>(context.ContentItem);
         if (alias != null)
         {
           if (alias.Alias == "user-landing-page-menu")
           {
-            var menulist = context.ContentItem.As<MenuItemsListPart>();
+            var menulist = ContentItemExtensions.As<MenuItemsListPart>(
+                context.ContentItem);
             menulist.MenuItems =
                 GetMenuContent().Concat(menulist.MenuItems).ToList();
           }

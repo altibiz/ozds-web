@@ -1,12 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Handlers;
-using System;
 using System.Globalization;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using OrchardCore.Autoroute.Models;
-using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement.Metadata;
 
@@ -37,7 +34,8 @@ namespace Ozds.Modules.Members.Core
           if (routeDef != null && context.ContentItem.ContentType == "Offer")
           {
             var part =
-                context.ContentItem.As<AutoroutePart>() ?? new AutoroutePart();
+                ContentItemExtensions.As<AutoroutePart>(context.ContentItem) ??
+                new AutoroutePart();
             part.Path =
                 part.Path ?? "offers-" + context.ContentItem.ContentItemId;
             context.ContentItem.Apply(part);

@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Ozds.Modules.Members.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,27 +12,13 @@ namespace Ozds.Modules.Members.Pages
   [Authorize]
   public class CreateMemberModel : PageModel
   {
-    private readonly IHtmlLocalizer H;
-    private readonly MemberService _memberService;
-    private readonly INotifier _notifier;
-
-    public IShape Shape { get; set; }
-
-    public CreateMemberModel(MemberService mService,
-        IHtmlLocalizer<CreateMemberModel> htmlLocalizer, INotifier notifier)
-    {
-
-      _notifier = notifier;
-      H = htmlLocalizer;
-      _memberService = mService;
-    }
 
     public async Task<IActionResult> OnGetAsync()
     {
-      var mbr = await _memberService.GetUserMember(true);
+      var mbr = await Members.GetUserMember(true);
       if (mbr != null)
         return RedirectToPage("Portal");
-      (_, Shape) = await _memberService.GetNewItem(ContentType.Member);
+      (_, Shape) = await Members.GetNewItem(ContentType.Member);
       return Page();
     }
 
@@ -50,17 +35,34 @@ namespace Ozds.Modules.Members.Pages
     {
       ContentItem contentItem;
       (contentItem, Shape) =
-          await _memberService.ModelToNew(ContentType.Member);
+          await Members.ModelToNew(ContentType.Member);
       if (ModelState.IsValid)
       {
-        var result = await _memberService.CreateMemberDraft(contentItem);
+        var result = await Members.CreateMemberDraft(contentItem);
         if (result.Succeeded)
         {
-          await _notifier.SuccessAsync(H["Member registration successful"]);
+          await Notifier.SuccessAsync(H["Member registration successful"]);
           return RedirectToPage(nextPage);
         }
       }
       return Page();
     }
+
+    public IShape? Shape { get; private set; }
+
+    public CreateMemberModel(
+        IHtmlLocalizer<CreateMemberModel> localizer,
+        MemberService members,
+        INotifier notifier)
+    {
+      H = localizer;
+
+      Members = members;
+      Notifier = notifier;
+    }
+
+    private readonly IHtmlLocalizer H;
+    private readonly MemberService Members;
+    private readonly INotifier Notifier;
   }
 }

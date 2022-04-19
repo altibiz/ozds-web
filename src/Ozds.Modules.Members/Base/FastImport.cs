@@ -10,103 +10,93 @@ using OrchardCore.Recipes.Services;
 using System.Collections.Concurrent;
 using YesSql;
 
-namespace Ozds.Modules.Members.Base
+namespace Ozds.Modules.Members;
+
+public class FastImport : IRecipeStepHandler
 {
-  public class FastImport : IRecipeStepHandler
+  private record StepModel(JArray Data);
+
+  public Task ExecuteAsync(RecipeExecutionContext? context) =>
+    context
+      .When(context => string.Equals(
+        context.Name, "fastimport", StringComparison.OrdinalIgnoreCase),
+        context =>
+          context.Step
+            .ToObject<StepModel>()?.Data
+            .ToObject<ContentItem[]>()
+            .When(contentItems => FastImportBackgroundTask.PendingImports
+              .Enqueue(contentItems)))
+      .Return(Task.CompletedTask);
+}
+
+public class Importer
+{
+  public Task ImportAsync(IEnumerable<ContentItem> contentItems) =>
+    (new HashSet<string>())
+      .Named(
+        importedIds =>
+          contentItems
+            .Split(ImportBatchSize)
+            .ForEachAsync(
+              batchedItems =>
+                batchedItems
+                  .ForEach(item =>
+                    item.When(
+                      item => !importedIds
+                        .Contains(item.ContentItemVersionId),
+                      item =>
+                      {
+                        importedIds
+                          .Add(item.ContentItemVersionId);
+                        return Handlers
+                          .InvokeAsync(
+                            (handler, context) =>
+                              handler.ImportingAsync(context),
+                            new ImportContentContext(item),
+                            Logger)
+                          .Then(() => Session.Save(item));
+                      }))
+                  .Await()
+                  .Then(() =>
+                  {
+                    Logger.LogDebug("Imported: " + importedIds.Count);
+                    return Session.SaveChangesAsync();
+                  })));
+
+  public Importer(ISession session, ILogger<DefaultContentManager> logger,
+      IEnumerable<IContentHandler> handlers)
   {
-    public class ContentStepModel
-    {
-      public JArray Data { get; set; }
-    }
+    Logger = logger;
 
-    public Task ExecuteAsync(RecipeExecutionContext context)
-    {
-      if (!string.Equals(
-              context.Name, "fastimport", StringComparison.OrdinalIgnoreCase))
-      {
-        return Task.CompletedTask;
-      }
+    Session = session;
 
-      var model = context.Step.ToObject<ContentStepModel>();
-      var contentItems = model.Data.ToObject<ContentItem[]>();
-      FastImportBackgroundTask.PendingImports.Enqueue(contentItems);
-
-      return Task.CompletedTask;
-    }
+    Handlers = handlers.ToList();
+    ReversedHandlers = handlers.Reverse().ToList();
   }
 
-  public class Importer
-  {
+  private ILogger<DefaultContentManager> Logger { get; }
 
-    private const int ImportBatchSize = 500;
-    private readonly ISession _session;
+  private ISession Session { get; }
 
-    public IEnumerable<IContentHandler> Handlers { get; }
-    public IContentHandler[] ReversedHandlers { get; }
+  private IEnumerable<IContentHandler> Handlers { get; }
+  private IEnumerable<IContentHandler> ReversedHandlers { get; }
 
-    private readonly ILogger<DefaultContentManager> _logger;
+  private static int ImportBatchSize { get; } = 500;
+}
 
-    public Importer(ISession session, ILogger<DefaultContentManager> logger,
-        IEnumerable<IContentHandler> handlers)
-    {
-      _session = session;
-      Handlers = handlers;
-      ReversedHandlers = handlers.Reverse().ToArray();
-      _logger = logger;
-    }
+[BackgroundTask(
+    Schedule = "*/1 * * * *",
+    Description = "Fast import background task.")]
+public class FastImportBackgroundTask : IBackgroundTask
+{
+  public Task DoWorkAsync(
+      IServiceProvider services,
+      CancellationToken token) =>
+    PendingImports
+      .TryTake()
+      .When(imports => services
+          .GetRequiredService<Importer>()
+          .ImportAsync(imports));
 
-    public async Task ImportAsync(IEnumerable<ContentItem> contentItems)
-    {
-      var skip = 0;
-
-      var importedVersionIds = new HashSet<string>();
-
-      var batchedContentItems = contentItems.Take(ImportBatchSize);
-
-      while (batchedContentItems.Any())
-      {
-
-        foreach (var importingItem in batchedContentItems)
-        {
-          if (!string.IsNullOrEmpty(importingItem.ContentItemVersionId))
-          {
-            if (importedVersionIds.Contains(
-                    importingItem.ContentItemVersionId))
-            {
-              continue;
-            }
-
-            importedVersionIds.Add(importingItem.ContentItemVersionId);
-          }
-          var context = new ImportContentContext(importingItem);
-          await Handlers.InvokeAsync(
-              (handler, context) => handler.ImportingAsync(context), context,
-              _logger);
-          _session.Save(importingItem);
-        }
-        await _session.SaveChangesAsync();
-        skip += ImportBatchSize;
-        _logger.LogDebug("Imported: " + skip);
-        batchedContentItems = contentItems.Skip(skip).Take(ImportBatchSize);
-      }
-    }
-  }
-
-  [BackgroundTask(
-      Schedule = "*/1 * * * *", Description = "Fast import background task.")]
-  public class FastImportBackgroundTask : IBackgroundTask
-  {
-    public static readonly ConcurrentQueue<ContentItem[]> PendingImports =
-        new();
-    public Task DoWorkAsync(
-        IServiceProvider serviceProvider, CancellationToken cancellationToken)
-    {
-      if (PendingImports.TryDequeue(out var toImport))
-      {
-        var contentManager = serviceProvider.GetRequiredService<Importer>();
-        return contentManager.ImportAsync(toImport);
-      }
-      return Task.CompletedTask;
-    }
-  }
+  public static ConcurrentQueue<ContentItem[]> PendingImports { get; } = new();
 }

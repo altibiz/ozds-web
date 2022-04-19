@@ -1,50 +1,36 @@
 ﻿using OrchardCore;
 using OrchardCore.ContentManagement;
 using OrchardCore.Taxonomies.Fields;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ozds.Modules.Members.Base
 {
   public class TaxonomyCachedService
   {
-    private IOrchardHelper _helper;
+    public Task<IEnumerable<ContentItem>> GetTaxonomyTerms(TaxonomyField? field) =>
+      field
+        .When(field => field.TermContentItemIds
+          .SelectFilter(term =>
+            (id: field.TaxonomyContentItemId, term: term)
+              .Named(key => key
+                .FinallyWhen(
+                  key => !Cache.ContainsKey(key),
+                  key => Helper
+                    .GetTaxonomyTermAsync(key.id, key.term)
+                    .Then(item => Cache[key] = item)
+                  )))
+          .Await(),
+        new List<ContentItem> { }.AsEnumerable().ToTask());
 
-    private Dictionary<(string, string), ContentItem> _cached =
-        new Dictionary<(string, string), ContentItem>();
+    public Task<ContentItem?> GetFirstTerm(TaxonomyField? field) =>
+      GetTaxonomyTerms(field).Then(items => items.FirstOrDefault());
 
-    public TaxonomyCachedService(IOrchardHelper helper) { _helper = helper; }
-    public async Task<List<ContentItem>> GetTaxonomyTerms(TaxonomyField field)
+    public TaxonomyCachedService(IOrchardHelper helper)
     {
-      var res = new List<ContentItem>();
-      foreach (var trm in field?.TermContentItemIds ?? Array.Empty<string>())
-      {
-        if (!_cached.TryGetValue(
-                (field.TaxonomyContentItemId, trm), out var contentItem))
-          _cached[(field.TaxonomyContentItemId, trm)] = contentItem =
-              await _helper.GetTaxonomyTermAsync(
-                  field.TaxonomyContentItemId, trm);
-        res.Add(contentItem);
-      }
-      return res;
+      Helper = helper;
     }
 
-    public async Task<ContentItem> GetFirstTerm(TaxonomyField field)
-    {
-      var res = new List<ContentItem>();
-      foreach (var trm in field?.TermContentItemIds ?? Array.Empty<string>())
-      {
-        if (!_cached.TryGetValue(
-                (field.TaxonomyContentItemId, trm), out var contentItem))
-          _cached[(field.TaxonomyContentItemId, trm)] = contentItem =
-              await _helper.GetTaxonomyTermAsync(
-                  field.TaxonomyContentItemId, trm);
-        res.Add(contentItem);
-      }
-      return res.FirstOrDefault();
-      ;
-    }
+    private IOrchardHelper Helper { get; }
+
+    private Dictionary<(string, string), ContentItem> Cache { get; } = new();
   }
 }

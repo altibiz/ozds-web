@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Records;
 using OrchardCore.Contents.Services;
-using System.Threading.Tasks;
 using YesSql;
 using YesSql.Filters.Query;
 using YesSql.Services;
@@ -13,52 +12,57 @@ namespace Ozds.Modules.Members.Persons
   public class PersonPartAdminListFilterProvider
       : IContentsAdminListFilterProvider
   {
-    public void Build(QueryEngineBuilder<ContentItem> builder)
-    {
+    public void Build(QueryEngineBuilder<ContentItem> builder) =>
       builder
-          .WithNamedTerm(
-              "oib", builder => builder.OneCondition((val, query) =>
+        .WithNamedTerm(
+          "oib",
+          builder => builder.OneCondition(
+            (val, query) =>
+            val
+              .When(val =>
               {
-                if (!string.IsNullOrEmpty(val))
-                {
-                  query.With<PersonPartIndex>(i => i.Oib == val);
-                }
-
-                return query;
-              }))
-          .WithDefaultTerm("text",
-              builder => builder.ManyCondition(
-                  async (val, query, ctx) =>
-                  {
-                    return await Task.Run<IQuery<ContentItem>>(() =>
-                    {
-                      var context = (ContentQueryContext)ctx;
-                      var accessr =
-                          context.ServiceProvider
-                              .GetRequiredService<IHttpContextAccessor>();
-                      accessr.HttpContext.Request.RouteValues.TryGetValue(
-                          "contentTypeId", out var selectedContentType);
-                      if (selectedContentType?.ToString() == "Member" ||
-                          selectedContentType?.ToString() == "Company")
-                      {
-                        return query.With<PersonPartIndex>(
-                            x => x.Oib == val || x.LegalName.Contains(val));
-                      }
-                      else
-                        return query.With<ContentItemIndex>(
-                            x => x.DisplayText.Contains(val));
-                    });
-                  },
-                  async (val, query, ctx) =>
-                  {
-                    return await Task.Run<IQuery<ContentItem>>(() =>
-                    {
-                      return query.With<ContentItemIndex>(
-                          x => x.DisplayText.IsNotIn<ContentItemIndex>(
-                              s => s.DisplayText,
-                              w => w.DisplayText.Contains(val)));
-                    });
-                  }));
-    }
+                query.With<PersonPartIndex>(i => i.Oib == val);
+              })
+              .Return(query)
+          ))
+        .WithDefaultTerm(
+          "text",
+          builder => builder.ManyCondition(
+            (value, query, context) =>
+              Task
+                .Run<IQuery<ContentItem>?>(() =>
+                  context
+                    .As<ContentQueryContext>()
+                    .When(content => content.ServiceProvider
+                      .GetRequiredService<IHttpContextAccessor>()
+                      .HttpContext
+                      .When(httpContext => httpContext
+                        .Request
+                        .RouteValues
+                        .GetOrDefault("contentTypeId")
+                        .When(selectedContentType =>
+                          selectedContentType.ToString() == "Member" ||
+                          selectedContentType.ToString() == "Company",
+                          _ => query
+                            .With<PersonPartIndex>(
+                              person =>
+                                person.Oib == value ||
+                                person.LegalName.Contains(value))
+                            .As<IQuery<ContentItem>>(),
+                          () => query
+                            .With<ContentItemIndex>(
+                              item => item.DisplayText.Contains(value))
+                            .As<IQuery<ContentItem>>()))))
+                .ToValueTask(),
+            (value, query, context) =>
+              Task
+                .Run<IQuery<ContentItem>?>(() =>
+                  query
+                    .With<ContentItemIndex>(
+                      index => index.DisplayText.IsNotIn<ContentItemIndex>(
+                          index => index.DisplayText,
+                          index => index.DisplayText.Contains(value)))
+                    .As<IQuery<ContentItem>>())
+                .ToValueTask()));
   }
 }

@@ -1,35 +1,33 @@
-﻿using Ozds.Modules.Members.PartFieldSettings;
-using OrchardCore.ContentFields.Fields;
+﻿using OrchardCore.ContentFields.Fields;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.Taxonomies.Fields;
 
 namespace Ozds.Modules.Members.Persons
 {
-
   public enum PersonType { Natural, Legal }
 
   public class PersonPart : ContentPart
   {
-    public TextField Oib { get; set; }
+    public TextField Oib { get; set; } = default!;
 
-    public TextField Name { get; set; }
+    public TextField Name { get; set; } = default!;
 
-    public TextField Surname { get; set; }
+    public TextField Surname { get; set; } = default!;
 
-    public TextField Address { get; set; }
+    public TextField Address { get; set; } = default!;
 
-    public TextField City { get; set; }
+    public TextField City { get; set; } = default!;
 
-    public TaxonomyField County { get; set; }
+    public TaxonomyField County { get; set; } = default!;
 
-    public TextField Phone { get; set; }
+    public TextField Phone { get; set; } = default!;
 
-    public TextField Email { get; set; }
+    public TextField Email { get; set; } = default!;
 
-    public TaxonomyField ContribType { get; set; }
+    public TaxonomyField ContribType { get; set; } = default!;
 
-    public TextField Skills { get; set; }
+    public TextField Skills { get; set; } = default!;
 
     public string LegalName
     {
@@ -37,13 +35,13 @@ namespace Ozds.Modules.Members.Persons
              (string.IsNullOrEmpty(Surname?.Text) ? "" : " " + Surname?.Text);
     }
 
-    public string OldSalt { get; set; }
-    public string OldHash { get; set; }
+    public string OldSalt { get; set; } = default!;
+    public string OldHash { get; set; } = default!;
   }
 
   public class PersonPartSettings : IFieldEditorSettings
   {
-    public PersonType? Type { get; set; }
+    public PersonType Type { get; set; }
 
     public DisplayModeResult GetFieldDisplayMode(string propertyName,
         string displayMode, BuildFieldEditorContext context,

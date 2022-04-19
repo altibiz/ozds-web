@@ -1,8 +1,6 @@
 ﻿using System.Security.Claims;
-using Ozds.Modules.Members.Base;
 using Ozds.Modules.Members.Persons;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using OrchardCore;
 using OrchardCore.ContentFields.Indexing.SQL;
 using OrchardCore.ContentManagement;
@@ -127,7 +125,7 @@ await query.ListAsync();
   }
 
   public MemberService(ISession session, IUserService userService,
-      UserManager<User> users, IContentManager contentManager,
+      IContentManager contentManager,
       IOrchardHelper orchardHelper,
       IContentItemDisplayManager contentItemDisplayManager,
       IUpdateModelAccessor updateModelAccessor,
@@ -140,16 +138,13 @@ await query.ListAsync();
     ContentDisplay = contentItemDisplayManager;
     UpdateModel = updateModelAccessor;
     Http = httpContextAccessor;
-    Users = users;
   }
 
-  // TODO: make better when link gets better
-  // http://github.com/OrchardCMS/OrchardCore/blob/c2e1e3975db1b6e6d5a69940a3c5081969dd4bc2/src/OrchardCore/OrchardCore.Users.Core/Services/UserService.cs#L142s
-  private UserManager<User> Users { get; }
-  private async Task<User> GetCurrentUser(ClaimsPrincipal? principal = null)
-  {
-    return await Users.GetUserAsync(principal);
-  }
+  // TODO: better
+  private Task<User> GetCurrentUser(ClaimsPrincipal? principal = null) =>
+    UserService
+      .GetAuthenticatedUserAsync(principal)
+      .Then(user => user.As<User>())!;
 
   private IUserService UserService { get; }
   private ISession Session { get; }

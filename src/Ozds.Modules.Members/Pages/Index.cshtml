@@ -53,7 +53,7 @@
 
 @{ Html.RenderPartial("_Header", @T["User Pages"].Value); }
 @await RenderSectionAsync("Messages", required: false)
-@if (Model.Member.Published)
+@if (Model.Member?.Published ?? false)
 {
 	<menu alias="alias:user-landing-page-menu" cache-id="user-landing-page-menu" cache-fixed-duration="00:05:00" cache-tag="alias:user-landing-page-menu" />
 }

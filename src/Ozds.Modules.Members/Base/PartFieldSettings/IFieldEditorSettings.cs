@@ -5,10 +5,15 @@ namespace Ozds.Modules.Members;
 public interface IFieldEditorSettings
 {
   string GetFieldLabel(
-      string propertyName, string defaultVale, bool isAdminTheme);
+      string propertyName,
+      string defaultVale,
+      bool isAdminTheme);
 
-  DisplayModeResult GetFieldDisplayMode(string propertyName, string defaultMode,
-      BuildFieldEditorContext context, bool isAdminTheme);
+  DisplayModeResult GetFieldDisplayMode(
+      string propertyName,
+      string defaultMode,
+      BuildFieldEditorContext context,
+      bool isAdminTheme);
 }
 
 public struct DisplayModeResult
@@ -22,23 +27,15 @@ public struct DisplayModeResult
     IsVisible = isVisible;
   }
 
-  public static implicit operator DisplayModeResult(bool visible)
-  {
-    return new DisplayModeResult(null, visible);
-  }
+  public static implicit operator DisplayModeResult(bool visible) =>
+    new DisplayModeResult(null, visible);
 
-  public static implicit operator DisplayModeResult(string displayMode)
-  {
-    return new DisplayModeResult(displayMode);
-  }
+  public static implicit operator DisplayModeResult(string displayMode) =>
+    new DisplayModeResult(displayMode);
 
-  public static implicit operator bool(DisplayModeResult dm)
-  {
-    return dm.IsVisible;
-  }
+  public static implicit operator bool(DisplayModeResult displayMode) =>
+    displayMode.IsVisible;
 
-  public static implicit operator string?(DisplayModeResult dm)
-  {
-    return dm.DisplayMode;
-  }
+  public static implicit operator string?(DisplayModeResult displayMode) =>
+    displayMode.DisplayMode;
 }

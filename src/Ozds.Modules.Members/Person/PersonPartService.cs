@@ -1,5 +1,4 @@
-﻿using Ozds.Modules.Members.PartFieldSettings;
-using Ozds.Modules.Members.Utils;
+﻿using Ozds.Modules.Members.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using OrchardCore.ContentFields.Fields;
@@ -51,7 +50,7 @@ public class PersonPartService : IPartService<PersonPart>
   private async Task<bool> IsPersonUniqueAsync(PersonPart part, string oib)
   {
     var typeDef = ContentDefinitions.GetSettings<PersonPartSettings>(part);
-    var personType = typeDef.Type?.ToString();
+    var personType = typeDef?.Type.ToString();
     return (await Session
                    .QueryIndex<PersonPartIndex>(
                        o => o.Oib == oib &&
@@ -66,11 +65,11 @@ public class PersonPartService : IPartService<PersonPart>
         .ListAsync();
   }
 
-  private async Task<User> GetCurrentUser()
-  {
-    return await Users.GetAuthenticatedUserAsync(HttpContext.HttpContext?.User)
-        as User;
-  }
+  // TODO: better
+  private Task<User> GetCurrentUser() =>
+    Users
+      .GetAuthenticatedUserAsync(HttpContext.HttpContext?.User)
+      .Then(user => user.As<User>())!;
 
   public async Task InitializingAsync(PersonPart part)
   {
@@ -86,10 +85,10 @@ public class PersonPartService : IPartService<PersonPart>
     return Task.CompletedTask;
   }
 
-  public System.Action<PersonPart> GetEditModel(
+  public Action<PersonPart> GetEditModel(
       PersonPart part, BuildPartEditorContext context)
   {
-    return null;
+    return (part) => { };
   }
 
   public Task UpdatedAsync<TPart>(

@@ -14,46 +14,35 @@ namespace Ozds.Modules.Members.PartFieldSettings;
 public class PartTextFieldDriver : TextFieldDisplayDriver
 {
   public override IDisplayResult? Edit(
-      TextField field, BuildFieldEditorContext context)
-  {
-    var fieldDef = context.GetFieldDefinition(
-        AdminAttribute.IsApplied(HttpContext.HttpContext));
-    if (fieldDef == null)
-    {
-      return null;
-    }
+      TextField field,
+      BuildFieldEditorContext context) =>
+    context
+      .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
+      .When(fieldDefinition =>
+        Initialize<EditTextFieldViewModel>(
+          GetEditorShapeType(fieldDefinition),
+          model =>
+          {
+            model.Text = field.Text;
+            model.Field = field;
+            model.Part = context.ContentPart;
+            model.PartFieldDefinition = fieldDefinition;
+          }));
 
-    return Initialize<EditTextFieldViewModel>(
-        GetEditorShapeType(fieldDef), model =>
-        {
-          model.Text = field.Text;
-          model.Field = field;
-          model.Part = context.ContentPart;
-          model.PartFieldDefinition = fieldDef;
-        });
-  }
+  public override Task<IDisplayResult?> UpdateAsync(
+      TextField field,
+      IUpdateModel updater,
+      UpdateFieldEditorContext context) =>
+    context
+      .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
+      .When(_ => _
+        .When(fieldDefinition => fieldDefinition.Editor() != "Disabled",
+          _ => base.UpdateAsync(field, updater, context),
+          () => Edit(field, context)));
 
-  public override async Task<IDisplayResult?> UpdateAsync(
-      TextField field, IUpdateModel updater, UpdateFieldEditorContext context)
-  {
-    var fieldDef = context.GetFieldDefinition(
-        AdminAttribute.IsApplied(HttpContext.HttpContext));
-    if (fieldDef == null)
-    {
-      return null;
-    }
-
-    if (fieldDef.Editor() == "Disabled")
-    {
-      return Edit(field, context);
-    }
-
-    return await base.UpdateAsync(field, updater, context);
-  }
-
-  public PartTextFieldDriver(IStringLocalizer<TextFieldDisplayDriver> localizer,
-      IHttpContextAccessor httpContext)
-      : base(localizer)
+  public PartTextFieldDriver(
+      IStringLocalizer<TextFieldDisplayDriver> localizer,
+      IHttpContextAccessor httpContext) : base(localizer)
   {
     HttpContext = httpContext;
   }
