@@ -39,3 +39,20 @@ To start the development process locally, follow these steps:
    [the browser-sync server](http://localhost:3000), and to start file
    watchers for hot reload. Open [the site](https://localhost:5001) if it
    didn't automatically open.
+
+### Test users
+
+Two test users are added in the development environment to make testing
+easier.
+
+#### TestOwner
+
+- Username: 'TestOwner'
+- Email: 'test-owner@helb.hr'
+- Password: 'wiQm8E0iXLYCWRWjpW74zRSsC3Z4YYTq'
+
+#### TestMember
+
+- Username: 'TestMember'
+- Email: 'test-member@helb.hr'
+- Password: '8JW4aIGqbTrHOSQZz1hCUgn3qeTBza9z'

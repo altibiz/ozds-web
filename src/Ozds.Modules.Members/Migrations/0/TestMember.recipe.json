@@ -1,0 +1,143 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "4getacb8ffdhc028bqrqrf5bc6",
+          "ContentItemVersionId": "4jsn62qp9e2vf6wst2z2rvwd5a",
+          "ContentType": "Member",
+          "DisplayText": "",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-04-20T14:24:20.5111296Z",
+          "PublishedUtc": "2022-04-20T14:24:20.5431906Z",
+          "CreatedUtc": "2022-04-20T14:14:44.7172994Z",
+          "Owner": "4s73wcst6dzjvwxn13kk57dndd",
+          "Author": "admin",
+          "Member": {
+            "User": {
+              "UserIds": ["TestMemberId"],
+              "UserNames": ["TestMember"]
+            },
+            "DateOfBirth": {
+              "Value": null
+            },
+            "Sex": {
+              "TaxonomyContentItemId": null,
+              "TermContentItemIds": []
+            },
+            "AdminNotes": {
+              "Text": null
+            }
+          },
+          "TitlePart": {
+            "Title": ""
+          },
+          "PersonPart": {
+            "Oib": {
+              "Text": "12312312316"
+            },
+            "Name": {
+              "Text": "Ivo"
+            },
+            "MiddleName": {
+              "Text": null
+            },
+            "Surname": {
+              "Text": "Ivić"
+            },
+            "Address": {
+              "Text": "Frankopanska 5"
+            },
+            "City": {
+              "Text": "Zagreb"
+            },
+            "County": {
+              "TaxonomyContentItemId": "4d0dew9ar7h9nsbpcs7jg2egwe",
+              "TermContentItemIds": ["4z3rcbqjad20q2pgckfbyd7wc4"],
+              "TagNames": ["Grad Zagreb"]
+            },
+            "Phone": {
+              "Text": "+385911234567"
+            },
+            "Email": {
+              "Text": "ivo-ivic@gmail.com"
+            },
+            "Legal": {
+              "Value": false
+            },
+            "LegalName": "Ivo Ivić"
+          },
+          "BagPart": {
+            "ContentItems": [
+              {
+                "ContentItemId": "4wr8zmbsykbdry12hfv378eaxz",
+                "ContentItemVersionId": null,
+                "ContentType": "Site",
+                "DisplayText": null,
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T14:24:20.5274969Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Site": {
+                  "Code": {
+                    "Text": null
+                  },
+                  "Type": {
+                    "Text": null,
+                    "TaxonomyContentItemId": "40afgjpy1kyk7z3p54vgtdhz5a",
+                    "TermContentItemIds": ["4mr2ex2rrxcf06cwsqgrvj1r55"]
+                  },
+                  "ZDSCode": {
+                    "Text": null
+                  },
+                  "DeviceCode": {
+                    "Text": null
+                  },
+                  "UserCode": {
+                    "Text": null
+                  },
+                  "Coefficient": {
+                    "Text": null,
+                    "Value": 1
+                  },
+                  "PhaseNumber": {
+                    "Value": null
+                  },
+                  "Geolocation": {
+                    "Latitude": 45,
+                    "Longitude": 46
+                  },
+                  "Active": {
+                    "Value": true
+                  },
+                  "UserType": {
+                    "Text": null
+                  },
+                  "Primary": {
+                    "Value": false
+                  },
+                  "DeviceId": {
+                    "Text": "SfakIDfakeDevice2"
+                  },
+                  "Phase": {
+                    "TaxonomyContentItemId": "4p8c2k9qbte1yzcbewfjy5zyxw",
+                    "TermContentItemIds": ["4gc5wfqf6er6yrm4551qjvx049"]
+                  }
+                }
+              }
+            ]
+          },
+          "ContainedPart": {
+            "ListContentItemId": "4rq44pcgbd96ms70k45kme32mq",
+            "Order": 0
+          }
+        }
+      ]
+    }
+  ]
+}

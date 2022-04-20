@@ -5,9 +5,15 @@ namespace Ozds.Modules.Members.Extensions.OrchardCore;
 
 public static class IRecipeMigratorExtensions
 {
-  public static void Execute(
-      this IRecipeMigrator schema,
+  public static IRecipeMigrator Execute(
+      this IRecipeMigrator migrator,
       string recipe,
-      IDataMigration migration) =>
-    schema.ExecuteAsync(recipe, migration).Wait();
+      IDataMigration migration)
+  {
+    migrator
+      .ExecuteAsync(recipe, migration)
+      .Wait();
+
+    return migrator;
+  }
 }

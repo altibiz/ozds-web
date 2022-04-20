@@ -14,18 +14,17 @@ public static class ContentExtensions
       this IContentDefinitionManager content,
       ContentPart part) where TSettings : class?, new() =>
     content
-      .GetTypeDefinition(part.ContentItem.ContentType)
-      .Parts.FirstOrDefault(part =>
-          string.Equals(part.PartDefinition.Name, part.GetType().Name))
+      .GetTypeDefinition(part.ContentItem.ContentType).Parts
+      .FirstOrDefault(part =>
+        string.Equals(part.PartDefinition.Name, part.GetType().Name))
       ?.GetSettings<TSettings>();
 
-  public static void AddToList(this ContentItem parent, ContentItem child) =>
-    child.Named(child =>
-    {
-      child.Weld<ContainedPart>();
-      child.Alter<ContainedPart>(part =>
-        part.ListContentItemId = parent.ContentItemId);
-    });
+  public static void AddToList(this ContentItem parent, ContentItem child)
+  {
+    child.Weld<ContainedPart>();
+    child.Alter<ContainedPart>(part =>
+      part.ListContentItemId = parent.ContentItemId);
+  }
 
   public static T? AsReal<T>(
       this ContentItem contentItem) where T : ContentPart =>
@@ -42,21 +41,31 @@ public static class ContentExtensions
   public static string? GetId(this TaxonomyField taxonomyField) =>
       taxonomyField.TermContentItemIds?.FirstOrDefault();
 
-  public static void SetId(this TaxonomyField field,
-      string value) => field.TermContentItemIds = new[] { value };
+  public static void SetId(
+      this TaxonomyField field,
+      string value) =>
+    field.TermContentItemIds =
+      new[]
+      {
+        value
+      };
 
-  public static async Task<ContentItem?> GetTerm(this TaxonomyField field,
-      TaxonomyCachedService service) => await service.GetFirstTerm(field);
+  public static async Task<ContentItem?> GetTerm(
+      this TaxonomyField field,
+      TaxonomyCachedService service) =>
+    await service.GetFirstTerm(field);
 
   public static async Task<TPart> GetTerm<TPart>(
-      this TaxonomyField field, TaxonomyCachedService service)
-      where TPart : ContentPart =>
+      this TaxonomyField field,
+      TaxonomyCachedService service) where TPart : ContentPart =>
     ContentItemExtensions.As<TPart>(await service.GetFirstTerm(field));
 
-  public static IEnumerable<T> AsParts<T>(this IEnumerable<ContentItem> items)
-      where T : ContentPart => items.Select(x => ContentItemExtensions.As<T>(x));
+  public static IEnumerable<T> AsParts<T>(
+      this IEnumerable<ContentItem> items) where T : ContentPart =>
+    items.Select(x => ContentItemExtensions.As<T>(x));
 
-  public static T InitContentFields<T>(this T part) where T : ContentPart =>
+  public static T InitContentFields<T>(
+      this T part) where T : ContentPart =>
     part
       .GetType()
       .GetProperties()
@@ -72,13 +81,15 @@ public static class ContentExtensions
             })))
       .Return(part);
 
-  private static List<Type> ContentFieldTypes { get; } = new List<Type> {
-    typeof(BooleanField),
-    typeof(TaxonomyField),
-    typeof(NumericField),
-    typeof(TextField),
-    typeof(DateField),
-    typeof(ContentPickerField),
-    typeof(UserPickerField),
-  };
+  private static List<Type> ContentFieldTypes { get; } =
+    new List<Type>
+    {
+      typeof(BooleanField),
+      typeof(TaxonomyField),
+      typeof(NumericField),
+      typeof(TextField),
+      typeof(DateField),
+      typeof(ContentPickerField),
+      typeof(UserPickerField),
+    };
 }

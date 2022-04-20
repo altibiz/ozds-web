@@ -1,0 +1,11 @@
+{
+  "steps": [
+    {
+      "name": "Command",
+      "Commands": [
+        "createUser /UserName:TestOwner /Password:wiQm8E0iXLYCWRWjpW74zRSsC3Z4YYTq /Email:test-owner@helb.hr",
+        "createUser /UserName:TestMember /Password:8JW4aIGqbTrHOSQZz1hCUgn3qeTBza9z /Email:test-member@helb.hr"
+      ]
+    }
+  ]
+}

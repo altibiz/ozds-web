@@ -1,9 +1,5 @@
-using System;
-using System.Threading;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
 
 namespace Ozds.Elasticsearch.HelbOzds;
 
@@ -11,10 +7,12 @@ public sealed partial class Client : IClient, IDisposable
 {
   public Client(IConfiguration conf, ILogger<Client> logger)
   {
-    var section = conf.GetSection("Elasticsearch")
-                      .GetSection("External")
-                      .GetSection("HelbOzds")
-                      .GetSection("Client");
+    var section = conf
+      .GetSection("Ozds")
+      .GetSection("Elasticsearch")
+      .GetSection("External")
+      .GetSection("HelbOzds")
+      .GetSection("Client");
 
     Db = new SqlConnection(section.GetNonNullValue<string>("connectionString"));
 

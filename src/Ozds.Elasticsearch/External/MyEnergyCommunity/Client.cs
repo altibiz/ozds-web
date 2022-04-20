@@ -1,9 +1,5 @@
-using System;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace Ozds.Elasticsearch.MyEnergyCommunity;
 
@@ -13,10 +9,12 @@ public sealed partial class Client : IClient
   {
     Logger = logger;
 
-    var section = conf.GetSection("Elasticsearch")
-                      .GetSection("External")
-                      .GetSection("MyEnergyCommunity")
-                      .GetSection("Client");
+    var section = conf
+      .GetSection("Ozds")
+      .GetSection("Elasticsearch")
+      .GetSection("External")
+      .GetSection("MyEnergyCommunity")
+      .GetSection("Client");
 
     Http = new HttpClient();
     Http.BaseAddress = new Uri(section.GetNonNullValue<string>("serverUri"));

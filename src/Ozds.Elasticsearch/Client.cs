@@ -19,7 +19,10 @@ public sealed partial class Client : IClientPrototype, IClient
     Env = env;
     Logger = logger;
 
-    var section = conf.GetSection("Elasticsearch").GetSection("Client");
+    var section = conf
+      .GetSection("Ozds")
+      .GetSection("Elasticsearch")
+      .GetSection("Client");
     var serverUri = section.GetNonNullValue<string>("serverUri");
     var caPath = section.GetNonNullValue<string>("caPath");
     var user = section.GetNonNullValue<string>("user");

@@ -1,0 +1,146 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "4rq44pcgbd96ms70k45kme32mq",
+          "ContentItemVersionId": "4jvagzq28gs911pf9qkxn752xa",
+          "ContentType": "Center",
+          "DisplayText": "Zagreb centar",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-04-20T14:23:47.75938Z",
+          "PublishedUtc": "2022-04-20T14:23:48.7576253Z",
+          "CreatedUtc": "2022-04-20T14:13:02.0641015Z",
+          "Owner": "4s73wcst6dzjvwxn13kk57dndd",
+          "Author": "admin",
+          "Center": {
+            "Representative": {
+              "Text": null
+            },
+            "User": {
+              "UserIds": ["TestOwnerId"],
+              "UserNames": ["TestOwner"]
+            }
+          },
+          "TitlePart": {
+            "Title": "Zagreb centar"
+          },
+          "AliasPart": {
+            "Alias": "zg-centar"
+          },
+          "AutoroutePart": {
+            "Path": "",
+            "SetHomepage": false,
+            "Disabled": false,
+            "RouteContainedItems": false,
+            "Absolute": false
+          },
+          "PersonPart": {
+            "Oib": {
+              "Text": "12312312343"
+            },
+            "Name": {
+              "Text": "Zagreb Centar"
+            },
+            "MiddleName": {
+              "Text": null
+            },
+            "Surname": {
+              "Text": null
+            },
+            "Address": {
+              "Text": "Frankopanska 4"
+            },
+            "City": {
+              "Text": "Zagreb"
+            },
+            "County": {
+              "TaxonomyContentItemId": "4d0dew9ar7h9nsbpcs7jg2egwe",
+              "TermContentItemIds": ["4z3rcbqjad20q2pgckfbyd7wc4"],
+              "TagNames": ["Grad Zagreb"]
+            },
+            "Phone": {
+              "Text": "+385911234342"
+            },
+            "Email": {
+              "Text": "zds-zg-centar@gmail.com"
+            },
+            "Legal": {
+              "Value": true
+            },
+            "LegalName": "Zagreb Centar"
+          },
+          "BagPart": {
+            "ContentItems": [
+              {
+                "ContentItemId": "4gx0qdhvxthqf1a6chbrkax64h",
+                "ContentItemVersionId": null,
+                "ContentType": "Site",
+                "DisplayText": "",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T14:23:47.9562884Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Site": {
+                  "Code": {
+                    "Text": null
+                  },
+                  "Type": {
+                    "Text": null,
+                    "TaxonomyContentItemId": "40afgjpy1kyk7z3p54vgtdhz5a",
+                    "TermContentItemIds": ["4hwv4r61rnb952sq60t8bkxwxa"]
+                  },
+                  "ZDSCode": {
+                    "Text": null
+                  },
+                  "DeviceCode": {
+                    "Text": null
+                  },
+                  "UserCode": {
+                    "Text": null
+                  },
+                  "Coefficient": {
+                    "Text": null,
+                    "Value": 1
+                  },
+                  "PhaseNumber": {
+                    "Value": null
+                  },
+                  "Geolocation": {
+                    "Latitude": 45,
+                    "Longitude": 45
+                  },
+                  "Active": {
+                    "Value": true
+                  },
+                  "UserType": {
+                    "Text": null
+                  },
+                  "Primary": {
+                    "Value": true
+                  },
+                  "DeviceId": {
+                    "Text": "SfakIDfakeDevice1"
+                  },
+                  "Phase": {
+                    "TaxonomyContentItemId": "4p8c2k9qbte1yzcbewfjy5zyxw",
+                    "TermContentItemIds": ["4gc5wfqf6er6yrm4551qjvx049"]
+                  }
+                }
+              }
+            ]
+          },
+          "ListPart": {
+            "FeedProxyUrl": null,
+            "FeedItemsCount": 20
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -25,7 +25,6 @@
         "OrchardCore.Autoroute",
         "OrchardCore.Html",
         "OrchardCore.ContentFields",
-        "OrchardCore.ContentFields.Indexing.SQL.UserPicker",
         "OrchardCore.ContentPreview",
         "OrchardCore.Contents",
         "OrchardCore.Contents.FileContentDefinition",

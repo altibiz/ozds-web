@@ -1,0 +1,18 @@
+{
+  "UserId": "TestOwnerId",
+  "UserName": "TestOwner",
+  "NormalizedUserName": "TESTOWNER",
+  "Email": "test-owner@helb.hr",
+  "NormalizedEmail": "TEST-OWNER@HELB.HR",
+  "PasswordHash": "AQAAAAEAACcQAAAAEEUVSHpRQPATi/QJ0GV0i7ISe5EejQsQa4zxkVVnrAZlIQZHArW6AIJxJYMs/GIldA==",
+  "SecurityStamp": "TO3TIJGELDO7E44G6O7U5TK5XHSCLREJ",
+  "EmailConfirmed": true,
+  "IsEnabled": true,
+  "IsLockoutEnabled": true,
+  "AccessFailedCount": 0,
+  "RoleNames": [],
+  "UserClaims": [],
+  "LoginInfos": [],
+  "UserTokens": [],
+  "Properties": {}
+}

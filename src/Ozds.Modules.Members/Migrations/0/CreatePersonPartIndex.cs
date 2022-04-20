@@ -4,17 +4,19 @@ namespace Ozds.Modules.Members.M0;
 
 public static partial class CreatePersonPartIndex
 {
-  public static void CreatePersonPartMapTable(this ISchemaBuilder schema) =>
+  // TODO: investigate why this throws InvalidOperationException
+  public static ISchemaBuilder CreatePersonPartMapTable(
+      this ISchemaBuilder schema) =>
     schema.CreateMapIndexTable<PersonPartIndex>(
       table => table
+        .Column<string>("ContentItemId", column => column.WithLength(50))
         .Column<bool>("Published")
-        .Column<string>("ContentItemId", c => c.WithLength(50))
-        .Column<string>("Oib", col => col.WithLength(50))
-        .Column<string>("LegalName", c => c.WithLength(255))
+        .Column<string>("Oib", column => column.WithLength(50))
+        .Column<string>("LegalName", column => column.WithLength(255))
         .Column<bool>("Legal"));
 
-
-  public static void CreatePersonPartMapIndex(this ISchemaBuilder schema) =>
+  public static ISchemaBuilder CreatePersonPartMapIndex(
+      this ISchemaBuilder schema) =>
     schema.AlterIndexTable<PersonPartIndex>(
       table => table
         .CreateIndex(

@@ -11,6 +11,18 @@ namespace Ozds.Themes.Ozds;
 
 public partial class Migrations : DataMigration
 {
+  public int Create()
+  {
+    Recipe.ExecuteLayers(this);
+    Recipe.ExecuteLayout(this);
+    Recipe.ExecuteAdminMenu(this);
+    Recipe.ExecuteLocalization(this);
+    Recipe.ExecuteAnonymousRole(this);
+    Recipe.ExecuteLuceneFullTextSearch(this);
+
+    return 1;
+  }
+
   public Migrations(IHostEnvironment env, ILogger<Migrations> logger,
       IRecipeMigrator recipe, IContentDefinitionManager content,
       ISession session)
@@ -22,18 +34,6 @@ public partial class Migrations : DataMigration
 
     Recipe = recipe;
     Content = content;
-  }
-
-  public int Create()
-  {
-    Recipe.ExecuteLayers(this);
-    Recipe.ExecuteLayout(this);
-    Recipe.ExecuteAdminMenu(this);
-    Recipe.ExecuteLocalization(this);
-    Recipe.ExecuteAnonymousRole(this);
-    Recipe.ExecuteLuceneFullTextSearch(this);
-
-    return 1;
   }
 
   private IHostEnvironment Env { get; }

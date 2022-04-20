@@ -1,4 +1,6 @@
-namespace Ozds.Elasticsearch;
+using Microsoft.Extensions.Configuration;
+
+namespace Ozds.Modules.Members;
 
 public static class IConfigurationSectionExtensions
 {
