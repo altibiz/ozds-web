@@ -6,9 +6,9 @@ using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Razor;
 using Ozds.Util;
 
-namespace Ozds.Modules.Members.Base;
+namespace Ozds.Modules.Members;
 
-public static class OrchardRazorHelperExtensions
+public static class IOrchardDisplayHelperExtensions
 {
   public static Task<IHtmlContent> EditorAsync(
       this IOrchardDisplayHelper orchardDisplayHelper,

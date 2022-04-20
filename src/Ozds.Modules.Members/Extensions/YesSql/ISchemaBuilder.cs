@@ -1,12 +1,12 @@
-﻿using Dapper;
+using Dapper;
 using YesSql;
 using YesSql.Sql;
 using YesSql.Sql.Schema;
 using Ozds.Util;
 
-namespace Ozds.Modules.Members.Base;
+namespace Ozds.Modules.Members;
 
-public static class SchemaBuilderExtensions
+public static class ISchemaBuilderExtensions
 {
   public static void ExecuteSql(
       this ISchemaBuilder schemaBuilder,

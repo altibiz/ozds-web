@@ -1,4 +1,4 @@
-﻿using Ozds.Modules.Members.Base;
+using Ozds.Modules.Members.Base;
 using OrchardCore.ContentFields.Fields;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Metadata;
@@ -6,7 +6,7 @@ using OrchardCore.Lists.Models;
 using OrchardCore.Taxonomies.Fields;
 using Ozds.Util;
 
-namespace Ozds.Modules.Members.Utils;
+namespace Ozds.Modules.Members;
 
 public static class ContentExtensions
 {
