@@ -9,7 +9,6 @@ using OrchardCore.Users.Models;
 using OrchardCore.Users.Services;
 using System.ComponentModel.DataAnnotations;
 using YesSql;
-using Ozds.Modules.Members.Persons;
 using Ozds.Util;
 using ISession = YesSql.ISession;
 
@@ -41,7 +40,7 @@ public class PersonPartService : IPartService<PersonPart>
             Localizer["Your ID is already in use."]);
       }
     }
-    if (personPartSettings?.Type != PersonType.Legal &&
+    if (!part.Legal.Value &&
         string.IsNullOrWhiteSpace(part.Surname.Text))
     {
       yield return new ValidationResult(Localizer["Surname is required."]);
@@ -50,13 +49,11 @@ public class PersonPartService : IPartService<PersonPart>
 
   private async Task<bool> IsPersonUniqueAsync(PersonPart part, string oib)
   {
-    var typeDef = ContentDefinitions.GetSettings<PersonPartSettings>(part);
-    var personType = typeDef?.Type.ToString();
     return (await Session
                    .QueryIndex<PersonPartIndex>(
                        o => o.Oib == oib &&
                             o.ContentItemId != part.ContentItem.ContentItemId &&
-                            o.PersonType == personType)
+                            o.Legal == part.Legal.Value)
                    .CountAsync()) == 0;
   }
 

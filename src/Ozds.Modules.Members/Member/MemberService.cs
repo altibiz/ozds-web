@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using Ozds.Modules.Members.Persons;
 using Microsoft.AspNetCore.Http;
 using OrchardCore;
 using OrchardCore.ContentFields.Indexing.SQL;

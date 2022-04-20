@@ -1,46 +1,113 @@
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Flows.Models;
+using OrchardCore.Title.Models;
+using OrchardCore.ContentFields.Settings;
 
 namespace Ozds.Modules.Members.M0;
 
 public static partial class AlterCalculation
 {
   public static void AlterCalculationType(
-      this IContentDefinitionManager contentDefinitionManager) =>
-      contentDefinitionManager.AlterTypeDefinition("Calculation",
-          type =>
-              type.DisplayedAs("Obračun")
-                  .Creatable()
-                  .Listable()
-                  .Draftable()
-                  .Securable()
-                  .WithPart("Calculation", part => part.WithPosition("0"))
-                  .WithPart("Items",
-                      part => part.WithDisplayName("Stavke")
-                                  .WithDescription("Stavke mjesečnog obračuna")
-                                  .WithSettings(new BagPartSettings
-                                  {
-                                    ContainedContentTypes = new[] { "Item" },
-                                  })));
+      this IContentDefinitionManager content) =>
+    content.AlterTypeDefinition("Calculation",
+      type => type
+        .DisplayedAs("Obračun")
+        .Creatable()
+        .Listable()
+        .Securable()
+        .WithPart("Calculation",
+          part => part
+            .WithPosition("0")
+            .WithSettings(
+              new CalculationSettings
+              {
+              }))
+        .WithPart("TitlePart",
+          part => part
+            .WithPosition("1")
+            .WithDisplayName("Naziv")
+            .WithSettings(
+              new TitlePartSettings
+              {
+                RenderTitle = true,
+                Options = TitlePartOptions.GeneratedDisabled,
+                // TODO: check
+                Pattern =
+                @"""
+                  {{%- assign calc = ContentItem.Content.Calculation -%}}
+                  {{%- assign deviceId = calc.DeviceId.Text -%}}
+                  {{%- assign dateFrom = calc.DateFrom.Value?.ToString() -%}}
+                  {{%- assign dateFrom = calc.DateTo.Value?.ToString() -%}}
+                  {{- deviceId }} {{ dateFrom }} - {{ dateTo -}}
+                """,
+              }))
+        .WithPart("BagPart",
+          part => part
+            .WithDisplayName("Stavke")
+            .WithDescription("Stavke mjesečnog obračuna")
+            .WithPosition("2")
+            .WithSettings(
+              new BagPartSettings
+              {
+                ContainedContentTypes = new[]
+                {
+                  "CalculationItem"
+                },
+              })));
 
   public static void AlterCalculationPart(
-      this IContentDefinitionManager contentDefinitionManager) =>
-      contentDefinitionManager.AlterPartDefinition("Calculation",
-          part =>
-              part.WithField("DeviceNumber",
-                      field => field.OfType("NumericField")
-                                   .WithDisplayName("Broj brojila"))
-                  .WithField("DateFrom",
-                      field =>
-                          field.OfType("DateField").WithDisplayName("Datum od"))
-                  .WithField("DateTo",
-                      field =>
-                          field.OfType("DateField").WithDisplayName("Datum do"))
-                  .WithField("MeasurementServiceFee",
-                      field => field.OfType("NumericField")
-                                   .WithDisplayName("Naknada za mjernu uslugu"))
-                  .WithField(
-                      "InTotal", field => field.OfType("NumericField")
-                                              .WithDisplayName("Ukupno")));
+      this IContentDefinitionManager content) =>
+    content.AlterPartDefinition("Calculation",
+      part => part
+        .WithField("DeviceId",
+          field => field
+            .OfType("TextField")
+            .WithDisplayName("Brojilo")
+            .WithDescription("Sifra brojila")
+            .WithSettings(
+              new TextFieldSettings
+              {
+                Required = true,
+              }))
+        .WithField("DateFrom",
+          field => field
+            .OfType("DateField")
+            .WithDisplayName("Datum od")
+            .WithDescription("Pocetni datum mjerenja")
+            .WithSettings(
+              new DateFieldSettings
+              {
+                Required = true
+              }))
+        .WithField("DateTo",
+          field => field
+            .OfType("DateField")
+            .WithDisplayName("Datum do")
+            .WithDescription("Krajnji datum mjerenja")
+            .WithSettings(
+              new DateFieldSettings
+              {
+                Required = true
+              }))
+        .WithField("MeasurementServiceFee",
+          field => field
+            .OfType("NumericField")
+            .WithDisplayName("Naknada za mjernu uslugu")
+            .WithSettings(
+              new NumericFieldSettings
+              {
+                Required = true,
+                Minimum = 0
+              }))
+        .WithField("InTotal",
+          field => field
+            .OfType("NumericField")
+            .WithDisplayName("Ukupno")
+            .WithSettings(
+              new NumericFieldSettings
+              {
+                Required = true,
+                Minimum = 0
+              })));
 }

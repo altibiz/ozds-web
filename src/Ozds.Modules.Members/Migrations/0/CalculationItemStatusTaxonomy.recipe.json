@@ -1,0 +1,100 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "4pxxf7kz2v2mgy67ehbhz5gsxq",
+          "ContentItemVersionId": "4qs4082249rknvj6pq039yd6mg",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Status obracunske stavke",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-04-20T04:51:20.4098764Z",
+          "PublishedUtc": "2022-04-20T04:51:20.416279Z",
+          "CreatedUtc": "2022-04-20T04:51:01.5574969Z",
+          "Owner": "4z1n3dzdpndys34562h5aq12ma",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Status obracunske stavke"
+          },
+          "AliasPart": {
+            "Alias": "status-obracunske-stavke"
+          },
+          "AutoroutePart": {
+            "Path": "status-obracunske-stavke",
+            "SetHomepage": false,
+            "Disabled": false,
+            "RouteContainedItems": false,
+            "Absolute": false
+          },
+          "TaxonomyPart": {
+            "TermContentType": "Tag",
+            "Terms": [
+              {
+                "ContentItemId": "4jts97fbyqdcp6e7x2hsx0dtdc",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "0",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T04:51:12.2526969Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "0"
+                },
+                "AutoroutePart": {
+                  "Path": "",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4pxxf7kz2v2mgy67ehbhz5gsxq"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "44bq1k0qy3ft22ycg56f833gmm",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "1",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T04:51:18.1517725Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "1"
+                },
+                "AutoroutePart": {
+                  "Path": "",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4pxxf7kz2v2mgy67ehbhz5gsxq"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

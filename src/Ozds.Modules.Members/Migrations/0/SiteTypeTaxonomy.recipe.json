@@ -1,0 +1,100 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "40afgjpy1kyk7z3p54vgtdhz5a",
+          "ContentItemVersionId": "466hcqp1f4akktmqgv68zrfqxa",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Tip obracunskog mjernog mjesta",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-04-20T04:46:14.1885959Z",
+          "PublishedUtc": "2022-04-20T04:46:14.1974442Z",
+          "CreatedUtc": "2022-04-20T04:44:22.9443626Z",
+          "Owner": "4z1n3dzdpndys34562h5aq12ma",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Tip obracunskog mjernog mjesta"
+          },
+          "AliasPart": {
+            "Alias": "tip-obracunskog-mjernog-mjesta"
+          },
+          "AutoroutePart": {
+            "Path": "sitetype",
+            "SetHomepage": false,
+            "Disabled": false,
+            "RouteContainedItems": false,
+            "Absolute": false
+          },
+          "TaxonomyPart": {
+            "TermContentType": "Tag",
+            "Terms": [
+              {
+                "ContentItemId": "4hwv4r61rnb952sq60t8bkxwxa",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Primarno",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T04:44:34.0754328Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "Primarno"
+                },
+                "AutoroutePart": {
+                  "Path": "",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "40afgjpy1kyk7z3p54vgtdhz5a"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4mr2ex2rrxcf06cwsqgrvj1r55",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Sekundarno",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T04:44:40.8902222Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "Sekundarno"
+                },
+                "AutoroutePart": {
+                  "Path": "",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "40afgjpy1kyk7z3p54vgtdhz5a"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

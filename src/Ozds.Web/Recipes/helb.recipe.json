@@ -57,7 +57,8 @@
         "OrchardCore.Localization",
         "OrchardCore.ContentLocalization.ContentCulturePicker",
         "OrchardCore.ContentFields.Indexing.SQL.UserPicker",
-        "OrchardCore.BackgroundTasks"
+        "OrchardCore.BackgroundTasks",
+        "OrchardCore.Spatial"
       ]
     },
     {

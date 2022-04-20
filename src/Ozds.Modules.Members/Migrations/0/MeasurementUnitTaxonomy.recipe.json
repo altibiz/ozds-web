@@ -1,0 +1,160 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "4cqf2eeqqwadb4xechw3tbbsn0",
+          "ContentItemVersionId": "4hjavgd4vrkcj2tjp41353qcmt",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Mjerna jedinica",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-04-20T05:00:08.6855874Z",
+          "PublishedUtc": "2022-04-20T05:00:08.6927635Z",
+          "CreatedUtc": "2022-04-20T04:59:12.3751518Z",
+          "Owner": "4z1n3dzdpndys34562h5aq12ma",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Mjerna jedinica"
+          },
+          "AliasPart": {
+            "Alias": "mjerna-jedinica"
+          },
+          "AutoroutePart": {
+            "Path": "mjerna-jedinica",
+            "SetHomepage": false,
+            "Disabled": false,
+            "RouteContainedItems": false,
+            "Absolute": false
+          },
+          "TaxonomyPart": {
+            "TermContentType": "Tag",
+            "Terms": [
+              {
+                "ContentItemId": "4815907rnr6raz2vfk91mn9xx2",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "kWh",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T04:59:27.144524Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "kWh"
+                },
+                "AutoroutePart": {
+                  "Path": "",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4cqf2eeqqwadb4xechw3tbbsn0"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "400zwphkr96e12j3gz4hn50858",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "kW",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T04:59:36.0300197Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "kW"
+                },
+                "AutoroutePart": {
+                  "Path": "",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4cqf2eeqqwadb4xechw3tbbsn0"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4v6kbg9g8pv3d3a96npd8yycnz",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "kVAr",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T04:59:45.1200891Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "kVAr"
+                },
+                "AutoroutePart": {
+                  "Path": "",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4cqf2eeqqwadb4xechw3tbbsn0"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "471xnq2wqkr4h2r9bjjjvmdsnt",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "mjesec",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T04:59:54.6242208Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "mjesec"
+                },
+                "AutoroutePart": {
+                  "Path": "",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4cqf2eeqqwadb4xechw3tbbsn0"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

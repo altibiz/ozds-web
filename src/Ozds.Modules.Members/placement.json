@@ -1,10 +1,4 @@
 {
-  "ContentPreview_Button": [
-    {
-      "place": "-",
-      "contentType": ["BankStatement", "Payment"]
-    }
-  ],
   "HtmlField": [
     {
       "contentType": ["Offer"],

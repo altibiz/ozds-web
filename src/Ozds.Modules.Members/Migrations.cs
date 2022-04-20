@@ -27,10 +27,11 @@ public sealed class Migrations : DataMigration
   public int Create()
   {
     Recipe.ExecuteAuthSettings(this);
-    Recipe.ExecuteUserLandingPageMenu(this);
-    Recipe.ExecuteCountyTaxonomy(this);
 
     Content.AlterAdminPageType();
+
+    Content.AlterTagPart();
+    Content.AlterTagType();
 
     Content.AlterImagePart();
     Content.AlterImageType();
@@ -51,12 +52,25 @@ public sealed class Migrations : DataMigration
     Content.AlterMemberType();
 
     Content.AlterPersonPart();
+    Schema.CreatePersonPartMapTable();
+    Schema.CreatePersonPartMapIndex();
 
     Content.AlterSiteType();
     Content.AlterSitePart();
 
     Content.AlterCenterType();
     Content.AlterCenterPart();
+
+    Recipe.ExecuteUserLandingPageMenu(this);
+
+    Recipe.ExecuteArticleTaxonomy(this);
+    Recipe.ExecuteCalculationItemStatusTaxonomy(this);
+    Recipe.ExecuteCountyTaxonomy(this);
+    Recipe.ExecuteCurrencyTaxonomy(this);
+    Recipe.ExecuteMeasurementUnitTaxonomy(this);
+    Recipe.ExecutePhaseTaxonomy(this);
+    Recipe.ExecuteSiteTypeTaxonomy(this);
+    Recipe.ExecuteTariffTaxonomy(this);
 
     return 1;
   }

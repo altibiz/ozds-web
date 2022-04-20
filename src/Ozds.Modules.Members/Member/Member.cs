@@ -7,13 +7,13 @@ namespace Ozds.Modules.Members.Core
 {
   public class Member : ContentPart
   {
-    public UserPickerField User { get; set; } = default!;
+    public UserPickerField User { get; set; } = new();
 
-    public DateField DateOfBirth { get; set; } = default!;
+    public DateField DateOfBirth { get; set; } = new();
 
-    public TaxonomyField Sex { get; set; } = default!;
+    public TaxonomyField Sex { get; set; } = new();
 
-    public TextField AdminNotes { get; set; } = default!;
+    public TextField AdminNotes { get; set; } = new();
   }
 
   public class MemberSettings : IFieldEditorSettings
@@ -33,5 +33,4 @@ namespace Ozds.Modules.Members.Core
       return defaultVale;
     }
   }
-
 }

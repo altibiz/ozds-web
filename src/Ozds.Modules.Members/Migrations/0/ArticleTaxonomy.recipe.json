@@ -1,0 +1,250 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "4dyah7e7srewr46d894deh28n4",
+          "ContentItemVersionId": "43zhjy3brvb753sk5gjen8v9xb",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Artikl",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-04-20T04:58:32.373151Z",
+          "PublishedUtc": "2022-04-20T04:58:32.3807696Z",
+          "CreatedUtc": "2022-04-20T04:57:20.7411414Z",
+          "Owner": "4z1n3dzdpndys34562h5aq12ma",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Artikl"
+          },
+          "AliasPart": {
+            "Alias": "artikl"
+          },
+          "AutoroutePart": {
+            "Path": "artikl",
+            "SetHomepage": false,
+            "Disabled": false,
+            "RouteContainedItems": false,
+            "Absolute": false
+          },
+          "TaxonomyPart": {
+            "TermContentType": "Tag",
+            "Terms": [
+              {
+                "ContentItemId": "4e9wg11wcqf2jw8ycym5nr045h",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "MVT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T04:57:33.9678925Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "MVT"
+                },
+                "AutoroutePart": {
+                  "Path": "",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4dyah7e7srewr46d894deh28n4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4k6srynrmt4h437ejtqcpwm6c1",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "MNT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T04:57:42.5168144Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "MNT"
+                },
+                "AutoroutePart": {
+                  "Path": "",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4dyah7e7srewr46d894deh28n4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4ywqw01j93t9f6d1ctg5sb6dwf",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "SVT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T04:57:51.9573859Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "SVT"
+                },
+                "AutoroutePart": {
+                  "Path": "",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4dyah7e7srewr46d894deh28n4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4gw8f0qc454d238v79e80jj3d8",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "JEN",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T04:58:01.0122608Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "JEN"
+                },
+                "AutoroutePart": {
+                  "Path": "",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4dyah7e7srewr46d894deh28n4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4kts8324e9zr27zc221331ej5c",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "MU",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T04:58:08.6563389Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "MU"
+                },
+                "AutoroutePart": {
+                  "Path": "",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4dyah7e7srewr46d894deh28n4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4mjabc0sdzbx14karvb4xf36n5",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "OVT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T04:58:17.4684306Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "OVT"
+                },
+                "AutoroutePart": {
+                  "Path": "",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4dyah7e7srewr46d894deh28n4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4g7y1thzxr0jw5m8akqwsd10cg",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "ONT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-20T04:58:25.1731897Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "ONT"
+                },
+                "AutoroutePart": {
+                  "Path": "",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4dyah7e7srewr46d894deh28n4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -20,7 +20,7 @@ public class PartNumericFieldDriver : NumericFieldDisplayDriver
       NumericField field, BuildFieldEditorContext context) =>
       context
           .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
-          .Named(fieldDefinition => Initialize<EditNumericFieldViewModel>(
+          .When(fieldDefinition => Initialize<EditNumericFieldViewModel>(
             GetEditorShapeType(fieldDefinition),
             model =>
             {
@@ -40,7 +40,7 @@ public class PartNumericFieldDriver : NumericFieldDisplayDriver
       IUpdateModel updater, UpdateFieldEditorContext context) =>
       context
           .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
-          .Named(fieldDefinition => fieldDefinition
+          .When(fieldDefinition => fieldDefinition
               .Editor() == "Disabled" ? Edit(field, context).ToTask()
               : base.UpdateAsync(field, updater, context));
 
