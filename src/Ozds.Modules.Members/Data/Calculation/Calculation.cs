@@ -6,11 +6,12 @@ namespace Ozds.Modules.Members;
 
 public class Calculation : ContentPart
 {
-  TextField DeviceId { get; set; } = new();
-  DateField DateFrom { get; set; } = new();
-  DateField DateTo { get; set; } = new();
-  NumericField MeasurementServiceFee { get; set; } = new();
-  NumericField InTotal { get; set; } = new();
+  public ContentPickerField Site { get; set; } = new();
+  public TextField DeviceId { get; set; } = new();
+  public DateField DateFrom { get; set; } = new();
+  public DateField DateTo { get; set; } = new();
+  public NumericField MeasurementServiceFee { get; set; } = new();
+  public NumericField InTotal { get; set; } = new();
 }
 
 public class CalculationSettings : IFieldEditorSettings

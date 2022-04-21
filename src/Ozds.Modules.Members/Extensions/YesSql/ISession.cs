@@ -43,21 +43,21 @@ public static class ISessionExtensions
     return session;
   }
 
-  public static Task<ContentItem> GetItemById(
+  public static Task<ContentItem?> GetItemById(
       this ISession session,
       string contentItemId) =>
     session
       .Query<ContentItem, ContentItemIndex>(
           item => item.ContentItemId == contentItemId)
-      .FirstOrDefaultAsync();
+      .FirstOrDefaultAsync()
+      .NullableTask();
 
   public static Task<ContentItem?> GetListParent(
       this ISession session, ContentItem child) =>
     child
       .As<ContainedPart>()
-      .When(part => session
-        .GetItemById(part.ListContentItemId)
-        .Nullable());
+      .FinallyWhen(part => session
+        .GetItemById(part.ListContentItemId));
 
   public static Task<ContentItem> FirstOrDefaultAsync<TIndex>(
       this ISession session,

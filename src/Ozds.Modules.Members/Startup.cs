@@ -44,27 +44,35 @@ public class Startup : OrchardCore.Modules.StartupBase
   {
     services.AddScoped<INavigationProvider, AdminMenu>();
     services.AddScoped<IDataMigration, Migrations>();
+
     services.AddContentPart<Member>();
+    services.AddScoped<MemberService>();
+    services.AddSingleton<IContentHandler, MemberHandler>();
+    services.AddScoped<IScopedIndexProvider, MemberIndexProvider>();
     services.AddContentPart<Center>();
+    services.AddScoped<IScopedIndexProvider, CenterIndexProvider>();
     services.AddContentPart<Site>();
+    services.AddScoped<IScopedIndexProvider, SiteIndexProvider>();
     services.AddContentPart<Receipt>();
+    services.AddScoped<IScopedIndexProvider, ReceiptIndexProvider>();
     services.AddContentPart<ReceiptItem>();
     services.AddContentPart<Calculation>();
+    services.AddScoped<IScopedIndexProvider, CalculationIndexProvider>();
     services.AddContentPart<CalculationItem>();
     services.UsePartService<PersonPart, PersonPartService>();
-    services.AddScoped<MemberService>();
     services.AddScoped<IScopedIndexProvider, PersonPartIndexProvider>();
-    services.AddScoped<TaxonomyCachedService>();
-    services.AddSingleton<IContentHandler, MemberHandler>();
-    services.AddRecipeExecutionStep<FastImport>();
-    services.AddScoped<Importer>();
     services.AddTransient<IContentsAdminListFilterProvider,
         PersonPartAdminListFilterProvider>();
     services.AddScoped<IDisplayDriver<ContentOptionsViewModel>,
         PersonOptionsDisplayDriver>();
 
-    services.AddScoped<IContentDisplayDriver, ContainedPartDisplayDriver>();
+    services.AddScoped<TaxonomyCacheService>();
+
+    services.AddRecipeExecutionStep<FastImport>();
+    services.AddScoped<Importer>();
     services.AddSingleton<IBackgroundTask, FastImportBackgroundTask>();
+
+    services.AddScoped<IContentDisplayDriver, ContainedPartDisplayDriver>();
 
     if (Env.IsDevelopment())
     {

@@ -4,7 +4,6 @@ namespace Ozds.Modules.Members.M0;
 
 public static partial class CreatePersonPartIndex
 {
-  // TODO: investigate why this throws InvalidOperationException
   public static ISchemaBuilder CreatePersonPartMapTable(
       this ISchemaBuilder schema) =>
     schema.CreateMapIndexTable<PersonPartIndex>(

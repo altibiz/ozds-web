@@ -3,35 +3,50 @@ using OrchardCore.ContentManagement;
 using OrchardCore.Taxonomies.Fields;
 using Ozds.Util;
 
-namespace Ozds.Modules.Members.Base
+namespace Ozds.Modules.Members;
+
+public class TaxonomyCacheService
 {
-  public class TaxonomyCachedService
+  public Task<IEnumerable<ContentItem>> GetTerms(TaxonomyField? field) =>
+    field
+      .When(field => field.TermContentItemIds
+        .SelectFilter(term =>
+          (id: field.TaxonomyContentItemId, term: term)
+            .Named(key => key
+              .FinallyWhen(
+                key => !Cache.ContainsKey(key),
+                key => Helper
+                  .GetTaxonomyTermAsync(key.id, key.term)
+                  .Then(item => Cache[key] = item)
+                )))
+        .Await(),
+      new List<ContentItem> { }.AsEnumerable().ToTask());
+
+  public Task<ContentItem?> GetTerm(TaxonomyField? field) =>
+    GetTerms(field)
+      .Then(terms => terms
+          .FirstOrDefault());
+
+  public Task<IEnumerable<T>> GetTerms<T>(
+      TaxonomyField? field) where T : ContentPart =>
+    GetTerms(field)
+      .Then(terms => terms
+        .SelectFilter(term => term
+          .AsReal<T>()));
+
+  public Task<T?> GetTerm<T>(
+      TaxonomyField? field) where T : ContentPart =>
+    GetTerm(field)
+      .Then(term => term
+        .When(term => term
+          .AsReal<T>()));
+
+  public TaxonomyCacheService(IOrchardHelper helper)
   {
-    public Task<IEnumerable<ContentItem>> GetTaxonomyTerms(TaxonomyField? field) =>
-      field
-        .When(field => field.TermContentItemIds
-          .SelectFilter(term =>
-            (id: field.TaxonomyContentItemId, term: term)
-              .Named(key => key
-                .FinallyWhen(
-                  key => !Cache.ContainsKey(key),
-                  key => Helper
-                    .GetTaxonomyTermAsync(key.id, key.term)
-                    .Then(item => Cache[key] = item)
-                  )))
-          .Await(),
-        new List<ContentItem> { }.AsEnumerable().ToTask());
-
-    public Task<ContentItem?> GetFirstTerm(TaxonomyField? field) =>
-      GetTaxonomyTerms(field).Then(items => items.FirstOrDefault());
-
-    public TaxonomyCachedService(IOrchardHelper helper)
-    {
-      Helper = helper;
-    }
-
-    private IOrchardHelper Helper { get; }
-
-    private Dictionary<(string, string), ContentItem> Cache { get; } = new();
+    Helper = helper;
   }
+
+  private IOrchardHelper Helper { get; }
+
+  private Dictionary<(string, string), ContentItem> Cache { get; } = new();
 }

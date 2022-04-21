@@ -18,9 +18,9 @@ public class BarcodeGenModel : PageModel
   {
     if (PersonId != OriginalId && PersonId is not null)
     {
-      ContentItem person = await Members.GetContentItemById(PersonId);
-      LegalName = person.Content.PersonPart.LegalName.ToString();
-      Oib = person.Content.PersonPart.Oib.Text;
+      ContentItem? person = await Members.GetContentItemById(PersonId);
+      LegalName = person?.Content.PersonPart.LegalName.ToString();
+      Oib = person?.Content.PersonPart.Oib.Text;
       OriginalId = PersonId;
     }
 

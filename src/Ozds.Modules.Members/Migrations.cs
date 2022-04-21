@@ -39,26 +39,31 @@ public sealed class Migrations : DataMigration
     Schema.CreatePersonPartMapTable();
     Schema.CreatePersonPartMapIndex();
 
+    Content.AlterSiteType();
+    Content.AlterSitePart();
+    Schema.CreateSiteMapTable();
+
     Content.AlterReceiptPart();
     Content.AlterReceiptType();
+    Schema.CreateReceiptMapTable();
 
     Content.AlterReceiptItemPart();
     Content.AlterReceiptItemType();
 
     Content.AlterCalculationPart();
     Content.AlterCalculationType();
+    Schema.CreateCalculationMapTable();
 
     Content.AlterCalculationItemPart();
     Content.AlterCalculationItemType();
 
     Content.AlterMemberPart();
     Content.AlterMemberType();
-
-    Content.AlterSiteType();
-    Content.AlterSitePart();
+    Schema.CreateMemberMapTable();
 
     Content.AlterCenterType();
     Content.AlterCenterPart();
+    Schema.CreateCenterMapTable();
 
     Recipe.ExecuteUserLandingPageMenu(this);
 

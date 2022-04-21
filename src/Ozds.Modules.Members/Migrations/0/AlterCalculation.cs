@@ -35,10 +35,10 @@ public static partial class AlterCalculation
                 // TODO: check
                 Pattern =
                 @"""
-                  {{%- assign calc = ContentItem.Content.Calculation -%}}
-                  {{%- assign deviceId = calc.DeviceId.Text -%}}
-                  {{%- assign dateFrom = calc.DateFrom.Value?.ToString() -%}}
-                  {{%- assign dateFrom = calc.DateTo.Value?.ToString() -%}}
+                  {%- assign receipt = ContentItem.Content.Receipt -%}
+                  {%- assign deviceId = calc.DeviceId.Text -%}
+                  {%- assign dateFrom = calc.DateFrom.Value | date: '%Y-%m-%d' -%}
+                  {%- assign dateTo = calc.DateTo.Value | date: '%Y-%m-%d' -%}
                   {{- deviceId }} {{ dateFrom }} - {{ dateTo -}}
                 """,
               }))
@@ -60,15 +60,20 @@ public static partial class AlterCalculation
       this IContentDefinitionManager content) =>
     content.AlterPartDefinition("Calculation",
       part => part
-        .WithField("DeviceId",
+        .WithField("SiteId",
           field => field
-            .OfType("TextField")
-            .WithDisplayName("Brojilo")
-            .WithDescription("Šifra brojila")
+            .OfType("ContentPickerField")
+            .WithDisplayName("Obračunsko mjerno mjesto")
+            .WithPosition("0")
             .WithSettings(
-              new TextFieldSettings
+              new ContentPickerFieldSettings
               {
+                Multiple = false,
                 Required = true,
+                DisplayedContentTypes = new[]
+                {
+                  "Site",
+                }
               }))
         .WithField("DateFrom",
           field => field

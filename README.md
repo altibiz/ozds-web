@@ -47,12 +47,19 @@ easier.
 
 #### TestOwner
 
+- Id: 1001
 - Username: 'TestOwner'
 - Email: 'test-owner@helb.hr'
 - Password: 'wiQm8E0iXLYCWRWjpW74zRSsC3Z4YYTq'
 
 #### TestMember
 
+- Id: 1002
 - Username: 'TestMember'
 - Email: 'test-member@helb.hr'
 - Password: '8JW4aIGqbTrHOSQZz1hCUgn3qeTBza9z'
+
+## TODO
+
+- fix indices that read bags
+- fix taxonomies

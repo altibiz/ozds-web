@@ -25,12 +25,4 @@ public static partial class TaskExtensions
   public static async ValueTask ToValueTask(
       this Task @this) =>
     await @this;
-
-  public static Task<T?> Nullable<T>(
-      this Task<T> @this) =>
-    @this.Then(@this => @this.Nullable());
-
-  public static ValueTask<T?> Nullable<T>(
-      this ValueTask<T> @this) =>
-    @this.Then(@this => @this.Nullable());
 }

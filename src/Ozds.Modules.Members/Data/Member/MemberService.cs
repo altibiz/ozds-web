@@ -53,7 +53,7 @@ await query.ListAsync();
     return member.FirstOrDefault();
   }
 
-  public async Task<ContentItem> GetContentItemById(string contentItemId)
+  public async Task<ContentItem?> GetContentItemById(string contentItemId)
   {
     return await Session.GetItemById(contentItemId);
   }

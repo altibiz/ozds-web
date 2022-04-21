@@ -1,9 +1,9 @@
-using Ozds.Modules.Members.Base;
 using OrchardCore.ContentFields.Fields;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.Lists.Models;
 using OrchardCore.Taxonomies.Fields;
+using OrchardCore.Flows.Models;
 using Ozds.Util;
 
 namespace Ozds.Modules.Members;
@@ -27,10 +27,22 @@ public static class ContentExtensions
   }
 
   public static T? AsReal<T>(
-      this ContentItem contentItem) where T : ContentPart =>
-    contentItem.When(
-        contentItem => contentItem.Latest || contentItem.Published,
-        contentItem => ContentItemExtensions.As<T>(contentItem));
+      this ContentItem? item) where T : ContentPart =>
+    item.When(
+        item => item.Latest || item.Published,
+        item => ContentItemExtensions.As<T>(item));
+
+  public static IEnumerable<T>? FromBag<T>(
+      this ContentItem? item) where T : ContentPart =>
+    item.AsReal<BagPart>()
+      .When(bag => bag.ContentItems
+          .SelectFilter(item => item.AsReal<T>()));
+
+  public static IEnumerable<T>? FromFlow<T>(
+      this ContentItem? item) where T : ContentPart =>
+    item.AsReal<FlowPart>()
+      .When(flow => flow.Widgets
+          .SelectFilter(item => item.AsReal<T>()));
 
   public static string? GetId(this ContentPickerField contentPickerField) =>
       contentPickerField?.ContentItemIds?.FirstOrDefault();
@@ -49,16 +61,6 @@ public static class ContentExtensions
       {
         value
       };
-
-  public static async Task<ContentItem?> GetTerm(
-      this TaxonomyField field,
-      TaxonomyCachedService service) =>
-    await service.GetFirstTerm(field);
-
-  public static async Task<TPart> GetTerm<TPart>(
-      this TaxonomyField field,
-      TaxonomyCachedService service) where TPart : ContentPart =>
-    ContentItemExtensions.As<TPart>(await service.GetFirstTerm(field));
 
   public static IEnumerable<T> AsParts<T>(
       this IEnumerable<ContentItem> items) where T : ContentPart =>

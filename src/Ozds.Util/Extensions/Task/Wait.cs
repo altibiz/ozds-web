@@ -7,4 +7,10 @@ public static partial class TaskExtensions
     @this.Wait();
     return @this.Result;
   }
+
+  public static T Wait<T>(this ValueTask<T> @this)
+  {
+    @this.Wait();
+    return @this.Result;
+  }
 }

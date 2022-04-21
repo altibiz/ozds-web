@@ -87,7 +87,7 @@
                 "ContentItemId": "4jnm695h5s00rx0qcw63pjepn0",
                 "ContentItemVersionId": null,
                 "ContentType": "Calculation",
-                "DisplayText": "",
+                "DisplayText": "SfakIDfakeDevice2 2022-04-01 - 2022-04-30",
                 "Latest": false,
                 "Published": false,
                 "ModifiedUtc": "2022-04-20T14:40:23.4024998Z",
@@ -96,6 +96,9 @@
                 "Owner": null,
                 "Author": "admin",
                 "Calculation": {
+                  "Site": {
+                    "ContentItemIds": ["4wr8zmbsykbdry12hfv378eaxz"]
+                  },
                   "DeviceId": {
                     "Text": "SfakIDfakeDevice2"
                   },
@@ -113,7 +116,7 @@
                   }
                 },
                 "TitlePart": {
-                  "Title": ""
+                  "Title": "SfakIDfakeDevice2 2022-04-01 - 2022-04-30"
                 },
                 "BagPart": {
                   "ContentItems": [
