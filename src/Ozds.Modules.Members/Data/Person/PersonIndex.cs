@@ -1,7 +1,6 @@
 ﻿using OrchardCore.ContentManagement;
 using YesSql.Indexes;
 using OrchardCore.ContentManagement.Metadata;
-using Ozds.Modules.Members.Utils;
 using OrchardCore.Data;
 using Ozds.Util;
 
@@ -31,7 +30,7 @@ public class PersonPartIndexProvider : IndexProvider<ContentItem>,
             Published = contentItem.Published,
             Oib = person.Oib.Text,
             LegalName = person.LegalName,
-            Legal = person.Legal.Value,
+            Legal = person.Legal,
           })
         // NOTE: this is mandatory for Yessql
         .NonNullable());

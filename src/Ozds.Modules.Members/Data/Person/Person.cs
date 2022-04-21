@@ -2,6 +2,7 @@
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.Taxonomies.Fields;
+using Ozds.Util;
 
 namespace Ozds.Modules.Members;
 
@@ -13,18 +14,24 @@ public class PersonPart : ContentPart
   public TextField Surname { get; set; } = new();
   public TextField Address { get; set; } = new();
   public TextField City { get; set; } = new();
+  public TextField PostalCode { get; set; } = new();
   public TaxonomyField County { get; set; } = new();
   public TextField Phone { get; set; } = new();
   public TextField Email { get; set; } = new();
-  public BooleanField Legal { get; set; } = new();
+  public TaxonomyField Type { get; set; } = new();
 
   public string LegalName
   {
     get =>
-      Legal.Value ? Name.Text
-      : String.IsNullOrWhiteSpace(MiddleName.Text) ?
+      Legal ? Name.Text
+      : MiddleName.Text.Empty() ?
         $"{Name.Text} {Surname.Text}"
       : $"{Name.Text} {MiddleName.Text} {Surname.Text}";
+  }
+
+  public bool Legal
+  {
+    get => PersonType.LegalId.In(Type.TermContentItemIds);
   }
 }
 

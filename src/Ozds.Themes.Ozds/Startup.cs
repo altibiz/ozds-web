@@ -3,18 +3,20 @@ using Microsoft.Extensions.Options;
 using OrchardCore.Modules;
 using OrchardCore.ResourceManagement;
 using OrchardCore.Data.Migration;
+using OrchardCore.Navigation;
 
 namespace Ozds.Themes.Ozds
 {
   public class Startup : StartupBase
   {
     public override void ConfigureServices(
-        IServiceCollection serviceCollection)
+        IServiceCollection services)
     {
-      serviceCollection
+      services
           .AddTransient<IConfigureOptions<ResourceManagementOptions>,
               ResourceManagementOptionsConfiguration>();
-      serviceCollection.AddScoped<IDataMigration, Migrations>();
+      services.AddScoped<IDataMigration, Migrations>();
+      services.AddScoped<INavigationProvider, AdminMenu>();
     }
   }
 }

@@ -1,5 +1,4 @@
-﻿using Ozds.Modules.Members.Utils;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using OrchardCore.ContentFields.Fields;
 using OrchardCore.ContentManagement.Display.Models;
@@ -40,7 +39,7 @@ public class PersonPartService : IPartService<PersonPart>
             Localizer["Your ID is already in use."]);
       }
     }
-    if (!part.Legal.Value &&
+    if (!part.Legal &&
         string.IsNullOrWhiteSpace(part.Surname.Text))
     {
       yield return new ValidationResult(Localizer["Surname is required."]);
@@ -53,7 +52,7 @@ public class PersonPartService : IPartService<PersonPart>
                    .QueryIndex<PersonPartIndex>(
                        o => o.Oib == oib &&
                             o.ContentItemId != part.ContentItem.ContentItemId &&
-                            o.Legal == part.Legal.Value)
+                            o.Legal == part.Legal)
                    .CountAsync()) == 0;
   }
 

@@ -7,7 +7,7 @@
           "ContentItemId": "42qzg689efr227rxx1hsga3sc6",
           "ContentItemVersionId": "40dgsxs91dp85sxje8fqjvv1my",
           "ContentType": "Receipt",
-          "DisplayText": "",
+          "DisplayText": "Ivo Ivić 2022-04-01 - 2022-04-30",
           "Latest": true,
           "Published": true,
           "ModifiedUtc": "2022-04-20T14:40:23.3912248Z",
@@ -79,7 +79,7 @@
             }
           },
           "TitlePart": {
-            "Title": ""
+            "Title": "Ivo Ivić 2022-04-01 - 2022-04-30"
           },
           "BagPart": {
             "ContentItems": [
@@ -150,6 +150,10 @@
                         "Consumption": {
                           "Value": 50
                         },
+                        "Unit": {
+                          "TaxonomyContentItemId": "4cqf2eeqqwadb4xechw3tbbsn0",
+                          "TermContentItemIds": ["4815907rnr6raz2vfk91mn9xx2"]
+                        },
                         "UnitPrice": {
                           "Value": 10
                         },
@@ -191,6 +195,10 @@
                         "Consumption": {
                           "Value": 96
                         },
+                        "Unit": {
+                          "TaxonomyContentItemId": "4cqf2eeqqwadb4xechw3tbbsn0",
+                          "TermContentItemIds": ["4815907rnr6raz2vfk91mn9xx2"]
+                        },
                         "UnitPrice": {
                           "Value": 5
                         },
@@ -223,7 +231,8 @@
                     "TermContentItemIds": ["4kts8324e9zr27zc221331ej5c"]
                   },
                   "Unit": {
-                    "Text": "mjesec"
+                    "TaxonomyContentItemId": "4cqf2eeqqwadb4xechw3tbbsn0",
+                    "TermContentItemIds": ["471xnq2wqkr4h2r9bjjjvmdsnt"]
                   },
                   "Amount": {
                     "Value": 1

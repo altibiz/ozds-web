@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Localization;
 using OrchardCore.DisplayManagement.Notify;
-using Ozds.Modules.Members.Core;
 
 namespace Ozds.Modules.Members.Pages;
 

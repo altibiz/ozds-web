@@ -55,7 +55,7 @@ public static partial class AlterReceiptItem
               }))
         .WithField("Unit",
           field => field
-            .OfType("TextField")
+            .OfType("TaxonomyField")
             .WithDisplayName("Mjerna jedinica")
             .WithPosition("2")
             .WithSettings(

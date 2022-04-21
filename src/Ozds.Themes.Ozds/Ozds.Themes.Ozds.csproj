@@ -33,4 +33,8 @@
   <ItemGroup>
     <None Include="wwwroot/js/media.js" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ozds.Util\Ozds.Util.csproj" />
+  </ItemGroup>
 </Project>

@@ -86,6 +86,7 @@ public static partial class AlterPerson
               {
                 TaxonomyContentItemId = "4d0dew9ar7h9nsbpcs7jg2egwe",
                 Unique = true,
+                Required = true,
               }))
         .WithField("Phone",
           field => field
@@ -109,15 +110,17 @@ public static partial class AlterPerson
               {
                 Required = true,
               }))
-        .WithField("Legal",
+        .WithField("Type",
           field => field
-            .OfType("BooleanField")
-            .WithDisplayName("Pravna")
-            .WithDescription("Da li je osoba pravna ili fizicka")
-            .WithPosition("8"))
+            .OfType("TaxonomyField")
+            .WithDisplayName("Tip")
+            .WithDescription("Tip osobe")
+            .WithPosition("8")
             .WithSettings(
-              new BooleanFieldSettings
+              new TaxonomyFieldSettings
               {
-                DefaultValue = true,
-              }));
+                TaxonomyContentItemId = "445pqtg9kka9hzxgdj30x9qq4g",
+                Unique = true,
+                Required = true
+              })));
 }

@@ -5,7 +5,6 @@ using Microsoft.Extensions.Hosting;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.Data.Migration;
 using OrchardCore.Recipes.Services;
-using OrchardCore.Users.Services;
 using Ozds.Modules.Members.M0;
 
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
@@ -17,6 +16,16 @@ public sealed class Migrations : DataMigration
   public int Create()
   {
     Recipe.ExecuteAuthSettings(this);
+
+    Recipe.ExecuteCountyTaxonomy(this);
+    Recipe.ExecuteCurrencyTaxonomy(this);
+    Recipe.ExecuteArticleTaxonomy(this);
+    Recipe.ExecutePhaseTaxonomy(this);
+    Recipe.ExecuteMeasurementUnitTaxonomy(this);
+    Recipe.ExecuteCalculationItemStatusTaxonomy(this);
+    Recipe.ExecuteTariffTaxonomy(this);
+    Recipe.ExecuteSiteTypeTaxonomy(this);
+    Recipe.ExecutePersonTypeTaxonomy(this);
 
     Content.AlterAdminPageType();
 
@@ -53,25 +62,8 @@ public sealed class Migrations : DataMigration
 
     Recipe.ExecuteUserLandingPageMenu(this);
 
-    Recipe.ExecuteArticleTaxonomy(this);
-    Recipe.ExecuteCalculationItemStatusTaxonomy(this);
-    Recipe.ExecuteCountyTaxonomy(this);
-    Recipe.ExecuteCurrencyTaxonomy(this);
-    Recipe.ExecuteMeasurementUnitTaxonomy(this);
-    Recipe.ExecutePhaseTaxonomy(this);
-    Recipe.ExecuteSiteTypeTaxonomy(this);
-    Recipe.ExecuteTariffTaxonomy(this);
-
     if (Env.IsDevelopment())
     {
-      // NOTE: this one breaks the schema transaction for some reason
-      // Users.AddTestUsers(Logger, Conf);
-
-      // NOTE: this one is similar to Users.AddTestUsers, but does this
-      // NOTE: through a recipe
-      // Recipe.ExecuteCommandCreateTestUsers(this);
-
-      // NOTE: these add users directly from JSON
       Session.SaveUserTestOwner();
       Session.SaveUserTestMember();
     }
@@ -92,8 +84,7 @@ public sealed class Migrations : DataMigration
       IConfiguration conf,
       IRecipeMigrator recipe,
       IContentDefinitionManager content,
-      ISession session,
-      IUserService users)
+      ISession session)
   {
     Env = env;
     Logger = logger;
@@ -103,10 +94,7 @@ public sealed class Migrations : DataMigration
 
     Recipe = recipe;
     Content = content;
-
-    Users = users;
   }
-
 
   private IHostEnvironment Env { get; }
   private ILogger Logger { get; }
@@ -117,6 +105,4 @@ public sealed class Migrations : DataMigration
 
   private IRecipeMigrator Recipe { get; }
   private IContentDefinitionManager Content { get; }
-
-  private IUserService Users { get; }
 }

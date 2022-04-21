@@ -64,7 +64,7 @@ public static partial class AlterCalculation
           field => field
             .OfType("TextField")
             .WithDisplayName("Brojilo")
-            .WithDescription("Sifra brojila")
+            .WithDescription("Šifra brojila")
             .WithSettings(
               new TextFieldSettings
               {
@@ -74,7 +74,7 @@ public static partial class AlterCalculation
           field => field
             .OfType("DateField")
             .WithDisplayName("Datum od")
-            .WithDescription("Pocetni datum mjerenja")
+            .WithDescription("Početni datum mjerenja")
             .WithSettings(
               new DateFieldSettings
               {

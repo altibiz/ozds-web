@@ -42,6 +42,10 @@ public static partial class RecipeMigrations
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/SiteTypeTaxonomy.recipe.json", migration);
 
+  public static IRecipeMigrator ExecutePersonTypeTaxonomy(
+      this IRecipeMigrator recipe, IDataMigration migration) =>
+    recipe.Execute("0/PersonTypeTaxonomy.recipe.json", migration);
+
   public static IRecipeMigrator ExecuteTariffTaxonomy(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/TariffTaxonomy.recipe.json", migration);

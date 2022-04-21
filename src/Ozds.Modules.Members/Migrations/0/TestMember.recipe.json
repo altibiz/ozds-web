@@ -7,7 +7,7 @@
           "ContentItemId": "4getacb8ffdhc028bqrqrf5bc6",
           "ContentItemVersionId": "4jsn62qp9e2vf6wst2z2rvwd5a",
           "ContentType": "Member",
-          "DisplayText": "",
+          "DisplayText": "Ivo Ivić",
           "Latest": true,
           "Published": true,
           "ModifiedUtc": "2022-04-20T14:24:20.5111296Z",
@@ -19,20 +19,10 @@
             "User": {
               "UserIds": ["TestMemberId"],
               "UserNames": ["TestMember"]
-            },
-            "DateOfBirth": {
-              "Value": null
-            },
-            "Sex": {
-              "TaxonomyContentItemId": null,
-              "TermContentItemIds": []
-            },
-            "AdminNotes": {
-              "Text": null
             }
           },
           "TitlePart": {
-            "Title": ""
+            "Title": "Ivo Ivić"
           },
           "PersonPart": {
             "Oib": {
@@ -53,6 +43,9 @@
             "City": {
               "Text": "Zagreb"
             },
+            "PostalCode": {
+              "Text": "10000"
+            },
             "County": {
               "TaxonomyContentItemId": "4d0dew9ar7h9nsbpcs7jg2egwe",
               "TermContentItemIds": ["4z3rcbqjad20q2pgckfbyd7wc4"],
@@ -64,10 +57,10 @@
             "Email": {
               "Text": "ivo-ivic@gmail.com"
             },
-            "Legal": {
-              "Value": false
-            },
-            "LegalName": "Ivo Ivić"
+            "Type": {
+              "TaxonomyContentItemId": "445pqtg9kka9hzxgdj30x9qq4g",
+              "TermContentItemIds": ["4p5tav8t59akeytk2at7sprqn5"]
+            }
           },
           "BagPart": {
             "ContentItems": [
@@ -75,7 +68,7 @@
                 "ContentItemId": "4wr8zmbsykbdry12hfv378eaxz",
                 "ContentItemVersionId": null,
                 "ContentType": "Site",
-                "DisplayText": null,
+                "DisplayText": "Mjerno mjesto",
                 "Latest": false,
                 "Published": false,
                 "ModifiedUtc": "2022-04-20T14:24:20.5274969Z",
@@ -84,42 +77,19 @@
                 "Owner": null,
                 "Author": "admin",
                 "Site": {
-                  "Code": {
-                    "Text": null
-                  },
                   "Type": {
-                    "Text": null,
                     "TaxonomyContentItemId": "40afgjpy1kyk7z3p54vgtdhz5a",
                     "TermContentItemIds": ["4mr2ex2rrxcf06cwsqgrvj1r55"]
                   },
-                  "ZDSCode": {
-                    "Text": null
-                  },
-                  "DeviceCode": {
-                    "Text": null
-                  },
-                  "UserCode": {
-                    "Text": null
-                  },
                   "Coefficient": {
-                    "Text": null,
                     "Value": 1
-                  },
-                  "PhaseNumber": {
-                    "Value": null
                   },
                   "Geolocation": {
                     "Latitude": 45,
-                    "Longitude": 46
+                    "Longitude": 15
                   },
                   "Active": {
                     "Value": true
-                  },
-                  "UserType": {
-                    "Text": null
-                  },
-                  "Primary": {
-                    "Value": false
                   },
                   "DeviceId": {
                     "Text": "SfakIDfakeDevice2"
@@ -128,6 +98,9 @@
                     "TaxonomyContentItemId": "4p8c2k9qbte1yzcbewfjy5zyxw",
                     "TermContentItemIds": ["4gc5wfqf6er6yrm4551qjvx049"]
                   }
+                },
+                "TitlePart": {
+                  "Title": "Mjerno mjesto"
                 }
               }
             ]

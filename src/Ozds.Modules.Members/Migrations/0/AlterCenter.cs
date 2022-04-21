@@ -58,7 +58,7 @@ public static partial class AlterCenter
               new AutoroutePartSettings
               {
                 ManageContainedItemRoutes = true,
-                Pattern = @"{{ ContentItem.Content.TitlePart.Text | slugify }}"
+                Pattern = @"{{ ContentItem.Content.TitlePart.Title | slugify }}"
               }))
         .WithPart("PersonPart",
           part => part
@@ -87,8 +87,8 @@ public static partial class AlterCenter
         .WithPart("ListPart",
           part => part
             .WithPosition("6")
-            .WithDisplayName("Clanovi")
-            .WithDescription("Clanovi zatvorenog distribucijskog sustava")
+            .WithDisplayName("Članovi")
+            .WithDescription("Članovi zatvorenog distribucijskog sustava")
             .WithSettings(
               new ListPartSettings
               {
@@ -106,7 +106,7 @@ public static partial class AlterCenter
           field => field
             .OfType("UserPickerField")
             .WithDisplayName("Korisnik")
-            .WithDescription("Korisnicki racun zastupnika")
+            .WithDescription("Korisnički račun zastupnika")
             .WithPosition("0")
             .WithSettings(
               new UserPickerFieldSettings

@@ -15,7 +15,6 @@ public partial class Migrations : DataMigration
   {
     Recipe.ExecuteLayers(this);
     Recipe.ExecuteLayout(this);
-    Recipe.ExecuteAdminMenu(this);
     Recipe.ExecuteLocalization(this);
     Recipe.ExecuteAnonymousRole(this);
     Recipe.ExecuteLuceneFullTextSearch(this);

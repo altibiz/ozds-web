@@ -11,7 +11,7 @@ public static partial class AlterTag
       this IContentDefinitionManager content) =>
     content.AlterTypeDefinition("Tag",
       type => type
-        .DisplayedAs("Znacajka")
+        .DisplayedAs("Značajka")
         .Creatable()
         .Listable()
         .Securable()
@@ -22,7 +22,7 @@ public static partial class AlterTag
           part => part
             .WithPosition("1")
             .WithDisplayName("Naziv")
-            .WithDisplayName("Naziv znacajke")
+            .WithDisplayName("Naziv značajke")
             .WithSettings(
               new TitlePartSettings
               {
@@ -33,11 +33,11 @@ public static partial class AlterTag
           part => part
             .WithPosition("2")
             .WithDisplayName("Ruta")
-            .WithDescription("Automatski generirana ruta znacajke")
+            .WithDescription("Automatski generirana ruta značajke")
             .WithSettings(
               new AutoroutePartSettings
               {
-                Pattern = @"{{ ContentItem.Content.TitlePart.Text | slugify }}"
+                Pattern = @"{{ ContentItem.Content.TitlePart.Title | slugify }}"
               })));
 
   public static void AlterTagPart(this IContentDefinitionManager content) =>

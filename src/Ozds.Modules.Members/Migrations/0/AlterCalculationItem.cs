@@ -94,6 +94,17 @@ public static partial class AlterCalculationItem
               {
                 Required = true
               }))
+        .WithField("Unit",
+          field => field
+            .OfType("TaxonomyField")
+            .WithDisplayName("Mjerna jedinica")
+            .WithPosition("2")
+            .WithSettings(
+              new TaxonomyFieldSettings
+              {
+                TaxonomyContentItemId = "4cqf2eeqqwadb4xechw3tbbsn0",
+                Unique = true
+              }))
         .WithField("UnitPrice",
           field => field
             .OfType("NumericField")

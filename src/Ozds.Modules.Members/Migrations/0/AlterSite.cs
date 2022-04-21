@@ -2,6 +2,7 @@ using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.ContentFields.Settings;
 using OrchardCore.Taxonomies.Settings;
+using OrchardCore.Title.Models;
 using OrchardCore.Spatial.Settings;
 
 namespace Ozds.Modules.Members.M0;
@@ -23,6 +24,17 @@ public static partial class AlterSite
             .WithSettings(
               new SiteSettings
               {
+              }))
+        .WithPart("TitlePart",
+          part => part
+            .WithPosition("1")
+            .WithDisplayName("Naziv")
+            .WithDescription("Naziv obračunskog mjernog mjesta")
+            .WithSettings(
+              new TitlePartSettings
+              {
+                RenderTitle = true,
+                Options = TitlePartOptions.EditableRequired,
               })));
 
   public static void AlterSitePart(
@@ -94,18 +106,5 @@ public static partial class AlterSite
               new BooleanFieldSettings
               {
                 DefaultValue = false
-              }))
-        // TODO: as SiteSettings field
-        // NOTE: Center => Primary Sites
-        // NOTE: Member => Secondary Sites
-        .WithField("Primary",
-          field => field
-            .OfType("BooleanField")
-            .WithDisplayName("Primarno")
-            .WithPosition("6"))
-            .WithSettings(
-              new BooleanFieldSettings
-              {
-                DefaultValue = false
-              }));
+              })));
 }

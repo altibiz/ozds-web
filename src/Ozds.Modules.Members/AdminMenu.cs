@@ -33,7 +33,7 @@ public class AdminMenu : INavigationProvider
               "icon-class-fas",
               "icon-class-fa-users"
             })
-          .Add(S["Financije"], "1", rootView => rootView
+          .Add(S["Financije"], "0", rootView => rootView
             .Add(S["Računi"], "0", childTwo => childTwo
               .Action("List", "Admin",
                 new

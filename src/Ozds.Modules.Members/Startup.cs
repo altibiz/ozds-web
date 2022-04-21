@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Builder;
 using OrchardCore.Data.Migration;
 using OrchardCore.Navigation;
 using OrchardCore.Contents.Services;
@@ -22,7 +24,6 @@ using OrchardCore.Taxonomies.Drivers;
 using OrchardCore.Recipes;
 using Lombiq.HelpfulExtensions.Extensions.CodeGeneration;
 using Ozds.Modules.Members.Utils;
-using Ozds.Modules.Members.Core;
 using Ozds.Modules.Members.PartFieldSettings;
 using Ozds.Modules.Members.Base;
 
@@ -123,5 +124,14 @@ public class Startup : OrchardCore.Modules.StartupBase
         PeriodicMeasurementLoadBackgroundTask>();
 
     services.AddScoped<LocalizedRouteTransformer>();
+  }
+
+  public override void Configure(
+      IApplicationBuilder app,
+      IEndpointRouteBuilder routes,
+      IServiceProvider services)
+  {
+    routes.MapDynamicPageRoute<LocalizedRouteTransformer>("clanovi");
+    routes.MapDynamicPageRoute<LocalizedRouteTransformer>("clanovi/{page?}");
   }
 }

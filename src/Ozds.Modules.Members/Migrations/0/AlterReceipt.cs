@@ -35,13 +35,13 @@ public static partial class AlterReceipt
                 Options = TitlePartOptions.GeneratedDisabled,
                 // TODO: check
                 Pattern =
-                @"""
-                  {{%- assign receipt = ContentItem.Content.Receipt -%}}
-                  {{%- assign document = receipt.DocumentId.Text -%}}
-                  {{%- assign dateFrom = receipt.DateFrom.Value?.ToString() -%}}
-                  {{%- assign dateFrom = receipt.DateTo.Value?.ToString() -%}}
-                  {{- document }} {{ dateFrom }} - {{ dateTo -}}
-                """,
+                @"
+                  {%- assign receipt = ContentItem.Content.Receipt -%}
+                  {%- assign partner = receipt.Partner.Text -%}
+                  {%- assign dateFrom = receipt.DateFrom.Value | date: '%Y-%m-%d' -%}
+                  {%- assign dateTo = receipt.DateTo.Value | date: '%Y-%m-%d' -%}
+                  {{- partner }} {{ dateFrom }} - {{ dateTo -}}
+                ",
               }))
         .WithPart("BagPart",
           part => part

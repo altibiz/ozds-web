@@ -30,12 +30,6 @@ public static partial class RecipeMigrations
     recipe.Execute("0/AnonymousRole.recipe.json", migration);
   }
 
-  public static void ExecuteAdminMenu(
-      this IRecipeMigrator recipe, IDataMigration migration)
-  {
-    recipe.Execute("0/AdminMenu.recipe.json", migration);
-  }
-
   public static void ExecuteLuceneFullTextSearch(
       this IRecipeMigrator recipe, IDataMigration migration)
   {

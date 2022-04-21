@@ -56,5 +56,6 @@ using OrchardCore.Modules.Manifest;
         "OrchardCore.ContentLocalization.ContentCulturePicker",
         "OrchardCore.ContentFields.Indexing.SQL.UserPicker",
         "OrchardCore.BackgroundTasks",
-        "OrchardCore.Spatial"
+        "OrchardCore.Spatial",
+        "OrchardCore.Contents.Deployment.Download"
       })]

@@ -13,8 +13,10 @@ using YesSql;
 using Ozds.Util;
 using ISession = YesSql.ISession;
 
-namespace Ozds.Modules.Members.Core;
+namespace Ozds.Modules.Members;
 
+// TODO: does this make any sense?
+// TODO: use in migrations?
 public enum ContentType { Member, Company, Offer }
 
 public class MemberService
