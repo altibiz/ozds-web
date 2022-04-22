@@ -36,13 +36,13 @@ public static class ContentExtensions
       this ContentItem? item) where T : ContentPart =>
     item.AsReal<BagPart>()
       .When(bag => bag.ContentItems
-          .SelectFilter(item => item.AsReal<T>()));
+          .SelectFilter(item => ContentItemExtensions.As<T>(item)));
 
   public static IEnumerable<T>? FromFlow<T>(
       this ContentItem? item) where T : ContentPart =>
     item.AsReal<FlowPart>()
       .When(flow => flow.Widgets
-          .SelectFilter(item => item.AsReal<T>()));
+          .SelectFilter(item => ContentItemExtensions.As<T>(item)));
 
   public static string? GetId(this ContentPickerField contentPickerField) =>
       contentPickerField?.ContentItemIds?.FirstOrDefault();

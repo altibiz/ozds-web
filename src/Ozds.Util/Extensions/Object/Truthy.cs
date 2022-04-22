@@ -8,7 +8,7 @@ public static partial class ObjectExtensions
     @this is not null;
 
   public static bool Truthy([NotNullWhen(true)] this string? @this) =>
-    !String.IsNullOrWhiteSpace(@this);
+    !string.IsNullOrWhiteSpace(@this);
 
   public static bool Truthy([NotNullWhen(true)] this bool? @this) =>
     @this switch
@@ -16,4 +16,12 @@ public static partial class ObjectExtensions
       bool @thisBool => @thisBool,
       null => false,
     };
+
+  public static bool Truthy<T>(
+      [NotNullWhen(true)] this IEnumerable<T>? @this) =>
+    !@this.IsEmpty();
+
+  public static bool Truthy<T>(
+      [NotNullWhen(true)] this IAsyncEnumerable<T>? @this) =>
+    !@this.IsEmpty();
 }

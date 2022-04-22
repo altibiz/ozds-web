@@ -1,7 +1,6 @@
 using YesSql.Indexes;
 using OrchardCore.Data;
 using OrchardCore.ContentManagement;
-using OrchardCore.ContentManagement.Metadata;
 using Ozds.Util;
 
 namespace Ozds.Modules.Members;
@@ -22,31 +21,51 @@ public class CalculationIndexProvider :
       DescribeContext<ContentItem> context) =>
     context
       .For<CalculationIndex>()
-      .Map(item => item.AsReal<Receipt>()
-        .When(receipt => receipt.Official.ContentItemIds
-          .FirstOrDefault()
-          .When(officialId => item.FromBag<Calculation>()
-            .When(calculations => calculations
-              .SelectFilter(calculation => calculation.Site.ContentItemIds
-                .FirstOrDefault()
-                .When(siteId =>
-                  new CalculationIndex
-                  {
-                    ReceiptId = item.ContentItemId,
-                    OfficialId = officialId,
-                    SiteId = siteId,
-                    DeviceId = calculation.DeviceId.Text
-                  }))))));
+      .Map(
+        item =>
+        {
+          var receipt = item.AsReal<Receipt>();
+          if (receipt is null)
+          {
+            return Enumerable.Empty<CalculationIndex>();
+          }
 
-  public CalculationIndexProvider(
-      IServiceProvider services,
-      IContentDefinitionManager content,
-      TaxonomyCacheService taxonomyCache)
-  {
-    Services = services;
-    TaxonomyCache = taxonomyCache;
-  }
+          var officialId = receipt.Official.ContentItemIds.FirstOrDefault();
+          if (officialId is null)
+          {
+            return Enumerable.Empty<CalculationIndex>();
+          }
 
-  private IServiceProvider Services { get; }
-  private TaxonomyCacheService TaxonomyCache { get; }
+          var calculations = item.FromBag<Calculation>();
+          if (calculations is null)
+          {
+            return Enumerable.Empty<CalculationIndex>();
+          }
+
+          var result = calculations.SelectFilter(
+            calculation =>
+            {
+              var siteId = calculation.Site.ContentItemIds.FirstOrDefault();
+              if (siteId is null)
+              {
+                return null;
+              }
+
+              var deviceId = calculation.DeviceId.Text;
+              if (deviceId is null)
+              {
+                return null;
+              }
+
+              return new CalculationIndex
+              {
+                ReceiptId = item.ContentItemId,
+                OfficialId = officialId,
+                SiteId = siteId,
+                DeviceId = deviceId,
+              };
+            });
+
+          return result;
+        });
 }

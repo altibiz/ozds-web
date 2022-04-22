@@ -17,7 +17,7 @@ public class MemberIndexProvider : IndexProvider<ContentItem>,
   public override void Describe(DescribeContext<ContentItem> context) =>
     context
       .For<MemberIndex>()
-      .Map(contentItem => contentItem.AsReal<Member>()
+      .Map(item => item.AsReal<Member>()
         .When(member => member.User.UserIds.FirstOrDefault()
           .When(userId =>
           new MemberIndex
@@ -26,15 +26,4 @@ public class MemberIndexProvider : IndexProvider<ContentItem>,
           }))
         // NOTE: this is mandatory for Yessql
         .NonNullable());
-
-  public MemberIndexProvider(
-      IServiceProvider services,
-      IContentDefinitionManager content)
-  {
-    Services = services;
-    Content = content;
-  }
-
-  private IServiceProvider Services;
-  private IContentDefinitionManager Content;
 }

@@ -27,15 +27,4 @@ public class CenterIndexProvider :
           }))
         // NOTE: this is mandatory for Yessql
         .NonNullable());
-
-  public CenterIndexProvider(
-      IServiceProvider services,
-      IContentDefinitionManager content)
-  {
-    Services = services;
-    Content = content;
-  }
-
-  private IServiceProvider Services;
-  private IContentDefinitionManager Content;
 }

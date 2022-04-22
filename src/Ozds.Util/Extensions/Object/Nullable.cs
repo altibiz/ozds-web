@@ -6,11 +6,11 @@ public static partial class ObjectExtensions
       this T @this) =>
     @this;
 
-  public static async Task<T?> NullableTask<T>(
+  public static async Task<T?> Nullable<T>(
       this Task<T> @this) =>
     await @this;
 
-  public static async ValueTask<T?> NullableTask<T>(
+  public static async ValueTask<T?> Nullable<T>(
       this ValueTask<T> @this) =>
     await @this;
 
@@ -18,11 +18,11 @@ public static partial class ObjectExtensions
       this T? @this) =>
     @this!;
 
-  public static async Task<T> NonNullableTask<T>(
+  public static async Task<T> NonNullable<T>(
       this Task<T?> @this) =>
     (await @this)!;
 
-  public static async ValueTask<T> NonNullableTask<T>(
+  public static async ValueTask<T> NonNullable<T>(
       this ValueTask<T?> @this) =>
     (await @this)!;
 }

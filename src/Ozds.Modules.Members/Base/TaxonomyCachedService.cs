@@ -11,7 +11,7 @@ public class TaxonomyCacheService
     field
       .When(field => field.TermContentItemIds
         .SelectFilter(term =>
-          (id: field.TaxonomyContentItemId, term: term)
+          (id: field.TaxonomyContentItemId, term)
             .Named(key => key
               .FinallyWhen(
                 key => !Cache.ContainsKey(key),
@@ -31,15 +31,14 @@ public class TaxonomyCacheService
       TaxonomyField? field) where T : ContentPart =>
     GetTerms(field)
       .Then(terms => terms
-        .SelectFilter(term => term
-          .AsReal<T>()));
+        .SelectFilter(term => ContentItemExtensions
+          .As<T>(term)));
 
   public Task<T?> GetTerm<T>(
       TaxonomyField? field) where T : ContentPart =>
     GetTerm(field)
-      .Then(term => term
-        .When(term => term
-          .AsReal<T>()));
+      .ThenWhen(term => ContentItemExtensions
+        .As<T>(term));
 
   public TaxonomyCacheService(IOrchardHelper helper)
   {

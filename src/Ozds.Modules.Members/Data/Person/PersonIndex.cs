@@ -21,8 +21,7 @@ public class PersonPartIndexProvider : IndexProvider<ContentItem>,
   public override void Describe(DescribeContext<ContentItem> context) =>
     context
       .For<PersonPartIndex>()
-      .Map(contentItem => contentItem
-        .AsReal<PersonPart>()
+      .Map(contentItem => contentItem.AsReal<PersonPart>()
         .When(person =>
           new PersonPartIndex
           {
@@ -34,15 +33,4 @@ public class PersonPartIndexProvider : IndexProvider<ContentItem>,
           })
         // NOTE: this is mandatory for Yessql
         .NonNullable());
-
-  public PersonPartIndexProvider(
-      IServiceProvider services,
-      IContentDefinitionManager content)
-  {
-    Services = services;
-    Content = content;
-  }
-
-  private IServiceProvider Services;
-  private IContentDefinitionManager Content;
 }

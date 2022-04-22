@@ -69,12 +69,12 @@ public sealed partial class Client : IClient
     return Task.FromResult(result);
   }
 
-  private Ozds.Elasticsearch.Measurement ConvertMeasurement(
+  private Elasticsearch.Measurement ConvertMeasurement(
       Measurement measurement) =>
-    new Ozds.Elasticsearch.Measurement(measurement.Timestamp,
+    new(measurement.Timestamp,
         null, Source,
-        Ozds.Elasticsearch.Device.MakeId(Source, measurement.DeviceId),
-        new Ozds.Elasticsearch.Measurement.KnownData
+        Device.MakeId(Source, measurement.DeviceId),
+        new Elasticsearch.Measurement.KnownData
         {
           dongleId = measurement.Data.dongleId,
           meterIdent = measurement.Data.meterIdent,
@@ -115,16 +115,17 @@ public sealed partial class Client : IClient
           voltageL3 = measurement.Data.voltageL3,
         });
 
-  private static int s_measurementsPerMinute = 4;
+  private static readonly int s_measurementsPerMinute = 4;
 
-  private static int s_maxTimeSpanMinutes = 1000;
+  private static readonly int s_maxTimeSpanMinutes = 1000;
 
-  private static Period s_defaultPeriod =
-      new Period
-      {
-        From = DateTime.UtcNow.AddMinutes(-5),
-        To = DateTime.UtcNow
-      };
+  private static readonly Period s_defaultPeriod =
+    new()
+    {
+      From = DateTime.UtcNow.AddMinutes(-5),
+      To = DateTime.UtcNow
+    };
 
-  private static TimeSpan s_defaultTimeSpan = TimeSpan.FromMinutes(5);
+  private static readonly TimeSpan s_defaultTimeSpan =
+    TimeSpan.FromMinutes(5);
 }

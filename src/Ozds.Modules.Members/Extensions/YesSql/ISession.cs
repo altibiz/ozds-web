@@ -50,7 +50,7 @@ public static class ISessionExtensions
       .Query<ContentItem, ContentItemIndex>(
           item => item.ContentItemId == contentItemId)
       .FirstOrDefaultAsync()
-      .NullableTask();
+      .Nullable();
 
   public static Task<ContentItem?> GetListParent(
       this ISession session, ContentItem child) =>

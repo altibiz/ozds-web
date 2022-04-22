@@ -1,13 +1,10 @@
 using YesSql;
 using YesSql.Sql;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.Data.Migration;
 using OrchardCore.Recipes.Services;
 using Ozds.Modules.Members.M0;
-
-using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Ozds.Modules.Members;
 
@@ -85,15 +82,11 @@ public sealed class Migrations : DataMigration
 
   public Migrations(
       IHostEnvironment env,
-      ILogger<Migrations> logger,
-      IConfiguration conf,
       IRecipeMigrator recipe,
       IContentDefinitionManager content,
       ISession session)
   {
     Env = env;
-    Logger = logger;
-    Conf = conf;
 
     Session = session;
 
@@ -102,8 +95,6 @@ public sealed class Migrations : DataMigration
   }
 
   private IHostEnvironment Env { get; }
-  private ILogger Logger { get; }
-  private IConfiguration Conf { get; }
 
   private ISchemaBuilder Schema { get => SchemaBuilder; }
   private ISession Session { get; }

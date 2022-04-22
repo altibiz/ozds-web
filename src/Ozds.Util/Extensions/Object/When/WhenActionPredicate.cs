@@ -6,7 +6,7 @@ public static partial class ObjectExtensions
   {
     if (!@this.Truthy() || !predicate(@this))
     {
-      return default;
+      return @this;
     }
     @do();
     return @this;
@@ -61,7 +61,7 @@ public static partial class ObjectExtensions
   {
     if (!@this.Truthy() || !predicate(@this))
     {
-      return default;
+      return @this;
     }
     await @do();
     return @this;
@@ -105,7 +105,7 @@ public static partial class ObjectExtensions
   {
     if (!@this.Truthy() || !predicate(@this))
     {
-      return default;
+      return @this;
     }
     await @do();
     return @this;
@@ -159,7 +159,7 @@ public static partial class ObjectExtensions
   {
     if (!@this.Truthy() || !predicate(@this))
     {
-      return default;
+      return @this;
     }
     @do(@this);
     return @this;
@@ -214,7 +214,7 @@ public static partial class ObjectExtensions
   {
     if (!@this.Truthy() || !predicate(@this))
     {
-      return default;
+      return @this;
     }
     await @do(@this);
     return @this;
@@ -258,7 +258,7 @@ public static partial class ObjectExtensions
   {
     if (!@this.Truthy() || !predicate(@this))
     {
-      return default;
+      return @this;
     }
     await @do(@this);
     return @this;

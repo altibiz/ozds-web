@@ -40,18 +40,16 @@ public class SiteIndexProvider :
                   Phase = phase.Title,
                   Active = site.Active.Value,
                   Primary = site.Primary
-                }))))
-        ?.Await());
+                }))),
+          // NOTE: YesSql expects at least an empty enumerable
+          new List<SiteIndex>().ToAsyncEnumerable())
+        .Await());
 
   public SiteIndexProvider(
-      IServiceProvider services,
-      IContentDefinitionManager content,
       TaxonomyCacheService taxonomyCache)
   {
-    Services = services;
     TaxonomyCache = taxonomyCache;
   }
 
-  private IServiceProvider Services { get; }
   private TaxonomyCacheService TaxonomyCache { get; }
 }

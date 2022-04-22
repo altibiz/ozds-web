@@ -33,16 +33,4 @@ public class ReceiptIndexProvider :
             }))
         // NOTE: this is mandatory for Yessql
         .NonNullable());
-
-  public ReceiptIndexProvider(
-      IServiceProvider services,
-      IContentDefinitionManager content,
-      TaxonomyCacheService taxonomyCache)
-  {
-    Services = services;
-    TaxonomyCache = taxonomyCache;
-  }
-
-  private IServiceProvider Services { get; }
-  private TaxonomyCacheService TaxonomyCache { get; }
 }
