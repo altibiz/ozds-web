@@ -20,6 +20,6 @@ echo -e "
 ";
 dotnet \
   run \
-  --no-restore \
   --configuration Release \
+  --property:consoleLoggerParameters=ErrorsOnly \
   --project "$ROOT_DIR/src/Ozds.Web/Ozds.Web.csproj";

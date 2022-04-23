@@ -25,7 +25,7 @@ echo -e "
 echo "
 yarn --cwd '$ROOT_DIR' start
 dotnet watch run \
-  --no-restore \
   --configuration Release \
+  --property:consoleLoggerParameters=ErrorsOnly \
   --project '$ROOT_DIR/src/Ozds.Web/Ozds.Web.csproj'
 " | xargs -P2 -IR /usr/bin/env bash -c R;

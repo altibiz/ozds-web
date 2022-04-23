@@ -25,7 +25,7 @@ echo -e "
 echo "
 yarn --cwd '$ROOT_DIR' start
 dotnet watch test \
-  --no-restore \
   --configuration Debug \
+  --property:consoleLoggerParameters=ErrorsOnly \
   $@
 " | xargs -P2 -IR /usr/bin/env bash -c R;

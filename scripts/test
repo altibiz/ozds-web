@@ -19,6 +19,6 @@ echo -e "
 [OZDS] Tesing with 'dotnet' in development...
 ";
 dotnet test \
-  --no-restore \
   --configuration Debug \
+  --property:consoleLoggerParameters=ErrorsOnly \
   $@;
