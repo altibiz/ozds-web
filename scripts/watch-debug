@@ -24,5 +24,8 @@ echo -e "
 ";
 echo "
 yarn --cwd '$ROOT_DIR' debug
-dotnet watch run --project '$ROOT_DIR/src/Ozds.Web/Ozds.Web.csproj'
+dotnet watch run \
+  --no-restore \
+  --configuration Debug \
+  --project '$ROOT_DIR/src/Ozds.Web/Ozds.Web.csproj'
 " | xargs -P2 -IR /usr/bin/env bash -c R;

@@ -45,26 +45,31 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddScoped<INavigationProvider, AdminMenu>();
     services.AddScoped<IDataMigration, Migrations>();
 
+    services.UsePartService<Person, PersonPartService>();
+    services.AddScoped<IScopedIndexProvider, PersonIndexProvider>();
+    services.AddTransient<IContentsAdminListFilterProvider,
+        PersonPartAdminListFilterProvider>();
+    services.AddScoped<IDisplayDriver<ContentOptionsViewModel>,
+        PersonOptionsDisplayDriver>();
+    services.AddContentPart<Site>();
+    services.AddScoped<IScopedIndexProvider, SiteIndexProvider>();
     services.AddContentPart<Member>();
     services.AddScoped<MemberService>();
     services.AddSingleton<IContentHandler, MemberHandler>();
     services.AddScoped<IScopedIndexProvider, MemberIndexProvider>();
     services.AddContentPart<Center>();
     services.AddScoped<IScopedIndexProvider, CenterIndexProvider>();
-    services.AddContentPart<Site>();
-    services.AddScoped<IScopedIndexProvider, SiteIndexProvider>();
+    services.AddContentPart<ReceiptItem>();
     services.AddContentPart<Receipt>();
     services.AddScoped<IScopedIndexProvider, ReceiptIndexProvider>();
-    services.AddContentPart<ReceiptItem>();
     services.AddContentPart<Calculation>();
     services.AddScoped<IScopedIndexProvider, CalculationIndexProvider>();
     services.AddContentPart<CalculationItem>();
-    services.UsePartService<PersonPart, PersonPartService>();
-    services.AddScoped<IScopedIndexProvider, PersonPartIndexProvider>();
-    services.AddTransient<IContentsAdminListFilterProvider,
-        PersonPartAdminListFilterProvider>();
-    services.AddScoped<IDisplayDriver<ContentOptionsViewModel>,
-        PersonOptionsDisplayDriver>();
+    services.AddContentPart<Catalogue>();
+    services.AddContentPart<CatalogueItem>();
+    services.AddScoped<IScopedIndexProvider, CatalogueIndexProvider>();
+    services.AddContentPart<Contract>();
+    services.AddScoped<IScopedIndexProvider, ContractIndexProvider>();
 
     services.AddScoped<TaxonomyCacheService>();
 

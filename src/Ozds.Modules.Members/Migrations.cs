@@ -32,9 +32,10 @@ public sealed class Migrations : DataMigration
     Content.AlterImagePart();
     Content.AlterImageType();
 
+    Content.AlterPersonType();
     Content.AlterPersonPart();
-    Schema.CreatePersonPartMapTable();
-    Schema.CreatePersonPartMapIndex();
+    Schema.CreatePersonMapTable();
+    Schema.CreatePersonMapIndex();
 
     Content.AlterSiteType();
     Content.AlterSitePart();
@@ -49,10 +50,9 @@ public sealed class Migrations : DataMigration
 
     Content.AlterCalculationPart();
     Content.AlterCalculationType();
-    Schema.CreateCalculationMapTable();
-
     Content.AlterCalculationItemPart();
     Content.AlterCalculationItemType();
+    Schema.CreateCalculationMapTable();
 
     Content.AlterMemberPart();
     Content.AlterMemberType();
@@ -61,6 +61,16 @@ public sealed class Migrations : DataMigration
     Content.AlterCenterType();
     Content.AlterCenterPart();
     Schema.CreateCenterMapTable();
+
+    Content.AlterCataloguePart();
+    Content.AlterCatalogueType();
+    Content.AlterCatalogueItemPart();
+    Content.AlterCatalogueItemType();
+    Schema.CreateCatalogueMapTable();
+
+    Content.AlterContractPart();
+    Content.AlterContractType();
+    Schema.CreateContractMapTable();
 
     Recipe.ExecuteUserLandingPageMenu(this);
 
@@ -72,6 +82,8 @@ public sealed class Migrations : DataMigration
 
     if (Env.IsDevelopment())
     {
+      Recipe.ExecuteTestCenterSite(this);
+      Recipe.ExecuteTestMemberSite(this);
       Recipe.ExecuteTestCenter(this);
       Recipe.ExecuteTestMember(this);
       Recipe.ExecuteTestReceipt(this);

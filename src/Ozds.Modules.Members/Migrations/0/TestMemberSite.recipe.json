@@ -1,0 +1,51 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "4wr8zmbsykbdry12hfv378eaxz",
+          "ContentItemVersionId": null,
+          "ContentType": "Site",
+          "DisplayText": "Mjerno mjesto testnog člana",
+          "Latest": false,
+          "Published": false,
+          "ModifiedUtc": "2022-04-20T14:24:20.5274969Z",
+          "PublishedUtc": null,
+          "CreatedUtc": null,
+          "Owner": null,
+          "Author": "admin",
+          "Site": {
+            "Type": {
+              "TaxonomyContentItemId": "40afgjpy1kyk7z3p54vgtdhz5a",
+              "TermContentItemIds": ["4mr2ex2rrxcf06cwsqgrvj1r55"]
+            },
+            "Coefficient": {
+              "Value": 1
+            },
+            "Geolocation": {
+              "Latitude": 45,
+              "Longitude": 15
+            },
+            "Active": {
+              "Value": true
+            },
+            "Source": {
+              "Text": "fakeSource"
+            },
+            "DeviceId": {
+              "Text": "SfakIDfakeDevice2"
+            },
+            "Phase": {
+              "TaxonomyContentItemId": "4p8c2k9qbte1yzcbewfjy5zyxw",
+              "TermContentItemIds": ["4gc5wfqf6er6yrm4551qjvx049"]
+            }
+          },
+          "TitlePart": {
+            "Title": "Mjerno mjesto testnog člana"
+          }
+        }
+      ]
+    }
+  ]
+}

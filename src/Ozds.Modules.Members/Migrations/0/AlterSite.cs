@@ -20,16 +20,13 @@ public static partial class AlterSite
         .Securable()
         .WithPart("Site",
           part => part
-            .WithPosition("0")
             .WithSettings(
               new SiteSettings
               {
               }))
         .WithPart("TitlePart",
           part => part
-            .WithPosition("1")
             .WithDisplayName("Naziv")
-            .WithDescription("Naziv obračunskog mjernog mjesta")
             .WithSettings(
               new TitlePartSettings
               {
@@ -43,11 +40,21 @@ public static partial class AlterSite
       part => part
         .Attachable()
         .Reusable()
+        .WithField("Source",
+          field => field
+            .OfType("TaxonomyField")
+            .WithDisplayName("Izvor mjerenja uređaja")
+            .WithSettings(
+              new TaxonomyFieldSettings
+              {
+                Required = true,
+                Unique = true,
+                TaxonomyContentItemId = ""
+              }))
         .WithField("DeviceId",
           field => field
             .OfType("TextField")
-            .WithDisplayName("Šifra uređaja")
-            .WithPosition("0")
+            .WithDisplayName("Identifikator uređaja")
             .WithSettings(
               new TextFieldSettings
               {
@@ -57,7 +64,6 @@ public static partial class AlterSite
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Tip")
-            .WithPosition("1")
             .WithSettings(
               new TaxonomyFieldSettings
               {
@@ -69,7 +75,6 @@ public static partial class AlterSite
           field => field
             .OfType("NumericField")
             .WithDisplayName("Koeficijent")
-            .WithPosition("2")
             .WithSettings(
               new NumericFieldSettings
               {
@@ -79,7 +84,6 @@ public static partial class AlterSite
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Faza")
-            .WithPosition("3")
             .WithSettings(
               new TaxonomyFieldSettings
               {
@@ -91,7 +95,6 @@ public static partial class AlterSite
           field => field
             .OfType("GeoPointField")
             .WithDisplayName("Geolokacija")
-            .WithPosition("4")
             .WithSettings(
               new GeoPointFieldSettings
               {
@@ -101,7 +104,6 @@ public static partial class AlterSite
           field => field
             .OfType("BooleanField")
             .WithDisplayName("Aktivno")
-            .WithPosition("5")
             .WithSettings(
               new BooleanFieldSettings
               {

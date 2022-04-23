@@ -61,7 +61,7 @@ await query.ListAsync();
   public async Task<ContentItem> GetByOib(string oib)
   {
     return await Session.Query<ContentItem>()
-        .With<PersonPartIndex>(x => x.Oib == oib)
+        .With<PersonIndex>(x => x.Oib == oib)
         .FirstOrDefaultAsync();
   }
 

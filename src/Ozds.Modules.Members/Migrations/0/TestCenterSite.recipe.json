@@ -1,0 +1,51 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "4gx0qdhvxthqf1a6chbrkax64h",
+          "ContentItemVersionId": null,
+          "ContentType": "Site",
+          "DisplayText": "Primarno mjerno mjesto testnog ZDS-a",
+          "Latest": false,
+          "Published": false,
+          "ModifiedUtc": "2022-04-20T14:23:47.9562884Z",
+          "PublishedUtc": null,
+          "CreatedUtc": null,
+          "Owner": "",
+          "Author": "admin",
+          "Site": {
+            "Type": {
+              "TaxonomyContentItemId": "40afgjpy1kyk7z3p54vgtdhz5a",
+              "TermContentItemIds": ["4hwv4r61rnb952sq60t8bkxwxa"]
+            },
+            "Coefficient": {
+              "Value": 1
+            },
+            "Geolocation": {
+              "Latitude": 45,
+              "Longitude": 45
+            },
+            "Active": {
+              "Value": true
+            },
+            "Source": {
+              "Text": "fakeSource"
+            },
+            "DeviceId": {
+              "Text": "SfakIDfakeDevice1"
+            },
+            "Phase": {
+              "TaxonomyContentItemId": "4p8c2k9qbte1yzcbewfjy5zyxw",
+              "TermContentItemIds": ["4gc5wfqf6er6yrm4551qjvx049"]
+            }
+          },
+          "TitlePart": {
+            "Title": "Primarno mjerno mjesto testnog ZDS-a"
+          }
+        }
+      ]
+    }
+  ]
+}

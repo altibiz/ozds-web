@@ -2,11 +2,11 @@ using YesSql.Sql;
 
 namespace Ozds.Modules.Members.M0;
 
-public static partial class CreatePersonPartIndex
+public static partial class CreatePersonIndex
 {
-  public static ISchemaBuilder CreatePersonPartMapTable(
+  public static ISchemaBuilder CreatePersonMapTable(
       this ISchemaBuilder schema) =>
-    schema.CreateMapIndexTable<PersonPartIndex>(
+    schema.CreateMapIndexTable<PersonIndex>(
       table => table
         .Column<string>("ContentItemId", column => column.WithLength(50))
         .Column<bool>("Published")
@@ -14,12 +14,12 @@ public static partial class CreatePersonPartIndex
         .Column<string>("LegalName", column => column.WithLength(255))
         .Column<bool>("Legal"));
 
-  public static ISchemaBuilder CreatePersonPartMapIndex(
+  public static ISchemaBuilder CreatePersonMapIndex(
       this ISchemaBuilder schema) =>
-    schema.AlterIndexTable<PersonPartIndex>(
+    schema.AlterIndexTable<PersonIndex>(
       table => table
         .CreateIndex(
-          "IDX_PersonPartIndex_DocumentId",
+          "IDX_PersonIndex_DocumentId",
           "DocumentId",
           "Oib",
           "ContentItemId"));

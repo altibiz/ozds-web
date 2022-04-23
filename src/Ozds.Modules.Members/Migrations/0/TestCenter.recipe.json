@@ -19,13 +19,13 @@
             "User": {
               "UserIds": ["TestOwnerId"],
               "UserNames": ["TestOwner"]
+            },
+            "PrimarySites": {
+              "ContentItemIds": ["4gx0qdhvxthqf1a6chbrkax64h"]
             }
           },
           "TitlePart": {
             "Title": "Zagreb centar"
-          },
-          "AliasPart": {
-            "Alias": "zg-centar"
           },
           "AutoroutePart": {
             "Path": "zagreb-centar",
@@ -34,7 +34,7 @@
             "RouteContainedItems": false,
             "Absolute": false
           },
-          "PersonPart": {
+          "Person": {
             "Oib": {
               "Text": "12312312343"
             },
@@ -71,49 +71,6 @@
               "TaxonomyContentItemId": "445pqtg9kka9hzxgdj30x9qq4g",
               "TermContentItemIds": ["43jw9bej0w1tqybrryfm3nek44"]
             }
-          },
-          "BagPart": {
-            "ContentItems": [
-              {
-                "ContentItemId": "4gx0qdhvxthqf1a6chbrkax64h",
-                "ContentItemVersionId": null,
-                "ContentType": "Site",
-                "DisplayText": "Primarno mjerno mjesto",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-04-20T14:23:47.9562884Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": "",
-                "Author": "admin",
-                "Site": {
-                  "Type": {
-                    "TaxonomyContentItemId": "40afgjpy1kyk7z3p54vgtdhz5a",
-                    "TermContentItemIds": ["4hwv4r61rnb952sq60t8bkxwxa"]
-                  },
-                  "Coefficient": {
-                    "Value": 1
-                  },
-                  "Geolocation": {
-                    "Latitude": 45,
-                    "Longitude": 45
-                  },
-                  "Active": {
-                    "Value": true
-                  },
-                  "DeviceId": {
-                    "Text": "SfakIDfakeDevice1"
-                  },
-                  "Phase": {
-                    "TaxonomyContentItemId": "4p8c2k9qbte1yzcbewfjy5zyxw",
-                    "TermContentItemIds": ["4gc5wfqf6er6yrm4551qjvx049"]
-                  }
-                },
-                "TitlePart": {
-                  "Title": "Primarno mjerno mjesto"
-                }
-              }
-            ]
           },
           "ListPart": {
             "FeedProxyUrl": null,

@@ -19,12 +19,15 @@
             "User": {
               "UserIds": ["TestMemberId"],
               "UserNames": ["TestMember"]
+            },
+            "SecondarySites": {
+              "ContentItemIds": ["4wr8zmbsykbdry12hfv378eaxz"]
             }
           },
           "TitlePart": {
             "Title": "Ivo Ivić"
           },
-          "PersonPart": {
+          "Person": {
             "Oib": {
               "Text": "12312312316"
             },
@@ -61,49 +64,6 @@
               "TaxonomyContentItemId": "445pqtg9kka9hzxgdj30x9qq4g",
               "TermContentItemIds": ["4p5tav8t59akeytk2at7sprqn5"]
             }
-          },
-          "BagPart": {
-            "ContentItems": [
-              {
-                "ContentItemId": "4wr8zmbsykbdry12hfv378eaxz",
-                "ContentItemVersionId": null,
-                "ContentType": "Site",
-                "DisplayText": "Mjerno mjesto",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-04-20T14:24:20.5274969Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "Site": {
-                  "Type": {
-                    "TaxonomyContentItemId": "40afgjpy1kyk7z3p54vgtdhz5a",
-                    "TermContentItemIds": ["4mr2ex2rrxcf06cwsqgrvj1r55"]
-                  },
-                  "Coefficient": {
-                    "Value": 1
-                  },
-                  "Geolocation": {
-                    "Latitude": 45,
-                    "Longitude": 15
-                  },
-                  "Active": {
-                    "Value": true
-                  },
-                  "DeviceId": {
-                    "Text": "SfakIDfakeDevice2"
-                  },
-                  "Phase": {
-                    "TaxonomyContentItemId": "4p8c2k9qbte1yzcbewfjy5zyxw",
-                    "TermContentItemIds": ["4gc5wfqf6er6yrm4551qjvx049"]
-                  }
-                },
-                "TitlePart": {
-                  "Title": "Mjerno mjesto"
-                }
-              }
-            ]
           },
           "ContainedPart": {
             "ListContentItemId": "4rq44pcgbd96ms70k45kme32mq",

@@ -9,8 +9,8 @@ public class AdminMenu : INavigationProvider
   public Task BuildNavigationAsync(
       string name,
       NavigationBuilder builder) =>
-    name
-      .WhenWith(name => string
+    Task.Run(() =>
+      name.WhenWith(name => string
         .Equals(name, "admin", StringComparison.OrdinalIgnoreCase),
         name => builder
           .Add(S["Članstvo"], "0", rootView => rootView
@@ -45,8 +45,7 @@ public class AdminMenu : INavigationProvider
             {
               "icon-class-fas",
               "icon-class-fa-coins"
-            }))
-      .ToTask();
+            })));
 
   public AdminMenu(IStringLocalizer<AdminMenu> localizer)
   {

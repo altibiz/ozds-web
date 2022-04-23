@@ -7,9 +7,25 @@ namespace Ozds.Modules.Members.M0;
 
 public static partial class AlterPerson
 {
+  public static void AlterPersonType(
+      this IContentDefinitionManager content) =>
+    content.AlterTypeDefinition("Person",
+      type => type
+        .DisplayedAs("Osoba")
+        .Creatable()
+        .Listable()
+        .Securable()
+        .WithPart("Person",
+          part => part
+          .WithPosition("0")
+          .WithSettings(
+            new PersonSettings
+            {
+            })));
+
   public static void AlterPersonPart(
       this IContentDefinitionManager content) =>
-    content.AlterPartDefinition("PersonPart",
+    content.AlterPartDefinition("Person",
       part => part
         .Attachable()
         .WithDisplayName("Osoba")

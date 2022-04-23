@@ -58,6 +58,14 @@ public static partial class RecipeMigrations
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/TestCenter.recipe.json", migration);
 
+  public static IRecipeMigrator ExecuteTestCenterSite(
+      this IRecipeMigrator recipe, IDataMigration migration) =>
+    recipe.Execute("0/TestCenterSite.recipe.json", migration);
+
+  public static IRecipeMigrator ExecuteTestMemberSite(
+      this IRecipeMigrator recipe, IDataMigration migration) =>
+    recipe.Execute("0/TestMemberSite.recipe.json", migration);
+
   public static IRecipeMigrator ExecuteTestMember(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/TestMember.recipe.json", migration);

@@ -51,7 +51,8 @@ public static partial class AlterReceipt
             .WithSettings(
               new BagPartSettings
               {
-                ContainedContentTypes = new[] {
+                ContainedContentTypes = new[]
+                {
                   "Calculation",
                   "ReceiptItem"
                 },

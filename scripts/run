@@ -18,4 +18,8 @@ yarn --cwd "$ROOT_DIR" build;
 echo -e "
 [OZDS] Running with 'dotnet' in production...
 ";
-dotnet run --project "$ROOT_DIR/src/Ozds.Web/Ozds.Web.csproj";
+dotnet \
+  run \
+  --no-restore \
+  --configuration Release \
+  --project "$ROOT_DIR/src/Ozds.Web/Ozds.Web.csproj";

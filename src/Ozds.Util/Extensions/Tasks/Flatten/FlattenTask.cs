@@ -25,22 +25,22 @@ public static partial class Tasks
     await await @this;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<TOut> FlattenTask<TOut>(
-      this Task<Task<TOut>> @this) =>
+  public static async Task<T> FlattenTask<T>(
+      this Task<Task<T>> @this) =>
     await await @this;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<TOut> FlattenTask<TOut>(
-      this Task<ValueTask<TOut>> @this) =>
+  public static async Task<T> FlattenTask<T>(
+      this Task<ValueTask<T>> @this) =>
     await await @this;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<TOut> FlattenTask<TOut>(
-      this ValueTask<Task<TOut>> @this) =>
+  public static async Task<T> FlattenTask<T>(
+      this ValueTask<Task<T>> @this) =>
     await await @this;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<TOut> FlattenTask<TOut>(
-      this ValueTask<ValueTask<TOut>> @this) =>
+  public static async Task<T> FlattenTask<T>(
+      this ValueTask<ValueTask<T>> @this) =>
     await await @this;
 }

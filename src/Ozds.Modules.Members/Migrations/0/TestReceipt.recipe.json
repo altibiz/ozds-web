@@ -87,7 +87,7 @@
                 "ContentItemId": "4jnm695h5s00rx0qcw63pjepn0",
                 "ContentItemVersionId": null,
                 "ContentType": "Calculation",
-                "DisplayText": "SfakIDfakeDevice2 2022-04-01 - 2022-04-30",
+                "DisplayText": "fakeSource SfakIDfakeDevice2 2022-04-01 - 2022-04-30",
                 "Latest": false,
                 "Published": false,
                 "ModifiedUtc": "2022-04-20T14:40:23.4024998Z",
@@ -98,9 +98,6 @@
                 "Calculation": {
                   "Site": {
                     "ContentItemIds": ["4wr8zmbsykbdry12hfv378eaxz"]
-                  },
-                  "DeviceId": {
-                    "Text": "SfakIDfakeDevice2"
                   },
                   "DateFrom": {
                     "Value": "2022-04-01T00:00:00Z"
@@ -116,7 +113,7 @@
                   }
                 },
                 "TitlePart": {
-                  "Title": "SfakIDfakeDevice2 2022-04-01 - 2022-04-30"
+                  "Title": "fakeSource SfakIDfakeDevice2 2022-04-01 - 2022-04-30"
                 },
                 "BagPart": {
                   "ContentItems": [

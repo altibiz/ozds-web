@@ -2,9 +2,7 @@ using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
 using OrchardCore.Lists.Models;
-using OrchardCore.Flows.Models;
 using OrchardCore.ContentFields.Settings;
-using OrchardCore.Alias.Settings;
 using OrchardCore.Autoroute.Models;
 
 namespace Ozds.Modules.Members.M0;
@@ -22,14 +20,12 @@ public static partial class AlterCenter
         .Securable()
         .WithPart("Center",
           part => part
-            .WithPosition("0")
             .WithSettings(
               new CenterSettings
               {
               }))
         .WithPart("TitlePart",
           part => part
-            .WithPosition("1")
             .WithDisplayName("Naziv")
             .WithDescription("Naziv zatvorenog distribucijskog sustava")
             .WithSettings(
@@ -37,20 +33,27 @@ public static partial class AlterCenter
               {
                 RenderTitle = true,
                 Options = TitlePartOptions.EditableRequired,
-              }))
-        .WithPart("AliasPart",
-          part => part
-            .WithPosition("2")
-            .WithDisplayName("Alias")
-            .WithDescription("Alias zatvorenog distribucijskog sustava")
-            .WithSettings(
-              new AliasPartSettings
-              {
-                Options = AliasPartOptions.Editable,
+                Pattern =
+                @"
+                  {%- assign person = ContentItem.Content.PersonPart -%}
+                  {%- assign types = person.Type.TermContentItemIds -%}
+                  {%- assign isLegal = types contains '43jw9bej0w1tqybrryfm3nek44' -%}
+                  {%- assign name = person.Name.Text -%}
+                  {%- if isLegal -%}
+                    {{- name -}}
+                  {%- else -%}
+                    {%- assign middleName = person.MiddleName.Text -%}
+                    {%- assign surname = person.Surname.Text -%}
+                    {%- if middleName -%}
+                      {{- name }} {{ middleName }} {{ surname -}}
+                    {%- else -%}
+                      {{- name }} {{ surname -}}
+                    {%- endif -%}
+                  {%- endif -%}
+                ",
               }))
         .WithPart("AutoroutePart",
           part => part
-            .WithPosition("3")
             .WithDisplayName("Ruta")
             .WithDescription(
               "Automatski generirana ruta zatvorenog distribucijskog sustava")
@@ -60,29 +63,15 @@ public static partial class AlterCenter
                 ManageContainedItemRoutes = true,
                 Pattern = @"{{ ContentItem.Content.TitlePart.Title | slugify }}"
               }))
-        .WithPart("PersonPart",
+        .WithPart("Person",
           part => part
-            .WithPosition("4")
             .WithDisplayName("Zastupna osoba")
             .WithDescription(
               "Poslovni i kontakt podaci zastupne osobe " +
               "zatvorenog distribucijskog sustava")
             .WithSettings(
-              new PersonPartSettings
+              new PersonSettings
               {
-              }))
-        .WithPart("BagPart",
-          part => part
-            .WithPosition("5")
-            .WithDisplayName("OMM")
-            .WithDescription("Primarna obračunska mjerna mjesta")
-            .WithSettings(
-              new BagPartSettings
-              {
-                ContainedContentTypes = new[]
-                {
-                  "Site"
-                }
               }))
         .WithPart("ListPart",
           part => part
@@ -107,12 +96,31 @@ public static partial class AlterCenter
             .OfType("UserPickerField")
             .WithDisplayName("Korisnik")
             .WithDescription("Korisnički račun zastupnika")
-            .WithPosition("0")
             .WithSettings(
               new UserPickerFieldSettings
               {
                 Required = true,
                 DisplayAllUsers = true,
                 Multiple = false,
+              }))
+        .WithField("PrimarySites",
+          part => part
+            .WithDisplayName("Primarna obračunska mjerna mjesta")
+            .WithDescription(
+              "Primarna obračunska mjerna mjesta " +
+              "zatvorenog distribucijskog sustava")
+            .WithSettings(
+              new ContentPickerFieldSettings
+              {
+                Multiple = true,
+                Required = true,
+                DisplayedContentTypes = new[]
+                {
+                  "Site"
+                }
+              })
+            .WithSettings(
+              new SiteSettings
+              {
               })));
 }

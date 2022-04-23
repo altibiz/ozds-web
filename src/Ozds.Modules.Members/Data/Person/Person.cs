@@ -6,7 +6,7 @@ using Ozds.Util;
 
 namespace Ozds.Modules.Members;
 
-public class PersonPart : ContentPart
+public class Person : ContentPart
 {
   public TextField Oib { get; set; } = new();
   public TextField Name { get; set; } = new();
@@ -35,7 +35,7 @@ public class PersonPart : ContentPart
   }
 }
 
-public class PersonPartSettings : IFieldEditorSettings
+public class PersonSettings : IFieldEditorSettings
 {
   public DisplayModeResult GetFieldDisplayMode(
       string propertyName,
@@ -43,8 +43,8 @@ public class PersonPartSettings : IFieldEditorSettings
       BuildFieldEditorContext context,
       bool isAdminTheme) =>
     isAdminTheme ? displayMode
-    : (propertyName == nameof(PersonPart.MiddleName) ||
-      propertyName == nameof(PersonPart.Surname)) &&
+    : (propertyName == nameof(Person.MiddleName) ||
+      propertyName == nameof(Person.Surname)) &&
       context.ContentPart.Content.Legal ? false
     : context.IsNew ? displayMode
     : "Disabled";
@@ -55,7 +55,7 @@ public class PersonPartSettings : IFieldEditorSettings
       bool isAdminTheme) =>
     propertyName switch
     {
-      nameof(PersonPart.Name) =>
+      nameof(Person.Name) =>
           // TODO: by Legal?
           true ? "Ime"
           : displayName,

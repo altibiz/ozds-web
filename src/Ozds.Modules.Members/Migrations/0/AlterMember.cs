@@ -2,7 +2,6 @@ using OrchardCore.ContentFields.Settings;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
-using OrchardCore.Flows.Models;
 
 namespace Ozds.Modules.Members.M0;
 
@@ -18,14 +17,12 @@ public static partial class AlterMember
         .Securable()
         .WithPart("Member",
           part => part
-            .WithPosition("0")
             .WithSettings(
               new MemberSettings
               {
               }))
         .WithPart("TitlePart",
           part => part
-            .WithPosition("1")
             .WithDisplayName("Naziv")
             .WithDisplayName("Naziv člana")
             .WithSettings(
@@ -33,7 +30,6 @@ public static partial class AlterMember
               {
                 RenderTitle = true,
                 Options = TitlePartOptions.GeneratedDisabled,
-                // TODO: check
                 Pattern =
                 @"
                   {%- assign person = ContentItem.Content.PersonPart -%}
@@ -53,27 +49,13 @@ public static partial class AlterMember
                   {%- endif -%}
                 ",
               }))
-        .WithPart("PersonPart",
+        .WithPart("Person",
           part => part
-            .WithPosition("2")
             .WithDisplayName("Poslovni i kontakt podaci")
             .WithDescription("Poslovni i kontakt podaci člana")
             .WithSettings(
-              new PersonPartSettings
+              new PersonSettings
               {
-              }))
-        .WithPart("BagPart",
-          part => part
-            .WithPosition("3")
-            .WithDisplayName("OMM")
-            .WithDescription("Sekundarna obračunska mjerna mjesta člana")
-            .WithSettings(
-              new BagPartSettings
-              {
-                ContainedContentTypes = new[]
-                {
-                  "Site"
-                }
               })));
 
   public static void AlterMemberPart(this IContentDefinitionManager content) =>
@@ -84,12 +66,31 @@ public static partial class AlterMember
             .OfType("UserPickerField")
             .WithDisplayName("Korisnik")
             .WithDescription("Korisnički račun člana")
-            .WithPosition("0")
             .WithSettings(
               new UserPickerFieldSettings
               {
                 Required = true,
                 DisplayAllUsers = true,
                 Multiple = false,
+              }))
+        .WithField("SecondarySites",
+          part => part
+            .OfType("ContentPickerField")
+            .WithDisplayName("Sekundarna obračunska mjerna mjesta")
+            .WithDescription(
+              "Sekundarna obračunska mjerna mjesta člana")
+            .WithSettings(
+              new ContentPickerFieldSettings
+              {
+                Required = true,
+                Multiple = true,
+                DisplayedContentTypes = new[]
+                {
+                  "Site"
+                }
+              })
+            .WithSettings(
+              new SiteSettings
+              {
               })));
 }

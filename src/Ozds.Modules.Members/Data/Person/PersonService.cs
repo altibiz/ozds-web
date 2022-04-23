@@ -13,17 +13,17 @@ using ISession = YesSql.ISession;
 
 namespace Ozds.Modules.Members;
 
-public class PersonPartService : IPartService<PersonPart>
+public class PersonPartService : IPartService<Person>
 {
   public async IAsyncEnumerable<ValidationResult> ValidateAsync(
-      PersonPart part)
+      Person part)
   {
     if (part.ContentItem.ContentItemId.StartsWith("nat_"))
     {
       yield break;
     }
     var personPartSettings =
-        ContentDefinitions.GetSettings<PersonPartSettings>(part);
+        ContentDefinitions.GetSettings<PersonSettings>(part);
     if (!string.IsNullOrWhiteSpace(part.Oib?.Text))
     {
       var oib = part.Oib.Text;
@@ -46,19 +46,19 @@ public class PersonPartService : IPartService<PersonPart>
     }
   }
 
-  private async Task<bool> IsPersonUniqueAsync(PersonPart part, string oib)
+  private async Task<bool> IsPersonUniqueAsync(Person part, string oib)
   {
     return (await Session
-                   .QueryIndex<PersonPartIndex>(
+                   .QueryIndex<PersonIndex>(
                        o => o.Oib == oib &&
                             o.ContentItemId != part.ContentItem.ContentItemId &&
                             o.Legal == part.Legal)
                    .CountAsync()) == 0;
   }
 
-  public async Task<IEnumerable<PersonPartIndex>> GetByOibAsync(string oib)
+  public async Task<IEnumerable<PersonIndex>> GetByOibAsync(string oib)
   {
-    return await Session.QueryIndex<PersonPartIndex>(o => o.Oib == oib)
+    return await Session.QueryIndex<PersonIndex>(o => o.Oib == oib)
         .ListAsync();
   }
 
@@ -68,7 +68,7 @@ public class PersonPartService : IPartService<PersonPart>
       .GetAuthenticatedUserAsync(HttpContext.HttpContext?.User)
       .Then(user => user.As<User>())!;
 
-  public async Task InitializingAsync(PersonPart part)
+  public async Task InitializingAsync(Person part)
   {
     var user = await GetCurrentUser();
     if (user == null)
@@ -77,24 +77,24 @@ public class PersonPartService : IPartService<PersonPart>
   }
 
   public Task PublishedAsync(
-      PersonPart instance, PublishContentContext context)
+      Person instance, PublishContentContext context)
   {
     return Task.CompletedTask;
   }
 
-  public Action<PersonPart> GetEditModel(
-      PersonPart part, BuildPartEditorContext context)
+  public Action<Person> GetEditModel(
+      Person part, BuildPartEditorContext context)
   {
     return (part) => { };
   }
 
   public Task UpdatedAsync<TPart>(
-      UpdateContentContext context, PersonPart instance)
+      UpdateContentContext context, Person instance)
   {
     return Task.CompletedTask;
   }
 
-  public PersonPartService(IStringLocalizer<PersonPart> localizer,
+  public PersonPartService(IStringLocalizer<Person> localizer,
       ISession session, IContentDefinitionManager contentDefinitions,
       IHttpContextAccessor httpContext, IUserService users)
   {
@@ -105,7 +105,7 @@ public class PersonPartService : IPartService<PersonPart>
     Users = users;
   }
 
-  private IStringLocalizer<PersonPart> Localizer { get; }
+  private IStringLocalizer<Person> Localizer { get; }
   private ISession Session { get; }
   private IContentDefinitionManager ContentDefinitions { get; }
   private IHttpContextAccessor HttpContext { get; }

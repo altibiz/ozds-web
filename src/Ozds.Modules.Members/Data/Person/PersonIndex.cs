@@ -5,7 +5,7 @@ using Ozds.Util;
 
 namespace Ozds.Modules.Members;
 
-public class PersonPartIndex : MapIndex
+public class PersonIndex : MapIndex
 {
   public string ContentItemId { get; init; } = default!;
   public bool Published { get; init; } = default!;
@@ -14,15 +14,15 @@ public class PersonPartIndex : MapIndex
   public bool Legal { get; init; } = default!;
 }
 
-public class PersonPartIndexProvider : IndexProvider<ContentItem>,
+public class PersonIndexProvider : IndexProvider<ContentItem>,
                                        IScopedIndexProvider
 {
   public override void Describe(DescribeContext<ContentItem> context) =>
     context
-      .For<PersonPartIndex>()
-      .Map(contentItem => contentItem.AsReal<PersonPart>()
+      .For<PersonIndex>()
+      .Map(contentItem => contentItem.AsReal<Person>()
         .WhenNonNullable(person =>
-          new PersonPartIndex
+          new PersonIndex
           {
             ContentItemId = contentItem.ContentItemId,
             Published = contentItem.Published,

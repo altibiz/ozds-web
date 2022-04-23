@@ -36,10 +36,13 @@ public static partial class AlterCalculation
                 Pattern =
                 @"""
                   {%- assign receipt = ContentItem.Content.Receipt -%}
-                  {%- assign deviceId = calc.DeviceId.Text -%}
+                  {%- assign sites = calc.Site.ContainedItemIds | content_item_id -%}
+                  {%- assign site = site[0] -%}
+                  {%- assign source = site.Source -%}
+                  {%- assign deviceId = site.DeviceId -%}
                   {%- assign dateFrom = calc.DateFrom.Value | date: '%Y-%m-%d' -%}
                   {%- assign dateTo = calc.DateTo.Value | date: '%Y-%m-%d' -%}
-                  {{- deviceId }} {{ dateFrom }} - {{ dateTo -}}
+                  {{- source }} {{ deviceId }} {{ dateFrom }} - {{ dateTo -}}
                 """,
               }))
         .WithPart("BagPart",
@@ -60,7 +63,7 @@ public static partial class AlterCalculation
       this IContentDefinitionManager content) =>
     content.AlterPartDefinition("Calculation",
       part => part
-        .WithField("SiteId",
+        .WithField("Site",
           field => field
             .OfType("ContentPickerField")
             .WithDisplayName("Obračunsko mjerno mjesto")

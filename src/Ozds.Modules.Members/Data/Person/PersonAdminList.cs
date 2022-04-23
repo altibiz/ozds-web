@@ -20,7 +20,7 @@ public class PersonPartAdminListFilterProvider :
         builder => builder
           .OneCondition((val, query) => val
             .WhenNonNullable(val => query
-              .With<PersonPartIndex>(i =>
+              .With<PersonIndex>(i =>
                 i.Oib == val))
             .Return(query)))
       .WithDefaultTerm(
@@ -40,7 +40,7 @@ public class PersonPartAdminListFilterProvider :
                     selectedContentType.ToString() == "Member" ||
                     selectedContentType.ToString() == "Company",
                     _ => query
-                      .With<PersonPartIndex>(
+                      .With<PersonIndex>(
                         person =>
                           person.Oib == value ||
                           person.LegalName.Contains(value))
