@@ -20,29 +20,31 @@ public class PartNumericFieldDriver : NumericFieldDisplayDriver
       NumericField field, BuildFieldEditorContext context) =>
       context
           .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
-          .When(fieldDefinition => Initialize<EditNumericFieldViewModel>(
-            GetEditorShapeType(fieldDefinition),
-            model =>
-            {
-              model.Value =
-                  context.IsNew
-                      ? context.PartFieldDefinition
-                            .GetSettings<NumericFieldSettings>()
-                            .DefaultValue
-                      : Convert.ToString(
-                            field.Value, CultureInfo.CurrentUICulture);
-              model.Field = field;
-              model.Part = context.ContentPart;
-              model.PartFieldDefinition = fieldDefinition;
-            }));
+          .WhenNonNullable(fieldDefinition =>
+            Initialize<EditNumericFieldViewModel>(
+              GetEditorShapeType(fieldDefinition),
+              model =>
+              {
+                model.Value =
+                    context.IsNew
+                        ? context.PartFieldDefinition
+                              .GetSettings<NumericFieldSettings>()
+                              .DefaultValue
+                        : Convert.ToString(
+                              field.Value, CultureInfo.CurrentUICulture);
+                model.Field = field;
+                model.Part = context.ContentPart;
+                model.PartFieldDefinition = fieldDefinition;
+              }));
 
   public override Task<IDisplayResult?> UpdateAsync(NumericField field,
       IUpdateModel updater, UpdateFieldEditorContext context) =>
       context
           .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
-          .When(fieldDefinition => fieldDefinition
-              .Editor() == "Disabled" ? Edit(field, context).ToTask()
-              : base.UpdateAsync(field, updater, context));
+          .When(fieldDefinition => fieldDefinition.Editor() == "Disabled",
+              _ => Edit(field, context),
+              () => base.UpdateAsync(field, updater, context))
+          .ToTask();
 
   public PartNumericFieldDriver(
       IStringLocalizer<NumericFieldDisplayDriver> localizer,

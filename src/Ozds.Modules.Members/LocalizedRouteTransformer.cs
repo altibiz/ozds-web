@@ -10,21 +10,20 @@ public class LocalizedRouteTransformer : DynamicRouteValueTransformer
   public override ValueTask<RouteValueDictionary> TransformAsync(
       HttpContext context,
       RouteValueDictionary values) =>
-    ValueTask.FromResult(
-      new RouteValueDictionary
+    new RouteValueDictionary
+    {
       {
-        {
-          "area",
-          "Ozds.Modules.Members"
-        },
-        {
-          "page",
-          values
-            .GetOrDefault("page")
-            .FinallyWhen(
-              page => !page.In("index", "Index"),
-              page => $"/{page}",
-              "/portal")
-        }
-      });
+        "area",
+        "Ozds.Modules.Members"
+      },
+      {
+        "page",
+        values
+          .GetOrDefault("page")
+          .WhenFinally(
+            page => !page.In("index", "Index"),
+            page => $"/{page}",
+            "/portal")
+      }
+    }.ToValueTask();
 }

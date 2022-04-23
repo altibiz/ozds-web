@@ -1,6 +1,5 @@
 ﻿using OrchardCore.ContentManagement;
 using YesSql.Indexes;
-using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.Data;
 using Ozds.Util;
 
@@ -22,7 +21,7 @@ public class PersonPartIndexProvider : IndexProvider<ContentItem>,
     context
       .For<PersonPartIndex>()
       .Map(contentItem => contentItem.AsReal<PersonPart>()
-        .When(person =>
+        .WhenNonNullable(person =>
           new PersonPartIndex
           {
             ContentItemId = contentItem.ContentItemId,
@@ -31,6 +30,6 @@ public class PersonPartIndexProvider : IndexProvider<ContentItem>,
             LegalName = person.LegalName,
             Legal = person.Legal,
           })
-        // NOTE: this is mandatory for Yessql
+        // NOTE: this is okay because YesSql expects null values
         .NonNullable());
 }

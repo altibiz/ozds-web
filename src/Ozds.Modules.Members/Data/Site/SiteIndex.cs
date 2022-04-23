@@ -1,7 +1,6 @@
 using YesSql.Indexes;
 using OrchardCore.Data;
 using OrchardCore.ContentManagement;
-using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.Title.Models;
 using Ozds.Util;
 
@@ -27,9 +26,9 @@ public class SiteIndexProvider :
     context
       .For<SiteIndex>()
       .Map(item => item.FromBag<Site>()
-        .When(sites => sites
-          .SelectFilter(site => TaxonomyCache.GetTerm<TitlePart>(site.Type)
-            .ThenWhen(title => TaxonomyCache.GetTerm<TitlePart>(site.Phase)
+        .WhenNonNullable(sites => sites
+          .SelectFilterTask(site => TaxonomyCache.GetTerm<TitlePart>(site.Type)
+            .ThenWhenTask(title => TaxonomyCache.GetTerm<TitlePart>(site.Phase)
               .ThenFinally(phase =>
                 new SiteIndex
                 {
@@ -42,7 +41,7 @@ public class SiteIndexProvider :
                   Primary = site.Primary
                 }))),
           // NOTE: YesSql expects at least an empty enumerable
-          new List<SiteIndex>().ToAsyncEnumerable())
+          Enumerable.Empty<SiteIndex>().ToAsyncEnumerable())
         .Await());
 
   public SiteIndexProvider(

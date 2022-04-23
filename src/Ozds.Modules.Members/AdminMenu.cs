@@ -10,9 +10,9 @@ public class AdminMenu : INavigationProvider
       string name,
       NavigationBuilder builder) =>
     name
-      .When(name =>
-        string.Equals(name, "admin", StringComparison.OrdinalIgnoreCase),
-        () => builder
+      .WhenWith(name => string
+        .Equals(name, "admin", StringComparison.OrdinalIgnoreCase),
+        name => builder
           .Add(S["Članstvo"], "0", rootView => rootView
             .Add(S["ZDS"], "0", childTwo => childTwo
               .Action("List", "Admin",
@@ -46,7 +46,7 @@ public class AdminMenu : INavigationProvider
               "icon-class-fas",
               "icon-class-fa-coins"
             }))
-      .Return(Task.CompletedTask);
+      .ToTask();
 
   public AdminMenu(IStringLocalizer<AdminMenu> localizer)
   {

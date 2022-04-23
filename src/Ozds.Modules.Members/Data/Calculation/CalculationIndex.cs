@@ -21,51 +21,22 @@ public class CalculationIndexProvider :
       DescribeContext<ContentItem> context) =>
     context
       .For<CalculationIndex>()
-      .Map(
-        item =>
-        {
-          var receipt = item.AsReal<Receipt>();
-          if (receipt is null)
-          {
-            return Enumerable.Empty<CalculationIndex>();
-          }
-
-          var officialId = receipt.Official.ContentItemIds.FirstOrDefault();
-          if (officialId is null)
-          {
-            return Enumerable.Empty<CalculationIndex>();
-          }
-
-          var calculations = item.FromBag<Calculation>();
-          if (calculations is null)
-          {
-            return Enumerable.Empty<CalculationIndex>();
-          }
-
-          var result = calculations.SelectFilter(
-            calculation =>
-            {
-              var siteId = calculation.Site.ContentItemIds.FirstOrDefault();
-              if (siteId is null)
-              {
-                return null;
-              }
-
-              var deviceId = calculation.DeviceId.Text;
-              if (deviceId is null)
-              {
-                return null;
-              }
-
-              return new CalculationIndex
-              {
-                ReceiptId = item.ContentItemId,
-                OfficialId = officialId,
-                SiteId = siteId,
-                DeviceId = deviceId,
-              };
-            });
-
-          return result;
-        });
+      .Map(item => item.AsReal<Receipt>()
+        .WhenNonNullable(receipt => receipt.Official.ContentItemIds
+          .FirstOrDefault()
+          .WhenNonNullable(officialId => item.FromBag<Calculation>()
+            .WhenNonNullable(calculations => calculations
+              .SelectFilter(calculation => calculation.Site.ContentItemIds
+                .FirstOrDefault()
+                .WhenNonNullable(siteId => calculation.DeviceId.Text
+                  .WhenNonNullable(deviceId =>
+                    new CalculationIndex
+                    {
+                      ReceiptId = item.ContentItemId,
+                      OfficialId = officialId,
+                      SiteId = siteId,
+                      DeviceId = deviceId,
+                    }))))),
+          // NOTE: YesSql expects at least an empty enumerable here
+          Enumerable.Empty<CalculationIndex>()));
 }

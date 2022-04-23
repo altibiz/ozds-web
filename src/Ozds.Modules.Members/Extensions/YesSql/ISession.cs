@@ -15,33 +15,20 @@ public static class ISessionExtensions
 {
   public static ISession SaveJson<T>(
       this ISession session,
-      string path)
-  {
-    File
-      .OpenText(path)
-      .Using(stream =>
-          session.Save(
-            JsonSerializer.Deserialize<T>(
-              stream.ReadToEnd())));
-
-    return session;
-  }
+      string path) =>
+    session.SaveJson(path, typeof(T));
 
   public static ISession SaveJson(
       this ISession session,
       string path,
-      Type type)
-  {
+      Type type) =>
     File
       .OpenText(path)
       .Using(stream =>
-          session.Save(
-            JsonSerializer.Deserialize(
-              stream.ReadToEnd(),
-              type)));
-
-    return session;
-  }
+        JsonSerializer
+          .Deserialize(stream.ReadToEnd(), type)
+          .With(@object => session.Save(@object)))
+      .Return(session);
 
   public static Task<ContentItem?> GetItemById(
       this ISession session,
@@ -56,7 +43,7 @@ public static class ISessionExtensions
       this ISession session, ContentItem child) =>
     child
       .As<ContainedPart>()
-      .FinallyWhen(part => session
+      .WhenNonNullableFinallyTask(part => session
         .GetItemById(part.ListContentItemId));
 
   public static Task<ContentItem> FirstOrDefaultAsync<TIndex>(

@@ -25,7 +25,7 @@ public class FastImport : IRecipeStepHandler
           context.Step
             .ToObject<StepModel>()?.Data
             .ToObject<ContentItem[]>()
-            .When(contentItems => FastImportBackgroundTask.PendingImports
+            .With(contentItems => FastImportBackgroundTask.PendingImports
               .Enqueue(contentItems)))
       .Return(Task.CompletedTask);
 }
@@ -34,7 +34,7 @@ public class Importer
 {
   public Task ImportAsync(IEnumerable<ContentItem> contentItems) =>
     (new HashSet<string>())
-      .Named(
+      .WithTask(
         importedIds =>
           contentItems
             .Split(ImportBatchSize)
@@ -42,7 +42,7 @@ public class Importer
               batchedItems =>
                 batchedItems
                   .ForEach(item =>
-                    item.When(
+                    item.WhenWithTask(
                       item => !importedIds
                         .Contains(item.ContentItemVersionId),
                       item =>
@@ -55,10 +55,10 @@ public class Importer
                               handler.ImportingAsync(context),
                             new ImportContentContext(item),
                             Logger)
-                          .Then(() => Session.Save(item));
+                          .After(() => Session.Save(item));
                       }))
                   .Await()
-                  .Then(() =>
+                  .After(() =>
                   {
                     Logger.LogDebug("Imported: " + importedIds.Count);
                     return Session.SaveChangesAsync();
@@ -95,7 +95,7 @@ public class FastImportBackgroundTask : IBackgroundTask
       CancellationToken token) =>
     PendingImports
       .TryTake()
-      .When(imports => services
+      .WithTask(imports => services
           .GetRequiredService<Importer>()
           .ImportAsync(imports));
 

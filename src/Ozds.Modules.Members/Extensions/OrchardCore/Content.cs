@@ -35,13 +35,13 @@ public static class ContentExtensions
   public static IEnumerable<T>? FromBag<T>(
       this ContentItem? item) where T : ContentPart =>
     item.AsReal<BagPart>()
-      .When(bag => bag.ContentItems
+      .WhenNonNullable(bag => bag.ContentItems
           .SelectFilter(item => ContentItemExtensions.As<T>(item)));
 
   public static IEnumerable<T>? FromFlow<T>(
       this ContentItem? item) where T : ContentPart =>
     item.AsReal<FlowPart>()
-      .When(flow => flow.Widgets
+      .WhenNonNullable(flow => flow.Widgets
           .SelectFilter(item => ContentItemExtensions.As<T>(item)));
 
   public static string? GetId(this ContentPickerField contentPickerField) =>
@@ -72,11 +72,12 @@ public static class ContentExtensions
       .GetType()
       .GetProperties()
       .ForEach(property => property
-        .When(property => property.GetValue(part) is null,
-          () => ContentFieldTypes
+        .When(
+          property => property.GetValue(part) is null,
+          property => ContentFieldTypes
             .FirstOrDefault(type => type == property.PropertyType)
             .Construct<ContentField>()
-            .When(field =>
+            .With(field =>
             {
               field.ContentItem = part.ContentItem;
               property.SetValue(part, field);

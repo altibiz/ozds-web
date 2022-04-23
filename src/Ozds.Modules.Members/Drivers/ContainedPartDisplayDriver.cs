@@ -20,35 +20,38 @@ public class ContainedPartDisplayDriver : ContentDisplayDriver
   public override Task<IDisplayResult?> EditAsync(
       ContentItem model, BuildEditorContext context) =>
     model
-      .When(
-        _ => AdminAttribute.IsApplied(HttpContext.HttpContext),
+      .WhenFinallyTask(
+        _ => AdminAttribute.IsApplied(HttpContext),
         model => ContentItemExtensions
           .As<ContainedPart>(model)
-          .When(part => Initialize<ContainedPartViewModel>(
-            "ContainedPart_Nav",
-            model => Content
-              .GetAsync(part.ListContentItemId)
-              .Then(list =>
-              {
-                model.ListContentItemId = part.ListContentItemId;
-                model.ParentName = list.DisplayText;
-              })
-              // NOTE: it needs to be a ValueTask for the Initialize method
-              .ToValueTask())
+          .WhenNonNullable(part =>
+            Initialize<ContainedPartViewModel>(
+              "ContainedPart_Nav",
+              model => Content
+                .GetAsync(part.ListContentItemId)
+                .ThenWith(
+                  list =>
+                  {
+                    model.ListContentItemId = part.ListContentItemId;
+                    model.ParentName = list.DisplayText;
+                  })
+                // NOTE: it has to be a ValueTask for Initialize
+                .ToValueTask())
             .Location("Content"))
           .As<IDisplayResult>()
-          // NOTE: it has to be a task for the override
+          // NOTE: it has to be a Task for the override
           .ToTask());
 
   public ContainedPartDisplayDriver(
-      IHttpContextAccessor httpContext,
+      IHttpContextAccessor httpContextAccessor,
       IContentManager content)
   {
-    HttpContext = httpContext;
+    HttpContextAccessor = httpContextAccessor;
     Content = content;
   }
 
-  private IHttpContextAccessor HttpContext { get; }
+  private IHttpContextAccessor HttpContextAccessor { get; }
+  private HttpContext? HttpContext { get => HttpContextAccessor.HttpContext; }
 
   private IContentManager Content { get; }
 }

@@ -1,5 +1,6 @@
 using OrchardCore.Data.Migration;
 using OrchardCore.Recipes.Services;
+using Ozds.Util;
 
 namespace Ozds.Modules.Members.Extensions.OrchardCore;
 
@@ -8,12 +9,9 @@ public static class IRecipeMigratorExtensions
   public static IRecipeMigrator Execute(
       this IRecipeMigrator migrator,
       string recipe,
-      IDataMigration migration)
-  {
+      IDataMigration migration) =>
     migrator
       .ExecuteAsync(recipe, migration)
-      .Wait();
-
-    return migrator;
-  }
+      .BlockTask()
+      .Return(migrator);
 }

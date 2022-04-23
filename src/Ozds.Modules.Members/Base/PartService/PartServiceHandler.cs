@@ -20,7 +20,7 @@ public class PartServiceHandler<TPart, TService> : ContentPartHandler<TPart>
       TPart instance) =>
     Service
       .InitializingAsync(instance)
-      .Then(() => context.ContentItem.Apply(instance));
+      .After(() => context.ContentItem.Apply(instance));
 
   public override Task PublishedAsync(
       PublishContentContext context,
@@ -32,7 +32,7 @@ public class PartServiceHandler<TPart, TService> : ContentPartHandler<TPart>
       TPart instance) =>
     Service
       .UpdatedAsync<TPart>(context, instance)
-      .Then(() => instance.ContentItem.Apply(instance));
+      .After(() => instance.ContentItem.Apply(instance));
 
   public PartServiceHandler(TService service)
   {

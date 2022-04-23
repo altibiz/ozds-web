@@ -1,6 +1,5 @@
 using OrchardCore.ContentManagement;
 using YesSql.Indexes;
-using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.Data;
 using Ozds.Util;
 
@@ -18,12 +17,12 @@ public class MemberIndexProvider : IndexProvider<ContentItem>,
     context
       .For<MemberIndex>()
       .Map(item => item.AsReal<Member>()
-        .When(member => member.User.UserIds.FirstOrDefault()
-          .When(userId =>
-          new MemberIndex
-          {
-            UserId = userId
-          }))
-        // NOTE: this is mandatory for Yessql
+        .WhenNonNullable(member => member.User.UserIds.FirstOrDefault()
+          .WhenNonNullable(userId =>
+            new MemberIndex
+            {
+              UserId = userId
+            }))
+        // NOTE: this is okay because YesSql expects null values
         .NonNullable());
 }

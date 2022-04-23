@@ -23,14 +23,15 @@ public class ReceiptIndexProvider :
     context
       .For<ReceiptIndex>()
       .Map(contentItem => contentItem.AsReal<Receipt>()
-        .When(receipt => receipt.Official.ContentItemIds.FirstOrDefault()
-          .When(officialId =>
+        .WhenNonNullable(receipt => receipt.Official.ContentItemIds
+          .FirstOrDefault()
+          .WhenNonNullable(officialId =>
             new ReceiptIndex
             {
               ReceiptDocumentId = receipt.DocumentId.Text,
               OfficialId = officialId,
               Partner = receipt.Partner.Text,
             }))
-        // NOTE: this is mandatory for Yessql
+        // NOTE: this is okay because YesSql expects null values
         .NonNullable());
 }

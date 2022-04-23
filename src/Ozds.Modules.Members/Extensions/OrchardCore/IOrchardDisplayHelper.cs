@@ -18,7 +18,7 @@ public static class IOrchardDisplayHelperExtensions
     orchardDisplayHelper.HttpContext.RequestServices
       .GetRequiredService<IContentItemDisplayManager>()
       .BuildEditorAsync(content, updater, true, groupId)
-      .Then(shape => orchardDisplayHelper.DisplayHelper
+      .ThenTask(shape => orchardDisplayHelper.DisplayHelper
         .ShapeExecuteAsync(shape));
 
   public static Task<IHtmlContent> EditorAsync(
@@ -29,6 +29,6 @@ public static class IOrchardDisplayHelperExtensions
     orchardDisplayHelper.HttpContext.RequestServices
       .GetRequiredService<IContentManager>()
       .NewAsync(contentType)
-      .Then(content => orchardDisplayHelper
+      .ThenTask(content => orchardDisplayHelper
         .EditorAsync(content, groupId, updater));
 }

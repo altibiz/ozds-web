@@ -9,18 +9,16 @@ public class TaxonomyCacheService
 {
   public Task<IEnumerable<ContentItem>> GetTerms(TaxonomyField? field) =>
     field
-      .When(field => field.TermContentItemIds
-        .SelectFilter(term =>
-          (id: field.TaxonomyContentItemId, term)
-            .Named(key => key
-              .FinallyWhen(
-                key => !Cache.ContainsKey(key),
-                key => Helper
-                  .GetTaxonomyTermAsync(key.id, key.term)
-                  .Then(item => Cache[key] = item)
-                )))
+      .WhenNonNullable(field => field.TermContentItemIds
+        .SelectFilterTask(term => (id: field.TaxonomyContentItemId, term)
+          .WhenFinallyTask(
+            key => !Cache.ContainsKey(key),
+            key => Helper
+              .GetTaxonomyTermAsync(key.id, key.term)
+              .Then(item => Cache[key] = item)
+            ))
         .Await(),
-      new List<ContentItem> { }.AsEnumerable().ToTask());
+      Enumerable.Empty<ContentItem>().ToTask());
 
   public Task<ContentItem?> GetTerm(TaxonomyField? field) =>
     GetTerms(field)

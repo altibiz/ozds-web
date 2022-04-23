@@ -11,9 +11,9 @@ public class AdminMenu : INavigationProvider
       string name,
       NavigationBuilder builder) =>
     name
-      .When(name =>
+      .WhenWith(name =>
         string.Equals(name, "admin", StringComparison.OrdinalIgnoreCase),
-        () => builder
+        name => builder
           .Add(S["Content"], "1", root => root
             .Add(S["Content Items"], "0", child => child
               .Action("ContentItems", AdminController,
@@ -21,7 +21,7 @@ public class AdminMenu : INavigationProvider
                 {
                   area = "OrchardCore.Contents"
                 }))))
-      .Return(Task.CompletedTask);
+      .ToTask();
 
   public AdminMenu(
       IStringLocalizer<AdminMenu> localizer,

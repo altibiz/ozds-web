@@ -19,7 +19,7 @@ public class PartTextFieldDriver : TextFieldDisplayDriver
       BuildFieldEditorContext context) =>
     context
       .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
-      .When(fieldDefinition =>
+      .WhenNonNullable(fieldDefinition =>
         Initialize<EditTextFieldViewModel>(
           GetEditorShapeType(fieldDefinition),
           model =>
@@ -36,10 +36,9 @@ public class PartTextFieldDriver : TextFieldDisplayDriver
       UpdateFieldEditorContext context) =>
     context
       .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
-      .When(_ => _
-        .When(fieldDefinition => fieldDefinition.Editor() != "Disabled",
-          _ => base.UpdateAsync(field, updater, context),
-          () => Edit(field, context)));
+      .WhenTask(fieldDefinition => fieldDefinition.Editor() != "Disabled",
+        _ => base.UpdateAsync(field, updater, context),
+        () => Edit(field, context));
 
   public PartTextFieldDriver(
       IStringLocalizer<TextFieldDisplayDriver> localizer,
