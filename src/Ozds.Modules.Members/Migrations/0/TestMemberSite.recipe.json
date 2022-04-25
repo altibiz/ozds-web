@@ -6,20 +6,17 @@
         {
           "ContentItemId": "4wr8zmbsykbdry12hfv378eaxz",
           "ContentItemVersionId": null,
-          "ContentType": "Site",
+          "ContentType": "SecondarySite",
           "DisplayText": "Mjerno mjesto testnog člana",
-          "Latest": false,
-          "Published": false,
-          "ModifiedUtc": "2022-04-20T14:24:20.5274969Z",
-          "PublishedUtc": null,
-          "CreatedUtc": null,
-          "Owner": null,
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-04-20T14:23:47.9562884Z",
+          "PublishedUtc": "2022-04-20T14:24:20.5431906Z",
+          "CreatedUtc": "2022-04-20T14:14:44.7172994Z",
+          "Owner": "4s73wcst6dzjvwxn13kk57dndd",
           "Author": "admin",
-          "Site": {
-            "Type": {
-              "TaxonomyContentItemId": "40afgjpy1kyk7z3p54vgtdhz5a",
-              "TermContentItemIds": ["4mr2ex2rrxcf06cwsqgrvj1r55"]
-            },
+          "SecondarySite": {},
+          "SitePart": {
             "Coefficient": {
               "Value": 1
             },
@@ -31,7 +28,8 @@
               "Value": true
             },
             "Source": {
-              "Text": "fakeSource"
+              "TaxonomyContentItemId": "4k4556m076b1vvsmmqjccbjwn5",
+              "TermContentItemIds": ["4ajzfswsjftfzym6sj9fc223ms"]
             },
             "DeviceId": {
               "Text": "SfakIDfakeDevice2"
@@ -43,6 +41,10 @@
           },
           "TitlePart": {
             "Title": "Mjerno mjesto testnog člana"
+          },
+          "ContainedPart": {
+            "ListContentItemId": "4gx0qdhvxthqf1a6chbrkax64h",
+            "Order": 0
           }
         }
       ]

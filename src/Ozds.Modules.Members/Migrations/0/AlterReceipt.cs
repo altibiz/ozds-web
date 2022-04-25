@@ -26,8 +26,8 @@ public static partial class AlterReceipt
               }))
         .WithPart("TitlePart",
           part => part
-            .WithPosition("1")
             .WithDisplayName("Naslov")
+            .WithPosition("1")
             .WithSettings(
               new TitlePartSettings
               {

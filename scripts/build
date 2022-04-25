@@ -20,6 +20,7 @@ echo -e "
 ";
 dotnet \
   build \
+  --no-incremental \
   --output "$ROOT_DIR/artifacts" \
   --property:consoleLoggerParameters=ErrorsOnly \
   --configuration Release;

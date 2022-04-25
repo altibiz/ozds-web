@@ -25,8 +25,8 @@ public static partial class AlterCalculation
               }))
         .WithPart("TitlePart",
           part => part
-            .WithPosition("1")
             .WithDisplayName("Naziv")
+            .WithPosition("1")
             .WithSettings(
               new TitlePartSettings
               {
@@ -83,6 +83,7 @@ public static partial class AlterCalculation
             .OfType("DateField")
             .WithDisplayName("Datum od")
             .WithDescription("Početni datum mjerenja")
+            .WithPosition("1")
             .WithSettings(
               new DateFieldSettings
               {
@@ -93,6 +94,7 @@ public static partial class AlterCalculation
             .OfType("DateField")
             .WithDisplayName("Datum do")
             .WithDescription("Krajnji datum mjerenja")
+            .WithPosition("2")
             .WithSettings(
               new DateFieldSettings
               {
@@ -102,6 +104,7 @@ public static partial class AlterCalculation
           field => field
             .OfType("NumericField")
             .WithDisplayName("Naknada za mjernu uslugu")
+            .WithPosition("3")
             .WithSettings(
               new NumericFieldSettings
               {
@@ -112,6 +115,7 @@ public static partial class AlterCalculation
           field => field
             .OfType("NumericField")
             .WithDisplayName("Ukupno")
+            .WithPosition("4")
             .WithSettings(
               new NumericFieldSettings
               {

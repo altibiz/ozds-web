@@ -84,32 +84,32 @@ public static partial class AlterCalculationItem
               {
                 Required = true
               }))
-        .WithField("Consumption",
-          field => field
-            .OfType("NumericField")
-            .WithDisplayName("Potrošak")
-            .WithPosition("5")
-            .WithSettings(
-              new NumericFieldSettings
-              {
-                Required = true
-              }))
         .WithField("Unit",
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Mjerna jedinica")
-            .WithPosition("2")
+            .WithPosition("5")
             .WithSettings(
               new TaxonomyFieldSettings
               {
                 TaxonomyContentItemId = "4cqf2eeqqwadb4xechw3tbbsn0",
                 Unique = true
               }))
+        .WithField("Consumption",
+          field => field
+            .OfType("NumericField")
+            .WithDisplayName("Potrošak")
+            .WithPosition("6")
+            .WithSettings(
+              new NumericFieldSettings
+              {
+                Required = true
+              }))
         .WithField("UnitPrice",
           field => field
             .OfType("NumericField")
             .WithDisplayName("Jedinična cijena")
-            .WithPosition("6")
+            .WithPosition("7")
             .WithSettings(
               new NumericFieldSettings
               {
@@ -119,7 +119,7 @@ public static partial class AlterCalculationItem
           field => field
             .OfType("NumericField")
             .WithDisplayName("Iznos")
-            .WithPosition("7"))
+            .WithPosition("8"))
             .WithSettings(
               new NumericFieldSettings
               {

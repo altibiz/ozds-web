@@ -20,6 +20,7 @@ public static partial class AlterCenter
         .Securable()
         .WithPart("Center",
           part => part
+            .WithPosition("0")
             .WithSettings(
               new CenterSettings
               {
@@ -28,6 +29,7 @@ public static partial class AlterCenter
           part => part
             .WithDisplayName("Naziv")
             .WithDescription("Naziv zatvorenog distribucijskog sustava")
+            .WithPosition("1")
             .WithSettings(
               new TitlePartSettings
               {
@@ -35,7 +37,7 @@ public static partial class AlterCenter
                 Options = TitlePartOptions.EditableRequired,
                 Pattern =
                 @"
-                  {%- assign person = ContentItem.Content.PersonPart -%}
+                  {%- assign person = ContentItem.Content.Person -%}
                   {%- assign types = person.Type.TermContentItemIds -%}
                   {%- assign isLegal = types contains '43jw9bej0w1tqybrryfm3nek44' -%}
                   {%- assign name = person.Name.Text -%}
@@ -57,6 +59,7 @@ public static partial class AlterCenter
             .WithDisplayName("Ruta")
             .WithDescription(
               "Automatski generirana ruta zatvorenog distribucijskog sustava")
+            .WithPosition("2")
             .WithSettings(
               new AutoroutePartSettings
               {
@@ -69,15 +72,16 @@ public static partial class AlterCenter
             .WithDescription(
               "Poslovni i kontakt podaci zastupne osobe " +
               "zatvorenog distribucijskog sustava")
+            .WithPosition("3")
             .WithSettings(
               new PersonSettings
               {
               }))
         .WithPart("ListPart",
           part => part
-            .WithPosition("6")
             .WithDisplayName("Članovi")
             .WithDescription("Članovi zatvorenog distribucijskog sustava")
+            .WithPosition("4")
             .WithSettings(
               new ListPartSettings
               {
@@ -96,6 +100,7 @@ public static partial class AlterCenter
             .OfType("UserPickerField")
             .WithDisplayName("Korisnik")
             .WithDescription("Korisnički račun zastupnika")
+            .WithPosition("0")
             .WithSettings(
               new UserPickerFieldSettings
               {
@@ -105,22 +110,20 @@ public static partial class AlterCenter
               }))
         .WithField("PrimarySites",
           part => part
+            .OfType("ContentPickerField")
             .WithDisplayName("Primarna obračunska mjerna mjesta")
             .WithDescription(
               "Primarna obračunska mjerna mjesta " +
               "zatvorenog distribucijskog sustava")
+            .WithPosition("1")
             .WithSettings(
               new ContentPickerFieldSettings
               {
-                Multiple = true,
                 Required = true,
+                Multiple = true,
                 DisplayedContentTypes = new[]
                 {
-                  "Site"
+                  "PrimarySite"
                 }
-              })
-            .WithSettings(
-              new SiteSettings
-              {
               })));
 }

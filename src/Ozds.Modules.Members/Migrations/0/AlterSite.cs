@@ -2,38 +2,12 @@ using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.ContentFields.Settings;
 using OrchardCore.Taxonomies.Settings;
-using OrchardCore.Title.Models;
 using OrchardCore.Spatial.Settings;
 
 namespace Ozds.Modules.Members.M0;
 
 public static partial class AlterSite
 {
-  public static void AlterSiteType(
-      this IContentDefinitionManager content) =>
-    content.AlterTypeDefinition("Site",
-      type => type
-        .DisplayedAs("Obračunsko mjerno mjesto")
-        .Creatable()
-        .Listable()
-        .Draftable()
-        .Securable()
-        .WithPart("Site",
-          part => part
-            .WithSettings(
-              new SiteSettings
-              {
-              }))
-        .WithPart("TitlePart",
-          part => part
-            .WithDisplayName("Naziv")
-            .WithSettings(
-              new TitlePartSettings
-              {
-                RenderTitle = true,
-                Options = TitlePartOptions.EditableRequired,
-              })));
-
   public static void AlterSitePart(
       this IContentDefinitionManager content) =>
     content.AlterPartDefinition("Site",
@@ -44,37 +18,29 @@ public static partial class AlterSite
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Izvor mjerenja uređaja")
+            .WithPosition("0")
             .WithSettings(
               new TaxonomyFieldSettings
               {
                 Required = true,
                 Unique = true,
-                TaxonomyContentItemId = ""
+                TaxonomyContentItemId = "4k4556m076b1vvsmmqjccbjwn5"
               }))
         .WithField("DeviceId",
           field => field
             .OfType("TextField")
             .WithDisplayName("Identifikator uređaja")
+            .WithPosition("1")
             .WithSettings(
               new TextFieldSettings
               {
                 Required = true
               }))
-        .WithField("Type",
-          field => field
-            .OfType("TaxonomyField")
-            .WithDisplayName("Tip")
-            .WithSettings(
-              new TaxonomyFieldSettings
-              {
-                TaxonomyContentItemId = "40afgjpy1kyk7z3p54vgtdhz5a",
-                Required = true,
-                Unique = true
-              }))
         .WithField("Coefficient",
           field => field
             .OfType("NumericField")
             .WithDisplayName("Koeficijent")
+            .WithPosition("3")
             .WithSettings(
               new NumericFieldSettings
               {
@@ -84,6 +50,7 @@ public static partial class AlterSite
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Faza")
+            .WithPosition("4")
             .WithSettings(
               new TaxonomyFieldSettings
               {
@@ -95,6 +62,7 @@ public static partial class AlterSite
           field => field
             .OfType("GeoPointField")
             .WithDisplayName("Geolokacija")
+            .WithPosition("5")
             .WithSettings(
               new GeoPointFieldSettings
               {
@@ -104,6 +72,7 @@ public static partial class AlterSite
           field => field
             .OfType("BooleanField")
             .WithDisplayName("Aktivno")
+            .WithPosition("6")
             .WithSettings(
               new BooleanFieldSettings
               {

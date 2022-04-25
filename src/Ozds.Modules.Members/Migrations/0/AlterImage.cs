@@ -39,7 +39,7 @@ public static class AlterImage
           field => field
             .OfType("TextField")
             .WithDisplayName("Podnaslov")
-            .WithPosition("2")
+            .WithPosition("1")
             .WithSettings(
               new TextFieldSettings
               {
@@ -49,7 +49,7 @@ public static class AlterImage
           field => field
             .OfType("LinkField")
             .WithDisplayName("Link")
-            .WithPosition("1")
+            .WithPosition("2")
             .WithSettings(
               new LinkFieldSettings
               {

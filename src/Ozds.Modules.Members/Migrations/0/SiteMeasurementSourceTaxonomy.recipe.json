@@ -4,25 +4,25 @@
       "name": "content",
       "Data": [
         {
-          "ContentItemId": "40afgjpy1kyk7z3p54vgtdhz5a",
-          "ContentItemVersionId": "466hcqp1f4akktmqgv68zrfqxa",
+          "ContentItemId": "4k4556m076b1vvsmmqjccbjwn5",
+          "ContentItemVersionId": "4yjtq8wjp0qyj406gqwvsgb84r",
           "ContentType": "Taxonomy",
-          "DisplayText": "Tip obracunskog mjernog mjesta",
+          "DisplayText": "Izvor mjerenja obračunskog mjernog mjesta",
           "Latest": true,
           "Published": true,
-          "ModifiedUtc": "2022-04-20T04:46:14.1885959Z",
-          "PublishedUtc": "2022-04-20T04:46:14.1974442Z",
-          "CreatedUtc": "2022-04-20T04:44:22.9443626Z",
-          "Owner": "4z1n3dzdpndys34562h5aq12ma",
+          "ModifiedUtc": "2022-04-25T11:13:42.0279486Z",
+          "PublishedUtc": "2022-04-25T11:13:42.034785Z",
+          "CreatedUtc": "2022-04-25T11:11:35.7707323Z",
+          "Owner": "4q3fadsrra74e5yg5pshywag40",
           "Author": "admin",
           "TitlePart": {
-            "Title": "Tip obracunskog mjernog mjesta"
+            "Title": "Izvor mjerenja obračunskog mjernog mjesta"
           },
           "AliasPart": {
-            "Alias": "tip-obracunskog-mjernog-mjesta"
+            "Alias": "site-measurement-source"
           },
           "AutoroutePart": {
-            "Path": "sitetype",
+            "Path": "izvor-mjerenja-obracunskog-mjernog-mjesta",
             "SetHomepage": false,
             "Disabled": false,
             "RouteContainedItems": false,
@@ -32,60 +32,60 @@
             "TermContentType": "Tag",
             "Terms": [
               {
-                "ContentItemId": "4hwv4r61rnb952sq60t8bkxwxa",
+                "ContentItemId": "4k73fvdf8r38krb1fypjzgm9n3",
                 "ContentItemVersionId": null,
                 "ContentType": "Tag",
-                "DisplayText": "Primarno",
+                "DisplayText": "HelbOzds",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2022-04-20T04:44:34.0754328Z",
+                "ModifiedUtc": "2022-04-25T11:12:20.1485226Z",
                 "PublishedUtc": null,
                 "CreatedUtc": null,
                 "Owner": null,
                 "Author": "admin",
                 "Tag": {},
                 "TitlePart": {
-                  "Title": "Primarno"
+                  "Title": "HelbOzds"
                 },
                 "AutoroutePart": {
-                  "Path": "",
+                  "Path": "helbozds",
                   "SetHomepage": false,
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
                 "TermPart": {
-                  "TaxonomyContentItemId": "40afgjpy1kyk7z3p54vgtdhz5a"
+                  "TaxonomyContentItemId": "4k4556m076b1vvsmmqjccbjwn5"
                 },
                 "@WeldedPartSettings": {
                   "TermPart": {}
                 }
               },
               {
-                "ContentItemId": "4mr2ex2rrxcf06cwsqgrvj1r55",
+                "ContentItemId": "481mx70mkj8y769kc85vqhw55c",
                 "ContentItemVersionId": null,
                 "ContentType": "Tag",
-                "DisplayText": "Sekundarno",
+                "DisplayText": "MyEnergyCommunity",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2022-04-20T04:44:40.8902222Z",
+                "ModifiedUtc": "2022-04-25T11:12:48.8944418Z",
                 "PublishedUtc": null,
                 "CreatedUtc": null,
                 "Owner": null,
                 "Author": "admin",
                 "Tag": {},
                 "TitlePart": {
-                  "Title": "Sekundarno"
+                  "Title": "MyEnergyCommunity"
                 },
                 "AutoroutePart": {
-                  "Path": "",
+                  "Path": "myenergycommunity",
                   "SetHomepage": false,
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
                 "TermPart": {
-                  "TaxonomyContentItemId": "40afgjpy1kyk7z3p54vgtdhz5a"
+                  "TaxonomyContentItemId": "4k4556m076b1vvsmmqjccbjwn5"
                 },
                 "@WeldedPartSettings": {
                   "TermPart": {}

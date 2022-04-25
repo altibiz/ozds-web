@@ -19,6 +19,7 @@ public static partial class AlterCatalogue
         .Securable()
         .WithPart("Catalogue",
           part => part
+            .WithPosition("0")
             .WithSettings(
               new CatalogueSettings
               {
@@ -26,6 +27,7 @@ public static partial class AlterCatalogue
         .WithPart("TitlePart",
           part => part
             .WithDisplayName("Naziv")
+            .WithPosition("1")
             .WithSettings(
               new TitlePartSettings
               {
@@ -36,6 +38,7 @@ public static partial class AlterCatalogue
           part => part
             .WithDisplayName("Ruta")
             .WithDisplayName("Automatski generirana ruta kataloga")
+            .WithPosition("2")
             .WithSettings(
               new AutoroutePartSettings
               {
@@ -46,6 +49,7 @@ public static partial class AlterCatalogue
         .WithPart("AliasPart",
           part => part
             .WithDisplayName("Alias")
+            .WithPosition("3")
             .WithSettings(
               new AliasPartSettings
               {
@@ -56,6 +60,7 @@ public static partial class AlterCatalogue
           part => part
             .WithDisplayName("Stavke")
             .WithDescription("Stavke kataloga")
+            .WithPosition("4")
             .WithSettings(
               new ListPartSettings
               {

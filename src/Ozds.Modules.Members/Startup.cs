@@ -45,6 +45,8 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddScoped<INavigationProvider, AdminMenu>();
     services.AddScoped<IDataMigration, Migrations>();
 
+    services.AddContentPart<Contact>();
+    services.AddContentPart<Location>();
     services.UsePartService<Person, PersonPartService>();
     services.AddScoped<IScopedIndexProvider, PersonIndexProvider>();
     services.AddTransient<IContentsAdminListFilterProvider,
@@ -52,6 +54,8 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddScoped<IDisplayDriver<ContentOptionsViewModel>,
         PersonOptionsDisplayDriver>();
     services.AddContentPart<Site>();
+    services.AddContentPart<PrimarySite>();
+    services.AddContentPart<SecondarySite>();
     services.AddScoped<IScopedIndexProvider, SiteIndexProvider>();
     services.AddContentPart<Member>();
     services.AddScoped<MemberService>();

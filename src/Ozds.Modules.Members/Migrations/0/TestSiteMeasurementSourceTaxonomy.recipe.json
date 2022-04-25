@@ -1,0 +1,130 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "4k4556m076b1vvsmmqjccbjwn5",
+          "ContentItemVersionId": "4yjtq8wjp0qyj406gqwvsgb84r",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Izvor mjerenja obračunskog mjernog mjesta",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-04-25T11:13:42.0279486Z",
+          "PublishedUtc": "2022-04-25T11:13:42.034785Z",
+          "CreatedUtc": "2022-04-25T11:11:35.7707323Z",
+          "Owner": "4q3fadsrra74e5yg5pshywag40",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Izvor mjerenja obračunskog mjernog mjesta"
+          },
+          "AliasPart": {
+            "Alias": "site-measurement-source"
+          },
+          "AutoroutePart": {
+            "Path": "izvor-mjerenja-obracunskog-mjernog-mjesta",
+            "SetHomepage": false,
+            "Disabled": false,
+            "RouteContainedItems": false,
+            "Absolute": false
+          },
+          "TaxonomyPart": {
+            "TermContentType": "Tag",
+            "Terms": [
+              {
+                "ContentItemId": "4ajzfswsjftfzym6sj9fc223ms",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "fakeSource",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-25T11:11:45.6081103Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "fakeSource"
+                },
+                "AutoroutePart": {
+                  "Path": "fakesource",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4k4556m076b1vvsmmqjccbjwn5"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4k73fvdf8r38krb1fypjzgm9n3",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "HelbOzds",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-25T11:12:20.1485226Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "HelbOzds"
+                },
+                "AutoroutePart": {
+                  "Path": "helbozds",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4k4556m076b1vvsmmqjccbjwn5"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "481mx70mkj8y769kc85vqhw55c",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "MyEnergyCommunity",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-25T11:12:48.8944418Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "MyEnergyCommunity"
+                },
+                "AutoroutePart": {
+                  "Path": "myenergycommunity",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4k4556m076b1vvsmmqjccbjwn5"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

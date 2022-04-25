@@ -21,8 +21,15 @@ public sealed class Migrations : DataMigration
     Recipe.ExecuteMeasurementUnitTaxonomy(this);
     Recipe.ExecuteCalculationItemStatusTaxonomy(this);
     Recipe.ExecuteTariffTaxonomy(this);
-    Recipe.ExecuteSiteTypeTaxonomy(this);
     Recipe.ExecutePersonTypeTaxonomy(this);
+    if (Env.IsDevelopment())
+    {
+      Recipe.ExecuteTestSiteMeasurementSourceTaxonomy(this);
+    }
+    else
+    {
+      Recipe.ExecuteSiteMeasurementSourceTaxonomy(this);
+    }
 
     Content.AlterAdminPageType();
 
@@ -34,11 +41,16 @@ public sealed class Migrations : DataMigration
 
     Content.AlterPersonType();
     Content.AlterPersonPart();
+    Content.AlterContactPart();
+    Content.AlterLocationPart();
     Schema.CreatePersonMapTable();
     Schema.CreatePersonMapIndex();
 
-    Content.AlterSiteType();
     Content.AlterSitePart();
+    Content.AlterPrimarySiteType();
+    Content.AlterPrimarySitePart();
+    Content.AlterSecondarySiteType();
+    Content.AlterSecondarySitePart();
     Schema.CreateSiteMapTable();
 
     Content.AlterReceiptPart();

@@ -15,6 +15,8 @@ public static partial class AlterPerson
         .Creatable()
         .Listable()
         .Securable()
+        .Draftable()
+        .Versionable()
         .WithPart("Person",
           part => part
           .WithPosition("0")
@@ -28,6 +30,7 @@ public static partial class AlterPerson
     content.AlterPartDefinition("Person",
       part => part
         .Attachable()
+        .Reusable()
         .WithDisplayName("Osoba")
         .WithDescription("Poslovni i kontakt podaci osobe.")
         .WithField("Name",
@@ -90,6 +93,16 @@ public static partial class AlterPerson
               {
                 Required = true,
               }))
+        .WithField("PostalCode",
+          field => field
+            .OfType("TextField")
+            .WithDisplayName("Poštanski broj")
+            .WithPosition("6")
+            .WithSettings(
+              new TextFieldSettings
+              {
+                Required = true,
+              }))
         .WithField("County",
           field => field
             .OfType("TaxonomyField")
@@ -109,7 +122,7 @@ public static partial class AlterPerson
             .OfType("TextField")
             .WithDisplayName("Broj telefona")
             .WithEditor("Tel")
-            .WithPosition("6")
+            .WithPosition("8")
             .WithSettings(
               new TextFieldSettings
               {
@@ -120,7 +133,7 @@ public static partial class AlterPerson
             .OfType("TextField")
             .WithDisplayName("Email")
             .WithEditor("Email")
-            .WithPosition("7")
+            .WithPosition("9")
             .WithSettings(
               new TextFieldSettings
               {
@@ -131,7 +144,7 @@ public static partial class AlterPerson
             .OfType("TaxonomyField")
             .WithDisplayName("Tip")
             .WithDescription("Tip osobe")
-            .WithPosition("8")
+            .WithPosition("10")
             .WithSettings(
               new TaxonomyFieldSettings
               {

@@ -8,9 +8,10 @@ namespace Ozds.Modules.Members;
 
 public class SiteIndex : MapIndex
 {
-  public string OwnerId { get; init; } = default!;
+  // TODO: OwnerId
+  public string SiteId { get; init; } = default!;
+  public string Source { get; init; } = default!;
   public string DeviceId { get; init; } = default!;
-  public string Type { get; init; } = default!;
   public decimal Coefficient { get; init; } = default!;
   public string Phase { get; init; } = default!;
   public bool Active { get; init; } = default!;
@@ -25,24 +26,25 @@ public class SiteIndexProvider :
       DescribeContext<ContentItem> context) =>
     context
       .For<SiteIndex>()
-      .Map(item => item.FromBag<Site>()
-        .WhenNonNullable(sites => sites
-          .SelectFilterTask(site => TaxonomyCache.GetTerm<TitlePart>(site.Type)
-            .ThenWhenTask(title => TaxonomyCache.GetTerm<TitlePart>(site.Phase)
-              .ThenFinally(phase =>
-                new SiteIndex
-                {
-                  OwnerId = item.ContentItemId,
-                  DeviceId = site.DeviceId.Text,
-                  Type = title.Title,
-                  Coefficient = site.Coefficient.Value ?? 1,
-                  Phase = phase.Title,
-                  Active = site.Active.Value,
-                  Primary = site.Primary
-                }))),
-          // NOTE: YesSql expects at least an empty enumerable
-          Enumerable.Empty<SiteIndex>().ToAsyncEnumerable())
-        .Await());
+      .Map(item => item
+        .As<Site>()
+        .WhenNonNullableTask(site => TaxonomyCache
+          .GetTerm<TitlePart>(site.Phase)
+          .ThenWhenTask(phase => TaxonomyCache
+            .GetTerm<TitlePart>(site.Source)
+            .ThenFinally(source =>
+              new SiteIndex
+              {
+                SiteId = item.ContentItemId,
+                DeviceId = site.DeviceId.Text,
+                Source = source.Title,
+                Coefficient = site.Coefficient.Value ?? 1,
+                Phase = phase.Title,
+                Active = site.Active.Value,
+                Primary = item.ContentType == "PrimarySite"
+              })))
+          // NOTE: YesSql expects null values
+          .NonNullable());
 
   public SiteIndexProvider(
       TaxonomyCacheService taxonomyCache)

@@ -17,6 +17,7 @@ public static partial class AlterMember
         .Securable()
         .WithPart("Member",
           part => part
+            .WithPosition("0")
             .WithSettings(
               new MemberSettings
               {
@@ -25,6 +26,7 @@ public static partial class AlterMember
           part => part
             .WithDisplayName("Naziv")
             .WithDisplayName("Naziv člana")
+            .WithPosition("1")
             .WithSettings(
               new TitlePartSettings
               {
@@ -32,7 +34,7 @@ public static partial class AlterMember
                 Options = TitlePartOptions.GeneratedDisabled,
                 Pattern =
                 @"
-                  {%- assign person = ContentItem.Content.PersonPart -%}
+                  {%- assign person = ContentItem.Content.Person -%}
                   {%- assign types = person.Type.TermContentItemIds -%}
                   {%- assign isLegal = types contains '43jw9bej0w1tqybrryfm3nek44' -%}
                   {%- assign name = person.Name.Text -%}
@@ -53,6 +55,7 @@ public static partial class AlterMember
           part => part
             .WithDisplayName("Poslovni i kontakt podaci")
             .WithDescription("Poslovni i kontakt podaci člana")
+            .WithPosition("2")
             .WithSettings(
               new PersonSettings
               {
@@ -66,6 +69,7 @@ public static partial class AlterMember
             .OfType("UserPickerField")
             .WithDisplayName("Korisnik")
             .WithDescription("Korisnički račun člana")
+            .WithPosition("0")
             .WithSettings(
               new UserPickerFieldSettings
               {
@@ -79,6 +83,7 @@ public static partial class AlterMember
             .WithDisplayName("Sekundarna obračunska mjerna mjesta")
             .WithDescription(
               "Sekundarna obračunska mjerna mjesta člana")
+            .WithPosition("1")
             .WithSettings(
               new ContentPickerFieldSettings
               {
@@ -86,11 +91,7 @@ public static partial class AlterMember
                 Multiple = true,
                 DisplayedContentTypes = new[]
                 {
-                  "Site"
+                  "SecondarySite"
                 }
-              })
-            .WithSettings(
-              new SiteSettings
-              {
               })));
 }

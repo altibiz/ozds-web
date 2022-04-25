@@ -2,6 +2,7 @@ using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.ContentFields.Settings;
 using OrchardCore.Taxonomies.Settings;
+using OrchardCore.Title.Models;
 
 namespace Ozds.Modules.Members.M0;
 
@@ -15,12 +16,28 @@ public static partial class AlterCatalogueItem
         .Creatable()
         .Listable()
         .Securable()
-        .WithPart("CatalogueItem",
-          part => part
+        .WithPart("CatalogueItem", part => part
           .WithPosition("0")
           .WithSettings(
             new CatalogueItemSettings
             {
+            }))
+        .WithPart("TitlePart", part => part
+          .WithPosition("1")
+          .WithDisplayName("Naziv")
+          .WithSettings(
+            new TitlePartSettings
+            {
+              Options = TitlePartOptions.GeneratedHidden,
+              Pattern =
+              @"
+                {%- assign catalogueItem = ContentItem.Content.CatalogueItem -%}
+                {%- assign tariffs = catalogueItem.Tariff.TermContentIds -%}
+                {%- assign tariff = tariffs[0] | content_item_id -%}
+                {%- assign measurementUnits = catalogueItem.Unit.TermContentIds -%}
+                {%- assign measurementUnit = measurementUnits[0] | content_item_id -%}
+                {{- tariff }} {{ measurementUnit -}}
+              "
             })));
 
   public static void AlterCatalogueItemPart(
@@ -46,7 +63,7 @@ public static partial class AlterCatalogueItem
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Mjerna jedinica")
-            .WithPosition("2")
+            .WithPosition("1")
             .WithSettings(
               new TaxonomyFieldSettings
               {
@@ -57,7 +74,7 @@ public static partial class AlterCatalogueItem
           field => field
             .OfType("NumericField")
             .WithDisplayName("Jedinična cijena")
-            .WithPosition("6")
+            .WithPosition("2")
             .WithSettings(
               new NumericFieldSettings
               {

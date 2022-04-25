@@ -21,6 +21,7 @@ public static partial class AlterContract
         .Securable()
         .WithPart("Contract",
           part => part
+            .WithPosition("0")
             .WithSettings(
               new ContractSettings
               {
@@ -28,23 +29,31 @@ public static partial class AlterContract
         .WithPart("TitlePart",
           part => part
             .WithDisplayName("Naziv")
+            .WithPosition("1")
             .WithSettings(
               new TitlePartSettings
               {
                 RenderTitle = true,
                 Options = TitlePartOptions.GeneratedDisabled,
                 Pattern =
-                @"""
+                @"
                   {%- assign contract = ContentItem.Content.Contract -%}
-                  {%- assign centers = contract.Center.ContainedItemIds | content_item_id -%}
-                  {%- assign center = centers[0] -%}
-                  {{- center -}}
-                """,
+                  {%- assign centers = contract.Center.ContainedItemIds -%}
+                  {%- assign center = centers[0] | content_item_id -%}
+                  {%- assign members = contract.Center.ContainedItemIds -%}
+                  {%- assign member = members[0] | content_item_id -%}
+                  {%- if member -%}
+                    {{- center }} {{ member -}}
+                  {%- else -%}
+                    {{- center -}}
+                  {%- endif -%}
+                ",
               }))
         .WithPart("AutoroutePart",
           part => part
             .WithDisplayName("Ruta")
             .WithDescription("Automatski generirana ruta ugovora")
+            .WithPosition("2")
             .WithSettings(
               new AutoroutePartSettings
               {
@@ -55,6 +64,7 @@ public static partial class AlterContract
           part => part
             .WithDisplayName("Stavke")
             .WithDescription("Cjenovnik ugovora")
+            .WithPosition("3")
             .WithSettings(
               new BagPartSettings
               {
@@ -67,6 +77,7 @@ public static partial class AlterContract
           part => part
             .WithDisplayName("Stranke")
             .WithDescription("Stranke ugovora")
+            .WithPosition("4")
             .WithSettings(
               new BagPartSettings
               {
@@ -87,6 +98,7 @@ public static partial class AlterContract
             .WithDescription(
               "Zatvoreni distribucijski sustav " +
               "s kojim je sklopljen ugovor")
+            .WithPosition("0")
             .WithSettings(
               new ContentPickerFieldSettings
               {
@@ -102,6 +114,7 @@ public static partial class AlterContract
             .OfType("ContentPickerField")
             .WithDisplayName("Član")
             .WithDescription("Član s kojim je sklopljen ugovor")
+            .WithPosition("1")
             .WithSettings(
               new ContentPickerFieldSettings
               {
@@ -117,6 +130,7 @@ public static partial class AlterContract
             .OfType("DateField")
             .WithDisplayName("Datum")
             .WithDescription("Datum kada je sklopljen ugovor")
+            .WithPosition("2")
             .WithSettings(
               new DateFieldSettings
               {
@@ -127,6 +141,7 @@ public static partial class AlterContract
             .OfType("DateField")
             .WithDisplayName("Datum od")
             .WithDescription("Početni datum valjanosti ugovora")
+            .WithPosition("3")
             .WithSettings(
               new DateFieldSettings
               {
@@ -137,6 +152,7 @@ public static partial class AlterContract
             .OfType("DateField")
             .WithDisplayName("Datum do")
             .WithDescription("Krajnji datum valjanosti ugovora")
+            .WithPosition("4")
             .WithSettings(
               new DateFieldSettings
               {

@@ -16,8 +16,10 @@ public class MemberIndexProvider : IndexProvider<ContentItem>,
   public override void Describe(DescribeContext<ContentItem> context) =>
     context
       .For<MemberIndex>()
-      .Map(item => item.AsReal<Member>()
-        .WhenNonNullable(member => member.User.UserIds.FirstOrDefault()
+      .Map(item => item
+        .AsReal<Member>()
+        .WhenNonNullable(member => member.User.UserIds
+          .FirstOrDefault()
           .WhenNonNullable(userId =>
             new MemberIndex
             {
