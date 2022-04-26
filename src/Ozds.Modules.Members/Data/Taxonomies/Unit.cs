@@ -6,7 +6,7 @@ public static class Unit
     "4cqf2eeqqwadb4xechw3tbbsn0";
   public static readonly string KiloWattsPerHourId =
     "4815907rnr6raz2vfk91mn9xx2";
-  public static readonly string KiloWatts =
+  public static readonly string KiloWattsId =
     "400zwphkr96e12j3gz4hn50858";
   public static readonly string KiloVoltAmpereReactiveId =
     "4v6kbg9g8pv3d3a96npd8yycnz";

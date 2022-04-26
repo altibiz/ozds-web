@@ -7,6 +7,7 @@ namespace Ozds.Modules.Members;
 
 public class CenterIndex : MapIndex
 {
+  public string ContentItemId { get; init; } = default!;
   public string UserId { get; init; } = default!;
 }
 
@@ -22,6 +23,7 @@ public class CenterIndexProvider :
           .WhenNonNullable(userId =>
             new CenterIndex
             {
+              ContentItemId = item.ContentItemId,
               UserId = userId
             }))
         // NOTE: this is mandatory for Yessql

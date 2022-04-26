@@ -7,7 +7,7 @@ namespace Ozds.Modules.Members;
 
 public class CatalogueIndex : MapIndex
 {
-  public string CatalogueId { get; init; } = default!;
+  public string ContentItemId { get; init; } = default!;
 }
 
 public class CatalogueIndexProvider :
@@ -23,7 +23,7 @@ public class CatalogueIndexProvider :
           catalogue =>
             new CatalogueIndex
             {
-              CatalogueId = catalogue.ContentItem.ContentItemId
+              ContentItemId = item.ContentItemId
             })
         // NOTE: YesSql expects a null value
         .NonNullable());

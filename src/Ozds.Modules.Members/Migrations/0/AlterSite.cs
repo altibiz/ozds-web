@@ -14,6 +14,8 @@ public static partial class AlterSite
       part => part
         .Attachable()
         .Reusable()
+        .WithDisplayName("Obračunsko mjerno mjesto")
+        .WithDescription("Obračunsko mjerno mjesto")
         .WithField("Source",
           field => field
             .OfType("TaxonomyField")

@@ -8,5 +8,6 @@ public static partial class CreateCenterIndex
       this ISchemaBuilder schema) =>
     schema.CreateMapIndexTable<CenterIndex>(
       table => table
+        .Column<string>("ContentItemId", column => column.WithLength(50))
         .Column<string>("UserId", column => column.WithLength(50)));
 }

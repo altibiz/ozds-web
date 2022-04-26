@@ -8,8 +8,8 @@ public static partial class CreateCalculationIndex
       this ISchemaBuilder schema) =>
     schema.CreateMapIndexTable<CalculationIndex>(
       table => table
-        .Column<string>("ReceiptId", column => column.WithLength(50))
-        .Column<string>("OfficialId", column => column.WithLength(50))
-        .Column<string>("SiteId", column => column.WithLength(50))
+        .Column<string>("ContentItemId", column => column.WithLength(50))
+        .Column<string>("OfficialContentItemId", column => column.WithLength(50))
+        .Column<string>("SiteContentItemId", column => column.WithLength(50))
         .Column<string>("DeviceId", column => column.WithLength(50)));
 }

@@ -7,9 +7,9 @@ namespace Ozds.Modules.Members;
 
 public class CalculationIndex : MapIndex
 {
-  public string ReceiptId { get; init; } = default!;
-  public string OfficialId { get; init; } = default!;
-  public string SiteId { get; init; } = default!;
+  public string ContentItemId { get; init; } = default!;
+  public string OfficialContentItemId { get; init; } = default!;
+  public string SiteContentItemId { get; init; } = default!;
   public string DeviceId { get; init; } = default!;
 }
 
@@ -32,9 +32,9 @@ public class CalculationIndexProvider :
                   .WhenNonNullable(deviceId =>
                     new CalculationIndex
                     {
-                      ReceiptId = item.ContentItemId,
-                      OfficialId = officialId,
-                      SiteId = siteId,
+                      ContentItemId = item.ContentItemId,
+                      OfficialContentItemId = officialId,
+                      SiteContentItemId = siteId,
                       DeviceId = deviceId,
                     }))))),
           // NOTE: YesSql expects at least an empty enumerable here

@@ -7,6 +7,7 @@ namespace Ozds.Modules.Members;
 
 public class MemberIndex : MapIndex
 {
+  public string ContentItemId { get; init; } = default!;
   public string UserId { get; init; } = default!;
 }
 
@@ -23,6 +24,7 @@ public class MemberIndexProvider : IndexProvider<ContentItem>,
           .WhenNonNullable(userId =>
             new MemberIndex
             {
+              ContentItemId = item.ContentItemId,
               UserId = userId
             }))
         // NOTE: this is okay because YesSql expects null values

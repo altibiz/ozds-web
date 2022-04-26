@@ -8,7 +8,7 @@ public static partial class CreateContractIndex
       this ISchemaBuilder schema) =>
     schema.CreateMapIndexTable<ContractIndex>(
       table => table
-        .Column<string>("ContractId", column => column.WithLength(50))
+        .Column<string>("ContentItemId", column => column.WithLength(50))
         .Column<string>("CenterId", column => column.WithLength(50))
         .Column<string>("MemberId", column => column.WithLength(50)));
 }

@@ -8,5 +8,5 @@ public static partial class CreateCatalogueIndex
       this ISchemaBuilder schema) =>
     schema.CreateMapIndexTable<CatalogueIndex>(
       table => table
-        .Column<string>("CatalogueId", column => column.WithLength(50)));
+        .Column<string>("ContentItemId", column => column.WithLength(50)));
 }

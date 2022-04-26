@@ -7,7 +7,7 @@ namespace Ozds.Modules.Members;
 
 public class ContractIndex : MapIndex
 {
-  public string ContractId { get; init; } = default!;
+  public string ContentItemId { get; init; } = default!;
   public string CenterId { get; init; } = default!;
   public string MemberId { get; init; } = default!;
 }
@@ -26,7 +26,7 @@ public class ContractIndexProvider :
             .Select(memberId =>
               new ContractIndex
               {
-                ContractId = contract.ContentItem.ContentItemId,
+                ContentItemId = item.ContentItemId,
                 CenterId = centerId,
                 MemberId = memberId
               })),
