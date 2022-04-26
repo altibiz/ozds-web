@@ -6,6 +6,7 @@ namespace Ozds.Modules.Members;
 
 public class Contract : ContentPart
 {
+  public TextField ContractId { get; set; } = new();
   public ContentPickerField Center { get; set; } = new();
   public ContentPickerField Member { get; set; } = new();
   public DateField Date { get; set; } = new();

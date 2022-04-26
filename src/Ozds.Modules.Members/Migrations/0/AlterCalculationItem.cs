@@ -18,6 +18,7 @@ public static partial class AlterCalculationItem
         .WithPart("CalculationItem",
           part => part
           .WithPosition("0")
+          .WithDisplayName("Stavka obračuna")
           .WithSettings(
             new CalculationItemSettings
             {

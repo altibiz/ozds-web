@@ -9,7 +9,9 @@ public class CatalogueItem : ContentPart
 {
   TaxonomyField Tariff { get; set; } = new();
   TaxonomyField Unit { get; set; } = new();
-  NumericField UnitPrice { get; set; } = new();
+  TaxonomyField Currency { get; set; } = new();
+  NumericField Tax { get; set; } = new();
+  NumericField Price { get; set; } = new();
 }
 
 public class CatalogueItemSettings : IFieldEditorSettings

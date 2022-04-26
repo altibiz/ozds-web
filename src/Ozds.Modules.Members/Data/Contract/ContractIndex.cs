@@ -10,6 +10,7 @@ public class ContractIndex : MapIndex
   public string ContentItemId { get; init; } = default!;
   public string CenterId { get; init; } = default!;
   public string MemberId { get; init; } = default!;
+  public string ContractId { get; init; } = default!;
 }
 
 public class ContractIndexProvider :
@@ -28,7 +29,8 @@ public class ContractIndexProvider :
               {
                 ContentItemId = item.ContentItemId,
                 CenterId = centerId,
-                MemberId = memberId
+                MemberId = memberId,
+                ContractId = contract.ContractId.Text,
               })),
         // NOTE: YesSql expects at least an empty enumerable here
         Enumerable.Empty<ContractIndex>()));

@@ -1,5 +1,6 @@
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
+using OrchardCore.ContentFields.Settings;
 using OrchardCore.Title.Models;
 using OrchardCore.Lists.Models;
 using OrchardCore.Autoroute.Models;
@@ -15,24 +16,26 @@ public static partial class AlterCatalogue
       type => type
         .DisplayedAs("Katalog")
         .Creatable()
-        .Listable()
         .Securable()
-        .WithPart("Catalogue",
-          part => part
-            .WithPosition("0")
-            .WithSettings(
-              new CatalogueSettings
-              {
-              }))
+        .Draftable()
+        .Versionable()
         .WithPart("TitlePart",
           part => part
             .WithDisplayName("Naziv")
-            .WithPosition("1")
+            .WithPosition("0")
             .WithSettings(
               new TitlePartSettings
               {
                 RenderTitle = true,
                 Options = TitlePartOptions.EditableRequired,
+              }))
+        .WithPart("Catalogue",
+          part => part
+            .WithPosition("1")
+            .WithDisplayName("Katalog")
+            .WithSettings(
+              new CatalogueSettings
+              {
               }))
         .WithPart("AutoroutePart",
           part => part
@@ -72,5 +75,17 @@ public static partial class AlterCatalogue
 
   public static void AlterCataloguePart(
       this IContentDefinitionManager content) =>
-    content.AlterPartDefinition("Catalogue", part => { });
+    content.AlterPartDefinition("Catalogue",
+        part => part
+          .WithDisplayName("Katalog")
+          .WithDescription("Opis kataloga")
+          .WithField("Description",
+            field => field
+              .OfType("TextField")
+              .WithDisplayName("Opis")
+              .WithEditor("Textarea")
+              .WithSettings(
+                new TextFieldSettings
+                {
+                })));
 }

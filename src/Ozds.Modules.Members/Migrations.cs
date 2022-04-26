@@ -22,6 +22,8 @@ public sealed class Migrations : DataMigration
     Recipe.ExecuteCalculationItemStatusTaxonomy(this);
     Recipe.ExecuteTariffTaxonomy(this);
     Recipe.ExecutePersonTypeTaxonomy(this);
+    Recipe.ExecuteActivityTaxonomy(this);
+    Recipe.ExecuteContractTypeTaxonomy(this);
     if (Env.IsDevelopment())
     {
       Recipe.ExecuteTestSiteMeasurementSourceTaxonomy(this);

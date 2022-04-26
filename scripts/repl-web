@@ -1,22 +1,6 @@
 #!/usr/bin/env bash
 
 SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")";
-ROOT_DIR="$(dirname "$SCRIPT_DIR")";
 
-export ASPNETCORE_ENVIRONMENT=Production;
-export DOTNET_ENVIRONMENT=Production;
-export ORCHARD_APP_DATA="$ROOT_DIR/App_Data";
-
-echo -e "
-[OZDS] Cleaning '$ORCHARD_APP_DATA'...
-";
-rm -rf "$ORCHARD_APP_DATA";
-
-echo -e "
-[OZDS] Runnning with 'dotnet'...
-";
-dotnet \
-  run \
-  --configuration Debug \
-  --property:consoleLoggerParameters=ErrorsOnly \
-  --project "$ROOT_DIR/src/Ozds.Web/Ozds.Web.csproj";
+"$SCRIPT_DIR/clean-web";
+"$SCRIPT_DIR/watch-web";

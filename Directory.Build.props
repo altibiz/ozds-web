@@ -1,4 +1,5 @@
 <Project>
+<!--
   <ItemGroup>
     <PackageReference
       Include="StyleCop.Analyzers"
@@ -13,4 +14,5 @@
       Condition="$(MSBuildProjectExtension) == '.csproj'"
     />
   </ItemGroup>
+-->
 </Project>

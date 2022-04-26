@@ -7,6 +7,8 @@ namespace Ozds.Modules.Members;
 public class Center : ContentPart
 {
   public UserPickerField User { get; set; } = new();
+  public TextField Note { get; set; } = new();
+  public ContentPickerField PrimarySites { get; set; } = new();
 }
 
 public class CenterSettings : IFieldEditorSettings

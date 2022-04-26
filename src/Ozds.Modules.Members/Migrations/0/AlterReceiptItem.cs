@@ -84,11 +84,34 @@ public static partial class AlterReceiptItem
               {
                 Minimum = 0
               }))
+        .WithField("Tax",
+          field => field
+            .OfType("NumericField")
+            .WithDisplayName("PDV")
+            .WithPosition("5")
+            .WithSettings(
+              new NumericFieldSettings
+              {
+                Required = true,
+                Minimum = 0,
+                Maximum = 1
+              }))
         .WithField("InTotal",
           field => field
             .OfType("NumericField")
+            .WithDisplayName("Ukupno bez PDV-a")
+            .WithPosition("6")
+            .WithSettings(
+              new NumericFieldSettings
+              {
+                Required = true,
+                Minimum = 0,
+              }))
+        .WithField("InTotalWithTax",
+          field => field
+            .OfType("NumericField")
             .WithDisplayName("Ukupno")
-            .WithPosition("5")
+            .WithPosition("7")
             .WithSettings(
               new NumericFieldSettings
               {

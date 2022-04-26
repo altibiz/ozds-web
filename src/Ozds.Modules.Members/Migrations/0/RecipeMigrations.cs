@@ -56,6 +56,14 @@ public static partial class RecipeMigrations
         "0/TestSiteMeasurementSourceTaxonomy.recipe.json",
         migration);
 
+  public static IRecipeMigrator ExecuteActivityTaxonomy(
+      this IRecipeMigrator recipe, IDataMigration migration) =>
+    recipe.Execute("0/ActivityTaxonomy.recipe.json", migration);
+
+  public static IRecipeMigrator ExecuteContractTypeTaxonomy(
+      this IRecipeMigrator recipe, IDataMigration migration) =>
+    recipe.Execute("0/ContractTypeTaxonomy.recipe.json", migration);
+
   public static IRecipeMigrator ExecuteCommandCreateTestUsers(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/CommandCreateTestUsers.recipe.json", migration);

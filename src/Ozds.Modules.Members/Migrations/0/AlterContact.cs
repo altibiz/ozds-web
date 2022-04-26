@@ -19,7 +19,7 @@ public static partial class AlterContact
           field => field
             .OfType("TextField")
             .WithDisplayName("Ime")
-            .WithPosition("0")
+            .WithPosition("2")
             .WithSettings(
               new TextFieldSettings
               {
@@ -29,7 +29,7 @@ public static partial class AlterContact
           field => field
             .OfType("TextField")
             .WithDisplayName("Srednje ime")
-            .WithPosition("1")
+            .WithPosition("3")
             .WithSettings(
               new TextFieldSettings
               {
@@ -39,7 +39,7 @@ public static partial class AlterContact
           field => field
             .OfType("TextField")
             .WithDisplayName("Prezime")
-            .WithPosition("2")
+            .WithPosition("4")
             .WithSettings(
               new TextFieldSettings
               {
@@ -50,7 +50,7 @@ public static partial class AlterContact
             .OfType("TextField")
             .WithDisplayName("Broj telefona")
             .WithEditor("Tel")
-            .WithPosition("3")
+            .WithPosition("5")
             .WithSettings(
               new TextFieldSettings
               {
@@ -61,7 +61,7 @@ public static partial class AlterContact
             .OfType("TextField")
             .WithDisplayName("Email")
             .WithEditor("Email")
-            .WithPosition("4")
+            .WithPosition("6")
             .WithSettings(
               new TextFieldSettings
               {
@@ -72,7 +72,7 @@ public static partial class AlterContact
             .OfType("TaxonomyField")
             .WithDisplayName("Tip")
             .WithDescription("Tip osobe")
-            .WithPosition("5")
+            .WithPosition("7")
             .WithSettings(
               new TaxonomyFieldSettings
               {

@@ -16,19 +16,15 @@ public static partial class AlterCatalogueItem
         .Creatable()
         .Listable()
         .Securable()
-        .WithPart("CatalogueItem", part => part
-          .WithPosition("0")
-          .WithSettings(
-            new CatalogueItemSettings
-            {
-            }))
+        .Draftable()
+        .Versionable()
         .WithPart("TitlePart", part => part
-          .WithPosition("1")
+          .WithPosition("0")
           .WithDisplayName("Naziv")
           .WithSettings(
             new TitlePartSettings
             {
-              Options = TitlePartOptions.GeneratedHidden,
+              Options = TitlePartOptions.EditableRequired,
               Pattern =
               @"
                 {%- assign catalogueItem = ContentItem.Content.CatalogueItem -%}
@@ -38,6 +34,13 @@ public static partial class AlterCatalogueItem
                 {%- assign measurementUnit = measurementUnits[0] | content_item_id -%}
                 {{- tariff }} {{ measurementUnit -}}
               "
+            }))
+        .WithPart("CatalogueItem", part => part
+          .WithPosition("1")
+          .WithDisplayName("Stavka kataloga")
+          .WithSettings(
+            new CatalogueItemSettings
+            {
             })));
 
   public static void AlterCatalogueItemPart(
@@ -45,6 +48,7 @@ public static partial class AlterCatalogueItem
     content.AlterPartDefinition("CatalogueItem",
       part => part
         .Attachable()
+        .Reusable()
         .WithDisplayName("Stavka kataloga")
         .WithDescription("Cijena i mjerna jedinica u određenoj tarifi")
         .WithField("Tariff",
@@ -68,13 +72,38 @@ public static partial class AlterCatalogueItem
               new TaxonomyFieldSettings
               {
                 TaxonomyContentItemId = "4cqf2eeqqwadb4xechw3tbbsn0",
+                Required = true,
                 Unique = true
               }))
-        .WithField("UnitPrice",
+        .WithField("Currency",
+          field => field
+            .OfType("TaxonomyField")
+            .WithDisplayName("Valuta")
+            .WithPosition("2")
+            .WithSettings(
+              new TaxonomyFieldSettings
+              {
+                TaxonomyContentItemId = "4098639c3zswm084zyay3je1m9",
+                Required = true,
+                Unique = true
+              }))
+        .WithField("Tax",
+          field => field
+            .OfType("NumericField")
+            .WithDisplayName("PDV")
+            .WithPosition("5")
+            .WithSettings(
+              new NumericFieldSettings
+              {
+                Required = true,
+                Minimum = 0,
+                Maximum = 1
+              }))
+        .WithField("Price",
           field => field
             .OfType("NumericField")
             .WithDisplayName("Jedinična cijena")
-            .WithPosition("2")
+            .WithPosition("3")
             .WithSettings(
               new NumericFieldSettings
               {

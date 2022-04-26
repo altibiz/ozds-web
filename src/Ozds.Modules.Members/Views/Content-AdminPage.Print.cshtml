@@ -1,10 +1,10 @@
 ﻿@{
 	if (!User.IsInRole("Administrator"))
 	{
-  <div>Access denied</div>
+    <div>Access denied</div>
 	}
 	else
 	{
-  @await DisplayAsync(Model.Content)
+    @await DisplayAsync(Model.Content)
 	}
 }

@@ -19,7 +19,7 @@ public static partial class AlterLocation
           field => field
             .OfType("TextField")
             .WithDisplayName("Adresa")
-            .WithPosition("0")
+            .WithPosition("2")
             .WithSettings(
               new TextFieldSettings
               {
@@ -29,7 +29,7 @@ public static partial class AlterLocation
           field => field
             .OfType("TextField")
             .WithDisplayName("Grad/Općina")
-            .WithPosition("1")
+            .WithPosition("3")
             .WithSettings(
               new TextFieldSettings
               {
@@ -39,7 +39,7 @@ public static partial class AlterLocation
           field => field
             .OfType("TextField")
             .WithDisplayName("Poštanski broj")
-            .WithPosition("2")
+            .WithPosition("4")
             .WithSettings(
               new TextFieldSettings
               {
@@ -51,7 +51,7 @@ public static partial class AlterLocation
             .WithDisplayName("Županija")
             .WithEditor("Tags")
             .WithDisplayMode("Tags")
-            .WithPosition("3")
+            .WithPosition("5")
             .WithSettings(
               new TaxonomyFieldSettings
               {

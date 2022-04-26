@@ -1,0 +1,71 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "4fm60kwhbgryxyasm37nrdk5de",
+          "ContentItemVersionId": "4wz2k2q28amv5xxwyk568z7z5g",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Aktivnost",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-04-26T13:25:57.5629696Z",
+          "PublishedUtc": "2022-04-26T13:25:57.5710347Z",
+          "CreatedUtc": "2022-04-26T13:25:25.2941983Z",
+          "Owner": "46w8xwt3z43x427zp01d52k2m9",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Aktivnost"
+          },
+          "AliasPart": {
+            "Alias": "activity"
+          },
+          "AutoroutePart": {
+            "Path": "aktivnost",
+
+            "SetHomepage": false,
+            "Disabled": false,
+            "RouteContainedItems": false,
+            "Absolute": false
+          },
+          "TaxonomyPart": {
+            "TermContentType": "Tag",
+            "Terms": [
+              {
+                "ContentItemId": "41nwrqdps5a23rqtbk4besbw51",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Ostalo",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-04-26T13:25:56.2963898Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "Tag": {},
+                "TitlePart": {
+                  "Title": "Ostalo"
+                },
+                "AutoroutePart": {
+                  "Path": "ostalo",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4fm60kwhbgryxyasm37nrdk5de"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

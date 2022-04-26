@@ -16,17 +16,10 @@ public static partial class AlterCalculation
         .Creatable()
         .Listable()
         .Securable()
-        .WithPart("Calculation",
-          part => part
-            .WithPosition("0")
-            .WithSettings(
-              new CalculationSettings
-              {
-              }))
         .WithPart("TitlePart",
           part => part
             .WithDisplayName("Naziv")
-            .WithPosition("1")
+            .WithPosition("0")
             .WithSettings(
               new TitlePartSettings
               {
@@ -44,6 +37,14 @@ public static partial class AlterCalculation
                   {%- assign dateTo = calc.DateTo.Value | date: '%Y-%m-%d' -%}
                   {{- source }} {{ deviceId }} {{ dateFrom }} - {{ dateTo -}}
                 """,
+              }))
+        .WithPart("Calculation",
+          part => part
+            .WithDisplayName("Obračun")
+            .WithPosition("1")
+            .WithSettings(
+              new CalculationSettings
+              {
               }))
         .WithPart("BagPart",
           part => part

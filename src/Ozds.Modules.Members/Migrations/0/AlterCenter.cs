@@ -18,18 +18,11 @@ public static partial class AlterCenter
         .Listable()
         .Draftable()
         .Securable()
-        .WithPart("Center",
-          part => part
-            .WithPosition("0")
-            .WithSettings(
-              new CenterSettings
-              {
-              }))
         .WithPart("TitlePart",
           part => part
             .WithDisplayName("Naziv")
             .WithDescription("Naziv zatvorenog distribucijskog sustava")
-            .WithPosition("1")
+            .WithPosition("0")
             .WithSettings(
               new TitlePartSettings
               {
@@ -54,34 +47,65 @@ public static partial class AlterCenter
                   {%- endif -%}
                 ",
               }))
+        .WithPart("Center",
+          part => part
+            .WithPosition("1")
+            .WithDisplayName("Centar")
+            .WithSettings(
+              new CenterSettings
+              {
+              }))
+        .WithPart("Person",
+          part => part
+            .WithDisplayName("Odgovorna osoba")
+            .WithDescription(
+              "Poslovni i kontakt podaci odgovorne osobe " +
+              "zatvorenog distribucijskog sustava")
+            .WithPosition("2")
+            .WithSettings(
+              new PersonSettings
+              {
+              }))
+        .WithPart("Contact",
+          part => part
+            .WithDisplayName("Kontakt")
+            .WithDescription(
+              "Podaci za kontaktiranje " +
+              "zatvorenog distribucijskog sustava")
+            .WithPosition("3")
+            .WithSettings(
+              new ContactSettings
+              {
+              }))
+        .WithPart("Location",
+          part => part
+            .WithDisplayName("Adresa dostave")
+            .WithDescription(
+              "Adresa dostave dokumenata " +
+              "zatvorenog distribucijskog sustava")
+            .WithPosition("4")
+            .WithSettings(
+              new LocationSettings
+              {
+              }))
         .WithPart("AutoroutePart",
           part => part
             .WithDisplayName("Ruta")
             .WithDescription(
-              "Automatski generirana ruta zatvorenog distribucijskog sustava")
-            .WithPosition("2")
+              "Automatski generirana ruta " +
+              "zatvorenog distribucijskog sustava")
+            .WithPosition("5")
             .WithSettings(
               new AutoroutePartSettings
               {
                 ManageContainedItemRoutes = true,
                 Pattern = @"{{ ContentItem.Content.TitlePart.Title | slugify }}"
               }))
-        .WithPart("Person",
-          part => part
-            .WithDisplayName("Zastupna osoba")
-            .WithDescription(
-              "Poslovni i kontakt podaci zastupne osobe " +
-              "zatvorenog distribucijskog sustava")
-            .WithPosition("3")
-            .WithSettings(
-              new PersonSettings
-              {
-              }))
         .WithPart("ListPart",
           part => part
             .WithDisplayName("Članovi")
             .WithDescription("Članovi zatvorenog distribucijskog sustava")
-            .WithPosition("4")
+            .WithPosition("6")
             .WithSettings(
               new ListPartSettings
               {
@@ -108,6 +132,17 @@ public static partial class AlterCenter
                 DisplayAllUsers = true,
                 Multiple = false,
               }))
+        .WithField("Note",
+          field => field
+            .OfType("TextField")
+            .WithEditor("Textarea")
+            .WithDisplayName("Napomena")
+            .WithPosition("1")
+            .WithSettings(
+              new TextFieldSettings
+              {
+                Required = false,
+              }))
         .WithField("PrimarySites",
           part => part
             .OfType("ContentPickerField")
@@ -115,7 +150,7 @@ public static partial class AlterCenter
             .WithDescription(
               "Primarna obračunska mjerna mjesta " +
               "zatvorenog distribucijskog sustava")
-            .WithPosition("1")
+            .WithPosition("2")
             .WithSettings(
               new ContentPickerFieldSettings
               {

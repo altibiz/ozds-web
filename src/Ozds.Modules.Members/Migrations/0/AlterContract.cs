@@ -3,6 +3,7 @@ using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Flows.Models;
 using OrchardCore.Title.Models;
 using OrchardCore.Autoroute.Models;
+using OrchardCore.Taxonomies.Settings;
 using OrchardCore.ContentFields.Settings;
 
 namespace Ozds.Modules.Members.M0;
@@ -19,17 +20,10 @@ public static partial class AlterContract
         .Versionable()
         .Listable()
         .Securable()
-        .WithPart("Contract",
-          part => part
-            .WithPosition("0")
-            .WithSettings(
-              new ContractSettings
-              {
-              }))
         .WithPart("TitlePart",
           part => part
             .WithDisplayName("Naziv")
-            .WithPosition("1")
+            .WithPosition("0")
             .WithSettings(
               new TitlePartSettings
               {
@@ -38,33 +32,44 @@ public static partial class AlterContract
                 Pattern =
                 @"
                   {%- assign contract = ContentItem.Content.Contract -%}
+                  {%- assign contractId = contract.ContractId -%}
                   {%- assign centers = contract.Center.ContainedItemIds -%}
                   {%- assign center = centers[0] | content_item_id -%}
                   {%- assign members = contract.Center.ContainedItemIds -%}
                   {%- assign member = members[0] | content_item_id -%}
                   {%- if member -%}
-                    {{- center }} {{ member -}}
+                    {{- contractId }} {{ center }} {{ member -}}
                   {%- else -%}
-                    {{- center -}}
+                    {{- contractId }} {{ center -}}
                   {%- endif -%}
                 ",
               }))
-        .WithPart("AutoroutePart",
+        .WithPart("Contract",
           part => part
-            .WithDisplayName("Ruta")
-            .WithDescription("Automatski generirana ruta ugovora")
-            .WithPosition("2")
+            .WithDisplayName("Ugovor")
+            .WithPosition("1")
             .WithSettings(
-              new AutoroutePartSettings
+              new ContractSettings
               {
-                ManageContainedItemRoutes = true,
-                Pattern = @"{{ ContentItem.Content.TitlePart.Title | slugify }}"
+              }))
+        .WithPart("BagPart",
+          part => part
+            .WithDisplayName("Stranke")
+            .WithDescription("Stranke ugovora")
+            .WithPosition("3")
+            .WithSettings(
+              new BagPartSettings
+              {
+                ContainedContentTypes = new[]
+                {
+                  "Person"
+                },
               }))
         .WithPart("BagPart",
           part => part
             .WithDisplayName("Stavke")
             .WithDescription("Cjenovnik ugovora")
-            .WithPosition("3")
+            .WithPosition("2")
             .WithSettings(
               new BagPartSettings
               {
@@ -73,24 +78,44 @@ public static partial class AlterContract
                   "CatalogueItem"
                 },
               }))
-        .WithPart("BagPart",
+        .WithPart("AutoroutePart",
           part => part
-            .WithDisplayName("Stranke")
-            .WithDescription("Stranke ugovora")
+            .WithDisplayName("Ruta")
+            .WithDescription("Automatski generirana ruta ugovora")
             .WithPosition("4")
             .WithSettings(
-              new BagPartSettings
+              new AutoroutePartSettings
               {
-                ContainedContentTypes = new[]
-                {
-                  "Person"
-                },
+                ManageContainedItemRoutes = true,
+                Pattern = @"{{ ContentItem.Content.TitlePart.Title | slugify }}"
               })));
 
   public static void AlterContractPart(
       this IContentDefinitionManager content) =>
     content.AlterPartDefinition("Contract",
       part => part
+        .WithField("ContractId",
+          field => field
+            .OfType("TextField")
+            .WithDisplayName("Identifikator ugovora")
+            .WithPosition("0")
+            .WithSettings(
+              new DateFieldSettings
+              {
+                Required = true
+              }))
+        .WithField("Type",
+          field => field
+            .OfType("TaxonomyField")
+            .WithDisplayName("Tip ugovora")
+            .WithPosition("1")
+            .WithSettings(
+              new TaxonomyFieldSettings
+              {
+                Required = true,
+                Unique = true,
+                TaxonomyContentItemId = "44r3168eak25bvqpbmy2fs3pns",
+              }))
         .WithField("Center",
           field => field
             .OfType("ContentPickerField")
@@ -98,7 +123,7 @@ public static partial class AlterContract
             .WithDescription(
               "Zatvoreni distribucijski sustav " +
               "s kojim je sklopljen ugovor")
-            .WithPosition("0")
+            .WithPosition("2")
             .WithSettings(
               new ContentPickerFieldSettings
               {
@@ -114,7 +139,7 @@ public static partial class AlterContract
             .OfType("ContentPickerField")
             .WithDisplayName("Član")
             .WithDescription("Član s kojim je sklopljen ugovor")
-            .WithPosition("1")
+            .WithPosition("3")
             .WithSettings(
               new ContentPickerFieldSettings
               {
@@ -130,7 +155,7 @@ public static partial class AlterContract
             .OfType("DateField")
             .WithDisplayName("Datum")
             .WithDescription("Datum kada je sklopljen ugovor")
-            .WithPosition("2")
+            .WithPosition("4")
             .WithSettings(
               new DateFieldSettings
               {
@@ -141,7 +166,7 @@ public static partial class AlterContract
             .OfType("DateField")
             .WithDisplayName("Datum od")
             .WithDescription("Početni datum valjanosti ugovora")
-            .WithPosition("3")
+            .WithPosition("5")
             .WithSettings(
               new DateFieldSettings
               {
@@ -152,7 +177,7 @@ public static partial class AlterContract
             .OfType("DateField")
             .WithDisplayName("Datum do")
             .WithDescription("Krajnji datum valjanosti ugovora")
-            .WithPosition("4")
+            .WithPosition("6")
             .WithSettings(
               new DateFieldSettings
               {

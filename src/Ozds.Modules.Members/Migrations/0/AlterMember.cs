@@ -2,6 +2,7 @@ using OrchardCore.ContentFields.Settings;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
+using OrchardCore.Taxonomies.Settings;
 
 namespace Ozds.Modules.Members.M0;
 
@@ -15,18 +16,11 @@ public static partial class AlterMember
         .Creatable()
         .Listable()
         .Securable()
-        .WithPart("Member",
-          part => part
-            .WithPosition("0")
-            .WithSettings(
-              new MemberSettings
-              {
-              }))
         .WithPart("TitlePart",
           part => part
             .WithDisplayName("Naziv")
             .WithDisplayName("Naziv člana")
-            .WithPosition("1")
+            .WithPosition("0")
             .WithSettings(
               new TitlePartSettings
               {
@@ -51,13 +45,39 @@ public static partial class AlterMember
                   {%- endif -%}
                 ",
               }))
+        .WithPart("Member",
+          part => part
+            .WithPosition("1")
+            .WithDisplayName("Član")
+            .WithSettings(
+              new MemberSettings
+              {
+              }))
         .WithPart("Person",
           part => part
-            .WithDisplayName("Poslovni i kontakt podaci")
+            .WithDisplayName("Osoba")
             .WithDescription("Poslovni i kontakt podaci člana")
             .WithPosition("2")
             .WithSettings(
               new PersonSettings
+              {
+              }))
+        .WithPart("Contact",
+          part => part
+            .WithDisplayName("Kontakt")
+            .WithDescription("Podaci za kontaktiranje člana")
+            .WithPosition("3")
+            .WithSettings(
+              new ContactSettings
+              {
+              }))
+        .WithPart("Location",
+          part => part
+            .WithDisplayName("Adresa dostave")
+            .WithDescription("Adresa dostave dokumenata člana")
+            .WithPosition("4")
+            .WithSettings(
+              new LocationSettings
               {
               })));
 
@@ -69,7 +89,7 @@ public static partial class AlterMember
             .OfType("UserPickerField")
             .WithDisplayName("Korisnik")
             .WithDescription("Korisnički račun člana")
-            .WithPosition("0")
+            .WithPosition("1")
             .WithSettings(
               new UserPickerFieldSettings
               {
@@ -77,13 +97,68 @@ public static partial class AlterMember
                 DisplayAllUsers = true,
                 Multiple = false,
               }))
+        .WithField("Activity",
+          field => field
+            .OfType("TaxonomyField")
+            .WithDisplayName("Djelatnost")
+            .WithPosition("2")
+            .WithSettings(
+              new TaxonomyFieldSettings
+              {
+                Required = true,
+                Unique = true,
+                TaxonomyContentItemId = "4fm60kwhbgryxyasm37nrdk5de"
+              }))
+        .WithField("ConnectionContract",
+          field => field
+            .OfType("ContentPickerFieldSettings")
+            .WithDisplayName("Ugovor o priključenju")
+            .WithPosition("3")
+            .WithSettings(
+              new ContentPickerFieldSettings
+              {
+                Multiple = false,
+                Required = true,
+                DisplayedContentTypes =
+                new[]
+                {
+                  "Contract"
+                }
+              }))
+        .WithField("UsageContract",
+          field => field
+            .OfType("ContentPickerFieldSettings")
+            .WithDisplayName("Ugovor o korištenju i opskrbi")
+            .WithPosition("4")
+            .WithSettings(
+              new ContentPickerFieldSettings
+              {
+                Multiple = false,
+                Required = true,
+                DisplayedContentTypes =
+                new[]
+                {
+                  "Contract"
+                }
+              }))
+        .WithField("Note",
+          field => field
+            .OfType("TextField")
+            .WithEditor("Textarea")
+            .WithDisplayName("Napomena")
+            .WithPosition("5")
+            .WithSettings(
+              new TextFieldSettings
+              {
+                Required = false,
+              }))
         .WithField("SecondarySites",
           part => part
             .OfType("ContentPickerField")
             .WithDisplayName("Sekundarna obračunska mjerna mjesta")
             .WithDescription(
               "Sekundarna obračunska mjerna mjesta člana")
-            .WithPosition("1")
+            .WithPosition("6")
             .WithSettings(
               new ContentPickerFieldSettings
               {

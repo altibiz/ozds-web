@@ -19,7 +19,7 @@ public static partial class AlterPerson
         .Versionable()
         .WithPart("Person",
           part => part
-          .WithPosition("0")
+          .WithPosition("2")
           .WithSettings(
             new PersonSettings
             {
@@ -37,7 +37,7 @@ public static partial class AlterPerson
           field => field
             .OfType("TextField")
             .WithDisplayName("Ime")
-            .WithPosition("0")
+            .WithPosition("2")
             .WithSettings(
               new TextFieldSettings
               {
@@ -47,7 +47,7 @@ public static partial class AlterPerson
           field => field
             .OfType("TextField")
             .WithDisplayName("Srednje ime")
-            .WithPosition("1")
+            .WithPosition("3")
             .WithSettings(
               new TextFieldSettings
               {
@@ -57,7 +57,7 @@ public static partial class AlterPerson
           field => field
             .OfType("TextField")
             .WithDisplayName("Prezime")
-            .WithPosition("2")
+            .WithPosition("4")
             .WithSettings(
               new TextFieldSettings
               {
@@ -67,7 +67,7 @@ public static partial class AlterPerson
           field => field
             .OfType("TextField")
             .WithDisplayName("OIB")
-            .WithPosition("3")
+            .WithPosition("5")
             .WithSettings(
               new TextFieldSettings
               {
@@ -77,7 +77,7 @@ public static partial class AlterPerson
           field => field
             .OfType("TextField")
             .WithDisplayName("Adresa")
-            .WithPosition("4")
+            .WithPosition("6")
             .WithSettings(
               new TextFieldSettings
               {
@@ -87,7 +87,7 @@ public static partial class AlterPerson
           field => field
             .OfType("TextField")
             .WithDisplayName("Grad/Općina")
-            .WithPosition("5")
+            .WithPosition("7")
             .WithSettings(
               new TextFieldSettings
               {
@@ -97,7 +97,7 @@ public static partial class AlterPerson
           field => field
             .OfType("TextField")
             .WithDisplayName("Poštanski broj")
-            .WithPosition("6")
+            .WithPosition("8")
             .WithSettings(
               new TextFieldSettings
               {
@@ -109,7 +109,7 @@ public static partial class AlterPerson
             .WithDisplayName("Županija")
             .WithEditor("Tags")
             .WithDisplayMode("Tags")
-            .WithPosition("7")
+            .WithPosition("9")
             .WithSettings(
               new TaxonomyFieldSettings
               {
@@ -122,7 +122,7 @@ public static partial class AlterPerson
             .OfType("TextField")
             .WithDisplayName("Broj telefona")
             .WithEditor("Tel")
-            .WithPosition("8")
+            .WithPosition("10")
             .WithSettings(
               new TextFieldSettings
               {
@@ -133,7 +133,7 @@ public static partial class AlterPerson
             .OfType("TextField")
             .WithDisplayName("Email")
             .WithEditor("Email")
-            .WithPosition("9")
+            .WithPosition("11")
             .WithSettings(
               new TextFieldSettings
               {
@@ -144,7 +144,7 @@ public static partial class AlterPerson
             .OfType("TaxonomyField")
             .WithDisplayName("Tip")
             .WithDescription("Tip osobe")
-            .WithPosition("10")
+            .WithPosition("12")
             .WithSettings(
               new TaxonomyFieldSettings
               {

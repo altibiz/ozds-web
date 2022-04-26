@@ -15,12 +15,9 @@ public static partial class AlterTag
         .Creatable()
         .Listable()
         .Securable()
-        .WithPart("Tag",
-          part => part
-            .WithPosition("0"))
         .WithPart("TitlePart",
           part => part
-            .WithPosition("1")
+            .WithPosition("0")
             .WithDisplayName("Naziv")
             .WithDisplayName("Naziv značajke")
             .WithSettings(
@@ -29,6 +26,9 @@ public static partial class AlterTag
                 RenderTitle = true,
                 Options = TitlePartOptions.EditableRequired,
               }))
+        .WithPart("Tag",
+          part => part
+            .WithPosition("1"))
         .WithPart("AutoroutePart",
           part => part
             .WithPosition("2")

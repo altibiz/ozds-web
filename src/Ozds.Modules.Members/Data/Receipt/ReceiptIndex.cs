@@ -1,17 +1,15 @@
 using YesSql.Indexes;
 using OrchardCore.Data;
 using OrchardCore.ContentManagement;
-using OrchardCore.ContentManagement.Metadata;
 using Ozds.Util;
 
 namespace Ozds.Modules.Members;
 
 public class ReceiptIndex : MapIndex
 {
-  public string OfficialId { get; init; } = default!;
-  // NOTE: conflicts with YesSql DocumentId column
-  public string ReceiptDocumentId { get; init; } = default!;
-  public string Partner { get; init; } = default!;
+  public string ContentItemId { get; init; } = default!;
+  public string OfficialContentItemId { get; init; } = default!;
+  public string ContractContentItemId { get; init; } = default!;
 }
 
 public class ReceiptIndexProvider :
@@ -22,16 +20,18 @@ public class ReceiptIndexProvider :
       DescribeContext<ContentItem> context) =>
     context
       .For<ReceiptIndex>()
-      .Map(contentItem => contentItem.AsReal<Receipt>()
+      .Map(item => item.AsReal<Receipt>()
         .WhenNonNullable(receipt => receipt.Official.ContentItemIds
           .FirstOrDefault()
-          .WhenNonNullable(officialId =>
-            new ReceiptIndex
-            {
-              ReceiptDocumentId = receipt.DocumentId.Text,
-              OfficialId = officialId,
-              Partner = receipt.Partner.Text,
-            }))
+          .WhenNonNullable(officialId => receipt.Contract.ContentItemIds
+            .FirstOrDefault()
+            .WhenNonNullable(contractId =>
+              new ReceiptIndex
+              {
+                ContentItemId = item.ContentItemId,
+                OfficialContentItemId = officialId,
+                ContractContentItemId = contractId,
+              })))
         // NOTE: this is okay because YesSql expects null values
         .NonNullable());
 }
