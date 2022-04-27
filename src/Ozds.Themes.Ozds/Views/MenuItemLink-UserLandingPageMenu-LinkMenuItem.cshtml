@@ -1,34 +1,35 @@
 ﻿@using OrchardCore.ContentManagement
 @using OrchardCore.Menu.Models
+
 @{
-    ContentItem contentItem = Model.ContentItem;
+  ContentItem contentItem = Model.ContentItem;
 
+  var iconTxt = contentItem.Content.LinkMenuItem.Icon.Text;
 
-    var iconTxt = contentItem.Content.LinkMenuItem.Icon.Text;
+  var linkMenuItemPart = contentItem.As<LinkMenuItemPart>();
 
-    var linkMenuItemPart = contentItem.As<LinkMenuItemPart>();
+  var url = linkMenuItemPart.Url;
+  if (url.StartsWith('/'))
+  {
+    url = '~' + url;
+  }
 
-    TagBuilder tag = Tag(Model, "a");
+  if (url.StartsWith("~/", StringComparison.Ordinal))
+  {
+    url = Url.Content(linkMenuItemPart.Url);
+  }
 
-    var url = linkMenuItemPart.Url;
-    if (url.StartsWith('/'))
-    {
-        url = '~' + url;
-    }
+  TagBuilder tag = Tag(Model, "a");
+  tag.AddCssClass("fa " + iconTxt);
+  tag.Attributes["href"] = url;
+  tag.InnerHtml.Append(contentItem.DisplayText);
 
-    if (url.StartsWith("~/", StringComparison.Ordinal))
-    {
-        url = Url.Content(linkMenuItemPart.Url);
-    }
-
-    tag.AddCssClass("fa " + iconTxt);
-
-    tag.Attributes["href"] = url;
-    tag.InnerHtml.Append(contentItem.DisplayText);
-
-    <a href="@url">
-        <div class="icon-box"><i class="far @iconTxt"></i></div>
-        <span>@contentItem.DisplayText</span>
-    </a>
-
+  <a href="@url">
+    <div class="icon-box">
+      <i class="far @iconTxt"></i>
+    </div>
+    <span>
+      @contentItem.DisplayText
+    </span>
+  </a>
 }

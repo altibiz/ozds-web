@@ -24,7 +24,7 @@ public class PrintModel : PageModel
   {
     fileName = string.IsNullOrWhiteSpace(fileName) ? contentId : fileName;
     var docUrl = string.Format(
-        "https://{0}/Members/Print/{1}/", Request.Host, contentId);
+        "https://{0}/Ozds.Modules.Members/Print/{1}/", Request.Host, contentId);
     return Redirect(string.Format(DownloadFormat, fileName, docUrl));
   }
 

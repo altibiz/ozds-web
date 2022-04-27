@@ -3,120 +3,195 @@
 @using OrchardCore.Settings
 @using OrchardCore.Users
 @using OrchardCore.Users.Models
+@using Ozds.Util
+
 @model OrchardCore.Users.ViewModels.LoginViewModel
 
-@inject SignInManager<IUser> SignInManager
 @inject ISiteService SiteService
+@inject SignInManager<IUser> SignInManager
 @inject UserManager<IUser> UserManager;
 
 @{
 	ViewLayout = "Layout__Login";
 
-	var userCanRegister = (await SiteService.GetSiteSettingsAsync()).As<RegistrationSettings>().UsersCanRegister == UserRegistrationType.AllowRegistration;
-	var allowResetPassword = (await SiteService.GetSiteSettingsAsync()).As<ResetPasswordSettings>().AllowResetPassword;
-	var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-	var disableLocalLogin = (await SiteService.GetSiteSettingsAsync()).As<LoginSettings>().DisableLocalLogin;
+	var siteSettings = await SiteService.GetSiteSettingsAsync();
+  var registrationSettings = siteSettings.As<RegistrationSettings>();
+  var resetPasswordSettings = siteSettings.As<ResetPasswordSettings>();
+  var loginSettings = siteSettings.As<LoginSettings>();
+
+  var externalAuthSchemes = await SignInManager
+      .GetExternalAuthenticationSchemesAsync();
+
+	var userCanRegister =
+      registrationSettings.UsersCanRegister ==
+      UserRegistrationType.AllowRegistration;
+	var allowResetPassword = resetPasswordSettings.AllowResetPassword;
+	var disableLocalLogin = loginSettings.DisableLocalLogin;
+
+
+	var loginProviders = externalAuthSchemes.ToList();
 }
+
 <style asp-name="font-awesome" version="5"></style>
 <script asp-name="ozdstheme-custom"></script>
 
 @{ Html.RenderPartial("_Header", @T["Log In"].Value); }
+
 <div class="container login-container">
-
 	<div class="row">
-  @if (!disableLocalLogin)
-  {
-  	<div class="col-md-6 @(loginProviders.Count == 0 ? "offset-md-0" : String.Empty)  fs-6">
-    <h4>@T["Log in"]</h4>
-    <hr />
-    <span asp-validation-for="UserName" class="text-danger"></span>
+    @if (!disableLocalLogin)
+    {
+      <div class='col-md-6 fs-6
+          @(loginProviders.Count == 0 ? "offset-md-0" : String.Empty)'>
+        <h4>
+          @T["Log in"]
+        </h4>
 
-                <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" id="auth-form">
-                    <div asp-validation-summary="All" class="text-danger"></div>
-                    <div class="form-floating">
-                        <input asp-for="UserName" class="form-control content-preview-text" autofocus tabindex="1" placeholder="smth" />
-                        <label asp-for="UserName">@T["Username or email address"]</label>
-                    </div>
+        <hr />
+        <span asp-validation-for="UserName" class="text-danger">
+        </span>
 
-                    <div class="form-floating">
-                        <input asp-for="Password" class="form-control content-preview-text" tabindex="2" placeholder="smth" />
-                        <label asp-for="Password">@T["Password"]</label>
-                    </div>
-                    <div class="form-check  fs-6 ">
-                        <input asp-for="RememberMe" class="form-check-input" tabindex="3" placeholder="smth">
-                        <label asp-for="RememberMe" class="custom-control-label">@T["Remember me"]</label>
-                    </div>
-                    <div class="form-check  fs-6 ">
-                        <label asp-for="Password" class="mb-4 fs-6">
-                            <a asp-controller="ResetPassword" asp-action="ForgotPassword" class="label-link">@T["Forgot your password?"]</a>
-                        </label>
-                    </div>
-                    @await RenderSectionAsync("AfterLogin", required: false)
-                    <button type="submit" class="btn btn-primary" tabindex="4">@T["Log in"]</button>
-                </form>
-  	</div>
+        <form
+            asp-controller="Account"
+            asp-action="Login"
+            asp-route-returnurl='@ViewData["ReturnUrl"]'
+            method="post"
+            id="auth-form">
+          <div asp-validation-summary="All" class="text-danger">
+          </div>
 
+          <div class="form-floating">
+            <input
+                asp-for="UserName"
+                class="form-control content-preview-text"
+                autofocus tabindex="1"
+                placeholder="smth" />
+            <label asp-for="UserName">
+              @T["Username or email address"]
+            </label>
+          </div>
 
-  	@if (userCanRegister)
-  	{
-    <div class="col-md-6 fs-6">
-    	<div class="auth-form">
-      <h4>@T["Register"]</h4>
+          <div class="form-floating">
+            <input
+                asp-for="Password"
+                class="form-control content-preview-text"
+                tabindex="2"
+                placeholder="smth" />
+            <label asp-for="Password">
+              @T["Password"]
+            </label>
+          </div>
 
-      <hr />
-      <div class="form-floating">
-      	<p>@T["If You still not a member, register"]</p>
+          <div class="form-check  fs-6 ">
+            <input
+                asp-for="RememberMe"
+                class="form-check-input"
+                tabindex="3"
+                placeholder="smth">
+            <label asp-for="RememberMe" class="custom-control-label">
+              @T["Remember me"]
+            </label>
+          </div>
 
-      	<a asp-controller="Registration" class="btn btn-info" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">@T["Sign Up"]</a>
-      </div>
+          <div class="form-check  fs-6 ">
+            <label
+                asp-for="Password"
+                class="mb-4 fs-6">
+              <a
+                  asp-controller="ResetPassword"
+                  asp-action="ForgotPassword"
+                  class="label-link">
+                @T["Forgot your password?"]
+              </a>
+            </label>
+          </div>
 
-    	</div>
-    </div>
-  	}
+          @await RenderSectionAsync("AfterLogin", required: false)
 
-  }
-  @if (loginProviders.Count > 0)
-  {
-  	<div class="col-md-6 @(disableLocalLogin ? "offset-md-3" : String.Empty)">
-    <section>
-    	<h4>@T["Use another service to log in"]</h4>
-    	<hr />
-    	<form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-      <div>
-      	<p>
-        @foreach (var provider in loginProviders)
-        {
-        	<button
+          <button
               type="submit"
-              class="btn btn-primary @(
-                  disableLocalLogin ?
-                  "w-100" :
-                  String.Empty
-                )"
-              name="provider"
-              value="@provider.Name"
-              title="@(
-                  provider?.DisplayName is not null ?
-                  T["Log in using your {0} account", provider.DisplayName] :
-                  String.Empty
-                )">
-            @provider?.DisplayName
+              class="btn btn-primary"
+              tabindex="4">
+            @T["Log in"]
           </button>
-        	@if (disableLocalLogin)
-        	{
-          <br />
-        	}
-        }
-      	</p>
+        </form>
       </div>
-    	</form>
-    </section>
-  	</div>
-  }
+
+
+      @if (userCanRegister)
+      {
+        <div class="col-md-6 fs-6">
+          <div class="auth-form">
+            <h4>
+              @T["Register"]
+            </h4>
+
+            <hr />
+            <div class="form-floating">
+              <p>
+                @T["If You still not a member, register"]
+              </p>
+
+              <a
+                  asp-controller="Registration"
+                  class="btn btn-info"
+                  asp-action="Register"
+                  asp-route-returnurl='@ViewData["ReturnUrl"]'>
+                @T["Sign Up"]
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+    }
+
+    @if (loginProviders.Count > 0)
+    {
+      <div class="col-md-6 @(disableLocalLogin ? "offset-md-3" : String.Empty)">
+        <section>
+          <h4>
+            @T["Use another service to log in"]
+          </h4>
+          <hr />
+
+          <form
+              asp-controller="Account"
+              asp-action="ExternalLogin"
+              asp-route-returnurl='@ViewData["ReturnUrl"]'
+              method="post"
+              class="form-horizontal">
+            <div>
+              <p>
+                @foreach (var provider in loginProviders)
+                {
+                  <button
+                      type="submit"
+                      class='btn btn-primary
+                        @(disableLocalLogin ? "w-100" : String.Empty)'
+                      name="provider"
+                      value='@provider.Name'
+                      title='@(
+                          provider?.DisplayName is not null ?
+                          T["Log in using your {0} account",
+                            provider.DisplayName] :
+                          String.Empty
+                        )'>
+                    @provider?.DisplayName
+                  </button>
+                  @if (disableLocalLogin)
+                  {
+                    <br />
+                  }
+                }
+              </p>
+            </div>
+          </form>
+        </section>
+      </div>
+    }
 	</div>
 </div>
+
 <script at="Foot">
-
 	interceptLogin('auth-form', "UserName", "Password")
-
 </script>

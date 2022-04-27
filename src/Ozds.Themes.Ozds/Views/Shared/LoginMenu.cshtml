@@ -3,34 +3,48 @@
 @using OrchardCore.Settings
 @using OrchardCore.Users
 @using OrchardCore.Users.Models
+@using Ozds.Util
+
 @inject ISiteService SiteService
 @inject SignInManager<IUser> SignInManager
 
 @{
-    var allowChangeEmail = (await SiteService.GetSiteSettingsAsync()).As<ChangeEmailSettings>().AllowChangeEmail;
-    var externalAuthenticationSchemes = await SignInManager.GetExternalAuthenticationSchemesAsync();
+  var allowChangeEmail = await SiteService
+    .GetSiteSettingsAsync()
+    .Then(siteSettings => siteSettings
+      .As<ChangeEmailSettings>()
+      .AllowChangeEmail);
+  var externalAuthenticationSchemes = await SignInManager
+    .GetExternalAuthenticationSchemesAsync();
 }
+
 <ul class="navbar-nav">
-    @if (User?.Identity?.IsAuthenticated ?? false)
-    {
+  @if (User?.Identity?.IsAuthenticated ?? false)
+  {
     <li class="nav-item ">
-        <a class="nav-link px-lg-3 py-3 py-lg-4" href="/members/portal">@T["Portal"]</a>
+      <a
+          class="nav-link px-lg-3 py-3 py-lg-4"
+          href="/Ozds.Modules.Members">
+        @T["Members"]
+      </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link px-lg-3 py-3 py-lg-4" href="/members/logout" ><i class="fa fa-sign-out-alt fa-fw"></i> @T["Log Off"]</a>
+      <a
+          class="nav-link px-lg-3 py-3 py-lg-4"
+          href="/LogOut" >
+        <i class="fa fa-sign-out-alt fa-fw"></i>
+        @T["Log out"]
+      </a>
     </li>
-    }
-    else
-    {
+  }
+  else
+  {
     <li class="nav-item">
-        <a class="nav-link px-lg-3 py-3 py-lg-4" href="/members/portal">@T["Log In"]</a>
+      <a
+          class="nav-link px-lg-3 py-3 py-lg-4"
+          href="/LogIn">
+        @T["Log in"]
+      </a>
     </li>
-    }
+  }
 </ul>
-
-
-
-
-
-
-

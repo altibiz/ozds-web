@@ -1,7 +1,7 @@
 {
   "name": "Helb",
-  "displayName": "OZDS Helb",
-  "description": "OZDS Helb Tenant Recipe",
+  "displayName": "OZDS HELB",
+  "description": "OZDS HELB Tenant Recipe",
   "issetuprecipe": true,
   "steps": [
     {
@@ -9,6 +9,8 @@
       "enable": [
         "OrchardCore.HomeRoute",
         "OrchardCore.Admin",
+        "OrchardCore.AdminMenu",
+        "OrchardCore.AdminTemplates",
         "OrchardCore.Diagnostics",
         "OrchardCore.DynamicCache",
         "OrchardCore.Features",
@@ -21,7 +23,6 @@
         "OrchardCore.Users",
         "OrchardCore.Localization",
         "OrchardCore.Alias",
-        "OrchardCore.AdminMenu",
         "OrchardCore.Autoroute",
         "OrchardCore.Html",
         "OrchardCore.ContentFields",

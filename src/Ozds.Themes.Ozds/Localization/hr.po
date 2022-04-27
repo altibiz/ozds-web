@@ -258,20 +258,20 @@ msgstr "Potvrda lozinke"
 #. <a class="nav-link px-lg-3 py-3 py-lg-4" asp-route-area="OrchardCore.Users" asp-controller="Account" asp-action="LogOff" ><i class="fa fa-sign-out-alt fa-fw"></i> @T["Log Off"]</a>
 #: OrchardCore.Users\Views\Account\LoginMenu.cshtml:20
 msgctxt "Ozds.Themes.Ozds.Views.Shared.LoginMenu"
-msgid "Log Off"
-msgstr "Odjavi se"
+msgid "Log Out"
+msgstr "Odjava"
 
-#. <a class="nav-link px-lg-3 py-3 py-lg-4" href="/members/portal">@T["Log In"]</a>
+#. <a class="nav-link px-lg-3 py-3 py-lg-4" href="/Ozds.Modules.Members/Login">@T["Log In"]</a>
 #: OrchardCore.Users\Views\Account\LoginMenu.cshtml:20
 msgctxt "Ozds.Themes.Ozds.Views.Shared.LoginMenu"
 msgid "Log In"
 msgstr "Prijava"
 
-#. <a class="nav-link px-lg-3 py-3 py-lg-4" href="/members/portal">@T["Portal"]</a>
+#. <a class="nav-link px-lg-3 py-3 py-lg-4" href="/Ozds.Modules.Members/">@T["Portal"]</a>
 #: OrchardCore.Users\Views\Account\LoginMenu.cshtml:20
 msgctxt "Ozds.Themes.Ozds.Views.Shared.LoginMenu"
-msgid "Portal"
-msgstr "Portal"
+msgid "Members"
+msgstr "Članovi"
 
 #. @{ Html.RenderPartial("_Header", @T["Forgot password?"].Value); }
 #: OrchardCore.Users\Views\ResetPassword\ForgotPassword.cshtml:7
@@ -345,5 +345,3 @@ msgstr "Vaša lozinka je resetirana"
 msgctxt "Ozds.Themes.Ozds.Views.Shared.ResetPasswordConfirmation"
 msgid "Click here to log in"
 msgstr "Kliknite ovdje za prijavu"
-
-

@@ -12,7 +12,7 @@ public class LogOutModel : PageModel
   public async Task<IActionResult> OnGetAsync()
   {
     await SignInManager.SignOutAsync();
-    await Notifier.SuccessAsync(H["SignOut Success"]);
+    await Notifier.SuccessAsync(H["LogOut Success"]);
     return Page();
   }
 
