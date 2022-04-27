@@ -33,7 +33,7 @@ public static partial class AlterPrimarySite
                 RenderTitle = true,
                 Options = TitlePartOptions.EditableRequired,
               }))
-        .WithPart("SitePart",
+        .WithPart("Site",
           part => part
             .WithPosition("2")
             .WithSettings(

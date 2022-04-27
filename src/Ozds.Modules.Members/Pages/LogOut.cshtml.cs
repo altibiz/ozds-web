@@ -16,8 +16,10 @@ public class LogOutModel : PageModel
     return Page();
   }
 
-  public LogOutModel(SignInManager<IUser> signInManager, INotifier notifier,
-      IHtmlLocalizer htmlLocalizer)
+  public LogOutModel(
+      SignInManager<IUser> signInManager,
+      INotifier notifier,
+      IHtmlLocalizer<LogOutModel> htmlLocalizer)
   {
     SignInManager = signInManager;
     Notifier = notifier;
@@ -27,5 +29,5 @@ public class LogOutModel : PageModel
 
   private SignInManager<IUser> SignInManager { get; }
   private INotifier Notifier { get; }
-  private IHtmlLocalizer H { get; }
+  private IHtmlLocalizer<LogOutModel> H { get; }
 }

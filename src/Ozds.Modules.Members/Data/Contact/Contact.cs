@@ -40,7 +40,7 @@ public class ContactSettings : IFieldEditorSettings
     isAdminTheme ? displayMode
     : (propertyName == nameof(Contact.MiddleName) ||
       propertyName == nameof(Contact.Surname)) &&
-      context.ContentPart.Content.Legal ? false
+      (context.ContentPart.As<Contact>()?.Legal ?? false) ? false
     : context.IsNew ? displayMode
     : "Disabled";
 

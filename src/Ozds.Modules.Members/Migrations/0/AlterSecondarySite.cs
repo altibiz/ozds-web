@@ -32,7 +32,7 @@ public static partial class AlterSecondarySite
                 RenderTitle = true,
                 Options = TitlePartOptions.EditableRequired,
               }))
-        .WithPart("SitePart",
+        .WithPart("Site",
           part => part
             .WithDisplayName("Obračunsko mjerno mjesto")
             .WithPosition("2")

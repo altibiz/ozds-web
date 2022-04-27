@@ -21,10 +21,15 @@ public enum ContentType { Member, Company, Offer }
 
 public class MemberService
 {
-  public async Task<ContentValidateResult> CreateMemberDraft(
+  public async Task<ContentValidateResult?> CreateMemberDraft(
       ContentItem memberItem)
   {
     var user = await GetCurrentUser();
+    if (user is null)
+    {
+      return null;
+    }
+
     memberItem.Owner = user.UserName;
     memberItem.Alter<Member>(
         member => { member.User.UserIds = new[] { user.UserId }; });
@@ -44,6 +49,11 @@ public class MemberService
       bool includeDraft = false, ClaimsPrincipal? userPrincipal = null)
   {
     var user = await GetCurrentUser(userPrincipal);
+    if (user is null)
+    {
+      return null;
+    }
+
     var query = Session.Query<ContentItem, UserPickerFieldIndex>(
         x =>
             x.ContentType == nameof(Member) && x.SelectedUserId == user.UserId);
@@ -143,7 +153,7 @@ await query.ListAsync();
   }
 
   // TODO: better
-  private Task<User> GetCurrentUser(ClaimsPrincipal? principal = null) =>
+  private Task<User?> GetCurrentUser(ClaimsPrincipal? principal = null) =>
     UserService
       .GetAuthenticatedUserAsync(principal)
       .Then(user => user.As<User>())!;

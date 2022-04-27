@@ -45,7 +45,7 @@ public class PersonSettings : IFieldEditorSettings
     isAdminTheme ? displayMode
     : (propertyName == nameof(Person.MiddleName) ||
       propertyName == nameof(Person.Surname)) &&
-      context.ContentPart.Content.Legal ? false
+      (context.ContentPart.As<Person>()?.Legal ?? false) ? false
     : context.IsNew ? displayMode
     : "Disabled";
 

@@ -64,29 +64,16 @@ namespace Ozds.Modules.Members.ContentHandlers
 
   public class UserMenuHandler : ContentHandlerBase
   {
-    public static MenuItem[] Menu
-    {
-      get;
-    } = new[] { new MenuItem { Name = "Moji podaci", Url = "/Members/myprofile",
-                 Text = "far fa-address-card" },
-      new MenuItem { Name = "Moji Dokumenti", Url = "/Members/MyDocuments",
-        Text = "far fa-file-alt" },
-      new MenuItem { Name = "Doniraj", Url = "/Members/Donate",
-        Text = "far fa-hand-point-up" },
-      new MenuItem {
-
-        Name = "Moje donacije", Url = "/Members/mydonations",
-        Text = "fas fa-file-contract"
-      },
-      new MenuItem { Name = "Moja ponuda ", Url = "/Members/offerfor",
-        Text = "fa fa-store" },
-      new MenuItem { Name = "Ponude za članove", Url = "/Members/Offers",
-        Text = "fas fa-percent" },
-      new MenuItem {
-        Name = "Događanja",
-        Url = "/Members/events",
-        Text = "far fa-calendar-alt"
-      } };
+    public static MenuItem[] Menu { get; } =
+      new[]
+      {
+        new MenuItem
+        {
+          Name = "Moji podaci",
+          Url = "/Ozds.Modules.Members/MyProfile",
+          Text = "far fa-address-card",
+        },
+      };
 
     public static IEnumerable<ContentItem> GetMenuContent()
     {

@@ -16,7 +16,6 @@ public static partial class AlterPerson
         .Listable()
         .Securable()
         .Draftable()
-        .Versionable()
         .WithPart("Person",
           part => part
           .WithPosition("2")

@@ -35,7 +35,7 @@ public class TaxonomyCacheService
   public Task<T?> GetTerm<T>(
       TaxonomyField? field) where T : ContentPart =>
     GetTerm(field)
-      .ThenWhen(term => ContentItemExtensions
+      .ThenWhenNonNullable(term => ContentItemExtensions
         .As<T>(term));
 
   public TaxonomyCacheService(IOrchardHelper helper)

@@ -8,11 +8,9 @@
 
 @inject IContentDefinitionManager ContentDefinitionManager
 
-@{ Html.RenderPartial("_Header", T["Registration"].Value); }
+@{ Html.RenderPartial("_Header", T["Create member"].Value); }
 
 @await RenderSectionAsync("Messages", required: false)
-
-<h5>1. @T["Please Add User Data"]</h5>
 
 <form method="post" enctype="multipart/form-data">
 	<div asp-validation-summary="All" class="text-danger">
@@ -22,17 +20,8 @@
 
 	<button
       type="submit"
-      asp-page-handler="CreateMemberToCompany"
-      class="btn btn-success publish mt-2">
-    @T["Next: Register Legal Entity"]
-  </button>
-	<div style="padding:10px">
-	  @T["Or"]
-	</div>
-	<button
-      type="submit"
       asp-page-handler="CreateMember"
       class="btn btn-success publish mt-2">
-    @T["Register As A Natural Entity"]
+    @T["Create member"]
   </button>
 </form>

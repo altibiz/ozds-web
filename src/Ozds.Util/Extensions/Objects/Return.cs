@@ -2,6 +2,11 @@ namespace Ozds.Util;
 
 public static partial class Objects
 {
+  public static void Return<TIn>(
+      this TIn? @this)
+  {
+  }
+
   public static TOut Return<TIn, TOut>(
       this TIn? @this,
       TOut result) =>

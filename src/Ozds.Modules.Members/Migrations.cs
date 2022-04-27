@@ -43,10 +43,12 @@ public sealed class Migrations : DataMigration
 
     Content.AlterPersonType();
     Content.AlterPersonPart();
-    Content.AlterContactPart();
-    Content.AlterLocationPart();
     Schema.CreatePersonMapTable();
     Schema.CreatePersonMapIndex();
+
+    Content.AlterContactPart();
+
+    Content.AlterLocationPart();
 
     Content.AlterSitePart();
     Content.AlterPrimarySiteType();
