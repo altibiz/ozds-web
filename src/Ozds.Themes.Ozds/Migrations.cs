@@ -13,11 +13,14 @@ public partial class Migrations : DataMigration
 {
   public int Create()
   {
-    Recipe.ExecuteLayers(this);
-    Recipe.ExecuteLayout(this);
     Recipe.ExecuteLocalization(this);
+    Recipe.ExecuteLayers(this);
     Recipe.ExecuteAnonymousRole(this);
     Recipe.ExecuteLuceneFullTextSearch(this);
+
+    Content.AlterPagePart();
+    Content.AlterPageType();
+    Recipe.ExecuteFrontPage(this);
 
     return 1;
   }

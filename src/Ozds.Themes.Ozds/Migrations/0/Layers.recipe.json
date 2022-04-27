@@ -1,6 +1,12 @@
 {
   "steps": [
     {
+      "name": "settings",
+      "LayerSettings": {
+        "Zones": ["Content", "Footer"]
+      }
+    },
+    {
       "name": "layers",
       "Layers": [
         {

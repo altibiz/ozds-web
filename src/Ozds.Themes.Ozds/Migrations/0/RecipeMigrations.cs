@@ -12,12 +12,6 @@ public static partial class RecipeMigrations
     recipe.Execute("0/Localization.recipe.json", migration);
   }
 
-  public static void ExecuteLayout(
-      this IRecipeMigrator recipe, IDataMigration migration)
-  {
-    recipe.Execute("0/Layout.recipe.json", migration);
-  }
-
   public static void ExecuteLayers(
       this IRecipeMigrator recipe, IDataMigration migration)
   {
@@ -34,5 +28,11 @@ public static partial class RecipeMigrations
       this IRecipeMigrator recipe, IDataMigration migration)
   {
     recipe.Execute("0/LuceneFullTextSearch.recipe.json", migration);
+  }
+
+  public static void ExecuteFrontPage(
+      this IRecipeMigrator recipe, IDataMigration migration)
+  {
+    recipe.Execute("0/FrontPage.recipe.json", migration);
   }
 }
