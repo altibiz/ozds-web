@@ -9,7 +9,7 @@ public static partial class AlterLocation
 {
   public static void AlterLocationPart(
       this IContentDefinitionManager content) =>
-    content.AlterPartDefinition("Location",
+    content.AlterPartDefinition("LocationPart",
       part => part
         .Attachable()
         .Reusable()

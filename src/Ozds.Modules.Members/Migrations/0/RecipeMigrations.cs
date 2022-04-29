@@ -10,41 +10,9 @@ public static partial class RecipeMigrations
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/AuthSettings.recipe.json", migration);
 
-  public static IRecipeMigrator ExecuteUserLandingPageMenu(
+  public static IRecipeMigrator ExecuteTariffElementTaxonomy(
       this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/UserLandingPageMenu.recipe.json", migration);
-
-  public static IRecipeMigrator ExecuteCountyTaxonomy(
-      this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/CountyTaxonomy.recipe.json", migration);
-
-  public static IRecipeMigrator ExecuteCurrencyTaxonomy(
-      this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/CurrencyTaxonomy.recipe.json", migration);
-
-  public static IRecipeMigrator ExecuteArticleTaxonomy(
-      this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/ArticleTaxonomy.recipe.json", migration);
-
-  public static IRecipeMigrator ExecuteCalculationItemStatusTaxonomy(
-      this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/CalculationItemStatusTaxonomy.recipe.json", migration);
-
-  public static IRecipeMigrator ExecuteMeasurementUnitTaxonomy(
-      this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/MeasurementUnitTaxonomy.recipe.json", migration);
-
-  public static IRecipeMigrator ExecutePhaseTaxonomy(
-      this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/PhaseTaxonomy.recipe.json", migration);
-
-  public static IRecipeMigrator ExecutePersonTypeTaxonomy(
-      this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/PersonTypeTaxonomy.recipe.json", migration);
-
-  public static IRecipeMigrator ExecuteTariffTaxonomy(
-      this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/TariffTaxonomy.recipe.json", migration);
+    recipe.Execute("0/TariffElementTaxonomy.recipe.json", migration);
 
   public static IRecipeMigrator ExecuteSiteMeasurementSourceTaxonomy(
       this IRecipeMigrator recipe, IDataMigration migration) =>
@@ -55,18 +23,6 @@ public static partial class RecipeMigrations
     recipe.Execute(
         "0/TestSiteMeasurementSourceTaxonomy.recipe.json",
         migration);
-
-  public static IRecipeMigrator ExecuteActivityTaxonomy(
-      this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/ActivityTaxonomy.recipe.json", migration);
-
-  public static IRecipeMigrator ExecuteContractTypeTaxonomy(
-      this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/ContractTypeTaxonomy.recipe.json", migration);
-
-  public static IRecipeMigrator ExecuteCommandCreateTestUsers(
-      this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/CommandCreateTestUsers.recipe.json", migration);
 
   public static IRecipeMigrator ExecuteTestCenter(
       this IRecipeMigrator recipe, IDataMigration migration) =>

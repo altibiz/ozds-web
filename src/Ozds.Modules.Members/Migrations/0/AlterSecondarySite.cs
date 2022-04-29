@@ -30,7 +30,14 @@ public static partial class AlterSecondarySite
               new TitlePartSettings
               {
                 RenderTitle = true,
-                Options = TitlePartOptions.EditableRequired,
+                Options = TitlePartOptions.GeneratedHidden,
+                Pattern =
+                @"
+{%- assign site = ContentItem.Content.Site -%}
+{%- assign source = site.Source -%}
+{%- assign deviceId = site.DeviceId -%}
+{{- source }} {{ deviceId -}}
+                ",
               }))
         .WithPart("Site",
           part => part

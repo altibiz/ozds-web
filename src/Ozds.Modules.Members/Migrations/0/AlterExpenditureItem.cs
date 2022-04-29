@@ -5,41 +5,35 @@ using OrchardCore.Taxonomies.Settings;
 
 namespace Ozds.Modules.Members.M0;
 
-public static partial class AlterCalculationItem
+public static partial class AlterExpenditureItem
 {
-  public static void AlterCalculationItemType(
+  public static void AlterExpenditureItemType(
       this IContentDefinitionManager content) =>
-    content.AlterTypeDefinition("CalculationItem",
+    content.AlterTypeDefinition("ExpenditureItem",
       type => type
-        .DisplayedAs("Stavka obračuna")
+        .DisplayedAs("Stavka troška")
         .Creatable()
         .Listable()
         .Securable()
-        .WithPart("CalculationItem",
+        .WithPart("ExpenditureItem",
           part => part
-          .WithPosition("0")
-          .WithDisplayName("Stavka obračuna")
-          .WithSettings(
-            new CalculationItemSettings
-            {
-            })));
+          .WithPosition("0")));
 
-  public static void AlterCalculationItemPart(
+  public static void AlterExpenditureItemPart(
       this IContentDefinitionManager content) =>
-    content.AlterPartDefinition("CalculationItem",
+    content.AlterPartDefinition("ExpenditureItem",
       part => part
         .Attachable()
-        .WithDisplayName("Stavka obračuna")
-        .WithDescription("Tarifna stavka mjesečnog obračuna")
-        .WithField("Tariff",
+        .WithDisplayName("Stavka troška")
+        .WithField("TariffItem",
           field => field
             .OfType("TaxonomyField")
-            .WithDisplayName("Tarifa")
+            .WithDisplayName("Tarifna stavka")
             .WithPosition("0")
             .WithSettings(
               new TaxonomyFieldSettings
               {
-                TaxonomyContentItemId = "46nrgz0a0y570tcgvh50tq1vxp",
+                TaxonomyContentItemId = "",
                 Required = true,
                 Unique = true
               }))
@@ -51,7 +45,7 @@ public static partial class AlterCalculationItem
             .WithSettings(
               new NumericFieldSettings
               {
-                Required = true
+                Required = false
               }))
         .WithField("ValueTo",
           field => field
@@ -61,46 +55,13 @@ public static partial class AlterCalculationItem
             .WithSettings(
               new NumericFieldSettings
               {
-                Required = true
-              }))
-        .WithField("Status",
-          field => field
-            .OfType("TaxonomyField")
-            .WithDisplayName("Status")
-            .WithPosition("3")
-            .WithSettings(
-              new TaxonomyFieldSettings
-              {
-                TaxonomyContentItemId = "4pxxf7kz2v2mgy67ehbhz5gsxq",
-                Required = true,
-                Unique = true
-              }))
-        .WithField("Constant",
-          field => field
-            .OfType("NumericField")
-            .WithDisplayName("Konstanta")
-            .WithPosition("4")
-            .WithSettings(
-              new NumericFieldSettings
-              {
-                Required = true
-              }))
-        .WithField("Unit",
-          field => field
-            .OfType("TaxonomyField")
-            .WithDisplayName("Mjerna jedinica")
-            .WithPosition("5")
-            .WithSettings(
-              new TaxonomyFieldSettings
-              {
-                TaxonomyContentItemId = "4cqf2eeqqwadb4xechw3tbbsn0",
-                Unique = true
+                Required = false
               }))
         .WithField("Consumption",
           field => field
             .OfType("NumericField")
             .WithDisplayName("Potrošak")
-            .WithPosition("6")
+            .WithPosition("3")
             .WithSettings(
               new NumericFieldSettings
               {
@@ -110,7 +71,7 @@ public static partial class AlterCalculationItem
           field => field
             .OfType("NumericField")
             .WithDisplayName("Jedinična cijena")
-            .WithPosition("7")
+            .WithPosition("4")
             .WithSettings(
               new NumericFieldSettings
               {
@@ -120,7 +81,7 @@ public static partial class AlterCalculationItem
           field => field
             .OfType("NumericField")
             .WithDisplayName("Iznos")
-            .WithPosition("8"))
+            .WithPosition("5"))
             .WithSettings(
               new NumericFieldSettings
               {

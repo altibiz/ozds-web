@@ -14,16 +14,7 @@ public sealed class Migrations : DataMigration
   {
     Recipe.ExecuteAuthSettings(this);
 
-    Recipe.ExecuteCountyTaxonomy(this);
-    Recipe.ExecuteCurrencyTaxonomy(this);
-    Recipe.ExecuteArticleTaxonomy(this);
-    Recipe.ExecutePhaseTaxonomy(this);
-    Recipe.ExecuteMeasurementUnitTaxonomy(this);
-    Recipe.ExecuteCalculationItemStatusTaxonomy(this);
-    Recipe.ExecuteTariffTaxonomy(this);
-    Recipe.ExecutePersonTypeTaxonomy(this);
-    Recipe.ExecuteActivityTaxonomy(this);
-    Recipe.ExecuteContractTypeTaxonomy(this);
+    Recipe.ExecuteTariffElementTaxonomy(this);
     if (Env.IsDevelopment())
     {
       Recipe.ExecuteTestSiteMeasurementSourceTaxonomy(this);
@@ -33,68 +24,32 @@ public sealed class Migrations : DataMigration
       Recipe.ExecuteSiteMeasurementSourceTaxonomy(this);
     }
 
-    Content.AlterAdminPageType();
-
     Content.AlterTagPart();
     Content.AlterTagType();
-
-    Content.AlterImagePart();
-    Content.AlterImageType();
-
-    Content.AlterPersonType();
-    Content.AlterPersonPart();
-    Schema.CreatePersonMapTable();
-    Schema.CreatePersonMapIndex();
-
-    Content.AlterContactPart();
-
-    Content.AlterLocationPart();
+    Content.AlterTariffElementPart();
+    Content.AlterTariffElementType();
 
     Content.AlterSitePart();
-    Content.AlterPrimarySiteType();
-    Content.AlterPrimarySitePart();
     Content.AlterSecondarySiteType();
     Content.AlterSecondarySitePart();
-    Schema.CreateSiteMapTable();
 
+    Content.AlterExpenditureType();
+    Content.AlterExpenditurePart();
+    Content.AlterExpenditureItemType();
+    Content.AlterExpenditureItemPart();
+    Content.AlterCalculationPart();
+    Content.AlterCalculationType();
     Content.AlterReceiptPart();
     Content.AlterReceiptType();
-    Schema.CreateReceiptMapTable();
-
     Content.AlterReceiptItemPart();
     Content.AlterReceiptItemType();
 
-    Content.AlterCalculationPart();
-    Content.AlterCalculationType();
-    Content.AlterCalculationItemPart();
-    Content.AlterCalculationItemType();
-    Schema.CreateCalculationMapTable();
-
-    Content.AlterMemberPart();
-    Content.AlterMemberType();
-    Schema.CreateMemberMapTable();
-
+    Content.AlterPersonType();
+    Content.AlterPersonPart();
+    Content.AlterConsumerType();
+    Content.AlterConsumerType();
     Content.AlterCenterType();
     Content.AlterCenterPart();
-    Schema.CreateCenterMapTable();
-
-    Content.AlterCataloguePart();
-    Content.AlterCatalogueType();
-    Content.AlterCatalogueItemPart();
-    Content.AlterCatalogueItemType();
-    Schema.CreateCatalogueMapTable();
-
-    Content.AlterContractPart();
-    Content.AlterContractType();
-    Schema.CreateContractMapTable();
-
-    Recipe.ExecuteUserLandingPageMenu(this);
-
-    if (Env.IsDevelopment())
-    {
-      Session.SaveUserTestOwner();
-      Session.SaveUserTestMember();
-    }
 
     if (Env.IsDevelopment())
     {

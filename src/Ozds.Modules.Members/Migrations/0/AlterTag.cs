@@ -37,7 +37,11 @@ public static partial class AlterTag
             .WithSettings(
               new AutoroutePartSettings
               {
-                Pattern = @"{{ ContentItem.Content.TitlePart.Title | slugify }}"
+                Pattern =
+                @"
+{%- assign title = ContentItem.Content.TitlePart -%}
+{{- title.Title | slugify -}}
+                "
               })));
 
   public static void AlterTagPart(this IContentDefinitionManager content) =>

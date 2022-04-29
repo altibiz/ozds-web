@@ -1,10 +1,7 @@
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
-using OrchardCore.ContentFields.Settings;
 using OrchardCore.Title.Models;
-using OrchardCore.Lists.Models;
-using OrchardCore.Autoroute.Models;
-using OrchardCore.Alias.Settings;
+using OrchardCore.Flows.Models;
 
 namespace Ozds.Modules.Members.M0;
 
@@ -14,7 +11,7 @@ public static partial class AlterCatalogue
       this IContentDefinitionManager content) =>
     content.AlterTypeDefinition("Catalogue",
       type => type
-        .DisplayedAs("Katalog")
+        .DisplayedAs("Cjenik")
         .Creatable()
         .Securable()
         .Draftable()
@@ -32,40 +29,18 @@ public static partial class AlterCatalogue
         .WithPart("Catalogue",
           part => part
             .WithPosition("1")
-            .WithDisplayName("Katalog")
+            .WithDisplayName("Cjenik")
             .WithSettings(
               new CatalogueSettings
               {
               }))
-        .WithPart("AutoroutePart",
-          part => part
-            .WithDisplayName("Ruta")
-            .WithDisplayName("Automatski generirana ruta kataloga")
-            .WithPosition("2")
-            .WithSettings(
-              new AutoroutePartSettings
-              {
-                AllowRouteContainedItems = true,
-                ManageContainedItemRoutes = true,
-                Pattern = @"{{ ContentItem.Content.TitlePart.Title | slugify }}"
-              }))
-        .WithPart("AliasPart",
-          part => part
-            .WithDisplayName("Alias")
-            .WithPosition("3")
-            .WithSettings(
-              new AliasPartSettings
-              {
-                Options = AliasPartOptions.Editable,
-                Pattern = @"{{ ContentItem.Content.TitlePart.Title | slugify }}"
-              }))
-        .WithPart("ListPart",
+        .WithPart("BagPart",
           part => part
             .WithDisplayName("Stavke")
             .WithDescription("Stavke kataloga")
-            .WithPosition("4")
+            .WithPosition("2")
             .WithSettings(
-              new ListPartSettings
+              new BagPartSettings
               {
                 ContainedContentTypes = new[]
                 {
@@ -75,17 +50,5 @@ public static partial class AlterCatalogue
 
   public static void AlterCataloguePart(
       this IContentDefinitionManager content) =>
-    content.AlterPartDefinition("Catalogue",
-        part => part
-          .WithDisplayName("Katalog")
-          .WithDescription("Opis kataloga")
-          .WithField("Description",
-            field => field
-              .OfType("TextField")
-              .WithDisplayName("Opis")
-              .WithEditor("Textarea")
-              .WithSettings(
-                new TextFieldSettings
-                {
-                })));
+    content.AlterPartDefinition("Catalogue", part => { });
 }

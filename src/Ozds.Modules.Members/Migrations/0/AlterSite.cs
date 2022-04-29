@@ -2,7 +2,6 @@ using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.ContentFields.Settings;
 using OrchardCore.Taxonomies.Settings;
-using OrchardCore.Spatial.Settings;
 
 namespace Ozds.Modules.Members.M0;
 
@@ -38,43 +37,11 @@ public static partial class AlterSite
               {
                 Required = true
               }))
-        .WithField("Coefficient",
-          field => field
-            .OfType("NumericField")
-            .WithDisplayName("Koeficijent")
-            .WithPosition("3")
-            .WithSettings(
-              new NumericFieldSettings
-              {
-                Required = true
-              }))
-        .WithField("Phase",
+        .WithField("Status",
           field => field
             .OfType("TaxonomyField")
-            .WithDisplayName("Faza")
-            .WithPosition("4")
-            .WithSettings(
-              new TaxonomyFieldSettings
-              {
-                TaxonomyContentItemId = "4p8c2k9qbte1yzcbewfjy5zyxw",
-                Required = true,
-                Unique = true,
-              }))
-        .WithField("Geolocation",
-          field => field
-            .OfType("GeoPointField")
-            .WithDisplayName("Geolokacija")
-            .WithPosition("5")
-            .WithSettings(
-              new GeoPointFieldSettings
-              {
-                Required = true
-              }))
-        .WithField("Active",
-          field => field
-            .OfType("BooleanField")
-            .WithDisplayName("Aktivno")
-            .WithPosition("6")
+            .WithDisplayName("Status")
+            .WithPosition("2")
             .WithSettings(
               new BooleanFieldSettings
               {

@@ -1,8 +1,8 @@
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
-using OrchardCore.Flows.Models;
 using OrchardCore.Title.Models;
 using OrchardCore.ContentFields.Settings;
+using OrchardCore.Taxonomies.Settings;
 
 namespace Ozds.Modules.Members.M0;
 
@@ -24,19 +24,16 @@ public static partial class AlterCalculation
               new TitlePartSettings
               {
                 RenderTitle = true,
-                Options = TitlePartOptions.GeneratedDisabled,
-                // TODO: check
+                Options = TitlePartOptions.GeneratedHidden,
                 Pattern =
-                @"""
-                  {%- assign receipt = ContentItem.Content.Receipt -%}
-                  {%- assign sites = calc.Site.ContainedItemIds | content_item_id -%}
-                  {%- assign site = site[0] -%}
-                  {%- assign source = site.Source -%}
-                  {%- assign deviceId = site.DeviceId -%}
-                  {%- assign dateFrom = calc.DateFrom.Value | date: '%Y-%m-%d' -%}
-                  {%- assign dateTo = calc.DateTo.Value | date: '%Y-%m-%d' -%}
-                  {{- source }} {{ deviceId }} {{ dateFrom }} - {{ dateTo -}}
-                """,
+                @"
+{%- assign calc = ConntentItem.Content.Calculation -%}
+{%- assign site = calc.Site.ContainedItemIds[0] | content_item_id -%}
+{%- assign tariffModel = calc.TariffModel.TermContentItemIds[0] | content_item_id -%}
+{%- assign dateFrom = calc.DateFrom.Value | date: '%Y-%m-%d' -%}
+{%- assign dateTo = calc.DateTo.Value | date: '%Y-%m-%d' -%}
+{{- site }} {{ tariffModel }} {{ dateFrom }} - {{ dateTo -}}
+                ",
               }))
         .WithPart("Calculation",
           part => part
@@ -46,19 +43,15 @@ public static partial class AlterCalculation
               new CalculationSettings
               {
               }))
-        .WithPart("BagPart",
+        .WithPart("UsageExpenditure", "Expenditure",
           part => part
-            .WithDisplayName("Stavke")
-            .WithDescription("Stavke mjesečnog obračuna")
-            .WithPosition("2")
-            .WithSettings(
-              new BagPartSettings
-              {
-                ContainedContentTypes = new[]
-                {
-                  "CalculationItem"
-                },
-              })));
+            .WithDisplayName("Troškovi korištenja mreže ZDS-a")
+            .WithPosition("2"))
+        .WithPart("SupplyExpenditure", "Expenditure",
+          part => part
+            .WithDisplayName("Troškovi opskrbe električnom energijom")
+            .WithPosition("3")));
+
 
   public static void AlterCalculationPart(
       this IContentDefinitionManager content) =>
@@ -79,12 +72,24 @@ public static partial class AlterCalculation
                   "Site",
                 }
               }))
+        .WithField("TariffModel",
+          field => field
+            .OfType("TaxonomyField")
+            .WithDisplayName("Tarifni model")
+            .WithPosition("1")
+            .WithSettings(
+              new TaxonomyFieldSettings
+              {
+                Unique = true,
+                Required = true,
+                TaxonomyContentItemId = ""
+              }))
         .WithField("DateFrom",
           field => field
             .OfType("DateField")
             .WithDisplayName("Datum od")
             .WithDescription("Početni datum mjerenja")
-            .WithPosition("1")
+            .WithPosition("2")
             .WithSettings(
               new DateFieldSettings
               {
@@ -95,7 +100,7 @@ public static partial class AlterCalculation
             .OfType("DateField")
             .WithDisplayName("Datum do")
             .WithDescription("Krajnji datum mjerenja")
-            .WithPosition("2")
+            .WithPosition("3")
             .WithSettings(
               new DateFieldSettings
               {
@@ -105,17 +110,6 @@ public static partial class AlterCalculation
           field => field
             .OfType("NumericField")
             .WithDisplayName("Naknada za mjernu uslugu")
-            .WithPosition("3")
-            .WithSettings(
-              new NumericFieldSettings
-              {
-                Required = true,
-                Minimum = 0
-              }))
-        .WithField("InTotal",
-          field => field
-            .OfType("NumericField")
-            .WithDisplayName("Ukupno")
             .WithPosition("4")
             .WithSettings(
               new NumericFieldSettings
