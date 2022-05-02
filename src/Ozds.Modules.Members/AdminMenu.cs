@@ -13,57 +13,29 @@ public class AdminMenu : INavigationProvider
       name.WhenWith(name => string
         .Equals(name, "admin", StringComparison.OrdinalIgnoreCase),
         name => builder
-          .Add(S["Članstvo"], "0", root => root
-            .Add(S["Zatvoreni distribucijski sustavi"], "0", child => child
+          .Add(S["OZDS"], "0", root => root
+            .Add(S["ZDS"], "0", child => child
               .Action("List", "Admin",
                 new
                 {
                   area = "OrchardCore.Contents",
                   contentTypeId = "Center"
                 }))
-            .Add(S["Članovi"], "1", child => child
+            .Add(S["Korisnici ZDS-a"], "1", child => child
               .Action("List", "Admin",
                 new
                 {
                   area = "OrchardCore.Contents",
-                  contentTypeId = "Member"
+                  contentTypeId = "Consumer"
                 }))
-            .Add(S["Obračunska mjerna mjesta"], "2", child => child
-              .Add(S["Primarna"], "0", child => child
-                .Action("List", "Admin",
-                  new
-                  {
-                    area = "OrchardCore.Contents",
-                    contentTypeId = "PrimarySite"
-                  }))
-              .Add(S["Sekundarna"], "1", child => child
-                .Action("List", "Admin",
-                  new
-                  {
-                    area = "OrchardCore.Contents",
-                    contentTypeId = "SecondarySite"
-                  }))),
-            new[]
-            {
-              "icon-class-fas",
-              "icon-class-fa-users"
-            })
-          .Add(S["Financije"], "0", root => root
-            .Add(S["Katalozi"], "0", child => child
+            .Add(S["OMM"], "2", child => child
               .Action("List", "Admin",
                 new
                 {
                   area = "OrchardCore.Contents",
-                  contentTypeId = "Catalogue",
+                  contentTypeId = "SecondarySite"
                 }))
-            .Add(S["Ugovori"], "1", child => child
-              .Action("List", "Admin",
-                new
-                {
-                  area = "OrchardCore.Contents",
-                  contentTypeId = "Contract",
-                }))
-            .Add(S["Računi"], "2", child => child
+            .Add(S["Računi"], "3", child => child
               .Action("List", "Admin",
                 new
                 {
@@ -73,7 +45,7 @@ public class AdminMenu : INavigationProvider
             new[]
             {
               "icon-class-fas",
-              "icon-class-fa-coins"
+              "icon-class-fa-users"
             })));
 
   public AdminMenu(IStringLocalizer<AdminMenu> localizer)

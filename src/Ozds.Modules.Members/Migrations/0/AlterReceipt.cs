@@ -28,11 +28,11 @@ public static partial class AlterReceipt
                 // TODO: check
                 Pattern =
                 @"
-                  {%- assign receipt = ContentItem.Content.Receipt -%}
-                  {%- assign partner = ContentItem.Content.Partner -%}
-                  {%- assign dateFrom = receipt.DateFrom.Value | date: '%Y-%m-%d' -%}
-                  {%- assign dateTo = receipt.DateTo.Value | date: '%Y-%m-%d' -%}
-                  {{- partner }} {{ dateFrom }} - {{ dateTo -}}
+{%- assign receipt = ContentItem.Content.Receipt -%}
+{%- assign partner = ContentItem.Content.Partner -%}
+{%- assign dateFrom = receipt.DateFrom.Value | date: '%Y-%m-%d' -%}
+{%- assign dateTo = receipt.DateTo.Value | date: '%Y-%m-%d' -%}
+{{- partner }} {{ dateFrom }} - {{ dateTo -}}
                 ",
               }))
         .Securable()
