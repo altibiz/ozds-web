@@ -1,0 +1,220 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "42d7a5kashgdgztx5ehjb4deca",
+          "ContentItemVersionId": "4cnk992nk4p1c0nc2axt0sy2m9",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Tarifni model",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-05-02T13:26:21.031839Z",
+          "PublishedUtc": "2022-05-02T13:26:21.0391366Z",
+          "CreatedUtc": "2022-05-02T12:46:08.186578Z",
+          "Owner": "4d50ebg7mq26svwy7dh4zwp0wv",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Tarifni model"
+          },
+          "AliasPart": {
+            "Alias": "tariff-model"
+          },
+          "AutoroutePart": {
+            "Path": "tarifni-model",
+            "SetHomepage": false,
+            "Disabled": false,
+            "RouteContainedItems": false,
+            "Absolute": false
+          },
+          "TaxonomyPart": {
+            "TermContentType": "Tag",
+            "Terms": [
+              {
+                "ContentItemId": "4g4m7xhxj84na3xf49ks1ty7d5",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Bijeli VN",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-02T12:46:21.1936006Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Bijeli VN"
+                },
+                "Tag": {},
+                "AutoroutePart": {
+                  "Path": "bijeli-vn",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "46k372fszexy61xan98qkz42w0",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Bijeli SN",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-02T12:46:29.2848312Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Bijeli SN"
+                },
+                "Tag": {},
+                "AutoroutePart": {
+                  "Path": "bijeli-sn",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "41vr9sy8ap5ntvbkj74zbw6749",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Plavi",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-02T12:46:43.1400263Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Plavi"
+                },
+                "Tag": {},
+                "AutoroutePart": {
+                  "Path": "plavi",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4w9hx6bgrmj70wdky9pcp9e1mz",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Bijeli NN",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-02T12:46:51.1007543Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Bijeli NN"
+                },
+                "Tag": {},
+                "AutoroutePart": {
+                  "Path": "bijeli-nn",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4bypnkrf7e4ng3q59x732vgq5t",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Crveni",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-02T12:47:04.0781119Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Crveni"
+                },
+                "Tag": {},
+                "AutoroutePart": {
+                  "Path": "crveni",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "48pb3v35bcfnbswk47q3nfm2dg",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Žuti (JR)",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-02T12:47:35.6168889Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Žuti (JR)"
+                },
+                "Tag": {},
+                "AutoroutePart": {
+                  "Path": "zuti-jr-",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

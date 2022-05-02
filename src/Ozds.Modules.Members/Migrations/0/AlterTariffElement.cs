@@ -36,7 +36,12 @@ public static partial class AlterTariffElement
               }))
         .WithPart("TariffElement",
           part => part
-            .WithPosition("1"))
+            .WithPosition("1")
+            .WithDisplayMode("")
+            .WithSettings(
+              new FieldEditorSettings
+              {
+              }))
         .WithPart("AutoroutePart",
           part => part
             .WithPosition("2")
@@ -45,10 +50,15 @@ public static partial class AlterTariffElement
             .WithSettings(
               new AutoroutePartSettings
               {
-                Pattern = @"{{ ContentItem.Content.TitlePart.Title | slugify }}"
+                Pattern =
+                @"
+{%- assign title = ContentItem.Content.TitlePart -%}
+{{- title.Title | slugify -}}
+                "
               })));
 
-  public static void AlterTariffElementPart(this IContentDefinitionManager content) =>
+  public static void AlterTariffElementPart(
+      this IContentDefinitionManager content) =>
     content.AlterPartDefinition("TariffElement",
       part => part
         .WithField("Name",
@@ -69,7 +79,7 @@ public static partial class AlterTariffElement
             .WithSettings(
               new TextFieldSettings
               {
-                Required = true,
+                Required = false,
               }))
         .WithField("Unit",
           field => field

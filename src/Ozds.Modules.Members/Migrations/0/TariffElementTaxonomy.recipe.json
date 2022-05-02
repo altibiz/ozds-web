@@ -4,298 +4,228 @@
       "name": "content",
       "Data": [
         {
-          "ContentItemId": "46nrgz0a0y570tcgvh50tq1vxp",
-          "ContentItemVersionId": "43087zks508ddrk3h7axtqbhcr",
+          "ContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+          "ContentItemVersionId": "4q0f21pvy9j6aw036z0yvwzgn5",
           "ContentType": "Taxonomy",
-          "DisplayText": "Tarifa",
+          "DisplayText": "Tarifni element",
           "Latest": true,
           "Published": true,
-          "ModifiedUtc": "2022-04-20T04:55:49.7141969Z",
-          "PublishedUtc": "2022-04-20T04:55:49.7227523Z",
-          "CreatedUtc": "2022-04-20T04:53:17.737113Z",
-          "Owner": "4z1n3dzdpndys34562h5aq12ma",
+          "ModifiedUtc": "2022-05-02T14:26:26.0194973Z",
+          "PublishedUtc": "2022-05-02T14:26:26.0337525Z",
+          "CreatedUtc": "2022-05-02T14:09:16.515114Z",
+          "Owner": "43y4ndgt2zesk2z66746enw3xj",
           "Author": "admin",
           "TitlePart": {
-            "Title": "Tarifa"
+            "Title": "Tarifni element"
           },
           "AliasPart": {
-            "Alias": "tarifa"
+            "Alias": "tariff-element"
           },
           "AutoroutePart": {
-            "Path": "tarifa",
+            "Path": "tarifni-element",
             "SetHomepage": false,
             "Disabled": false,
             "RouteContainedItems": false,
             "Absolute": false
           },
           "TaxonomyPart": {
-            "TermContentType": "Tag",
+            "TermContentType": "TariffElement",
             "Terms": [
               {
-                "ContentItemId": "4sqzkz7mqz6v53qyc5tqpsd6cz",
+                "ContentItemId": "44vg6aarzp3ayv2praq3t17pce",
                 "ContentItemVersionId": null,
-                "ContentType": "Tag",
-                "DisplayText": "RVT - R1",
+                "ContentType": "TariffElement",
+                "DisplayText": "Radna energija JT",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2022-04-20T04:53:33.6049588Z",
+                "ModifiedUtc": "2022-05-02T14:18:59.1367189Z",
                 "PublishedUtc": null,
                 "CreatedUtc": null,
                 "Owner": null,
                 "Author": "admin",
-                "Tag": {},
                 "TitlePart": {
-                  "Title": "RVT - R1"
+                  "Title": "Radna energija JT"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Radna energija"
+                  },
+                  "Abbreviation": {
+                    "Text": "JT"
+                  },
+                  "Unit": {
+                    "Text": "kWh"
+                  }
                 },
                 "AutoroutePart": {
-                  "Path": "",
+                  "Path": "radna-energija-jt",
                   "SetHomepage": false,
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
                 "TermPart": {
-                  "TaxonomyContentItemId": "46nrgz0a0y570tcgvh50tq1vxp"
+                  "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4"
                 },
                 "@WeldedPartSettings": {
                   "TermPart": {}
                 }
               },
               {
-                "ContentItemId": "4kazq8vr116apt7zdz692g5adk",
+                "ContentItemId": "4mw0ncthn1aq4r5k6cqfk19yw3",
                 "ContentItemVersionId": null,
-                "ContentType": "Tag",
-                "DisplayText": "RNT - R2",
+                "ContentType": "TariffElement",
+                "DisplayText": "Radna energija VT",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2022-04-20T04:53:56.1552475Z",
+                "ModifiedUtc": "2022-05-02T14:19:16.6944699Z",
                 "PublishedUtc": null,
                 "CreatedUtc": null,
                 "Owner": null,
                 "Author": "admin",
-                "Tag": {},
                 "TitlePart": {
-                  "Title": "RNT - R2"
+                  "Title": "Radna energija VT"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Radna energija"
+                  },
+                  "Abbreviation": {
+                    "Text": "VT"
+                  },
+                  "Unit": {
+                    "Text": "kWh"
+                  }
                 },
                 "AutoroutePart": {
-                  "Path": "",
+                  "Path": "radna-energija-vt",
                   "SetHomepage": false,
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
                 "TermPart": {
-                  "TaxonomyContentItemId": "46nrgz0a0y570tcgvh50tq1vxp"
+                  "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4"
                 },
                 "@WeldedPartSettings": {
                   "TermPart": {}
                 }
               },
               {
-                "ContentItemId": "489sxf0prfhvfzeyk88rmgnacd",
+                "ContentItemId": "4cqexne8f6j3sv77ewvydhxzn8",
                 "ContentItemVersionId": null,
-                "ContentType": "Tag",
-                "DisplayText": "SVT - S1",
+                "ContentType": "TariffElement",
+                "DisplayText": "Radna energija NT",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2022-04-20T04:54:12.0173067Z",
+                "ModifiedUtc": "2022-05-02T14:19:36.4122018Z",
                 "PublishedUtc": null,
                 "CreatedUtc": null,
                 "Owner": null,
                 "Author": "admin",
-                "Tag": {},
                 "TitlePart": {
-                  "Title": "SVT - S1"
+                  "Title": "Radna energija NT"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Radna energija"
+                  },
+                  "Abbreviation": {
+                    "Text": "NT"
+                  },
+                  "Unit": {
+                    "Text": "kWh"
+                  }
                 },
                 "AutoroutePart": {
-                  "Path": "",
+                  "Path": "radna-energija-nt",
                   "SetHomepage": false,
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
                 "TermPart": {
-                  "TaxonomyContentItemId": "46nrgz0a0y570tcgvh50tq1vxp"
+                  "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4"
                 },
                 "@WeldedPartSettings": {
                   "TermPart": {}
                 }
               },
               {
-                "ContentItemId": "4c3hgwx0rj12azf674mcbpqych",
+                "ContentItemId": "4eexj7kgkdww3rpcavx5mxw3da",
                 "ContentItemVersionId": null,
-                "ContentType": "Tag",
-                "DisplayText": "JEN - J1",
+                "ContentType": "TariffElement",
+                "DisplayText": "Naknada za obračunsko mjerno mjesto ",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2022-04-20T04:54:31.2388217Z",
+                "ModifiedUtc": "2022-05-02T14:23:10.6410695Z",
                 "PublishedUtc": null,
                 "CreatedUtc": null,
                 "Owner": null,
                 "Author": "admin",
-                "Tag": {},
                 "TitlePart": {
-                  "Title": "JEN - J1"
+                  "Title": "Naknada za obračunsko mjerno mjesto "
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Naknada za obračunsko mjerno mjesto"
+                  },
+                  "Abbreviation": {
+                    "Text": null
+                  },
+                  "Unit": {
+                    "Text": "mjesec"
+                  }
                 },
                 "AutoroutePart": {
-                  "Path": "",
+                  "Path": "naknada-za-obracunsko-mjerno-mjesto-",
                   "SetHomepage": false,
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
                 "TermPart": {
-                  "TaxonomyContentItemId": "46nrgz0a0y570tcgvh50tq1vxp"
+                  "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4"
                 },
                 "@WeldedPartSettings": {
                   "TermPart": {}
                 }
               },
               {
-                "ContentItemId": "4dqwtme5cfc03wassa43p9zbcm",
+                "ContentItemId": "4fpzdpa1c1mdjsef4j21wnd9x7",
                 "ContentItemVersionId": null,
-                "ContentType": "Tag",
-                "DisplayText": "JEN - J2",
+                "ContentType": "TariffElement",
+                "DisplayText": "Radna snaga ",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2022-04-20T04:54:42.1156727Z",
+                "ModifiedUtc": "2022-05-02T14:23:41.6926237Z",
                 "PublishedUtc": null,
                 "CreatedUtc": null,
                 "Owner": null,
                 "Author": "admin",
-                "Tag": {},
                 "TitlePart": {
-                  "Title": "JEN - J2"
+                  "Title": "Radna snaga "
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Radna snaga"
+                  },
+                  "Abbreviation": {
+                    "Text": null
+                  },
+                  "Unit": {
+                    "Text": "kW"
+                  }
                 },
                 "AutoroutePart": {
-                  "Path": "",
+                  "Path": "radna-snaga-",
                   "SetHomepage": false,
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
                 "TermPart": {
-                  "TaxonomyContentItemId": "46nrgz0a0y570tcgvh50tq1vxp"
-                },
-                "@WeldedPartSettings": {
-                  "TermPart": {}
-                }
-              },
-              {
-                "ContentItemId": "4ey0tm3f106ez4d8ewrg1mjnc5",
-                "ContentItemVersionId": null,
-                "ContentType": "Tag",
-                "DisplayText": "RVT",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-04-20T04:54:52.2509539Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "Tag": {},
-                "TitlePart": {
-                  "Title": "RVT"
-                },
-                "AutoroutePart": {
-                  "Path": "",
-                  "SetHomepage": false,
-                  "Disabled": false,
-                  "RouteContainedItems": false,
-                  "Absolute": false
-                },
-                "TermPart": {
-                  "TaxonomyContentItemId": "46nrgz0a0y570tcgvh50tq1vxp"
-                },
-                "@WeldedPartSettings": {
-                  "TermPart": {}
-                }
-              },
-              {
-                "ContentItemId": "4kyyb3fyj6j55t18zf9xsngd45",
-                "ContentItemVersionId": null,
-                "ContentType": "Tag",
-                "DisplayText": "RNT",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-04-20T04:55:03.9365287Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "Tag": {},
-                "TitlePart": {
-                  "Title": "RNT"
-                },
-                "AutoroutePart": {
-                  "Path": "",
-                  "SetHomepage": false,
-                  "Disabled": false,
-                  "RouteContainedItems": false,
-                  "Absolute": false
-                },
-                "TermPart": {
-                  "TaxonomyContentItemId": "46nrgz0a0y570tcgvh50tq1vxp"
-                },
-                "@WeldedPartSettings": {
-                  "TermPart": {}
-                }
-              },
-              {
-                "ContentItemId": "4jhy72wtpkjp40e5yfxjnzjam4",
-                "ContentItemVersionId": null,
-                "ContentType": "Tag",
-                "DisplayText": "OIE",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-04-20T04:55:23.0643808Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "Tag": {},
-                "TitlePart": {
-                  "Title": "OIE"
-                },
-                "AutoroutePart": {
-                  "Path": "",
-                  "SetHomepage": false,
-                  "Disabled": false,
-                  "RouteContainedItems": false,
-                  "Absolute": false
-                },
-                "TermPart": {
-                  "TaxonomyContentItemId": "46nrgz0a0y570tcgvh50tq1vxp"
-                },
-                "@WeldedPartSettings": {
-                  "TermPart": {}
-                }
-              },
-              {
-                "ContentItemId": "46t00pf1ss2362d81zh2h4gywy",
-                "ContentItemVersionId": null,
-                "ContentType": "Tag",
-                "DisplayText": "TRP",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-04-20T04:55:41.1980568Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "Tag": {},
-                "TitlePart": {
-                  "Title": "TRP"
-                },
-                "AutoroutePart": {
-                  "Path": "",
-                  "SetHomepage": false,
-                  "Disabled": false,
-                  "RouteContainedItems": false,
-                  "Absolute": false
-                },
-                "TermPart": {
-                  "TaxonomyContentItemId": "46nrgz0a0y570tcgvh50tq1vxp"
+                  "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4"
                 },
                 "@WeldedPartSettings": {
                   "TermPart": {}

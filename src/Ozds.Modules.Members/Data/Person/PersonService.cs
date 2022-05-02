@@ -39,11 +39,6 @@ public class PersonPartService : IPartService<Person>
             Localizer["Your ID is already in use."]);
       }
     }
-    if (!part.Legal &&
-        string.IsNullOrWhiteSpace(part.Surname.Text))
-    {
-      yield return new ValidationResult(Localizer["Surname is required."]);
-    }
   }
 
   private async Task<bool> IsPersonUniqueAsync(Person part, string oib)
@@ -51,8 +46,7 @@ public class PersonPartService : IPartService<Person>
     return (await Session
                    .QueryIndex<PersonIndex>(
                        o => o.Oib == oib &&
-                            o.ContentItemId != part.ContentItem.ContentItemId &&
-                            o.Legal == part.Legal)
+                            o.ContentItemId != part.ContentItem.ContentItemId)
                    .CountAsync()) == 0;
   }
 
@@ -73,7 +67,7 @@ public class PersonPartService : IPartService<Person>
     var user = await GetCurrentUser();
     if (user == null)
       return;
-    part.Email = new TextField { Text = user.Email };
+    part.Contact = new TextField { Text = user.Email };
   }
 
   public Task PublishedAsync(

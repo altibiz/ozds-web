@@ -69,7 +69,7 @@ public static partial class AlterCalculation
                 Required = true,
                 DisplayedContentTypes = new[]
                 {
-                  "Site",
+                  "SecondarySite",
                 }
               }))
         .WithField("TariffModel",

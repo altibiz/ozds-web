@@ -18,7 +18,6 @@ using OrchardCore.ContentTypes.Editors;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentFields.Fields;
 using OrchardCore.ContentFields.Drivers;
-using OrchardCore.Data;
 using OrchardCore.Taxonomies.Fields;
 using OrchardCore.Taxonomies.Drivers;
 using OrchardCore.Recipes;
@@ -48,7 +47,6 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddContentPart<Contact>();
     services.AddContentPart<Location>();
     services.UsePartService<Person, PersonPartService>();
-    services.AddScoped<IScopedIndexProvider, PersonIndexProvider>();
     services.AddTransient<IContentsAdminListFilterProvider,
         PersonPartAdminListFilterProvider>();
     services.AddScoped<IDisplayDriver<ContentOptionsViewModel>,
@@ -56,24 +54,17 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddContentPart<Site>();
     services.AddContentPart<PrimarySite>();
     services.AddContentPart<SecondarySite>();
-    services.AddScoped<IScopedIndexProvider, SiteIndexProvider>();
     services.AddContentPart<Member>();
     services.AddScoped<MemberService>();
     services.AddSingleton<IContentHandler, MemberHandler>();
-    services.AddScoped<IScopedIndexProvider, MemberIndexProvider>();
     services.AddContentPart<Center>();
-    services.AddScoped<IScopedIndexProvider, CenterIndexProvider>();
     services.AddContentPart<ReceiptItem>();
     services.AddContentPart<Receipt>();
-    services.AddScoped<IScopedIndexProvider, ReceiptIndexProvider>();
     services.AddContentPart<Calculation>();
-    services.AddScoped<IScopedIndexProvider, CalculationIndexProvider>();
     services.AddContentPart<CalculationItem>();
     services.AddContentPart<Catalogue>();
     services.AddContentPart<CatalogueItem>();
-    services.AddScoped<IScopedIndexProvider, CatalogueIndexProvider>();
     services.AddContentPart<Contract>();
-    services.AddScoped<IScopedIndexProvider, ContractIndexProvider>();
 
     services.AddScoped<TaxonomyCacheService>();
 

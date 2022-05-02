@@ -37,13 +37,13 @@ public class PersonPartAdminListFilterProvider :
                   .RouteValues
                   .GetOrDefault("contentTypeId")
                   .When(selectedContentType =>
-                    selectedContentType.ToString() == "Member" ||
-                    selectedContentType.ToString() == "Company",
+                    selectedContentType.ToString() == "Consumer" ||
+                    selectedContentType.ToString() == "Center",
                     _ => query
                       .With<PersonIndex>(
                         person =>
                           person.Oib == value ||
-                          person.LegalName.Contains(value))
+                          person.Name.Contains(value))
                       .As<IQuery<ContentItem>>(),
                     () => query
                       .With<ContentItemIndex>(
