@@ -7,11 +7,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Builder;
 using OrchardCore.Data.Migration;
 using OrchardCore.Navigation;
-using OrchardCore.Contents.Services;
-using OrchardCore.DisplayManagement.Handlers;
-using OrchardCore.Contents.ViewModels;
 using OrchardCore.BackgroundTasks;
-using OrchardCore.ContentManagement.Handlers;
 using OrchardCore.DisplayManagement.Implementation;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentTypes.Editors;
@@ -45,18 +41,13 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddScoped<INavigationProvider, AdminMenu>();
     services.AddScoped<IDataMigration, Migrations>();
 
-    services.UsePartService<Person, PersonPartService>();
+    services.AddContentPart<Person>();
     services.AddScoped<IScopedIndexProvider, PersonIndexProvider>();
-    services.AddTransient<IContentsAdminListFilterProvider,
-        PersonPartAdminListFilterProvider>();
-    services.AddScoped<IDisplayDriver<ContentOptionsViewModel>,
-        PersonOptionsDisplayDriver>();
     services.AddContentPart<Site>();
     services.AddContentPart<SecondarySite>();
     services.AddScoped<IScopedIndexProvider, SiteIndexProvider>();
     services.AddContentPart<Consumer>();
     services.AddScoped<ConsumerService>();
-    services.AddSingleton<IContentHandler, ConsumerHandler>();
     services.AddContentPart<Center>();
     services.AddContentPart<ReceiptItem>();
     services.AddContentPart<Receipt>();

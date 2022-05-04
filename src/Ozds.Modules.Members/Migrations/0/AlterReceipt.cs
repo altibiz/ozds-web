@@ -90,11 +90,27 @@ public static partial class AlterReceipt
     content.AlterPartDefinition("Receipt",
       part => part
         .WithDisplayName("Račun")
+        .WithField("Site",
+          field => field
+            .OfType("ContentPickerField")
+            .WithDisplayName("Obračunsko mjerno mjesto")
+            .WithPosition("1")
+            .WithSettings(
+              new ContentPickerFieldSettings
+              {
+                Required = true,
+                Multiple = false,
+                DisplayedContentTypes =
+                new[]
+                {
+                  "SecondarySite"
+                }
+              }))
         .WithField("Date",
           field => field
             .OfType("DateField")
             .WithDisplayName("Datum izrade")
-            .WithPosition("1")
+            .WithPosition("2")
             .WithSettings(
               new DateFieldSettings
               {
@@ -104,7 +120,7 @@ public static partial class AlterReceipt
           field => field
             .OfType("NumericField")
             .WithDisplayName("UKUPNO")
-            .WithPosition("2")
+            .WithPosition("3")
             .WithSettings(
               new NumericFieldSettings
               {
@@ -116,7 +132,7 @@ public static partial class AlterReceipt
           field => field
             .OfType("NumericField")
             .WithDisplayName("PDV (13%)")
-            .WithPosition("3")
+            .WithPosition("4")
             .WithSettings(
               new NumericFieldSettings
               {
@@ -128,7 +144,7 @@ public static partial class AlterReceipt
           field => field
             .OfType("NumericField")
             .WithDisplayName("UKUPNI IZNOS")
-            .WithPosition("4")
+            .WithPosition("5")
             .WithSettings(
               new NumericFieldSettings
               {
