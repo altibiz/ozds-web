@@ -17,11 +17,15 @@ public static partial class AlterExpenditure
         .Securable()
         .WithPart("Expenditure",
           part => part
-          .WithPosition("0"))
+          .WithPosition("1")
+          .WithSettings(
+            new FieldEditorSettings
+            {
+            }))
         .WithPart("BagPart",
           part => part
             .WithDisplayName("Stavke")
-            .WithPosition("1")
+            .WithPosition("2")
             .WithSettings(
               new BagPartSettings
               {
@@ -45,6 +49,7 @@ public static partial class AlterExpenditure
               new NumericFieldSettings
               {
                 Required = true,
-                Minimum = 0
+                Minimum = 0,
+                Scale = 2,
               })));
 }

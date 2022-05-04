@@ -23,7 +23,7 @@ public class MyDocumentsModel : PageModel
     get;
   } = new();
 
-  public MyDocumentsModel(MemberService members,
+  public MyDocumentsModel(ConsumerService members,
       IHtmlLocalizer<MyDocumentsModel> localizer, INotifier notifier)
   {
     Members = members;
@@ -32,7 +32,7 @@ public class MyDocumentsModel : PageModel
   }
 
   private IHtmlLocalizer H { get; }
-  private MemberService Members { get; }
+  private ConsumerService Members { get; }
   private INotifier Notifier { get; }
 
   private void AddDocument(string group, string name, string id)

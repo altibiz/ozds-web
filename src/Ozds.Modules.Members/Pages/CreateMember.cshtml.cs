@@ -50,7 +50,7 @@ namespace Ozds.Modules.Members.Pages
 
     public CreateMemberModel(
         IHtmlLocalizer<CreateMemberModel> localizer,
-        MemberService members,
+        ConsumerService members,
         INotifier notifier)
     {
       H = localizer;
@@ -60,7 +60,7 @@ namespace Ozds.Modules.Members.Pages
     }
 
     private readonly IHtmlLocalizer H;
-    private readonly MemberService Members;
+    private readonly ConsumerService Members;
     private readonly INotifier Notifier;
   }
 }

@@ -69,7 +69,7 @@ public class BarcodeGenModel : PageModel
 
   public List<ContentItem> PersonList { get; } = new();
 
-  public BarcodeGenModel(MemberService mService,
+  public BarcodeGenModel(ConsumerService mService,
       IHtmlLocalizer<CreateMemberModel> localizer, INotifier notifier)
   {
     Notifier = notifier;
@@ -80,6 +80,6 @@ public class BarcodeGenModel : PageModel
   }
 
   private IHtmlLocalizer H { get; }
-  private MemberService Members { get; }
+  private ConsumerService Members { get; }
   private INotifier Notifier { get; }
 }

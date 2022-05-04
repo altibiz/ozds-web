@@ -1,9 +1,8 @@
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
-using OrchardCore.Flows.Models;
 using OrchardCore.ContentFields.Settings;
 using OrchardCore.Title.Models;
-using OrchardCore.Taxonomies.Settings;
+using OrchardCore.Flows.Models;
 
 namespace Ozds.Modules.Members.M0;
 
@@ -16,6 +15,8 @@ public static partial class AlterReceipt
         .DisplayedAs("Račun")
         .Creatable()
         .Listable()
+        .Draftable()
+        .Securable()
          .WithPart("TitlePart",
           part => part
             .WithDisplayName("Naslov")
@@ -24,54 +25,63 @@ public static partial class AlterReceipt
               new TitlePartSettings
               {
                 RenderTitle = true,
-                Options = TitlePartOptions.GeneratedDisabled,
-                // TODO: check
+                Options = TitlePartOptions.GeneratedHidden,
                 Pattern =
                 @"
 {%- assign receipt = ContentItem.Content.Receipt -%}
-{%- assign partner = ContentItem.Content.Partner -%}
-{%- assign dateFrom = receipt.DateFrom.Value | date: '%Y-%m-%d' -%}
-{%- assign dateTo = receipt.DateTo.Value | date: '%Y-%m-%d' -%}
-{{- partner }} {{ dateFrom }} - {{ dateTo -}}
+{%- assign consumer = ContentItem.Content.Consumer -%}
+{%- assign consumerName = consumer.Name.Text -%}
+{%- assign date = receipt.Date.Value | date: '%d. %m. %Y.' -%}
+{{- consumerName }} {{ date -}}
                 ",
               }))
-        .Securable()
-        .WithPart("Receipt",
+        .WithPart("Center", "Person",
           part => part
-            .WithPosition("0")
+            .WithDisplayName("Operator")
+            .WithPosition("2")
             .WithSettings(
-              new ReceiptSettings
+              new FieldEditorSettings
               {
               }))
-       .WithPart("Person",
+        .WithPart("Consumer", "Person",
           part => part
-            .WithDisplayName("Partner")
-            .WithDescription("Partner projekta")
+            .WithDisplayName("Korisnik ZDS-a")
             .WithPosition("3")
             .WithSettings(
-              new PersonSettings
+              new FieldEditorSettings
               {
               }))
-        .WithPart("BagPart",
+        .WithPart("Calculation", "BagPart",
           part => part
-            .WithDisplayName("Stavke")
-            .WithDescription("Stavke mjesecnog računa")
-            .WithPosition("2")
+            .WithDisplayName("Obračun")
+            .WithPosition("4")
             .WithSettings(
               new BagPartSettings
               {
-                ContainedContentTypes = new[]
+                ContainedContentTypes =
+                new[]
                 {
-                  "Calculation",
-                  "ReceiptItem"
-                },
+                  "Calculation"
+                }
               }))
-        .WithPart("Contact",
+        .WithPart("Items", "BagPart",
           part => part
-            .WithDisplayName("Operater")
-            .WithPosition("4")
+            .WithDisplayName("Stavke")
+            .WithPosition("5")
             .WithSettings(
-              new ContactSettings
+              new BagPartSettings
+              {
+                ContainedContentTypes =
+                  new[]
+                  {
+                    "ReceiptItem"
+                  }
+              }))
+        .WithPart("Receipt",
+          part => part
+            .WithPosition("5")
+            .WithSettings(
+              new FieldEditorSettings
               {
               })));
 
@@ -80,131 +90,50 @@ public static partial class AlterReceipt
     content.AlterPartDefinition("Receipt",
       part => part
         .WithDisplayName("Račun")
-        .WithDescription("Poslovni podaci u racunu")
-        .WithField("ProjectId",
-          field => field
-            .OfType("TextField")
-            .WithDisplayName("Identifikator projekta")
-            .WithPosition("0")
-            .WithSettings(
-              new TextFieldSettings
-              {
-                Required = true
-              }))
-        .WithField("Official",
-          field => field
-            .OfType("ContentPickerField")
-            .WithDisplayName("Dužnosnik")
-            .WithPosition("1")
-            .WithSettings(
-              new ContentPickerFieldSettings
-              {
-                Multiple = false,
-                Required = true,
-                DisplayedContentTypes = new[]
-                {
-                  "Member",
-                  "Center"
-                }
-              }))
-        .WithField("Contract",
-          field => field
-            .OfType("ContentPickerField")
-            .WithDisplayName("Ugovor")
-            .WithPosition("6")
-            .WithSettings(
-              new ContentPickerFieldSettings
-              {
-                Multiple = false,
-                Required = true,
-                DisplayedContentTypes = new[]
-                {
-                  "Contract",
-                }
-              }))
-        .WithField("DateFrom",
-          field => field
-            .OfType("DateField")
-            .WithDisplayName("Datum od")
-            .WithPosition("8")
-            .WithSettings(
-              new DateFieldSettings
-              {
-                Required = true
-              }))
-        .WithField("DateTo",
-          field => field
-            .OfType("DateField")
-            .WithDisplayName("Datum do")
-            .WithPosition("9")
-            .WithSettings(
-              new DateFieldSettings
-              {
-                Required = true
-              }))
         .WithField("Date",
           field => field
             .OfType("DateField")
-            .WithDisplayName("Datum računa")
-            .WithPosition("10")
+            .WithDisplayName("Datum izrade")
+            .WithPosition("1")
             .WithSettings(
               new DateFieldSettings
               {
                 Required = true
-              }))
-        .WithField("DeliveryDate",
-          field => field
-            .OfType("DateField")
-            .WithDisplayName("Datum isporuke")
-            .WithPosition("11")
-            .WithSettings(
-              new DateFieldSettings
-              {
-                Required = true
-              }))
-        .WithField("PaymentCurrency",
-          field => field
-            .OfType("TaxonomyField")
-            .WithDisplayName("Valuta plaćanja")
-            .WithPosition("12")
-            .WithSettings(
-              new TaxonomyFieldSettings
-              {
-                TaxonomyContentItemId = "4098639c3zswm084zyay3je1m9",
-                Required = true,
-                Unique = true,
               }))
         .WithField("InTotal",
           field => field
             .OfType("NumericField")
-            .WithDisplayName("Ukupno bez PDV-a")
-            .WithPosition("13")
+            .WithDisplayName("UKUPNO")
+            .WithPosition("2")
             .WithSettings(
               new NumericFieldSettings
               {
                 Required = true,
-                Minimum = 0
+                Minimum = 0,
+                Scale = 2
+              }))
+        .WithField("Tax",
+          field => field
+            .OfType("NumericField")
+            .WithDisplayName("PDV (13%)")
+            .WithPosition("3")
+            .WithSettings(
+              new NumericFieldSettings
+              {
+                Required = true,
+                Minimum = 0,
+                Scale = 2,
               }))
         .WithField("InTotalWithTax",
           field => field
             .OfType("NumericField")
-            .WithDisplayName("Ukupno")
-            .WithPosition("14")
+            .WithDisplayName("UKUPNI IZNOS")
+            .WithPosition("4")
             .WithSettings(
               new NumericFieldSettings
               {
                 Required = true,
-                Minimum = 0
-              }))
-        .WithField("Remark",
-          field => field
-            .OfType("TextField")
-            .WithDisplayName("Napomena")
-            .WithPosition("15")
-            .WithEditor("TextArea")
-            .WithSettings(
-              new TextFieldSettings
-              {
-                Required = false
+                Minimum = 0,
+                Scale = 2,
               })));
 }

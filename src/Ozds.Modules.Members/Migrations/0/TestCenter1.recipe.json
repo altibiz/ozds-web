@@ -4,77 +4,761 @@
       "name": "content",
       "Data": [
         {
-          "ContentItemId": "4rq44pcgbd96ms70k45kme32mq",
-          "ContentItemVersionId": "4jvagzq28gs911pf9qkxn752xa",
+          "ContentItemId": "4gk51z3vfezzgtk8kqr231y9x7",
+          "ContentItemVersionId": "41cbhnsd25z7x5xgmz4fd7dd4g",
           "ContentType": "Center",
-          "DisplayText": "Zagreb centar",
+          "DisplayText": "Arena Centar",
           "Latest": true,
           "Published": true,
-          "ModifiedUtc": "2022-04-20T14:23:47.75938Z",
-          "PublishedUtc": "2022-04-20T14:23:48.7576253Z",
-          "CreatedUtc": "2022-04-20T14:13:02.0641015Z",
-          "Owner": "4s73wcst6dzjvwxn13kk57dndd",
+          "ModifiedUtc": "2022-05-04T10:31:52.3987525Z",
+          "PublishedUtc": "2022-05-04T10:31:52.5469593Z",
+          "CreatedUtc": "2022-05-03T19:13:00.3759784Z",
+          "Owner": "498t0ej1wwcgps2ejas0t2kjwv",
           "Author": "admin",
-          "Center": {
-            "User": {
-              "UserIds": ["TestOwnerId"],
-              "UserNames": ["TestOwner"]
-            },
-            "PrimarySites": {
-              "ContentItemIds": ["4gx0qdhvxthqf1a6chbrkax64h"]
-            }
-          },
           "TitlePart": {
-            "Title": "Zagreb centar"
+            "Title": "Arena Centar"
           },
-          "AutoroutePart": {
-            "Path": "zagreb-centar",
-            "SetHomepage": false,
-            "Disabled": false,
-            "RouteContainedItems": false,
-            "Absolute": false
-          },
-          "Person": {
-            "Oib": {
-              "Text": "12312312343"
-            },
+          "Center": {},
+          "Operator": {
             "Name": {
-              "Text": "Zagreb Centar"
+              "Text": "HELB"
             },
-            "MiddleName": {
-              "Text": null
-            },
-            "Surname": {
-              "Text": null
+            "Oib": {
+              "Text": "12312312312"
             },
             "Address": {
-              "Text": "Frankopanska 4"
+              "Text": "Industrijska ulica 1"
+            },
+            "City": {
+              "Text": "Božjakovina"
+            },
+            "PostalCode": {
+              "Text": "10370 Dugo Selo"
+            },
+            "Contact": {
+              "Text": "helb@helb.hr"
+            }
+          },
+
+          "CenterOwner": {
+            "Name": {
+              "Text": "Ivo Ivić"
+            },
+            "Oib": {
+              "Text": "12312312313"
+            },
+            "Address": {
+              "Text": "Vice Vukova 6"
+            },
+            "City": {
+              "Text": "Zagreb"
+            },
+
+            "PostalCode": {
+              "Text": "10020"
+            },
+            "Contact": {
+              "Text": "info@arenacentar.hr"
+            }
+          },
+          "Catalogues": {
+            "ContentItems": [
+              {
+                "ContentItemId": "4p9c9e6wq9055srmwvqjay7wnp",
+                "ContentItemVersionId": null,
+                "ContentType": "Catalogue",
+                "DisplayText": "",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-04T10:31:52.4105032Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": ""
+                },
+                "Catalogue": {
+                  "TariffModel": {
+                    "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
+                    "TermContentItemIds": ["4g4m7xhxj84na3xf49ks1ty7d5"]
+                  }
+                },
+                "BagPart": {
+                  "ContentItems": [
+                    {
+                      "ContentItemId": "4ncqpyq809pdq0560wfdfwasdb",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.413925Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+
+                          "TermContentItemIds": ["4mw0ncthn1aq4r5k6cqfk19yw3"]
+                        },
+                        "Price": {
+                          "Value": 0.04
+                        }
+                      }
+                    },
+                    {
+                      "ContentItemId": "4f6vknv9skpsc13rah7cnp6xx8",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.4199189Z",
+                      "PublishedUtc": null,
+
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4cqexne8f6j3sv77ewvydhxzn8"]
+                        },
+                        "Price": {
+                          "Value": 0.02
+                        }
+                      }
+                    },
+
+                    {
+                      "ContentItemId": "47wyqycst2xenymmq59gf5amxm",
+
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.4245713Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4fpzdpa1c1mdjsef4j21wnd9x7"]
+                        },
+
+                        "Price": {
+                          "Value": 14.0
+                        }
+                      }
+                    },
+                    {
+                      "ContentItemId": "40csbqgmccmsx0xq52d9rgm1mj",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.4288466Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
+                        },
+                        "Price": {
+                          "Value": 68.0
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentItemId": "441dc2qeqxcchyzpv2gnr55654",
+                "ContentItemVersionId": null,
+                "ContentType": "Catalogue",
+                "DisplayText": "",
+                "Latest": false,
+                "Published": false,
+
+                "ModifiedUtc": "2022-05-04T10:31:52.4356876Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": ""
+                },
+                "Catalogue": {
+                  "TariffModel": {
+                    "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
+                    "TermContentItemIds": ["46k372fszexy61xan98qkz42w0"]
+                  }
+                },
+                "BagPart": {
+                  "ContentItems": [
+                    {
+                      "ContentItemId": "48v0nydyjt3tc0eykg2neerfdg",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.4386531Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4mw0ncthn1aq4r5k6cqfk19yw3"]
+                        },
+                        "Price": {
+                          "Value": 0.14
+                        }
+                      }
+                    },
+                    {
+                      "ContentItemId": "48tjfgkyymk9zwggt6f0akwpnb",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.4427967Z",
+
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4cqexne8f6j3sv77ewvydhxzn8"]
+                        },
+                        "Price": {
+                          "Value": 0.07
+                        }
+                      }
+                    },
+                    {
+                      "ContentItemId": "4rz4qg23r2h7cz5eh6b186hkmr",
+                      "ContentItemVersionId": null,
+
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+
+                      "Published": false,
+
+                      "ModifiedUtc": "2022-05-04T10:31:52.4473691Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4fpzdpa1c1mdjsef4j21wnd9x7"]
+                        },
+                        "Price": {
+                          "Value": 26.0
+                        }
+                      }
+                    },
+                    {
+                      "ContentItemId": "434pmg9hseaq61a3bdchdmd0wr",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.4519767Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
+                        },
+                        "Price": {
+                          "Value": 66.0
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentItemId": "4x1d1ava6mp7f2a29sd0bgcjxe",
+                "ContentItemVersionId": null,
+                "ContentType": "Catalogue",
+                "DisplayText": "",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-04T10:31:52.4584482Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": ""
+                },
+                "Catalogue": {
+                  "TariffModel": {
+                    "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
+                    "TermContentItemIds": ["41vr9sy8ap5ntvbkj74zbw6749"]
+                  }
+                },
+                "BagPart": {
+                  "ContentItems": [
+                    {
+                      "ContentItemId": "4q5sz11wzp37311bz97jqk28w2",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.4613129Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["44vg6aarzp3ayv2praq3t17pce"]
+                        },
+                        "Price": {
+                          "Value": 0.31
+                        }
+                      }
+                    },
+                    {
+                      "ContentItemId": "4bjk1t3j0vb9920fe1hk0wj94p",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.4657925Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+
+                          "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
+                        },
+                        "Price": {
+                          "Value": 41.3
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentItemId": "4fw0meja1s82rw6qndrvng51nn",
+                "ContentItemVersionId": null,
+                "ContentType": "Catalogue",
+                "DisplayText": "",
+                "Latest": false,
+
+                "Published": false,
+                "ModifiedUtc": "2022-05-04T10:31:52.472885Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": ""
+                },
+
+                "Catalogue": {
+                  "TariffModel": {
+                    "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
+                    "TermContentItemIds": ["4w9hx6bgrmj70wdky9pcp9e1mz"]
+                  }
+                },
+
+                "BagPart": {
+                  "ContentItems": [
+                    {
+                      "ContentItemId": "408nvye5adz7mtwqggbj6thdcn",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.4759825Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4mw0ncthn1aq4r5k6cqfk19yw3"]
+                        },
+                        "Price": {
+                          "Value": 0.39
+                        }
+                      }
+                    },
+                    {
+                      "ContentItemId": "4n8z42khpmneqxwks52rrr00mm",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.4814508Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4cqexne8f6j3sv77ewvydhxzn8"]
+                        },
+                        "Price": {
+                          "Value": 0.17
+                        }
+                      }
+                    },
+                    {
+                      "ContentItemId": "4zyp93xqjzn44x42ges2h35mm5",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.4868575Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+
+                          "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
+                        },
+                        "Price": {
+                          "Value": 41.3
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentItemId": "4dvzddcsds2wr5ptrj2vhq9845",
+                "ContentItemVersionId": null,
+                "ContentType": "Catalogue",
+                "DisplayText": "",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-04T10:31:52.4962932Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": ""
+                },
+                "Catalogue": {
+                  "TariffModel": {
+                    "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
+
+                    "TermContentItemIds": ["4bypnkrf7e4ng3q59x732vgq5t"]
+                  }
+                },
+                "BagPart": {
+                  "ContentItems": [
+                    {
+                      "ContentItemId": "4yaqhq90vby680vcea6ymf2gc7",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.4992867Z",
+
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4mw0ncthn1aq4r5k6cqfk19yw3"]
+                        },
+                        "Price": {
+                          "Value": 0.22
+                        }
+                      }
+                    },
+                    {
+                      "ContentItemId": "4mkpt9sa2nc7vxkewc7w34v9dv",
+                      "ContentItemVersionId": null,
+
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.5060666Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4cqexne8f6j3sv77ewvydhxzn8"]
+                        },
+                        "Price": {
+                          "Value": 0.1
+                        }
+                      }
+                    },
+                    {
+                      "ContentItemId": "4hgtx7102e3e63209va2553bmh",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.5119057Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+
+                          "TermContentItemIds": ["4fpzdpa1c1mdjsef4j21wnd9x7"]
+                        },
+                        "Price": {
+                          "Value": 39.0
+                        }
+                      }
+                    },
+                    {
+                      "ContentItemId": "45qhnp1a0m5kdzhfpv8r9tbhm3",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.5169555Z",
+                      "PublishedUtc": null,
+
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
+                        },
+                        "Price": {
+                          "Value": 41.3
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentItemId": "44h5c34fk76wr2n6z41k0t1adt",
+                "ContentItemVersionId": null,
+                "ContentType": "Catalogue",
+                "DisplayText": "",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-04T10:31:52.5249391Z",
+
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+
+                "Owner": "",
+                "Author": "admin",
+
+                "TitlePart": {
+                  "Title": ""
+                },
+                "Catalogue": {
+                  "TariffModel": {
+                    "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
+                    "TermContentItemIds": ["48pb3v35bcfnbswk47q3nfm2dg"]
+                  }
+                },
+                "BagPart": {
+                  "ContentItems": [
+                    {
+                      "ContentItemId": "4bgraxe6n77fq6qzvq75tckqx5",
+                      "ContentItemVersionId": null,
+
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+
+                      "Published": false,
+
+                      "ModifiedUtc": "2022-05-04T10:31:52.5278647Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["44vg6aarzp3ayv2praq3t17pce"]
+                        },
+                        "Price": {
+                          "Value": 0.24
+                        }
+                      }
+                    },
+                    {
+                      "ContentItemId": "4x89g1mjvyp3nygqcm1emfkrwq",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:31:52.5329043Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "Tariff": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
+                        },
+                        "Price": {
+                          "Value": 15.45
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "ListPart": {
+            "FeedProxyUrl": null,
+            "FeedItemsCount": 20
+          },
+
+          "Person": {
+            "Name": {
+              "Text": "Ivo Ivić"
+            },
+            "Oib": {
+              "Text": "12312312313"
+            },
+            "Address": {
+              "Text": "Vice Vukova 6"
             },
             "City": {
               "Text": "Zagreb"
             },
             "PostalCode": {
-              "Text": "10000"
+              "Text": "10020"
             },
-            "County": {
-              "TaxonomyContentItemId": "4d0dew9ar7h9nsbpcs7jg2egwe",
-              "TermContentItemIds": ["4z3rcbqjad20q2pgckfbyd7wc4"],
-              "TagNames": ["Grad Zagreb"]
-            },
-            "Phone": {
-              "Text": "+385911234342"
-            },
-            "Email": {
-              "Text": "zds-zg-centar@gmail.com"
-            },
-            "Type": {
-              "TaxonomyContentItemId": "445pqtg9kka9hzxgdj30x9qq4g",
-              "TermContentItemIds": ["43jw9bej0w1tqybrryfm3nek44"]
+            "Contact": {
+              "Text": "info@arenacentar.hr"
             }
-          },
-          "ListPart": {
-            "FeedProxyUrl": null,
-            "FeedItemsCount": 20
           }
         }
       ]

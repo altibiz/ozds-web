@@ -34,7 +34,7 @@ namespace Ozds.Modules.Members.Pages
       return Page();
     }
 
-    public IndexModel(MemberService members, INotifier notifier,
+    public IndexModel(ConsumerService members, INotifier notifier,
         IHtmlLocalizer<IndexModel> localizer)
     {
       Members = members;
@@ -42,7 +42,7 @@ namespace Ozds.Modules.Members.Pages
       H = localizer;
     }
 
-    private MemberService Members { get; }
+    private ConsumerService Members { get; }
     private INotifier Notifier { get; }
     private IHtmlLocalizer<IndexModel> H { get; }
   }

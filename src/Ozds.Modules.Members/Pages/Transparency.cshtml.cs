@@ -5,7 +5,7 @@ namespace Ozds.Modules.Members.Pages;
 
 public class TransparencyModel : PageModel
 {
-  public TransparencyModel(ISession session, MemberService mService)
+  public TransparencyModel(ISession session, ConsumerService mService)
   {
     Session = session;
   }

@@ -6,25 +6,9 @@ namespace Ozds.Modules.Members.M0;
 
 public static partial class AlterPerson
 {
-  public static void AlterPersonType(
-      this IContentDefinitionManager content) =>
-    content.AlterTypeDefinition("Person",
-      type => type
-        .DisplayedAs("Osoba")
-        .Creatable()
-        .Listable()
-        .Securable()
-        .WithPart("Person",
-          part => part
-          .WithPosition("0")
-          .WithSettings(
-            new PersonSettings
-            {
-            })));
-
   public static void AlterPersonPart(
       this IContentDefinitionManager content) =>
-    content.AlterPartDefinition("PersonPart",
+    content.AlterPartDefinition("Person",
       part => part
         .Attachable()
         .Reusable()
@@ -32,8 +16,8 @@ public static partial class AlterPerson
         .WithField("Name",
           field => field
             .OfType("TextField")
-            .WithDisplayName("Ime")
-            .WithPosition("0")
+            .WithDisplayName("Naziv")
+            .WithPosition("1")
             .WithSettings(
               new TextFieldSettings
               {
@@ -43,7 +27,7 @@ public static partial class AlterPerson
           field => field
             .OfType("TextField")
             .WithDisplayName("OIB")
-            .WithPosition("1")
+            .WithPosition("2")
             .WithSettings(
               new TextFieldSettings
               {
@@ -53,7 +37,7 @@ public static partial class AlterPerson
           field => field
             .OfType("TextField")
             .WithDisplayName("Adresa")
-            .WithPosition("2")
+            .WithPosition("3")
             .WithSettings(
               new TextFieldSettings
               {
@@ -63,7 +47,7 @@ public static partial class AlterPerson
           field => field
             .OfType("TextField")
             .WithDisplayName("Grad/Općina")
-            .WithPosition("3")
+            .WithPosition("4")
             .WithSettings(
               new TextFieldSettings
               {
@@ -73,7 +57,7 @@ public static partial class AlterPerson
           field => field
             .OfType("TextField")
             .WithDisplayName("Poštanski broj")
-            .WithPosition("4")
+            .WithPosition("5")
             .WithSettings(
               new TextFieldSettings
               {
@@ -83,7 +67,7 @@ public static partial class AlterPerson
           field => field
             .OfType("TextField")
             .WithDisplayName("Kontakt")
-            .WithPosition("5")
+            .WithPosition("6")
             .WithSettings(
               new TextFieldSettings
               {

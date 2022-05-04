@@ -1,6 +1,7 @@
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Taxonomies.Settings;
+using OrchardCore.Title.Models;
 using OrchardCore.ContentFields.Settings;
 
 namespace Ozds.Modules.Members.M0;
@@ -15,11 +16,27 @@ public static partial class AlterReceiptItem
         .Creatable()
         .Listable()
         .Securable()
+        .WithPart("TitlePart", part => part
+          .WithPosition("1")
+          .WithDisplayName("Naziv")
+          .WithSettings(
+            new TitlePartSettings
+            {
+              Options = TitlePartOptions.GeneratedHidden,
+              Pattern =
+              @"
+{%- assign receiptItem = ContentItem.Content.receiptItem -%}
+{%- assign articleId = receiptItem.Article.TermContentIds[0] -%}
+{%- assign article = articleId | content_item_id -%}
+{%- assign ordinalNumber = receiptItem.OrdinalNumber.Text -%}
+{{- ordinalNumber }} {{ article -}}
+              "
+            }))
         .WithPart("ReceiptItem",
           part => part
-            .WithPosition("0")
+            .WithPosition("1")
             .WithSettings(
-              new ReceiptItemSettings
+              new FieldEditorSettings
               {
               })));
 
@@ -29,13 +46,11 @@ public static partial class AlterReceiptItem
       part => part
         .Attachable()
         .WithDisplayName("Stavka računa")
-        .WithDescription(
-          "Usluga pružana korisnicima ZDS-a i njen mjesečni iznos.")
         .WithField("OrdinalNumber",
           field => field
             .OfType("TextField")
             .WithDisplayName("Redni broj")
-            .WithPosition("0")
+            .WithPosition("1")
             .WithSettings(
               new TextFieldSettings
               {
@@ -45,24 +60,13 @@ public static partial class AlterReceiptItem
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Artikl")
-            .WithPosition("1")
-            .WithSettings(
-              new TaxonomyFieldSettings
-              {
-                TaxonomyContentItemId = "4dyah7e7srewr46d894deh28n4",
-                Unique = true,
-                Required = true
-              }))
-        .WithField("Unit",
-          field => field
-            .OfType("TaxonomyField")
-            .WithDisplayName("Mjerna jedinica")
             .WithPosition("2")
             .WithSettings(
               new TaxonomyFieldSettings
               {
-                TaxonomyContentItemId = "4cqf2eeqqwadb4xechw3tbbsn0",
-                Unique = true
+                TaxonomyContentItemId = "4van7f3sda11fx2nm0pbqjef45",
+                Unique = true,
+                Required = true
               }))
         .WithField("Amount",
           field => field
@@ -72,7 +76,8 @@ public static partial class AlterReceiptItem
             .WithSettings(
               new NumericFieldSettings
               {
-                Minimum = 0
+                Minimum = 0,
+                Scale = 0
               }))
         .WithField("Price",
           field => field
@@ -82,40 +87,20 @@ public static partial class AlterReceiptItem
             .WithSettings(
               new NumericFieldSettings
               {
-                Minimum = 0
+                Minimum = 0,
+                // NOTE: as precise as possible because of regulations
+                Scale = 10
               }))
-        .WithField("Tax",
+        .WithField("InTotal",
           field => field
             .OfType("NumericField")
-            .WithDisplayName("PDV")
+            .WithDisplayName("Ukupno")
             .WithPosition("5")
             .WithSettings(
               new NumericFieldSettings
               {
                 Required = true,
                 Minimum = 0,
-                Maximum = 1
-              }))
-        .WithField("InTotal",
-          field => field
-            .OfType("NumericField")
-            .WithDisplayName("Ukupno bez PDV-a")
-            .WithPosition("6")
-            .WithSettings(
-              new NumericFieldSettings
-              {
-                Required = true,
-                Minimum = 0,
-              }))
-        .WithField("InTotalWithTax",
-          field => field
-            .OfType("NumericField")
-            .WithDisplayName("Ukupno")
-            .WithPosition("7")
-            .WithSettings(
-              new NumericFieldSettings
-              {
-                Required = true,
-                Minimum = 0,
+                Scale = 2
               })));
 }

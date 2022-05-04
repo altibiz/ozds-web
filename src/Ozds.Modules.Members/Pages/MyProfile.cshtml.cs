@@ -17,7 +17,7 @@ public class MyProfileModel : PageModel
 
   public IShape? Shape { get; set; }
 
-  public MyProfileModel(MemberService mService,
+  public MyProfileModel(ConsumerService mService,
       IContentItemDisplayManager contentItemDisplayManager,
       IHtmlLocalizer<CreateMemberModel> htmlLocalizer,
       IUpdateModelAccessor updateModelAccessor)
@@ -33,5 +33,5 @@ public class MyProfileModel : PageModel
   private IContentItemDisplayManager ContentDisplay { get; }
   private IHtmlLocalizer H { get; }
   private IUpdateModelAccessor UpdateModel { get; }
-  private MemberService Members { get; }
+  private ConsumerService Members { get; }
 }

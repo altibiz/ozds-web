@@ -5,35 +5,39 @@ namespace Ozds.Modules.Members.M0;
 public static class ContentMigrations
 {
   public static IContentDefinitionManager AlterContent(
-      this IContentDefinitionManager @this)
+      this IContentDefinitionManager content)
   {
-    @this.AlterTagPart();
-    @this.AlterTagType();
-    @this.AlterTariffElementPart();
-    @this.AlterTariffElementType();
+    content.AlterTagPart();
+    content.AlterTagType();
+    content.AlterTariffElementPart();
+    content.AlterTariffElementType();
 
-    @this.AlterSitePart();
-    @this.AlterSecondarySiteType();
-    @this.AlterSecondarySitePart();
+    content.AlterSitePart();
+    content.AlterSecondarySiteType();
+    content.AlterSecondarySitePart();
 
-    @this.AlterExpenditureType();
-    @this.AlterExpenditurePart();
-    @this.AlterExpenditureItemType();
-    @this.AlterExpenditureItemPart();
-    @this.AlterCalculationPart();
-    @this.AlterCalculationType();
-    @this.AlterReceiptPart();
-    @this.AlterReceiptType();
-    @this.AlterReceiptItemPart();
-    @this.AlterReceiptItemType();
+    content.AlterCatalogueItemPart();
+    content.AlterCatalogueItemType();
+    content.AlterCataloguePart();
+    content.AlterCatalogueType();
 
-    @this.AlterPersonType();
-    @this.AlterPersonPart();
-    @this.AlterConsumerType();
-    @this.AlterConsumerType();
-    @this.AlterCenterType();
-    @this.AlterCenterPart();
+    content.AlterExpenditureType();
+    content.AlterExpenditurePart();
+    content.AlterExpenditureItemType();
+    content.AlterExpenditureItemPart();
+    content.AlterCalculationPart();
+    content.AlterCalculationType();
+    content.AlterReceiptPart();
+    content.AlterReceiptType();
+    content.AlterReceiptItemPart();
+    content.AlterReceiptItemType();
 
-    return @this;
+    content.AlterPersonPart();
+    content.AlterConsumerType();
+    content.AlterConsumerPart();
+    content.AlterCenterType();
+    content.AlterCenterPart();
+
+    return content;
   }
 }

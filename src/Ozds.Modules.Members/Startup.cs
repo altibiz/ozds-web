@@ -21,6 +21,7 @@ using OrchardCore.ContentFields.Drivers;
 using OrchardCore.Taxonomies.Fields;
 using OrchardCore.Taxonomies.Drivers;
 using OrchardCore.Recipes;
+using OrchardCore.Data;
 using Lombiq.HelpfulExtensions.Extensions.CodeGeneration;
 using Ozds.Modules.Members.Utils;
 using Ozds.Modules.Members.PartFieldSettings;
@@ -44,27 +45,27 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddScoped<INavigationProvider, AdminMenu>();
     services.AddScoped<IDataMigration, Migrations>();
 
-    services.AddContentPart<Contact>();
-    services.AddContentPart<Location>();
     services.UsePartService<Person, PersonPartService>();
+    services.AddScoped<IScopedIndexProvider, PersonIndexProvider>();
     services.AddTransient<IContentsAdminListFilterProvider,
         PersonPartAdminListFilterProvider>();
     services.AddScoped<IDisplayDriver<ContentOptionsViewModel>,
         PersonOptionsDisplayDriver>();
     services.AddContentPart<Site>();
-    services.AddContentPart<PrimarySite>();
     services.AddContentPart<SecondarySite>();
-    services.AddContentPart<Member>();
-    services.AddScoped<MemberService>();
-    services.AddSingleton<IContentHandler, MemberHandler>();
+    services.AddScoped<IScopedIndexProvider, SiteIndexProvider>();
+    services.AddContentPart<Consumer>();
+    services.AddScoped<ConsumerService>();
+    services.AddSingleton<IContentHandler, ConsumerHandler>();
     services.AddContentPart<Center>();
     services.AddContentPart<ReceiptItem>();
     services.AddContentPart<Receipt>();
+    services.AddScoped<IScopedIndexProvider, ReceiptIndexProvider>();
     services.AddContentPart<Calculation>();
-    services.AddContentPart<CalculationItem>();
     services.AddContentPart<Catalogue>();
     services.AddContentPart<CatalogueItem>();
-    services.AddContentPart<Contract>();
+    services.AddContentPart<Expenditure>();
+    services.AddContentPart<ExpenditureItem>();
 
     services.AddScoped<TaxonomyCacheService>();
 

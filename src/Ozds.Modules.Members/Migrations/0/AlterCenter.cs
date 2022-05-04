@@ -2,6 +2,7 @@ using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
 using OrchardCore.Lists.Models;
+using OrchardCore.Flows.Models;
 
 namespace Ozds.Modules.Members.M0;
 
@@ -20,47 +21,55 @@ public static partial class AlterCenter
           part => part
             .WithDisplayName("Naziv")
             .WithDescription("Naziv zatvorenog distribucijskog sustava")
-            .WithPosition("0")
+            .WithPosition("1")
             .WithSettings(
               new TitlePartSettings
               {
                 RenderTitle = true,
-                Options = TitlePartOptions.GeneratedHidden,
-                Pattern =
-                @"
-{%- assign owner = ContentItem.Content.Owner -%}
-{%- assign name = owner.Name.Text -%}
-{{- name -}}
-                ",
+                Options = TitlePartOptions.EditableRequired,
               }))
         .WithPart("Center",
           part => part
-            .WithPosition("1")
+            .WithPosition("2")
             .WithDisplayName("Centar")
             .WithSettings(
-              new CenterSettings
+              new FieldEditorSettings
               {
               }))
         .WithPart("Operator", "Person",
           part => part
-            .WithDisplayName("Operator")
-            .WithPosition("2")
-            .WithSettings(
-              new PersonSettings
-              {
-              }))
-        .WithPart("Owner", "Person",
-          part => part
-            .WithDisplayName("Vlasnik")
+            .WithDisplayName("Operator ZDS-a")
             .WithPosition("3")
             .WithSettings(
-              new PersonSettings
+              new FieldEditorSettings
               {
+              }))
+        // NOTE: Owner clashes with the internal Orchard Core Owner field
+        .WithPart("CenterOwner", "Person",
+          part => part
+            .WithDisplayName("Vlasnik")
+            .WithPosition("4")
+            .WithSettings(
+              new FieldEditorSettings
+              {
+              }))
+        .WithPart("Catalogues", "BagPart",
+          part => part
+            .WithDisplayName("Cjenik")
+            .WithPosition("5")
+            .WithSettings(
+              new BagPartSettings
+              {
+                ContainedContentTypes =
+                  new[]
+                  {
+                    "Catalogue"
+                  }
               }))
         .WithPart("ListPart",
           part => part
             .WithDisplayName("Korisnici")
-            .WithPosition("4")
+            .WithPosition("6")
             .WithSettings(
               new ListPartSettings
               {

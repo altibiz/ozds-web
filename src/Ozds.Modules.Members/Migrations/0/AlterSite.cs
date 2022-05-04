@@ -12,26 +12,24 @@ public static partial class AlterSite
     content.AlterPartDefinition("Site",
       part => part
         .Attachable()
-        .Reusable()
         .WithDisplayName("Obračunsko mjerno mjesto")
-        .WithDescription("Obračunsko mjerno mjesto")
         .WithField("Source",
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Izvor mjerenja uređaja")
-            .WithPosition("0")
+            .WithPosition("1")
             .WithSettings(
               new TaxonomyFieldSettings
               {
+                TaxonomyContentItemId = "4k4556m076b1vvsmmqjccbjwn5",
                 Required = true,
                 Unique = true,
-                TaxonomyContentItemId = "4k4556m076b1vvsmmqjccbjwn5"
               }))
         .WithField("DeviceId",
           field => field
             .OfType("TextField")
             .WithDisplayName("Identifikator uređaja")
-            .WithPosition("1")
+            .WithPosition("2")
             .WithSettings(
               new TextFieldSettings
               {
@@ -41,10 +39,12 @@ public static partial class AlterSite
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Status")
-            .WithPosition("2")
+            .WithPosition("3")
             .WithSettings(
-              new BooleanFieldSettings
+              new TaxonomyFieldSettings
               {
-                DefaultValue = false
+                TaxonomyContentItemId = "47p9e5rkms3m012qv3z2t26jcg",
+                Required = true,
+                Unique = true,
               })));
 }

@@ -18,27 +18,7 @@ public class PersonPartService : IPartService<Person>
   public async IAsyncEnumerable<ValidationResult> ValidateAsync(
       Person part)
   {
-    if (part.ContentItem.ContentItemId.StartsWith("nat_"))
-    {
-      yield break;
-    }
-    var personPartSettings =
-        ContentDefinitions.GetSettings<PersonSettings>(part);
-    if (!string.IsNullOrWhiteSpace(part.Oib?.Text))
-    {
-      var oib = part.Oib.Text;
-      if (oib.Length != 11)
-      {
-        yield return new ValidationResult(
-            Localizer["Your ID must be 11 numbers."]);
-      }
-
-      if (!await IsPersonUniqueAsync(part, oib))
-      {
-        yield return new ValidationResult(
-            Localizer["Your ID is already in use."]);
-      }
-    }
+    yield break;
   }
 
   private async Task<bool> IsPersonUniqueAsync(Person part, string oib)

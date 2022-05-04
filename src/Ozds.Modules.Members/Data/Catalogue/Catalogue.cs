@@ -1,24 +1,9 @@
 using OrchardCore.ContentManagement;
-using OrchardCore.ContentManagement.Display.Models;
+using OrchardCore.Taxonomies.Fields;
 
 namespace Ozds.Modules.Members;
 
 public class Catalogue : ContentPart
 {
-}
-
-public class CatalogueSettings : IFieldEditorSettings
-{
-  public DisplayModeResult GetFieldDisplayMode(string propertyName,
-      string defaultMode, BuildFieldEditorContext context,
-      bool isAdminTheme)
-  {
-    return defaultMode;
-  }
-
-  public string GetFieldLabel(
-      string propertyName, string defaultVale, bool isAdminTheme)
-  {
-    return defaultVale;
-  }
+  public TaxonomyField TariffModel { get; set; } = default!;
 }

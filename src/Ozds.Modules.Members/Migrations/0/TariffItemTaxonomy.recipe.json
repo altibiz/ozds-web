@@ -1,0 +1,360 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "4van7f3sda11fx2nm0pbqjef45",
+          "ContentItemVersionId": "4sa4crsqmmd9qza2c7det3eedp",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Tarifna stavka",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-05-03T08:41:47.7933695Z",
+          "PublishedUtc": "2022-05-03T08:41:47.8025162Z",
+          "CreatedUtc": "2022-05-03T08:36:58.249848Z",
+          "Owner": "4bdz0dx2hax94sr798hvnsz740",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Tarifna stavka"
+          },
+          "AliasPart": {
+            "Alias": "tariff-item"
+          },
+          "AutoroutePart": {
+            "Path": "tarifna-stavka",
+            "SetHomepage": false,
+            "Disabled": false,
+            "RouteContainedItems": false,
+            "Absolute": false
+          },
+          "TaxonomyPart": {
+            "TermContentType": "TariffElement",
+            "Terms": [
+              {
+                "ContentItemId": "4pmasmhzk65113a9svxxvj4r55",
+                "ContentItemVersionId": null,
+                "ContentType": "TariffElement",
+                "DisplayText": "Korištenje mreže u doba više tarife - RVT-R1",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-03T08:37:38.3207027Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Korištenje mreže u doba više tarife - RVT-R1"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Korištenje mreže u doba više tarife"
+                  },
+                  "Abbreviation": {
+                    "Text": "RVT-R1"
+                  },
+                  "Unit": {
+                    "Text": "kWh"
+                  }
+                },
+                "AutoroutePart": {
+                  "Path": "koristenje-mreze-u-doba-vise-tarife-rvt-r1",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4r7f2004nhpmzx0mr5xer6a44t",
+                "ContentItemVersionId": null,
+                "ContentType": "TariffElement",
+                "DisplayText": "Korištenje mreže u doba niže tarife - RNT-R2",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-03T08:38:09.0691986Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Korištenje mreže u doba niže tarife - RNT-R2"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Korištenje mreže u doba niže tarife"
+                  },
+                  "Abbreviation": {
+                    "Text": "RNT-R2"
+                  },
+                  "Unit": {
+                    "Text": "kWh"
+                  }
+                },
+                "AutoroutePart": {
+                  "Path": "koristenje-mreze-u-doba-nize-tarife-rnt-r2",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4mpfrnnvf0newswdsvvq9tpcxh",
+                "ContentItemVersionId": null,
+                "ContentType": "TariffElement",
+                "DisplayText": "Angažirana snaga u doba više tarife - SVT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-03T08:38:28.2757354Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Angažirana snaga u doba više tarife - SVT"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Angažirana snaga u doba više tarife"
+                  },
+                  "Abbreviation": {
+                    "Text": "SVT"
+                  },
+                  "Unit": {
+                    "Text": "kW"
+                  }
+                },
+                "AutoroutePart": {
+                  "Path": "angazirana-snaga-u-doba-vise-tarife-svt",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4gvhahd4x59fv7gektpbqf48wa",
+                "ContentItemVersionId": null,
+                "ContentType": "TariffElement",
+                "DisplayText": "Naknada za mjernu uslugu - MU",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-03T08:38:46.5273592Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Naknada za mjernu uslugu - MU"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Naknada za mjernu uslugu"
+                  },
+                  "Abbreviation": {
+                    "Text": "MU"
+                  },
+                  "Unit": {
+                    "Text": "mjesec"
+                  }
+                },
+                "AutoroutePart": {
+                  "Path": "naknada-za-mjernu-uslugu-svt",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4zsh3gffhw1gn2ba9fj945m7cv",
+                "ContentItemVersionId": null,
+                "ContentType": "TariffElement",
+                "DisplayText": "Opskrba električnom energijom u doba više tarife - RVT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-03T08:39:31.5859405Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Opskrba električnom energijom u doba više tarife - RVT"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Opskrba električnom energijom u doba više tarife"
+                  },
+                  "Abbreviation": {
+                    "Text": "RVT"
+                  },
+                  "Unit": {
+                    "Text": "kWh"
+                  }
+                },
+                "AutoroutePart": {
+                  "Path": "opskrba-elektricnom-energijom-u-doba-vise-tarife-rvt",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4nbab8htaqysb0v5cjy4jx235m",
+                "ContentItemVersionId": null,
+                "ContentType": "TariffElement",
+                "DisplayText": "Opskrba električnom energijom u doba niže tarife - RNT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-03T08:40:06.147277Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Opskrba električnom energijom u doba niže tarife RNT"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Opskrba električnom energijom u doba niže tarife"
+                  },
+                  "Abbreviation": {
+                    "Text": "RNT"
+                  },
+                  "Unit": {
+                    "Text": "kWh"
+                  }
+                },
+                "AutoroutePart": {
+                  "Path": "opskrba-elektricnom-energijom-u-doba-nize-tarife-rnt",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4dnr256xfy2mr6095cfay03dc5",
+                "ContentItemVersionId": null,
+                "ContentType": "TariffElement",
+                "DisplayText": "Naknada za poticanje proizvodnje iz obnovljivih izvora i kogeneracije - OIEIK",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-03T08:40:46.4167253Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Naknada za poticanje proizvodnje iz obnovljivih izvora i kogeneracije - OIEIK"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Naknada za poticanje proizvodnje iz obnovljivih izvora i kogeneracije"
+                  },
+                  "Abbreviation": {
+                    "Text": "OIEIK"
+                  },
+                  "Unit": {
+                    "Text": "kWh"
+                  }
+                },
+                "AutoroutePart": {
+                  "Path": "naknada-za-poticanje-proizvodnje-iz-obnovljivih-izvora-i-kogeneracije-oieik",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "42aw5mm1t3cfh2mef7shta9qnw",
+                "ContentItemVersionId": null,
+                "ContentType": "TariffElement",
+                "DisplayText": "Trošarina za poslovnu upotrebu - TRP",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-03T08:41:32.9465961Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Trošarina za poslovnu upotrebu - TRP"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Trošarina za poslovnu upotrebu"
+                  },
+                  "Abbreviation": {
+                    "Text": "TRP"
+                  },
+                  "Unit": {
+                    "Text": "kWh"
+                  }
+                },
+                "AutoroutePart": {
+                  "Path": "trosarina-za-poslovnu-upotrebu-trp",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -3,48 +3,27 @@ using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Handlers;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using OrchardCore.Autoroute.Models;
-using Microsoft.Extensions.DependencyInjection;
-using OrchardCore.ContentManagement.Metadata;
 
 namespace Ozds.Modules.Members;
 
-class MemberHandler : ContentHandlerBase
+class ConsumerHandler : ContentHandlerBase
 {
   private IServiceProvider _spr;
 
-  public MemberHandler(IServiceProvider serviceProvider)
+  public ConsumerHandler(IServiceProvider serviceProvider)
   {
     _spr = serviceProvider;
   }
   public override Task ImportingAsync(ImportContentContext context)
   {
-    if (context.ContentItem.ContentType == "Member")
+    if (context.ContentItem.ContentType == "Consuer")
     {
-      FixMemberDate(context.ContentItem);
+      FixConsumerDate(context.ContentItem);
     }
-    if (context.ContentItem.ContentType == "Offer")
-      using (var scope = _spr.CreateScope())
-      {
-        var cdm = scope.ServiceProvider
-                      .GetRequiredService<IContentDefinitionManager>();
-        var type = cdm.GetTypeDefinition(context.ContentItem.ContentType);
-        var routeDef =
-            type.Parts.FirstOrDefault(x => x.Name == "AutoroutePart");
-        if (routeDef != null && context.ContentItem.ContentType == "Offer")
-        {
-          var part =
-              ContentItemExtensions.As<AutoroutePart>(context.ContentItem) ??
-              new AutoroutePart();
-          part.Path =
-              part.Path ?? "offers-" + context.ContentItem.ContentItemId;
-          context.ContentItem.Apply(part);
-        }
-      }
     return Task.CompletedTask;
   }
 
-  public static void FixMemberDate(ContentItem cItem)
+  public static void FixConsumerDate(ContentItem cItem)
   {
     if (cItem.Content.Member?.DateOfBirth?.Value is not JValue oldVal)
       return;

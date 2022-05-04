@@ -33,14 +33,16 @@ public static class ContentExtensions
         item => ContentItemExtensions.As<T>(item));
 
   public static IEnumerable<T>? FromBag<T>(
-      this ContentItem? item) where T : ContentPart =>
-    item.AsReal<BagPart>()
+      this ContentItem? item,
+      string? name = null) where T : ContentPart =>
+    item.Get<BagPart>(name ?? typeof(BagPart).Name)
       .WhenNonNullable(bag => bag.ContentItems
           .SelectFilter(item => ContentItemExtensions.As<T>(item)));
 
   public static IEnumerable<T>? FromFlow<T>(
-      this ContentItem? item) where T : ContentPart =>
-    item.AsReal<FlowPart>()
+      this ContentItem? item,
+      string? name = null) where T : ContentPart =>
+    item.Get<FlowPart>(name ?? typeof(FlowPart).Name)
       .WhenNonNullable(flow => flow.Widgets
           .SelectFilter(item => ContentItemExtensions.As<T>(item)));
 

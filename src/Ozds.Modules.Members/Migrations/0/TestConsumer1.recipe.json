@@ -4,69 +4,47 @@
       "name": "content",
       "Data": [
         {
-          "ContentItemId": "4getacb8ffdhc028bqrqrf5bc6",
-          "ContentItemVersionId": "4jsn62qp9e2vf6wst2z2rvwd5a",
-          "ContentType": "Member",
-          "DisplayText": "Ivo Ivić",
+          "ContentItemId": "4svpv279hbbc4vpgxey41nys46",
+          "ContentItemVersionId": "4ndkw796p2acp29tdfx07nc0m5",
+          "ContentType": "Consumer",
+          "DisplayText": "Dubravica",
           "Latest": true,
           "Published": true,
-          "ModifiedUtc": "2022-04-20T14:24:20.5111296Z",
-          "PublishedUtc": "2022-04-20T14:24:20.5431906Z",
-          "CreatedUtc": "2022-04-20T14:14:44.7172994Z",
-          "Owner": "4s73wcst6dzjvwxn13kk57dndd",
+          "ModifiedUtc": "2022-05-04T09:58:06.7089898Z",
+          "PublishedUtc": "2022-05-04T09:58:06.7531492Z",
+          "CreatedUtc": "2022-05-03T19:15:16.4843939Z",
+          "Owner": "498t0ej1wwcgps2ejas0t2kjwv",
           "Author": "admin",
-          "Member": {
-            "User": {
-              "UserIds": ["TestMemberId"],
-              "UserNames": ["TestMember"]
-            },
+          "TitlePart": {
+            "Title": "Dubravica"
+          },
+          "Consumer": {
             "SecondarySites": {
-              "ContentItemIds": ["4wr8zmbsykbdry12hfv378eaxz"]
+              "ContentItemIds": ["4fnzd5fywmg2dz3gxzcy0x9cd7"]
             }
           },
-          "TitlePart": {
-            "Title": "Ivo Ivić"
-          },
           "Person": {
-            "Oib": {
-              "Text": "12312312316"
-            },
             "Name": {
-              "Text": "Ivo"
+              "Text": "Dubravica"
             },
-            "MiddleName": {
-              "Text": null
-            },
-            "Surname": {
-              "Text": "Ivić"
+            "Oib": {
+              "Text": "12312312314"
             },
             "Address": {
-              "Text": "Frankopanska 5"
+              "Text": "Vice Vukovara 6"
             },
             "City": {
               "Text": "Zagreb"
             },
             "PostalCode": {
-              "Text": "10000"
+              "Text": "10020"
             },
-            "County": {
-              "TaxonomyContentItemId": "4d0dew9ar7h9nsbpcs7jg2egwe",
-              "TermContentItemIds": ["4z3rcbqjad20q2pgckfbyd7wc4"],
-              "TagNames": ["Grad Zagreb"]
-            },
-            "Phone": {
-              "Text": "+385911234567"
-            },
-            "Email": {
-              "Text": "ivo-ivic@gmail.com"
-            },
-            "Type": {
-              "TaxonomyContentItemId": "445pqtg9kka9hzxgdj30x9qq4g",
-              "TermContentItemIds": ["4p5tav8t59akeytk2at7sprqn5"]
+            "Contact": {
+              "Text": "info@pekara-dubravica.hr"
             }
           },
           "ContainedPart": {
-            "ListContentItemId": "4rq44pcgbd96ms70k45kme32mq",
+            "ListContentItemId": "4gk51z3vfezzgtk8kqr231y9x7",
             "Order": 0
           }
         }

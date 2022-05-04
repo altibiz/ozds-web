@@ -19,21 +19,11 @@ namespace Ozds.Modules.Members;
 // TODO: use in migrations?
 public enum ContentType { Member, Company, Offer }
 
-public class MemberService
+public class ConsumerService
 {
   public async Task<ContentValidateResult?> CreateMemberDraft(
       ContentItem memberItem)
   {
-    var user = await GetCurrentUser();
-    if (user is null)
-    {
-      return null;
-    }
-
-    memberItem.Owner = user.UserName;
-    memberItem.Alter<Member>(
-        member => { member.User.UserIds = new[] { user.UserId }; });
-
     return await Content.UpdateValidateAndCreateAsync(
         memberItem, VersionOptions.Draft);
   }
@@ -56,7 +46,7 @@ public class MemberService
 
     var query = Session.Query<ContentItem, UserPickerFieldIndex>(
         x =>
-            x.ContentType == nameof(Member) && x.SelectedUserId == user.UserId);
+            x.ContentType == nameof(Consumer) && x.SelectedUserId == user.UserId);
     if (!includeDraft) { query = query.Where(x => x.Published); }
     var member =
 await query.ListAsync();
@@ -136,7 +126,7 @@ await query.ListAsync();
     return await Content.ValidateAsync(contentItem);
   }
 
-  public MemberService(ISession session, IUserService userService,
+  public ConsumerService(ISession session, IUserService userService,
       IContentManager contentManager,
       IOrchardHelper orchardHelper,
       IContentItemDisplayManager contentItemDisplayManager,

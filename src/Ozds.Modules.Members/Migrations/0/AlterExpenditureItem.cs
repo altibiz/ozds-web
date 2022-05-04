@@ -2,6 +2,7 @@ using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.ContentFields.Settings;
 using OrchardCore.Taxonomies.Settings;
+using OrchardCore.Title.Models;
 
 namespace Ozds.Modules.Members.M0;
 
@@ -15,9 +16,28 @@ public static partial class AlterExpenditureItem
         .Creatable()
         .Listable()
         .Securable()
+        .WithPart("TitlePart", part => part
+          .WithPosition("1")
+          .WithDisplayName("Naziv")
+          .WithSettings(
+            new TitlePartSettings
+            {
+              Options = TitlePartOptions.GeneratedHidden,
+              Pattern =
+              @"
+{%- assign expenditureItem = ContentItem.Content.ExpenditureItem -%}
+{%- assign tariffItemId = expenditureItem.TariffItem.TermContentIds[0] -%}
+{%- assign tariffItem = tariffItemId | content_item_id -%}
+{{- tariffItem -}}
+              "
+            }))
         .WithPart("ExpenditureItem",
           part => part
-          .WithPosition("0")));
+          .WithPosition("2")
+          .WithSettings(
+            new FieldEditorSettings
+            {
+            })));
 
   public static void AlterExpenditureItemPart(
       this IContentDefinitionManager content) =>
@@ -29,11 +49,11 @@ public static partial class AlterExpenditureItem
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Tarifna stavka")
-            .WithPosition("0")
+            .WithPosition("1")
             .WithSettings(
               new TaxonomyFieldSettings
               {
-                TaxonomyContentItemId = "",
+                TaxonomyContentItemId = "4van7f3sda11fx2nm0pbqjef45",
                 Required = true,
                 Unique = true
               }))
@@ -41,50 +61,62 @@ public static partial class AlterExpenditureItem
           field => field
             .OfType("NumericField")
             .WithDisplayName("Stanje od")
-            .WithPosition("1")
+            .WithPosition("2")
             .WithSettings(
               new NumericFieldSettings
               {
-                Required = false
+                Required = false,
+                Minimum = 0,
+                // NOTE: as precise as possible because of regulations
+                Scale = 10
               }))
         .WithField("ValueTo",
           field => field
             .OfType("NumericField")
             .WithDisplayName("Stanje do")
-            .WithPosition("2")
+            .WithPosition("3")
             .WithSettings(
               new NumericFieldSettings
               {
-                Required = false
+                Required = false,
+                Minimum = 0,
+                // NOTE: as precise as possible because of regulations
+                Scale = 10
               }))
         .WithField("Consumption",
           field => field
             .OfType("NumericField")
             .WithDisplayName("Potrošak")
-            .WithPosition("3")
+            .WithPosition("4")
             .WithSettings(
               new NumericFieldSettings
               {
-                Required = true
+                Required = true,
+                Minimum = 0,
+                Scale = 0
               }))
         .WithField("UnitPrice",
           field => field
             .OfType("NumericField")
             .WithDisplayName("Jedinična cijena")
-            .WithPosition("4")
+            .WithPosition("5")
             .WithSettings(
               new NumericFieldSettings
               {
-                Required = true
+                Required = true,
+                Minimum = 0,
+                Scale = 2
               }))
         .WithField("Amount",
           field => field
             .OfType("NumericField")
             .WithDisplayName("Iznos")
-            .WithPosition("5"))
+            .WithPosition("6"))
             .WithSettings(
               new NumericFieldSettings
               {
-                Required = true
+                Required = true,
+                Minimum = 0,
+                Scale = 2
               }));
 }

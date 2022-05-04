@@ -12,12 +12,12 @@ public static partial class AlterCatalogueItem
       this IContentDefinitionManager content) =>
     content.AlterTypeDefinition("CatalogueItem",
       type => type
-        .DisplayedAs("Stavka kataloga")
+        .DisplayedAs("Stavka cjenika")
         .Creatable()
         .Listable()
         .Securable()
         .WithPart("TitlePart", part => part
-          .WithPosition("0")
+          .WithPosition("1")
           .WithDisplayName("Naziv")
           .WithSettings(
             new TitlePartSettings
@@ -32,10 +32,10 @@ public static partial class AlterCatalogueItem
               "
             }))
         .WithPart("CatalogueItem", part => part
-          .WithPosition("1")
-          .WithDisplayName("Stavka kataloga")
+          .WithPosition("2")
+          .WithDisplayName("Stavka cjenika")
           .WithSettings(
-            new CatalogueItemSettings
+            new FieldEditorSettings
             {
             })));
 
@@ -45,17 +45,16 @@ public static partial class AlterCatalogueItem
       part => part
         .Attachable()
         .Reusable()
-        .WithDisplayName("Stavka kataloga")
-        .WithDescription("Cijena određenog tarifnog elementa")
+        .WithDisplayName("Stavka cjenika")
         .WithField("Tariff",
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Tarifni element")
-            .WithPosition("0")
+            .WithPosition("1")
             .WithSettings(
               new TaxonomyFieldSettings
               {
-                TaxonomyContentItemId = "46nrgz0a0y570tcgvh50tq1vxp",
+                TaxonomyContentItemId = "4v6ax991xqge9wyk8g6z4e6vn4",
                 Required = true,
                 Unique = true
               }))
@@ -63,10 +62,12 @@ public static partial class AlterCatalogueItem
           field => field
             .OfType("NumericField")
             .WithDisplayName("Cijena")
-            .WithPosition("1")
+            .WithPosition("2")
             .WithSettings(
               new NumericFieldSettings
               {
-                Required = true
+                Required = true,
+                Minimum = 0,
+                Scale = 2
               })));
 }

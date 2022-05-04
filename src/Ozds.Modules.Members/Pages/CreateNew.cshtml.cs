@@ -34,7 +34,7 @@ public class CreateNewModel : PageModel
 
   public IShape? Shape { get; set; }
 
-  public CreateNewModel(MemberService mService, IHtmlLocalizer htmlLocalizer,
+  public CreateNewModel(ConsumerService mService, IHtmlLocalizer htmlLocalizer,
       INotifier notifier)
   {
     Notifier = notifier;
@@ -44,6 +44,6 @@ public class CreateNewModel : PageModel
   }
 
   private IHtmlLocalizer H { get; }
-  private MemberService Members { get; }
+  private ConsumerService Members { get; }
   private INotifier Notifier { get; }
 }

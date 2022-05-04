@@ -18,7 +18,7 @@ public static partial class AlterTariffElement
         .Securable()
         .WithPart("TitlePart",
           part => part
-            .WithPosition("0")
+            .WithPosition("1")
             .WithDisplayName("Naziv")
             .WithSettings(
               new TitlePartSettings
@@ -30,13 +30,16 @@ public static partial class AlterTariffElement
 {%- assign tariffElement = ContentItem.Content.TariffElement -%}
 {%- assign name = tariffElement.Name.Text -%}
 {%- assign abbreviation = tariffElement.Abbreviation.Text -%}
-{%- assign unit = tariffElement.Unit.Text -%}
-{{- name }} {{ abbreviation -}}
+{%- if abbreviation -%}
+  {{- name }} - {{ abbreviation -}}
+{%- else -%}
+  {{- name -}}
+{%- endif -%}
                 "
               }))
         .WithPart("TariffElement",
           part => part
-            .WithPosition("1")
+            .WithPosition("2")
             .WithDisplayMode("")
             .WithSettings(
               new FieldEditorSettings
@@ -44,7 +47,7 @@ public static partial class AlterTariffElement
               }))
         .WithPart("AutoroutePart",
           part => part
-            .WithPosition("2")
+            .WithPosition("3")
             .WithDisplayName("Ruta")
             .WithDescription("Automatski generirana ruta tarifnog elementa")
             .WithSettings(
@@ -65,7 +68,7 @@ public static partial class AlterTariffElement
           field => field
             .OfType("TextField")
             .WithDisplayName("Ime")
-            .WithPosition("0")
+            .WithPosition("1")
             .WithSettings(
               new TextFieldSettings
               {
@@ -75,7 +78,7 @@ public static partial class AlterTariffElement
           field => field
             .OfType("TextField")
             .WithDisplayName("Kratica")
-            .WithPosition("1")
+            .WithPosition("2")
             .WithSettings(
               new TextFieldSettings
               {
@@ -85,7 +88,7 @@ public static partial class AlterTariffElement
           field => field
             .OfType("TextField")
             .WithDisplayName("Jedinica")
-            .WithPosition("2")
+            .WithPosition("3")
             .WithSettings(
               new TextFieldSettings
               {

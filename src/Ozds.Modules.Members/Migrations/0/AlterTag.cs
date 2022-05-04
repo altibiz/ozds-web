@@ -17,7 +17,7 @@ public static partial class AlterTag
         .Securable()
         .WithPart("TitlePart",
           part => part
-            .WithPosition("0")
+            .WithPosition("1")
             .WithDisplayName("Naziv")
             .WithDisplayName("Naziv značajke")
             .WithSettings(
@@ -28,10 +28,14 @@ public static partial class AlterTag
               }))
         .WithPart("Tag",
           part => part
-            .WithPosition("1"))
+            .WithPosition("2")
+            .WithSettings(
+              new FieldEditorSettings
+              {
+              }))
         .WithPart("AutoroutePart",
           part => part
-            .WithPosition("2")
+            .WithPosition("3")
             .WithDisplayName("Ruta")
             .WithDescription("Automatski generirana ruta značajke")
             .WithSettings(

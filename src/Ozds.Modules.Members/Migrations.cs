@@ -15,6 +15,8 @@ public sealed class Migrations : DataMigration
   {
     if (Env.IsDevelopment())
     {
+      Schema.CreateIndexMapTables();
+      Schema.CreateIndexMapIndices();
       Recipe.ExecuteTestSettings(this);
       Recipe.ExecuteTestTaxonomies(this);
       Content.AlterContent();
@@ -22,6 +24,8 @@ public sealed class Migrations : DataMigration
     }
     else
     {
+      Schema.CreateIndexMapTables();
+      Schema.CreateIndexMapIndices();
       Recipe.ExecuteSettings(this);
       Recipe.ExecuteTaxonomies(this);
       Content.AlterContent();

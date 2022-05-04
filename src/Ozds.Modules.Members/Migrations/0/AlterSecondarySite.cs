@@ -1,6 +1,7 @@
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
+using OrchardCore.Flows.Models;
 
 namespace Ozds.Modules.Members.M0;
 
@@ -15,13 +16,6 @@ public static partial class AlterSecondarySite
         .Listable()
         .Draftable()
         .Securable()
-        .WithPart("SecondarySite",
-          part => part
-            .WithPosition("0")
-            .WithSettings(
-              new SecondarySiteSettings
-              {
-              }))
         .WithPart("TitlePart",
           part => part
             .WithDisplayName("Naziv")
@@ -34,18 +28,39 @@ public static partial class AlterSecondarySite
                 Pattern =
                 @"
 {%- assign site = ContentItem.Content.Site -%}
-{%- assign source = site.Source -%}
-{%- assign deviceId = site.DeviceId -%}
+{%- assign sourceId = site.Source.TermContentItemIds[0] -%}
+{%- assign source = sourceId | content_item_id -%}
+{%- assign deviceId = site.DeviceId.Text -%}
 {{- source }} {{ deviceId -}}
                 ",
+              }))
+        .WithPart("SecondarySite",
+          part => part
+            .WithPosition("2")
+            .WithSettings(
+              new FieldEditorSettings
+              {
               }))
         .WithPart("Site",
           part => part
             .WithDisplayName("Obračunsko mjerno mjesto")
-            .WithPosition("2")
+            .WithPosition("3")
             .WithSettings(
-              new SiteSettings
+              new FieldEditorSettings
               {
+              }))
+        .WithPart("Catalogue", "BagPart",
+          part => part
+            .WithDisplayName("Cjenik")
+            .WithPosition("4")
+            .WithSettings(
+              new BagPartSettings
+              {
+                ContainedContentTypes =
+                new[]
+                {
+                  "Catalogue"
+                }
               })));
 
   public static void AlterSecondarySitePart(

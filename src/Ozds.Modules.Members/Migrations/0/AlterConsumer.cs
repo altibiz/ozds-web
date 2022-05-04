@@ -19,12 +19,12 @@ public static partial class AlterConsumer
           part => part
             .WithDisplayName("Naziv")
             .WithDisplayName("Naziv člana")
-            .WithPosition("0")
+            .WithPosition("1")
             .WithSettings(
               new TitlePartSettings
               {
                 RenderTitle = true,
-                Options = TitlePartOptions.GeneratedDisabled,
+                Options = TitlePartOptions.GeneratedHidden,
                 Pattern =
                 @"
 {%- assign person = ContentItem.Content.Person -%}
@@ -34,14 +34,18 @@ public static partial class AlterConsumer
               }))
         .WithPart("Consumer",
           part => part
-            .WithPosition("1")
-            .WithDisplayName("Korisnik ZDS-a"))
+            .WithPosition("2")
+            .WithDisplayName("Korisnik ZDS-a")
+            .WithSettings(
+              new FieldEditorSettings
+              {
+              }))
         .WithPart("Person",
           part => part
             .WithDisplayName("Osoba")
-            .WithPosition("2")
+            .WithPosition("3")
             .WithSettings(
-              new PersonSettings
+              new FieldEditorSettings
               {
               })));
 
@@ -52,7 +56,7 @@ public static partial class AlterConsumer
           part => part
             .OfType("ContentPickerField")
             .WithDisplayName("Sekundarna obračunska mjerna mjesta")
-            .WithPosition("0")
+            .WithPosition("1")
             .WithSettings(
               new ContentPickerFieldSettings
               {

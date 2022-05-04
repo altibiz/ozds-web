@@ -1,0 +1,134 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "47p9e5rkms3m012qv3z2t26jcg",
+          "ContentItemVersionId": "4wfshzq5qzbpqy1yk23wzad9ws",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Status obračunskog mjernog mjesta",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-05-03T10:26:55.6336966Z",
+          "PublishedUtc": "2022-05-03T10:26:55.6421748Z",
+          "CreatedUtc": "2022-05-03T10:26:28.4659428Z",
+          "Owner": "4gxxk1d1qy92565mx190rxp1mz",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Status obračunskog mjernog mjesta"
+          },
+          "AliasPart": {
+            "Alias": "site-status"
+          },
+          "AutoroutePart": {
+            "Path": "status-obracunskog-mjernog-mjesta",
+            "SetHomepage": false,
+            "Disabled": false,
+            "RouteContainedItems": false,
+            "Absolute": false
+          },
+          "TaxonomyPart": {
+            "TermContentType": "Tag",
+            "Terms": [
+              {
+                "ContentItemId": "444t1z24wt35hy89d6g3r5yan4",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Aktivno",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-03T10:26:36.8491342Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Aktivno"
+                },
+
+                "Tag": {},
+                "AutoroutePart": {
+                  "Path": "aktivno",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "47p9e5rkms3m012qv3z2t26jcg"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4k6wy5m7hn86m3fy8b49k4z5xg",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Neaktivno",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-03T10:26:42.6032156Z",
+
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+
+                "TitlePart": {
+                  "Title": "Neaktivno"
+                },
+                "Tag": {},
+
+                "AutoroutePart": {
+                  "Path": "neaktivno",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "47p9e5rkms3m012qv3z2t26jcg"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4wv183b13azkq2vf2cq71wxmwz",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Privremeno neaktivno",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-03T10:26:53.1960246Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Privremeno neaktivno"
+                },
+                "Tag": {},
+                "AutoroutePart": {
+                  "Path": "privremeno-neaktivno",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "47p9e5rkms3m012qv3z2t26jcg"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

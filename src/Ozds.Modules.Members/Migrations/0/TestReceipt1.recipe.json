@@ -4,248 +4,99 @@
       "name": "content",
       "Data": [
         {
-          "ContentItemId": "42qzg689efr227rxx1hsga3sc6",
-          "ContentItemVersionId": "40dgsxs91dp85sxje8fqjvv1my",
+          "ContentItemId": "4k2wnvdbcmv5q46wdwmrybsqx7",
+          "ContentItemVersionId": "4amt3egc96wchxkrm2xnxpre4e",
           "ContentType": "Receipt",
-          "DisplayText": "Ivo Ivić 2022-04-01 - 2022-04-30",
+          "DisplayText": "Dubravica 04. 05. 2022.",
           "Latest": true,
           "Published": true,
-          "ModifiedUtc": "2022-04-20T14:40:23.3912248Z",
-          "PublishedUtc": "2022-04-20T14:40:23.4229159Z",
-          "CreatedUtc": "2022-04-20T14:30:27.1570063Z",
-          "Owner": "4s73wcst6dzjvwxn13kk57dndd",
+          "ModifiedUtc": "2022-05-04T10:55:45.852758Z",
+          "PublishedUtc": "2022-05-04T10:55:45.9127493Z",
+          "CreatedUtc": "2022-05-04T10:55:45.852758Z",
+          "Owner": "4b9fz1bem3q9zwm5hpndvqrjx2",
           "Author": "admin",
-          "Receipt": {
-            "Official": {
-              "ContentItemIds": ["4getacb8ffdhc028bqrqrf5bc6"]
-            },
-            "DocumentId": {
-              "Text": "123123123"
-            },
-            "Partner": {
+          "TitlePart": {
+            "Title": "Dubravica 04. 05. 2022."
+          },
+          "Center": {
+            "Name": {
               "Text": "Ivo Ivić"
             },
-            "PartnerAdress": {
-              "Text": "Frankopanska 5"
+            "Oib": {
+              "Text": "12312312313"
             },
-            "PartnerPostalCode": {
-              "Text": "10000"
+            "Address": {
+              "Text": "Vice Vukova 6"
             },
-            "PartnerOIB": {
-              "Text": "12312312316"
+            "City": {
+              "Text": "Zagreb"
             },
-            "DeliveryDate": {
-              "Value": "2022-05-01T00:00:00Z"
+            "PostalCode": {
+              "Text": "10020"
             },
-            "PaymentCurrency": {
-              "TaxonomyContentItemId": "4098639c3zswm084zyay3je1m9",
-              "TermContentItemIds": ["45e80vekvqj9ptvzsen3yb7mwm"]
-            },
-            "ContractDate": {
-              "Value": "2022-03-02T00:00:00Z"
-            },
-            "ContractId": {
-              "Text": "12343214"
-            },
-            "ProjectId": {
-              "Text": "dhfjaohf134r1"
-            },
-            "DateFrom": {
-              "Value": "2022-04-01T00:00:00Z"
-            },
-            "DateTo": {
-              "Value": "2022-04-30T00:00:00Z"
-            },
-            "InTotal": {
-              "Value": 1000
-            },
-            "Tax": {
-              "Value": 23
-            },
-            "InTotalWithTax": {
-              "Value": 1230
-            },
-            "Remark": {
-              "Text": "Nešto kreativno!"
-            },
-            "OperatorName": {
-              "Text": "Jura"
-            },
-            "OperatorSurname": {
-              "Text": "Jurić"
-            },
-            "ReceiptDate": {
-              "Value": "2022-04-30T00:00:00Z"
+            "Contact": {
+              "Text": "info@arenacentar.hr"
             }
           },
-          "TitlePart": {
-            "Title": "Ivo Ivić 2022-04-01 - 2022-04-30"
+          "Consumer": {
+            "Name": {
+              "Text": "Dubravica"
+            },
+            "Oib": {
+              "Text": "12312312314"
+            },
+            "Address": {
+              "Text": "Vice Vukovara 6"
+            },
+            "City": {
+              "Text": "Zagreb"
+            },
+            "PostalCode": {
+              "Text": "10020"
+            },
+            "Contact": {
+              "Text": "info@pekara-dubravica.hr"
+            }
           },
-          "BagPart": {
-            "ContentItems": [
-              {
-                "ContentItemId": "4jnm695h5s00rx0qcw63pjepn0",
-                "ContentItemVersionId": null,
-                "ContentType": "Calculation",
-                "DisplayText": "fakeSource SfakIDfakeDevice2 2022-04-01 - 2022-04-30",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-04-20T14:40:23.4024998Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "Calculation": {
-                  "Site": {
-                    "ContentItemIds": ["4wr8zmbsykbdry12hfv378eaxz"]
-                  },
-                  "DateFrom": {
-                    "Value": "2022-04-01T00:00:00Z"
-                  },
-                  "DateTo": {
-                    "Value": "2022-04-30T00:00:00Z"
-                  },
-                  "MeasurementServiceFee": {
-                    "Value": 10
-                  },
-                  "InTotal": {
-                    "Value": 980
-                  }
-                },
-                "TitlePart": {
-                  "Title": "fakeSource SfakIDfakeDevice2 2022-04-01 - 2022-04-30"
-                },
-                "BagPart": {
-                  "ContentItems": [
-                    {
-                      "ContentItemId": "4asm6dw2qykaf5dt836z73zyxt",
-                      "ContentItemVersionId": null,
-                      "ContentType": "CalculationItem",
-                      "DisplayText": null,
-                      "Latest": false,
-                      "Published": false,
-                      "ModifiedUtc": "2022-04-20T14:40:23.4056151Z",
-                      "PublishedUtc": null,
-                      "CreatedUtc": null,
-                      "Owner": null,
-                      "Author": "admin",
-                      "CalculationItem": {
-                        "Tariff": {
-                          "TaxonomyContentItemId": "46nrgz0a0y570tcgvh50tq1vxp",
-                          "TermContentItemIds": ["4ey0tm3f106ez4d8ewrg1mjnc5"]
-                        },
-                        "ValueFrom": {
-                          "Value": 0
-                        },
-                        "ValueTo": {
-                          "Value": 50
-                        },
-                        "Status": {
-                          "TaxonomyContentItemId": "4pxxf7kz2v2mgy67ehbhz5gsxq",
-                          "TermContentItemIds": ["4jts97fbyqdcp6e7x2hsx0dtdc"]
-                        },
-                        "Constant": {
-                          "Value": 1
-                        },
-                        "Consumption": {
-                          "Value": 50
-                        },
-                        "Unit": {
-                          "TaxonomyContentItemId": "4cqf2eeqqwadb4xechw3tbbsn0",
-                          "TermContentItemIds": ["4815907rnr6raz2vfk91mn9xx2"]
-                        },
-                        "UnitPrice": {
-                          "Value": 10
-                        },
-                        "Amount": {
-                          "Value": 500
-                        }
-                      }
-                    },
-                    {
-                      "ContentItemId": "4btmpr9hf2c36sgh284212aem8",
-                      "ContentItemVersionId": null,
-                      "ContentType": "CalculationItem",
-                      "DisplayText": null,
-                      "Latest": false,
-                      "Published": false,
-                      "ModifiedUtc": "2022-04-20T14:40:23.4106235Z",
-                      "PublishedUtc": null,
-                      "CreatedUtc": null,
-                      "Owner": null,
-                      "Author": "admin",
-                      "CalculationItem": {
-                        "Tariff": {
-                          "TaxonomyContentItemId": "46nrgz0a0y570tcgvh50tq1vxp",
-                          "TermContentItemIds": ["4kyyb3fyj6j55t18zf9xsngd45"]
-                        },
-                        "ValueFrom": {
-                          "Value": 0
-                        },
-                        "ValueTo": {
-                          "Value": 96
-                        },
-                        "Status": {
-                          "TaxonomyContentItemId": "4pxxf7kz2v2mgy67ehbhz5gsxq",
-                          "TermContentItemIds": ["4jts97fbyqdcp6e7x2hsx0dtdc"]
-                        },
-                        "Constant": {
-                          "Value": 1
-                        },
-                        "Consumption": {
-                          "Value": 96
-                        },
-                        "Unit": {
-                          "TaxonomyContentItemId": "4cqf2eeqqwadb4xechw3tbbsn0",
-                          "TermContentItemIds": ["4815907rnr6raz2vfk91mn9xx2"]
-                        },
-                        "UnitPrice": {
-                          "Value": 5
-                        },
-                        "Amount": {
-                          "Value": 480
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "ContentItemId": "4fjj4ye81vwjb5cpnn4za39qcg",
-                "ContentItemVersionId": null,
-                "ContentType": "ReceiptItem",
-                "DisplayText": null,
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-04-20T14:40:23.4159968Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "ReceiptItem": {
-                  "OrdinalNumber": {
-                    "Text": "1."
-                  },
-                  "Article": {
-                    "TaxonomyContentItemId": "4dyah7e7srewr46d894deh28n4",
-                    "TermContentItemIds": ["4kts8324e9zr27zc221331ej5c"]
-                  },
-                  "Unit": {
-                    "TaxonomyContentItemId": "4cqf2eeqqwadb4xechw3tbbsn0",
-                    "TermContentItemIds": ["471xnq2wqkr4h2r9bjjjvmdsnt"]
-                  },
-                  "Amount": {
-                    "Value": 1
-                  },
-                  "Price": {
-                    "Value": 10
-                  },
-                  "InTotal": {
-                    "Value": 10
-                  }
-                }
-              }
-            ]
+          "Calculation": {
+            "ContentItems": []
+          },
+          "Items": {
+            "ContentItems": []
+          },
+          "Receipt": {
+            "Date": {
+              "Value": "2022-05-04T00:00:00Z"
+            },
+            "InTotal": {
+              "Value": 0.0
+            },
+            "Tax": {
+              "Value": 0.0
+            },
+            "InTotalWithTax": {
+              "Value": 0.0
+            }
+          },
+          "Person": {
+            "Name": {
+              "Text": "Dubravica"
+            },
+            "Oib": {
+              "Text": "12312312314"
+            },
+            "Address": {
+              "Text": "Vice Vukovara 6"
+            },
+            "City": {
+              "Text": "Zagreb"
+            },
+            "PostalCode": {
+              "Text": "10020"
+            },
+            "Contact": {
+              "Text": "info@pekara-dubravica.hr"
+            }
           }
         }
       ]

@@ -28,6 +28,10 @@ public static partial class RecipeMigrations
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/TariffElementTaxonomy.recipe.json", migration);
 
+  public static IRecipeMigrator ExecuteTariffItemTaxonomy(
+      this IRecipeMigrator recipe, IDataMigration migration) =>
+    recipe.Execute("0/TariffItemTaxonomy.recipe.json", migration);
+
   public static IRecipeMigrator ExecuteSiteMeasurementSourceTaxonomy(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/SiteMeasurementSourceTaxonomy.recipe.json", migration);
@@ -38,19 +42,27 @@ public static partial class RecipeMigrations
         "0/TestSiteMeasurementSourceTaxonomy.recipe.json",
         migration);
 
+  public static IRecipeMigrator ExecuteSiteStatusTaxonomy(
+      this IRecipeMigrator recipe, IDataMigration migration) =>
+    recipe.Execute("0/SiteStatusTaxonomy.recipe.json", migration);
+
   public static IRecipeMigrator ExecuteTaxonomies(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe
       .ExecuteTariffModelTaxonomy(migration)
       .ExecuteTariffElementTaxonomy(migration)
-      .ExecuteSiteMeasurementSourceTaxonomy(migration);
+      .ExecuteTariffItemTaxonomy(migration)
+      .ExecuteSiteMeasurementSourceTaxonomy(migration)
+      .ExecuteSiteStatusTaxonomy(migration);
 
   public static IRecipeMigrator ExecuteTestTaxonomies(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe
       .ExecuteTariffModelTaxonomy(migration)
       .ExecuteTariffElementTaxonomy(migration)
-      .ExecuteTestSiteMeasurementSourceTaxonomy(migration);
+      .ExecuteTariffItemTaxonomy(migration)
+      .ExecuteTestSiteMeasurementSourceTaxonomy(migration)
+      .ExecuteSiteStatusTaxonomy(migration);
 
   public static IRecipeMigrator ExecuteTestCenter1(
       this IRecipeMigrator recipe, IDataMigration migration) =>
