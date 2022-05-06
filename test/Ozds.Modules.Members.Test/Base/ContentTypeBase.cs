@@ -18,9 +18,14 @@ public class ContentTypeBaseConstructs
         })
       .AsContent<Tag>()
       .AssertNotNull()
-      .WithNullable(tag =>
-          tag.Title.AssertNotNull()
-          .Value.Title.AssertEquals("MyTitle"));
+      .WithNullable(tag => tag
+        .Title
+          .AssertNotNull()
+        .Value
+          .AssertNotNull()
+        .Title
+          .AssertNotNull()
+          .AssertEquals("MyTitle"));
 
   private class Tag : ContentTypeBase
   {
