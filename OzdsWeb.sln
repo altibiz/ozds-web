@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ozds.Util", "src\Ozds.Util\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{582F8AE3-C1B1-4561-BCC7-FDF55FD22BB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ozds.Modules.Members.Test", "test\Ozds.Modules.Members.Test\Ozds.Modules.Members.Test.csproj", "{F9825B75-6A4C-4FB0-B3F8-8DDBC7151174}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{CF9B7CBB-3FD8-437D-9E81-57E3E8DF7A6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF9B7CBB-3FD8-437D-9E81-57E3E8DF7A6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF9B7CBB-3FD8-437D-9E81-57E3E8DF7A6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9825B75-6A4C-4FB0-B3F8-8DDBC7151174}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9825B75-6A4C-4FB0-B3F8-8DDBC7151174}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9825B75-6A4C-4FB0-B3F8-8DDBC7151174}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9825B75-6A4C-4FB0-B3F8-8DDBC7151174}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{4679181A-5059-426F-93E8-A8057475B4EB} = {919D4349-CBA1-4A90-9479-B6AFFA36F94B}
 		{1AE056F6-5A24-4838-BC4C-162147F12ADA} = {582F8AE3-C1B1-4561-BCC7-FDF55FD22BB7}
 		{CF9B7CBB-3FD8-437D-9E81-57E3E8DF7A6F} = {919D4349-CBA1-4A90-9479-B6AFFA36F94B}
+		{F9825B75-6A4C-4FB0-B3F8-8DDBC7151174} = {582F8AE3-C1B1-4561-BCC7-FDF55FD22BB7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA3A8E79-E4F2-4B69-AD02-EF22EFD0A084}

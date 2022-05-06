@@ -8,7 +8,7 @@ using Ozds.Util;
 
 namespace Ozds.Modules.Members;
 
-public static class ContentExtensions
+public static partial class ContentExtensions
 {
   public static TSettings? GetSettings<TSettings>(
       this IContentDefinitionManager content,

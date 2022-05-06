@@ -14,28 +14,35 @@ public class AdminMenu : INavigationProvider
         .Equals(name, "admin", StringComparison.OrdinalIgnoreCase),
         name => builder
           .Add(S["OZDS"], "0", root => root
-            .Add(S["ZDS"], "0", child => child
+            .Add(S["Cjenici"], "1", child => child
+              .Action("List", "Admin",
+                new
+                {
+                  area = "OrchardCore.Contents",
+                  contentTypeId = "Catalogue"
+                }))
+            .Add(S["ZDS"], "2", child => child
               .Action("List", "Admin",
                 new
                 {
                   area = "OrchardCore.Contents",
                   contentTypeId = "Center"
                 }))
-            .Add(S["Korisnici ZDS-a"], "1", child => child
+            .Add(S["Korisnici ZDS-a"], "3", child => child
               .Action("List", "Admin",
                 new
                 {
                   area = "OrchardCore.Contents",
                   contentTypeId = "Consumer"
                 }))
-            .Add(S["OMM"], "2", child => child
+            .Add(S["OMM"], "4", child => child
               .Action("List", "Admin",
                 new
                 {
                   area = "OrchardCore.Contents",
                   contentTypeId = "SecondarySite"
                 }))
-            .Add(S["Računi"], "3", child => child
+            .Add(S["Računi"], "5", child => child
               .Action("List", "Admin",
                 new
                 {

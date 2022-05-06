@@ -5,6 +5,29 @@ namespace Ozds.Util;
 public static partial class Types
 {
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
+  public static object? Construct(
+      this Type? @this,
+      params object?[]? args) =>
+    @this == default ? default :
+    Activator.CreateInstance(@this, args);
+
+  [MethodImpl(MethodImplOptions.AggressiveInlining)]
+  public static object ConstructDefault(
+      this Type? @this,
+      object @default,
+      params object?[]? args) =>
+    @this == default ? @default :
+    Activator.CreateInstance(@this, args) ?? @default;
+
+  [MethodImpl(MethodImplOptions.AggressiveInlining)]
+  public static object ConstructDefault(
+      this Type? @this,
+      Func<object> @default,
+      params object?[]? args) =>
+    @this == default ? @default() :
+    Activator.CreateInstance(@this, args) ?? @default();
+
+  [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static T? Construct<T>(
       params object?[]? args) where T : class =>
     Activator.CreateInstance(typeof(T), args).As<T>();

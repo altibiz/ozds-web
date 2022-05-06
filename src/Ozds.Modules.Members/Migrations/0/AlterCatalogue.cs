@@ -42,7 +42,7 @@ public static partial class AlterCatalogue
               new FieldEditorSettings
               {
               }))
-        .WithPart("BagPart",
+        .WithPart("Items", "BagPart",
           part => part
             .WithDisplayName("Stavke")
             .WithDescription("Stavke kataloga")

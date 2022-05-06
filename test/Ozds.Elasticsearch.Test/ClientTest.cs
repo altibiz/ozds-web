@@ -1,17 +1,15 @@
-using Microsoft.Extensions.Logging;
-
 namespace Ozds.Elasticsearch.Test;
 
 public partial class ClientTest
 {
-  public ClientTest(Elasticsearch.IClient client, ILogger<ClientTest> logger)
+  public ClientTest(
+      Elasticsearch.IClient client,
+      ILogger<ClientTest> logger)
   {
     Logger = logger;
-
     Client = client;
   }
 
   private IClient Client { get; }
-
   private ILogger Logger { get; }
 }

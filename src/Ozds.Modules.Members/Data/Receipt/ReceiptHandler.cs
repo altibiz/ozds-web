@@ -67,7 +67,7 @@ public class ReceiptHandler : ContentHandlerBase
                           {
                             ((Measurement beginEnergy,
                               Measurement endEnergy),
-                             Measurement power) =>
+                              Measurement power) =>
                               ReceiptData.FromCalculation(
                                 consumer.Data.Value,
                                 @operator.Data.Value,
@@ -83,9 +83,9 @@ public class ReceiptHandler : ContentHandlerBase
                                   beginEnergy.Data.energyIn_T2,
                                   endEnergy.Data.energyIn_T2,
                                   power.Data.powerIn),
-                                TariffItem.TaxRate,
-                                TariffItem.RenewableEnergyFeePrice,
-                                TariffItem.BusinessUsageFeePrice),
+                                Pricing.TaxRate,
+                                Pricing.RenewableEnergyFeePrice,
+                                Pricing.BusinessUsageFeePrice),
                             _ => null as ReceiptData?
                           },
                         _ => null
