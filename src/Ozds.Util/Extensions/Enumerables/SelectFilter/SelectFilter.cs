@@ -4,6 +4,26 @@ namespace Ozds.Util;
 
 public static partial class Enumerables
 {
+  // NOTE: https://www.infoq.com/articles/csharp-nullable-reference-case-study/
+  // NOTE: https://www.reddit.com/r/csharp/comments/c4aev5/c_generics_t_either_nullablet_or_nullableref_of_t/ ...
+  // I really hate this....
+  // TODO: nullable versions for these functions?
+  [MethodImpl(MethodImplOptions.AggressiveInlining)]
+  public static IEnumerable<TOut> SelectFilter<TIn, TOut>(
+      this IEnumerable<TIn> @this,
+      Func<TIn, Nullable<TOut>> selector) where TOut : struct
+  {
+    foreach (var value in @this)
+    {
+      var result = selector(value);
+
+      if (result.Truthy())
+      {
+        yield return result.Value;
+      }
+    }
+  }
+
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static IEnumerable<TOut> SelectFilter<TIn, TOut>(
       this IEnumerable<TIn> @this,

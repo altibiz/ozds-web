@@ -46,7 +46,7 @@ public static partial class AlterCatalogueItem
         .Attachable()
         .Reusable()
         .WithDisplayName("Stavka cjenika")
-        .WithField("Tariff",
+        .WithField("TariffElement",
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Tarifni element")

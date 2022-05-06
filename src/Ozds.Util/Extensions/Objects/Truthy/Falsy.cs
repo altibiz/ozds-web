@@ -7,6 +7,11 @@ public static partial class Objects
 {
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static bool Falsy<T>(
+      [NotNullWhen(false)] this Nullable<T> @this) where T : struct =>
+    !@this.Truthy();
+
+  [MethodImpl(MethodImplOptions.AggressiveInlining)]
+  public static bool Falsy<T>(
       [NotNullWhen(false)] this T? @this) =>
     !@this.Truthy();
 

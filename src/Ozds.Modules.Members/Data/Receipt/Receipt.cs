@@ -13,48 +13,47 @@ public class Receipt : ContentPart
   public ReceiptData? Data { get; set; } = null;
 }
 
-public record ReceiptData
-(ReceiptDataPerson Operator,
- ReceiptDataPerson Consumer,
- ReceiptDataCalculation Calculation,
- IEnumerable<ReceiptDataItem> Items,
- DateTime Date,
- decimal InTotal,
- decimal Tax,
- decimal InTotalWithTax);
+public readonly record struct ReceiptData
+{
+  public readonly PersonData Operator { get; init; }
+  public readonly PersonData Consumer { get; init; }
+  public readonly CalculationData Calculation { get; init; }
+  public readonly IEnumerable<ReceiptItemData> Items { get; init; }
+  public readonly DateTime Date { get; init; }
+  public readonly decimal InTotal { get; init; }
+  public readonly decimal Tax { get; init; }
+  public readonly decimal InTotalWithTax { get; init; }
 
-public record ReceiptDataCalculation
-(string SiteContentItemId,
- string TariffModelTermId,
- DateTime DateFrom,
- DateTime DateTo,
- decimal MeasurementServiceFee,
- ReceiptDataExpenditure UsageExpenditure,
- ReceiptDataExpenditure SupplyExpenditure);
+  public static ReceiptData FromCalculation(
+      PersonData @operator,
+      PersonData consumer,
+      CalculationData calculation,
+      decimal taxRate,
+      decimal renewableEnergyFeePrice,
+      decimal businessUsageFeePrice)
+  {
+    var items =
+      Enumerable.Concat(
+        calculation.UsageExpenditure.Items.Select(
+          ReceiptItemData.FromUsageExpenditureItem),
+        calculation.SupplyExpenditure.Items.Select(
+          ReceiptItemData.FromSupplyExpenditureItem));
 
-public record ReceiptDataExpenditure
-(IEnumerable<ReceiptDataExpenditureItem> Items,
- decimal InTotal);
+    var inTotal = items.Sum(item => item.InTotal);
+    var tax = taxRate * inTotal;
+    var inTotalWithTax = inTotal + tax;
 
-public record ReceiptDataExpenditureItem
-(string TariffItemTermId,
- decimal ValueFrom,
- decimal ValueTo,
- decimal Consumption,
- decimal UnitPrice,
- decimal Amount);
-
-public record ReceiptDataItem
-(string OrdinalNumber,
- string ArticleTermId,
- decimal Amount,
- decimal Price,
- decimal InTotal);
-
-public record ReceiptDataPerson
-(string Title,
- string Oib,
- string Address,
- string City,
- string PostalCode,
- string Contact);
+    return
+      new ReceiptData
+      {
+        Date = DateTime.UtcNow,
+        Operator = @operator,
+        Consumer = consumer,
+        Calculation = calculation,
+        Items = items,
+        InTotal = inTotal,
+        Tax = tax,
+        InTotalWithTax = inTotalWithTax,
+      };
+  }
+}

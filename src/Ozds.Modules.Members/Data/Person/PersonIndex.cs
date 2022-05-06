@@ -10,6 +10,7 @@ public class PersonIndex : MapIndex
   public string ContentItemId { get; init; } = default!;
   public string Oib { get; init; } = default!;
   public string Name { get; init; } = default!;
+  public string? SiteContentItemId { get; init; } = default;
 }
 
 public class PersonIndexProvider :
@@ -20,14 +21,22 @@ public class PersonIndexProvider :
     context
       .For<PersonIndex>()
       .Map(item =>
-        ((item.Get<Person>("CenterOwner"),
+        ((item.AsReal<Center>(),
+          item.Get<Person>("CenterOwner"),
+          item.AsReal<Consumer>(),
           item.Get<Person>("Person"))
          switch
         {
-          (Person person, null) =>
-           FromPerson(item, person),
-          (null, Person person) =>
-           FromPerson(item, person),
+          (Center center, Person owner, null, _) =>
+           FromPerson(
+              item,
+              owner),
+          (null, _, Consumer consumer, Person person) =>
+           FromPerson(
+             item,
+             person,
+             consumer.SecondarySites.ContentItemIds
+              .FirstOrDefault()),
           _ => null
         })
         // NOTE: this is okay because YesSql expects null values
@@ -35,11 +44,13 @@ public class PersonIndexProvider :
 
   private PersonIndex FromPerson(
       ContentItem item,
-      Person person) =>
+      Person person,
+      string? siteContentItemId = null) =>
     new PersonIndex
     {
       ContentItemId = item.ContentItemId,
       Oib = person.Oib.Text,
-      Name = person.Name.Text
+      Name = person.Name.Text,
+      SiteContentItemId = siteContentItemId
     };
 }

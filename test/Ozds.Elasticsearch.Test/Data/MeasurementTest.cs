@@ -1,52 +1,53 @@
 using System;
 
-namespace Ozds.Elasticsearch.Test
-{
-  public static partial class Data
-  {
-    public static readonly Measurement MyEnergyCommunityMeasurement =
-        new Measurement(DateTime.UtcNow, null, "MyEnergyCommunity", "M9EQCU59",
-            new Measurement.KnownData
-            {
-              dongleId = "M9EQCU59",
-              meterIdent = "ISK5/2M550T-2006",
-              meterSerial = "83793906",
-              localTime = "194938",
-              localDate = "220322",
-              energyIn = 2803.013,
-              energyIn_T1 = 719.16,
-              energyIn_T2 = 2083.848,
-              energyOut = 0.785,
-              energyOut_T1 = 0.121,
-              energyOut_T2 = 0.664,
-              powerIn = 0,
-              powerOut = 0,
-              powerInL1 = 0,
-              powerInL2 = 0,
-              powerInL3 = 0,
-              powerOutL1 = 0,
-              powerOutL2 = 0,
-              powerOutL3 = 0,
-              voltageL1 = 238.7,
-              voltageL2 = 240.2,
-              voltageL3 = 240.9,
-              currentL1 = 0,
-              currentL2 = 0,
-              currentL3 = 0,
-              numLongPwrFailures = 3,
-              numVoltageSagsL1 = 0,
-              numVoltageSagsL2 = 0,
-              numVoltageSagsL3 = 0,
-              numVoltageSwellsL1 = 0,
-              numVoltageSwellsL2 = 0,
-              numVoltageSwellsL3 = 0,
-              limiter = -1,
-              fuseSupervisionL1 = 0,
-              disconnectControl = 1,
-            });
+namespace Ozds.Elasticsearch.Test;
 
-    public static readonly Measurement FakeMeasurement = new Measurement(
-        DateTime.UtcNow, null, Ozds.Elasticsearch.MeasurementFaker.Client.FakeSource,
-        Ozds.Elasticsearch.MeasurementFaker.Client.FakeDeviceId);
-  };
-}
+public static partial class Data
+{
+  public static readonly Measurement MyEnergyCommunityMeasurement =
+      new Measurement(DateTime.UtcNow, null, "MyEnergyCommunity", "M9EQCU59",
+          new Measurement.KnownData
+          {
+            dongleId = "M9EQCU59",
+            meterIdent = "ISK5/2M550T-2006",
+            meterSerial = "83793906",
+            localTime = "194938",
+            localDate = "220322",
+            energyIn = 2803.013M,
+            energyIn_T1 = 719.16M,
+            energyIn_T2 = 2083.848M,
+            energyOut = 0.785M,
+            energyOut_T1 = 0.121M,
+            energyOut_T2 = 0.664M,
+            powerIn = 0M,
+            powerOut = 0M,
+            powerInL1 = 0M,
+            powerInL2 = 0M,
+            powerInL3 = 0M,
+            powerOutL1 = 0M,
+            powerOutL2 = 0M,
+            powerOutL3 = 0M,
+            voltageL1 = 238.7M,
+            voltageL2 = 240.2M,
+            voltageL3 = 240.9M,
+            currentL1 = 0M,
+            currentL2 = 0M,
+            currentL3 = 0M,
+            numLongPwrFailures = 3,
+            numVoltageSagsL1 = 0,
+            numVoltageSagsL2 = 0,
+            numVoltageSagsL3 = 0,
+            numVoltageSwellsL1 = 0,
+            numVoltageSwellsL2 = 0,
+            numVoltageSwellsL3 = 0,
+            limiter = -1,
+            fuseSupervisionL1 = 0,
+            disconnectControl = 1,
+          });
+
+  public static readonly Measurement FakeMeasurement = new Measurement(
+      DateTime.UtcNow,
+      null,
+      Ozds.Elasticsearch.MeasurementFaker.Client.FakeSource,
+      Ozds.Elasticsearch.MeasurementFaker.Client.FakeDeviceId);
+};

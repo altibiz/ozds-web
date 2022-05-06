@@ -10,7 +10,8 @@ public static class CreatePersonIndex
       table => table
         .Column<string>("ContentItemId", column => column.WithLength(30))
         .Column<string>("Name", column => column.WithLength(250))
-        .Column<string>("Oib", column => column.WithLength(30)));
+        .Column<string>("Oib", column => column.WithLength(30))
+        .Column<string?>("SiteContentItemId", column => column.WithLength(30)));
 
   public static ISchemaBuilder CreatePersonMapIndex(
       this ISchemaBuilder schema) =>
