@@ -14,12 +14,8 @@ public class ContentTypeBase
   public ContentItem ContentItem { get; init; }
 }
 
-public static partial class ContentExtensions
+public static class ContentTypeBaseExtensions
 {
-  public static Lazy<R> InitLazy<T, R>(
-      Func<T> f) where R : class =>
-    new Lazy<R>(() => (f() as R)!);
-
   public static T? AsContent<T>(
       this ContentItem @this) where T : ContentTypeBase =>
     Activator
@@ -30,86 +26,74 @@ public static partial class ContentExtensions
         new[] { @this },
         null)
       .As<T>()
-      .WhenNonNullable(content => typeof(T)
-        .GetProperties()
-        .WithNullable(
-          properties =>
-            {
-              foreach (var property in properties)
-              {
-                if (property.PropertyType.IsGenericType &&
+      .With(content =>
+        typeof(T)
+          .GetProperties()
+          .ForEach(property =>
+            property.PropertyType
+              .GetGenericArguments()
+              .FirstOrDefault()
+              .When(
+                partType =>
+                  partType.IsAssignableTo(typeof(ContentElement)) &&
                   Type.Equals(
                     property.PropertyType.GetGenericTypeDefinition(),
-                    typeof(Lazy<>)) &&
-                  property.PropertyType
-                    .GetGenericArguments()
-                    .FirstOrDefault()
-                    .WhenNonNullable(genericArgument => genericArgument
-                      .IsAssignableTo(typeof(ContentElement))))
+                    typeof(Lazy<>)),
+                partType =>
+                  content.ContentItem
+                    .CreateLazy(
+                      partType,
+                      property.Name)
+                    .WhenNonNullable(lazy =>
+                      content.SetProperty(property, lazy))))
+          // NOTE: this forces the ForEach to run eagerly
+          .Run());
+
+  private static object? CreateLazy(
+      this ContentItem contentItem,
+      Type partType,
+      string partName) =>
+    typeof(Lazy<>)
+      .MakeGenericType(
+          new[]
+          {
+            partType
+          })
+      .GetConstructor(
+          new[]
+          {
+            typeof(Func<>)
+              .MakeGenericType(
+                new[]
                 {
-                  typeof(ContentExtensions)
-                  .GetMethod("InitLazy")
-                  ?.MakeGenericMethod(
-                    new[]
-                    {
-                      typeof(ContentElement),
-                      property.PropertyType.GetGenericArguments().First()
-                    })
-                  ?.Invoke(
-                    null,
-                    new[]
-                    {
-                      () =>
-                        content.ContentItem.Get(
-                          property.PropertyType
-                            .GetGenericArguments()
-                            .FirstOrDefault(),
-                          property.Name) ??
-                        content.ContentItem.Get(
-                          property.PropertyType
-                            .GetGenericArguments()
-                            .FirstOrDefault(),
-                          property.Name + "Part")
-                    })
-                  .WhenNonNullable(lazy => content
-                    .SetProperty(property, lazy));
-                }
-              }
-            })
-        .Return(content));
-  // TODO: declarative like this
-  // .Where(property =>
-  //   property.PropertyType.IsGenericType &&
-  //   Type.Equals(
-  //     property.PropertyType.GetGenericTypeDefinition(),
-  //     typeof(Lazy<>)) &&
-  //   property.PropertyType
-  //     .GetGenericArguments()
-  //     .FirstOrDefault()
-  //     .WhenNonNullable(genericArgument => genericArgument
-  //       .IsAssignableTo(typeof(ContentElement))))
-  // .Select(property =>
-  //   typeof(ContentExtensions)
-  //   .GetMethod("InitLazy")
-  //   ?.MakeGenericMethod(
-  //     new[]
-  //     {
-  //       typeof(ContentElement),
-  //       property.PropertyType.GetGenericArguments().First()
-  //     })
-  //   ?.Invoke(
-  //     null,
-  //     new[]
-  //     {
-  //       () =>
-  //         content.ContentItem.Get(
-  //           property.PropertyType
-  //             .GetGenericArguments()
-  //             .FirstOrDefault(),
-  //           property.Name)
-  //     })
-  //   .WriteTitledJson("Lazy")
-  //   .WhenNonNullable(value => content
-  //     .SetProperty(property, value)))
-  // .Return(content));
+                  partType
+                })
+          })!
+      .Invoke(
+        new[]
+        {
+          LazyFactoryCaster
+            .MakeGenericMethod(
+              new []
+              {
+                typeof(ContentElement),
+                partType
+              })
+            .Invoke(
+              null,
+              new []
+              {
+                () =>
+                  contentItem.Get(partType, partName) ??
+                  contentItem.Get(partType, partName + "Part")
+              })
+        });
+
+  private static readonly MethodInfo LazyFactoryCaster =
+    typeof(Functions)
+      .GetMethods()
+      .Where(method =>
+        method.Name == nameof(Functions.Cast) &&
+        method.GetGenericArguments().Count() == 2)
+      .FirstOrDefault()!;
 }

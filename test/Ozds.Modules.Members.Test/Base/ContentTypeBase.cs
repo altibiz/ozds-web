@@ -8,7 +8,7 @@ namespace Ozds.Modules.Members.Test;
 public class ContentTypeBaseConstructs
 {
   [Fact]
-  public void Constructs() =>
+  public void Title() =>
     new ContentItem()
       .WithNullable(
         item =>
@@ -16,21 +16,69 @@ public class ContentTypeBaseConstructs
           item.Weld<TitlePart>();
           item.Alter<TitlePart>(titlePart => titlePart.Title = "MyTitle");
         })
-      .AsContent<Tag>()
+      .AsContent<TitleType>()
       .AssertNotNull()
-      .WithNullable(tag => tag
-        .Title
+      .WithNullable(type => type
+        .TitlePart
           .AssertNotNull()
         .Value
-          .AssertNotNull()
         .Title
           .AssertNotNull()
           .AssertEquals("MyTitle"));
 
-  private class Tag : ContentTypeBase
+  private class TitleType : ContentTypeBase
   {
-    public Lazy<TitlePart> Title { get; init; } = default!;
+    public Lazy<TitlePart> TitlePart { get; init; } = default!;
 
-    private Tag(ContentItem contentItem) : base(contentItem) { }
+    private TitleType(ContentItem contentItem) : base(contentItem) { }
+  }
+
+  [Fact]
+  public void TwoTitles() =>
+    new ContentItem()
+      .WithNullable(
+        item =>
+        {
+          item.Weld(
+            "FirstTitle",
+            new TitlePart
+            {
+              Title = "MyFirstTitle"
+            });
+          item.Weld(
+            "SecondTitle",
+            new TitlePart
+            {
+              Title = "MySecondTitle"
+            });
+        })
+      .AsContent<TwoTitlesType>()
+      .AssertNotNull()
+      .WithNullable(
+        type =>
+          {
+            type
+              .FirstTitle
+                .AssertNotNull()
+              .Value
+              .Title
+                .AssertNotNull()
+                .AssertEquals("MyFirstTitle");
+
+            type
+              .SecondTitle
+                .AssertNotNull()
+              .Value
+              .Title
+                .AssertNotNull()
+                .AssertEquals("MySecondTitle");
+          });
+
+  private class TwoTitlesType : ContentTypeBase
+  {
+    public Lazy<TitlePart> FirstTitle { get; init; } = default!;
+    public Lazy<TitlePart> SecondTitle { get; init; } = default!;
+
+    private TwoTitlesType(ContentItem contentItem) : base(contentItem) { }
   }
 }
