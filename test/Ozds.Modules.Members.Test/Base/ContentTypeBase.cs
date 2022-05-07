@@ -10,21 +10,23 @@ public class ContentTypeBaseConstructs
   [Fact]
   public void Title() =>
     new ContentItem()
-      .WithNullable(
-        item =>
+      .WithNullable(item =>
         {
           item.Weld<TitlePart>();
           item.Alter<TitlePart>(titlePart => titlePart.Title = "MyTitle");
         })
       .AsContent<TitleType>()
       .AssertNotNull()
-      .WithNullable(type => type
-        .TitlePart
-          .AssertNotNull()
-        .Value
-        .Title
-          .AssertNotNull()
-          .AssertEquals("MyTitle"));
+      .WithNullable(type =>
+        {
+          type
+            .TitlePart
+              .AssertNotNull()
+            .Value
+            .Title
+              .AssertNotNull()
+              .AssertEquals("MyTitle");
+        });
 
   private class TitleType : ContentTypeBase
   {
@@ -36,8 +38,7 @@ public class ContentTypeBaseConstructs
   [Fact]
   public void TwoTitles() =>
     new ContentItem()
-      .WithNullable(
-        item =>
+      .WithNullable(item =>
         {
           item.Weld(
             "FirstTitle",
@@ -45,6 +46,7 @@ public class ContentTypeBaseConstructs
             {
               Title = "MyFirstTitle"
             });
+
           item.Weld(
             "SecondTitle",
             new TitlePart
@@ -54,25 +56,24 @@ public class ContentTypeBaseConstructs
         })
       .AsContent<TwoTitlesType>()
       .AssertNotNull()
-      .WithNullable(
-        type =>
-          {
-            type
-              .FirstTitle
-                .AssertNotNull()
-              .Value
-              .Title
-                .AssertNotNull()
-                .AssertEquals("MyFirstTitle");
+      .WithNullable(type =>
+        {
+          type
+            .FirstTitle
+              .AssertNotNull()
+            .Value
+            .Title
+              .AssertNotNull()
+              .AssertEquals("MyFirstTitle");
 
-            type
-              .SecondTitle
-                .AssertNotNull()
-              .Value
-              .Title
-                .AssertNotNull()
-                .AssertEquals("MySecondTitle");
-          });
+          type
+            .SecondTitle
+              .AssertNotNull()
+            .Value
+            .Title
+              .AssertNotNull()
+              .AssertEquals("MySecondTitle");
+        });
 
   private class TwoTitlesType : ContentTypeBase
   {

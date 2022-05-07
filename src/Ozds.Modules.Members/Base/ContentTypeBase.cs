@@ -68,7 +68,8 @@ public static class ContentTypeBaseExtensions
                 {
                   partType
                 })
-          })!
+          })
+      .ThrowWhenNull()
       .Invoke(
         new[]
         {
@@ -95,5 +96,5 @@ public static class ContentTypeBaseExtensions
       .Where(method =>
         method.Name == nameof(Functions.Cast) &&
         method.GetGenericArguments().Count() == 2)
-      .FirstOrDefault()!;
+      .First();
 }
