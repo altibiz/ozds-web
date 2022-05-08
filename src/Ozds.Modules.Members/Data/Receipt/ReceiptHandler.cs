@@ -83,16 +83,14 @@ public class ReceiptHandler : ContentHandlerBase
                                   beginEnergy.Data.energyIn_T2,
                                   endEnergy.Data.energyIn_T2,
                                   power.Data.powerIn),
-                                Pricing.TaxRate,
-                                Pricing.RenewableEnergyFeePrice,
-                                Pricing.BusinessUsageFeePrice),
-                            _ => null as ReceiptData?
+                                Pricing.TaxRate),
+                            _ => default
                           },
-                        _ => null
+                        _ => default
                       },
-                    _ => null
+                    _ => default
                   },
-                _ => null
+                _ => default
               };
           });
 

@@ -1,5 +1,6 @@
 using System.Reflection;
 using OrchardCore.ContentManagement;
+using OrchardCore.Lists.Models;
 using Ozds.Util;
 
 namespace Ozds.Modules.Members;
@@ -12,6 +13,8 @@ public class ContentTypeBase
   }
 
   public ContentItem ContentItem { get; init; }
+
+  public Lazy<ContainedPart?> ContainedPart { get; init; } = default!;
 }
 
 public static class ContentTypeBaseExtensions
@@ -33,7 +36,7 @@ public static class ContentTypeBaseExtensions
             property.PropertyType
               .GetGenericArguments()
               .FirstOrDefault()
-              .When(
+              .WhenWith(
                 partType =>
                   partType.IsAssignableTo(typeof(ContentElement)) &&
                   Type.Equals(
@@ -41,15 +44,56 @@ public static class ContentTypeBaseExtensions
                     typeof(Lazy<>)),
                 partType =>
                   content.ContentItem
-                    .CreateLazy(
-                      partType,
-                      property.Name)
-                    .WhenNonNullable(lazy =>
+                    .CreateLazy(partType, property.Name)
+                    .WithNullable(lazy =>
                       content.SetProperty(property, lazy))))
-          // NOTE: this forces the ForEach to run eagerly
           .Run());
 
-  private static object? CreateLazy(
+  public static Task<T?> NewContentAsync<T>(
+      this IContentManager content) where T : ContentTypeBase =>
+    content
+      .NewAsync(typeof(T).Name.RegexRemove(@"Type$"))
+      .Then(item => item.AsContent<T>());
+
+  public static Task<T?> CloneContentAsync<T>(
+      this IContentManager content,
+      ContentItem item) where T : ContentTypeBase =>
+    content
+      .CloneAsync(item)
+      .Then(item => item.AsContent<T>());
+
+  public static Task<T?> GetContentAsync<T>(
+      this IContentManager content,
+      string id) where T : ContentTypeBase =>
+    content
+      .GetAsync(id)
+      .Then(item => item.AsContent<T>());
+
+  public static Task<T?> GetContentAsync<T>(
+      this IContentManager content,
+      string id,
+      VersionOptions options) where T : ContentTypeBase =>
+    content
+      .GetAsync(id, options)
+      .Then(item => item.AsContent<T>());
+
+  public static Task<T?> GetVersionedContentAsync<T>(
+      this IContentManager content,
+      string id) where T : ContentTypeBase =>
+    content
+      .GetAsync(id)
+      .Then(item => item.AsContent<T>());
+
+  public static Task<IEnumerable<T>> GetContentAsync<T>(
+      this IContentManager content,
+      IEnumerable<string> ids) where T : ContentTypeBase =>
+    content
+      .GetAsync(ids)
+      .Then(items =>
+        items.SelectFilter(item =>
+          item.AsContent<T>()));
+
+  private static object CreateLazy(
       this ContentItem contentItem,
       Type partType,
       string partName) =>

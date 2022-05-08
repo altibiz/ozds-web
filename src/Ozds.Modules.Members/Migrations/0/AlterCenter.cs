@@ -17,7 +17,7 @@ public static partial class AlterCenter
         .Listable()
         .Draftable()
         .Securable()
-        .WithPart("TitlePart",
+        .WithPart("Title", "TitlePart",
           part => part
             .WithDisplayName("Naziv")
             .WithDescription("Naziv zatvorenog distribucijskog sustava")
@@ -28,7 +28,7 @@ public static partial class AlterCenter
                 RenderTitle = true,
                 Options = TitlePartOptions.EditableRequired,
               }))
-        .WithPart("Center",
+        .WithPart("Center", "Center",
           part => part
             .WithPosition("2")
             .WithDisplayName("Centar")
@@ -66,7 +66,7 @@ public static partial class AlterCenter
                     "Catalogue"
                   }
               }))
-        .WithPart("ListPart",
+        .WithPart("Consumers", "ListPart",
           part => part
             .WithDisplayName("Korisnici")
             .WithPosition("6")

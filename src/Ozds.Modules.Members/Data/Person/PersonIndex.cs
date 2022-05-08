@@ -21,21 +21,19 @@ public class PersonIndexProvider :
     context
       .For<PersonIndex>()
       .Map(item =>
-        ((item.AsReal<Center>(),
-          item.Get<Person>("CenterOwner"),
-          item.AsReal<Consumer>(),
-          item.Get<Person>("Person"))
+        ((item.AsContent<CenterType>(),
+          item.AsContent<ConsumerType>())
          switch
         {
-          (Center center, Person owner, null, _) =>
+          (CenterType center, null) =>
            FromPerson(
               item,
-              owner),
-          (null, _, Consumer consumer, Person person) =>
+              center.CenterOwner.Value),
+          (null, ConsumerType consumer) =>
            FromPerson(
              item,
-             person,
-             consumer.SecondarySites.ContentItemIds
+             consumer.Person.Value,
+             consumer.Consumer.Value.SecondarySites.ContentItemIds
               .FirstOrDefault()),
           _ => null
         })

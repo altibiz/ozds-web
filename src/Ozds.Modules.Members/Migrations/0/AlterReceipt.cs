@@ -17,7 +17,7 @@ public static partial class AlterReceipt
         .Listable()
         .Draftable()
         .Securable()
-         .WithPart("TitlePart",
+         .WithPart("Title", "TitlePart",
           part => part
             .WithDisplayName("Naslov")
             .WithPosition("1")

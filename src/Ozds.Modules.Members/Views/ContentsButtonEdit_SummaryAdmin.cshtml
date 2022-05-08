@@ -41,21 +41,36 @@
     </span>
   </a>
 
-	<a
-      href="/Ozds.Modules.Members/Print/@contentItem.ContentItemId"
-      target="_blank"
-      class="btn btn-sm btn-success view">
-    <span>
-      @T["Print"]
-    </span>
-  </a>
+  @if (contentItem.ContentType == "Receipt")
+  {
+    <a
+        href="/Ozds.Modules.Members/Print/@contentItem.ContentItemId"
+        target="_blank"
+        class="btn btn-sm btn-success view">
+      <span>
+        @T["Print"]
+      </span>
+    </a>
 
+    <a
+        href="/Ozds.Modules.Members/Print/@contentItem.ContentItemId/Download"
+        target="_blank"
+        class="btn btn-sm btn-success view">
+      <span>
+        @T["PDF"]
+      </span>
+    </a>
+  }
+}
+
+@if (contentItem.ContentType == "Consumer")
+{
 	<a
       href="/Ozds.Modules.Members/Print/@contentItem.ContentItemId/Download"
       target="_blank"
       class="btn btn-sm btn-success view">
     <span>
-      @T["PDF"]
+      @T["Create Receipt"]
     </span>
   </a>
 }

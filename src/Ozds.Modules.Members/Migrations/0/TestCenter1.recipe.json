@@ -15,7 +15,7 @@
           "CreatedUtc": "2022-05-03T19:13:00.3759784Z",
           "Owner": "498t0ej1wwcgps2ejas0t2kjwv",
           "Author": "admin",
-          "TitlePart": {
+          "Title": {
             "Title": "Arena Centar"
           },
           "Center": {},
@@ -39,7 +39,6 @@
               "Text": "helb@helb.hr"
             }
           },
-
           "CenterOwner": {
             "Name": {
               "Text": "Ivo Ivić"
@@ -53,7 +52,6 @@
             "City": {
               "Text": "Zagreb"
             },
-
             "PostalCode": {
               "Text": "10020"
             },
@@ -735,30 +733,9 @@
               }
             ]
           },
-          "ListPart": {
+          "Consumers": {
             "FeedProxyUrl": null,
             "FeedItemsCount": 20
-          },
-
-          "Person": {
-            "Name": {
-              "Text": "Ivo Ivić"
-            },
-            "Oib": {
-              "Text": "12312312313"
-            },
-            "Address": {
-              "Text": "Vice Vukova 6"
-            },
-            "City": {
-              "Text": "Zagreb"
-            },
-            "PostalCode": {
-              "Text": "10020"
-            },
-            "Contact": {
-              "Text": "info@arenacentar.hr"
-            }
           }
         }
       ]

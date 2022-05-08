@@ -15,7 +15,7 @@ public static partial class AlterConsumer
         .Creatable()
         .Listable()
         .Securable()
-        .WithPart("TitlePart",
+        .WithPart("Title", "TitlePart",
           part => part
             .WithDisplayName("Naziv")
             .WithDisplayName("Naziv člana")
@@ -32,7 +32,7 @@ public static partial class AlterConsumer
 {{- name -}}
                 ",
               }))
-        .WithPart("Consumer",
+        .WithPart("Consumer", "Consumer",
           part => part
             .WithPosition("2")
             .WithDisplayName("Korisnik ZDS-a")
@@ -40,7 +40,7 @@ public static partial class AlterConsumer
               new FieldEditorSettings
               {
               }))
-        .WithPart("Person",
+        .WithPart("Person", "Person",
           part => part
             .WithDisplayName("Osoba")
             .WithPosition("3")

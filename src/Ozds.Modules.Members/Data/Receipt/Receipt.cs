@@ -3,6 +3,13 @@ using OrchardCore.ContentManagement;
 
 namespace Ozds.Modules.Members;
 
+public class ReceiptType : ContentTypeBase
+{
+  public Lazy<Receipt> Receipt { get; init; } = default!;
+
+  private ReceiptType(ContentItem item) : base(item) { }
+}
+
 public class Receipt : ContentPart
 {
   public ContentPickerField Site { get; set; } = new();
@@ -10,7 +17,7 @@ public class Receipt : ContentPart
   public NumericField InTotal { get; set; } = new();
   public NumericField Tax { get; set; } = new();
   public NumericField InTotalWithTax { get; set; } = new();
-  public ReceiptData? Data { get; set; } = null;
+  public ReceiptData Data { get; set; } = default;
 }
 
 public readonly record struct ReceiptData
@@ -28,9 +35,7 @@ public readonly record struct ReceiptData
       PersonData @operator,
       PersonData consumer,
       CalculationData calculation,
-      decimal taxRate,
-      decimal renewableEnergyFeePrice,
-      decimal businessUsageFeePrice)
+      decimal taxRate)
   {
     var items =
       Enumerable.Concat(
