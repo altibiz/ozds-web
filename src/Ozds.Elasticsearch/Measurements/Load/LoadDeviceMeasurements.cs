@@ -1,41 +1,48 @@
-using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
+using Ozds.Util;
 
 namespace Ozds.Elasticsearch;
 
 public partial interface IClient
 {
-  public IEnumerable<Measurement> LoadDeviceMeasurements(
+  public Task<IEnumerable<Measurement>> LoadDeviceMeasurementsAsync(
       Device device, Period? period = null);
 
-  public Task<IEnumerable<Measurement>> LoadDeviceMeasurementsAsync(
+  public IEnumerable<Measurement> LoadDeviceMeasurements(
       Device device, Period? period = null);
 }
 
 public partial class Client
 {
+  public Task<IEnumerable<Measurement>> LoadDeviceMeasurementsAsync(
+      Device device, Period? period = null) =>
+    Providers
+      .Find(provider =>
+        provider.Source == device.Source)
+      .WhenNonNullableTask(provider =>
+        provider
+          .GetMeasurementsAsync(device, period)
+          .Then(Enumerable.ToList)
+          .ThenWith(measurements =>
+            Logger.LogDebug(
+              $"Got {measurements.Count} measurements " +
+              $"from {device.Source} {device.SourceDeviceId}"))
+          .Then(Enumerable.AsEnumerable)
+          .Nullable(),
+        Enumerable.Empty<Measurement>());
+
   public IEnumerable<Measurement> LoadDeviceMeasurements(
-      Device device, Period? period = null)
-  {
-    var task = LoadDeviceMeasurementsAsync(device, period);
-    task.Wait();
-    return task.Result;
-  }
-
-  public async Task<IEnumerable<Measurement>> LoadDeviceMeasurementsAsync(
-      Device device, Period? period = null)
-  {
-    var provider = Providers.Find(p => p.Source == device.Source);
-    if (provider is null) { return new List<Measurement> { }; }
-
-    var measurements =
-        (await provider.GetMeasurementsAsync(device, period)).ToList();
-
-    Logger.LogDebug(
-        $"Got {measurements.Count} measurements " + $"from {device.Id}");
-
-    return measurements;
-  }
+      Device device, Period? period = null) =>
+    Providers
+      .Find(provider =>
+        provider.Source == device.Source)
+      .WhenNonNullable(provider =>
+        provider
+          .GetMeasurements(device, period)
+          .ToList()
+          .WithNullable(measurements =>
+            Logger.LogDebug(
+              $"Got {measurements.Count} measurements " +
+              $"from {device.Source} {device.SourceDeviceId}"))
+          .AsEnumerable(),
+        Enumerable.Empty<Measurement>());
 }

@@ -1,35 +1,36 @@
+using Ozds.Util;
+
 namespace Ozds.Elasticsearch;
 
 public partial interface IClient
 {
-  public IEnumerable<Measurement> LoadMeasurements(Period? period = null);
-
   public Task<IEnumerable<Measurement>> LoadMeasurementsAsync(
+      Period? period = null);
+
+  public IEnumerable<Measurement> LoadMeasurements(
       Period? period = null);
 };
 
 public partial class Client : IClient
 {
-  public IEnumerable<Measurement> LoadMeasurements(Period? period = null)
-  {
-    var task = LoadMeasurementsAsync(period);
-    task.Wait();
-    return task.Result;
-  }
+  public Task<IEnumerable<Measurement>> LoadMeasurementsAsync(
+      Period? period = null) =>
+    Providers
+      .Select(provider =>
+        LoadSourceMeasurementsAsync(provider.Source, period))
+      .Await()
+      .Then(Enumerables.Flatten)
+      .Then(Enumerable.ToList)
+      .ThenWith(measurements =>
+        Logger.LogDebug($"Fetched {measurements.Count} measurements"))
+      .Then(Enumerable.AsEnumerable);
 
-  public async Task<IEnumerable<Measurement>> LoadMeasurementsAsync(
-      Period? period = null)
-  {
-    var measurements = new List<Measurement> { };
-
-    foreach (var provider in Providers)
-    {
-      measurements.AddRange(
-          await LoadSourceMeasurementsAsync(provider.Source, period));
-    }
-
-    Logger.LogDebug($"Fetched {measurements.Count} measurements");
-
-    return measurements;
-  }
+  public IEnumerable<Measurement> LoadMeasurements(
+      Period? period = null) =>
+    Providers
+      .SelectMany(provider =>
+        LoadSourceMeasurements(provider.Source, period))
+      .ToList()
+      .WithNullable(measurements =>
+         Logger.LogDebug($"Fetched {measurements.Count} measurements"));
 }

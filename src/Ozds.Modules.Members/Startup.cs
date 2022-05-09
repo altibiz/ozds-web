@@ -84,17 +84,12 @@ public class Startup : OrchardCore.Modules.StartupBase
 
     services.AddContentField<TaxonomyField>()
         .ForEditor<TaxonomyFieldTagsDisplayDriver>(d => false)
-        .ForEditor<TaxonomyFieldDisplayDriver>(
-            d =>
-                !string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) &&
-                !string.Equals(
-                    d, "Disabled", StringComparison.OrdinalIgnoreCase))
+        .ForEditor<TaxonomyFieldDisplayDriver>(d =>
+          !d.Equals("Tags", StringComparison.OrdinalIgnoreCase) &&
+          !d.Equals("Disabled", StringComparison.OrdinalIgnoreCase))
         .ForEditor<PartTaxonomyFieldTagsDriver>(d =>
-        {
-          return string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) ||
-                 string.Equals(
-                     d, "Disabled", StringComparison.OrdinalIgnoreCase);
-        });
+          d.Equals("Tags", StringComparison.OrdinalIgnoreCase) ||
+          d.Equals("Disabled", StringComparison.OrdinalIgnoreCase));
 
     if (Env.IsDevelopment())
     {

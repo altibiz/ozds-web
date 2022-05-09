@@ -1,4 +1,5 @@
 using Nest;
+using Ozds.Util;
 
 namespace Ozds.Elasticsearch;
 
@@ -8,7 +9,7 @@ public class Measurement
   public static string MakeId(
       string deviceId, DateTime measurementTimestamp)
   {
-    return StringExtensions.CombineIntoStringId(
+    return Strings.CombineIntoStringId(
         "D", deviceId, "TS", measurementTimestamp.ToUtcIsoString());
   }
 

@@ -1,5 +1,5 @@
-using System;
 using Nest;
+using Ozds.Util;
 
 namespace Ozds.Elasticsearch
 {
@@ -18,7 +18,7 @@ namespace Ozds.Elasticsearch
     // TODO: review if timestamp is enough
     public static string MakeId(DateTime timestamp)
     {
-      return StringExtensions.CombineIntoStringId(timestamp.ToUtcIsoString());
+      return Strings.CombineIntoStringId(timestamp.ToUtcIsoString());
     }
 
     public Log(string type, string? source = null, KnownData? data = null)

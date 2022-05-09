@@ -1,8 +1,8 @@
 using System.Text.Json;
-
 // NOTE: QueryBuilder
 // TODO: dont use AspNetCore?
 using Microsoft.AspNetCore.Http.Extensions;
+using Ozds.Util;
 
 namespace Ozds.Elasticsearch.MyEnergyCommunity;
 

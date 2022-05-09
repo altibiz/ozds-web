@@ -1,5 +1,3 @@
-using System;
-
 namespace Ozds.Elasticsearch;
 
 public readonly record struct MinMax
@@ -7,8 +5,6 @@ public readonly record struct MinMax
 
 public static class RandomExtensions
 {
-  public static int Next(this Random rand, MinMax minMax)
-  {
-    return rand.Next(minMax.Min, minMax.Max);
-  }
+  public static int Next(this Random rand, MinMax minMax) =>
+    rand.Next(minMax.Min, minMax.Max);
 }
