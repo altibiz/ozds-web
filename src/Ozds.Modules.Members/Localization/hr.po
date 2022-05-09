@@ -29,18 +29,28 @@ msgstr "Uspješna odjava"
 msgctxt "Ozds.Modules.Members.Pages.MyProfile"
 msgid "My Profile"
 msgstr "Moj Profil"
+
+msgctxt "Ozds.Modules.Members.Pages.MyProfile"
 msgid "Add Company"
 msgstr "Dodaj tvrtku"
+
+msgctxt "Ozds.Modules.Members.Pages.MyProfile"
 msgid "No results found"
-msgstr "Nema rezultata
+msgstr "Nema rezultata"
+
+msgctxt "Ozds.Modules.Members.Pages.MyProfile"
 msgid "Change Password"
 msgstr "Izmjena lozinke"
 
 msgctxt "Ozds.Modules.Members.Persons.PersonPart"
 msgid "Your ID must be 11 numbers."
 msgstr "OIB mora imati 11 znakova."
+
+msgctxt "Ozds.Modules.Members.Persons.PersonPart"
 msgid "Your ID is already in use."
 msgstr "Upisani OIB je već registriran."
+
+msgctxt "Ozds.Modules.Members.Persons.PersonPart"
 msgid "Surname is required."
 msgstr "Polje Prezime je obvezno."
 
@@ -59,3 +69,7 @@ msgstr "Adresa dostave"
 msgctxt "Ozds.Modules.Members.Views.Member-Contact.Edit"
 msgid "Member contact"
 msgstr "Kontakt člana"
+
+msgctxt "Ozds.Modules.Members.Views.ContentsButtonEdit_SummaryAdmin"
+msgid "Create Receipt"
+msgstr "Kreiraj račun"

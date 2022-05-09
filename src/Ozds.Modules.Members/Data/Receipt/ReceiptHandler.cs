@@ -55,19 +55,27 @@ public class ReceiptHandler : ContentHandlerBase
                          Catalogue catalogue,
                          Person consumer,
                          Person @operator) =>
-                          (await Elasticsearch
-                            .GetMonthlyEnergyMeasurementsAsync(
-                              date.Year,
-                              date.AddMonths(-1).Month),
-                           await Elasticsearch
-                            .GetMonthlyPowerMeasurementAsync(
-                              date.Year,
-                              date.AddMonths(-1).Month))
+                          (await Measurements
+                            .GetEnergyMeasurementsAsync(
+                              site.DeviceId.Text,
+                              new Elasticsearch.Period
+                              {
+                                From = date.AddMonths(-1),
+                                To = date
+                              }),
+                           await Measurements
+                            .GetPowerMeasurementAsync(
+                              site.DeviceId.Text,
+                              new Elasticsearch.Period
+                              {
+                                From = date.AddMonths(-1),
+                                To = date
+                              }))
                           switch
                           {
-                            ((Measurement beginEnergy,
-                              Measurement endEnergy),
-                              Measurement power) =>
+                            ((EnergyMeasurement beginEnergy,
+                              EnergyMeasurement endEnergy),
+                              PowerMeasurement power) =>
                               ReceiptData.FromCalculation(
                                 consumer.Data.Value,
                                 @operator.Data.Value,
@@ -76,15 +84,14 @@ public class ReceiptHandler : ContentHandlerBase
                                   site.ContentItem.ContentItemId,
                                   catalogue.Data.Value,
                                   default(CatalogueData),
-                                  beginEnergy.Data.energyIn,
-                                  endEnergy.Data.energyIn,
-                                  beginEnergy.Data.energyIn_T1,
-                                  endEnergy.Data.energyIn_T1,
-                                  beginEnergy.Data.energyIn_T2,
-                                  endEnergy.Data.energyIn_T2,
-                                  power.Data.powerIn),
-                                Pricing.TaxRate),
-                            _ => default
+                                  beginEnergy.Energy,
+                                  endEnergy.Energy,
+                                  beginEnergy.HighCostEnergy,
+                                  endEnergy.HighCostEnergy,
+                                  beginEnergy.LowCostEnergy,
+                                  endEnergy.LowCostEnergy,
+                                  power.Power),
+                                Pricing.TaxRate)
                           },
                         _ => default
                       },
@@ -97,14 +104,14 @@ public class ReceiptHandler : ContentHandlerBase
   public ReceiptHandler(
     IContentManager content,
     ISession session,
-    Elasticsearch.IClient elasticsearch)
+    IReceiptMeasurementProvider measurements)
   {
     Content = content;
     Session = session;
-    Elasticsearch = elasticsearch;
+    Measurements = measurements;
   }
 
   private IContentManager Content { get; }
   private ISession Session { get; }
-  private Elasticsearch.IClient Elasticsearch { get; }
+  private IReceiptMeasurementProvider Measurements { get; }
 }

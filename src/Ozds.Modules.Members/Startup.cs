@@ -22,6 +22,8 @@ using Lombiq.HelpfulExtensions.Extensions.CodeGeneration;
 using Ozds.Modules.Members.Utils;
 using Ozds.Modules.Members.PartFieldSettings;
 using Ozds.Modules.Members.Base;
+using Ozds.Elasticsearch;
+using Ozds.Util;
 
 namespace Ozds.Modules.Members;
 
@@ -96,32 +98,46 @@ public class Startup : OrchardCore.Modules.StartupBase
 
     if (Env.IsDevelopment())
     {
-      services.AddSingleton<Ozds.Elasticsearch.IMeasurementProvider,
-          Ozds.Elasticsearch.MeasurementFaker.Client>();
+      services.AddSingleton<
+        IMeasurementProvider,
+        Elasticsearch.MeasurementFaker.Client>();
+
+      services.AddSingleton<
+        IMeasurementImporter,
+        Elasticsearch.FakeMeasurementImporter>();
+
+      services.AddSingleton<
+        IReceiptMeasurementProvider,
+        Elasticsearch.FakeReceiptMeasurementProvider>();
     }
     else
     {
-      foreach (var measurementProviderType in Assembly.GetExecutingAssembly()
-                   .GetTypes()
-                   .Where(type =>
-                              typeof(Ozds.Elasticsearch.IMeasurementProvider)
-                                  .IsAssignableFrom(type) &&
-                              !type.IsInterface &&
-                              !type.Equals(typeof(Ozds.Elasticsearch.Client)) &&
-                              !type.Equals(
-                                  typeof(Ozds.Elasticsearch.MeasurementFaker
-                                             .Client))))
-      {
-        services.AddSingleton(typeof(Ozds.Elasticsearch.IMeasurementProvider),
-            measurementProviderType);
-      }
-    }
+      Assembly
+        .GetExecutingAssembly()
+        .GetTypes()
+        .Where(type =>
+          type.IsAssignableTo<IMeasurementProvider>() &&
+          !type.IsInterface &&
+          !type.Equals(typeof(Elasticsearch.Client)) &&
+          !type.Equals(typeof(Elasticsearch.MeasurementFaker.Client)))
+        .ForEach(measurementProviderType =>
+          services.AddSingleton(
+            typeof(IMeasurementProvider),
+            measurementProviderType))
+        .Run();
 
-    services
-        .AddSingleton<Ozds.Elasticsearch.IClient, Ozds.Elasticsearch.Client>();
+      services.AddSingleton<
+        IMeasurementImporter,
+        Elasticsearch.Client>();
+
+      services.AddSingleton<
+        IReceiptMeasurementProvider,
+        Elasticsearch.Client>();
+    }
     services.AddSingleton<PeriodicMeasurementLoader>();
-    services.AddSingleton<IBackgroundTask,
-        PeriodicMeasurementLoadBackgroundTask>();
+    services.AddSingleton<
+      IBackgroundTask,
+      PeriodicMeasurementLoadBackgroundTask>();
 
     services.AddScoped<LocalizedRouteTransformer>();
   }

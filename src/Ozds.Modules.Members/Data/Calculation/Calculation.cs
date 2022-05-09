@@ -51,12 +51,12 @@ public readonly record struct CalculationData
       string siteContentItemId,
       CatalogueData catalogue,
       CatalogueData operatorCatalogue,
-      decimal energyBegin,
-      decimal energyEnd,
-      decimal highCostEnergyBegin,
-      decimal highCostEnergyEnd,
-      decimal lowCostEnergyBegin,
-      decimal lowCostEnergyEnd,
+      decimal beginEnergy,
+      decimal endEnergy,
+      decimal beginHighCostEnergy,
+      decimal endHighCostEnergy,
+      decimal beginLowCostEnergy,
+      decimal endLowCostEnergy,
       decimal maxPower) =>
     new CalculationData
     {
@@ -79,43 +79,43 @@ public readonly record struct CalculationData
                   new ExpenditureItemData
                   {
                     TariffItemTermId = TariffItem.UsageTermId,
-                    ValueFrom = energyBegin,
-                    ValueTo = energyEnd,
+                    ValueFrom = beginEnergy,
+                    ValueTo = endEnergy,
                     Consumption =
-                      energyEnd -
-                      energyBegin,
+                      endEnergy -
+                      beginEnergy,
                     UnitPrice = item.Price,
                     Amount = item.Price *
-                      (energyEnd -
-                      energyBegin),
+                      (endEnergy -
+                      beginEnergy),
                   },
                 TariffElement.HighCostEnergyTermId =>
                   new ExpenditureItemData
                   {
                     TariffItemTermId = TariffItem.HighCostUsageTermId,
-                    ValueFrom = highCostEnergyBegin,
-                    ValueTo = highCostEnergyEnd,
+                    ValueFrom = beginHighCostEnergy,
+                    ValueTo = endHighCostEnergy,
                     Consumption =
-                      highCostEnergyEnd -
-                      highCostEnergyBegin,
+                      endHighCostEnergy -
+                      beginHighCostEnergy,
                     UnitPrice = item.Price,
                     Amount = item.Price *
-                      (highCostEnergyEnd -
-                      highCostEnergyBegin),
+                      (endHighCostEnergy -
+                      beginHighCostEnergy),
                   },
                 TariffElement.LowCostEnergyTermId =>
                   new ExpenditureItemData
                   {
                     TariffItemTermId = TariffItem.LowCostUsageTermId,
-                    ValueFrom = lowCostEnergyBegin,
-                    ValueTo = lowCostEnergyEnd,
+                    ValueFrom = beginLowCostEnergy,
+                    ValueTo = endLowCostEnergy,
                     Consumption =
-                      lowCostEnergyEnd -
-                      lowCostEnergyBegin,
+                      endLowCostEnergy -
+                      beginLowCostEnergy,
                     UnitPrice = item.Price,
                     Amount = item.Price *
-                      (lowCostEnergyEnd -
-                      lowCostEnergyBegin),
+                      (endLowCostEnergy -
+                      beginLowCostEnergy),
                   },
                 TariffElement.MaxPowerTermId =>
                   new ExpenditureItemData
@@ -140,43 +140,43 @@ public readonly record struct CalculationData
                   new ExpenditureItemData
                   {
                     TariffItemTermId = TariffItem.SupplyTermId,
-                    ValueFrom = energyBegin,
-                    ValueTo = energyEnd,
+                    ValueFrom = beginEnergy,
+                    ValueTo = endEnergy,
                     Consumption =
-                      energyEnd -
-                      energyBegin,
+                      endEnergy -
+                      beginEnergy,
                     UnitPrice = item.Price,
                     Amount = item.Price *
-                      (energyEnd -
-                      energyBegin),
+                      (endEnergy -
+                      beginEnergy),
                   },
                 TariffElement.HighCostEnergyTermId =>
                   new ExpenditureItemData
                   {
                     TariffItemTermId = TariffItem.HighCostSupplyTermId,
-                    ValueFrom = highCostEnergyBegin,
-                    ValueTo = highCostEnergyEnd,
+                    ValueFrom = beginHighCostEnergy,
+                    ValueTo = endHighCostEnergy,
                     Consumption =
-                      highCostEnergyEnd -
-                      highCostEnergyBegin,
+                      endHighCostEnergy -
+                      beginHighCostEnergy,
                     UnitPrice = item.Price,
                     Amount = item.Price *
-                      (highCostEnergyEnd -
-                      highCostEnergyBegin),
+                      (endHighCostEnergy -
+                      beginHighCostEnergy),
                   },
                 TariffElement.LowCostEnergyTermId =>
                   new ExpenditureItemData
                   {
                     TariffItemTermId = TariffItem.LowCostSupplyTermId,
-                    ValueFrom = lowCostEnergyBegin,
-                    ValueTo = lowCostEnergyEnd,
+                    ValueFrom = beginLowCostEnergy,
+                    ValueTo = endLowCostEnergy,
                     Consumption =
-                      lowCostEnergyEnd -
-                      lowCostEnergyBegin,
+                      endLowCostEnergy -
+                      beginLowCostEnergy,
                     UnitPrice = item.Price,
                     Amount = item.Price *
-                      (lowCostEnergyEnd -
-                      lowCostEnergyBegin),
+                      (endLowCostEnergy -
+                      beginLowCostEnergy),
                   },
                 TariffElement.RenewableEnergyFeeTermId =>
                   new ExpenditureItemData
@@ -185,20 +185,20 @@ public readonly record struct CalculationData
                     ValueFrom = default,
                     ValueTo = default,
                     Consumption =
-                      (energyEnd -
-                      energyBegin) +
-                      (lowCostEnergyEnd -
-                      lowCostEnergyBegin) +
-                      (highCostEnergyEnd -
-                      highCostEnergyBegin),
+                      (endEnergy -
+                      beginEnergy) +
+                      (endLowCostEnergy -
+                      beginLowCostEnergy) +
+                      (endHighCostEnergy -
+                      beginHighCostEnergy),
                     UnitPrice = item.Price,
                     Amount = item.Price *
-                      (energyEnd -
-                      energyBegin) +
-                      (lowCostEnergyEnd -
-                      lowCostEnergyBegin) +
-                      (highCostEnergyEnd -
-                      highCostEnergyBegin),
+                      (endEnergy -
+                      beginEnergy) +
+                      (endLowCostEnergy -
+                      beginLowCostEnergy) +
+                      (endHighCostEnergy -
+                      beginHighCostEnergy),
                   },
                 TariffElement.BusinessUsageFeeTermId =>
                   new ExpenditureItemData
@@ -207,20 +207,20 @@ public readonly record struct CalculationData
                     ValueFrom = default,
                     ValueTo = default,
                     Consumption =
-                      (energyEnd -
-                      energyBegin) +
-                      (lowCostEnergyEnd -
-                      lowCostEnergyBegin) +
-                      (highCostEnergyEnd -
-                      highCostEnergyBegin),
+                      (endEnergy -
+                      beginEnergy) +
+                      (endLowCostEnergy -
+                      beginLowCostEnergy) +
+                      (endHighCostEnergy -
+                      beginHighCostEnergy),
                     UnitPrice = item.Price,
                     Amount = item.Price *
-                      (energyEnd -
-                      energyBegin) +
-                      (lowCostEnergyEnd -
-                      lowCostEnergyBegin) +
-                      (highCostEnergyEnd -
-                      highCostEnergyBegin),
+                      (endEnergy -
+                      beginEnergy) +
+                      (endLowCostEnergy -
+                      beginLowCostEnergy) +
+                      (endHighCostEnergy -
+                      beginHighCostEnergy),
                   },
                 _ => null as ExpenditureItemData?
               })),

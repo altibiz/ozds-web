@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 using OrchardCore.BackgroundTasks;
 
 namespace Ozds.Modules.Members;
@@ -21,25 +20,24 @@ public class PeriodicMeasurementLoadBackgroundTask : IBackgroundTask
 
 public class PeriodicMeasurementLoader
 {
-  public async Task LoadContinuouslyAsync() =>
-    await Client.IndexMeasurementsAsync(
-      await Client.LoadMeasurementsAsync());
+  public Task LoadContinuouslyAsync() =>
+    Importer.ImportMeasurementsAsync();
 
   public PeriodicMeasurementLoader(IWebHostEnvironment env,
       ILogger<PeriodicMeasurementLoader> logger,
-      Ozds.Elasticsearch.IClient client)
+      Ozds.Elasticsearch.IMeasurementImporter importer)
   {
-    Client = client;
+    Importer = importer;
 
-    if (env.IsDevelopment())
-    {
-      Client.IndexDevice(new Ozds.Elasticsearch.Device(
-        Ozds.Elasticsearch.MeasurementFaker.Client.FakeSource,
-        Ozds.Elasticsearch.MeasurementFaker.Client.FakeDeviceId, null,
-        Ozds.Elasticsearch.DeviceState.Healthy));
-      logger.Log(LogLevel.Information, "Indexed a fake device for development");
-    }
+    // if (env.IsDevelopment())
+    // {
+    //   Importer.IndexDevice(new Ozds.Elasticsearch.Device(
+    //     Ozds.Elasticsearch.MeasurementFaker.Client.FakeSource,
+    //     Ozds.Elasticsearch.MeasurementFaker.Client.FakeDeviceId, null,
+    //     Ozds.Elasticsearch.DeviceState.Healthy));
+    //   logger.LogInformation("Indexed a fake device for development");
+    // }
   }
 
-  Ozds.Elasticsearch.IClient Client { get; init; }
+  Ozds.Elasticsearch.IMeasurementImporter Importer { get; init; }
 }

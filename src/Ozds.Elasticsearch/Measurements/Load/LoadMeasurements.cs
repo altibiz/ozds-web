@@ -1,40 +1,35 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+namespace Ozds.Elasticsearch;
 
-namespace Ozds.Elasticsearch
+public partial interface IClient
 {
-  public partial interface IClient
-  {
-    public IEnumerable<Measurement> LoadMeasurements(Period? period = null);
+  public IEnumerable<Measurement> LoadMeasurements(Period? period = null);
 
-    public Task<IEnumerable<Measurement>> LoadMeasurementsAsync(
-        Period? period = null);
-  };
+  public Task<IEnumerable<Measurement>> LoadMeasurementsAsync(
+      Period? period = null);
+};
 
-  public partial class Client : IClient
+public partial class Client : IClient
+{
+  public IEnumerable<Measurement> LoadMeasurements(Period? period = null)
   {
-    public IEnumerable<Measurement> LoadMeasurements(Period? period = null)
+    var task = LoadMeasurementsAsync(period);
+    task.Wait();
+    return task.Result;
+  }
+
+  public async Task<IEnumerable<Measurement>> LoadMeasurementsAsync(
+      Period? period = null)
+  {
+    var measurements = new List<Measurement> { };
+
+    foreach (var provider in Providers)
     {
-      var task = LoadMeasurementsAsync(period);
-      task.Wait();
-      return task.Result;
+      measurements.AddRange(
+          await LoadSourceMeasurementsAsync(provider.Source, period));
     }
 
-    public async Task<IEnumerable<Measurement>> LoadMeasurementsAsync(
-        Period? period = null)
-    {
-      var measurements = new List<Measurement> { };
+    Logger.LogDebug($"Fetched {measurements.Count} measurements");
 
-      foreach (var provider in Providers)
-      {
-        measurements.AddRange(
-            await LoadSourceMeasurementsAsync(provider.Source, period));
-      }
-
-      Logger.LogDebug($"Fetched {measurements.Count} measurements");
-
-      return measurements;
-    }
+    return measurements;
   }
 }
