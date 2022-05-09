@@ -13,6 +13,7 @@ public class ContentTypeBaseConstructs
     new ContentItem()
       .WithNullable(item =>
         {
+          item.ContentType = "Title";
           item.Weld(
             nameof(TitleType.TitlePart),
             new TitlePart
@@ -46,6 +47,7 @@ public class ContentTypeBaseConstructs
     new ContentItem()
       .WithNullable(item =>
         {
+          item.ContentType = "TwoTitles";
           item.Weld(
             nameof(TwoTitlesType.FirstTitle),
             new TitlePart
@@ -94,6 +96,7 @@ public class ContentTypeBaseConstructs
     new ContentItem()
       .WithNullable(item =>
         {
+          item.ContentType = "Contained";
           item.Weld(
             nameof(ContainedType.TitlePart),
             new TitlePart

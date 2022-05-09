@@ -21,33 +21,34 @@ public static class ContentTypeBaseExtensions
 {
   public static T? AsContent<T>(
       this ContentItem @this) where T : ContentTypeBase =>
-    Activator
-      .CreateInstance(
-        typeof(T),
-        BindingFlags.NonPublic | BindingFlags.Instance,
-        null,
-        new[] { @this },
-        null)
-      .As<T>()
-      .With(content =>
-        typeof(T)
-          .GetProperties()
-          .ForEach(property =>
-            property.PropertyType
-              .GetGenericArguments()
-              .FirstOrDefault()
-              .WhenWith(
-                partType =>
-                  partType.IsAssignableTo(typeof(ContentElement)) &&
-                  Type.Equals(
-                    property.PropertyType.GetGenericTypeDefinition(),
-                    typeof(Lazy<>)),
-                partType =>
-                  content.ContentItem
-                    .CreateLazy(partType, property.Name)
-                    .WithNullable(lazy =>
-                      content.SetProperty(property, lazy))))
-          .Run());
+    @this.ContentType != typeof(T).Name.RegexRemove("Type$") ? null
+    : Activator
+        .CreateInstance(
+          typeof(T),
+          BindingFlags.NonPublic | BindingFlags.Instance,
+          null,
+          new[] { @this },
+          null)
+        .As<T>()
+        .With(content =>
+          typeof(T)
+            .GetProperties()
+            .ForEach(property =>
+              property.PropertyType
+                .GetGenericArguments()
+                .FirstOrDefault()
+                .WhenWith(
+                  partType =>
+                    partType.IsAssignableTo(typeof(ContentElement)) &&
+                    Type.Equals(
+                      property.PropertyType.GetGenericTypeDefinition(),
+                      typeof(Lazy<>)),
+                  partType =>
+                    content.ContentItem
+                      .CreateLazy(partType, property.Name)
+                      .WithNullable(lazy =>
+                        content.SetProperty(property, lazy))))
+            .Run());
 
   public static Task<T?> NewContentAsync<T>(
       this IContentManager content) where T : ContentTypeBase =>

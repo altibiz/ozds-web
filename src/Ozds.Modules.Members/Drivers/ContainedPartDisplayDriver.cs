@@ -35,7 +35,7 @@ public class ContainedPartDisplayDriver : ContentDisplayDriver
                     model.ListContentItemId = part.ListContentItemId;
                     model.ParentName = list.DisplayText;
                   })
-                // NOTE: it has to be a ValueTask for Initialize
+                //  NOTE: it has to be a ValueTask for Initialize
                 .ToValueTask())
             .Location("Content"))
           .As<IDisplayResult>()

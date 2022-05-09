@@ -14,6 +14,8 @@ public class ReceiptIndex : MapIndex
   public string ConsumerOib { get; init; } = default!;
   public string CenterOwnerName { get; init; } = default!;
   public string CenterOwnerOib { get; init; } = default!;
+  public string OperatorName { get; init; } = default!;
+  public string OperatorOib { get; init; } = default!;
 }
 
 public class ReceiptIndexProvider :
@@ -27,34 +29,19 @@ public class ReceiptIndexProvider :
       .Map(item => item.AsReal<Receipt>()
         .WhenNonNullable(receipt =>
           // NOTE: no way these are not nullable
-          (item.FromBag<Calculation>()?.FirstOrDefault(),
-           item.Get<Person>("Consumer").Nullable(),
-           item.Get<Person>("Center").Nullable())
-          switch
+          new ReceiptIndex
           {
-            (Calculation calculation,
-             Person consumer,
-             Person center) =>
-              (calculation.Site.ContentItemIds.FirstOrDefault(),
-               calculation.TariffModel.TermContentItemIds.FirstOrDefault())
-              switch
-              {
-                (string siteContentItemId, string tariffModelTermId) =>
-                  new ReceiptIndex
-                  {
-                    ContentItemId = item.ContentItemId,
-                    SiteContentItemId =
-                      siteContentItemId,
-                    TariffModelTermId =
-                      tariffModelTermId,
-                    ConsumerName = consumer.Name.Text,
-                    ConsumerOib = consumer.Oib.Text,
-                    CenterOwnerName = center.Name.Text,
-                    CenterOwnerOib = center.Oib.Text
-                  },
-                _ => null
-              },
-            _ => null
+            ContentItemId = item.ContentItemId,
+            SiteContentItemId =
+              receipt.Data.Calculation.SiteContentItemId,
+            TariffModelTermId =
+              receipt.Data.Calculation.TariffModelTermId,
+            ConsumerName = receipt.Data.Consumer.Name,
+            ConsumerOib = receipt.Data.Consumer.Oib,
+            CenterOwnerName = receipt.Data.CenterOwner.Name,
+            CenterOwnerOib = receipt.Data.CenterOwner.Oib,
+            OperatorName = receipt.Data.Operator.Name,
+            OperatorOib = receipt.Data.Operator.Oib,
           })
         // NOTE: YesSql expects null here
         .NonNullable());

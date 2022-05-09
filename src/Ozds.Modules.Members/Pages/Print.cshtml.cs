@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using OrchardCore.ContentManagement;
@@ -8,6 +9,7 @@ using OrchardCore.DisplayManagement.ModelBinding;
 
 namespace Ozds.Modules.Members.Pages;
 
+[Authorize(Roles = "Administrator")]
 public class PrintModel : PageModel
 {
   public async Task<IActionResult> OnGetAsync(string contentId)

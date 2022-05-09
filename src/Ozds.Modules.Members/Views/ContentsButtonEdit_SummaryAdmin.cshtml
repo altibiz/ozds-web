@@ -63,11 +63,11 @@
   }
 }
 
-@if (contentItem.ContentType == "Consumer")
+@if (contentItem.ContentType == "SecondarySite")
 {
 	<a
-      href="/Ozds.Modules.Members/Print/@contentItem.ContentItemId/Download"
-      target="_blank"
+      href="/Admin/Contents/ContentTypes/Receipt/Create?siteContentItemId=@contentItem.ContentItemId"
+      target="_self"
       class="btn btn-sm btn-success view">
     <span>
       @T["Create Receipt"]

@@ -22,7 +22,8 @@ public class Person : ContentPart
       () =>
         new PersonData
         {
-          Title = this.Name.Text,
+          ContentItemId = this.ContentItem.ContentItemId,
+          Name = this.Name.Text,
           Oib = this.Oib.Text,
           Address = this.Address.Text,
           City = this.City.Text,
@@ -33,7 +34,8 @@ public class Person : ContentPart
 }
 
 public readonly record struct PersonData
-(string Title,
+(string ContentItemId,
+ string Name,
  string Oib,
  string Address,
  string City,

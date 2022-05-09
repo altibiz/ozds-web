@@ -10,6 +10,7 @@ using OrchardCore.Navigation;
 using OrchardCore.BackgroundTasks;
 using OrchardCore.DisplayManagement.Implementation;
 using OrchardCore.ContentManagement;
+using OrchardCore.ContentManagement.Handlers;
 using OrchardCore.ContentTypes.Editors;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentFields.Fields;
@@ -29,15 +30,6 @@ namespace Ozds.Modules.Members;
 
 public class Startup : OrchardCore.Modules.StartupBase
 {
-  public IWebHostEnvironment Env { get; init; }
-  public ILogger<Startup> Logger { get; init; }
-
-  public Startup(IWebHostEnvironment env, ILogger<Startup> logger)
-  {
-    Env = env;
-    Logger = logger;
-  }
-
   public override void ConfigureServices(IServiceCollection services)
   {
     services.AddScoped<INavigationProvider, AdminMenu>();
@@ -54,6 +46,7 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddContentPart<ReceiptItem>();
     services.AddContentPart<Receipt>();
     services.AddScoped<IScopedIndexProvider, ReceiptIndexProvider>();
+    services.AddScoped<IContentHandler, ReceiptHandler>();
     services.AddContentPart<Calculation>();
     services.AddContentPart<Catalogue>();
     services.AddContentPart<CatalogueItem>();
@@ -85,11 +78,11 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddContentField<TaxonomyField>()
         .ForEditor<TaxonomyFieldTagsDisplayDriver>(d => false)
         .ForEditor<TaxonomyFieldDisplayDriver>(d =>
-          !d.Equals("Tags", StringComparison.OrdinalIgnoreCase) &&
-          !d.Equals("Disabled", StringComparison.OrdinalIgnoreCase))
+          !string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) &&
+          !string.Equals(d, "Disabled", StringComparison.OrdinalIgnoreCase))
         .ForEditor<PartTaxonomyFieldTagsDriver>(d =>
-          d.Equals("Tags", StringComparison.OrdinalIgnoreCase) ||
-          d.Equals("Disabled", StringComparison.OrdinalIgnoreCase));
+          string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) ||
+          string.Equals(d, "Disabled", StringComparison.OrdinalIgnoreCase));
 
     if (Env.IsDevelopment())
     {
@@ -145,4 +138,13 @@ public class Startup : OrchardCore.Modules.StartupBase
     routes.MapDynamicPageRoute<LocalizedRouteTransformer>("clanovi");
     routes.MapDynamicPageRoute<LocalizedRouteTransformer>("clanovi/{page?}");
   }
+
+  public Startup(IWebHostEnvironment env, ILogger<Startup> logger)
+  {
+    Env = env;
+    Logger = logger;
+  }
+
+  public IWebHostEnvironment Env { get; init; }
+  public ILogger<Startup> Logger { get; init; }
 }

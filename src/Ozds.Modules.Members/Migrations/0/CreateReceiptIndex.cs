@@ -13,6 +13,8 @@ public static class CreateReceiptIndex
         .Column<string>("TariffModelTermId", column => column.WithLength(30))
         .Column<string>("ConsumerName", column => column.WithLength(250))
         .Column<string>("ConsumerOib", column => column.WithLength(30))
+        .Column<string>("OperatorName", column => column.WithLength(250))
+        .Column<string>("OperatorOib", column => column.WithLength(30))
         .Column<string>("CenterOwnerName", column => column.WithLength(250))
         .Column<string>("CenterOwnerOib", column => column.WithLength(30)));
 }
