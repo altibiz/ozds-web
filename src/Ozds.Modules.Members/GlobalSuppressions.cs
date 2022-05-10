@@ -6,8 +6,10 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage(
-  "Usage",
-  "CA2254:Template should be a static expression",
-  Justification = "Why should logs be static expressions?",
+  "CodeQuality",
+  "IDE0051:Remove unused private members",
+  Justification =
+  "Adding private constructors to classes that " +
+  "inherit from ContentTypeBase",
   Scope = "namespaceanddescendants",
-  Target = "~N:Ozds.Elasticsearch")]
+  Target = "~N:Ozds.Modules.Members")]

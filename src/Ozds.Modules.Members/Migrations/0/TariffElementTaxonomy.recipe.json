@@ -4,101 +4,234 @@
       "name": "content",
       "Data": [
         {
-          "ContentItemId": "4k2wnvdbcmv5q46wdwmrybsqx7",
-          "ContentItemVersionId": "4amt3egc96wchxkrm2xnxpre4e",
-          "ContentType": "Receipt",
-          "DisplayText": "Dubravica 04. 05. 2022.",
+          "ContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+          "ContentItemVersionId": "4q0f21pvy9j6aw036z0yvwzgn5",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Tarifni element",
           "Latest": true,
           "Published": true,
-          "ModifiedUtc": "2022-05-04T10:55:45.852758Z",
-          "PublishedUtc": "2022-05-04T10:55:45.9127493Z",
-          "CreatedUtc": "2022-05-04T10:55:45.852758Z",
-          "Owner": "4b9fz1bem3q9zwm5hpndvqrjx2",
+          "ModifiedUtc": "2022-05-02T14:26:26.0194973Z",
+          "PublishedUtc": "2022-05-02T14:26:26.0337525Z",
+          "CreatedUtc": "2022-05-02T14:09:16.515114Z",
+          "Owner": "43y4ndgt2zesk2z66746enw3xj",
           "Author": "admin",
           "TitlePart": {
-            "Title": "Dubravica 04. 05. 2022."
+            "Title": "Tarifni element"
           },
-          "Center": {
-            "Name": {
-              "Text": "Ivo Ivić"
-            },
-            "Oib": {
-              "Text": "12312312313"
-            },
-            "Address": {
-              "Text": "Vice Vukova 6"
-            },
-            "City": {
-              "Text": "Zagreb"
-            },
-            "PostalCode": {
-              "Text": "10020"
-            },
-            "Contact": {
-              "Text": "info@arenacentar.hr"
-            }
+          "AliasPart": {
+            "Alias": "tariff-element"
           },
-          "Consumer": {
-            "Name": {
-              "Text": "Dubravica"
-            },
-            "Oib": {
-              "Text": "12312312314"
-            },
-            "Address": {
-              "Text": "Vice Vukovara 6"
-            },
-            "City": {
-              "Text": "Zagreb"
-            },
-            "PostalCode": {
-              "Text": "10020"
-            },
-
-            "Contact": {
-              "Text": "info@pekara-dubravica.hr"
-            }
+          "AutoroutePart": {
+            "Path": "tarifni-element",
+            "SetHomepage": false,
+            "Disabled": false,
+            "RouteContainedItems": false,
+            "Absolute": false
           },
-          "Calculation": {
-            "ContentItems": []
-          },
-          "Items": {
-            "ContentItems": []
-          },
-          "Receipt": {
-            "Date": {
-              "Value": "2022-05-04T00:00:00Z"
-            },
-            "InTotal": {
-              "Value": 0.0
-            },
-
-            "Tax": {
-              "Value": 0.0
-            },
-            "InTotalWithTax": {
-              "Value": 0.0
-            }
-          },
-          "Person": {
-            "Name": {
-              "Text": "Dubravica"
-            },
-            "Oib": {
-              "Text": "12312312314"
-            },
-            "Address": {
-              "Text": "Vice Vukovara 6"
-            },
-            "City": {
-              "Text": "Zagreb"
-            },
-            "PostalCode": {
-              "Text": "10020"
-            },
-            "Contact": {
-              "Text": "info@pekara-dubravica.hr"
-            }
+          "TaxonomyPart": {
+            "TermContentType": "TariffElement",
+            "Terms": [
+              {
+                "ContentItemId": "44vg6aarzp3ayv2praq3t17pce",
+                "ContentItemVersionId": null,
+                "ContentType": "TariffElement",
+                "DisplayText": "Radna energija - JT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-02T14:18:59.1367189Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Radna energija - JT"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Radna energija"
+                  },
+                  "Abbreviation": {
+                    "Text": "JT"
+                  },
+                  "Unit": {
+                    "Text": "kWh"
+                  }
+                },
+                "AutoroutePart": {
+                  "Path": "radna-energija-jt",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4mw0ncthn1aq4r5k6cqfk19yw3",
+                "ContentItemVersionId": null,
+                "ContentType": "TariffElement",
+                "DisplayText": "Radna energija - VT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-02T14:19:16.6944699Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Radna energija - VT"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Radna energija"
+                  },
+                  "Abbreviation": {
+                    "Text": "VT"
+                  },
+                  "Unit": {
+                    "Text": "kWh"
+                  }
+                },
+                "AutoroutePart": {
+                  "Path": "radna-energija-vt",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4cqexne8f6j3sv77ewvydhxzn8",
+                "ContentItemVersionId": null,
+                "ContentType": "TariffElement",
+                "DisplayText": "Radna energija - NT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-02T14:19:36.4122018Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Radna energija - NT"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Radna energija"
+                  },
+                  "Abbreviation": {
+                    "Text": "NT"
+                  },
+                  "Unit": {
+                    "Text": "kWh"
+                  }
+                },
+                "AutoroutePart": {
+                  "Path": "radna-energija-nt",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4fpzdpa1c1mdjsef4j21wnd9x7",
+                "ContentItemVersionId": null,
+                "ContentType": "TariffElement",
+                "DisplayText": "Radna snaga - SVT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-02T14:23:41.6926237Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Radna snaga - SVT"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Radna snaga"
+                  },
+                  "Abbreviation": {
+                    "Text": "SVT"
+                  },
+                  "Unit": {
+                    "Text": "kW"
+                  }
+                },
+                "AutoroutePart": {
+                  "Path": "radna-snaga-svt",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4eexj7kgkdww3rpcavx5mxw3da",
+                "ContentItemVersionId": null,
+                "ContentType": "TariffElement",
+                "DisplayText": "Naknada za obračunsko mjerno mjesto - NOMM",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-02T14:23:10.6410695Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Naknada za obračunsko mjerno mjesto - NOMM"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Naknada za obračunsko mjerno mjesto"
+                  },
+                  "Abbreviation": {
+                    "Text": "NOMM"
+                  },
+                  "Unit": {
+                    "Text": "mjesec"
+                  }
+                },
+                "AutoroutePart": {
+                  "Path": "naknada-za-obracunsko-mjerno-mjesto-nomm",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              }
+            ]
           }
         }
       ]

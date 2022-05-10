@@ -32,15 +32,6 @@
 
 @if (hasPublished && hasViewPermission)
 {
-	<a
-      display-for="@contentItem"
-      target="_blank"
-      class="btn btn-sm btn-success view">
-    <span>
-      @T["View"]
-    </span>
-  </a>
-
   @if (contentItem.ContentType == "Receipt")
   {
     <a
@@ -59,8 +50,19 @@
       <span>
         @T["PDF"]
       </span>
-    </a>
-  }
+        </a>
+    }
+    else
+    {
+	<a
+      display-for="@contentItem"
+      target="_blank"
+      class="btn btn-sm btn-success view">
+    <span>
+      @T["View"]
+    </span>
+  </a>
+    }
 }
 
 @if (contentItem.ContentType == "SecondarySite")

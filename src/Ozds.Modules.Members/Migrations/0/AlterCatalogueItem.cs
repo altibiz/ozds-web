@@ -16,7 +16,7 @@ public static partial class AlterCatalogueItem
         .Creatable()
         .Listable()
         .Securable()
-        .WithPart("TitlePart", part => part
+        .WithPart("Title", "TitlePart", part => part
           .WithPosition("1")
           .WithDisplayName("Naziv")
           .WithSettings(
@@ -31,7 +31,7 @@ public static partial class AlterCatalogueItem
 {{- tariffElement -}}
               "
             }))
-        .WithPart("CatalogueItem", part => part
+        .WithPart("CatalogueItem", "CatalogueItem", part => part
           .WithPosition("2")
           .WithDisplayName("Stavka cjenika")
           .WithSettings(

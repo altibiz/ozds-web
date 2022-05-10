@@ -1,9 +1,18 @@
 using OrchardCore.ContentFields.Fields;
 using OrchardCore.Taxonomies.Fields;
 using OrchardCore.ContentManagement;
+using OrchardCore.Title.Models;
 using Newtonsoft.Json;
 
 namespace Ozds.Modules.Members;
+
+public class CatalogueItemType : ContentTypeBase
+{
+  public Lazy<TitlePart> Title { get; set; } = default!;
+  public Lazy<CatalogueItem> CatalogueItem { get; set; } = default!;
+
+  private CatalogueItemType(ContentItem item) : base(item) { }
+}
 
 public class CatalogueItem : ContentPart
 {
@@ -20,8 +29,8 @@ public class CatalogueItem : ContentPart
       () =>
         new CatalogueItemData
         {
-          Price = this.Price.Value ?? 0,
-          TariffElementTermId = this.TariffElement.TermContentItemIds.First()
+          Price = Price.Value ?? 0,
+          TariffElementTermId = TariffElement.TermContentItemIds.First()
         });
   }
 }

@@ -3,6 +3,7 @@ using OrchardCore.Taxonomies.Fields;
 using OrchardCore.Title.Models;
 using OrchardCore.Flows.Models;
 using Newtonsoft.Json;
+using Ozds.Util;
 
 namespace Ozds.Modules.Members;
 
@@ -28,10 +29,15 @@ public class Catalogue : ContentPart
       () =>
         new CatalogueData
         {
-          TariffModelTermId = this.TariffModel.TermContentItemIds.First(),
-          Items = this.ContentItem
-            .FromBag<CatalogueItem>()!
-            .Select(item => item.Data.Value)
+          TariffModelTermId = TariffModel.TermContentItemIds.First(),
+          Items = ContentItem
+            .AsContent<CatalogueType>()
+            .WhenNonNullable(catalogue =>
+              catalogue.Items.Value.ContentItems
+                .Select(item =>
+                  item.AsContent<CatalogueItemType>()
+                    !.CatalogueItem.Value.Data.Value),
+              Enumerable.Empty<CatalogueItemData>())
         });
   }
 }

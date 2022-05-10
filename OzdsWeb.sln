@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ozds.Util", "src\Ozds.Util\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{582F8AE3-C1B1-4561-BCC7-FDF55FD22BB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ozds.Modules.Members.Test", "test\Ozds.Modules.Members.Test\Ozds.Modules.Members.Test.csproj", "{F9825B75-6A4C-4FB0-B3F8-8DDBC7151174}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ozds.Modules.Members.Test", "test\Ozds.Modules.Members.Test\Ozds.Modules.Members.Test.csproj", "{F9825B75-6A4C-4FB0-B3F8-8DDBC7151174}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

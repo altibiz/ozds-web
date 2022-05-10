@@ -39,7 +39,6 @@
                 "ContentItemVersionId": null,
                 "ContentType": "Catalogue",
                 "DisplayText": "",
-
                 "Latest": false,
                 "Published": false,
                 "ModifiedUtc": "2022-05-04T10:34:01.4986493Z",
@@ -50,19 +49,16 @@
                 "TitlePart": {
                   "Title": ""
                 },
-
                 "Catalogue": {
                   "TariffModel": {
                     "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
                     "TermContentItemIds": ["41vr9sy8ap5ntvbkj74zbw6749"]
                   }
                 },
-
-                "BagPart": {
+                "Items": {
                   "ContentItems": [
                     {
                       "ContentItemId": "4kqgx788gea4jre81x5t99vw5t",
-
                       "ContentItemVersionId": null,
                       "ContentType": "CatalogueItem",
                       "DisplayText": "",
@@ -70,7 +66,6 @@
                       "Published": false,
                       "ModifiedUtc": "2022-05-04T10:34:01.50113Z",
                       "PublishedUtc": null,
-
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
@@ -78,7 +73,7 @@
                         "Title": ""
                       },
                       "CatalogueItem": {
-                        "Tariff": {
+                        "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
                           "TermContentItemIds": ["44vg6aarzp3ayv2praq3t17pce"]
                         },
@@ -87,14 +82,11 @@
                         }
                       }
                     },
-
                     {
                       "ContentItemId": "47kk01vq8hf8g2wcac7ffabww1",
-
                       "ContentItemVersionId": null,
                       "ContentType": "CatalogueItem",
                       "DisplayText": "",
-
                       "Latest": false,
                       "Published": false,
                       "ModifiedUtc": "2022-05-04T10:34:01.5096779Z",
@@ -106,11 +98,10 @@
                         "Title": ""
                       },
                       "CatalogueItem": {
-                        "Tariff": {
+                        "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
                           "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
                         },
-
                         "Price": {
                           "Value": 41.3
                         }

@@ -23,14 +23,14 @@ public class Calculation : ContentPart
       () =>
         new CalculationData
         {
-          SiteContentItemId = this.Site.ContentItemIds.First(),
-          TariffModelTermId = this.TariffModel.TermContentItemIds.First(),
-          DateFrom = this.DateFrom.Value ?? new(),
-          DateTo = this.DateTo.Value ?? new(),
-          MeasurementServiceFee = this.MeasurementServiceFee.Value ?? 0,
-          UsageExpenditure = this.ContentItem
+          SiteContentItemId = Site.ContentItemIds.First(),
+          TariffModelTermId = TariffModel.TermContentItemIds.First(),
+          DateFrom = DateFrom.Value ?? new(),
+          DateTo = DateTo.Value ?? new(),
+          MeasurementServiceFee = MeasurementServiceFee.Value ?? 0,
+          UsageExpenditure = ContentItem
             .Get<Expenditure>("UsageExpenditure")!.Data.Value,
-          SupplyExpenditure = this.ContentItem
+          SupplyExpenditure = ContentItem
             .Get<Expenditure>("SupplyExpenditure")!.Data.Value,
         });
   }
