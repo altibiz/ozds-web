@@ -1,3 +1,5 @@
+using Ozds.Util;
+
 namespace Ozds.Elasticsearch.MeasurementFaker;
 
 public class Measurement
@@ -54,18 +56,18 @@ public class Measurement
     public decimal? voltageL3 { get; init; } = default;
   };
 
-  public static Measurement Generate(DateTime timestamp)
-  {
-    var rand = new Random();
+  public static Measurement Generate(DateTime timestamp) =>
+    new(
+      timestamp,
+      new()
+      {
+        energyIn = Random.Shared.Next(s_energyMinMax),
+        energyIn_T1 = Random.Shared.Next(s_energyMinMax),
+        energyIn_T2 = Random.Shared.Next(s_energyMinMax),
+        powerIn = Random.Shared.Next(s_powerMinMax),
+      });
 
-    return new Measurement(
-        timestamp, new KnownData
-        {
-          voltageL1 = rand.Next(s_voltageL1MinMax),
-          voltageL2 = 0,
-          voltageL3 = 0
-        });
-  }
 
-  private static MinMax s_voltageL1MinMax = new MinMax(150, 250);
+  private static MinMax s_energyMinMax = new(100, 200);
+  private static MinMax s_powerMinMax = new(10, 20);
 };

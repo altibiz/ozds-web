@@ -149,4 +149,38 @@ public class ContentTypeBaseConstructs
 
     private ContainedType(ContentItem contentItem) : base(contentItem) { }
   }
+
+  [Fact]
+  public void Derived() =>
+    new ContentItem()
+      .WithNullable(item =>
+        {
+          item.ContentType = "Title";
+          item.Weld(
+            nameof(TitleType.TitlePart),
+            new TitlePart
+            {
+              Title = "MyTitle"
+            });
+          item
+            .Construct<DerivedType>()
+            .AssertNotNull()
+            .WithNullable(type =>
+              {
+                type
+                  .TitlePart
+                    .AssertNotNull()
+                  .Value
+                  .Title
+                    .AssertNotNull()
+                    .AssertEquals("MyTitle");
+              });
+        });
+
+  private class DerivedType : ContentTypeBase<DerivedType>
+  {
+    public Lazy<TitlePart> TitlePart { get; init; } = default!;
+
+    public DerivedType(ContentItem contentItem) : base(contentItem) { }
+  }
 }

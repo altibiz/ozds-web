@@ -5,13 +5,13 @@
       "Data": [
         {
           "ContentItemId": "4van7f3sda11fx2nm0pbqjef45",
-          "ContentItemVersionId": "4sa4crsqmmd9qza2c7det3eedp",
+          "ContentItemVersionId": "4a1d177nxppqh190qbzdvn2a4e",
           "ContentType": "Taxonomy",
           "DisplayText": "Tarifna stavka",
           "Latest": true,
           "Published": true,
-          "ModifiedUtc": "2022-05-03T08:41:47.7933695Z",
-          "PublishedUtc": "2022-05-03T08:41:47.8025162Z",
+          "ModifiedUtc": "2022-05-10T17:34:39.7317321Z",
+          "PublishedUtc": "2022-05-10T17:34:39.7438645Z",
           "CreatedUtc": "2022-05-03T08:36:58.249848Z",
           "Owner": "4bdz0dx2hax94sr798hvnsz740",
           "Author": "admin",
@@ -31,6 +31,46 @@
           "TaxonomyPart": {
             "TermContentType": "TariffElement",
             "Terms": [
+              {
+                "ContentItemId": "42jhr1xpjvfpg6t02d014nr4xy",
+                "ContentItemVersionId": null,
+                "ContentType": "TariffElement",
+                "DisplayText": "Korištenje mreže - RJT-R1",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-10T17:33:36.6882569Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Korištenje mreže - RJT-R1"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Korištenje mreže"
+                  },
+                  "Abbreviation": {
+                    "Text": "RJT-R1"
+                  },
+                  "Unit": {
+                    "Text": "kWh"
+                  }
+                },
+                "AutoroutePart": {
+                  "Path": "koristenje-mreze-rjt-r1",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
               {
                 "ContentItemId": "4pmasmhzk65113a9svxxvj4r55",
                 "ContentItemVersionId": null,
@@ -179,6 +219,46 @@
                 },
                 "AutoroutePart": {
                   "Path": "naknada-za-mjernu-uslugu-svt",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "454jn23baxytmxnzvq1wy6hvma",
+                "ContentItemVersionId": null,
+                "ContentType": "TariffElement",
+                "DisplayText": "Opskrba električnom energijom - RJT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-10T17:34:32.5490021Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Opskrba električnom energijom - RJT"
+                },
+                "TariffElement": {
+                  "Name": {
+                    "Text": "Opskrba električnom energijom"
+                  },
+                  "Abbreviation": {
+                    "Text": "RJT"
+                  },
+                  "Unit": {
+                    "Text": "kWh"
+                  }
+                },
+                "AutoroutePart": {
+                  "Path": "opskrba-elektricnom-energijom-rjt",
                   "SetHomepage": false,
                   "Disabled": false,
                   "RouteContainedItems": false,

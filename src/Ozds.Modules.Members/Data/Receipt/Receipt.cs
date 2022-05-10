@@ -1,6 +1,7 @@
 using OrchardCore.ContentFields.Fields;
 using OrchardCore.ContentManagement;
 using OrchardCore.Title.Models;
+using Ozds.Util;
 
 namespace Ozds.Modules.Members;
 
@@ -25,7 +26,9 @@ public readonly record struct ReceiptData
   public readonly PersonData CenterOwner { get; init; }
   public readonly PersonData Consumer { get; init; }
   public readonly CalculationData Calculation { get; init; }
-  public readonly IEnumerable<ReceiptItemData> Items { get; init; }
+  public readonly ReceiptItemData[] Items { get; init; }
+  public readonly decimal UsageFee { get; init; }
+  public readonly decimal SupplyFee { get; init; }
   public readonly decimal InTotal { get; init; }
   public readonly decimal Tax { get; init; }
   public readonly decimal InTotalWithTax { get; init; }
@@ -37,25 +40,44 @@ public readonly record struct ReceiptData
       CalculationData calculation,
       decimal taxRate)
   {
+    var additionalFeeConsumption =
+      calculation.UsageExpenditure.Items
+        .Where(item =>
+          item.TariffItemTermId.In(
+            TariffItem.UsageTermId,
+            TariffItem.LowCostUsageTermId,
+            TariffItem.HighCostUsageTermId))
+        .Sum(item => item.Amount);
+
     var items =
       Enumerable.Concat(
         calculation.UsageExpenditure.Items.Select(
           ReceiptItemData.FromUsageExpenditureItem),
         calculation.SupplyExpenditure.Items.Select(
-          ReceiptItemData.FromSupplyExpenditureItem));
+          ReceiptItemData.FromSupplyExpenditureItem))
+      .ToArray();
 
-    var inTotal = items.Sum(item => item.InTotal);
+    var usageFee = items
+      .Where(item => TariffItem.IsUsage(item.TariffItemTermId))
+      .Sum(item => item.InTotal);
+    var supplyFee = items
+      .Where(item => TariffItem.IsSupply(item.TariffItemTermId))
+      .Sum(item => item.InTotal);
+    var inTotal = items
+      .Sum(item => item.InTotal);
     var tax = taxRate * inTotal;
     var inTotalWithTax = inTotal + tax;
 
     return
-      new ReceiptData
+      new()
       {
         Operator = @operator,
         CenterOwner = centerOwner,
         Consumer = consumer,
         Calculation = calculation,
         Items = items,
+        UsageFee = usageFee,
+        SupplyFee = supplyFee,
         InTotal = inTotal,
         Tax = tax,
         InTotalWithTax = inTotalWithTax,

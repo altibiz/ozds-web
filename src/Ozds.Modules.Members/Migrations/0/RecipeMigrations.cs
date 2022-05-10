@@ -64,6 +64,10 @@ public static partial class RecipeMigrations
       .ExecuteTestSiteMeasurementSourceTaxonomy(migration)
       .ExecuteSiteStatusTaxonomy(migration);
 
+  public static IRecipeMigrator ExecuteOperatorCatalogue(
+      this IRecipeMigrator recipe, IDataMigration migration) =>
+    recipe.Execute("0/OperatorCatalogue.recipe.json", migration);
+
   public static IRecipeMigrator ExecuteTestCenter1(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/TestCenter1.recipe.json", migration);
@@ -83,10 +87,15 @@ public static partial class RecipeMigrations
   public static IRecipeMigrator ExecuteTestReceiptRevision1(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/TestReceiptRevision1.recipe.json", migration);
+  public static IRecipeMigrator ExecuteContent(
+      this IRecipeMigrator recipe, IDataMigration migration) =>
+    recipe
+      .ExecuteOperatorCatalogue(migration);
 
   public static IRecipeMigrator ExecuteTestContent(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe
+      .ExecuteOperatorCatalogue(migration)
       .ExecuteTestCenter1(migration)
       .ExecuteTestConsumerSite1(migration)
       .ExecuteTestConsumer1(migration)

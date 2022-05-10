@@ -9,15 +9,15 @@ public class FakeReceiptMeasurementProvider : IReceiptMeasurementProvider
     Task.FromResult(
       (new EnergyMeasurement
       {
-        Energy = default,
-        HighCostEnergy = Random.Shared.Next(100, 200),
-        LowCostEnergy = Random.Shared.Next(100, 200),
+        Energy = Random.Shared.Next(s_energyMinMax),
+        HighCostEnergy = Random.Shared.Next(s_energyMinMax),
+        LowCostEnergy = Random.Shared.Next(s_energyMinMax),
       },
        new EnergyMeasurement
        {
-         Energy = default,
-         HighCostEnergy = Random.Shared.Next(100, 200),
-         LowCostEnergy = Random.Shared.Next(100, 200),
+         Energy = Random.Shared.Next(s_energyMinMax),
+         HighCostEnergy = Random.Shared.Next(s_energyMinMax),
+         LowCostEnergy = Random.Shared.Next(s_energyMinMax),
        }));
 
   public (EnergyMeasurement Begin, EnergyMeasurement End)
@@ -29,10 +29,13 @@ public class FakeReceiptMeasurementProvider : IReceiptMeasurementProvider
     Task.FromResult(
         (new PowerMeasurement
         {
-          Power = Random.Shared.Next(10, 20)
+          Power = Random.Shared.Next(s_powerMinMax)
         }));
 
   public PowerMeasurement GetPowerMeasurement(
       string deviceId, Period period) =>
     GetPowerMeasurementAsync(deviceId, period).BlockTask();
+
+  private static MinMax s_energyMinMax = new(100, 200);
+  private static MinMax s_powerMinMax = new(10, 20);
 }

@@ -15,25 +15,25 @@ public class ReceiptItem : ContentPart
 
 public readonly record struct ReceiptItemData
 {
-  public readonly string ArticleTermId { get; init; }
+  public readonly string TariffItemTermId { get; init; }
   public readonly decimal Amount { get; init; }
   public readonly decimal Price { get; init; }
   public readonly decimal InTotal { get; init; }
 
   public static ReceiptItemData FromUsageExpenditureItem(
       ExpenditureItemData item) =>
-    ReceiptItemData.FromExpenditureItem(item);
+    FromExpenditureItem(item);
 
   public static ReceiptItemData FromSupplyExpenditureItem(
       ExpenditureItemData item) =>
-    ReceiptItemData.FromExpenditureItem(item);
+    FromExpenditureItem(item);
 
   public static ReceiptItemData CreateRenewableEnergyFee(
       decimal amount,
       decimal price) =>
     new ReceiptItemData
     {
-      ArticleTermId = TariffItem.RenewableEnergyFeeTermId,
+      TariffItemTermId = TariffItem.RenewableEnergyFeeTermId,
       Amount = amount,
       Price = price,
       InTotal = price * amount
@@ -44,7 +44,7 @@ public readonly record struct ReceiptItemData
       decimal price) =>
     new ReceiptItemData
     {
-      ArticleTermId = TariffItem.BusinessUsageFeeTermId,
+      TariffItemTermId = TariffItem.BusinessUsageFeeTermId,
       Amount = amount,
       Price = price,
       InTotal = price * amount
@@ -54,9 +54,9 @@ public readonly record struct ReceiptItemData
       ExpenditureItemData item) =>
     new ReceiptItemData
     {
-      ArticleTermId = item.TariffItemTermId,
-      Amount = item.Consumption,
+      TariffItemTermId = item.TariffItemTermId,
+      Amount = item.Amount,
       Price = item.UnitPrice,
-      InTotal = item.Amount
+      InTotal = item.InTotal
     };
 }

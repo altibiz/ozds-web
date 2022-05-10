@@ -20,7 +20,8 @@ public class Expenditure : ContentPart
           InTotal = this.InTotal.Value ?? 0,
           Items = this.ContentItem
             .FromBag<ExpenditureItem>()!
-            .Select(item => item.Data.Value),
+            .Select(item => item.Data.Value)
+            .ToArray(),
         }
       );
   }
@@ -28,16 +29,14 @@ public class Expenditure : ContentPart
 
 public readonly record struct ExpenditureData
 {
-  public readonly IEnumerable<ExpenditureItemData> Items { get; init; }
+  public readonly ExpenditureItemData[] Items { get; init; }
   public readonly decimal InTotal { get; init; }
 
   public static ExpenditureData FromItems(
       IEnumerable<ExpenditureItemData> items) =>
-    new ExpenditureData
+    new()
     {
-      Items = items,
-      InTotal = items.Aggregate(
-          0M,
-          (current, next) => current + next.Amount)
+      Items = items.ToArray(),
+      InTotal = items.Sum(item => item.InTotal),
     };
 };

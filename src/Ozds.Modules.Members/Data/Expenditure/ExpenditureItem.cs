@@ -26,17 +26,45 @@ public class ExpenditureItem : ContentPart
           TariffItemTermId = this.TariffItem.TermContentItemIds.First(),
           ValueFrom = this.ValueFrom.Value ?? 0,
           ValueTo = this.ValueTo.Value ?? 0,
-          Consumption = this.Consumption.Value ?? 0,
+          Amount = this.Consumption.Value ?? 0,
           UnitPrice = this.UnitPrice.Value ?? 0,
-          Amount = this.Amount.Value ?? 0,
+          InTotal = this.Amount.Value ?? 0,
         });
   }
 }
 
 public readonly record struct ExpenditureItemData
-(string TariffItemTermId,
- decimal ValueFrom,
- decimal ValueTo,
- decimal Consumption,
- decimal UnitPrice,
- decimal Amount);
+{
+  public readonly string TariffItemTermId { get; init; }
+  public readonly decimal ValueFrom { get; init; }
+  public readonly decimal ValueTo { get; init; }
+  public readonly decimal Amount { get; init; }
+  public readonly decimal UnitPrice { get; init; }
+  public readonly decimal InTotal { get; init; }
+
+  public static ExpenditureItemData CreateRenewableEnergyFee(
+      decimal amount,
+      decimal price) =>
+    new()
+    {
+      TariffItemTermId = TariffItem.RenewableEnergyFeeTermId,
+      ValueFrom = default,
+      ValueTo = default,
+      Amount = amount,
+      UnitPrice = price,
+      InTotal = price * amount
+    };
+
+  public static ExpenditureItemData CreateBusinessUsageFee(
+      decimal amount,
+      decimal price) =>
+    new()
+    {
+      TariffItemTermId = TariffItem.BusinessUsageFeeTermId,
+      ValueFrom = default,
+      ValueTo = default,
+      Amount = amount,
+      UnitPrice = price,
+      InTotal = price * amount
+    };
+}

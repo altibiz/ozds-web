@@ -5,9 +5,9 @@ using Ozds.Util;
 
 namespace Ozds.Modules.Members;
 
-public class ContentTypeBase
+public abstract class ContentTypeBase
 {
-  public ContentTypeBase(ContentItem contentItem)
+  protected ContentTypeBase(ContentItem contentItem)
   {
     ContentItem = contentItem;
   }
@@ -17,6 +17,18 @@ public class ContentTypeBase
   public Lazy<ContainedPart?> ContainedPart { get; init; } = default!;
 }
 
+public abstract class ContentTypeBase<TDerived> :
+  ContentTypeBase,
+  IContentTypeBaseDerivedIndicator
+  where TDerived : ContentTypeBase<TDerived>
+{
+  protected ContentTypeBase(ContentItem item) : base(item)
+  {
+    (this as TDerived)!.PopulateContent();
+  }
+}
+
+// TODO: YesSql integration
 public static class ContentTypeBaseExtensions
 {
   public static T? AsContent<T>(
@@ -30,25 +42,11 @@ public static class ContentTypeBaseExtensions
           new[] { @this },
           null)
         .As<T>()
-        .With(content =>
-          typeof(T)
-            .GetProperties()
-            .ForEach(property =>
-              property.PropertyType
-                .GetGenericArguments()
-                .FirstOrDefault()
-                .WhenWith(
-                  partType =>
-                    partType.IsAssignableTo(typeof(ContentElement)) &&
-                    Type.Equals(
-                      property.PropertyType.GetGenericTypeDefinition(),
-                      typeof(Lazy<>)),
-                  partType =>
-                    content.ContentItem
-                      .CreateLazy(partType, property.Name)
-                      .WithNullable(lazy =>
-                        content.SetProperty(property, lazy))))
-            .Run());
+        .When(
+          content => !content.GetType()
+            .IsAssignableTo<IContentTypeBaseDerivedIndicator>(),
+          content => content
+            .PopulateContent());
 
   public static Task<T?> NewContentAsync<T>(
       this IContentManager content) where T : ContentTypeBase =>
@@ -93,6 +91,29 @@ public static class ContentTypeBaseExtensions
       .Then(items =>
         items.SelectFilter(item =>
           item.AsContent<T>()));
+
+  internal static T PopulateContent<T>(
+      this T content) where T : ContentTypeBase =>
+    typeof(T)
+      .GetProperties()
+      .ForEach(property =>
+        property.PropertyType
+          .GetGenericArguments()
+          .FirstOrDefault()
+          .WhenWith(
+            partType =>
+              partType.IsAssignableTo(typeof(ContentElement)) &&
+              Equals(
+                property.PropertyType.GetGenericTypeDefinition(),
+                typeof(Lazy<>)),
+            partType =>
+              content.ContentItem
+                .CreateLazy(partType, property.Name)
+                .WithNullable(lazy =>
+                  content.SetProperty(property, lazy))))
+      .Run()
+      .Return(content);
+
 
   private static object CreateLazy(
       this ContentItem contentItem,
@@ -140,6 +161,10 @@ public static class ContentTypeBaseExtensions
       .GetMethods()
       .Where(method =>
         method.Name == nameof(Functions.Cast) &&
-        method.GetGenericArguments().Count() == 2)
+        method.GetGenericArguments().Length == 2)
       .First();
+}
+
+internal interface IContentTypeBaseDerivedIndicator
+{
 }

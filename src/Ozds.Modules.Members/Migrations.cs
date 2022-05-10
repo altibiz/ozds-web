@@ -29,6 +29,7 @@ public sealed class Migrations : DataMigration
       Recipe.ExecuteSettings(this);
       Recipe.ExecuteTaxonomies(this);
       Content.AlterContent();
+      Recipe.ExecuteContent(this);
     }
 
     return 1;
@@ -51,6 +52,11 @@ public sealed class Migrations : DataMigration
   private IHostEnvironment Env { get; }
 
   private ISchemaBuilder Schema { get => SchemaBuilder; }
+
+  [System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "CodeQuality",
+    "IDE0052:Remove unread private members",
+    Justification = "Might need it at some point.")]
   private ISession Session { get; }
 
   private IRecipeMigrator Recipe { get; }

@@ -1,4 +1,4 @@
-namespace Ozds.Elasticsearch;
+namespace Ozds.Util;
 
 public readonly record struct MinMax
 (int Min, int Max);

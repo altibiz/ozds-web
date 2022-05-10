@@ -25,7 +25,7 @@ public static partial class AlterCatalogue
               new TitlePartSettings
               {
                 RenderTitle = true,
-                Options = TitlePartOptions.GeneratedHidden,
+                Options = TitlePartOptions.Editable,
                 Pattern =
                 @"
 {%- assign catalogue = ContentItem.Content.Catalogue -%}
