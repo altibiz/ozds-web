@@ -35,6 +35,9 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddScoped<INavigationProvider, AdminMenu>();
     services.AddScoped<IDataMigration, Migrations>();
 
+    services.AddContentPart<Tag>();
+    services.AddContentPart<TariffTag>();
+
     services.AddContentPart<Person>();
     services.AddScoped<IScopedIndexProvider, PersonIndexProvider>();
     services.AddContentPart<Site>();

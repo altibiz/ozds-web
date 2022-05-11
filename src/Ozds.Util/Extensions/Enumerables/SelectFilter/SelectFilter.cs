@@ -11,7 +11,7 @@ public static partial class Enumerables
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static IEnumerable<TOut> SelectFilter<TIn, TOut>(
       this IEnumerable<TIn> @this,
-      Func<TIn, Nullable<TOut>> selector) where TOut : struct
+      Func<TIn, TOut?> selector) where TOut : struct
   {
     foreach (var value in @this)
     {

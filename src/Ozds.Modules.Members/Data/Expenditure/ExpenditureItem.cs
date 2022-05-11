@@ -1,7 +1,7 @@
 using OrchardCore.ContentFields.Fields;
 using OrchardCore.Taxonomies.Fields;
 using OrchardCore.ContentManagement;
-using Newtonsoft.Json;
+using Ozds.Util;
 
 namespace Ozds.Modules.Members;
 
@@ -13,58 +13,93 @@ public class ExpenditureItem : ContentPart
   public NumericField Consumption { get; set; } = new();
   public NumericField UnitPrice { get; set; } = new();
   public NumericField Amount { get; set; } = new();
-
-  [JsonIgnore]
-  public Lazy<ExpenditureItemData> Data { get; }
-
-  public ExpenditureItem()
-  {
-    Data = new Lazy<ExpenditureItemData>(
-      () =>
-        new ExpenditureItemData
-        {
-          TariffItemTermId = this.TariffItem.TermContentItemIds.First(),
-          ValueFrom = this.ValueFrom.Value ?? 0,
-          ValueTo = this.ValueTo.Value ?? 0,
-          Amount = this.Consumption.Value ?? 0,
-          UnitPrice = this.UnitPrice.Value ?? 0,
-          InTotal = this.Amount.Value ?? 0,
-        });
-  }
 }
 
 public readonly record struct ExpenditureItemData
 {
   public readonly string TariffItemTermId { get; init; }
+  public readonly string Title { get; init; }
   public readonly decimal ValueFrom { get; init; }
   public readonly decimal ValueTo { get; init; }
   public readonly decimal Amount { get; init; }
   public readonly decimal UnitPrice { get; init; }
   public readonly decimal InTotal { get; init; }
 
-  public static ExpenditureItemData CreateRenewableEnergyFee(
-      decimal amount,
-      decimal price) =>
+  public static ExpenditureItemData Create(
+      TariffTagType tag,
+      decimal valueFrom,
+      decimal valueTo,
+      decimal unitPrice) =>
     new()
     {
-      TariffItemTermId = TariffItem.RenewableEnergyFeeTermId,
-      ValueFrom = default,
-      ValueTo = default,
-      Amount = amount,
-      UnitPrice = price,
-      InTotal = price * amount
+      TariffItemTermId = tag.ContentItem.ContentItemId,
+      Title = tag.TariffTag.Value.Abbreviation.Text,
+      ValueFrom = valueFrom,
+      ValueTo = valueTo,
+      Amount = valueTo - valueFrom,
+      UnitPrice = unitPrice,
+      InTotal = (valueTo - valueFrom) * unitPrice,
     };
 
-  public static ExpenditureItemData CreateBusinessUsageFee(
+  public static ExpenditureItemData Create(
+      TariffTagType tag,
       decimal amount,
-      decimal price) =>
+      decimal unitPrice) =>
     new()
     {
-      TariffItemTermId = TariffItem.BusinessUsageFeeTermId,
+      TariffItemTermId = tag.ContentItem.ContentItemId,
+      Title = tag.TariffTag.Value.Abbreviation.Text,
       ValueFrom = default,
       ValueTo = default,
       Amount = amount,
-      UnitPrice = price,
-      InTotal = price * amount
+      UnitPrice = unitPrice,
+      InTotal = unitPrice * amount
     };
+
+  public static ExpenditureItemData Create(
+      TariffTagType tag,
+      decimal unitPrice) =>
+    new()
+    {
+      TariffItemTermId = tag.ContentItem.ContentItemId,
+      Title = tag.TariffTag.Value.Abbreviation.Text,
+      ValueFrom = default,
+      ValueTo = default,
+      Amount = 1M,
+      UnitPrice = unitPrice,
+      InTotal = unitPrice
+    };
+}
+
+public static class ExpenditureItemDataTaxonomyExtensions
+{
+  public static Task<ExpenditureItemData> CreateExpenditureItemData(
+      this TaxonomyCacheService taxonomy,
+      string termId,
+      decimal valueFrom,
+      decimal valueTo,
+      decimal unitPrice) =>
+    taxonomy
+      .GetTariffItem(termId)
+      .ThenWhenNonNullable(tag => ExpenditureItemData
+        .Create(tag, valueFrom, valueTo, unitPrice));
+
+  public static Task<ExpenditureItemData> CreateExpenditureItemData(
+      this TaxonomyCacheService taxonomy,
+      string termId,
+      decimal amount,
+      decimal unitPrice) =>
+    taxonomy
+      .GetTariffItem(termId)
+      .ThenWhenNonNullable(tag => ExpenditureItemData
+        .Create(tag, amount, unitPrice));
+
+  public static Task<ExpenditureItemData> CreateExpenditureItemData(
+      this TaxonomyCacheService taxonomy,
+      string termId,
+      decimal unitPrice) =>
+    taxonomy
+      .GetTariffItem(termId)
+      .ThenWhenNonNullable(tag => ExpenditureItemData
+        .Create(tag, unitPrice));
 }

@@ -42,5 +42,9 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\NewFolder\" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties migrations_40_4operatorcatalogue_1recipe_1json__JsonSchema="orchardcore" /></VisualStudio></ProjectExtensions>
 </Project>

@@ -29,12 +29,12 @@
             "Absolute": false
           },
           "TaxonomyPart": {
-            "TermContentType": "TariffElement",
+            "TermContentType": "TariffTag",
             "Terms": [
               {
                 "ContentItemId": "42jhr1xpjvfpg6t02d014nr4xy",
                 "ContentItemVersionId": null,
-                "ContentType": "TariffElement",
+                "ContentType": "TariffTag",
                 "DisplayText": "Korištenje mreže - RJT-R1",
                 "Latest": false,
                 "Published": false,
@@ -46,7 +46,7 @@
                 "TitlePart": {
                   "Title": "Korištenje mreže - RJT-R1"
                 },
-                "TariffElement": {
+                "TariffTag": {
                   "Name": {
                     "Text": "Korištenje mreže"
                   },
@@ -74,7 +74,7 @@
               {
                 "ContentItemId": "4pmasmhzk65113a9svxxvj4r55",
                 "ContentItemVersionId": null,
-                "ContentType": "TariffElement",
+                "ContentType": "TariffTag",
                 "DisplayText": "Korištenje mreže u doba više tarife - RVT-R1",
                 "Latest": false,
                 "Published": false,
@@ -86,7 +86,7 @@
                 "TitlePart": {
                   "Title": "Korištenje mreže u doba više tarife - RVT-R1"
                 },
-                "TariffElement": {
+                "TariffTag": {
                   "Name": {
                     "Text": "Korištenje mreže u doba više tarife"
                   },
@@ -114,7 +114,7 @@
               {
                 "ContentItemId": "4r7f2004nhpmzx0mr5xer6a44t",
                 "ContentItemVersionId": null,
-                "ContentType": "TariffElement",
+                "ContentType": "TariffTag",
                 "DisplayText": "Korištenje mreže u doba niže tarife - RNT-R2",
                 "Latest": false,
                 "Published": false,
@@ -126,7 +126,7 @@
                 "TitlePart": {
                   "Title": "Korištenje mreže u doba niže tarife - RNT-R2"
                 },
-                "TariffElement": {
+                "TariffTag": {
                   "Name": {
                     "Text": "Korištenje mreže u doba niže tarife"
                   },
@@ -154,7 +154,7 @@
               {
                 "ContentItemId": "4mpfrnnvf0newswdsvvq9tpcxh",
                 "ContentItemVersionId": null,
-                "ContentType": "TariffElement",
+                "ContentType": "TariffTag",
                 "DisplayText": "Angažirana snaga u doba više tarife - SVT",
                 "Latest": false,
                 "Published": false,
@@ -166,7 +166,7 @@
                 "TitlePart": {
                   "Title": "Angažirana snaga u doba više tarife - SVT"
                 },
-                "TariffElement": {
+                "TariffTag": {
                   "Name": {
                     "Text": "Angažirana snaga u doba više tarife"
                   },
@@ -194,7 +194,7 @@
               {
                 "ContentItemId": "4gvhahd4x59fv7gektpbqf48wa",
                 "ContentItemVersionId": null,
-                "ContentType": "TariffElement",
+                "ContentType": "TariffTag",
                 "DisplayText": "Naknada za mjernu uslugu - MU",
                 "Latest": false,
                 "Published": false,
@@ -206,7 +206,7 @@
                 "TitlePart": {
                   "Title": "Naknada za mjernu uslugu - MU"
                 },
-                "TariffElement": {
+                "TariffTag": {
                   "Name": {
                     "Text": "Naknada za mjernu uslugu"
                   },
@@ -234,7 +234,7 @@
               {
                 "ContentItemId": "454jn23baxytmxnzvq1wy6hvma",
                 "ContentItemVersionId": null,
-                "ContentType": "TariffElement",
+                "ContentType": "TariffTag",
                 "DisplayText": "Opskrba električnom energijom - RJT",
                 "Latest": false,
                 "Published": false,
@@ -246,7 +246,7 @@
                 "TitlePart": {
                   "Title": "Opskrba električnom energijom - RJT"
                 },
-                "TariffElement": {
+                "TariffTag": {
                   "Name": {
                     "Text": "Opskrba električnom energijom"
                   },
@@ -274,7 +274,7 @@
               {
                 "ContentItemId": "4zsh3gffhw1gn2ba9fj945m7cv",
                 "ContentItemVersionId": null,
-                "ContentType": "TariffElement",
+                "ContentType": "TariffTag",
                 "DisplayText": "Opskrba električnom energijom u doba više tarife - RVT",
                 "Latest": false,
                 "Published": false,
@@ -286,7 +286,7 @@
                 "TitlePart": {
                   "Title": "Opskrba električnom energijom u doba više tarife - RVT"
                 },
-                "TariffElement": {
+                "TariffTag": {
                   "Name": {
                     "Text": "Opskrba električnom energijom u doba više tarife"
                   },
@@ -314,7 +314,7 @@
               {
                 "ContentItemId": "4nbab8htaqysb0v5cjy4jx235m",
                 "ContentItemVersionId": null,
-                "ContentType": "TariffElement",
+                "ContentType": "TariffTag",
                 "DisplayText": "Opskrba električnom energijom u doba niže tarife - RNT",
                 "Latest": false,
                 "Published": false,
@@ -326,7 +326,7 @@
                 "TitlePart": {
                   "Title": "Opskrba električnom energijom u doba niže tarife RNT"
                 },
-                "TariffElement": {
+                "TariffTag": {
                   "Name": {
                     "Text": "Opskrba električnom energijom u doba niže tarife"
                   },
@@ -354,7 +354,7 @@
               {
                 "ContentItemId": "4dnr256xfy2mr6095cfay03dc5",
                 "ContentItemVersionId": null,
-                "ContentType": "TariffElement",
+                "ContentType": "TariffTag",
                 "DisplayText": "Naknada za poticanje proizvodnje iz obnovljivih izvora i kogeneracije - OIEIK",
                 "Latest": false,
                 "Published": false,
@@ -366,7 +366,7 @@
                 "TitlePart": {
                   "Title": "Naknada za poticanje proizvodnje iz obnovljivih izvora i kogeneracije - OIEIK"
                 },
-                "TariffElement": {
+                "TariffTag": {
                   "Name": {
                     "Text": "Naknada za poticanje proizvodnje iz obnovljivih izvora i kogeneracije"
                   },
@@ -394,7 +394,7 @@
               {
                 "ContentItemId": "42aw5mm1t3cfh2mef7shta9qnw",
                 "ContentItemVersionId": null,
-                "ContentType": "TariffElement",
+                "ContentType": "TariffTag",
                 "DisplayText": "Trošarina za poslovnu upotrebu - TRP",
                 "Latest": false,
                 "Published": false,
@@ -406,7 +406,7 @@
                 "TitlePart": {
                   "Title": "Trošarina za poslovnu upotrebu - TRP"
                 },
-                "TariffElement": {
+                "TariffTag": {
                   "Name": {
                     "Text": "Trošarina za poslovnu upotrebu"
                   },

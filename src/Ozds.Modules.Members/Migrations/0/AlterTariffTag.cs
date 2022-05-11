@@ -1,4 +1,4 @@
-using OrchardCore.ContentManagement.Metadata;
+﻿using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
 using OrchardCore.ContentFields.Settings;
@@ -6,13 +6,13 @@ using OrchardCore.Autoroute.Models;
 
 namespace Ozds.Modules.Members.M0;
 
-public static partial class AlterTariffElement
+public static partial class AlterTariffTag
 {
-  public static void AlterTariffElementType(
+  public static void AlterTariffTagType(
       this IContentDefinitionManager content) =>
-    content.AlterTypeDefinition("TariffElement",
+    content.AlterTypeDefinition("TariffTag",
       type => type
-        .DisplayedAs("Tarifni element")
+        .DisplayedAs("Tarifna značajka")
         .Creatable()
         .Listable()
         .Securable()
@@ -37,7 +37,7 @@ public static partial class AlterTariffElement
 {%- endif -%}
                 "
               }))
-        .WithPart("TariffElement",
+        .WithPart("TariffTag",
           part => part
             .WithPosition("2")
             .WithDisplayMode("")
@@ -60,9 +60,9 @@ public static partial class AlterTariffElement
                 "
               })));
 
-  public static void AlterTariffElementPart(
+  public static void AlterTariffTagPart(
       this IContentDefinitionManager content) =>
-    content.AlterPartDefinition("TariffElement",
+    content.AlterPartDefinition("TariffTag",
       part => part
         .WithField("Name",
           field => field

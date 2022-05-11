@@ -34,10 +34,9 @@ public class ReceiptHandler : ContentHandlerBase
                         .FirstOrDefaultAsync()
                         .Nullable()) switch
                       {
-                        (SecondarySiteType siteType,
+                        (SecondarySiteType site,
                          ContentItem consumerItem) =>
-                          (siteType.Site.Value,
-                           siteType.Catalogue.Value.ContentItems
+                          (site.Catalogue.Value.ContentItems
                             .FirstOrDefault()
                             ?.As<Catalogue>(),
                            consumerItem.As<Person>(),
@@ -46,15 +45,18 @@ public class ReceiptHandler : ContentHandlerBase
                             .WhenNonNullableTask(consumer => content
                               .GetAsync(consumer.ListContentItemId)
                               .Then(centerItem =>
-                                (centerItem.Get<Person>("Operator"),
-                                 centerItem.Get<Person>("CenterOwner"))
-                                .Nullable()))) switch
+                                centerItem
+                                  .AsContent<CenterType>()
+                                  .WhenNonNullable(center =>
+                                    (center.Operator.Value,
+                                     center.CenterOwner.Value,
+                                     center.Title.Value.Title))))) switch
                           {
-                            (Site site,
-                             Catalogue catalogue,
+                            (Catalogue catalogue,
                              Person consumer,
                              (Person @operator,
-                              Person centerOwner)) =>
+                              Person centerOwner,
+                              string centerTitle)) =>
                               ((await content.GetAsync(
                                 OperatorCatalogue.ContentItemIdFor(
                                   catalogue.TariffModel.TermContentItemIds
@@ -62,7 +64,7 @@ public class ReceiptHandler : ContentHandlerBase
                                  .AsReal<Catalogue>(),
                                await Measurements
                                 .GetEnergyMeasurementsAsync(
-                                  site.DeviceId.Text,
+                                  site.Site.Value.DeviceId.Text,
                                   new()
                                   {
                                     From = new DateTime(
@@ -76,7 +78,7 @@ public class ReceiptHandler : ContentHandlerBase
                                   }),
                                await Measurements
                                 .GetPowerMeasurementAsync(
-                                  site.DeviceId.Text,
+                                  site.Site.Value.DeviceId.Text,
                                   new()
                                   {
                                     From = new DateTime(
@@ -93,13 +95,17 @@ public class ReceiptHandler : ContentHandlerBase
                                  (EnergyMeasurement energyBeginMeasurement,
                                   EnergyMeasurement endEnergyMeasurement),
                                   PowerMeasurement powerMeasurement) =>
-                                  ReceiptData.FromCalculation(
-                                    consumer.Data.Value,
-                                    centerOwner.Data.Value,
+                                  await ReceiptData.Create(
+                                    Taxonomy,
                                     @operator.Data.Value,
-                                    CalculationData.Create(
+                                    centerOwner.Data.Value,
+                                    centerTitle,
+                                    consumer.Data.Value,
+                                    await CalculationData.Create(
+                                      Taxonomy,
                                       date,
                                       site.ContentItem.ContentItemId,
+                                      site.Title.Value.Title,
                                       catalogue.Data.Value,
                                       operatorCatalogue.Data.Value,
                                       energyBeginMeasurement.Energy,
@@ -147,17 +153,20 @@ public class ReceiptHandler : ContentHandlerBase
       .Return(Task.CompletedTask);
 
   public ReceiptHandler(
+    TaxonomyCacheService taxonomy,
     YesSql.ISession session,
     IServiceProvider services,
     IHttpContextAccessor httpContextAccessor,
     IReceiptMeasurementProvider measurements)
   {
+    Taxonomy = taxonomy;
     Services = services;
     Session = session;
     Measurements = measurements;
     HttpContextAccessor = httpContextAccessor;
   }
 
+  private TaxonomyCacheService Taxonomy { get; }
   private IServiceProvider Services { get; }
   private YesSql.ISession Session { get; }
   private IReceiptMeasurementProvider Measurements { get; }

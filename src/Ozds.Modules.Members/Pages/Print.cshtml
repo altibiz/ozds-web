@@ -1,9 +1,9 @@
 ﻿@page "{contentId}/{handler?}"
+
 @model Ozds.Modules.Members.Pages.PrintModel
 
 @{
   ViewLayout = "LayoutPrint";
 }
 
-@await DisplayAsync(Model.PrintHeader)
-@await DisplayAsync(Model.Shape)
+@await DisplayAsync(Model.Print)

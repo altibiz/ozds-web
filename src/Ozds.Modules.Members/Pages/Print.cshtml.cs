@@ -15,10 +15,8 @@ public class PrintModel : PageModel
   public async Task<IActionResult> OnGetAsync(string contentId)
   {
     var content = await ContentManger.GetAsync(contentId);
-    Shape = await ContentDisplay.BuildDisplayAsync(
+    Print = await ContentDisplay.BuildDisplayAsync(
         content, UpdateModel.ModelUpdater, "Print");
-    PrintHeader = await ContentDisplay.BuildDisplayAsync(
-        content, UpdateModel.ModelUpdater, "PrintHeader");
     return Page();
   }
 
@@ -30,8 +28,8 @@ public class PrintModel : PageModel
     return Redirect(string.Format(DownloadFormat, fileName, docUrl));
   }
 
-  public IShape? PrintHeader { get; set; }
-  public IShape? Shape { get; set; }
+  public IShape? Print { get; set; }
+
 
   public PrintModel(IContentItemDisplayManager contentDisplay,
       IContentManager content, IUpdateModelAccessor updateModel,

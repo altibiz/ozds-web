@@ -14,6 +14,11 @@ public static class TariffItem
   public const string RenewableEnergyFeeTermId = "4dnr256xfy2mr6095cfay03dc5";
   public const string BusinessUsageFeeTermId = "42aw5mm1t3cfh2mef7shta9qnw";
 
+  public static Task<TariffTagType?> GetTariffItem(
+      this TaxonomyCacheService taxonomy,
+      string termId) =>
+    taxonomy.GetTerm<TariffTagType>(ContentItemId, termId);
+
   public static bool IsUsage(string tariffItemTermId) =>
     s_usageTariffItemTermIds.Contains(tariffItemTermId);
 

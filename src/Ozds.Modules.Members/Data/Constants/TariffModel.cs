@@ -9,4 +9,9 @@ public static class TariffModel
   public const string WhiteLowVoltageTermId = "4w9hx6bgrmj70wdky9pcp9e1mz";
   public const string RedTermId = "4bypnkrf7e4ng3q59x732vgq5t";
   public const string YellowTermId = "48pb3v35bcfnbswk47q3nfm2dg";
+
+  public static Task<TagType?> GetTariffModel(
+      this TaxonomyCacheService taxonomy,
+      string termId) =>
+    taxonomy.GetTerm<TagType>(ContentItemId, termId);
 }

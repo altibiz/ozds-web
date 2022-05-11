@@ -29,12 +29,12 @@
             "Absolute": false
           },
           "TaxonomyPart": {
-            "TermContentType": "TariffElement",
+            "TermContentType": "TariffTag",
             "Terms": [
               {
                 "ContentItemId": "44vg6aarzp3ayv2praq3t17pce",
                 "ContentItemVersionId": null,
-                "ContentType": "TariffElement",
+                "ContentType": "TariffTag",
                 "DisplayText": "Radna energija - JT",
                 "Latest": false,
                 "Published": false,
@@ -46,7 +46,7 @@
                 "TitlePart": {
                   "Title": "Radna energija - JT"
                 },
-                "TariffElement": {
+                "TariffTag": {
                   "Name": {
                     "Text": "Radna energija"
                   },
@@ -74,7 +74,7 @@
               {
                 "ContentItemId": "4mw0ncthn1aq4r5k6cqfk19yw3",
                 "ContentItemVersionId": null,
-                "ContentType": "TariffElement",
+                "ContentType": "TariffTag",
                 "DisplayText": "Radna energija - VT",
                 "Latest": false,
                 "Published": false,
@@ -86,7 +86,7 @@
                 "TitlePart": {
                   "Title": "Radna energija - VT"
                 },
-                "TariffElement": {
+                "TariffTag": {
                   "Name": {
                     "Text": "Radna energija"
                   },
@@ -114,7 +114,7 @@
               {
                 "ContentItemId": "4cqexne8f6j3sv77ewvydhxzn8",
                 "ContentItemVersionId": null,
-                "ContentType": "TariffElement",
+                "ContentType": "TariffTag",
                 "DisplayText": "Radna energija - NT",
                 "Latest": false,
                 "Published": false,
@@ -126,7 +126,7 @@
                 "TitlePart": {
                   "Title": "Radna energija - NT"
                 },
-                "TariffElement": {
+                "TariffTag": {
                   "Name": {
                     "Text": "Radna energija"
                   },
@@ -154,7 +154,7 @@
               {
                 "ContentItemId": "4fpzdpa1c1mdjsef4j21wnd9x7",
                 "ContentItemVersionId": null,
-                "ContentType": "TariffElement",
+                "ContentType": "TariffTag",
                 "DisplayText": "Radna snaga - SVT",
                 "Latest": false,
                 "Published": false,
@@ -166,7 +166,7 @@
                 "TitlePart": {
                   "Title": "Radna snaga - SVT"
                 },
-                "TariffElement": {
+                "TariffTag": {
                   "Name": {
                     "Text": "Radna snaga"
                   },
@@ -194,7 +194,7 @@
               {
                 "ContentItemId": "4eexj7kgkdww3rpcavx5mxw3da",
                 "ContentItemVersionId": null,
-                "ContentType": "TariffElement",
+                "ContentType": "TariffTag",
                 "DisplayText": "Naknada za obračunsko mjerno mjesto - NOMM",
                 "Latest": false,
                 "Published": false,
@@ -206,7 +206,7 @@
                 "TitlePart": {
                   "Title": "Naknada za obračunsko mjerno mjesto - NOMM"
                 },
-                "TariffElement": {
+                "TariffTag": {
                   "Name": {
                     "Text": "Naknada za obračunsko mjerno mjesto"
                   },

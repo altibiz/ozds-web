@@ -9,8 +9,8 @@ public static class ContentMigrations
   {
     content.AlterTagPart();
     content.AlterTagType();
-    content.AlterTariffElementPart();
-    content.AlterTariffElementType();
+    content.AlterTariffTagPart();
+    content.AlterTariffTagType();
 
     content.AlterSitePart();
     content.AlterSecondarySiteType();

@@ -7,7 +7,7 @@ public static partial class Objects
 {
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static bool Empty<T>(
-      [NotNullWhen(true)] this Nullable<T> @this) where T : struct =>
+      [NotNullWhen(true)] this T? @this) where T : struct =>
     @this is null;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -11,4 +11,9 @@ public static class TariffElement
   public const string SiteFeeTermId = "4eexj7kgkdww3rpcavx5mxw3da";
   public const string RenewableEnergyFeeTermId = "renewable";
   public const string BusinessUsageFeeTermId = "business";
+
+  public static Task<TariffTagType?> GetTariffElement(
+      this TaxonomyCacheService taxonomy,
+      string termId) =>
+    taxonomy.GetTerm<TariffTagType>(ContentItemId, termId);
 }

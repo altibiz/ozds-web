@@ -2,7 +2,7 @@
 
 namespace Ozds.Modules.Members;
 
-public class OperatorCatalogue
+public static class OperatorCatalogue
 {
   public const string WhiteHighVoltageContentItemId =
     "468ng0rw168cp78ssaecqh3adn";
@@ -21,7 +21,7 @@ public class OperatorCatalogue
     s_contentItemIdByTariffModelTermId.GetOrDefault(tariffModelTermId);
 
   private static readonly IDictionary<string, string>
-    s_contentItemIdByTariffModelTermId =
+      s_contentItemIdByTariffModelTermId =
     new Dictionary<string, string>
     {
       { TariffModel.WhiteHighVoltageTermId, WhiteHighVoltageContentItemId },

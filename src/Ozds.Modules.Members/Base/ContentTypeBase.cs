@@ -17,6 +17,7 @@ public abstract class ContentTypeBase
   public Lazy<ContainedPart?> ContainedPart { get; init; } = default!;
 }
 
+// NOTE: don't use for now - needs more testing
 public abstract class ContentTypeBase<TDerived> :
   ContentTypeBase,
   IContentTypeBaseDerivedIndicator
@@ -37,7 +38,9 @@ public static class ContentTypeBaseExtensions
     : Activator
         .CreateInstance(
           typeof(T),
-          BindingFlags.NonPublic | BindingFlags.Instance,
+          BindingFlags.NonPublic |
+          BindingFlags.Public |
+          BindingFlags.Instance,
           null,
           new[] { @this },
           null)
