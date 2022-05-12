@@ -9,7 +9,7 @@ using Ozds.Elasticsearch;
 
 namespace Ozds.Modules.Members;
 
-public class ReceiptHandler : ContentHandlerBase
+public class ReceiptCreator : ContentHandlerBase
 {
   public override Task UpdatedAsync(UpdateContentContext context) =>
     Services
@@ -152,7 +152,7 @@ public class ReceiptHandler : ContentHandlerBase
                 })))
       .Return(Task.CompletedTask);
 
-  public ReceiptHandler(
+  public ReceiptCreator(
     TaxonomyCacheService taxonomy,
     YesSql.ISession session,
     IServiceProvider services,

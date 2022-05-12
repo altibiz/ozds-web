@@ -27,6 +27,9 @@
             "DeviceId": {
               "Text": "fakeDevice1"
             },
+            "SourceData": {
+              "Data": []
+            },
             "Status": {
               "TaxonomyContentItemId": "47p9e5rkms3m012qv3z2t26jcg",
               "TermContentItemIds": ["444t1z24wt35hy89d6g3r5yan4"]

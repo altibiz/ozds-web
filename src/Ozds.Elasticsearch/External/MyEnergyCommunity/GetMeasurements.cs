@@ -9,7 +9,7 @@ public partial interface IClient : IMeasurementProvider { };
 
 public sealed partial class Client : IClient
 {
-  public string Source { get => Client.s_source; }
+  public string Source { get => Client.MyEnergyCommunitySource; }
 
   public IEnumerable<Ozds.Elasticsearch.Measurement> GetMeasurements(
       Device device, Period? period = null)
@@ -143,6 +143,4 @@ public sealed partial class Client : IClient
           voltageL3 = measurement.measurementData.voltageL3,
         });
   }
-
-  private const string s_source = "MyEnergyCommunity";
 }

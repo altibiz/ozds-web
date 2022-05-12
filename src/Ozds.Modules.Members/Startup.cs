@@ -42,6 +42,7 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddContentPart<Person>();
     services.AddScoped<IScopedIndexProvider, PersonIndexProvider>();
     services.AddContentPart<Site>();
+    services.AddScoped<IContentHandler, SiteDeviceIndexer>();
     services.AddContentPart<SecondarySite>();
     services.AddScoped<IScopedIndexProvider, SiteIndexProvider>();
     services.AddContentPart<Consumer>();
@@ -50,7 +51,7 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddContentPart<ReceiptItem>();
     services.AddContentPart<Receipt>();
     services.AddScoped<IScopedIndexProvider, ReceiptIndexProvider>();
-    services.AddScoped<IContentHandler, ReceiptHandler>();
+    services.AddScoped<IContentHandler, ReceiptCreator>();
     services.AddContentPart<Calculation>();
     services.AddContentPart<Catalogue>();
     services.AddContentPart<CatalogueItem>();
@@ -98,13 +99,7 @@ public class Startup : OrchardCore.Modules.StartupBase
       // NOTE: with that than fakes
       if (Elasticsearch.Client.Ping(Env, Conf))
       {
-        services.AddSingleton<
-          IMeasurementImporter,
-          Elasticsearch.Client>();
-
-        services.AddSingleton<
-          IReceiptMeasurementProvider,
-          Elasticsearch.Client>();
+        AddElasticClient(services);
       }
       else
       {
@@ -115,6 +110,10 @@ public class Startup : OrchardCore.Modules.StartupBase
         services.AddSingleton<
           IReceiptMeasurementProvider,
           Elasticsearch.FakeReceiptMeasurementProvider>();
+
+        services.AddSingleton<
+          IDeviceIndexer,
+          Elasticsearch.FakeDeviceIndexer>();
       }
     }
     else
@@ -135,13 +134,7 @@ public class Startup : OrchardCore.Modules.StartupBase
             measurementProviderType))
         .Run();
 
-      services.AddSingleton<
-        IMeasurementImporter,
-        Elasticsearch.Client>();
-
-      services.AddSingleton<
-        IReceiptMeasurementProvider,
-        Elasticsearch.Client>();
+      AddElasticClient(services);
     }
 
     services.AddSingleton<
@@ -158,8 +151,8 @@ public class Startup : OrchardCore.Modules.StartupBase
       IEndpointRouteBuilder routes,
       IServiceProvider services)
   {
-    routes.MapDynamicPageRoute<LocalizedRouteTransformer>("clanovi");
-    routes.MapDynamicPageRoute<LocalizedRouteTransformer>("clanovi/{page?}");
+    routes.MapDynamicPageRoute<LocalizedRouteTransformer>("korisnici");
+    routes.MapDynamicPageRoute<LocalizedRouteTransformer>("korisnici/{page?}");
   }
 
   public Startup(
@@ -175,4 +168,19 @@ public class Startup : OrchardCore.Modules.StartupBase
   private IWebHostEnvironment Env { get; }
   private ILogger<Startup> Logger { get; }
   private IConfiguration Conf { get; }
+
+  private static void AddElasticClient(
+      IServiceCollection services)
+  {
+    services.AddSingleton<Elasticsearch.Client>();
+
+    services.AddSingleton<IMeasurementImporter, Elasticsearch.Client>(
+        s => s.GetRequiredService<Elasticsearch.Client>());
+
+    services.AddSingleton<IReceiptMeasurementProvider, Elasticsearch.Client>(
+        s => s.GetRequiredService<Elasticsearch.Client>());
+
+    services.AddSingleton<IDeviceIndexer, Elasticsearch.Client>(
+        s => s.GetRequiredService<Elasticsearch.Client>());
+  }
 }

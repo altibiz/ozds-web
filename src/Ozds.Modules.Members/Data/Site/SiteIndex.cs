@@ -23,8 +23,7 @@ public class SiteIndexProvider :
       .For<SiteIndex>()
       .Map(item =>
         ((item.AsReal<SecondarySite>(),
-          item.As<Site>().Nullable())
-         switch
+          item.As<Site>().Nullable()) switch
         {
           (SecondarySite secondary, Site site) =>
           (site.Source.TermContentItemIds.FirstOrDefault(),
