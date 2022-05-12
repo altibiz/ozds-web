@@ -74,6 +74,7 @@ public readonly record struct CalculationData
             SiteContentItemId = siteContentItemId,
             SiteTitle = siteTitle,
             TariffModelTermId = catalogue.TariffModelTermId,
+            TariffModelTitle = model.Title.Value.Title,
             DateFrom = new DateTime(date.Year, date.AddMonths(-1).Month, 1),
             DateTo = new DateTime(date.Year, date.Month, 1),
             UsageExpenditure = data.Item1,

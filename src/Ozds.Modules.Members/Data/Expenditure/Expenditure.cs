@@ -107,8 +107,8 @@ public readonly record struct ExpenditureData
         (taxonomy.GetTariffItem(TariffItem.RenewableEnergyFeeTermId),
          taxonomy.GetTariffItem(TariffItem.BusinessUsageFeeTermId))
           .Await()
-          .Then(tags =>
-            tags switch
+          .Then(data =>
+            data switch
             {
               (TariffTagType renewableEnergyFeeTag,
                TariffTagType businessUsageTag) =>
@@ -116,16 +116,24 @@ public readonly record struct ExpenditureData
                 .Append(ExpenditureItemData
                   .Create(
                     renewableEnergyFeeTag,
-                    (endEnergy - beginEnergy) +
-                    (endLowCostEnergy - beginLowCostEnergy) +
-                    (endHighCostEnergy - beginHighCostEnergy),
+                    items
+                      .Where(item =>
+                        item.TariffItemTermId.In(
+                          TariffItem.SupplyTermId,
+                          TariffItem.HighCostSupplyTermId,
+                          TariffItem.LowCostSupplyTermId))
+                      .Sum(item => item.Amount),
                     renewableEnergyFeePrice))
                 .Append(ExpenditureItemData
                   .Create(
                     businessUsageTag,
-                    (endEnergy - beginEnergy) +
-                    (endLowCostEnergy - beginLowCostEnergy) +
-                    (endHighCostEnergy - beginHighCostEnergy),
+                    items
+                      .Where(item =>
+                        item.TariffItemTermId.In(
+                          TariffItem.SupplyTermId,
+                          TariffItem.HighCostSupplyTermId,
+                          TariffItem.LowCostSupplyTermId))
+                      .Sum(item => item.Amount),
                     businessUsageFeePrice)),
               _ => items
             }))
