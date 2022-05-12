@@ -13,8 +13,11 @@ public interface IClientPrototype
 public sealed partial class Client : IClientPrototype, IClient
 {
   #region Constructors
-  public Client(IHostEnvironment env, ILogger<Client> logger,
-      IConfiguration conf, IEnumerable<IMeasurementProvider> providers)
+  public Client(
+    IHostEnvironment env,
+    ILogger<Client> logger,
+    IConfiguration conf,
+    IEnumerable<IMeasurementProvider> providers)
   {
     Env = env;
     Logger = logger;
@@ -24,15 +27,22 @@ public sealed partial class Client : IClientPrototype, IClient
       .GetSection("Elasticsearch")
       .GetSection("Client");
     var serverUri = section.GetNonNullValue<string>("serverUri");
-    var caPath = section.GetNonNullValue<string>("caPath");
     var user = section.GetNonNullValue<string>("user");
     var password = section.GetNonNullValue<string>("password");
+    var caPath = section.GetValue<string?>("caPath");
 
-    var settings = new ConnectionSettings(new Uri(serverUri))
-                       .ServerCertificateValidationCallback(
-                           CertificateValidations.AuthorityIsRoot(
-                               new X509Certificate(caPath)))
-                       .BasicAuthentication(user, password);
+    var settings =
+      new ConnectionSettings(new Uri(serverUri))
+        .BasicAuthentication(user, password);
+
+    if (caPath is not null)
+    {
+      settings = settings
+        .ServerCertificateValidationCallback(
+          CertificateValidations.AuthorityIsRoot(
+            new X509Certificate(caPath)));
+    }
+
     if (Env.IsDevelopment())
     {
       settings = settings.PrettyJson(true).DisableDirectStreaming();
@@ -45,13 +55,14 @@ public sealed partial class Client : IClientPrototype, IClient
       if (Env.IsDevelopment())
       {
         throw new WebException(
-            $"Could not connect to {Source}\n" +
-            $"Ping response information: {pingResponse.DebugInformation}");
+          $"Could not connect to {Source}\n" +
+          $"Ping response debug information: {pingResponse.DebugInformation}");
       }
       else
       {
-        throw new WebException($"Could not connect to {Source}\n" +
-                               $"Ping response: {pingResponse}");
+        throw new WebException(
+          $"Could not connect to {Source}\n" +
+          $"Ping response: {pingResponse}");
       }
     }
 
@@ -95,16 +106,19 @@ public sealed partial class Client : IClientPrototype, IClient
     get => _indexSuffix;
     init
     {
-      _indexSuffix = String.IsNullOrWhiteSpace(value) ? ""
-                     : value.StartsWith('.') ? value
-                                                      : $".{value}";
+      _indexSuffix =
+        string.IsNullOrWhiteSpace(value) ? ""
+        : value.StartsWith('.') ? value
+        : $".{value}";
       TryReconstructIndices();
     }
   }
 
   private string ConsoleIndexSuffix
   {
-    get => String.IsNullOrWhiteSpace(IndexSuffix) ? "" : $" '{IndexSuffix}'";
+    get =>
+      string.IsNullOrWhiteSpace(IndexSuffix) ? ""
+      : $" '{IndexSuffix}'";
   }
 
   private string _indexSuffix = "";
@@ -148,17 +162,25 @@ public sealed partial class Client : IClientPrototype, IClient
     get => s_deviceIndexDebugPrefix + IndexSuffix;
   }
 
-  private string LogIndexName { get => s_logIndexDebugPrefix + IndexSuffix; }
+  private string LogIndexName
+  {
+    get => s_logIndexDebugPrefix + IndexSuffix;
+  }
 
 #if DEBUG
   private const string s_measurementIndexDebugPrefix =
-      "ozds.debug.measurements";
-  private const string s_deviceIndexDebugPrefix = "ozds.debug.devices";
-  private const string s_logIndexDebugPrefix = "ozds.debug.log";
+    "ozds.debug.measurements";
+  private const string s_deviceIndexDebugPrefix =
+    "ozds.debug.devices";
+  private const string s_logIndexDebugPrefix =
+    "ozds.debug.log";
 #else
-  private const string s_measurementIndexDebugPrefix = "ozds.measurements";
-  private const string s_deviceIndexDebugPrefix = "ozds.devices";
-  private const string s_logIndexDebugPrefix = "ozds.log";
+  private const string s_measurementIndexDebugPrefix =
+    "ozds.measurements";
+  private const string s_deviceIndexDebugPrefix =
+    "ozds.devices";
+  private const string s_logIndexDebugPrefix =
+    "ozds.log";
 #endif
   #endregion // Index Names
 }
