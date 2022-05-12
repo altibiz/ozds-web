@@ -1,6 +1,7 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
@@ -93,13 +94,28 @@ public class Startup : OrchardCore.Modules.StartupBase
         IMeasurementProvider,
         Elasticsearch.MeasurementFaker.Client>();
 
-      services.AddSingleton<
-        IMeasurementImporter,
-        Elasticsearch.FakeMeasurementImporter>();
+      // NOTE: if a developer starts elasticsearch it would be better to work
+      // NOTE: with that than fakes
+      if (Elasticsearch.Client.Ping(Env, Conf))
+      {
+        services.AddSingleton<
+          IMeasurementImporter,
+          Elasticsearch.Client>();
 
-      services.AddSingleton<
-        IReceiptMeasurementProvider,
-        Elasticsearch.FakeReceiptMeasurementProvider>();
+        services.AddSingleton<
+          IReceiptMeasurementProvider,
+          Elasticsearch.Client>();
+      }
+      else
+      {
+        services.AddSingleton<
+          IMeasurementImporter,
+          Elasticsearch.FakeMeasurementImporter>();
+
+        services.AddSingleton<
+          IReceiptMeasurementProvider,
+          Elasticsearch.FakeReceiptMeasurementProvider>();
+      }
     }
     else
     {
@@ -110,6 +126,8 @@ public class Startup : OrchardCore.Modules.StartupBase
           type.IsAssignableTo<IMeasurementProvider>() &&
           !type.IsInterface &&
           !type.Equals(typeof(Elasticsearch.Client)) &&
+          // TODO: enable later on
+          !type.Equals(typeof(Elasticsearch.HelbOzds.Client)) &&
           !type.Equals(typeof(Elasticsearch.MeasurementFaker.Client)))
         .ForEach(measurementProviderType =>
           services.AddSingleton(
@@ -125,7 +143,9 @@ public class Startup : OrchardCore.Modules.StartupBase
         IReceiptMeasurementProvider,
         Elasticsearch.Client>();
     }
-    services.AddSingleton<PeriodicMeasurementLoader>();
+
+    services.AddSingleton<
+      PeriodicMeasurementLoader>();
     services.AddSingleton<
       IBackgroundTask,
       PeriodicMeasurementLoadBackgroundTask>();
@@ -142,12 +162,17 @@ public class Startup : OrchardCore.Modules.StartupBase
     routes.MapDynamicPageRoute<LocalizedRouteTransformer>("clanovi/{page?}");
   }
 
-  public Startup(IWebHostEnvironment env, ILogger<Startup> logger)
+  public Startup(
+      IWebHostEnvironment env,
+      ILogger<Startup> logger,
+      IConfiguration conf)
   {
     Env = env;
     Logger = logger;
+    Conf = conf;
   }
 
-  public IWebHostEnvironment Env { get; init; }
-  public ILogger<Startup> Logger { get; init; }
+  private IWebHostEnvironment Env { get; }
+  private ILogger<Startup> Logger { get; }
+  private IConfiguration Conf { get; }
 }

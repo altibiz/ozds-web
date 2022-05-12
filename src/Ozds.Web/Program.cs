@@ -1,6 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Ozds.Util;
 
+var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+var logging = builder.Logging;
+
+#if DEBUG
 var env = Environment.GetEnvironmentVariables();
 
 var aspNetCoreEnv = env.Get<string>("ASPNETCORE_ENVIRONMENT");
@@ -13,10 +18,6 @@ Console.WriteLine($".NET Environment: {dotnetEnv}");
 Console.WriteLine($"Orchard AppData: {orchardAppData}");
 Console.WriteLine($"Log path template: {logPathTemplate}");
 
-var builder = WebApplication.CreateBuilder(args);
-var services = builder.Services;
-var logging = builder.Logging;
-
 logging.AddFile(
   logPathTemplate,
   builder.Environment.IsDevelopment() ? LogLevel.Debug : LogLevel.Information,
@@ -27,6 +28,7 @@ logging.AddFile(
     .ToDictionary(
       x => x.Key,
       x => Enum.Parse<LogLevel>(x.Value)));
+#endif
 
 services
   .Configure<IdentityOptions>(

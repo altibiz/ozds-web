@@ -42,6 +42,8 @@ To start the development process locally, follow these steps:
 
 ### Test users
 
+NOTE: this section is outdated and the users don't exist currently.
+
 Two test users are added in the development environment to make testing
 easier.
 

@@ -12,6 +12,7 @@ public interface IClientPrototype
 
 public sealed partial class Client : IClientPrototype, IClient
 {
+
   #region Constructors
   public Client(
     IHostEnvironment env,
@@ -22,33 +23,7 @@ public sealed partial class Client : IClientPrototype, IClient
     Env = env;
     Logger = logger;
 
-    var section = conf
-      .GetSection("Ozds")
-      .GetSection("Elasticsearch")
-      .GetSection("Client");
-    var serverUri = section.GetNonNullValue<string>("serverUri");
-    var user = section.GetNonNullValue<string>("user");
-    var password = section.GetNonNullValue<string>("password");
-    var caPath = section.GetValue<string?>("caPath");
-
-    var settings =
-      new ConnectionSettings(new Uri(serverUri))
-        .BasicAuthentication(user, password);
-
-    if (caPath is not null)
-    {
-      settings = settings
-        .ServerCertificateValidationCallback(
-          CertificateValidations.AuthorityIsRoot(
-            new X509Certificate(caPath)));
-    }
-
-    if (Env.IsDevelopment())
-    {
-      settings = settings.PrettyJson(true).DisableDirectStreaming();
-    }
-
-    Elasticsearch = new ElasticClient(settings);
+    Elasticsearch = CreateElasticClient(env, conf);
     var pingResponse = Elasticsearch.Ping();
     if (!pingResponse.IsValid)
     {
@@ -65,12 +40,58 @@ public sealed partial class Client : IClientPrototype, IClient
           $"Ping response: {pingResponse}");
       }
     }
-
-    Logger.LogInformation($"Successfully connected {Source} to {serverUri}");
+    Logger.LogInformation($"Successfully connected to {Source}");
 
     Providers = providers.ToList();
 
     TryReconstructIndices();
+  }
+
+  public static bool Ping(
+    IHostEnvironment env,
+    IConfiguration conf)
+  {
+    var client = CreateElasticClient(env, conf);
+    return client.Ping().IsValid;
+  }
+
+  private static IElasticClient CreateElasticClient(
+      IHostEnvironment env,
+      IConfiguration conf)
+  {
+    var section = conf
+      .GetSection("Ozds")
+      .GetSection("Elasticsearch")
+      .GetSection("Client");
+    var serverUri = section.GetNonNullValue<string>("serverUri");
+    var user = section.GetValue<string?>("user");
+    var password = section.GetValue<string?>("password");
+    var caPath = section.GetValue<string?>("caPath");
+
+    var settings = new ConnectionSettings(new Uri(serverUri));
+
+    if (user is not null && password is not null)
+    {
+      settings = settings
+        .BasicAuthentication(user, password);
+    }
+
+    if (caPath is not null)
+    {
+      settings = settings
+        .ServerCertificateValidationCallback(
+          CertificateValidations.AuthorityIsRoot(
+            new X509Certificate(caPath)));
+    }
+
+    if (env.IsDevelopment())
+    {
+      settings = settings
+        .PrettyJson(true)
+        .DisableDirectStreaming();
+    }
+
+    return new ElasticClient(settings);
   }
   #endregion // Constructors
 
