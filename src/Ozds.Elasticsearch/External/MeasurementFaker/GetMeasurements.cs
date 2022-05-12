@@ -30,9 +30,10 @@ public sealed partial class Client : IClient
   private Task<List<Measurement>> GetNativeMeasurementsAsync(
       Device device, Period? period = null)
   {
-    if (device.SourceDeviceId != Client.FakeDeviceId ||
-        !Client.FakeDeviceIds.Contains(device.SourceDeviceId))
+    if ((device.SourceDeviceId != Client.FakeDeviceId) &&
+        (!Client.FakeDeviceIds.Contains(device.SourceDeviceId)))
     {
+      Logger.LogWarning($"Unknown fake device id {device.SourceDeviceId}");
       return Task.FromResult(new List<Measurement>());
     }
 
@@ -49,7 +50,11 @@ public sealed partial class Client : IClient
     {
       timeSpan = s_defaultTimeSpan;
       period =
-          new Period { From = period.To.Subtract(timeSpan), To = period.To };
+          new Period
+          {
+            From = period.To.Subtract(timeSpan),
+            To = period.To
+          };
     }
 
     var measurementCount =
@@ -76,6 +81,11 @@ public sealed partial class Client : IClient
         Device.MakeId(Source, measurement.DeviceId),
         new Elasticsearch.Measurement.KnownData
         {
+          energyIn = measurement.Data.energyIn,
+          energyIn_T1 = measurement.Data.energyIn_T1,
+          energyIn_T2 = measurement.Data.energyIn_T2,
+          powerIn = measurement.Data.powerIn,
+
           dongleId = measurement.Data.dongleId,
           meterIdent = measurement.Data.meterIdent,
           meterSerial = measurement.Data.meterSerial,
@@ -96,13 +106,9 @@ public sealed partial class Client : IClient
           currentL1 = measurement.Data.currentL1,
           currentL2 = measurement.Data.currentL2,
           currentL3 = measurement.Data.currentL3,
-          energyIn = measurement.Data.energyIn,
-          energyIn_T1 = measurement.Data.energyIn_T1,
-          energyIn_T2 = measurement.Data.energyIn_T2,
           energyOut = measurement.Data.energyOut,
           energyOut_T1 = measurement.Data.energyOut_T1,
           energyOut_T2 = measurement.Data.energyOut_T2,
-          powerIn = measurement.Data.powerIn,
           powerInL1 = measurement.Data.powerInL1,
           powerInL2 = measurement.Data.powerInL2,
           powerInL3 = measurement.Data.powerInL3,
@@ -119,12 +125,15 @@ public sealed partial class Client : IClient
 
   private static readonly int s_maxTimeSpanMinutes = 1000;
 
-  private static readonly Period s_defaultPeriod =
-    new()
-    {
-      From = DateTime.UtcNow.AddMinutes(-5),
-      To = DateTime.UtcNow
-    };
+  private static Period s_defaultPeriod
+  {
+    get =>
+      new()
+      {
+        From = DateTime.UtcNow.AddMinutes(-5),
+        To = DateTime.UtcNow
+      };
+  }
 
   private static readonly TimeSpan s_defaultTimeSpan =
     TimeSpan.FromMinutes(5);

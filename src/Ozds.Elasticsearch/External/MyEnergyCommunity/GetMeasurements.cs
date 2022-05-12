@@ -2,7 +2,6 @@ using System.Text.Json;
 // NOTE: QueryBuilder
 // TODO: dont use AspNetCore?
 using Microsoft.AspNetCore.Http.Extensions;
-using Ozds.Util;
 
 namespace Ozds.Elasticsearch.MyEnergyCommunity;
 
@@ -52,6 +51,7 @@ public sealed partial class Client : IClient
       uri += query;
       var request = new HttpRequestMessage(HttpMethod.Get, uri);
       request.Headers.Add("OwnerId", device.SourceDeviceData.ownerId);
+      Logger.LogDebug($"Request to MyEnergyCommunity:\n{request}");
 
       HttpResponseMessage? response = null;
       try
@@ -60,8 +60,9 @@ public sealed partial class Client : IClient
       }
       catch (HttpRequestException connectionException)
       {
-        Logger.LogWarning($"Failed connecting to {Source}\n" +
-                          $"Reason {connectionException.Message}");
+        Logger.LogWarning(
+            $"Failed connecting to {Source}\n" +
+            $"Reason {connectionException.Message}");
         break;
       }
 
@@ -75,8 +76,9 @@ public sealed partial class Client : IClient
       }
       catch (JsonException jsonException)
       {
-        Logger.LogWarning($"Failed parsing response of {Source}\n" +
-                          $"Reason {jsonException.Message}");
+        Logger.LogWarning(
+            $"Failed parsing response of {Source}\n" +
+            $"Reason {jsonException.Message}");
         break;
       }
 
