@@ -4,31 +4,33 @@ using Ozds.Util;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var logging = builder.Logging;
+var env = builder.Environment;
 
-#if DEBUG
-var env = Environment.GetEnvironmentVariables();
+if (env.IsDevelopment())
+{
+  var vars = Environment.GetEnvironmentVariables();
 
-var aspNetCoreEnv = env.Get<string>("ASPNETCORE_ENVIRONMENT");
-var dotnetEnv = env.Get<string>("DOTNET_ENVIRONMENT");
-var orchardAppData = Path.GetFullPath(env.Get<string>("ORCHARD_APP_DATA"));
-var logPathTemplate = Path.Join(orchardAppData, "log-{Date}.txt");
+  var aspNetCoreEnv = vars.Get<string>("ASPNETCORE_ENVIRONMENT");
+  var dotnetEnv = vars.Get<string>("DOTNET_ENVIRONMENT");
+  var orchardAppData = Path.GetFullPath(vars.Get<string>("ORCHARD_APP_DATA"));
+  var logPathTemplate = Path.Join(orchardAppData, "log-{Date}.txt");
 
-Console.WriteLine($"ASP.NET Core Environment: {aspNetCoreEnv}");
-Console.WriteLine($".NET Environment: {dotnetEnv}");
-Console.WriteLine($"Orchard AppData: {orchardAppData}");
-Console.WriteLine($"Log path template: {logPathTemplate}");
+  Console.WriteLine($"ASP.NET Core Environment: {aspNetCoreEnv}");
+  Console.WriteLine($".NET Environment: {dotnetEnv}");
+  Console.WriteLine($"Orchard AppData: {orchardAppData}");
+  Console.WriteLine($"Log path template: {logPathTemplate}");
 
-logging.AddFile(
-  logPathTemplate,
-  builder.Environment.IsDevelopment() ? LogLevel.Debug : LogLevel.Information,
-  builder.Configuration
-    .GetSection("Logging")
-    .GetSection("LogLevel")
-    .GetChildren()
-    .ToDictionary(
-      x => x.Key,
-      x => Enum.Parse<LogLevel>(x.Value)));
-#endif
+  logging.AddFile(
+    logPathTemplate,
+    builder.Environment.IsDevelopment() ? LogLevel.Debug : LogLevel.Information,
+    builder.Configuration
+      .GetSection("Logging")
+      .GetSection("LogLevel")
+      .GetChildren()
+      .ToDictionary(
+        x => x.Key,
+        x => Enum.Parse<LogLevel>(x.Value)));
+}
 
 services
   .Configure<IdentityOptions>(

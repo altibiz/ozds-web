@@ -321,7 +321,6 @@ dist
 # User
 # ============================================================================
 
-wwwroot
 src/Ozds.Web/Localization
 is-cache
 secrets.json
