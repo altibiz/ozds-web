@@ -4,6 +4,6 @@
 HUSKY_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")";
 ROOT_DIR="$(dirname "$HUSKY_DIR")";
 
-"$ROOT_DIR/scripts/build";
-"$ROOT_DIR/scripts/format";
+"$ROOT_DIR/scripts/build.sh";
+"$ROOT_DIR/scripts/format.sh";
 git add "$ROOT_DIR";

@@ -7,15 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nest" Version="7.17.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference
+      Include="Nest"
+      Version="7.17.0" />
+
+    <PackageReference
+      Include="System.Data.SqlClient"
+      Version="4.8.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../Ozds.Util/Ozds.Util.csproj" />
+    <ProjectReference
+      Include="../Ozds.Util/Ozds.Util.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="../../test/Ozds.Elasticsearch.Test/Ozds.Elasticsearch.Test.csproj" />
+    <InternalsVisibleTo
+      Include="../../test/Ozds.Elasticsearch.Test/Ozds.Elasticsearch.Test.csproj" />
   </ItemGroup>
 </Project>
