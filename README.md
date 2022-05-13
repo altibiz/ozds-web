@@ -42,7 +42,7 @@ To start the development process locally, follow these steps:
 
 ### Test users
 
-NOTE: this section is outdated and the users don't exist currently.
+NOTE: this section is outdated and the users don't exist
 
 Two test users are added in the development environment to make testing
 easier.
@@ -60,8 +60,3 @@ easier.
 - Username: 'TestMember'
 - Email: 'test-member@helb.hr'
 - Password: '8JW4aIGqbTrHOSQZz1hCUgn3qeTBza9z'
-
-## TODO
-
-- fix indices that read bags
-- fix taxonomies
