@@ -31,11 +31,4 @@
     <ProjectReference
       Include="../Ozds.Themes.Ozds/Ozds.Themes.Ozds.csproj" />
   </ItemGroup>
-
-  <!-- NOTE: fix for Azure deployment -->
-  <ItemGroup>
-    <PackageReference
-      Include="Newtonsoft.Json"
-      Version="13.0.1" />
-  </ItemGroup>
 </Project>

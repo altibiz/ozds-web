@@ -104,13 +104,6 @@
       Include="../Ozds.Util/Ozds.Util.csproj" />
   </ItemGroup>
 
-  <!-- NOTE: fix for Azure deployment -->
-  <ItemGroup>
-    <PackageReference
-      Include="Newtonsoft.Json"
-      Version="13.0.1" />
-  </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Update="placement.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
