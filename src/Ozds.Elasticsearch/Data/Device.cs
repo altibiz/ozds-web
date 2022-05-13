@@ -15,14 +15,17 @@ public class DeviceState
 [ElasticsearchType(RelationName = "device", IdProperty = nameof(Id))]
 public class Device
 {
-  public static string MakeId(string source, string sourceDeviceId)
-  {
-    return Strings.CombineIntoStringId(
+  public static string MakeId(
+      string source,
+      string sourceDeviceId) =>
+    Strings.CombineIntoStringId(
         "S", source.Substring(0, 3), "ID", sourceDeviceId);
-  }
 
-  public Device(string source, string sourceDeviceId,
-      KnownSourceDeviceData? sourceDeviceData = null, string? state = null)
+  public Device(
+      string source,
+      string sourceDeviceId,
+      KnownSourceDeviceData? sourceDeviceData = null,
+      string? state = null)
   {
     Source = source;
     SourceDeviceId = sourceDeviceId;

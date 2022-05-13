@@ -1,0 +1,122 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "4fnzd5fywmg2dz3gxzcy0x9cd7",
+          "ContentItemVersionId": "4w6s638mn1y7vxv7rey48bbeca",
+          "ContentType": "SecondarySite",
+          "DisplayText": " fakeDevice1",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-05-04T10:34:01.4926284Z",
+          "PublishedUtc": "2022-05-04T10:34:01.5167043Z",
+          "CreatedUtc": "2022-05-04T09:08:40.0196328Z",
+          "Owner": "42y3v996azksss9bge7a78yf5k",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": " fakeDevice1"
+          },
+          "SecondarySite": {},
+          "Site": {
+            "Source": {
+              "TaxonomyContentItemId": "4k4556m076b1vvsmmqjccbjwn5",
+              "TermContentItemIds": ["4ajzfswsjftfzym6sj9fc223ms"]
+            },
+            "DeviceId": {
+              "Text": "fakeDevice1"
+            },
+            "SourceData": {
+              "Data": []
+            },
+            "Status": {
+              "TaxonomyContentItemId": "47p9e5rkms3m012qv3z2t26jcg",
+              "TermContentItemIds": ["444t1z24wt35hy89d6g3r5yan4"]
+            }
+          },
+          "Catalogue": {
+            "ContentItems": [
+              {
+                "ContentItemId": "4w31pvhj5ccpzt5dvfrkb9q54h",
+                "ContentItemVersionId": null,
+                "ContentType": "Catalogue",
+                "DisplayText": "",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-04T10:34:01.4986493Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": ""
+                },
+                "Catalogue": {
+                  "TariffModel": {
+                    "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
+                    "TermContentItemIds": ["41vr9sy8ap5ntvbkj74zbw6749"]
+                  }
+                },
+                "Items": {
+                  "ContentItems": [
+                    {
+                      "ContentItemId": "4kqgx788gea4jre81x5t99vw5t",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:34:01.50113Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "TariffElement": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["44vg6aarzp3ayv2praq3t17pce"]
+                        },
+                        "Price": {
+                          "Value": 0.31
+                        }
+                      }
+                    },
+                    {
+                      "ContentItemId": "47kk01vq8hf8g2wcac7ffabww1",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-04T10:34:01.5096779Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": "",
+                      "Author": "admin",
+                      "TitlePart": {
+                        "Title": ""
+                      },
+                      "CatalogueItem": {
+                        "TariffElement": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
+                        },
+                        "Price": {
+                          "Value": 41.3
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

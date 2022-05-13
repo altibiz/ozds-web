@@ -19,7 +19,9 @@
   ReceiptItemData? businessUsageFeeItem =
     receiptData.Items.FirstOrDefault(item =>
       item.TariffItemTermId == TariffItem.BusinessUsageFeeTermId);
-  DateTime? date = receipt.Receipt.Value.Date.Value;
+  DateTime date = receipt.Receipt.Value.Date.Value.ThrowWhenNull();
+  DateTime dateFrom = receipt.Receipt.Value.DateFrom.Value.ThrowWhenNull();
+  DateTime dateTo = receipt.Receipt.Value.DateTo.Value.ThrowWhenNull();
 }
 
 <div class="d-flex flex-column align-items-end">
@@ -29,9 +31,9 @@
   <h5>
     ZA ELEKTRIČNU ENERGIJU RAZDOBLJE:
     OD
-    @receiptData.Calculation.DateFrom.ToShortDateString()
+    @dateFrom.ToShortDateString()
     DO
-    @receiptData.Calculation.DateTo.ToShortDateString()
+    @dateTo.ToShortDateString()
   </h5>
 </div>
 
@@ -41,7 +43,7 @@
       @receiptData.Consumer.Name
     </span>
     <span>
-      Datum izrade: @date?.ToShortDateString()
+      Datum izrade: @date.ToShortDateString()
     </span>
   </div>
   <span>
@@ -88,9 +90,7 @@
     {
       <tr>
         <th scope="row">
-          &nbsp;1.
-          @(index + 1)
-          .)
+          &nbsp;1.@(index + 1).)
         </th>
         <th>
           @item.Title
@@ -128,9 +128,7 @@
     {
       <tr>
         <th scope="row">
-          &nbsp;2.
-          @(index + 1)
-          .)
+          &nbsp;2.@(index + 1).)
         </th>
         <th>
           @item.Title
@@ -217,7 +215,7 @@
     </span>
   </div>
   <div
-      style="width: 100px;margin: 10px"
+      style="width: 100px;margin-right: 10px"
       class="d-flex flex-column align-items-end">
     <span>
       @receiptData.InTotal
@@ -232,5 +230,5 @@
 </div>
 
 <div class="d-flex flex-row justify-content-start">
-  Božjakovim, @date?.ToShortDateString()
+  Božjakovina, @date.ToShortDateString()
 </div>

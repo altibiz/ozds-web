@@ -1,3 +1,5 @@
+using Ozds.Util;
+
 namespace Ozds.Modules.Members;
 
 public static class SiteStatus
@@ -11,4 +13,25 @@ public static class SiteStatus
       this TaxonomyCacheService taxonomy,
       string termId) =>
     taxonomy.GetTerm<TagType>(ContentItemId, termId);
+
+  public static string? GetElasticsearchStatus(string termId) =>
+    SiteStatusTermIdToElasticsearchStatue.GetOrDefault(termId);
+
+  private readonly static IDictionary<string, string>
+  SiteStatusTermIdToElasticsearchStatue =
+    new Dictionary<string, string>()
+    {
+      {
+        ActiveTermId,
+        Elasticsearch.DeviceState.Healthy
+      },
+      {
+        TemporarilyInactiveTermId,
+        Elasticsearch.DeviceState.Unhealthy
+      },
+      {
+        InactiveTermId,
+        Elasticsearch.DeviceState.Discontinued
+      }
+    };
 }

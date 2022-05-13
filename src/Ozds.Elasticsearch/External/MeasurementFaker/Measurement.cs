@@ -4,8 +4,12 @@ namespace Ozds.Elasticsearch.MeasurementFaker;
 
 public class Measurement
 {
-  public Measurement(DateTime? timestamp = null, KnownData? data = null)
+  public Measurement(
+      string deviceId,
+      DateTime? timestamp = null,
+      KnownData? data = null)
   {
+    DeviceId = deviceId;
     Timestamp = timestamp ?? DateTime.UtcNow.AddMinutes(-1);
     Data = data ?? new KnownData { };
   }
@@ -56,8 +60,11 @@ public class Measurement
     public decimal? voltageL3 { get; init; } = default;
   };
 
-  public static Measurement Generate(DateTime timestamp) =>
+  public static Measurement Generate(
+      string deviceId,
+      DateTime timestamp) =>
     new(
+      deviceId,
       timestamp,
       new()
       {

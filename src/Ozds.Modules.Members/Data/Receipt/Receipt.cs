@@ -17,6 +17,8 @@ public class Receipt : ContentPart
 {
   public ContentPickerField Site { get; set; } = new();
   public DateField Date { get; set; } = new();
+  public DateField DateFrom { get; set; } = new();
+  public DateField DateTo { get; set; } = new();
   public ReceiptData Data { get; set; } = default;
 }
 

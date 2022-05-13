@@ -1,7 +1,10 @@
 namespace Ozds.Elasticsearch;
 
 public readonly record struct EnergyMeasurement
-(decimal Energy, decimal LowCostEnergy, decimal HighCostEnergy);
+(decimal Energy,
+ decimal LowCostEnergy,
+ decimal HighCostEnergy,
+ DateTime Date);
 
 public readonly record struct PowerMeasurement
 (decimal Power);
@@ -9,14 +12,26 @@ public readonly record struct PowerMeasurement
 public interface IReceiptMeasurementProvider
 {
   public Task<(EnergyMeasurement Begin, EnergyMeasurement End)>
-  GetEnergyMeasurementsAsync(string deviceId, Period period);
+  GetEnergyMeasurementsAsync(
+      string source,
+      string deviceId,
+      Period period);
 
   public (EnergyMeasurement Begin, EnergyMeasurement End)
-  GetEnergyMeasurements(string deviceId, Period period);
+  GetEnergyMeasurements(
+      string source,
+      string deviceId,
+      Period period);
 
-  public Task<PowerMeasurement> GetPowerMeasurementAsync(
-      string deviceId, Period period);
+  public Task<PowerMeasurement>
+  GetPowerMeasurementAsync(
+      string source,
+      string deviceId,
+      Period period);
 
-  public PowerMeasurement GetPowerMeasurement(
-      string deviceId, Period period);
+  public PowerMeasurement
+  GetPowerMeasurement(
+      string source,
+      string deviceId,
+      Period period);
 }

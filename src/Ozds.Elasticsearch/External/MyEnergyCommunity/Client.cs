@@ -5,6 +5,8 @@ namespace Ozds.Elasticsearch.MyEnergyCommunity;
 
 public sealed partial class Client : IClient
 {
+  public const string MyEnergyCommunitySource = "MyEnergyCommunity";
+
   public Client(IConfiguration conf, ILogger<Client> logger)
   {
     Logger = logger;

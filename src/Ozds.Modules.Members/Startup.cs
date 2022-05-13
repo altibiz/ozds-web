@@ -1,6 +1,7 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
@@ -41,6 +42,7 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddContentPart<Person>();
     services.AddScoped<IScopedIndexProvider, PersonIndexProvider>();
     services.AddContentPart<Site>();
+    services.AddScoped<IContentHandler, SiteDeviceIndexer>();
     services.AddContentPart<SecondarySite>();
     services.AddScoped<IScopedIndexProvider, SiteIndexProvider>();
     services.AddContentPart<Consumer>();
@@ -49,7 +51,7 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddContentPart<ReceiptItem>();
     services.AddContentPart<Receipt>();
     services.AddScoped<IScopedIndexProvider, ReceiptIndexProvider>();
-    services.AddScoped<IContentHandler, ReceiptHandler>();
+    services.AddScoped<IContentHandler, ReceiptCreator>();
     services.AddContentPart<Calculation>();
     services.AddContentPart<Catalogue>();
     services.AddContentPart<CatalogueItem>();
@@ -94,12 +96,29 @@ public class Startup : OrchardCore.Modules.StartupBase
         Elasticsearch.MeasurementFaker.Client>();
 
       services.AddSingleton<
-        IMeasurementImporter,
-        Elasticsearch.FakeMeasurementImporter>();
+        IMeasurementProvider,
+        Elasticsearch.MyEnergyCommunity.Client>();
 
-      services.AddSingleton<
-        IReceiptMeasurementProvider,
-        Elasticsearch.FakeReceiptMeasurementProvider>();
+      // NOTE: if a developer starts elasticsearch it would be better to work
+      // NOTE: with that than fakes
+      if (Elasticsearch.Client.Ping(Env, Conf))
+      {
+        AddElasticsearchClient(services);
+      }
+      else
+      {
+        services.AddSingleton<
+          IMeasurementImporter,
+          Elasticsearch.FakeMeasurementImporter>();
+
+        services.AddSingleton<
+          IReceiptMeasurementProvider,
+          Elasticsearch.FakeReceiptMeasurementProvider>();
+
+        services.AddSingleton<
+          IDeviceIndexer,
+          Elasticsearch.FakeDeviceIndexer>();
+      }
     }
     else
     {
@@ -110,6 +129,8 @@ public class Startup : OrchardCore.Modules.StartupBase
           type.IsAssignableTo<IMeasurementProvider>() &&
           !type.IsInterface &&
           !type.Equals(typeof(Elasticsearch.Client)) &&
+          // TODO: enable later on
+          !type.Equals(typeof(Elasticsearch.HelbOzds.Client)) &&
           !type.Equals(typeof(Elasticsearch.MeasurementFaker.Client)))
         .ForEach(measurementProviderType =>
           services.AddSingleton(
@@ -117,18 +138,12 @@ public class Startup : OrchardCore.Modules.StartupBase
             measurementProviderType))
         .Run();
 
-      services.AddSingleton<
-        IMeasurementImporter,
-        Elasticsearch.Client>();
-
-      services.AddSingleton<
-        IReceiptMeasurementProvider,
-        Elasticsearch.Client>();
+      AddElasticsearchClient(services);
     }
-    services.AddSingleton<PeriodicMeasurementLoader>();
+
     services.AddSingleton<
       IBackgroundTask,
-      PeriodicMeasurementLoadBackgroundTask>();
+      MeasurementImporter>();
 
     services.AddScoped<LocalizedRouteTransformer>();
   }
@@ -138,16 +153,33 @@ public class Startup : OrchardCore.Modules.StartupBase
       IEndpointRouteBuilder routes,
       IServiceProvider services)
   {
-    routes.MapDynamicPageRoute<LocalizedRouteTransformer>("clanovi");
-    routes.MapDynamicPageRoute<LocalizedRouteTransformer>("clanovi/{page?}");
+    routes.MapDynamicPageRoute<LocalizedRouteTransformer>("korisnici");
+    routes.MapDynamicPageRoute<LocalizedRouteTransformer>("korisnici/{page?}");
   }
 
-  public Startup(IWebHostEnvironment env, ILogger<Startup> logger)
+  public Startup(
+      IWebHostEnvironment env,
+      ILogger<Startup> logger,
+      IConfiguration conf)
   {
     Env = env;
     Logger = logger;
+    Conf = conf;
   }
 
-  public IWebHostEnvironment Env { get; init; }
-  public ILogger<Startup> Logger { get; init; }
+  private IWebHostEnvironment Env { get; }
+  private ILogger<Startup> Logger { get; }
+  private IConfiguration Conf { get; }
+
+  private void AddElasticsearchClient(IServiceCollection services)
+  {
+    // NOTE: this prevents the client from being instantiated multiple times
+    services.AddSingleton<Elasticsearch.Client>();
+    services.AddSingleton<IMeasurementImporter>(
+        s => s.GetRequiredService<Elasticsearch.Client>());
+    services.AddSingleton<IReceiptMeasurementProvider>(
+        s => s.GetRequiredService<Elasticsearch.Client>());
+    services.AddSingleton<IDeviceIndexer>(
+        s => s.GetRequiredService<Elasticsearch.Client>());
+  }
 }

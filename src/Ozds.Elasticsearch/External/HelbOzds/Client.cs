@@ -5,6 +5,8 @@ namespace Ozds.Elasticsearch.HelbOzds;
 
 public sealed partial class Client : IClient, IDisposable
 {
+  public const string HelbOzdsSource = "HelbOzds";
+
   public Client(IConfiguration conf, ILogger<Client> logger)
   {
     var section = conf

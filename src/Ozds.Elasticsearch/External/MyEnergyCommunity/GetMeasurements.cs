@@ -2,7 +2,6 @@ using System.Text.Json;
 // NOTE: QueryBuilder
 // TODO: dont use AspNetCore?
 using Microsoft.AspNetCore.Http.Extensions;
-using Ozds.Util;
 
 namespace Ozds.Elasticsearch.MyEnergyCommunity;
 
@@ -10,7 +9,7 @@ public partial interface IClient : IMeasurementProvider { };
 
 public sealed partial class Client : IClient
 {
-  public string Source { get => Client.s_source; }
+  public string Source { get => Client.MyEnergyCommunitySource; }
 
   public IEnumerable<Ozds.Elasticsearch.Measurement> GetMeasurements(
       Device device, Period? period = null)
@@ -52,6 +51,7 @@ public sealed partial class Client : IClient
       uri += query;
       var request = new HttpRequestMessage(HttpMethod.Get, uri);
       request.Headers.Add("OwnerId", device.SourceDeviceData.ownerId);
+      Logger.LogDebug($"Request to MyEnergyCommunity:\n{request}");
 
       HttpResponseMessage? response = null;
       try
@@ -60,8 +60,9 @@ public sealed partial class Client : IClient
       }
       catch (HttpRequestException connectionException)
       {
-        Logger.LogWarning($"Failed connecting to {Source}\n" +
-                          $"Reason {connectionException.Message}");
+        Logger.LogWarning(
+            $"Failed connecting to {Source}\n" +
+            $"Reason {connectionException.Message}");
         break;
       }
 
@@ -75,8 +76,9 @@ public sealed partial class Client : IClient
       }
       catch (JsonException jsonException)
       {
-        Logger.LogWarning($"Failed parsing response of {Source}\n" +
-                          $"Reason {jsonException.Message}");
+        Logger.LogWarning(
+            $"Failed parsing response of {Source}\n" +
+            $"Reason {jsonException.Message}");
         break;
       }
 
@@ -141,6 +143,4 @@ public sealed partial class Client : IClient
           voltageL3 = measurement.measurementData.voltageL3,
         });
   }
-
-  private const string s_source = "MyEnergyCommunity";
 }

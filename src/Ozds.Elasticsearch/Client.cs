@@ -12,54 +12,100 @@ public interface IClientPrototype
 
 public sealed partial class Client : IClientPrototype, IClient
 {
+
   #region Constructors
-  public Client(IHostEnvironment env, ILogger<Client> logger,
-      IConfiguration conf, IEnumerable<IMeasurementProvider> providers)
+  public Client(
+    IHostEnvironment env,
+    ILogger<IClient> logger,
+    IConfiguration conf,
+    IEnumerable<IMeasurementProvider> providers)
   {
     Env = env;
     Logger = logger;
 
-    var section = conf
-      .GetSection("Ozds")
-      .GetSection("Elasticsearch")
-      .GetSection("Client");
-    var serverUri = section.GetNonNullValue<string>("serverUri");
-    var caPath = section.GetNonNullValue<string>("caPath");
-    var user = section.GetNonNullValue<string>("user");
-    var password = section.GetNonNullValue<string>("password");
-
-    var settings = new ConnectionSettings(new Uri(serverUri))
-                       .ServerCertificateValidationCallback(
-                           CertificateValidations.AuthorityIsRoot(
-                               new X509Certificate(caPath)))
-                       .BasicAuthentication(user, password);
-    if (Env.IsDevelopment())
-    {
-      settings = settings.PrettyJson(true).DisableDirectStreaming();
-    }
-
-    Elasticsearch = new ElasticClient(settings);
+    Elasticsearch = CreateElasticClient(env, conf);
     var pingResponse = Elasticsearch.Ping();
     if (!pingResponse.IsValid)
     {
       if (Env.IsDevelopment())
       {
         throw new WebException(
-            $"Could not connect to {Source}\n" +
-            $"Ping response information: {pingResponse.DebugInformation}");
+          $"Could not connect to {Source}\n" +
+          $"Ping response debug information: {pingResponse.DebugInformation}");
       }
       else
       {
-        throw new WebException($"Could not connect to {Source}\n" +
-                               $"Ping response: {pingResponse}");
+        throw new WebException(
+          $"Could not connect to {Source}\n" +
+          $"Ping response: {pingResponse}");
       }
     }
-
-    Logger.LogInformation($"Successfully connected {Source} to {serverUri}");
+    Logger.LogInformation($"Successfully connected to {Source}");
 
     Providers = providers.ToList();
+    if (Providers.Count > 0)
+    {
+      Logger.LogInformation(
+          "Registered " +
+          string.Join(
+            ", ",
+            Providers
+              .Select(provider => provider.Source)) +
+          " providers");
+    }
+    else
+    {
+      Logger.LogInformation("No providers registered");
+    }
 
-    TryReconstructIndices();
+    TryCreateIndices();
+  }
+
+  public static bool Ping(
+    IHostEnvironment env,
+    IConfiguration conf)
+  {
+    var client = CreateElasticClient(env, conf);
+    return client.Ping().IsValid;
+  }
+
+  private static IElasticClient CreateElasticClient(
+      IHostEnvironment env,
+      IConfiguration conf)
+  {
+    var section = conf
+      .GetSection("Ozds")
+      .GetSection("Elasticsearch")
+      .GetSection("Client");
+    var serverUri = section.GetNonNullValue<string>("serverUri");
+    var user = section.GetValue<string?>("user");
+    var password = section.GetValue<string?>("password");
+    var caPath = section.GetValue<string?>("caPath");
+
+    var settings = new ConnectionSettings(new Uri(serverUri));
+
+    if (user is not null && password is not null)
+    {
+      settings = settings
+        .BasicAuthentication(user, password);
+    }
+
+    if (caPath is not null)
+    {
+      settings = settings
+        .ServerCertificateValidationCallback(
+          CertificateValidations.AuthorityIsRoot(
+            new X509Certificate(caPath)));
+    }
+
+    if (env.IsDevelopment())
+    {
+      settings = settings
+        .PrettyJson(true)
+        .DisableDirectStreaming();
+    }
+
+    return new ElasticClient(settings);
   }
   #endregion // Constructors
 
@@ -95,16 +141,19 @@ public sealed partial class Client : IClientPrototype, IClient
     get => _indexSuffix;
     init
     {
-      _indexSuffix = String.IsNullOrWhiteSpace(value) ? ""
-                     : value.StartsWith('.') ? value
-                                                      : $".{value}";
+      _indexSuffix =
+        string.IsNullOrWhiteSpace(value) ? ""
+        : value.StartsWith('.') ? value
+        : $".{value}";
       TryReconstructIndices();
     }
   }
 
   private string ConsoleIndexSuffix
   {
-    get => String.IsNullOrWhiteSpace(IndexSuffix) ? "" : $" '{IndexSuffix}'";
+    get =>
+      string.IsNullOrWhiteSpace(IndexSuffix) ? ""
+      : $" '{IndexSuffix}'";
   }
 
   private string _indexSuffix = "";
@@ -125,7 +174,8 @@ public sealed partial class Client : IClientPrototype, IClient
     Elasticsearch.TryDeleteIndex(MeasurementIndexName);
     Elasticsearch.TryDeleteIndex(DeviceIndexName);
     Elasticsearch.TryDeleteIndex(LogIndexName);
-    Logger.LogInformation($"Deleted Elasticsearch indices{ConsoleIndexSuffix}");
+    Logger.LogInformation(
+        $"Deleted Elasticsearch indices{ConsoleIndexSuffix}");
   }
 
   private void TryCreateIndices()
@@ -133,7 +183,8 @@ public sealed partial class Client : IClientPrototype, IClient
     Elasticsearch.TryCreateIndex<Measurement>(MeasurementIndexName);
     Elasticsearch.TryCreateIndex<Device>(DeviceIndexName);
     Elasticsearch.TryCreateIndex<Log>(LogIndexName);
-    Logger.LogInformation($"Created Elasticsearch indices{ConsoleIndexSuffix}");
+    Logger.LogInformation(
+        $"Created Elasticsearch indices{ConsoleIndexSuffix}");
   }
   #endregion // Indices
 
@@ -148,17 +199,25 @@ public sealed partial class Client : IClientPrototype, IClient
     get => s_deviceIndexDebugPrefix + IndexSuffix;
   }
 
-  private string LogIndexName { get => s_logIndexDebugPrefix + IndexSuffix; }
+  private string LogIndexName
+  {
+    get => s_logIndexDebugPrefix + IndexSuffix;
+  }
 
 #if DEBUG
   private const string s_measurementIndexDebugPrefix =
-      "ozds.debug.measurements";
-  private const string s_deviceIndexDebugPrefix = "ozds.debug.devices";
-  private const string s_logIndexDebugPrefix = "ozds.debug.log";
+    "ozds.debug.measurements";
+  private const string s_deviceIndexDebugPrefix =
+    "ozds.debug.devices";
+  private const string s_logIndexDebugPrefix =
+    "ozds.debug.log";
 #else
-  private const string s_measurementIndexDebugPrefix = "ozds.measurements";
-  private const string s_deviceIndexDebugPrefix = "ozds.devices";
-  private const string s_logIndexDebugPrefix = "ozds.log";
+  private const string s_measurementIndexDebugPrefix =
+    "ozds.measurements";
+  private const string s_deviceIndexDebugPrefix =
+    "ozds.devices";
+  private const string s_logIndexDebugPrefix =
+    "ozds.log";
 #endif
   #endregion // Index Names
 }

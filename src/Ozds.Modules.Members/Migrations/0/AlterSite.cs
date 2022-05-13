@@ -2,6 +2,7 @@ using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.ContentFields.Settings;
 using OrchardCore.Taxonomies.Settings;
+using Etch.OrchardCore.Fields.Dictionary.Settings;
 
 namespace Ozds.Modules.Members.M0;
 
@@ -35,11 +36,23 @@ public static partial class AlterSite
               {
                 Required = true
               }))
+        .WithField("SourceData",
+          field => field
+            .OfType("DictionaryField")
+            .WithDisplayName("Izvorišni podaci")
+            .WithDescription(
+              "Podaci potrebni da bi se preuzimala mjerenja " +
+              "sa izvora mjerenja uređaja")
+            .WithPosition("3")
+            .WithSettings(
+              new DictionaryFieldSettings
+              {
+              }))
         .WithField("Status",
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Status")
-            .WithPosition("3")
+            .WithPosition("4")
             .WithSettings(
               new TaxonomyFieldSettings
               {

@@ -20,6 +20,7 @@ public static partial class RecipeMigrations
     recipe
       .ExecuteAuthSettings(migration);
 
+
   public static IRecipeMigrator ExecuteTariffModelTaxonomy(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/TariffModelTaxonomy.recipe.json", migration);
@@ -64,6 +65,7 @@ public static partial class RecipeMigrations
       .ExecuteTestSiteMeasurementSourceTaxonomy(migration)
       .ExecuteSiteStatusTaxonomy(migration);
 
+
   public static IRecipeMigrator ExecuteOperatorCatalogue(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/OperatorCatalogue.recipe.json", migration);
@@ -72,9 +74,13 @@ public static partial class RecipeMigrations
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/TestCenter1.recipe.json", migration);
 
-  public static IRecipeMigrator ExecuteTestConsumerSite1(
+  public static IRecipeMigrator ExecuteTestMyEnergyCommunitySite1(
       this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/TestConsumerSite1.recipe.json", migration);
+    recipe.Execute("0/TestMyEnergyCommunitySite1.recipe.json", migration);
+
+  public static IRecipeMigrator ExecuteTestFakeSite1(
+      this IRecipeMigrator recipe, IDataMigration migration) =>
+    recipe.Execute("0/TestFakeSite1.recipe.json", migration);
 
   public static IRecipeMigrator ExecuteTestConsumer1(
       this IRecipeMigrator recipe, IDataMigration migration) =>
@@ -97,7 +103,8 @@ public static partial class RecipeMigrations
     recipe
       .ExecuteOperatorCatalogue(migration)
       .ExecuteTestCenter1(migration)
-      .ExecuteTestConsumerSite1(migration)
+      .ExecuteTestMyEnergyCommunitySite1(migration)
+      .ExecuteTestFakeSite1(migration)
       .ExecuteTestConsumer1(migration)
       .ExecuteTestReceiptRevision1(migration);
 }

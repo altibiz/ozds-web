@@ -72,5 +72,27 @@ public static partial class AlterReceipt
               new DateFieldSettings
               {
                 Required = true
+              }))
+        .WithField("DateFrom",
+          field => field
+            .OfType("DateField")
+            .WithDisplayName("Datum od")
+            .WithDescription("Datum početka mjernja")
+            .WithPosition("3")
+            .WithSettings(
+              new DateFieldSettings
+              {
+                Required = true
+              }))
+        .WithField("DateTo",
+          field => field
+            .OfType("DateField")
+            .WithDisplayName("Datum do")
+            .WithDescription("Datum kraja mjernja")
+            .WithPosition("4")
+            .WithSettings(
+              new DateFieldSettings
+              {
+                Required = true
               })));
 }

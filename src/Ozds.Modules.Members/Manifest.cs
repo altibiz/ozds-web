@@ -57,5 +57,6 @@ using OrchardCore.Modules.Manifest;
         "OrchardCore.ContentFields.Indexing.SQL.UserPicker",
         "OrchardCore.BackgroundTasks",
         "OrchardCore.Spatial",
-        "OrchardCore.Contents.Deployment.Download"
+        "OrchardCore.Contents.Deployment.Download",
+        "Etch.OrchardCore.Fields.Dictionary"
       })]
