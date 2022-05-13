@@ -1,135 +1,137 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using OrchardCore.ContentManagement.Handlers;
 using OrchardCore.ContentManagement;
-using OrchardCore.Lists.Models;
 using YesSql;
 using Ozds.Util;
 using Ozds.Elasticsearch;
 
 namespace Ozds.Modules.Members;
 
+// TODO: fix sites without consumer
 public class ReceiptCreator : ContentHandlerBase
 {
-  public override Task UpdatedAsync(UpdateContentContext context) =>
-    Services
-      .GetRequiredService<IContentManager>()
-      .WhenNonNullable(content =>
-        context.ContentItem
-          .As<Receipt>()
-          .WithTask(
-            async receipt =>
-              {
-                receipt.Data =
-                  (receipt.Site.ContentItemIds.FirstOrDefault(),
-                   receipt.Date.Value) switch
-                  {
-                    (string siteContentItemId,
-                     DateTime date) =>
-                      (await content
-                        .GetContentAsync<SecondarySiteType>(siteContentItemId),
-                       await Session
-                        .Query<ContentItem, PersonIndex>(person =>
-                          person.SiteContentItemId == siteContentItemId)
-                        .FirstOrDefaultAsync()
-                        .Nullable()) switch
-                      {
-                        (SecondarySiteType site,
-                         ContentItem consumerItem) =>
-                          (site.Catalogue.Value.ContentItems
-                            .FirstOrDefault()
-                            ?.As<Catalogue>(),
-                           consumerItem.As<Person>(),
-                           await consumerItem
-                            .AsReal<ContainedPart>()
-                            .WhenNonNullableTask(consumer => content
-                              .GetAsync(consumer.ListContentItemId)
-                              .Then(centerItem =>
-                                centerItem
-                                  .AsContent<CenterType>()
-                                  .WhenNonNullable(center =>
-                                    (center.Operator.Value,
-                                     center.CenterOwner.Value,
-                                     center.Title.Value.Title))))) switch
-                          {
-                            (Catalogue catalogue,
-                             Person consumer,
-                             (Person @operator,
-                              Person centerOwner,
-                              string centerTitle)) =>
-                              ((await content.GetAsync(
-                                OperatorCatalogue.ContentItemIdFor(
-                                  catalogue.TariffModel.TermContentItemIds
-                                    .First())))
-                                 .AsReal<Catalogue>(),
-                               await Measurements
-                                .GetEnergyMeasurementsAsync(
-                                  site.Site.Value.DeviceId.Text,
-                                  new()
-                                  {
-                                    From = new DateTime(
-                                        date.Year,
-                                        date.AddMonths(-1).Month,
-                                        1),
-                                    To = new DateTime(
-                                        date.Year,
-                                        date.Month,
-                                        1)
-                                  }),
-                               await Measurements
-                                .GetPowerMeasurementAsync(
-                                  site.Site.Value.DeviceId.Text,
-                                  new()
-                                  {
-                                    From = new DateTime(
-                                        date.Year,
-                                        date.AddMonths(-1).Month,
-                                        1),
-                                    To = new DateTime(
-                                        date.Year,
-                                        date.Month,
-                                        1)
-                                  })) switch
-                              {
-                                (Catalogue operatorCatalogue,
-                                 (EnergyMeasurement energyBeginMeasurement,
-                                  EnergyMeasurement endEnergyMeasurement),
-                                  PowerMeasurement powerMeasurement) =>
-                                  await ReceiptData.Create(
-                                    Taxonomy,
-                                    @operator.Data.Value,
-                                    centerOwner.Data.Value,
-                                    centerTitle,
-                                    consumer.Data.Value,
-                                    await CalculationData.Create(
-                                      Taxonomy,
-                                      date,
-                                      site.ContentItem.ContentItemId,
-                                      site.Title.Value.Title,
-                                      catalogue.Data.Value,
-                                      operatorCatalogue.Data.Value,
-                                      energyBeginMeasurement.Energy,
-                                      endEnergyMeasurement.Energy,
-                                      energyBeginMeasurement.HighCostEnergy,
-                                      endEnergyMeasurement.HighCostEnergy,
-                                      energyBeginMeasurement.LowCostEnergy,
-                                      endEnergyMeasurement.LowCostEnergy,
-                                      powerMeasurement.Power,
-                                      Pricing.RenewableEnergyFeePrice,
-                                      Pricing.BusinessUsageFeePrice),
-                                    Pricing.TaxRate),
-                                _ => default
-                              },
-                            _ => default
-                          },
-                        _ => default
-                      },
-                    _ => default
-                  };
+  public override async Task UpdatedAsync(UpdateContentContext context)
+  {
+    var content =
+      Services
+        .GetRequiredService<IContentManager>()
+        .ThrowWhenNull();
 
-                context.ContentItem.Apply(receipt);
-              }),
-        Task.CompletedTask);
+    var receipt =
+      context.ContentItem
+        .As<Receipt>();
+    if (receipt is null) return;
+
+    var siteContentItemId =
+      receipt.Site.ContentItemIds
+        .FirstOrDefault()
+        .ThrowWhenNull();
+    var date = receipt.Date.Value.ThrowWhenNull();
+    var dateFrom = receipt.DateFrom.Value.ThrowWhenNull();
+    var dateTo = receipt.DateTo.Value.ThrowWhenNull();
+
+    var secondarySite =
+      await content
+        .GetContentAsync<SecondarySiteType>(siteContentItemId)
+        .ThrowWhenNull();
+    var consumer =
+      await Session
+        .Query<ContentItem, PersonIndex>(person =>
+            person.SiteContentItemId == siteContentItemId)
+        .FirstOrDefaultAsync()
+        .Nullable()
+        .ThrowWhenNull()
+        .Then(item => item.AsContent<ConsumerType>())
+        .ThrowWhenNull();
+    var center =
+      await content
+        .GetAsync(
+            consumer.ContainedPart.Value.ThrowWhenNull().ListContentItemId)
+        .ThrowWhenNull()
+        .Then(item => item.AsContent<CenterType>())
+        .ThrowWhenNull();
+
+    var catalogue =
+      secondarySite.Catalogue.Value.ContentItems
+        .FirstOrDefault()
+        .ThrowWhenNull()
+        .As<Catalogue>()
+        .ThrowWhenNull();
+    var operatorCatalogue =
+      await content
+        .GetAsync(
+          OperatorCatalogue.ContentItemIdFor(
+            catalogue.TariffModel.TermContentItemIds.First()))
+        .ThrowWhenNull()
+        .Then(item => item.As<Catalogue>())
+        .Nullable()
+        .ThrowWhenNull();
+
+    var source =
+      SiteMeasurementSource.GetElasticsearchSource(
+          secondarySite.Site.Value.Source.TermContentItemIds[0])
+        .ThrowWhenNull();
+    var deviceId = secondarySite.Site.Value.DeviceId.Text;
+    var (beginEnergyMeasurement, endEnergyMeasurement) =
+      await Measurements
+        .GetEnergyMeasurementsAsync(
+          source,
+          deviceId,
+          new()
+          {
+            From = dateFrom,
+            To = dateTo
+          });
+    var powerMeasurement =
+      await Measurements
+        .GetPowerMeasurementAsync(
+          source,
+          deviceId,
+          new()
+          {
+            From = dateFrom,
+            To = dateTo
+          });
+
+    receipt.Data =
+      await ReceiptData.Create(
+        Taxonomy,
+        center.Operator.Value.Data.Value,
+        center.CenterOwner.Value.Data.Value,
+        center.Title.Value.Title,
+        consumer.Person.Value.Data.Value,
+        await CalculationData.Create(
+          Taxonomy,
+          date,
+          beginEnergyMeasurement.Date,
+          endEnergyMeasurement.Date,
+          secondarySite.ContentItem.ContentItemId,
+          secondarySite.Title.Value.Title,
+          catalogue.Data.Value,
+          operatorCatalogue.Data.Value,
+          beginEnergyMeasurement.Energy,
+          endEnergyMeasurement.Energy,
+          beginEnergyMeasurement.HighCostEnergy,
+          endEnergyMeasurement.HighCostEnergy,
+          beginEnergyMeasurement.LowCostEnergy,
+          endEnergyMeasurement.LowCostEnergy,
+          powerMeasurement.Power,
+          Pricing.RenewableEnergyFeePrice,
+          Pricing.BusinessUsageFeePrice),
+        Pricing.TaxRate);
+
+    context.ContentItem.Apply(receipt);
+
+    Logger.LogDebug(
+      string.Format(
+        "Enriched receipt for {0} from {1} to {2}",
+        secondarySite.Site.Value.DeviceId.Text,
+        dateFrom.ToShortDateString(),
+        dateTo.ToShortDateString()));
+  }
 
   public override Task InitializedAsync(InitializingContentContext context) =>
     context.ContentItem
@@ -139,20 +141,49 @@ public class ReceiptCreator : ContentHandlerBase
           .WhenNonNullable(httpContext =>
             httpContext.Request.Query["siteContentItemId"]
               .FirstOrDefault()
-              .With(consumerContentItemId =>
+              .With(siteContentItemId =>
                 {
+                  var now = DateTime.UtcNow;
+
                   receipt.Site.ContentItemIds =
                     new[]
                     {
-                      consumerContentItemId
+                      siteContentItemId
                     };
-                  receipt.Date.Value = DateTime.UtcNow;
+                  receipt.Date.Value = now;
+                  if (Env.IsDevelopment())
+                  {
+                    receipt.DateFrom.Value = new DateTime(
+                        now.Year,
+                        now.Month,
+                        1);
+                    receipt.DateTo.Value = new DateTime(
+                        now.Year,
+                        now.AddMonths(1).Month,
+                        1);
+                  }
+                  else
+                  {
+                    receipt.DateFrom.Value = new DateTime(
+                        now.Year,
+                        now.AddMonths(-1).Month,
+                        1);
+                    receipt.DateTo.Value = new DateTime(
+                        now.Year,
+                        now.Month,
+                        1);
+                  }
 
                   context.ContentItem.Apply(receipt);
+
+                  Logger.LogDebug(
+                      $"Prepopulated receipt for {siteContentItemId}");
                 })))
       .Return(Task.CompletedTask);
 
   public ReceiptCreator(
+    IHostEnvironment env,
+    ILogger<ReceiptCreator> logger,
     TaxonomyCacheService taxonomy,
     YesSql.ISession session,
     IServiceProvider services,
@@ -164,8 +195,12 @@ public class ReceiptCreator : ContentHandlerBase
     Session = session;
     Measurements = measurements;
     HttpContextAccessor = httpContextAccessor;
+    Env = env;
+    Logger = logger;
   }
 
+  private IHostEnvironment Env { get; }
+  private ILogger Logger { get; }
   private TaxonomyCacheService Taxonomy { get; }
   private IServiceProvider Services { get; }
   private YesSql.ISession Session { get; }

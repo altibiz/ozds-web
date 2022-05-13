@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 using OrchardCore.ContentManagement.Handlers;
 using Ozds.Elasticsearch;
 using Ozds.Util;
@@ -12,26 +14,37 @@ public class SiteDeviceIndexer : ContentHandlerBase
       .AsContent<SecondarySiteType>()
       .When(
         secondarySite =>
-          !SiteMeasurementSource.IsFake(
-            secondarySite.Site.Value.Source.TermContentItemIds[0]),
+          (Env.IsProduction() &&
+           !SiteMeasurementSource.IsFake(
+            secondarySite.Site.Value.Source.TermContentItemIds[0])) ||
+          Env.IsDevelopment(),
         secondarySite =>
-          Indexer.IndexDeviceAsync(
-            SiteMeasurementSource.GetElasticsearchSource(
-              secondarySite.Site.Value.Source.TermContentItemIds[0]) ??
-            throw new InvalidOperationException("Invalid site source"),
-            secondarySite.Site.Value.DeviceId.Text,
-            new SourceDeviceData(
-              ownerId: secondarySite.Site.Value.SourceData.Data
-                .FirstOrDefault(data => data.Name == "OwnerId")?.Value),
-            SiteStatus.GetElasticsearchStatus(
-              secondarySite.Site.Value.Status.TermContentItemIds[0])),
+          Indexer
+            .IndexDeviceAsync(
+              SiteMeasurementSource.GetElasticsearchSource(
+                secondarySite.Site.Value.Source.TermContentItemIds[0]) ??
+              throw new InvalidOperationException("Invalid site source"),
+              secondarySite.Site.Value.DeviceId.Text,
+              new SourceDeviceData(
+                ownerId: secondarySite.Site.Value.SourceData.Data
+                  .FirstOrDefault(data => data.Name == "OwnerId")?.Value),
+              SiteStatus.GetElasticsearchStatus(
+                secondarySite.Site.Value.Status.TermContentItemIds[0]))
+            .Then(() => Logger.LogDebug(
+              $"Indexed device {secondarySite.Site.Value.DeviceId.Text}")),
         Task.CompletedTask);
 
   public SiteDeviceIndexer(
+      IHostEnvironment env,
+      ILogger<SiteDeviceIndexer> logger,
       IDeviceIndexer indexer)
   {
     Indexer = indexer;
+    Logger = logger;
+    Env = env;
   }
 
   IDeviceIndexer Indexer { get; }
+  ILogger Logger { get; }
+  IHostEnvironment Env { get; }
 }

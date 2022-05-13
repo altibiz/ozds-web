@@ -26,16 +26,20 @@ public class PersonIndexProvider :
          switch
         {
           (CenterType center, null) =>
-           FromPerson(
-              item,
-              center.CenterOwner.Value),
+            new List<PersonIndex>
+            {
+              FromPerson(
+                  item,
+                  center.CenterOwner.Value)
+            },
           (null, ConsumerType consumer) =>
-           FromPerson(
-             item,
-             consumer.Person.Value,
-             consumer.Consumer.Value.SecondarySites.ContentItemIds
-              .FirstOrDefault()),
-          _ => null
+            consumer.Consumer.Value.SecondarySites.ContentItemIds
+              .Select(siteContentItemId =>
+                  FromPerson(
+                    item,
+                    consumer.Person.Value,
+                    siteContentItemId)),
+          _ => Enumerable.Empty<PersonIndex>()
         })
         // NOTE: this is okay because YesSql expects null values
         .NonNullable());

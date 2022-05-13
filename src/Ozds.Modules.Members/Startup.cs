@@ -95,11 +95,15 @@ public class Startup : OrchardCore.Modules.StartupBase
         IMeasurementProvider,
         Elasticsearch.MeasurementFaker.Client>();
 
+      services.AddSingleton<
+        IMeasurementProvider,
+        Elasticsearch.MyEnergyCommunity.Client>();
+
       // NOTE: if a developer starts elasticsearch it would be better to work
       // NOTE: with that than fakes
       if (Elasticsearch.Client.Ping(Env, Conf))
       {
-        AddElasticClient(services);
+        AddElasticsearchClient(services);
       }
       else
       {
@@ -134,14 +138,12 @@ public class Startup : OrchardCore.Modules.StartupBase
             measurementProviderType))
         .Run();
 
-      AddElasticClient(services);
+      AddElasticsearchClient(services);
     }
 
     services.AddSingleton<
-      PeriodicMeasurementLoader>();
-    services.AddSingleton<
       IBackgroundTask,
-      PeriodicMeasurementLoadBackgroundTask>();
+      MeasurementImporter>();
 
     services.AddScoped<LocalizedRouteTransformer>();
   }
@@ -169,18 +171,15 @@ public class Startup : OrchardCore.Modules.StartupBase
   private ILogger<Startup> Logger { get; }
   private IConfiguration Conf { get; }
 
-  private static void AddElasticClient(
-      IServiceCollection services)
+  private void AddElasticsearchClient(IServiceCollection services)
   {
+    // NOTE: this prevents the client from being instantiated multiple times
     services.AddSingleton<Elasticsearch.Client>();
-
-    services.AddSingleton<IMeasurementImporter, Elasticsearch.Client>(
+    services.AddSingleton<IMeasurementImporter>(
         s => s.GetRequiredService<Elasticsearch.Client>());
-
-    services.AddSingleton<IReceiptMeasurementProvider, Elasticsearch.Client>(
+    services.AddSingleton<IReceiptMeasurementProvider>(
         s => s.GetRequiredService<Elasticsearch.Client>());
-
-    services.AddSingleton<IDeviceIndexer, Elasticsearch.Client>(
+    services.AddSingleton<IDeviceIndexer>(
         s => s.GetRequiredService<Elasticsearch.Client>());
   }
 }

@@ -20,7 +20,10 @@
           },
           "Consumer": {
             "SecondarySites": {
-              "ContentItemIds": ["4fnzd5fywmg2dz3gxzcy0x9cd7"]
+              "ContentItemIds": [
+                "4fnzd5fywmg2dz3gxzcy0x9cd7",
+                "4cxae7ke9gr5btyfbdsg4nb4ck"
+              ]
             }
           },
           "Person": {

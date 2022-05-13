@@ -16,7 +16,7 @@ public sealed partial class Client : IClientPrototype, IClient
   #region Constructors
   public Client(
     IHostEnvironment env,
-    ILogger<Client> logger,
+    ILogger<IClient> logger,
     IConfiguration conf,
     IEnumerable<IMeasurementProvider> providers)
   {
@@ -43,8 +43,22 @@ public sealed partial class Client : IClientPrototype, IClient
     Logger.LogInformation($"Successfully connected to {Source}");
 
     Providers = providers.ToList();
+    if (Providers.Count > 0)
+    {
+      Logger.LogInformation(
+          "Registered " +
+          string.Join(
+            ", ",
+            Providers
+              .Select(provider => provider.Source)) +
+          " providers");
+    }
+    else
+    {
+      Logger.LogInformation("No providers registered");
+    }
 
-    TryReconstructIndices();
+    TryCreateIndices();
   }
 
   public static bool Ping(
@@ -160,7 +174,8 @@ public sealed partial class Client : IClientPrototype, IClient
     Elasticsearch.TryDeleteIndex(MeasurementIndexName);
     Elasticsearch.TryDeleteIndex(DeviceIndexName);
     Elasticsearch.TryDeleteIndex(LogIndexName);
-    Logger.LogInformation($"Deleted Elasticsearch indices{ConsoleIndexSuffix}");
+    Logger.LogInformation(
+        $"Deleted Elasticsearch indices{ConsoleIndexSuffix}");
   }
 
   private void TryCreateIndices()
@@ -168,7 +183,8 @@ public sealed partial class Client : IClientPrototype, IClient
     Elasticsearch.TryCreateIndex<Measurement>(MeasurementIndexName);
     Elasticsearch.TryCreateIndex<Device>(DeviceIndexName);
     Elasticsearch.TryCreateIndex<Log>(LogIndexName);
-    Logger.LogInformation($"Created Elasticsearch indices{ConsoleIndexSuffix}");
+    Logger.LogInformation(
+        $"Created Elasticsearch indices{ConsoleIndexSuffix}");
   }
   #endregion // Indices
 

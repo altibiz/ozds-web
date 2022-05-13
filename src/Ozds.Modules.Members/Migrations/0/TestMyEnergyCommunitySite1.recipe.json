@@ -1,0 +1,161 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "Data": [
+        {
+          "ContentItemId": "4cxae7ke9gr5btyfbdsg4nb4ck",
+          "ContentItemVersionId": "435bvtpctazjb0smpjf6r3tsx3",
+          "ContentType": "SecondarySite",
+          "DisplayText": " W1N2CSTX",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-05-13T07:40:10.432299Z",
+          "PublishedUtc": "2022-05-13T07:40:10.4371455Z",
+          "CreatedUtc": "2022-05-13T07:40:10.432299Z",
+          "Owner": "4dwtvqg9yfan3s5r8490ezv45b",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": " W1N2CSTX"
+          },
+          "SecondarySite": {},
+          "Site": {
+            "Source": {
+              "TaxonomyContentItemId": "4k4556m076b1vvsmmqjccbjwn5",
+              "TermContentItemIds": ["481mx70mkj8y769kc85vqhw55c"]
+            },
+            "DeviceId": {
+              "Text": "W1N2CSTX"
+            },
+            "SourceData": {
+              "Data": [
+                {
+                  "Name": "OwnerId",
+                  "Value": "test-owner"
+                }
+              ]
+            },
+            "Status": {
+              "TaxonomyContentItemId": "47p9e5rkms3m012qv3z2t26jcg",
+              "TermContentItemIds": ["444t1z24wt35hy89d6g3r5yan4"]
+            }
+          },
+          "Catalogue": {
+            "ContentItems": [
+              {
+                "ContentItemId": "4bf4yh588e6ertm3p5kmyq8fxg",
+                "ContentItemVersionId": null,
+                "ContentType": "Catalogue",
+                "DisplayText": "",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-13T07:40:10.3949166Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": ""
+                },
+                "Catalogue": {
+                  "TariffModel": {
+                    "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
+                    "TermContentItemIds": ["4w9hx6bgrmj70wdky9pcp9e1mz"]
+                  }
+                },
+                "Items": {
+                  "ContentItems": [
+                    {
+                      "ContentItemId": "4t2z33gaq4qbvwv64vhbkhb15t",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-13T07:40:10.396905Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": null,
+                      "Author": "admin",
+                      "Title": {
+                        "Title": null
+                      },
+                      "CatalogueItem": {
+                        "TariffElement": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4mw0ncthn1aq4r5k6cqfk19yw3"]
+                        },
+                        "Price": {
+                          "Value": 0.14
+                        }
+                      },
+                      "TitlePart": {
+                        "Title": ""
+                      }
+                    },
+                    {
+                      "ContentItemId": "4tp5n8esge6sm4b64dx1b8ybnc",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-13T07:40:10.408089Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": null,
+                      "Author": "admin",
+                      "Title": {
+                        "Title": null
+                      },
+                      "CatalogueItem": {
+                        "TariffElement": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4cqexne8f6j3sv77ewvydhxzn8"]
+                        },
+                        "Price": {
+                          "Value": 0.7
+                        }
+                      },
+                      "TitlePart": {
+                        "Title": ""
+                      }
+                    },
+                    {
+                      "ContentItemId": "4gwpjf45xfp6wz74fjqq1mtcnk",
+                      "ContentItemVersionId": null,
+                      "ContentType": "CatalogueItem",
+                      "DisplayText": "",
+                      "Latest": false,
+                      "Published": false,
+                      "ModifiedUtc": "2022-05-13T07:40:10.4103002Z",
+                      "PublishedUtc": null,
+                      "CreatedUtc": null,
+                      "Owner": null,
+                      "Author": "admin",
+                      "Title": {
+                        "Title": null
+                      },
+                      "CatalogueItem": {
+                        "TariffElement": {
+                          "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                          "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
+                        },
+                        "Price": {
+                          "Value": 41.3
+                        }
+                      },
+                      "TitlePart": {
+                        "Title": ""
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
