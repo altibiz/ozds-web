@@ -324,3 +324,4 @@ dist
 src/Ozds.Web/Localization
 is-cache
 secrets.json
+secrets.sh

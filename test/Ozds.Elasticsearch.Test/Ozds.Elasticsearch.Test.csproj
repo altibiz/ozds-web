@@ -4,6 +4,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
+    <IsPublishable>false</IsPublishable>
     <UserSecretsId>83fb9858-cd5b-41a6-88fc-1bdadd5e8b1a</UserSecretsId>
   </PropertyGroup>
 
@@ -24,16 +25,20 @@
       Include="Xunit.DependencyInjection.Logging"
       Version="8.0.1" />
 
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+    <PackageReference
+      Include="xunit.runner.visualstudio"
+      Version="2.4.3">
       <IncludeAssets>
-          runtime; build; native; contentfiles; analyzers; buildtransitive
+        runtime; build; native; contentfiles; analyzers; buildtransitive
       </IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
 
-    <PackageReference Include="coverlet.collector" Version="3.1.0">
+    <PackageReference
+      Include="coverlet.collector"
+      Version="3.1.0">
       <IncludeAssets>
-          runtime; build; native; contentfiles; analyzers; buildtransitive
+        runtime; build; native; contentfiles; analyzers; buildtransitive
       </IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

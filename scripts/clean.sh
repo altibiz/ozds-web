@@ -11,6 +11,7 @@ git clean -Xd \
   -e '!.pnp.cjs' \
   -e '!.pnp.loader.mjs' \
   -e '!secrets.json' \
+  -e '!secrets.sh' \
   -e '!.vs/' \
   -e '!.vs/**' \
   -e '!**/*.csproj.user' \

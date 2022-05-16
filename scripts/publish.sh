@@ -2,6 +2,9 @@
 
 SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")";
 ROOT_DIR="$(dirname "$SCRIPT_DIR")";
+CONTENT_ROOT="$ROOT_DIR/artifacts";
+SECRETS_SH="$ROOT_DIR/secrets.sh";
+WD=`pwd`;
 
 export ASPNETCORE_ENVIRONMENT=Production;
 export DOTNET_ENVIRONMENT=Production;
@@ -16,11 +19,19 @@ echo -e "
 yarn --cwd "$ROOT_DIR" build;
 
 echo -e "
-[OZDS] Building with 'dotnet'...
+[OZDS] Publishing with 'dotnet'...
 ";
 dotnet \
-  build \
-  --no-incremental \
-  --output "$ROOT_DIR/build" \
+  publish \
+  --output "$CONTENT_ROOT" \
   --property:consoleLoggerParameters=ErrorsOnly \
+  --property:IsWebConfigTransformDisabled=true \
   --configuration Release;
+
+cd "$CONTENT_ROOT";
+source "$SECRETS_SH";
+echo -e "
+[OZDS] Running with 'dotnet'...
+";
+dotnet "Ozds.Web.dll";
+cd "$WD";

@@ -1,0 +1,9 @@
+export OrchardCore__OrchardCore_AutoSetup__Tenants__0__AdminEmail="";
+export OrchardCore__OrchardCore_AutoSetup__Tenants__0__AdminPassword="";
+export OrchardCore__OrchardCore_AutoSetup__Tenants__0__AdminUsername="";
+export OrchardCore__OrchardCore_AutoSetup__Tenants__0__DatabaseConnectionString="",
+export OrchardCore__OrchardCore_AutoSetup__Tenants__0__DatabaseProvider="";
+export OrchardCore__OrchardCore_AutoSetup__Tenants__0__DatabaseTablePrefix="";
+export Ozds__Elasticsearch__Client__serverUri="";
+export Ozds__Elasticsearch__External__HelbOzds__Client__connectionString="";
+export Ozds__Elasticsearch__External__MyEnergyCommunity__Client__serverUri="";

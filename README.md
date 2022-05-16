@@ -28,8 +28,10 @@ pushing changes.
 To start the development process locally, follow these steps:
 
 1. Run the [prepare script](scripts/prepare) to setup `git hooks`, install
-   dependencies and generate the [secrets file](secrets.json).
-2. Populate the generated [secrets file](secrets.json).
+   dependencies and generate the [`secrets.json` file](secrets.json), and
+   [`secrets.sh` file](secrets.sh).
+2. Populate the generated [`secrets.json` file](secrets.json) and
+   [`secrets.sh` file](secrets.sh).
 3. Run the [set-secrets script](scripts/set-secrets) to set
    `dotnet user-secrets`. You can run the
    [list-secrets script](scripts/list-secrets) to make sure that your secrets

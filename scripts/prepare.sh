@@ -28,3 +28,10 @@ echo -e "
 if [[ ! -f "$ROOT_DIR/secrets.json" ]]; then
   cp "$ROOT_DIR/example.secrets.json" "$ROOT_DIR/secrets.json"
 fi;
+
+echo -e "
+[OZDS] Generating 'secrets.sh'...
+";
+if [[ ! -f "$ROOT_DIR/secrets.sh" ]]; then
+  cp "$ROOT_DIR/example.secrets.sh" "$ROOT_DIR/secrets.sh"
+fi;
