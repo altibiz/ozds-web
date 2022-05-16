@@ -23,15 +23,15 @@ public static class SiteStatus
     {
       {
         ActiveTermId,
-        Elasticsearch.DeviceState.Healthy
+        Elasticsearch.DeviceState.Active
       },
       {
         TemporarilyInactiveTermId,
-        Elasticsearch.DeviceState.Unhealthy
+        Elasticsearch.DeviceState.TemporarilyInactive
       },
       {
         InactiveTermId,
-        Elasticsearch.DeviceState.Discontinued
+        Elasticsearch.DeviceState.Inactive
       }
     };
 }

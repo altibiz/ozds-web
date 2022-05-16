@@ -32,9 +32,9 @@ public readonly record struct ReceiptItemData
       TariffItemTermId = tag.ContentItem.ContentItemId,
       Title = tag.Title.Value.Title,
       Unit = tag.TariffTag.Value.Unit.Text,
-      Amount = amount,
+      Amount = decimal.Round(amount),
       Price = price,
-      InTotal = price * amount
+      InTotal = decimal.Round(price * amount, 2)
     };
 
   public static ReceiptItemData Create(

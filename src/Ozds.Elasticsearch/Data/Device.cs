@@ -6,10 +6,10 @@ namespace Ozds.Elasticsearch;
 public class DeviceState
 {
   public const string Added = "added";
-  public const string Discontinued = "discontinued";
-
-  public const string Healthy = "healthy";
-  public const string Unhealthy = "unhealthy";
+  public const string Active = "healthy";
+  public const string TemporarilyInactive = "unhealthy";
+  public const string Inactive = "inactive";
+  public const string Removed = "removed";
 }
 
 [ElasticsearchType(RelationName = "device", IdProperty = nameof(Id))]

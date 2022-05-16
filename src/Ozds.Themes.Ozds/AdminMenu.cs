@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Hosting;
 using OrchardCore.Navigation;
 using Ozds.Util;
 
@@ -10,8 +11,12 @@ public class AdminMenu : INavigationProvider
       string name,
       NavigationBuilder builder) =>
     Task.Run(() => name
-      .WhenWith(name =>
-        name.Equals("admin", StringComparison.OrdinalIgnoreCase),
+      .When(
+        name =>
+          string.Equals(
+            name, "admin",
+            StringComparison.OrdinalIgnoreCase) &&
+          Env.IsDevelopment(),
         name => builder
           .Add(S["Content"], "1", root => root
             .Add(S["Content Items"], "0", child => child
@@ -28,10 +33,14 @@ public class AdminMenu : INavigationProvider
                   contentTypeId = "Taxonomy"
                 })))));
 
-  public AdminMenu(IStringLocalizer<AdminMenu> localizer)
+  public AdminMenu(
+      IStringLocalizer<AdminMenu> localizer,
+      IHostEnvironment env)
   {
     S = localizer;
+    Env = env;
   }
 
   private IStringLocalizer S { get; }
+  private IHostEnvironment Env { get; }
 }

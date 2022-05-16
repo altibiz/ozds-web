@@ -36,9 +36,11 @@ public readonly record struct ExpenditureItemData
       Title = tag.TariffTag.Value.Abbreviation.Text,
       ValueFrom = valueFrom,
       ValueTo = valueTo,
-      Amount = valueTo - valueFrom,
+      Amount = decimal.Round(valueTo - valueFrom),
       UnitPrice = unitPrice,
-      InTotal = (valueTo - valueFrom) * unitPrice,
+      InTotal = decimal.Round(
+        decimal.Round(valueTo - valueFrom, 2) * unitPrice,
+        2),
     };
 
   public static ExpenditureItemData Create(
@@ -51,9 +53,9 @@ public readonly record struct ExpenditureItemData
       Title = tag.TariffTag.Value.Abbreviation.Text,
       ValueFrom = default,
       ValueTo = default,
-      Amount = amount,
+      Amount = decimal.Round(amount),
       UnitPrice = unitPrice,
-      InTotal = unitPrice * amount
+      InTotal = decimal.Round(unitPrice * amount, 2)
     };
 
   public static ExpenditureItemData Create(
@@ -67,7 +69,7 @@ public readonly record struct ExpenditureItemData
       ValueTo = default,
       Amount = 1M,
       UnitPrice = unitPrice,
-      InTotal = unitPrice
+      InTotal = decimal.Round(unitPrice, 2)
     };
 }
 

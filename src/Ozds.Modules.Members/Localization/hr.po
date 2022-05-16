@@ -73,3 +73,7 @@ msgstr "Kontakt člana"
 msgctxt "Ozds.Modules.Members.Views.ContentsButtonEdit_SummaryAdmin"
 msgid "Create Receipt"
 msgstr "Kreiraj račun"
+
+msgctxt "Ozds.Modules.Members.Views.AdminDashboard"
+msgid "Welcome to HELB OZDS Admin pages"
+msgstr "Dobrodošli na administratorske stranice HELB OZDS-a"

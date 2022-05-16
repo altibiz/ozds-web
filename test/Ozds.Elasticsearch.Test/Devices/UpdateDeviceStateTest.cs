@@ -11,9 +11,9 @@ namespace Ozds.Elasticsearch.Test
       var device = Data.MyEnergyCommunityDevice;
       var deviceId = device.Id;
       var deviceState = device.State;
-      var newDeviceState = deviceState == DeviceState.Healthy
-                               ? DeviceState.Unhealthy
-                               : DeviceState.Healthy;
+      var newDeviceState = deviceState == DeviceState.Active
+                               ? DeviceState.TemporarilyInactive
+                               : DeviceState.Active;
 
       var indexResponse = Client.IndexDevice(device);
       Assert.True(indexResponse.IsValid);
@@ -49,9 +49,9 @@ namespace Ozds.Elasticsearch.Test
       var device = Data.MyEnergyCommunityDevice;
       var deviceId = device.Id;
       var deviceState = device.State;
-      var newDeviceState = deviceState == DeviceState.Healthy
-                               ? DeviceState.Unhealthy
-                               : DeviceState.Healthy;
+      var newDeviceState = deviceState == DeviceState.Active
+                               ? DeviceState.TemporarilyInactive
+                               : DeviceState.Active;
 
       var indexResponse = await Client.IndexDeviceAsync(device);
       Assert.True(indexResponse.IsValid);

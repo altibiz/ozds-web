@@ -23,7 +23,7 @@ public sealed partial class Client : IClient
     : this.Elasticsearch.Search<Device>(s => s
         .Query(q => q
           .Term(t => t.Source, source) && q
-          .Term(t => t.State, DeviceState.Healthy))
+          .Term(t => t.State, DeviceState.Active))
         .Index(DeviceIndexName));
 
   public Task<ISearchResponse<Device>> SearchDevicesAsync(
@@ -36,6 +36,6 @@ public sealed partial class Client : IClient
     : this.Elasticsearch.SearchAsync<Device>(s => s
         .Query(q => q
           .Term(t => t.Source, source) && q
-          .Term(t => t.State, DeviceState.Healthy))
+          .Term(t => t.State, DeviceState.Active))
         .Index(DeviceIndexName));
 }

@@ -12,14 +12,14 @@ public static partial class Data
           {
             ownerId = "test-owner"
           },
-          DeviceState.Healthy);
+          DeviceState.Active);
 
   public static readonly Device FakeDevice =
       new Device(
           Ozds.Elasticsearch.MeasurementFaker.Client.FakeSource,
           Ozds.Elasticsearch.MeasurementFaker.Client.FakeDeviceId,
           null,
-          DeviceState.Healthy);
+          DeviceState.Active);
 
   public static IEnumerable<object[]> GenerateDevices()
   {

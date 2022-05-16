@@ -122,21 +122,26 @@ public class Startup : OrchardCore.Modules.StartupBase
     }
     else
     {
-      Assembly
-        .GetExecutingAssembly()
-        .GetTypes()
-        .Where(type =>
-          type.IsAssignableTo<IMeasurementProvider>() &&
-          !type.IsInterface &&
-          !type.Equals(typeof(Elasticsearch.Client)) &&
-          // TODO: enable later on
-          !type.Equals(typeof(Elasticsearch.HelbOzds.Client)) &&
-          !type.Equals(typeof(Elasticsearch.MeasurementFaker.Client)))
-        .ForEach(measurementProviderType =>
-          services.AddSingleton(
-            typeof(IMeasurementProvider),
-            measurementProviderType))
-        .Run();
+      // FIX: provider discovery
+      // Assembly
+      //   .GetExecutingAssembly()
+      //   .GetTypes()
+      //   .Where(type =>
+      //     type.IsAssignableTo<IMeasurementProvider>() &&
+      //     !type.IsInterface &&
+      //     !type.Equals(typeof(Elasticsearch.Client)) &&
+      //     // TODO: enable later on
+      //     !type.Equals(typeof(Elasticsearch.HelbOzds.Client)) &&
+      //     !type.Equals(typeof(Elasticsearch.MeasurementFaker.Client)))
+      //   .ForEach(measurementProviderType =>
+      //     services.AddSingleton(
+      //       typeof(IMeasurementProvider),
+      //       measurementProviderType))
+      //   .Run();
+
+      services.AddSingleton<
+        IMeasurementProvider,
+        Elasticsearch.MyEnergyCommunity.Client>();
 
       AddElasticsearchClient(services);
     }

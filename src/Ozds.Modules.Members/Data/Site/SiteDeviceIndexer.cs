@@ -31,7 +31,63 @@ public class SiteDeviceIndexer : ContentHandlerBase
               SiteStatus.GetElasticsearchStatus(
                 secondarySite.Site.Value.Status.TermContentItemIds[0]))
             .Then(() => Logger.LogDebug(
-              $"Indexed device {secondarySite.Site.Value.DeviceId.Text}")),
+              string.Format(
+                "Updated device {0}",
+                secondarySite.Site.Value.DeviceId.Text))),
+        Task.CompletedTask);
+
+  public override Task DraftSavedAsync(
+      SaveDraftContentContext context) =>
+    context.ContentItem
+      .AsContent<SecondarySiteType>()
+      .When(
+        secondarySite =>
+          (Env.IsProduction() &&
+           !SiteMeasurementSource.IsFake(
+            secondarySite.Site.Value.Source.TermContentItemIds[0])) ||
+          Env.IsDevelopment(),
+        secondarySite =>
+          Indexer
+            .IndexDeviceAsync(
+              SiteMeasurementSource.GetElasticsearchSource(
+                secondarySite.Site.Value.Source.TermContentItemIds[0]) ??
+              throw new InvalidOperationException("Invalid site source"),
+              secondarySite.Site.Value.DeviceId.Text,
+              new SourceDeviceData(
+                ownerId: secondarySite.Site.Value.SourceData.Data
+                  .FirstOrDefault(data => data.Name == "OwnerId")?.Value),
+              Elasticsearch.DeviceState.Added)
+            .Then(() => Logger.LogDebug(
+              string.Format(
+                "Added device {0}",
+                secondarySite.Site.Value.DeviceId.Text))),
+        Task.CompletedTask);
+
+  public override Task RemovedAsync(
+      RemoveContentContext context) =>
+    context.ContentItem
+      .AsContent<SecondarySiteType>()
+      .When(
+        secondarySite =>
+          (Env.IsProduction() &&
+           !SiteMeasurementSource.IsFake(
+            secondarySite.Site.Value.Source.TermContentItemIds[0])) ||
+          Env.IsDevelopment(),
+        secondarySite =>
+          Indexer
+            .IndexDeviceAsync(
+              SiteMeasurementSource.GetElasticsearchSource(
+                secondarySite.Site.Value.Source.TermContentItemIds[0]) ??
+              throw new InvalidOperationException("Invalid site source"),
+              secondarySite.Site.Value.DeviceId.Text,
+              new SourceDeviceData(
+                ownerId: secondarySite.Site.Value.SourceData.Data
+                  .FirstOrDefault(data => data.Name == "OwnerId")?.Value),
+              Elasticsearch.DeviceState.Removed)
+            .Then(() => Logger.LogDebug(
+              string.Format(
+                "Removed device {0}",
+                secondarySite.Site.Value.DeviceId.Text))),
         Task.CompletedTask);
 
   public SiteDeviceIndexer(

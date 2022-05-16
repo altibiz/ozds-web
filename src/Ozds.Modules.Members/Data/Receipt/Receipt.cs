@@ -53,7 +53,7 @@ public readonly record struct ReceiptData
     .Then(items =>
       items.ToArray())
     .Then(items => (items, inTotal: items.Sum(item => item.InTotal)))
-    .Then(cached =>
+    .Then(data =>
       new ReceiptData
       {
         Operator = @operator,
@@ -61,15 +61,21 @@ public readonly record struct ReceiptData
         CenterTitle = centerTitle,
         Consumer = consumer,
         Calculation = calculation,
-        Items = cached.items,
-        UsageFee = cached.items
-          .Where(item => TariffItem.IsUsage(item.TariffItemTermId))
-          .Sum(item => item.InTotal),
-        SupplyFee = cached.items
-          .Where(item => TariffItem.IsSupply(item.TariffItemTermId))
-          .Sum(item => item.InTotal),
-        InTotal = cached.inTotal,
-        Tax = cached.inTotal * taxRate,
-        InTotalWithTax = cached.inTotal + cached.inTotal * taxRate,
+        Items = data.items,
+        UsageFee = decimal.Round(
+          data.items
+            .Where(item => TariffItem.IsUsage(item.TariffItemTermId))
+            .Sum(item => item.InTotal),
+          2),
+        SupplyFee = decimal.Round(
+          data.items
+            .Where(item => TariffItem.IsSupply(item.TariffItemTermId))
+            .Sum(item => item.InTotal),
+          2),
+        InTotal = decimal.Round(data.inTotal, 2),
+        Tax = decimal.Round(data.inTotal * taxRate, 2),
+        InTotalWithTax = decimal.Round(
+          data.inTotal + decimal.Round(data.inTotal * taxRate, 2),
+          2),
       });
 }
