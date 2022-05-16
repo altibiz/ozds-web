@@ -81,16 +81,33 @@ public sealed partial class Client : IClientPrototype, IClient
     var user = section.GetValue<string?>("user");
     var password = section.GetValue<string?>("password");
     var caPath = section.GetValue<string?>("caPath");
+    var apiKey = section.GetValue<string?>("apiKey");
+    var apiKeyId = section.GetValue<string?>("apiKeyId");
 
     var settings = new ConnectionSettings(new Uri(serverUri));
 
-    if (user is not null && password is not null)
+    if (!string.IsNullOrWhiteSpace(apiKey))
+    {
+      if (!string.IsNullOrWhiteSpace(apiKeyId))
+      {
+        settings = settings.ApiKeyAuthentication(
+          new ApiKeyAuthenticationCredentials(apiKeyId, apiKey));
+      }
+      else
+      {
+        settings = settings.ApiKeyAuthentication(
+          new ApiKeyAuthenticationCredentials(apiKey));
+      }
+    }
+
+    if (!string.IsNullOrWhiteSpace(user) &&
+        !string.IsNullOrWhiteSpace(password))
     {
       settings = settings
         .BasicAuthentication(user, password);
     }
 
-    if (caPath is not null)
+    if (!string.IsNullOrWhiteSpace(caPath))
     {
       settings = settings
         .ServerCertificateValidationCallback(
