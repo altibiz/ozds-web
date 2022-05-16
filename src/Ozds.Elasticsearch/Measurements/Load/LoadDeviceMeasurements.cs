@@ -24,8 +24,8 @@ public partial class Client
           .Then(Enumerable.ToList)
           .ThenWith(measurements =>
             Logger.LogDebug(
-              $"Got {measurements.Count} measurements " +
-              $"from {device.Source} {device.SourceDeviceId}"))
+              $"Fetched {measurements.Count} measurements " +
+              $"from {device.Source} {device.SourceDeviceId} for {period}"))
           .Then(Enumerable.AsEnumerable)
           .Nullable(),
         Enumerable.Empty<Measurement>());
@@ -41,8 +41,8 @@ public partial class Client
           .ToList()
           .WithNullable(measurements =>
             Logger.LogDebug(
-              $"Got {measurements.Count} measurements " +
-              $"from {device.Source} {device.SourceDeviceId}"))
+              $"Fetched {measurements.Count} measurements " +
+              $"from {device.Source} {device.SourceDeviceId} for {period}"))
           .AsEnumerable(),
         Enumerable.Empty<Measurement>());
 }

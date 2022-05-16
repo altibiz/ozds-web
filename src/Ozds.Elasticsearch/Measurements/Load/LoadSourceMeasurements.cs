@@ -45,9 +45,9 @@ public partial class Client : IClient
               .Then(Enumerables.Flatten)
               .Then(Enumerable.ToList)
               .ThenWith(measurements =>
-                Logger.LogDebug(
-                  $"Got {measurements.Count} measurements " +
-                  $"from {provider.Source}"))
+                Logger.LogInformation(
+                  $"Fetched {measurements.Count} measurements " +
+                  $"from {provider.Source} for {period}"))
               .ThenWithTask(_ =>
                 IndexLogAsync(
                   new Log(
@@ -89,9 +89,9 @@ public partial class Client : IClient
                       period))
                   .ToList())
               .WithNullable(measurements =>
-                Logger.LogDebug(
-                  $"Got {measurements.Count} measurements " +
-                  $"from {provider.Source}"))
+                Logger.LogInformation(
+                  $"Fetched {measurements.Count} measurements " +
+                  $"from {provider.Source} for {period}"))
               .WithNullable(_ =>
                 IndexLog(
                   new Log(

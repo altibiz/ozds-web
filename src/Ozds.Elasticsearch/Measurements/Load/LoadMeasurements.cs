@@ -22,7 +22,8 @@ public partial class Client : IClient
       .Then(Enumerables.Flatten)
       .Then(Enumerable.ToList)
       .ThenWith(measurements =>
-        Logger.LogDebug($"Fetched {measurements.Count} measurements"))
+        Logger.LogDebug(
+          $"Fetched {measurements.Count} measurements for {period}"))
       .Then(Enumerable.AsEnumerable);
 
   public IEnumerable<Measurement> LoadMeasurements(
@@ -32,5 +33,6 @@ public partial class Client : IClient
         LoadSourceMeasurements(provider.Source, period))
       .ToList()
       .WithNullable(measurements =>
-         Logger.LogDebug($"Fetched {measurements.Count} measurements"));
+         Logger.LogDebug(
+           $"Fetched {measurements.Count} measurements for {period}"));
 }

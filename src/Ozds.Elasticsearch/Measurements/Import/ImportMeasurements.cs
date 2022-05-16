@@ -11,6 +11,10 @@ public partial class Client : IClient
   public Task ImportMeasurementsAsync() =>
     this
       .LoadMeasurementsAsync()
+      .Then(Enumerable.ToList)
+      .ThenWith(measurements =>
+        Logger.LogInformation(
+          $"Importing {measurements.Count} measurements"))
       .ThenTask(measurements =>
         IndexMeasurementsAsync(measurements));
 
