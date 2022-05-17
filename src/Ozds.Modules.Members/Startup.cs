@@ -1,4 +1,3 @@
-using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
@@ -25,7 +24,6 @@ using Ozds.Modules.Members.Utils;
 using Ozds.Modules.Members.PartFieldSettings;
 using Ozds.Modules.Members.Base;
 using Ozds.Elasticsearch;
-using Ozds.Util;
 
 namespace Ozds.Modules.Members;
 
@@ -118,27 +116,14 @@ public class Startup : OrchardCore.Modules.StartupBase
         services.AddSingleton<
           IDeviceIndexer,
           Elasticsearch.FakeDeviceIndexer>();
+
+        services.AddSingleton<
+          IDashboardMeasurementProvider,
+          Elasticsearch.FakeDashboardMeasurementProvider>();
       }
     }
     else
     {
-      // FIX: provider discovery
-      // Assembly
-      //   .GetExecutingAssembly()
-      //   .GetTypes()
-      //   .Where(type =>
-      //     type.IsAssignableTo<IMeasurementProvider>() &&
-      //     !type.IsInterface &&
-      //     !type.Equals(typeof(Elasticsearch.Client)) &&
-      //     // TODO: enable later on
-      //     !type.Equals(typeof(Elasticsearch.HelbOzds.Client)) &&
-      //     !type.Equals(typeof(Elasticsearch.MeasurementFaker.Client)))
-      //   .ForEach(measurementProviderType =>
-      //     services.AddSingleton(
-      //       typeof(IMeasurementProvider),
-      //       measurementProviderType))
-      //   .Run();
-
       services.AddSingleton<
         IMeasurementProvider,
         Elasticsearch.MyEnergyCommunity.Client>();
@@ -185,6 +170,8 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddSingleton<IReceiptMeasurementProvider>(
         s => s.GetRequiredService<Elasticsearch.Client>());
     services.AddSingleton<IDeviceIndexer>(
+        s => s.GetRequiredService<Elasticsearch.Client>());
+    services.AddSingleton<IDashboardMeasurementProvider>(
         s => s.GetRequiredService<Elasticsearch.Client>());
   }
 }
