@@ -19,8 +19,6 @@ using OrchardCore.Taxonomies.Fields;
 using OrchardCore.Taxonomies.Drivers;
 using OrchardCore.Recipes;
 using OrchardCore.Data;
-using Lombiq.HelpfulExtensions.Extensions.CodeGeneration;
-using Ozds.Modules.Members.Utils;
 using Ozds.Modules.Members.PartFieldSettings;
 using Ozds.Modules.Members.Base;
 using Ozds.Elasticsearch;

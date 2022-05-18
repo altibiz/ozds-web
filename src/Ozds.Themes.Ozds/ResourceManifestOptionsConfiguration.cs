@@ -13,27 +13,57 @@ namespace Ozds.Themes.Ozds
       _manifest = new ResourceManifest();
 
       _manifest
-        .DefineScript("ozdstheme-bootstrap-bundle")
-        .SetCdn(
-          "https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js",
-          "https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.js")
-        .SetCdnIntegrity(
-          "sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4",
-          "sha384-zlQmapo6noJSGz1A/oxylOFtN0k8EiXX45sOWv3x9f/RGYG0ECMxTbMao6+OLt2e")
-        .SetVersion("5.0.1");
+        .DefineScript("ozdstheme-global")
+        .SetDependencies("bootstrap")
+        .SetUrl(
+            "~/Ozds.Themes.Ozds/js/scripts.min.js",
+            "~/Ozds.Themes.Ozds/js/scripts.js");
 
       _manifest
-        .DefineScript("ozdstheme-jQuery")
-        .SetCdn(
-          "https://code.jquery.com/jquery-3.4.1.min.js",
-          "https://code.jquery.com/jquery-3.4.1.js")
-        .SetCdnIntegrity(
-          "sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh",
-          "sha384-mlceH9HlqLp7GMKHrj5Ara1+LvdTZVMx4S1U43/NxCvAkzIo8WJ0FE7duLel3wVo")
-        .SetVersion("3.4.1");
+        .DefineStyle("ozdstheme-global")
+        .SetDependencies("ozdstheme-bootstrap", "ozdstheme-fa")
+        .SetUrl(
+            "~/Ozds.Themes.Ozds/css/styles.min.css",
+            "~/Ozds.Themes.Ozds/css/styles.css");
 
       _manifest
-        .DefineScript("ozdstheme-chartjs")
+        .DefineScript("ozdstheme-login")
+        .SetDependencies("ozdstheme-jquery")
+        .SetUrl(
+            "~/Ozds.Themes.Ozds/js/login.min.js",
+            "~/Ozds.Themes.Ozds/js/login.js");
+
+      _manifest
+        .DefineScript("ozdstheme-barcode")
+        .SetDependencies("libbcmath", "bcmath", "pdf417");
+
+      _manifest
+        .DefineScript("libbcmath")
+        .SetCdn(
+          "https://cdn.jsdelivr.net/gh/pkoretic/pdf417-generator@master/lib/libbcmath.min.js",
+          "https://cdn.jsdelivr.net/gh/pkoretic/pdf417-generator@master/lib/libbcmath.js")
+        .SetVersion("master");
+
+      _manifest
+        .DefineScript("bcmath")
+        .SetCdn(
+          "https://cdn.jsdelivr.net/gh/pkoretic/pdf417-generator@master/lib/bcmath.min.js",
+          "https://cdn.jsdelivr.net/gh/pkoretic/pdf417-generator@master/lib/bcmath.js")
+        .SetVersion("master");
+
+      _manifest
+        .DefineScript("pdf417")
+        .SetCdn(
+          "https://cdn.jsdelivr.net/gh/pkoretic/pdf417-generator@master/lib/libbcmath.min.js",
+          "https://cdn.jsdelivr.net/gh/pkoretic/pdf417-generator@master/lib/libbcmath.js")
+        .SetVersion("master");
+
+      _manifest
+        .DefineScript("ozdstheme-chart")
+        .SetDependencies("chartjs");
+
+      _manifest
+        .DefineScript("chartjs")
         .SetCdn(
           "https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js",
           "https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.js")
@@ -43,45 +73,40 @@ namespace Ozds.Themes.Ozds
         .SetVersion("3.7.1");
 
       _manifest
-        .DefineStyle("ozdstheme-bootstrap-oc")
+        .DefineStyle("ozdstheme-fa")
+        .SetDependencies("font-awesome");
+
+      _manifest
+        .DefineStyle("ozdstheme-bootstrap")
+        .SetDependencies("bootstrap")
         .SetUrl(
           "~/Ozds.Themes.Ozds/css/bootstrap-oc.min.css",
-          "~/Ozds.Themes.Ozds/css/bootstrap-oc.css")
-        .SetVersion("1.0.0");
+          "~/Ozds.Themes.Ozds/css/bootstrap-oc.css");
 
       _manifest
-        .DefineScript("ozdstheme")
-        .SetDependencies("ozdstheme-bootstrap-bundle")
-        .SetUrl(
-            "~/Ozds.Themes.Ozds/js/scripts.min.js",
-            "~/Ozds.Themes.Ozds/js/scripts.js")
-        .SetVersion("6.0.0");
+        .DefineScript("ozdstheme-jquery-fileupload")
+        .SetDependencies("ozdstheme-jquery", "jquery-fileupload");
 
       _manifest
-        .DefineScript("ozdstheme-custom")
-        .SetDependencies("ozdstheme-jQuery")
-        .SetUrl("~/Ozds.Themes.Ozds/js/custom.js")
-        .SetVersion("6.0.0");
+        .DefineScript("jquery-fileupload")
+        .SetCdn(
+          "https://cdn.jsdelivr.net/npm/blueimp-file-upload@10.32.0/js/jquery.fileupload.min.js",
+          "https://cdn.jsdelivr.net/npm/blueimp-file-upload@10.32.0/js/jquery.fileupload.js")
+        .SetDependencies(
+            "admin",
+            "vuejs",
+            "sortable",
+            "vuedraggable",
+            "jQuery-ui")
+        .SetVersion("10.32.0");
 
       _manifest
-        .DefineScript("ozdstheme-libbcmath")
-        .SetUrl("~/Ozds.Themes.Ozds/js/libbcmath.js");
+        .DefineScript("ozdstheme-jquery")
+        .SetDependencies("jQuery");
 
       _manifest
-        .DefineScript("ozdstheme-bcmath")
-        .SetUrl("~/Ozds.Themes.Ozds/js/bcmath.js");
-
-      _manifest
-        .DefineScript("ozdstheme-pdf417")
-        .SetUrl("~/Ozds.Themes.Ozds/js/pdf417.js")
-        .SetVersion("1.0.005");
-
-      _manifest
-        .DefineStyle("ozdstheme")
-        .SetUrl(
-            "~/Ozds.Themes.Ozds/css/styles.min.css",
-            "~/Ozds.Themes.Ozds/css/styles.css")
-        .SetVersion("6.0.0");
+        .DefineScript("ozdstheme-codemirror")
+        .SetDependencies("codemirror", "codemirror-mode-javascript");
     }
 
     public void Configure(ResourceManagementOptions options)

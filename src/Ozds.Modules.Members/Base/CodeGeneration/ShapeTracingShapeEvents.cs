@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using OrchardCore.DisplayManagement.Implementation;
 using OrchardCore.DisplayManagement.Shapes;
 
-namespace Ozds.Modules.Members.Utils
+namespace Ozds.Modules.Members
 {
   public class ShapeTracingShapeEvents : IShapeDisplayEvents
   {

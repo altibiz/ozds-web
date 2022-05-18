@@ -10671,6 +10671,12 @@ p img {
   letter-spacing: 0.0625em;
   text-transform: uppercase;
 }
+#mainNav .navbar-nav > li.nav-item > button.nav-link {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.0625em;
+  text-transform: uppercase;
+}
 @media (min-width: 992px) {
   #mainNav {
     border-bottom: 1px solid transparent;
@@ -10686,7 +10692,13 @@ p img {
     color: #fff;
   }
   #mainNav .navbar-nav > li.nav-item > a.nav-link:focus, #mainNav .navbar-nav > li.nav-item > a.nav-link:hover {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(16, 114, 186, 0.8);
+  }
+  #mainNav .navbar-nav > li.nav-item > button.nav-link {
+    color: #fff;
+  }
+  #mainNav .navbar-nav > li.nav-item > button.nav-link:focus, #mainNav .navbar-nav > li.nav-item > button.nav-link:hover {
+    color: rgba(16, 114, 186, 0.8);
   }
 }
 @media (min-width: 992px) {
@@ -10711,10 +10723,16 @@ p img {
   #mainNav.is-fixed .navbar-brand:focus, #mainNav.is-fixed .navbar-brand:hover {
     color: #1072ba;
   }
-  #mainNav.is-fixed .navbar-nav > li.nav-item > a {
+  #mainNav.is-fixed .navbar-nav > li.nav-item > a.nav-link {
     color: #212529;
   }
-  #mainNav.is-fixed .navbar-nav > li.nav-item > a:focus, #mainNav.is-fixed .navbar-nav > li.nav-item > a:hover {
+  #mainNav.is-fixed .navbar-nav > li.nav-item > a.nav-link:focus, #mainNav.is-fixed .navbar-nav > li.nav-item > a.nav-link:hover {
+    color: #1072ba;
+  }
+  #mainNav.is-fixed .navbar-nav > li.nav-item > button.nav-link {
+    color: #212529;
+  }
+  #mainNav.is-fixed .navbar-nav > li.nav-item > button.nav-link:focus, #mainNav.is-fixed .navbar-nav > li.nav-item > button.nav-link:hover {
     color: #1072ba;
   }
   #mainNav.is-visible {

@@ -32,9 +32,15 @@ public abstract class ContentTypeBase<TDerived> :
 // TODO: YesSql integration
 public static class ContentTypeBaseExtensions
 {
+  public static string ContentTypeName(this Type @this) =>
+    @this.Name.RegexRemove("Type$");
+
+  public static string ContentTypeName<T>() =>
+    typeof(T).ContentTypeName();
+
   public static T? AsContent<T>(
       this ContentItem @this) where T : ContentTypeBase =>
-    @this.ContentType != typeof(T).Name.RegexRemove("Type$") ? null
+    @this.ContentType != ContentTypeName<T>() ? null
     : Activator
         .CreateInstance(
           typeof(T),

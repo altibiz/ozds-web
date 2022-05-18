@@ -12,23 +12,29 @@ namespace Ozds.Modules.Members.Pages;
 [Authorize(Roles = "Administrator")]
 public class PrintModel : PageModel
 {
-  public async Task<IActionResult> OnGetAsync(string contentId)
+  public IShape? Print { get; set; }
+
+  public async Task<IActionResult> OnGetAsync(string contentItemId)
   {
-    var content = await ContentManger.GetAsync(contentId);
-    Print = await ContentDisplay.BuildDisplayAsync(
-        content, UpdateModel.ModelUpdater, "Print");
+    Print = await ContentDisplay
+      .BuildDisplayAsync(
+          await ContentManger.GetAsync(contentItemId),
+          UpdateModel.ModelUpdater,
+          "Print");
+
     return Page();
   }
 
-  public IActionResult OnGetDownload(string contentId, string fileName)
-  {
-    fileName = string.IsNullOrWhiteSpace(fileName) ? contentId : fileName;
-    var docUrl = string.Format(
-        "https://{0}/Ozds.Modules.Members/Print/{1}/", Request.Host, contentId);
-    return Redirect(string.Format(DownloadFormat, fileName, docUrl));
-  }
-
-  public IShape? Print { get; set; }
+  public IActionResult OnGetDownload(string contentItemId, string fileName) =>
+    Redirect(
+      string.Format(
+        DownloadFormat,
+        string.IsNullOrWhiteSpace(fileName) ? contentItemId
+        : fileName,
+        string.Format(
+          "https://{0}/Ozds.Modules.Members/Print/{1}/",
+          Request.Host,
+          contentItemId)));
 
 
   public PrintModel(IContentItemDisplayManager contentDisplay,

@@ -19,21 +19,16 @@
   var resetPasswordSettings = siteSettings.As<ResetPasswordSettings>();
   var loginSettings = siteSettings.As<LoginSettings>();
 
-  var externalAuthSchemes = await SignInManager
-      .GetExternalAuthenticationSchemesAsync();
+  var externalAuthenticationSchemes = await SignInManager
+      .GetExternalAuthenticationSchemesAsync()
+      .Then(Enumerable.ToList);
 
 	var userCanRegister =
       registrationSettings.UsersCanRegister ==
       UserRegistrationType.AllowRegistration;
 	var allowResetPassword = resetPasswordSettings.AllowResetPassword;
 	var disableLocalLogin = loginSettings.DisableLocalLogin;
-
-
-	var loginProviders = externalAuthSchemes.ToList();
 }
-
-<style asp-name="font-awesome" version="5"></style>
-<script asp-name="ozdstheme-custom"></script>
 
 @{ Html.RenderPartial("_Header", @T["Log In"].Value); }
 
@@ -42,9 +37,10 @@
     @if (!disableLocalLogin)
     {
       <div class='col-md-6 fs-6
-          @(loginProviders.Count == 0 ? "offset-md-0" : String.Empty)'>
+          @(externalAuthenticationSchemes.Count == 0 ? "offset-md-0"
+            : String.Empty)'>
         <h4>
-          @T["Log in"]
+          @T["Log In"]
         </h4>
 
         <hr />
@@ -56,6 +52,7 @@
             asp-action="Login"
             asp-route-returnurl='@ViewData["ReturnUrl"]'
             method="post"
+            class="mb-4"
             id="auth-form">
           <div asp-validation-summary="All" class="text-danger">
           </div>
@@ -82,7 +79,7 @@
             </label>
           </div>
 
-          <div class="form-check  fs-6 ">
+          <div class="form-check fs-6 mt-4">
             <input
                 asp-for="RememberMe"
                 class="form-check-input"
@@ -93,7 +90,7 @@
             </label>
           </div>
 
-          <div class="form-check  fs-6 ">
+          <div class="form-check fs-6">
             <label
                 asp-for="Password"
                 class="mb-4 fs-6">
@@ -129,7 +126,7 @@
             <hr />
             <div class="form-floating">
               <p>
-                @T["If You still not a member, register"]
+                @T["Register if you are a consumer or center owner"]
               </p>
 
               <a
@@ -145,7 +142,7 @@
       }
     }
 
-    @if (loginProviders.Count > 0)
+    @if (externalAuthenticationSchemes.Count > 0)
     {
       <div class="col-md-6 @(disableLocalLogin ? "offset-md-3" : String.Empty)">
         <section>
@@ -162,21 +159,21 @@
               class="form-horizontal">
             <div>
               <p>
-                @foreach (var provider in loginProviders)
+                @foreach (var scheme in externalAuthenticationSchemes)
                 {
                   <button
                       type="submit"
                       class='btn btn-primary
                         @(disableLocalLogin ? "w-100" : String.Empty)'
-                      name="provider"
-                      value='@provider.Name'
+                      name="scheme"
+                      value='@scheme.Name'
                       title='@(
-                          provider?.DisplayName is not null ?
+                          scheme?.DisplayName is not null ?
                           T["Log in using your {0} account",
-                            provider.DisplayName] :
+                            scheme.DisplayName] :
                           String.Empty
                         )'>
-                    @provider?.DisplayName
+                    @scheme?.DisplayName
                   </button>
                   @if (disableLocalLogin)
                   {
@@ -192,6 +189,8 @@
 	</div>
 </div>
 
+<script asp-name="ozdstheme-login" at="Foot" />
 <script at="Foot">
-	interceptLogin('auth-form', "UserName", "Password")
+  // NOTE: legacy login
+  // window.onload = () => interceptLogin('auth-form', "UserName", "Password");
 </script>

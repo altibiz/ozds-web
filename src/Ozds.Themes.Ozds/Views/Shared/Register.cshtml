@@ -59,10 +59,8 @@
 	</div>
 </form>
 
-<script asp-name="ozdstheme-jQuery" at="Foot">
-</script>
-
-<script at="Foot" depends-on="ozdstheme-jQuery">
+<script asp-name="ozdstheme-jquery" at="Foot" />
+<script at="Foot">
   $('#emailInput').blur(() =>
     $('#nameInput').val(
       $(this).val().replace("@@","_")))

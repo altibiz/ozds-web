@@ -7,21 +7,40 @@
 
 @{
 	ContentItem contentItem = Model.ContentItem;
-	var hasPublished =  await ContentManager.HasPublishedVersionAsync(
+  string contentType = contentItem.ContentType;
+
+	var hasPublished =  await ContentManager
+    .HasPublishedVersionAsync(
       contentItem);
+
 	var hasDraft = contentItem.HasDraft();
-	var hasEditPermission = await AuthorizationService.AuthorizeAsync(
-      User, CommonPermissions.EditContent, contentItem);
-	var hasViewPermission = await AuthorizationService.AuthorizeAsync(
-      User, CommonPermissions.ViewContent, contentItem);
-	var hasPreviewPermission = await AuthorizationService.AuthorizeAsync(
-      User, CommonPermissions.PreviewContent, contentItem);
+
+	var hasEditPermission = await AuthorizationService
+    .AuthorizeAsync(
+      User,
+      CommonPermissions.EditContent,
+      contentItem);
+
+	var hasViewPermission = await AuthorizationService
+    .AuthorizeAsync(
+      User,
+      CommonPermissions.ViewContent,
+      contentItem);
+
+	var hasPreviewPermission = await AuthorizationService
+    .AuthorizeAsync(
+      User,
+      CommonPermissions.PreviewContent,
+      contentItem);
 }
 
 @if (hasEditPermission)
 {
 	<a
-      edit-for="@contentItem"
+      asp-route-area="OrchardCore.Contents"
+      asp-controller="Admin"
+      asp-action="Edit"
+      asp-route-contentItemId="@contentItem.ContentItemId"
       asp-route-returnUrl="@FullRequestPath"
       class="btn btn-sm btn-primary edit">
     <span>
@@ -30,49 +49,49 @@
   </a>
 }
 
-@if (hasPublished && hasViewPermission)
+@if (contentType == "SecondarySite")
 {
-  @if (contentItem.ContentType == "Receipt")
-  {
-    <a
-        href="/Ozds.Modules.Members/Print/@contentItem.ContentItemId"
-        target="_blank"
-        class="btn btn-sm btn-success view">
-      <span>
-        @T["Print"]
-      </span>
-    </a>
-
-    <a
-        href="/Ozds.Modules.Members/Print/@contentItem.ContentItemId/Download"
-        target="_blank"
-        class="btn btn-sm btn-success view">
-      <span>
-        @T["PDF"]
-      </span>
-        </a>
-    }
-    else
-    {
 	<a
-      display-for="@contentItem"
-      target="_blank"
-      class="btn btn-sm btn-success view">
+      asp-route-area="OrchardCore.Contents"
+      asp-controller="Admin"
+      asp-action="Create"
+      asp-route-id="Receipt"
+      asp-route-siteContentItemId="@contentItem.ContentItemId"
+      asp-route-returnUrl="@FullRequestPath"
+      target="_self"
+      class="btn btn-sm btn-primary view">
     <span>
-      @T["View"]
+      @T["Create Receipt"]
     </span>
   </a>
-    }
 }
 
-@if (contentItem.ContentType == "SecondarySite")
+@if (hasPublished && hasViewPermission)
 {
-	<a
-      href="/Admin/Contents/ContentTypes/Receipt/Create?siteContentItemId=@contentItem.ContentItemId"
+  <a
+      asp-route-area="OrchardCore.Contents"
+      asp-controller="Admin"
+      asp-action="Display"
+      asp-route-contentItemId="@contentItem.ContentItemId"
+      asp-route-returnUrl="@FullRequestPath"
       target="_self"
       class="btn btn-sm btn-success view">
     <span>
-      @T["Create Receipt"]
+      @T["Display"]
+    </span>
+  </a>
+
+  <!-- TODO: download controller or route to Azure function -->
+  <a
+      asp-route-area="OrchardCore.Contents"
+      asp-controller="Admin"
+      asp-action="Display"
+      asp-route-contentItemId="@contentItem.ContentItemId"
+      asp-route-returnUrl="@FullRequestPath"
+      target="_blank"
+      class="btn btn-sm btn-success view">
+    <span>
+      @T["Download"]
     </span>
   </a>
 }
@@ -80,12 +99,13 @@
 @if (hasDraft && hasPreviewPermission)
 {
 	<a
-      asp-action="Preview"
-      asp-controller="Item"
       asp-route-area="OrchardCore.Contents"
+      asp-controller="Item"
+      asp-action="Preview"
       asp-route-contentItemId="@contentItem.ContentItemId"
-      target="_blank"
-      class="btn btn-sm btn-primary preview">
+      asp-route-returnUrl="@FullRequestPath"
+      target="_self"
+      class="btn btn-sm btn-secondary preview">
     <span>
       @T["Preview Draft"]
     </span>

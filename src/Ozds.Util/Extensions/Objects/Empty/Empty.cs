@@ -23,12 +23,12 @@ public static partial class Objects
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static bool Empty<T>(
       [NotNullWhen(true)] this IEnumerable<T> @this) =>
-    @this.FirstOrDefault() is null;
+    @this.EmptyEnumerable();
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static bool Empty<T>(
       [NotNullWhen(true)] this IAsyncEnumerable<T> @this) =>
-    @this.FirstOrDefault() is null;
+    @this.EmptyAsyncEnumerable().Result;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static bool Empty<T>(
@@ -49,4 +49,28 @@ public static partial class Objects
   public static async ValueTask<bool> EmptyValueTask<T>(
       [NotNullWhen(true)] this ValueTask<T> @this) =>
     (await @this).Empty();
+
+  [MethodImpl(MethodImplOptions.AggressiveInlining)]
+  public static bool EmptyEnumerable<T>(
+      [NotNullWhen(true)] this IEnumerable<T> @this)
+  {
+    foreach (var item in @this)
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  [MethodImpl(MethodImplOptions.AggressiveInlining)]
+  public static async Task<bool> EmptyAsyncEnumerable<T>(
+      [NotNullWhen(true)] this IAsyncEnumerable<T> @this)
+  {
+    await foreach (var item in @this)
+    {
+      return false;
+    }
+
+    return true;
+  }
 }

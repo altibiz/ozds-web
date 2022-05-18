@@ -46,6 +46,13 @@
         letter-spacing: 0.0625em;
         text-transform: uppercase;
       }
+
+      > button.nav-link {
+        font-size: 0.75rem;
+        font-weight: $headings-font-weight;
+        letter-spacing: 0.0625em;
+        text-transform: uppercase;
+      }
     }
   }
   // Desktop only styling for the navbar
@@ -71,7 +78,16 @@
 
           &:focus,
           &:hover {
-            color: fade-out($white, 0.2);
+            color: fade-out($blue, 0.2);
+          }
+        }
+
+        > button.nav-link {
+          color: $white;
+
+          &:focus,
+          &:hover {
+            color: fade-out($blue, 0.2);
           }
         }
       }
@@ -111,7 +127,16 @@
 
       .navbar-nav {
         > li.nav-item {
-          > a {
+          > a.nav-link {
+            color: $body-color;
+
+            &:focus,
+            &:hover {
+              color: $primary;
+            }
+          }
+
+          > button.nav-link {
             color: $body-color;
 
             &:focus,

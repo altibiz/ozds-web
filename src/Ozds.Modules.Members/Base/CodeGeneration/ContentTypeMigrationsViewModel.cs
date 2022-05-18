@@ -1,4 +1,4 @@
-namespace Lombiq.HelpfulExtensions.Extensions.CodeGeneration
+namespace Ozds.Modules.Members
 {
   public class ContentTypeMigrationsViewModel
   {

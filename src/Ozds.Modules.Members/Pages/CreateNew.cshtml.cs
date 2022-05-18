@@ -34,8 +34,10 @@ public class CreateNewModel : PageModel
 
   public IShape? Shape { get; set; }
 
-  public CreateNewModel(ConsumerService mService, IHtmlLocalizer htmlLocalizer,
-      INotifier notifier)
+  public CreateNewModel(
+    ConsumerService mService,
+    IHtmlLocalizer<CreateNewModel> htmlLocalizer,
+    INotifier notifier)
   {
     Notifier = notifier;
     Members = mService;

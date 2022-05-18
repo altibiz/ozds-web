@@ -6,7 +6,7 @@ using OrchardCore.ContentTypes.Editors;
 using OrchardCore.DisplayManagement.Views;
 using System.Text;
 
-namespace Lombiq.HelpfulExtensions.Extensions.CodeGeneration
+namespace Ozds.Modules.Members
 {
   public class CodeGenerationDisplayDriver
       : ContentTypeDefinitionDisplayDriver

@@ -14,6 +14,7 @@
     .Then(siteSettings => siteSettings
       .As<ChangeEmailSettings>()
       .AllowChangeEmail);
+
   var externalAuthenticationSchemes = await SignInManager
     .GetExternalAuthenticationSchemesAsync();
 }
@@ -21,29 +22,81 @@
 <ul class="navbar-nav">
   @if (User?.Identity?.IsAuthenticated ?? false)
   {
-    <li class="nav-item ">
+    @if (User.HasClaim("Permission", "AccessAdminPanel"))
+    {
+      <li class="nav-item dropdown">
+        <a
+            class="dropdown-item nav-link"
+            asp-route-area="OrchardCore.Admin"
+            asp-controller="Admin"
+            asp-action="Index">
+          <i class="fa fa-desktop fa-fw" aria-hidden="true"></i>
+          @T["Admin"]
+        </a>
+      </li>
+    }
+    @if (allowChangeEmail)
+    {
+      <li class="nav-item dropdown">
+        <a
+            class="dropdown-item nav-link"
+            asp-route-area="OrchardCore.Users"
+            asp-controller="ChangeEmail"
+            asp-action="Index">
+          <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>
+          @T["Change Email"]
+        </a>
+      </li>
+    }
+    <li class="nav-item dropdown">
       <a
-          class="nav-link px-lg-3 py-3 py-lg-4"
-          href="/Ozds.Modules.Members">
-        @T["Members"]
+          class="dropdown-item nav-link"
+          asp-route-area="OrchardCore.Users"
+          asp-controller="Account"
+          asp-action="ChangePassword"
+          asp-route-returnUrl="@FullRequestPath">
+        <i class="fa fa-lock fa-fw" aria-hidden="true"></i>
+        @T["Change Password"]
       </a>
     </li>
-    <li class="nav-item">
-      <a
-          class="nav-link px-lg-3 py-3 py-lg-4"
-          href="/Ozds.Modules.Members/LogOut" >
-        <i class="fa fa-sign-out-alt fa-fw"></i>
-        @T["Log out"]
-      </a>
+    @if (externalAuthenticationSchemes.Count() > 0)
+    {
+      <li class="nav-item dropdown">
+        <a
+            class="dropdown-item nav-link"
+            asp-route-area="OrchardCore.Users"
+            asp-controller="Account"
+            asp-action="ExternalLogins">
+          <i class="fa fa-user-lock fa-fw" aria-hidden="true"></i>
+          @T["External Logins"]
+        </a>
+      </li>
+    }
+    <li class="nav-item dropdown">
+      <form
+          asp-route-area="OrchardCore.Users"
+          asp-controller="Account"
+          asp-action="LogOff"
+          method="post">
+        <button
+            type="submit"
+            class="dropdown-item nav-link">
+          <i class="fa fa-sign-out-alt fa-fw" aria-hidden="true"></i>
+          @T["Log off"]
+        </button>
+      </form>
     </li>
   }
   else
   {
     <li class="nav-item">
       <a
-          class="nav-link px-lg-3 py-3 py-lg-4"
-          href="/LogIn">
-        @T["Log in"]
+          class="nav-link"
+          asp-route-area="OrchardCore.Users"
+          asp-controller="Account"
+          asp-action="Login">
+        <i class="fa fa-sign-in-alt fa-fw" aria-hidden="true"></i>
+          @T["Log in"]
       </a>
     </li>
   }

@@ -77,3 +77,7 @@ msgstr "Kreiraj račun"
 msgctxt "Ozds.Modules.Members.Views.AdminDashboard"
 msgid "Welcome to HELB OZDS Admin pages"
 msgstr "Dobrodošli na administratorske stranice HELB OZDS-a"
+
+msgctxt "Ozds.Modules.Members.Views.Dashboard"
+msgid "Dashboard"
+msgstr "Upravljačka ploča"

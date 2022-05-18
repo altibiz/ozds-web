@@ -89,7 +89,7 @@ public sealed partial class Client : IClient
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.Id, deviceId))
+        .Term(t => t.DeviceId, deviceId))
       .Index(MeasurementIndexName));
 
   public ISearchResponse<Measurement>
@@ -102,7 +102,7 @@ public sealed partial class Client : IClient
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.Id, deviceId))
+        .Term(t => t.DeviceId, deviceId))
       .Index(MeasurementIndexName));
 
   public Task<ISearchResponse<Measurement>>
@@ -115,7 +115,7 @@ public sealed partial class Client : IClient
               period?.From ?? DateTime.MinValue.ToUniversalTime())
             .LessThanOrEquals(
               period?.To ?? DateTime.UtcNow)) && q
-          .Term(t => t.Id, deviceId))
+          .Term(t => t.DeviceId, deviceId))
         .Sort(s => s.Descending(h => h.MeasurementTimestamp))
         .Index(MeasurementIndexName));
 
@@ -129,7 +129,7 @@ public sealed partial class Client : IClient
               period?.From ?? DateTime.MinValue.ToUniversalTime())
             .LessThanOrEquals(
               period?.To ?? DateTime.UtcNow)) && q
-          .Term(t => t.Id, deviceId))
+          .Term(t => t.DeviceId, deviceId))
         .Sort(s => s.Descending(h => h.MeasurementTimestamp))
         .Index(MeasurementIndexName));
 }

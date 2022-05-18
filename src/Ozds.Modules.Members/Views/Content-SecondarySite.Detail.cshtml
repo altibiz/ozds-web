@@ -1,0 +1,17 @@
+@using OrchardCore.ContentManagement
+@using Ozds.Modules.Members
+@using Ozds.Util
+
+@{
+  ContentItem contentItem = Model.ContentItem;
+  SecondarySiteType site = contentItem
+    .AsContent<SecondarySiteType>()
+    .ThrowWhenNull();
+}
+
+<h2>
+  <span>
+    @(T["Site"]):
+    @site.Site.Value.DeviceId.Text
+  </span>
+</h2>

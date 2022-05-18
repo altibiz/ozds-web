@@ -19,9 +19,8 @@
         rel="stylesheet"
         type="text/css">
 
-    <style asp-name="font-awesome" version="5" at="Head" />
-    <style asp-name="ozdstheme" />
-    <style asp-name="ozdstheme-bootstrap-oc" version="1" />
+    <style asp-name="ozdstheme-global"></style>
+    <script asp-name="ozdstheme-global"></script>
 
     <resources type="Meta" />
     <resources type="HeadLink" />
@@ -32,7 +31,7 @@
 
   <body dir="@Orchard.CultureDir()">
     @await RenderSectionAsync("Header", required: false)
-    <div class="container px-4 px-lg-5 mb-4" style="margin-top: 10px">
+    <div class="container px-4 px-lg-5 my-4">
       @await RenderBodyAsync()
     </div>
   </body>
