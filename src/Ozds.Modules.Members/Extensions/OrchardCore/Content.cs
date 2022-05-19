@@ -64,6 +64,9 @@ public static partial class ContentExtensions
         value
       };
 
+  public static void Apply(this ContentElement element, string name) =>
+    element.ContentItem.Apply(name, element);
+
   public static IEnumerable<T> AsParts<T>(
       this IEnumerable<ContentItem> items) where T : ContentPart =>
     items.Select(x => ContentItemExtensions.As<T>(x));

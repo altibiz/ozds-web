@@ -2,12 +2,12 @@
   "steps": [
     {
       "name": "content",
-      "Data": [
+      "data": [
         {
           "ContentItemId": "4ja5m1709h556t5ntpn02jndwm",
           "ContentItemVersionId": "4ngm18kgnfr6v05ptz0evdmknm",
           "ContentType": "Page",
-          "DisplayText": "Početna",
+          "DisplayText": "HELB OZDS",
           "Latest": true,
           "Published": true,
           "ModifiedUtc": "2022-04-27T12:42:24.3503146Z",
@@ -16,11 +16,11 @@
           "Owner": "4q3c4b6g2d4tbr2ag8z5a6sxnv",
           "Author": "admin",
           "TitlePart": {
-            "Title": "OZDS"
+            "Title": "HELB OZDS"
           },
           "Page": {},
           "HtmlBodyPart": {
-            "Html": "<h1>Dobrodošli na početnu stranicu HELB OZDS-a</h1>"
+            "Html": "<h1>Dobrodošli na stranice HELB OZDS-a</h1>"
           }
         }
       ]

@@ -16,13 +16,11 @@ public static partial class Enumerables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<object> Run<TValue>(
+  public static async Task Run<TValue>(
       this IAsyncEnumerable<TValue> @this)
   {
     await foreach (var _ in @this)
     {
     }
-
-    return new { };
   }
 }

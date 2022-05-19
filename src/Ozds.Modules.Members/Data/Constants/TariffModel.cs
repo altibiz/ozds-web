@@ -1,3 +1,5 @@
+using OrchardCore.Taxonomies.Fields;
+
 namespace Ozds.Modules.Members;
 
 public static class TariffModel
@@ -14,4 +16,9 @@ public static class TariffModel
       this TaxonomyCacheService taxonomy,
       string termId) =>
     taxonomy.GetTerm<TagType>(ContentItemId, termId);
+
+  public static Task<TagType?> GetTariffModel(
+      this TaxonomyCacheService taxonomy,
+      TaxonomyField field) =>
+    taxonomy.GetTariffModel(field.TermContentItemIds[0]);
 }

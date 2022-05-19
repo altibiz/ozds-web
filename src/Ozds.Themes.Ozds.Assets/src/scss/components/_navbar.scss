@@ -47,7 +47,7 @@
         text-transform: uppercase;
       }
 
-      > button.nav-link {
+      > form > button.nav-link {
         font-size: 0.75rem;
         font-weight: $headings-font-weight;
         letter-spacing: 0.0625em;
@@ -82,7 +82,7 @@
           }
         }
 
-        > button.nav-link {
+        > form > button.nav-link {
           color: $white;
 
           &:focus,
@@ -136,7 +136,7 @@
             }
           }
 
-          > button.nav-link {
+          > form > button.nav-link {
             color: $body-color;
 
             &:focus,

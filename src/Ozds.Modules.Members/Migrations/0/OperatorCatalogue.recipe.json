@@ -2,576 +2,21 @@
   "steps": [
     {
       "name": "content",
-      "Data": [
-        {
-          "ContentItemId": "468ng0rw168cp78ssaecqh3adn",
-          "ContentItemVersionId": "4xzvscf3x1yjn1zm4nwxz2vh4y",
-          "ContentType": "Catalogue",
-          "DisplayText": "",
-          "Latest": true,
-          "Published": true,
-          "ModifiedUtc": "2022-05-10T12:33:00.5726576Z",
-          "PublishedUtc": "2022-05-10T12:33:00.9430724Z",
-          "CreatedUtc": "2022-05-10T12:31:22.4259639Z",
-          "Owner": "42q2dfhm98xj9wddjvs45g9zmw",
-          "Author": "admin",
-          "TitlePart": {
-            "Title": ""
-          },
-          "Catalogue": {
-            "TariffModel": {
-              "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
-              "TermContentItemIds": ["4g4m7xhxj84na3xf49ks1ty7d5"]
-            }
-          },
-          "Items": {
-            "ContentItems": [
-              {
-                "ContentItemId": "4p9r3dh87q43fr9g68tbgqsnna",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T12:33:00.5755217Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": "",
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4mw0ncthn1aq4r5k6cqfk19yw3"]
-                  },
-                  "Price": {
-                    "Value": 0.04
-                  }
-                }
-              },
-              {
-                "ContentItemId": "43nzwrb16szsns45nc638vky41",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T12:33:00.6681353Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": "",
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4cqexne8f6j3sv77ewvydhxzn8"]
-                  },
-                  "Price": {
-                    "Value": 0.02
-                  }
-                }
-              },
-              {
-                "ContentItemId": "4xv093d2ha5ax4wamekqw3ef4a",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T12:33:00.7570849Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": "",
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4fpzdpa1c1mdjsef4j21wnd9x7"]
-                  },
-                  "Price": {
-                    "Value": 14.0
-                  }
-                }
-              },
-              {
-                "ContentItemId": "4dya8e50x50crwqgbsg7sbf345",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T12:33:00.8446857Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": "",
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
-                  },
-                  "Price": {
-                    "Value": 68.0
-                  }
-                }
-              }
-            ]
-          }
-        },
-        {
-          "ContentItemId": "46etp0evtyaa6rpsgk0kfdr9nf",
-          "ContentItemVersionId": "4f6jt42t9de5tr70n4y6jf86wr",
-          "ContentType": "Catalogue",
-          "DisplayText": "",
-          "Latest": true,
-          "Published": true,
-          "ModifiedUtc": "2022-05-10T12:59:12.9218998Z",
-          "PublishedUtc": "2022-05-10T12:59:12.9845744Z",
-          "CreatedUtc": "2022-05-10T12:59:12.9218998Z",
-          "Owner": "42q2dfhm98xj9wddjvs45g9zmw",
-          "Author": "admin",
-          "TitlePart": {
-            "Title": ""
-          },
-          "Catalogue": {
-            "TariffModel": {
-              "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
-              "TermContentItemIds": ["46k372fszexy61xan98qkz42w0"]
-            }
-          },
-          "Items": {
-            "ContentItems": [
-              {
-                "ContentItemId": "4cab3yh8s4z0a69aph8qcwvewh",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T12:59:12.3315579Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4mw0ncthn1aq4r5k6cqfk19yw3"]
-                  },
-                  "Price": {
-                    "Value": 0.14
-                  }
-                }
-              },
-              {
-                "ContentItemId": "404swhkmh11f63yj2vfwnc6exr",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T12:59:12.6077573Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4cqexne8f6j3sv77ewvydhxzn8"]
-                  },
-                  "Price": {
-                    "Value": 0.07
-                  }
-                }
-              },
-              {
-                "ContentItemId": "4ddqerv4f3b2t22r5zzytpqfdx",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T12:59:12.6975702Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4fpzdpa1c1mdjsef4j21wnd9x7"]
-                  },
-                  "Price": {
-                    "Value": 26.0
-                  }
-                }
-              },
-              {
-                "ContentItemId": "4d4kwydf769xrykmc0rp0xdcc2",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T12:59:12.7885537Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
-                  },
-                  "Price": {
-                    "Value": 66.0
-                  }
-                }
-              }
-            ]
-          }
-        },
-        {
-          "ContentItemId": "4z8pmcx911avk5xkxm6wr4w9wh",
-          "ContentItemVersionId": "4j5qb65b1v900sqbm2az1a7bna",
-          "ContentType": "Catalogue",
-          "DisplayText": "",
-          "Latest": true,
-          "Published": true,
-          "ModifiedUtc": "2022-05-10T13:03:59.4053536Z",
-          "PublishedUtc": "2022-05-10T13:03:59.4085144Z",
-          "CreatedUtc": "2022-05-10T13:03:59.4053536Z",
-          "Owner": "42q2dfhm98xj9wddjvs45g9zmw",
-          "Author": "admin",
-          "TitlePart": {
-            "Title": ""
-          },
-          "Catalogue": {
-            "TariffModel": {
-              "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
-              "TermContentItemIds": ["41vr9sy8ap5ntvbkj74zbw6749"]
-            }
-          },
-          "Items": {
-            "ContentItems": [
-              {
-                "ContentItemId": "4bje035my943fzc1r9z51zz04x",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T13:03:59.228591Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["44vg6aarzp3ayv2praq3t17pce"]
-                  },
-                  "Price": {
-                    "Value": 0.31
-                  }
-                }
-              },
-              {
-                "ContentItemId": "4zqsdzrr4hpavsymgvbmsmqcwr",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T13:03:59.3224181Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
-                  },
-                  "Price": {
-                    "Value": 41.3
-                  }
-                }
-              }
-            ]
-          }
-        },
-        {
-          "ContentItemId": "4hyntwsawqkety42v8q4dgphn7",
-          "ContentItemVersionId": "4s19b8jbqjvwtzg7v3mqgv8rdp",
-          "ContentType": "Catalogue",
-          "DisplayText": "",
-          "Latest": true,
-          "Published": true,
-          "ModifiedUtc": "2022-05-10T13:07:30.2765146Z",
-          "PublishedUtc": "2022-05-10T13:07:30.2794685Z",
-          "CreatedUtc": "2022-05-10T13:07:30.2765146Z",
-          "Owner": "42q2dfhm98xj9wddjvs45g9zmw",
-          "Author": "admin",
-          "TitlePart": {
-            "Title": ""
-          },
-          "Catalogue": {
-            "TariffModel": {
-              "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
-              "TermContentItemIds": ["4w9hx6bgrmj70wdky9pcp9e1mz"]
-            }
-          },
-          "Items": {
-            "ContentItems": [
-              {
-                "ContentItemId": "4e2wqe8644haa5bwmmd3x8wn5y",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T13:07:30.027949Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4mw0ncthn1aq4r5k6cqfk19yw3"]
-                  },
-                  "Price": {
-                    "Value": 0.39
-                  }
-                }
-              },
-              {
-                "ContentItemId": "4n321nh182cy6vq004p6c0bqc5",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T13:07:30.1144666Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4cqexne8f6j3sv77ewvydhxzn8"]
-                  },
-                  "Price": {
-                    "Value": 0.17
-                  }
-                }
-              },
-              {
-                "ContentItemId": "4dejsbg796b4vr1fhybkcwb3md",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T13:07:30.1955585Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
-                  },
-                  "Price": {
-                    "Value": 41.3
-                  }
-                }
-              }
-            ]
-          }
-        },
-        {
-          "ContentItemId": "403658syw0s92swkkevr7h67cs",
-          "ContentItemVersionId": "4jyysdcc6ybm36pwm76n594rm6",
-          "ContentType": "Catalogue",
-          "DisplayText": "",
-          "Latest": true,
-          "Published": true,
-          "ModifiedUtc": "2022-05-10T13:18:43.7570238Z",
-          "PublishedUtc": "2022-05-10T13:18:43.7599259Z",
-          "CreatedUtc": "2022-05-10T13:18:43.7570238Z",
-          "Owner": "42q2dfhm98xj9wddjvs45g9zmw",
-          "Author": "admin",
-          "TitlePart": {
-            "Title": ""
-          },
-          "Catalogue": {
-            "TariffModel": {
-              "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
-              "TermContentItemIds": ["4bypnkrf7e4ng3q59x732vgq5t"]
-            }
-          },
-          "Items": {
-            "ContentItems": [
-              {
-                "ContentItemId": "4bx0am264jkrqx1hjjnzavmxnk",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T13:18:43.4033379Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4mw0ncthn1aq4r5k6cqfk19yw3"]
-                  },
-                  "Price": {
-                    "Value": 0.22
-                  }
-                }
-              },
-              {
-                "ContentItemId": "4mht1grd8t00k43jm9s64d48w5",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T13:18:43.4866109Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4cqexne8f6j3sv77ewvydhxzn8"]
-                  },
-                  "Price": {
-                    "Value": 0.1
-                  }
-                }
-              },
-              {
-                "ContentItemId": "44z48wk90k5f1xejaww6j8fpwd",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T13:18:43.5985886Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4fpzdpa1c1mdjsef4j21wnd9x7"]
-                  },
-                  "Price": {
-                    "Value": 39.0
-                  }
-                }
-              },
-              {
-                "ContentItemId": "4e50eq6h3dg5e6as9dtcpyp0c2",
-                "ContentItemVersionId": null,
-                "ContentType": "CatalogueItem",
-                "DisplayText": "",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-10T13:18:43.6768737Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
-                },
-                "CatalogueItem": {
-                  "TariffElement": {
-                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
-                    "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
-                  },
-                  "Price": {
-                    "Value": 41.3
-                  }
-                }
-              }
-            ]
-          }
-        },
+      "data": [
         {
           "ContentItemId": "4tnr9dxj784q607fvxdbgeq6nx",
-          "ContentItemVersionId": "4f7hk96phhn3d53hybg21e86mk",
+          "ContentItemVersionId": "47z3ng7j97xzav8k66058gmmc1",
           "ContentType": "Catalogue",
-          "DisplayText": "",
+          "DisplayText": "Žuti (JR)",
           "Latest": true,
           "Published": true,
-          "ModifiedUtc": "2022-05-10T13:20:03.0656405Z",
-          "PublishedUtc": "2022-05-10T13:20:03.0683014Z",
+          "ModifiedUtc": "2022-05-19T13:32:49.1495331Z",
+          "PublishedUtc": "2022-05-19T13:32:49.1931596Z",
           "CreatedUtc": "2022-05-10T13:20:03.0656405Z",
           "Owner": "42q2dfhm98xj9wddjvs45g9zmw",
           "Author": "admin",
           "TitlePart": {
-            "Title": ""
+            "Title": "Žuti (JR)"
           },
           "Catalogue": {
             "TariffModel": {
@@ -585,16 +30,16 @@
                 "ContentItemId": "4vgb3jw6hjv1n7zbq06n9bp8wr",
                 "ContentItemVersionId": null,
                 "ContentType": "CatalogueItem",
-                "DisplayText": "",
+                "DisplayText": "Radna energija - JT",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2022-05-10T13:20:02.9013846Z",
+                "ModifiedUtc": "2022-05-19T13:32:49.1766436Z",
                 "PublishedUtc": null,
                 "CreatedUtc": null,
-                "Owner": null,
+                "Owner": "",
                 "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
+                "Title": {
+                  "Title": null
                 },
                 "CatalogueItem": {
                   "TariffElement": {
@@ -604,22 +49,25 @@
                   "Price": {
                     "Value": 0.24
                   }
+                },
+                "TitlePart": {
+                  "Title": "Radna energija - JT"
                 }
               },
               {
                 "ContentItemId": "4vtwq6wrx4jfy1v95jtvh6t1xx",
                 "ContentItemVersionId": null,
                 "ContentType": "CatalogueItem",
-                "DisplayText": "",
+                "DisplayText": "Naknada za obračunsko mjerno mjesto - NOMM",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2022-05-10T13:20:02.9843134Z",
+                "ModifiedUtc": "2022-05-19T13:32:49.1868977Z",
                 "PublishedUtc": null,
                 "CreatedUtc": null,
-                "Owner": null,
+                "Owner": "",
                 "Author": "admin",
-                "TitlePart": {
-                  "Title": ""
+                "Title": {
+                  "Title": null
                 },
                 "CatalogueItem": {
                   "TariffElement": {
@@ -629,6 +77,615 @@
                   "Price": {
                     "Value": 15.45
                   }
+                },
+                "TitlePart": {
+                  "Title": "Naknada za obračunsko mjerno mjesto - NOMM"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "ContentItemId": "403658syw0s92swkkevr7h67cs",
+          "ContentItemVersionId": "4v4t3bq5xd7q6vj7mamhz8g6n6",
+          "ContentType": "Catalogue",
+          "DisplayText": "Crveni",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-05-19T13:33:43.8562028Z",
+          "PublishedUtc": "2022-05-19T13:33:43.8733417Z",
+          "CreatedUtc": "2022-05-10T13:18:43.7570238Z",
+          "Owner": "42q2dfhm98xj9wddjvs45g9zmw",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Crveni"
+          },
+          "Catalogue": {
+            "TariffModel": {
+              "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
+              "TermContentItemIds": ["4bypnkrf7e4ng3q59x732vgq5t"]
+            }
+          },
+          "Items": {
+            "ContentItems": [
+              {
+                "ContentItemId": "4bx0am264jkrqx1hjjnzavmxnk",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Radna energija - VT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:33:43.8590436Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4mw0ncthn1aq4r5k6cqfk19yw3"]
+                  },
+                  "Price": {
+                    "Value": 0.22
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Radna energija - VT"
+                }
+              },
+              {
+                "ContentItemId": "4mht1grd8t00k43jm9s64d48w5",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Radna energija - NT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:33:43.8632251Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4cqexne8f6j3sv77ewvydhxzn8"]
+                  },
+                  "Price": {
+                    "Value": 0.1
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Radna energija - NT"
+                }
+              },
+              {
+                "ContentItemId": "44z48wk90k5f1xejaww6j8fpwd",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Radna snaga - SVT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:33:43.8659725Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4fpzdpa1c1mdjsef4j21wnd9x7"]
+                  },
+                  "Price": {
+                    "Value": 39.0
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Radna snaga - SVT"
+                }
+              },
+              {
+                "ContentItemId": "4e50eq6h3dg5e6as9dtcpyp0c2",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Naknada za obračunsko mjerno mjesto - NOMM",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:33:43.8689277Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
+                  },
+                  "Price": {
+                    "Value": 41.3
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Naknada za obračunsko mjerno mjesto - NOMM"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "ContentItemId": "4hyntwsawqkety42v8q4dgphn7",
+          "ContentItemVersionId": "44yhnfw0ptydpt0tqkcz0w1m5j",
+          "ContentType": "Catalogue",
+          "DisplayText": "Bijeli NN",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-05-19T13:33:49.8892863Z",
+          "PublishedUtc": "2022-05-19T13:33:49.9026916Z",
+          "CreatedUtc": "2022-05-10T13:07:30.2765146Z",
+          "Owner": "42q2dfhm98xj9wddjvs45g9zmw",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Bijeli NN"
+          },
+          "Catalogue": {
+            "TariffModel": {
+              "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
+              "TermContentItemIds": ["4w9hx6bgrmj70wdky9pcp9e1mz"]
+            }
+          },
+          "Items": {
+            "ContentItems": [
+              {
+                "ContentItemId": "4e2wqe8644haa5bwmmd3x8wn5y",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Radna energija - VT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:33:49.8919709Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4mw0ncthn1aq4r5k6cqfk19yw3"]
+                  },
+                  "Price": {
+                    "Value": 0.39
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Radna energija - VT"
+                }
+              },
+              {
+                "ContentItemId": "4n321nh182cy6vq004p6c0bqc5",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Radna energija - NT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:33:49.8953313Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4cqexne8f6j3sv77ewvydhxzn8"]
+                  },
+                  "Price": {
+                    "Value": 0.17
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Radna energija - NT"
+                }
+              },
+              {
+                "ContentItemId": "4dejsbg796b4vr1fhybkcwb3md",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Naknada za obračunsko mjerno mjesto - NOMM",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:33:49.89789Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
+                  },
+                  "Price": {
+                    "Value": 41.3
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Naknada za obračunsko mjerno mjesto - NOMM"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "ContentItemId": "4z8pmcx911avk5xkxm6wr4w9wh",
+          "ContentItemVersionId": "4emznj2pkbb5kwtz8v47zchqxk",
+          "ContentType": "Catalogue",
+          "DisplayText": "Plavi",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-05-19T13:33:56.4641535Z",
+          "PublishedUtc": "2022-05-19T13:33:56.4743292Z",
+          "CreatedUtc": "2022-05-10T13:03:59.4053536Z",
+          "Owner": "42q2dfhm98xj9wddjvs45g9zmw",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Plavi"
+          },
+          "Catalogue": {
+            "TariffModel": {
+              "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
+              "TermContentItemIds": ["41vr9sy8ap5ntvbkj74zbw6749"]
+            }
+          },
+          "Items": {
+            "ContentItems": [
+              {
+                "ContentItemId": "4bje035my943fzc1r9z51zz04x",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Radna energija - JT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:33:56.4670462Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["44vg6aarzp3ayv2praq3t17pce"]
+                  },
+                  "Price": {
+                    "Value": 0.31
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Radna energija - JT"
+                }
+              },
+              {
+                "ContentItemId": "4zqsdzrr4hpavsymgvbmsmqcwr",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Naknada za obračunsko mjerno mjesto - NOMM",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:33:56.4704674Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
+                  },
+                  "Price": {
+                    "Value": 41.3
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Naknada za obračunsko mjerno mjesto - NOMM"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "ContentItemId": "46etp0evtyaa6rpsgk0kfdr9nf",
+          "ContentItemVersionId": "4c9d125f34h17y3c35kw3af5my",
+          "ContentType": "Catalogue",
+          "DisplayText": "Bijeli SN",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-05-19T13:34:07.0634991Z",
+          "PublishedUtc": "2022-05-19T13:34:07.0807137Z",
+          "CreatedUtc": "2022-05-10T12:59:12.9218998Z",
+          "Owner": "42q2dfhm98xj9wddjvs45g9zmw",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Bijeli SN"
+          },
+          "Catalogue": {
+            "TariffModel": {
+              "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
+              "TermContentItemIds": ["46k372fszexy61xan98qkz42w0"]
+            }
+          },
+          "Items": {
+            "ContentItems": [
+              {
+                "ContentItemId": "4cab3yh8s4z0a69aph8qcwvewh",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Radna energija - VT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:34:07.0667175Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4mw0ncthn1aq4r5k6cqfk19yw3"]
+                  },
+                  "Price": {
+                    "Value": 0.14
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Radna energija - VT"
+                }
+              },
+              {
+                "ContentItemId": "404swhkmh11f63yj2vfwnc6exr",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Radna energija - NT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:34:07.0703481Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4cqexne8f6j3sv77ewvydhxzn8"]
+                  },
+                  "Price": {
+                    "Value": 0.07
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Radna energija - NT"
+                }
+              },
+              {
+                "ContentItemId": "4ddqerv4f3b2t22r5zzytpqfdx",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Radna snaga - SVT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:34:07.0731509Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4fpzdpa1c1mdjsef4j21wnd9x7"]
+                  },
+                  "Price": {
+                    "Value": 26.0
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Radna snaga - SVT"
+                }
+              },
+              {
+                "ContentItemId": "4d4kwydf769xrykmc0rp0xdcc2",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Naknada za obračunsko mjerno mjesto - NOMM",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:34:07.0760103Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
+                  },
+                  "Price": {
+                    "Value": 66.0
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Naknada za obračunsko mjerno mjesto - NOMM"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "ContentItemId": "468ng0rw168cp78ssaecqh3adn",
+          "ContentItemVersionId": "48evhjfjqetnp36c0647r7fhcm",
+          "ContentType": "Catalogue",
+          "DisplayText": "Bijeli VN",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-05-19T13:34:10.2359044Z",
+          "PublishedUtc": "2022-05-19T13:34:10.252477Z",
+          "CreatedUtc": "2022-05-10T12:31:22.4259639Z",
+          "Owner": "42q2dfhm98xj9wddjvs45g9zmw",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Bijeli VN"
+          },
+          "Catalogue": {
+            "TariffModel": {
+              "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca",
+              "TermContentItemIds": ["4g4m7xhxj84na3xf49ks1ty7d5"]
+            }
+          },
+          "Items": {
+            "ContentItems": [
+              {
+                "ContentItemId": "4p9r3dh87q43fr9g68tbgqsnna",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Radna energija - VT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:34:10.2384908Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4mw0ncthn1aq4r5k6cqfk19yw3"]
+                  },
+                  "Price": {
+                    "Value": 0.04
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Radna energija - VT"
+                }
+              },
+              {
+                "ContentItemId": "43nzwrb16szsns45nc638vky41",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Radna energija - NT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:34:10.2418629Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4cqexne8f6j3sv77ewvydhxzn8"]
+                  },
+                  "Price": {
+                    "Value": 0.02
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Radna energija - NT"
+                }
+              },
+              {
+                "ContentItemId": "4xv093d2ha5ax4wamekqw3ef4a",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Radna snaga - SVT",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:34:10.2446169Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4fpzdpa1c1mdjsef4j21wnd9x7"]
+                  },
+                  "Price": {
+                    "Value": 14.0
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Radna snaga - SVT"
+                }
+              },
+              {
+                "ContentItemId": "4dya8e50x50crwqgbsg7sbf345",
+                "ContentItemVersionId": null,
+                "ContentType": "CatalogueItem",
+                "DisplayText": "Naknada za obračunsko mjerno mjesto - NOMM",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-19T13:34:10.2474543Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": "",
+                "Author": "admin",
+                "Title": {
+                  "Title": null
+                },
+                "CatalogueItem": {
+                  "TariffElement": {
+                    "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
+                    "TermContentItemIds": ["4eexj7kgkdww3rpcavx5mxw3da"]
+                  },
+                  "Price": {
+                    "Value": 68.0
+                  }
+                },
+                "TitlePart": {
+                  "Title": "Naknada za obračunsko mjerno mjesto - NOMM"
                 }
               }
             ]

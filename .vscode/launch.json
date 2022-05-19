@@ -14,13 +14,10 @@
             "args": [],
             "cwd": "${workspaceFolder}/src/Ozds.Web",
             "stopAtEntry": false,
-            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "DOTNET_ENVIRONMENT": "Development",
+                "ORCHARD_APP_DATA": "${workspaceFolder}/App_Data",
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"

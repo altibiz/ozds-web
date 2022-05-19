@@ -1,6 +1,7 @@
+using OrchardCore.Taxonomies.Fields;
+
 namespace Ozds.Modules.Members;
 
-// TODO: GreenFee, BusinessFee
 public static class TariffElement
 {
   public const string ContentItemId = "4v6ax991xqge9wyk8g6z4e6vn4";
@@ -16,4 +17,9 @@ public static class TariffElement
       this TaxonomyCacheService taxonomy,
       string termId) =>
     taxonomy.GetTerm<TariffTagType>(ContentItemId, termId);
+
+  public static Task<TariffTagType?> GetTariffElement(
+      this TaxonomyCacheService taxonomy,
+      TaxonomyField field) =>
+    taxonomy.GetTariffElement(field.TermContentItemIds[0]);
 }

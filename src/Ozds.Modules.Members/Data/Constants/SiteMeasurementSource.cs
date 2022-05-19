@@ -1,3 +1,5 @@
+using OrchardCore.Taxonomies.Fields;
+
 using Ozds.Util;
 
 namespace Ozds.Modules.Members;
@@ -13,6 +15,11 @@ public static class SiteMeasurementSource
       this TaxonomyCacheService taxonomy,
       string termId) =>
     taxonomy.GetTerm<TagType>(ContentItemId, termId);
+
+  public static Task<TagType?> GetSiteStatus(
+      this TaxonomyCacheService taxonomy,
+      TaxonomyField field) =>
+    taxonomy.GetSiteStatus(field.TermContentItemIds[0]);
 
   public static string? GetElasticsearchSource(
       string termId) =>

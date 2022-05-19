@@ -44,13 +44,13 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddContentPart<Consumer>();
     services.AddScoped<ConsumerService>();
     services.AddContentPart<Center>();
-    services.AddContentPart<ReceiptItem>();
+    services.AddContentPart<Catalogue>();
+    services.AddContentPart<CatalogueItem>();
     services.AddContentPart<Receipt>();
     services.AddScoped<IScopedIndexProvider, ReceiptIndexProvider>();
     services.AddScoped<IContentHandler, ReceiptCreator>();
+    services.AddContentPart<ReceiptItem>();
     services.AddContentPart<Calculation>();
-    services.AddContentPart<Catalogue>();
-    services.AddContentPart<CatalogueItem>();
     services.AddContentPart<Expenditure>();
     services.AddContentPart<ExpenditureItem>();
 

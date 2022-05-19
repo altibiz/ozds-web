@@ -1,9 +1,13 @@
 @using OrchardCore.ContentManagement
 
-@await Orchard.DisplayAsync(Model.ContentItem as ContentItem, "Detail")
+@{
+  ContentItem contentItem = Model.ContentItem;
+}
+
+@await Orchard.DisplayAsync(contentItem, "Brief")
 
 <h3>
-  @(T["Print"].Value):
+  @T["Print"]
 </h3>
 
-@await Orchard.DisplayAsync(Model.ContentItem as ContentItem, "Print")
+@await Orchard.DisplayAsync(contentItem, "Print")

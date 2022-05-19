@@ -1,3 +1,5 @@
+using OrchardCore.Taxonomies.Fields;
+
 namespace Ozds.Modules.Members;
 
 public static class TariffItem
@@ -18,6 +20,11 @@ public static class TariffItem
       this TaxonomyCacheService taxonomy,
       string termId) =>
     taxonomy.GetTerm<TariffTagType>(ContentItemId, termId);
+
+  public static Task<TariffTagType?> GetTariffItem(
+      this TaxonomyCacheService taxonomy,
+      TaxonomyField field) =>
+    taxonomy.GetTariffItem(field.TermContentItemIds[0]);
 
   public static bool IsUsage(string tariffItemTermId) =>
     s_usageTariffItemTermIds.Contains(tariffItemTermId);

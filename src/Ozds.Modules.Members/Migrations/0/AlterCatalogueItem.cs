@@ -22,13 +22,15 @@ public static partial class AlterCatalogueItem
           .WithSettings(
             new TitlePartSettings
             {
+              RenderTitle = true,
               Options = TitlePartOptions.GeneratedHidden,
               Pattern =
               @"
-{%- assign catalogueItem = ContentItem.Content.CatalogueItem -%}
-{%- assign tariffElements = catalogueItem.TariffElement.TermContentIds -%}
-{%- assign tariffElement = tariffElements[0] | content_item_id -%}
-{{- tariffElement -}}
+{{-
+  ContentItem.Content.CatalogueItem.TariffElement
+    | taxonomy_terms
+    | first
+-}}
               "
             }))
         .WithPart("CatalogueItem", "CatalogueItem", part => part

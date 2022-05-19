@@ -2,7 +2,7 @@
   "steps": [
     {
       "name": "content",
-      "Data": [
+      "data": [
         {
           "ContentItemId": "4fnzd5fywmg2dz3gxzcy0x9cd7",
           "ContentItemVersionId": "4w6s638mn1y7vxv7rey48bbeca",
@@ -10,8 +10,8 @@
           "DisplayText": " fakeDevice1",
           "Latest": true,
           "Published": true,
-          "ModifiedUtc": "2022-05-04T10:34:01.4926284Z",
-          "PublishedUtc": "2022-05-04T10:34:01.5167043Z",
+          "ModifiedUtc": "2022-05-19T14:01:39.2126167Z",
+          "PublishedUtc": "2022-05-19T14:01:40.1804063Z",
           "CreatedUtc": "2022-05-04T09:08:40.0196328Z",
           "Owner": "42y3v996azksss9bge7a78yf5k",
           "Author": "admin",
@@ -28,7 +28,7 @@
               "Text": "fakeDevice1"
             },
             "SourceData": {
-              "Data": []
+              "data": []
             },
             "Status": {
               "TaxonomyContentItemId": "47p9e5rkms3m012qv3z2t26jcg",
@@ -41,16 +41,16 @@
                 "ContentItemId": "4w31pvhj5ccpzt5dvfrkb9q54h",
                 "ContentItemVersionId": null,
                 "ContentType": "Catalogue",
-                "DisplayText": "",
+                "DisplayText": "Plavi",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2022-05-04T10:34:01.4986493Z",
+                "ModifiedUtc": "2022-05-19T14:01:39.3413892Z",
                 "PublishedUtc": null,
                 "CreatedUtc": null,
                 "Owner": "",
                 "Author": "admin",
                 "TitlePart": {
-                  "Title": ""
+                  "Title": "Plavi"
                 },
                 "Catalogue": {
                   "TariffModel": {
@@ -64,16 +64,16 @@
                       "ContentItemId": "4kqgx788gea4jre81x5t99vw5t",
                       "ContentItemVersionId": null,
                       "ContentType": "CatalogueItem",
-                      "DisplayText": "",
+                      "DisplayText": "Radna energija - JT",
                       "Latest": false,
                       "Published": false,
-                      "ModifiedUtc": "2022-05-04T10:34:01.50113Z",
+                      "ModifiedUtc": "2022-05-19T14:01:39.3441263Z",
                       "PublishedUtc": null,
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "TitlePart": {
-                        "Title": ""
+                      "Title": {
+                        "Title": null
                       },
                       "CatalogueItem": {
                         "TariffElement": {
@@ -83,22 +83,25 @@
                         "Price": {
                           "Value": 0.31
                         }
+                      },
+                      "TitlePart": {
+                        "Title": "Radna energija - JT"
                       }
                     },
                     {
                       "ContentItemId": "47kk01vq8hf8g2wcac7ffabww1",
                       "ContentItemVersionId": null,
                       "ContentType": "CatalogueItem",
-                      "DisplayText": "",
+                      "DisplayText": "Naknada za obračunsko mjerno mjesto - NOMM",
                       "Latest": false,
                       "Published": false,
-                      "ModifiedUtc": "2022-05-04T10:34:01.5096779Z",
+                      "ModifiedUtc": "2022-05-19T14:01:40.086057Z",
                       "PublishedUtc": null,
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "TitlePart": {
-                        "Title": ""
+                      "Title": {
+                        "Title": null
                       },
                       "CatalogueItem": {
                         "TariffElement": {
@@ -108,6 +111,9 @@
                         "Price": {
                           "Value": 41.3
                         }
+                      },
+                      "TitlePart": {
+                        "Title": "Naknada za obračunsko mjerno mjesto - NOMM"
                       }
                     }
                   ]
