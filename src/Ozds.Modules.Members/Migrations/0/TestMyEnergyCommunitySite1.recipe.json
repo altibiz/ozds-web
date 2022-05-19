@@ -7,7 +7,7 @@
           "ContentItemId": "4cxae7ke9gr5btyfbdsg4nb4ck",
           "ContentItemVersionId": "435bvtpctazjb0smpjf6r3tsx3",
           "ContentType": "SecondarySite",
-          "DisplayText": " W1N2CSTX",
+          "DisplayText": "MyEnergyCommunity W1N2CSTX",
           "Latest": true,
           "Published": true,
           "ModifiedUtc": "2022-05-19T14:00:30.6735002Z",
@@ -16,7 +16,7 @@
           "Owner": "4dwtvqg9yfan3s5r8490ezv45b",
           "Author": "admin",
           "TitlePart": {
-            "Title": " W1N2CSTX"
+            "Title": "MyEnergyCommunity W1N2CSTX"
           },
           "SecondarySite": {},
           "Site": {
@@ -34,6 +34,9 @@
                   "Value": "test-owner"
                 }
               ]
+            },
+            "MeasurementFrequency": {
+              "Value": 10
             },
             "Status": {
               "TaxonomyContentItemId": "47p9e5rkms3m012qv3z2t26jcg",
@@ -77,9 +80,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -105,9 +105,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -133,9 +130,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",

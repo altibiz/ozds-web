@@ -86,13 +86,6 @@ public static partial class RecipeMigrations
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/TestConsumer1.recipe.json", migration);
 
-  public static IRecipeMigrator ExecuteTestReceipt1(
-      this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/TestReceipt1.recipe.json", migration);
-
-  public static IRecipeMigrator ExecuteTestReceiptRevision1(
-      this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/TestReceiptRevision1.recipe.json", migration);
   public static IRecipeMigrator ExecuteContent(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe
@@ -105,6 +98,5 @@ public static partial class RecipeMigrations
       .ExecuteTestCenter1(migration)
       .ExecuteTestMyEnergyCommunitySite1(migration)
       .ExecuteTestFakeSite1(migration)
-      .ExecuteTestConsumer1(migration)
-      .ExecuteTestReceiptRevision1(migration);
+      .ExecuteTestConsumer1(migration);
 }

@@ -28,11 +28,9 @@ public static partial class AlterCatalogue
                 Options = TitlePartOptions.Editable,
                 Pattern =
                 @"
-{{-
-  ContentItem.Content.Catalogue.TariffModel
-    | taxonomy_terms
-    | first
--}}
+{%- assign catalogue = ContentItem.Content.Catalogue -%}
+{%- assign tariffModel = catalogue.TariffModel | taxonomy_terms | first -%}
+{{- tariffModel -}}
                 "
               }))
         .WithPart("Catalogue",

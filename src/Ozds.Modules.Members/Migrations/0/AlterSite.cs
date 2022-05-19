@@ -48,11 +48,21 @@ public static partial class AlterSite
               new DictionaryFieldSettings
               {
               }))
+        .WithField("MeasurementFrequency",
+          field => field
+            .OfType("NumericField")
+            .WithDisplayName("Frekvencija mjerenja uređaja u sekundama")
+            .WithPosition("4")
+            .WithSettings(
+              new NumericFieldSettings
+              {
+                Required = true
+              }))
         .WithField("Status",
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Status")
-            .WithPosition("4")
+            .WithPosition("5")
             .WithSettings(
               new TaxonomyFieldSettings
               {

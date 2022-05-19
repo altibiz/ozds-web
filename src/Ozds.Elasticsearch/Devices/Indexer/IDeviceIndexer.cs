@@ -9,11 +9,13 @@ public interface IDeviceIndexer
       string source,
       string sourceDeviceId,
       SourceDeviceData? sourceDeviceData = null,
+      decimal? measurementFrequency = null,
       string? state = null);
 
   public void IndexDevice(
       string source,
       string sourceDeviceId,
       SourceDeviceData? sourceDeviceData = null,
+      decimal? measurementFrequency = null,
       string? state = null);
 }

@@ -1,6 +1,8 @@
 using System.Reflection;
 using OrchardCore.ContentManagement;
 using OrchardCore.Lists.Models;
+using OrchardCore.DisplayManagement.Razor;
+using OrchardCore.Taxonomies.Fields;
 using Ozds.Util;
 
 namespace Ozds.Modules.Members;
@@ -100,6 +102,15 @@ public static class ContentTypeBaseExtensions
       .Then(items =>
         items.SelectFilter(item =>
           item.AsContent<T>()));
+
+  public static Task<T?> GetTaxonomyTermAsync<T>(
+      this IOrchardDisplayHelper orchardDisplayHelper,
+      TaxonomyField taxonomy) where T : ContentTypeBase =>
+    orchardDisplayHelper
+      .GetTaxonomyTermAsync(
+        taxonomy.TaxonomyContentItemId,
+        taxonomy.TermContentItemIds[0])
+      .Then(item => item.AsContent<T>());
 
   internal static T PopulateContent<T>(
       this T content) where T : ContentTypeBase =>

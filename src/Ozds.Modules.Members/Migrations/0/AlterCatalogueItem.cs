@@ -16,7 +16,7 @@ public static partial class AlterCatalogueItem
         .Creatable()
         .Listable()
         .Securable()
-        .WithPart("Title", "TitlePart", part => part
+        .WithPart("TitlePart", part => part
           .WithPosition("1")
           .WithDisplayName("Naziv")
           .WithSettings(
@@ -26,11 +26,9 @@ public static partial class AlterCatalogueItem
               Options = TitlePartOptions.GeneratedHidden,
               Pattern =
               @"
-{{-
-  ContentItem.Content.CatalogueItem.TariffElement
-    | taxonomy_terms
-    | first
--}}
+{%- assign catalogue = ContentItem.Content.Catalogue  -%}
+{%- assign tariffElement = catalogue.TariffElement | taxonomy_terms | first -%}
+{{- tariffElement -}}
               "
             }))
         .WithPart("CatalogueItem", "CatalogueItem", part => part

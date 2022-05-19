@@ -28,8 +28,7 @@ public static partial class AlterSecondarySite
                 Pattern =
                 @"
 {%- assign site = ContentItem.Content.Site -%}
-{%- assign sourceId = site.Source.TermContentItemIds[0] -%}
-{%- assign source = sourceId | content_item_id -%}
+{%- assign source = site.Source | taxonomy_terms | first -%}
 {%- assign deviceId = site.DeviceId.Text -%}
 {{- source }} {{ deviceId -}}
                 ",

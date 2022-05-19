@@ -28,6 +28,7 @@ public class SiteDeviceIndexer : ContentHandlerBase
               new SourceDeviceData(
                 ownerId: secondarySite.Site.Value.SourceData.Data
                   .FirstOrDefault(data => data.Name == "OwnerId")?.Value),
+              secondarySite.Site.Value.MeasurementFrequency.Value,
               SiteStatus.GetElasticsearchStatus(
                 secondarySite.Site.Value.Status.TermContentItemIds[0]))
             .Then(() => Logger.LogDebug(
@@ -56,6 +57,7 @@ public class SiteDeviceIndexer : ContentHandlerBase
               new SourceDeviceData(
                 ownerId: secondarySite.Site.Value.SourceData.Data
                   .FirstOrDefault(data => data.Name == "OwnerId")?.Value),
+              secondarySite.Site.Value.MeasurementFrequency.Value,
               Elasticsearch.DeviceState.Added)
             .Then(() => Logger.LogDebug(
               string.Format(
@@ -83,6 +85,7 @@ public class SiteDeviceIndexer : ContentHandlerBase
               new SourceDeviceData(
                 ownerId: secondarySite.Site.Value.SourceData.Data
                   .FirstOrDefault(data => data.Name == "OwnerId")?.Value),
+              secondarySite.Site.Value.MeasurementFrequency.Value,
               Elasticsearch.DeviceState.Removed)
             .Then(() => Logger.LogDebug(
               string.Format(

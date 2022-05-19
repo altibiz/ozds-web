@@ -49,10 +49,6 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddContentPart<Receipt>();
     services.AddScoped<IScopedIndexProvider, ReceiptIndexProvider>();
     services.AddScoped<IContentHandler, ReceiptCreator>();
-    services.AddContentPart<ReceiptItem>();
-    services.AddContentPart<Calculation>();
-    services.AddContentPart<Expenditure>();
-    services.AddContentPart<ExpenditureItem>();
 
     services.AddScoped<TaxonomyCacheService>();
 

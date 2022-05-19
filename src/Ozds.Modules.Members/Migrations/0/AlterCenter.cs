@@ -17,7 +17,7 @@ public static partial class AlterCenter
         .Listable()
         .Draftable()
         .Securable()
-        .WithPart("Title", "TitlePart",
+        .WithPart("TitlePart",
           part => part
             .WithDisplayName("Naziv")
             .WithDescription("Naziv zatvorenog distribucijskog sustava")

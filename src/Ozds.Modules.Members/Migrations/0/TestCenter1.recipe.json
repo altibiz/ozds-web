@@ -15,7 +15,7 @@
           "CreatedUtc": "2022-05-03T19:13:00.3759784Z",
           "Owner": "498t0ej1wwcgps2ejas0t2kjwv",
           "Author": "admin",
-          "Title": {
+          "TitlePart": {
             "Title": "Arena Centar"
           },
           "Center": {},
@@ -96,9 +96,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -124,9 +121,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -178,9 +172,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -206,9 +197,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -234,9 +222,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -262,9 +247,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -316,9 +298,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -344,9 +323,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -372,9 +348,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -426,9 +399,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -454,9 +424,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -508,9 +475,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -536,9 +500,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -564,9 +525,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -592,9 +550,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -646,9 +601,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -674,9 +626,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -702,9 +651,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -730,9 +676,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",

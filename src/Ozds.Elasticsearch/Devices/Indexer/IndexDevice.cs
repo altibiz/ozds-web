@@ -10,6 +10,7 @@ public partial class Client : IClient
       string source,
       string sourceDeviceId,
       SourceDeviceData? sourceDeviceData = null,
+      decimal? measurementFrequency = null,
       string? state = null) =>
     IndexDeviceAsync(
       new Device(
@@ -19,6 +20,7 @@ public partial class Client : IClient
         {
           ownerId = sourceDeviceData?.ownerId
         },
+        measurementFrequency,
         state));
 
 
@@ -26,6 +28,7 @@ public partial class Client : IClient
       string source,
       string sourceDeviceId,
       SourceDeviceData? sourceDeviceData = null,
+      decimal? measurementFrequency = null,
       string? state = null) =>
     IndexDevice(
       new Device(
@@ -35,5 +38,6 @@ public partial class Client : IClient
         {
           ownerId = sourceDeviceData?.ownerId
         },
+        measurementFrequency,
         state));
 }

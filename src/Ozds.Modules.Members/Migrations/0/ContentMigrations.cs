@@ -21,16 +21,8 @@ public static class ContentMigrations
     content.AlterCataloguePart();
     content.AlterCatalogueType();
 
-    content.AlterExpenditureType();
-    content.AlterExpenditurePart();
-    content.AlterExpenditureItemType();
-    content.AlterExpenditureItemPart();
-    content.AlterCalculationPart();
-    content.AlterCalculationType();
-    content.AlterReceiptPartRevision();
-    content.AlterReceiptTypeRevision();
-    content.AlterReceiptItemPart();
-    content.AlterReceiptItemType();
+    content.AlterReceiptPart();
+    content.AlterReceiptType();
 
     content.AlterPersonPart();
     content.AlterConsumerType();

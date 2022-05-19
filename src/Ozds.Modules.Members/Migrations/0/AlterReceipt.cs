@@ -2,7 +2,6 @@ using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.ContentFields.Settings;
 using OrchardCore.Title.Models;
-using OrchardCore.Flows.Models;
 
 namespace Ozds.Modules.Members.M0;
 
@@ -17,7 +16,7 @@ public static partial class AlterReceipt
         .Listable()
         .Draftable()
         .Securable()
-         .WithPart("Title", "TitlePart",
+        .WithPart("TitlePart",
           part => part
             .WithDisplayName("Naslov")
             .WithPosition("1")
@@ -29,57 +28,15 @@ public static partial class AlterReceipt
                 Pattern =
                 @"
 {%- assign receipt = ContentItem.Content.Receipt -%}
-{%- assign consumer = ContentItem.Content.Consumer -%}
-{%- assign consumerName = consumer.Name.Text -%}
+{%- assign consumerName = receipt.Data.Consumer.Name -%}
+{%- assign centerName = receipt.Data.CenterTitle -%}
 {%- assign date = receipt.Date.Value | date: '%d. %m. %Y.' -%}
-{{- consumerName }} {{ date -}}
+{{- centerName }} {{ consumerName }} {{ date -}}
                 ",
-              }))
-        .WithPart("Center", "Person",
-          part => part
-            .WithDisplayName("Operator")
-            .WithPosition("2")
-            .WithSettings(
-              new FieldEditorSettings
-              {
-              }))
-        .WithPart("Consumer", "Person",
-          part => part
-            .WithDisplayName("Korisnik ZDS-a")
-            .WithPosition("3")
-            .WithSettings(
-              new FieldEditorSettings
-              {
-              }))
-        .WithPart("Calculation", "BagPart",
-          part => part
-            .WithDisplayName("Obračun")
-            .WithPosition("4")
-            .WithSettings(
-              new BagPartSettings
-              {
-                ContainedContentTypes =
-                new[]
-                {
-                  "Calculation"
-                }
-              }))
-        .WithPart("Items", "BagPart",
-          part => part
-            .WithDisplayName("Stavke")
-            .WithPosition("5")
-            .WithSettings(
-              new BagPartSettings
-              {
-                ContainedContentTypes =
-                  new[]
-                  {
-                    "ReceiptItem"
-                  }
               }))
         .WithPart("Receipt",
           part => part
-            .WithPosition("5")
+            .WithPosition("2")
             .WithSettings(
               new FieldEditorSettings
               {
@@ -116,40 +73,26 @@ public static partial class AlterReceipt
               {
                 Required = true
               }))
-        .WithField("InTotal",
+        .WithField("DateFrom",
           field => field
-            .OfType("NumericField")
-            .WithDisplayName("UKUPNO")
+            .OfType("DateField")
+            .WithDisplayName("Datum od")
+            .WithDescription("Datum početka mjernja")
             .WithPosition("3")
             .WithSettings(
-              new NumericFieldSettings
+              new DateFieldSettings
               {
-                Required = true,
-                Minimum = 0,
-                Scale = 2
+                Required = true
               }))
-        .WithField("Tax",
+        .WithField("DateTo",
           field => field
-            .OfType("NumericField")
-            .WithDisplayName("PDV (13%)")
+            .OfType("DateField")
+            .WithDisplayName("Datum do")
+            .WithDescription("Datum kraja mjernja")
             .WithPosition("4")
             .WithSettings(
-              new NumericFieldSettings
+              new DateFieldSettings
               {
-                Required = true,
-                Minimum = 0,
-                Scale = 2,
-              }))
-        .WithField("InTotalWithTax",
-          field => field
-            .OfType("NumericField")
-            .WithDisplayName("UKUPNI IZNOS")
-            .WithPosition("5")
-            .WithSettings(
-              new NumericFieldSettings
-              {
-                Required = true,
-                Minimum = 0,
-                Scale = 2,
+                Required = true
               })));
 }

@@ -4,6 +4,7 @@ using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display;
 using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Razor;
+using OrchardCore.Taxonomies.Fields;
 using Ozds.Util;
 
 namespace Ozds.Modules.Members;
@@ -31,4 +32,15 @@ public static class IOrchardDisplayHelperExtensions
       .NewAsync(contentType)
       .ThenTask(content => orchardDisplayHelper
         .EditorAsync(content, groupId, updater));
+
+  public static Task<IHtmlContent> DisplayTaxonomyTermAsync(
+      this IOrchardDisplayHelper orchardDisplayHelper,
+      TaxonomyField taxonomy,
+      string? displayType = null) =>
+    orchardDisplayHelper
+      .GetTaxonomyTermAsync(
+        taxonomy.TaxonomyContentItemId,
+        taxonomy.TermContentItemIds[0])
+      .ThenTask(item => orchardDisplayHelper
+        .DisplayAsync(item, displayType ?? "Detail"));
 }

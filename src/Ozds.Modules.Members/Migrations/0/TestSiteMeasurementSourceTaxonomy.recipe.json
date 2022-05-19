@@ -35,7 +35,7 @@
                 "ContentItemId": "4ajzfswsjftfzym6sj9fc223ms",
                 "ContentItemVersionId": null,
                 "ContentType": "Tag",
-                "DisplayText": "fakeSource",
+                "DisplayText": "FakeSource",
                 "Latest": false,
                 "Published": false,
                 "ModifiedUtc": "2022-04-25T11:11:45.6081103Z",
@@ -45,7 +45,7 @@
                 "Author": "admin",
                 "Tag": {},
                 "TitlePart": {
-                  "Title": "fakeSource"
+                  "Title": "FakeSource"
                 },
                 "AutoroutePart": {
                   "Path": "fakesource",

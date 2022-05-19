@@ -8,6 +8,7 @@ public class FakeDeviceIndexer : IDeviceIndexer
       string source,
       string sourceDeviceId,
       SourceDeviceData? sourceDeviceData = null,
+      decimal? measurementFrequency = null,
       string? state = null) =>
     Task.CompletedTask;
 
@@ -16,10 +17,12 @@ public class FakeDeviceIndexer : IDeviceIndexer
       string source,
       string sourceDeviceId,
       SourceDeviceData? sourceDeviceData = null,
+      decimal? measurementFrequency = null,
       string? state = null) =>
     IndexDeviceAsync(
       source,
       sourceDeviceId,
       sourceDeviceData,
+      measurementFrequency,
       state).BlockTask();
 }

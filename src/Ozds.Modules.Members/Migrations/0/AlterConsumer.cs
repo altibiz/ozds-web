@@ -15,7 +15,7 @@ public static partial class AlterConsumer
         .Creatable()
         .Listable()
         .Securable()
-        .WithPart("Title", "TitlePart",
+        .WithPart("TitlePart",
           part => part
             .WithDisplayName("Naziv")
             .WithDisplayName("Naziv člana")

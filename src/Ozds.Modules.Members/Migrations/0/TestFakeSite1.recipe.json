@@ -7,7 +7,7 @@
           "ContentItemId": "4fnzd5fywmg2dz3gxzcy0x9cd7",
           "ContentItemVersionId": "4w6s638mn1y7vxv7rey48bbeca",
           "ContentType": "SecondarySite",
-          "DisplayText": " fakeDevice1",
+          "DisplayText": "FakeSource fakeDevice1",
           "Latest": true,
           "Published": true,
           "ModifiedUtc": "2022-05-19T14:01:39.2126167Z",
@@ -16,7 +16,7 @@
           "Owner": "42y3v996azksss9bge7a78yf5k",
           "Author": "admin",
           "TitlePart": {
-            "Title": " fakeDevice1"
+            "Title": "FakeSource fakeDevice1"
           },
           "SecondarySite": {},
           "Site": {
@@ -29,6 +29,9 @@
             },
             "SourceData": {
               "data": []
+            },
+            "MeasurementFrequency": {
+              "Value": 10
             },
             "Status": {
               "TaxonomyContentItemId": "47p9e5rkms3m012qv3z2t26jcg",
@@ -72,9 +75,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",
@@ -100,9 +100,6 @@
                       "CreatedUtc": null,
                       "Owner": "",
                       "Author": "admin",
-                      "Title": {
-                        "Title": null
-                      },
                       "CatalogueItem": {
                         "TariffElement": {
                           "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4",

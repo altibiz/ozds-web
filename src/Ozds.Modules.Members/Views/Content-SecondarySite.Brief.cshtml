@@ -11,7 +11,21 @@
 
 <h2>
   <span>
-    @(T["Site"]):
-    @site.Site.Value.DeviceId.Text
+    @(T["Site"])
+    @site.Title.Value.Title
   </span>
 </h2>
+
+<div>
+  <span>
+    @(T["MeasurementFrequency"])
+    @site.Site.Value.MeasurementFrequency.Value
+  </span>
+
+  <span>
+    @(T["Status"])
+    @(await Orchard
+        .GetTaxonomyTermAsync<TagType>(site.Site.Value.Status)
+        .Then(tag => tag.Title.Value.Title))
+  </span>
+</div>

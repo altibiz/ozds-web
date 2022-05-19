@@ -25,12 +25,14 @@ public class Device
       string source,
       string sourceDeviceId,
       KnownSourceDeviceData? sourceDeviceData = null,
+      decimal? measurementFrequency = null,
       string? state = null)
   {
     Source = source;
     SourceDeviceId = sourceDeviceId;
     SourceDeviceData = sourceDeviceData ?? new KnownSourceDeviceData { };
     State = state ?? DeviceState.Added;
+    MeasurementFrequency = measurementFrequency ?? 10;
     Id = MakeId(Source, SourceDeviceId);
   }
 
@@ -45,6 +47,9 @@ public class Device
   [Object(Name = "sourceDeviceData")]
   public KnownSourceDeviceData SourceDeviceData { get; init; } =
     new KnownSourceDeviceData { };
+
+  [Number(Name = "frequency")]
+  public decimal MeasurementFrequency { get; init; }
 
   [Keyword(Name = "state")]
   public string State { get; init; }

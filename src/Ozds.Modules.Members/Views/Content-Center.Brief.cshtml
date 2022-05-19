@@ -42,7 +42,7 @@
     @foreach (var catalogue in center.Catalogues.Value.ContentItems)
     {
       <li>
-        @Orchard.DisplayAsync(catalogue, "Brief")
+        @await Orchard.DisplayAsync(catalogue, "Brief")
       </li>
     }
   </ul>
