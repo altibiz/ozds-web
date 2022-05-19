@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,6 +7,7 @@ using OrchardCore.DisplayManagement.Notify;
 
 namespace Ozds.Modules.Members.Pages;
 
+[Authorize(Roles = "Administrator")]
 public class BarcodeGenModel : PageModel
 {
   public IActionResult OnGetAsync()
@@ -69,8 +71,10 @@ public class BarcodeGenModel : PageModel
 
   public List<ContentItem> PersonList { get; } = new();
 
-  public BarcodeGenModel(ConsumerService mService,
-      IHtmlLocalizer<CreateMemberModel> localizer, INotifier notifier)
+  public BarcodeGenModel(
+      ConsumerService mService,
+      IHtmlLocalizer<BarcodeGenModel> localizer,
+      INotifier notifier)
   {
     Notifier = notifier;
     H = localizer;

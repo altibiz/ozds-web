@@ -22,21 +22,19 @@ public class ContainedPartDisplayDriver : ContentDisplayDriver
     model
       .WhenFinallyTask(
         _ => AdminAttribute.IsApplied(HttpContext),
-        model => ContentItemExtensions
-          .As<ContainedPart>(model)
+        item => item
+          .As<ContainedPart>()
           .WhenNonNullable(part =>
             Initialize<ContainedPartViewModel>(
-              "ContainedPart_Nav",
-              model => Content
+              "ContainedPart.Navigation",
+              async model => await Content
                 .GetAsync(part.ListContentItemId)
                 .ThenWith(
                   list =>
                   {
                     model.ListContentItemId = part.ListContentItemId;
                     model.ParentName = list.DisplayText;
-                  })
-                //  NOTE: it has to be a ValueTask for Initialize
-                .ToValueTask())
+                  }))
             .Location("Content"))
           .As<IDisplayResult>()
           // NOTE: it has to be a Task for the override

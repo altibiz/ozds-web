@@ -13,20 +13,27 @@ public partial class Migrations : DataMigration
 {
   public int Create()
   {
-    Recipe.ExecuteLocalization(this);
-    Recipe.ExecuteLayers(this);
-    Recipe.ExecuteAnonymousRole(this);
-    Recipe.ExecuteLuceneFullTextSearch(this);
-
-    Content.AlterPagePart();
-    Content.AlterPageType();
-    Recipe.ExecuteFrontPage(this);
+    if (Env.IsDevelopment())
+    {
+      Recipe.ExecuteTestSettings(this);
+      Content.AlterContent();
+      Recipe.ExecuteTestContent(this);
+    }
+    else
+    {
+      Recipe.ExecuteSettings(this);
+      Content.AlterContent();
+      Recipe.ExecuteContent(this);
+    }
 
     return 1;
   }
 
-  public Migrations(IHostEnvironment env, ILogger<Migrations> logger,
-      IRecipeMigrator recipe, IContentDefinitionManager content,
+  public Migrations(
+      IHostEnvironment env,
+      ILogger<Migrations> logger,
+      IRecipeMigrator recipe,
+      IContentDefinitionManager content,
       ISession session)
   {
     Env = env;

@@ -10,10 +10,11 @@
 
 <a
     class="ta-navbar-brand"
-    href="@Url.Content("~/" + AdminOptions.Value.AdminUrlPrefix)">
+    href='@Url.Content(
+      $"~/{AdminOptions.Value.AdminUrlPrefix}")'>
   <img
-      src=@(Url.Content(
-        "~/Ozds.Themes.Ozds/assets/img/helb_logo/helb_logo_RGB.png"))
+      src='@(Url.Content(
+        "~/Ozds.Themes.Ozds/assets/img/helb_logo/helb_logo_RGB.png"))'
       alt="@Site.SiteName" />
   <span>@Site.SiteName</span>
 </a>

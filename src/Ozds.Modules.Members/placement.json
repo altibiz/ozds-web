@@ -1,14 +1,1 @@
-{
-  "HtmlField": [
-    {
-      "contentType": ["Offer"],
-      "place": "DescriptionZone"
-    }
-  ],
-  "LiquidPart": [
-    {
-      "displayType": "Print",
-      "place": "Content:10"
-    }
-  ]
-}
+{}

@@ -1,9 +1,35 @@
-﻿@page "{contentItemId}/{handler?}"
+﻿@page "{contentItemId}"
 
-@model Ozds.Modules.Members.Pages.PrintModel
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Configuration
+@using Ozds.Modules.Members
+@using Ozds.Util
+
+@attribute [Authorize(Roles = "Administrator")]
+
+@inject IConfiguration Configuration
 
 @{
   ViewLayout = "LayoutPrint";
+
+  var contentItemId =
+    Request.RouteValues
+      .GetNonNullable("contentItemId");
+
+  var downloadLink =
+    string.Format(
+      Configuration
+        .GetValue<string?>("PrintPdfUrl")
+        .ThrowWhenNull(),
+      contentItemId,
+      string.Format(
+        "https://{0}/Ozds.Modules.Members/Print/{1}/",
+        Request.Host,
+        contentItemId));
 }
 
-@await DisplayAsync(Model.Print)
+@await Orchard.DisplayByIdAsync(contentItemId)
+
+<a href='@downloadLink' target="_blank">
+  Download
+</a>

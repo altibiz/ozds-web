@@ -5,33 +5,9 @@
 @using OrchardCore.Users.Models
 @using Ozds.Util;
 
-@inject ISiteService SiteService
-@inject SignInManager<IUser> SignInManager
-
-<style type="text/css">
-  .nav.navbar-nav.menu-main-menu.menu {
-    margin-left: auto;
-  }
-</style>
-
-@{
-  var allowChangeEmail = await SiteService
-    .GetSiteSettingsAsync()
-    .Then(siteSettings => siteSettings
-      .As<ChangeEmailSettings>()
-      .AllowChangeEmail);
-  var externalAuthenticationSchemes = await SignInManager
-    .GetExternalAuthenticationSchemesAsync();
-}
-
-@{
-  TagBuilder tag = Tag(Model, "ul");
-  tag.AddCssClass("nav navbar-nav");
-
-  foreach (var item in Model.Items)
+<ul class="nav navbar-nav">
+  @foreach (var item in Model.Items)
   {
-    tag.InnerHtml.AppendHtml(await DisplayAsync(item));
+    @await DisplayAsync(item)
   }
-}
-
-@tag
+</ul>

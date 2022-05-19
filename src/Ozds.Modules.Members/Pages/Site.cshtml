@@ -1,0 +1,18 @@
+﻿:page "{contentItemId?}"
+
+@using Microsoft.AspNetCore.Authorization
+@using Ozds.Modules.Members
+
+@attribute [Authorize]
+
+@{
+  var contentItemId = Request.RouteValues.GetNullable("contentItemId");
+}
+
+@if (contentItemId is null)
+{
+}
+else
+{
+  @await Orchard.DisplayByIdAsync(contentItemId)
+}

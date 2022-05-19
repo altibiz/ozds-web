@@ -2,7 +2,7 @@
   "steps": [
     {
       "name": "Roles",
-      "Roles": [
+      "roles": [
         {
           "Name": "Anonymous",
           "Description": "Anonymous role",

@@ -1,0 +1,23 @@
+﻿@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Routing
+@using OrchardCore.ContentManagement.Routing
+@using OrchardCore.Admin
+
+@inject IOptions<AutorouteOptions> AutorouteOptions
+@inject IOptions<AdminOptions> AdminOptions
+
+@{
+  var routeValues = new RouteValueDictionary(
+    AutorouteOptions.Value.GlobalRouteValues);
+  routeValues[AutorouteOptions.Value.ContentItemIdKey] =
+    Model.ListContentItemId;
+
+  var linkUrl = Url.RouteUrl(routeValues);
+  linkUrl = String.Format(
+    $"~/{AdminOptions.Value.AdminUrlPrefix}{linkUrl}/Edit");
+}
+
+<a href='@Url.Content(linkUrl)'>
+  @T["Back to"]
+  @Model.ParentName
+</a>

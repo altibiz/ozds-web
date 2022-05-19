@@ -1,11 +1,6 @@
-﻿@{
-  TagBuilder tag = Tag(Model, "ul");
-  tag.AddCssClass("row justify-content-center list-unstyled");
-
-  foreach (var item in Model.Items)
+﻿<ul class="row justify-content-center list-unstyled">
+  @foreach (var item in Model.Items)
   {
-    tag.InnerHtml.AppendHtml(await DisplayAsync(item));
+    @await DisplayAsync(item)
   }
-}
-
-@tag
+</ul>

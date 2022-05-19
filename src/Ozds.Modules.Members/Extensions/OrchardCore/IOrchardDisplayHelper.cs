@@ -43,4 +43,39 @@ public static class IOrchardDisplayHelperExtensions
         taxonomy.TermContentItemIds[0])
       .ThenTask(item => orchardDisplayHelper
         .DisplayAsync(item, displayType ?? "Detail"));
+
+  public static Task<IHtmlContent> DisplayByIdAsync(
+      this IOrchardDisplayHelper orchardDisplayHelper,
+      string id) =>
+    orchardDisplayHelper
+      .GetContentItemByIdAsync(id)
+      .ThenTask(item => orchardDisplayHelper.DisplayAsync(item));
+
+  public static Task<IHtmlContent> DisplayByAliasAsync(
+      this IOrchardDisplayHelper orchardDisplayHelper,
+      string alias) =>
+    orchardDisplayHelper
+      .GetContentItemByAliasAsync(alias)
+      .ThenTask(item => orchardDisplayHelper.DisplayAsync(item));
+
+  public static Task<IHtmlContent> DisplayBySlugAsync(
+      this IOrchardDisplayHelper orchardDisplayHelper,
+      string slug) =>
+    orchardDisplayHelper
+      .GetContentItemBySlugAsync(slug)
+      .ThenTask(item => orchardDisplayHelper.DisplayAsync(item));
+
+  public static Task<IHtmlContent> DisplayByHandleAsync(
+      this IOrchardDisplayHelper orchardDisplayHelper,
+      string handle) =>
+    orchardDisplayHelper
+      .GetContentItemByHandleAsync(handle)
+      .ThenTask(item => orchardDisplayHelper.DisplayAsync(item));
+
+  public static Task<IHtmlContent> DisplayByVersionIdAsync(
+      this IOrchardDisplayHelper orchardDisplayHelper,
+      string versionId) =>
+    orchardDisplayHelper
+      .GetContentItemByHandleAsync(versionId)
+      .ThenTask(item => orchardDisplayHelper.DisplayAsync(item));
 }
