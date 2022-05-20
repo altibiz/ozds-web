@@ -1,0 +1,20 @@
+@using OrchardCore.ContentManagement
+@using Ozds.Modules.Ozds
+@using Ozds.Util
+
+@{
+  ContentItem contentItem = Model.ContentItem;
+  ReceiptType receipt = contentItem
+    .AsContent<ReceiptType>()
+    .ThrowWhenNull();
+}
+
+<h2 class="d-flex flex-row justify-content-between">
+  <span>
+    @(T["Receipt for site"].Value):
+    @receipt.Receipt.Value.Site.ContentItemIds[0]
+  </span>
+  <span>
+    @receipt.Receipt.Value.Date.Value?.ToShortDateString()
+  </span>
+</h2>

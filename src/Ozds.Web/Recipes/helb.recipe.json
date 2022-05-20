@@ -9,7 +9,7 @@
       "enable": [
         "TheAdmin",
         "SafeMode",
-        "Ozds.Modules.Members",
+        "Ozds.Modules.Ozds",
         "Ozds.Themes.Ozds"
       ]
     },

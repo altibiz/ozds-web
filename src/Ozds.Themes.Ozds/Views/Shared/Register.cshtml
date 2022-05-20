@@ -2,7 +2,7 @@
 
 @{ ViewLayout = "Layout__Login"; }
 
-@{ Html.RenderPartial("_Header", "Registracija"); }
+<partial name="Header" model='@T["Registracija"].Value' />
 
 <div asp-validation-summary="All" class="text-danger">
 </div>

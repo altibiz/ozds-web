@@ -16,9 +16,5 @@
   {
     "inputs": ["src/Ozds.Themes.Ozds.Assets/dist/js/scripts.js"],
     "output": "src/Ozds.Themes.Ozds/wwwroot/js/scripts.js"
-  },
-  {
-    "inputs": ["src/Ozds.Themes.Ozds.Assets/dist/js/login.js"],
-    "output": "src/Ozds.Themes.Ozds/wwwroot/js/login.js"
   }
 ]

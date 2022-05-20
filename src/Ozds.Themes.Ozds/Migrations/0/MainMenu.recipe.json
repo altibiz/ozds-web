@@ -4,69 +4,211 @@
       "name": "content",
       "data": [
         {
-          "ContentItemId": "[js: uuid()]",
+          "ContentItemId": "4wcrqennnqbrsx71cgnxjf6fwz",
+          "ContentItemVersionId": "4kv1k2xffnbew0eb6gvxmx02mp",
           "ContentType": "Menu",
-          "DisplayText": "Main Menu",
-          "Owner": "[js: parameters('AdminUserId')]",
-          "Author": "[js: parameters('AdminUsername')]",
+          "DisplayText": "MainMenu",
           "Latest": true,
           "Published": true,
-          "MenuPart": {},
+          "ModifiedUtc": "2022-05-20T13:50:42.3451347Z",
+          "PublishedUtc": "2022-05-20T13:50:42.3494402Z",
+          "CreatedUtc": "2022-05-20T13:16:22.8434591Z",
+          "Owner": "41a3ant9asfs82a0xpbz3kp1nn",
+          "Author": "admin",
           "TitlePart": {
-            "Title": "Main Menu"
+            "Title": "MainMenu"
           },
+          "AliasPart": {
+            "Alias": "main-menu-hr"
+          },
+          "MenuPart": {},
           "MenuItemsListPart": {
             "MenuItems": [
               {
-                "ContentItemId": "[js: uuid()]",
+                "ContentItemId": "43kg43sdnsg70s0gxdjmk8hcn8",
+                "ContentItemVersionId": null,
                 "ContentType": "LinkMenuItem",
-                "DisplayText": "Početna",
+                "DisplayText": "ZDS",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-20T13:49:04.0895222Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
                 "LinkMenuItemPart": {
-                  "Name": "Front Page",
-                  "Url": "~/"
-                }
+                  "Name": "ZDS",
+                  "Url": "~/Ozds.Modules.Ozds/Center"
+                },
+                "LinkMenuItem": {}
+              },
+              {
+                "ContentItemId": "41vnf5kvj16yntc5sr703kt1nr",
+                "ContentItemVersionId": null,
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Korisnik ZDS-a",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-20T13:49:27.0137109Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "LinkMenuItemPart": {
+                  "Name": "Korisnik ZDS-a",
+                  "Url": "~/Ozds.Modules.Ozds/Consumer"
+                },
+                "LinkMenuItem": {}
+              },
+              {
+                "ContentItemId": "4s0nzahq5tm2pxrtq1bfzmytx5",
+                "ContentItemVersionId": null,
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "OMM",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-20T13:50:04.5256361Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "LinkMenuItemPart": {
+                  "Name": "OMM",
+                  "Url": "~/Ozds.Modules.Ozds/Site"
+                },
+                "LinkMenuItem": {}
+              },
+              {
+                "ContentItemId": "4ebhgpqjzqtxvtzzxqvnqammxp",
+                "ContentItemVersionId": null,
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Račun",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-20T13:50:40.6955573Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "LinkMenuItemPart": {
+                  "Name": "Račun",
+                  "Url": "~/Ozds.Modules.Ozds/Receipt"
+                },
+                "LinkMenuItem": {}
               }
             ]
           },
-          "AliasPart": {
-            "Alias": "main-menu"
-          },
-          "LocalizationPart": {
-            "LocalizationSet": "4hnkvydw4bt1yv5d46r8bwqfc4",
-            "Culture": "hr"
+          "@WeldedPartSettings": {
+            "MenuPart": {
+              "Position": "3"
+            },
+            "MenuItemsListPart": {
+              "Position": "4"
+            }
           }
         },
         {
-          "ContentItemId": "[js: uuid()]",
+          "ContentItemId": "4e2specds1pk85yzbbdhhpvfxh",
+          "ContentItemVersionId": "4x400v38xj77mzermax3wgk644",
           "ContentType": "Menu",
-          "DisplayText": "Main Menu",
-          "Owner": "[js: parameters('AdminUserId')]",
-          "Author": "[js: parameters('AdminUsername')]",
+          "DisplayText": "MainMenu",
           "Latest": true,
           "Published": true,
-          "MenuPart": {},
+          "ModifiedUtc": "2022-05-20T13:48:42.5122178Z",
+          "PublishedUtc": "2022-05-20T13:48:42.5419304Z",
+          "CreatedUtc": "2022-05-20T13:14:58.1692414Z",
+          "Owner": "41a3ant9asfs82a0xpbz3kp1nn",
+          "Author": "admin",
           "TitlePart": {
-            "Title": "Main Menu"
-          },
-          "MenuItemsListPart": {
-            "MenuItems": [
-              {
-                "ContentItemId": "[js: uuid()]",
-                "ContentType": "LinkMenuItem",
-                "DisplayText": "Front Page",
-                "LinkMenuItemPart": {
-                  "Name": "Front Page",
-                  "Url": "~/en/"
-                }
-              }
-            ]
+            "Title": "MainMenu"
           },
           "AliasPart": {
             "Alias": "main-menu-en"
           },
-          "LocalizationPart": {
-            "LocalizationSet": "4hnkvydw4bt1yv5d46r8bwqfc4",
-            "Culture": "en"
+          "MenuPart": {},
+          "MenuItemsListPart": {
+            "MenuItems": [
+              {
+                "ContentItemId": "4kweynzfwcan13ykj9yhybyec8",
+                "ContentItemVersionId": null,
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Center",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-20T13:46:05.1302844Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "LinkMenuItemPart": {
+                  "Name": "Center",
+                  "Url": "~/Ozds.Modules.Ozds/Center"
+                },
+                "LinkMenuItem": {}
+              },
+              {
+                "ContentItemId": "4qwpgm2hda0bs7wr07h80fp54z",
+                "ContentItemVersionId": null,
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Consumer",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-20T13:46:18.1007171Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "LinkMenuItemPart": {
+                  "Name": "Consumer",
+                  "Url": "~/Ozds.Modules.Ozds/Consumer"
+                },
+                "LinkMenuItem": {}
+              },
+              {
+                "ContentItemId": "4dmvxs9vwavca5jgggwc16qvma",
+                "ContentItemVersionId": null,
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Site",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-20T13:48:37.5988565Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "LinkMenuItemPart": {
+                  "Name": "Site",
+                  "Url": "~/Ozds.Modules.Ozds/Site"
+                },
+                "LinkMenuItem": {}
+              },
+              {
+                "ContentItemId": "4023kt0ht49cd13prr1b2rc5n2",
+                "ContentItemVersionId": null,
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Receipt",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-20T13:47:08.5770217Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "LinkMenuItemPart": {
+                  "Name": "Receipt",
+                  "Url": "~/Ozds.Modules.Ozds/Receipt"
+                },
+                "LinkMenuItem": {}
+              }
+            ]
+          },
+          "@WeldedPartSettings": {
+            "MenuPart": {
+              "Position": "3"
+            },
+            "MenuItemsListPart": {
+              "Position": "4"
+            }
           }
         }
       ]

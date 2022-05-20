@@ -1,0 +1,9 @@
+@using OrchardCore.ContentManagement
+@using Ozds.Modules.Ozds
+@using Ozds.Util
+
+@{
+  ContentItem contentItem = Model.ContentItem;
+}
+
+@await Orchard.DisplayAsync(contentItem, "Brief")

@@ -1,17 +1,9 @@
-{% if Culture.Name == "en" %}
-  {%
-    shape "menu",
-    alias: "alias:main-menu-en",
-    cache_id: "main-menu-en",
-    cache_fixed_duration: "00:05:00",
-    cache_tag: "alias:main-menu-en"
-  %}
-{% else %}
-  {%
-    shape "menu",
-    alias: "alias:main-menu",
-    cache_id: "main-menu",
-    cache_fixed_duration: "00:05:00",
-    cache_tag: "alias:main-menu"
-  %}
-{% endif %}
+{% assign name = Culture.Name | prepend: "main-menu-" %}
+{% assign alias = name | prepend: "alias:" %}
+{%
+  shape "menu",
+  alias: alias,
+  cache_id: name,
+  cache_fixed_duration: "00:05:00",
+  cache_tag: alias
+%}

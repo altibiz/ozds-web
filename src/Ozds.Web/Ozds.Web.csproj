@@ -26,7 +26,7 @@
 
   <ItemGroup>
     <ProjectReference
-      Include="../Ozds.Modules.Members/Ozds.Modules.Members.csproj" />
+      Include="../Ozds.Modules.Ozds/Ozds.Modules.Ozds.csproj" />
 
     <ProjectReference
       Include="../Ozds.Themes.Ozds/Ozds.Themes.Ozds.csproj" />

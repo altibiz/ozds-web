@@ -1,0 +1,185 @@
+@using OrchardCore.ContentManagement
+@using Ozds.Modules.Ozds
+@using Ozds.Elasticsearch
+@using Ozds.Util
+
+@inject IDashboardMeasurementProvider Provider
+
+@{
+  ContentItem contentItem = Model.ContentItem;
+  var secondarySite = contentItem
+    .AsContent<SecondarySiteType>()
+    .ThrowWhenNull();
+
+  var source = SiteMeasurementSource
+    .GetElasticsearchSource(
+        secondarySite.Site.Value.Source.TermContentItemIds[0])
+    .ThrowWhenNull();
+  var deviceId = secondarySite.Site.Value.DeviceId.Text;
+
+  var measurements = Provider
+    .GetDashboardMeasurements(source, deviceId)
+    .ToList();
+}
+
+@if (measurements.EmptyEnumerable())
+{
+  <span>
+    @(T["No measurements available"].Value)
+  </span>
+  return;
+}
+
+<div class="d-flex flex-column">
+  <h5>
+    @(T["Energy"].Value)
+  </h5>
+  <div class="d-flex flex-column flex-lg-row w-100">
+    <div
+        class="
+          d-block justify-content-center
+          position-relative flex-shrink-1">
+      <canvas id="energy-doughnut" />
+    </div>
+    <div
+        class="
+          d-block justify-content-center
+          position-relative flex-grow-1">
+      <canvas id="energy-lines" />
+    </div>
+  </div>
+
+  <h5>
+    @(T["Power"].Value)
+  </h5>
+  <div class="d-flex flex-column flex-lg-row w-100">
+    <div
+        class="
+          d-block justify-content-center
+          position-relative flex-shrink-1">
+      <canvas id="power-doughnut" />
+    </div>
+    <div
+        class="
+          d-block justify-content-center
+          position-relative flex-grow-1">
+      <canvas id="power-lines" />
+    </div>
+  </div>
+</div>
+
+
+<script asp-name="ozdstheme-chart" at="Foot"/>
+<script at="Foot">
+  window.onload = () => {
+    const measurementsString = '@Html.Raw(Json.Serialize(measurements))';
+    console.log(measurementsString);
+    const measurements =
+      JSON.parse(measurementsString)
+        .map(measurement =>
+          ({
+            ...measurement,
+            date: new Date(measurement.date)
+          }))
+        .sort((a, b) => a.date - b.date);
+    console.log(measurements);
+    const lineLabels =
+      measurements.map(measurement => measurement.date.toLocaleTimeString());
+    const energy = measurements[measurements.length -1].energy;
+    const power = measurements[measurements.length -1].power;
+
+    new Chart(
+      "energy-lines",
+      {
+        type: "line",
+        data: {
+          labels: lineLabels,
+          datasets: [
+            {
+              label: '@T["Energy"].Value (kWh)',
+              data: measurements.map(measurement => measurement.energy),
+              borderColor: "Blue",
+              backgroundColor: "Blue",
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          plugins: {
+            legend: false
+          },
+        },
+      });
+
+    new Chart(
+      "power-lines",
+      {
+        type: "line",
+        data: {
+          labels: lineLabels,
+          datasets: [
+            {
+              label: '@T["Power"].Value (kW)',
+              data: measurements.map(measurement => measurement.power),
+              borderColor: "Red",
+              backgroundColor: "Red",
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          plugins: {
+            legend: false
+          },
+        },
+      });
+
+    new Chart(
+      "energy-doughnut",
+      {
+        type: "doughnut",
+        data: {
+          labels: [ '@T["Energy"].Value (kWh)' ],
+          datasets: [
+            {
+              label: [ '@T["Current Energy"].Value (kWh)', '' ],
+              data: [ energy, 300 - energy ],
+              backgroundColor: ["Blue", "White"],
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          rotation: 270,
+          circumference: 180,
+          plugins: {
+            legend: false
+          },
+        },
+      });
+
+    new Chart(
+      "power-doughnut",
+      {
+        type: "doughnut",
+        data: {
+          labels: [ '@T["Power"].Value (kW)' ],
+          datasets: [
+            {
+              label: [ '@T["Current Power"].Value (kW)', '' ],
+              data: [ power, 20 - power ],
+              backgroundColor: ["Red", "White"]
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          rotation: 270,
+          circumference: 180,
+          plugins: {
+            legend: false
+          },
+        },
+      });
+  }
+</script>

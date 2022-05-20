@@ -4,7 +4,7 @@
 
 // Global styling for the navbar
 
-#mainNav {
+#nav-root {
   position: absolute;
   top: 0;
   left: 0;
@@ -74,7 +74,7 @@
     .navbar-nav {
       > li.nav-item {
         > a.nav-link {
-          color: $white;
+          color: $body-color;
 
           &:focus,
           &:hover {
@@ -83,7 +83,7 @@
         }
 
         > form > button.nav-link {
-          color: $white;
+          color: $body-color;
 
           &:focus,
           &:hover {

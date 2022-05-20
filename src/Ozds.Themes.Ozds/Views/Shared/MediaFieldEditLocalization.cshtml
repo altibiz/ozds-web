@@ -1,24 +1,24 @@
 @if (!Context.Items.ContainsKey("MediaFieldEditLocalization"))
 {
-    Context.Items["MediaFieldEditLocalization"] = new object();
+  Context.Items["MediaFieldEditLocalization"] = new object();
 
-    <input
-        type="hidden"
-        id="onlyOneItemMessage"
-        value='@T["Only one item is allowed on this field."]' />
+  <input
+      type="hidden"
+      id="onlyOneItemMessage"
+      value='@T["Only one item is allowed on this field."]' />
 
-    <input
-        type="hidden"
-        id="t-media-not-found"
-        value='@T["Not Found"]' />
+  <input
+      type="hidden"
+      id="t-media-not-found"
+      value='@T["Not Found"]' />
 
-    <input
-        type="hidden"
-        id="t-discard-warning"
-        value='@T["It will be discarded on saving"]' />
+  <input
+      type="hidden"
+      id="t-discard-warning"
+      value='@T["It will be discarded on saving"]' />
 
-    <input
-        type="hidden"
-        id="t-no-images"
-        value='@T["No Images"]' />
+  <input
+      type="hidden"
+      id="t-no-images"
+      value='@T["No Images"]' />
 }

@@ -6,5 +6,5 @@ using OrchardCore.DisplayManagement.Manifest;
     Dependencies =
       new[]
       {
-        "Ozds.Modules.Members",
+        "Ozds.Modules.Ozds",
       })]

@@ -30,7 +30,7 @@
 	var disableLocalLogin = loginSettings.DisableLocalLogin;
 }
 
-@{ Html.RenderPartial("_Header", @T["Log In"].Value); }
+<partial name="Header" model='@T["Log In"].Value' />
 
 <div class="container login-container">
 	<div class="row">
@@ -188,9 +188,3 @@
     }
 	</div>
 </div>
-
-<script asp-name="ozdstheme-login" at="Foot" />
-<script at="Foot">
-  // NOTE: legacy login
-  // window.onload = () => interceptLogin('auth-form', "UserName", "Password");
-</script>

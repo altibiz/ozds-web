@@ -5,25 +5,25 @@
 
 window.addEventListener("DOMContentLoaded", function () {
   var scrollPos = 0;
-  var mainNav = document.getElementById("mainNav");
-  var headerHeight = mainNav.clientHeight;
+  var navRoot = document.getElementById("nav-root");
+  var headerHeight = navRoot.clientHeight;
   window.addEventListener("scroll", function () {
     var currentTop = document.body.getBoundingClientRect().top * -1;
 
     if (currentTop < scrollPos) {
       // Scrolling Up
-      if (currentTop > 0 && mainNav.classList.contains("is-fixed")) {
-        mainNav.classList.add("is-visible");
+      if (currentTop > 0 && navRoot.classList.contains("is-fixed")) {
+        navRoot.classList.add("is-visible");
       } else {
         console.log(123);
-        mainNav.classList.remove("is-visible", "is-fixed");
+        navRoot.classList.remove("is-visible", "is-fixed");
       }
     } else {
       // Scrolling Down
-      mainNav.classList.remove(["is-visible"]);
+      navRoot.classList.remove(["is-visible"]);
 
-      if (currentTop > headerHeight && !mainNav.classList.contains("is-fixed")) {
-        mainNav.classList.add("is-fixed");
+      if (currentTop > headerHeight && !navRoot.classList.contains("is-fixed")) {
+        navRoot.classList.add("is-fixed");
       }
     }
 
