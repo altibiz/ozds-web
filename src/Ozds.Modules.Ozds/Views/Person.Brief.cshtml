@@ -1,0 +1,34 @@
+@using Ozds.Modules.Ozds
+
+@model Person
+
+<h4>
+  @Model.Name.Text
+  @Model.Oib.Text
+</h4>
+
+<div class="d-flex flex-row justify-content-between">
+  <div class="d-flex flex-column">
+    <h5>
+      @T["Location"]
+    </h5>
+    <span>
+      @Model.Address.Text
+    </span>
+    <span>
+      @Model.City.Text
+    </span>
+    <span>
+      @Model.PostalCode.Text
+    </span>
+  </div>
+
+  <div class="d-flex flex-column text-end">
+    <h5>
+      @T["Contact"]
+    </h5>
+    <span>
+      @Model.Contact.Text
+    </span>
+  </div>
+</div>

@@ -5,28 +5,36 @@
 @{
   ContentItem contentItem = Model.ContentItem;
   CatalogueType catalogue = contentItem
-    .AsContent<CatalogueType>()
-    .ThrowWhenNull();
+  .AsContent<CatalogueType>()
+  .ThrowWhenNull();
+
+  List<CatalogueItemType> items = catalogue.Items.Value.ContentItems
+  .SelectFilter(item => item.AsContent<CatalogueItemType>())
+  .ToList();
 }
 
 <h4>
-  <span>
-    @(T["Catalogue"])
-    @catalogue.Title.Value.Title
-  </span>
+  @catalogue.Title.Value.Title
 </h4>
 
-<ul>
-  @foreach (var item in catalogue.Items.Value.ContentItems
-    .SelectFilter(ContentTypeBaseExtensions.AsContent<CatalogueItemType>))
-  {
-    <li>
-      <span>
-        @item.Title.Value.Title
-      </span>
-      <span>
-        @item.CatalogueItem.Value.Price.Value
-      </span>
-    </li>
-  }
-</ul>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">@T["Tariff Element"]</th>
+      <th scope="col" class="text-center">@T["Price"]</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (CatalogueItemType item in items)
+    {
+      <tr>
+        <th scope="row">
+          @item.Title.Value.Title
+        </th>
+        <th class="text-end">
+          @item.CatalogueItem.Value.Price.Value
+        </th>
+      </tr>
+    }
+  </tbody>
+</table>

@@ -73,7 +73,6 @@
 <script at="Foot">
   window.onload = () => {
     const measurementsString = '@Html.Raw(Json.Serialize(measurements))';
-    console.log(measurementsString);
     const measurements =
       JSON.parse(measurementsString)
         .map(measurement =>
@@ -82,7 +81,6 @@
             date: new Date(measurement.date)
           }))
         .sort((a, b) => a.date - b.date);
-    console.log(measurements);
     const lineLabels =
       measurements.map(measurement => measurement.date.toLocaleTimeString());
     const energy = measurements[measurements.length -1].energy;

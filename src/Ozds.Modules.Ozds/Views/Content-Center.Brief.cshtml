@@ -5,33 +5,20 @@
 @{
   ContentItem contentItem = Model.ContentItem;
   var center = contentItem
-    .AsContent<CenterType>()
-    .ThrowWhenNull();
+  .AsContent<CenterType>()
+  .ThrowWhenNull();
 }
 
 <h2>
-  @T["Center"]
   @center.Title.Value.Title
 </h2>
 
 <div>
   <h3>
     @T["Owner"]
-    @center.CenterOwner.Value.Name.Text
-    @center.CenterOwner.Value.Oib.Text
   </h3>
 
-  <span>
-    @T["Location"]
-    @center.CenterOwner.Value.Address.Text
-    @center.CenterOwner.Value.City.Text
-    @center.CenterOwner.Value.PostalCode.Text
-  </span>
-
-  <span>
-    @T["Contact"]
-    @center.CenterOwner.Value.Contact.Text
-  </span>
+  @await DisplayAsync(Model.Content.CenterOwner)
 </div>
 
 <div>
@@ -51,19 +38,7 @@
 <div>
   <h3>
     @T["Operator"]
-    @center.Operator.Value.Name.Text
-    @center.Operator.Value.Oib.Text
   </h3>
 
-  <span>
-    @T["Location"]
-    @center.Operator.Value.Address.Text
-    @center.Operator.Value.City.Text
-    @center.Operator.Value.PostalCode.Text
-  </span>
-
-  <span>
-    @T["Contact"]
-    @center.Operator.Value.Contact.Text
-  </span>
+  @await DisplayAsync(Model.Content.Operator)
 </div>
