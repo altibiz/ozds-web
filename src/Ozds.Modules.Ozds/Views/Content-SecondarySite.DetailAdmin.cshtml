@@ -1,9 +1,14 @@
 @using OrchardCore.ContentManagement
+@using Ozds.Modules.Ozds
+@using Ozds.Util
 
-@await Orchard.DisplayAsync(Model.ContentItem as ContentItem, "Brief")
+@{
+  ContentItem contentItem = Model.ContentItem;
+  SecondarySiteType site = contentItem
+    .AsContent<SecondarySiteType>()
+    .ThrowWhenNull();
+}
 
-<h3>
-  @(T["Dashboard"].Value)
-</h3>
+<partial name="SecondarySite" model="@site" />
 
-@await Orchard.DisplayAsync(Model.ContentItem as ContentItem, "Dashboard")
+<partial name="SecondarySite.Dashboard" model="@site" />

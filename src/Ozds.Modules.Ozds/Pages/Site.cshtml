@@ -1,4 +1,4 @@
-﻿:page "{contentItemId?}"
+﻿@page "{contentItemId?}"
 
 @using Microsoft.AspNetCore.Authorization
 @using Ozds.Modules.Ozds
@@ -10,7 +10,7 @@
   var headerText = T["Site"].Value;
 }
 
-<partial name="Header" model="@headerText" >
+<partial name="Header" model="@headerText" />
 
 @if (contentItemId is null)
 {

@@ -1,4 +1,4 @@
-﻿@page "{contentItemId}"
+﻿@page "{contentType}/{contentItemId?}"
 
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Configuration
@@ -10,14 +10,14 @@
 @inject IConfiguration Configuration
 
 @{
-  ViewLayout = "LayoutPrint";
+  ViewLayout = "Layout.Print";
 
-  var contentItemId =
-    Request.RouteValues
-      .GetNonNullable("contentItemId");
+  var contentItemId = Request.RouteValues.GetNonNullable("contentItemId");
+  var contentItem = await Orchard.GetContentItemByIdAsync(contentItemId);
+  var headerText = T["Print"].Value;
 
-  var downloadLink =
-    string.Format(
+  var downloadLink = string
+    .Format(
       Configuration
         .GetValue<string?>("PrintPdfUrl")
         .ThrowWhenNull(),
@@ -28,8 +28,13 @@
         contentItemId));
 }
 
-@await Orchard.DisplayByIdAsync(contentItemId)
+@if (contentItem is null)
+{
+
+}
+
+@await Orchard.DisplayByIdAsync(contentItemId, "Print")
 
 <a href='@downloadLink' target="_blank">
-  Download
+  @T["Download"]
 </a>

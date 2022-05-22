@@ -124,17 +124,7 @@ By Orchard Core Team
   text-align: justify;
 }
 
-.widget-size-100,
-.widget-size-75,
-.widget .widget-size-75,
-.widget-size-66,
-.widget .widget-size-66,
-.widget-size-50,
-.widget .widget-size-50,
-.widget-size-33,
-.widget .widget-size-33,
-.widget-size-25,
-.widget .widget-size-25 {
+.widget-size-100, .widget-size-75, .widget .widget-size-75, .widget-size-66, .widget .widget-size-66, .widget-size-50, .widget .widget-size-50, .widget-size-33, .widget .widget-size-33, .widget-size-25, .widget .widget-size-25 {
   flex-shrink: 0;
   width: 100%;
   max-width: 100%;
@@ -146,8 +136,7 @@ By Orchard Core Team
 }
 
 @media (min-width: 576px) {
-  .widget-size-25,
-  .widget .widget-size-25 {
+  .widget-size-25, .widget .widget-size-25 {
     flex: 0 0 auto;
     width: 25%;
   }
@@ -161,8 +150,7 @@ By Orchard Core Team
 }
 
 @media (min-width: 576px) {
-  .widget-size-33,
-  .widget .widget-size-33 {
+  .widget-size-33, .widget .widget-size-33 {
     flex: 0 0 auto;
     width: 33.3333333333%;
   }
@@ -176,8 +164,7 @@ By Orchard Core Team
 }
 
 @media (min-width: 576px) {
-  .widget-size-50,
-  .widget .widget-size-50 {
+  .widget-size-50, .widget .widget-size-50 {
     flex: 0 0 auto;
     width: 50%;
   }
@@ -191,8 +178,7 @@ By Orchard Core Team
 }
 
 @media (min-width: 576px) {
-  .widget-size-66,
-  .widget .widget-size-66 {
+  .widget-size-66, .widget .widget-size-66 {
     flex: 0 0 auto;
     width: 66.6666666667%;
   }
@@ -206,8 +192,7 @@ By Orchard Core Team
 }
 
 @media (min-width: 576px) {
-  .widget-size-75,
-  .widget .widget-size-75 {
+  .widget-size-75, .widget .widget-size-75 {
     flex: 0 0 auto;
     width: 75%;
   }

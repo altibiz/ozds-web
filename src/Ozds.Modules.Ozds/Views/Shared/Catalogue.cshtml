@@ -1,21 +1,17 @@
-@using OrchardCore.ContentManagement
 @using Ozds.Modules.Ozds
 @using Ozds.Util
 
-@{
-  ContentItem contentItem = Model.ContentItem;
-  CatalogueType catalogue = contentItem
-  .AsContent<CatalogueType>()
-  .ThrowWhenNull();
+@model CatalogueType
 
-  List<CatalogueItemType> items = catalogue.Items.Value.ContentItems
-  .SelectFilter(item => item.AsContent<CatalogueItemType>())
-  .ToList();
+@{
+  List<CatalogueItemType> items = Model.Items.Value.ContentItems
+      .SelectFilter(item => item.AsContent<CatalogueItemType>())
+      .ToList();
 }
 
-<h4>
-  @catalogue.Title.Value.Title
-</h4>
+<h5>
+  @Model.Title.Value.Title
+</h5>
 
 <table class="table">
   <thead>

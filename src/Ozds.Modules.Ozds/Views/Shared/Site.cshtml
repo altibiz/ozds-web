@@ -1,0 +1,26 @@
+@using Ozds.Modules.Ozds
+@using Ozds.Util
+
+@model Site
+
+<div class="d-flex flex-row justify-content-between">
+  <span>
+    <strong>
+      @(T["MeasurementFrequency"])
+    </strong>
+    <span>
+      @Model.MeasurementFrequency.Value
+    </span>
+  </span>
+
+  <span>
+    <strong>
+      @(T["Status"])
+    </strong>
+    <span>
+      @(await Orchard
+      .GetTaxonomyTermAsync<TagType>(Model.Status)
+      .ThenWhenNonNullable(tag => tag.Title.Value.Title))
+    </span>
+  </span>
+</div>

@@ -2,20 +2,41 @@
 
 @using Microsoft.AspNetCore.Authorization
 @using Ozds.Modules.Ozds
+@using Ozds.Util
 
 @attribute [Authorize]
 
 @{
   var contentItemId = Request.RouteValues.GetNullable("contentItemId");
-  var headerText = T["Center"].Value;
+  var headerText = T["Centers"].Value;
 }
-
-<partial name="Header" model="@headerText" >
 
 @if (contentItemId is null)
 {
+  <partial name="Header" model="@headerText" />
+
+  // TODO: for users
+
+  return;
 }
-else
+
+@{
+  var contentItem = await Orchard
+    .GetContentItemByIdAsync(contentItemId)
+    .ThrowWhenNull();
+}
+
+@if (contentItem is null)
 {
-  @await Orchard.DisplayByIdAsync(contentItemId)
+  headerText = T["Error"].Value;
+  <partial name="Header" model="@headerText" />
+  <div>
+    <h3>
+      <p>
+        @T["Wrong identifier"]
+      </p>
+    </h3>
+  </div>
 }
+
+@await Orchard.DisplayByIdAsync(contentItemId)

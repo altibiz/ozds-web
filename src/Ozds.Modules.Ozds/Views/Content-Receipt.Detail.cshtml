@@ -1,7 +1,12 @@
 @using OrchardCore.ContentManagement
+@using Ozds.Modules.Ozds
+@using Ozds.Util
 
 @{
   ContentItem contentItem = Model.ContentItem;
+  ReceiptType receipt = contentItem
+    .AsContent<ReceiptType>()
+    .ThrowWhenNull();
 }
 
-@await Orchard.DisplayAsync(contentItem, "Brief")
+<partial name="Receipt" model="@receipt" />

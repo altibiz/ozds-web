@@ -1,9 +1,14 @@
 @using OrchardCore.ContentManagement
+@using Ozds.Modules.Ozds
+@using Ozds.Util
 
 @{
   ContentItem contentItem = Model.ContentItem;
+  CenterType center = contentItem
+    .AsContent<CenterType>()
+    .ThrowWhenNull();
 }
 
-@await Orchard.DisplayAsync(contentItem, "Brief")
+<partial name="Center" model="@center" />
 
 @await DisplayAsync(Model.Content)

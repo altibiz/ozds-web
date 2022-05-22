@@ -4,6 +4,11 @@
 
 @{
   ContentItem contentItem = Model.ContentItem;
+  SecondarySiteType site = contentItem
+    .AsContent<SecondarySiteType>()
+    .ThrowWhenNull();
 }
 
-@await Orchard.DisplayAsync(contentItem, "Brief")
+<partial name="SecondarySite" model="@site" />
+
+<partial name="SecondarySite.Dashboard" model="@site" />

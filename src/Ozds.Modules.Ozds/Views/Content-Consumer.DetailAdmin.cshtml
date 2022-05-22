@@ -1,7 +1,12 @@
 @using OrchardCore.ContentManagement
+@using Ozds.Modules.Ozds
+@using Ozds.Util
 
 @{
   ContentItem contentItem = Model.ContentItem;
+  ConsumerType consumer = contentItem
+    .AsContent<ConsumerType>()
+    .ThrowWhenNull();
 }
 
-@await Orchard.DisplayAsync(contentItem, "Brief")
+<partial name="Consumer" model="@consumer" />

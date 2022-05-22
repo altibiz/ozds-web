@@ -1,0 +1,39 @@
+@using Ozds.Modules.Ozds
+
+@model CenterType
+
+<h2>
+  <span>
+    @Model.Title.Value.Title
+  </span>
+</h2>
+
+<div>
+  <h3>
+    @T["Owner"]
+  </h3>
+
+  <partial name="Person" model="@Model.CenterOwner.Value" />
+</div>
+
+<div>
+  <h3>
+    @T["Catalogue"]
+  </h3>
+  <ul>
+    @foreach (var catalogue in Model.Catalogues.Value.ContentItems)
+    {
+      <li>
+        <partial name="Catalogue" model="@catalogue.AsContent<CatalogueType>()" />
+      </li>
+    }
+  </ul>
+</div>
+
+<div>
+  <h3>
+    @T["Operator"]
+  </h3>
+
+  <partial name="Person" model="@Model.Operator.Value" />
+</div>

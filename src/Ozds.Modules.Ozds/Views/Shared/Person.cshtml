@@ -3,14 +3,21 @@
 @model Person
 
 <h4>
-  @Model.Name.Text
-  @Model.Oib.Text
+  <span>
+    @Model.Name.Text
+  </span>
+
+  <span>
+    @Model.Oib.Text
+  </span>
 </h4>
 
 <div class="d-flex flex-row justify-content-between">
   <div class="d-flex flex-column">
     <h5>
-      @T["Location"]
+      <span>
+        @T["Location"]
+      </span>
     </h5>
     <span>
       @Model.Address.Text
@@ -25,7 +32,9 @@
 
   <div class="d-flex flex-column text-end">
     <h5>
-      @T["Contact"]
+      <span>
+        @T["Contact"]
+      </span>
     </h5>
     <span>
       @Model.Contact.Text

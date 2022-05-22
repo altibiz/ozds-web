@@ -1,13 +1,14 @@
 @using OrchardCore.ContentManagement
+@using Ozds.Modules.Ozds
+@using Ozds.Util
 
 @{
   ContentItem contentItem = Model.ContentItem;
+  ReceiptType receipt = contentItem
+    .AsContent<ReceiptType>()
+    .ThrowWhenNull();
 }
 
-@await Orchard.DisplayAsync(contentItem, "Brief")
+<partial name="Receipt" model="@receipt" />
 
-<h3>
-  @T["Print"]
-</h3>
-
-@await Orchard.DisplayAsync(contentItem, "Print")
+<partial name="Receipt.Print" model="@receipt" />

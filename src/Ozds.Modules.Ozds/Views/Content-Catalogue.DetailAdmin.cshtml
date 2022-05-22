@@ -1,7 +1,12 @@
 @using OrchardCore.ContentManagement
+@using Ozds.Modules.Ozds
+@using Ozds.Util
 
 @{
   ContentItem contentItem = Model.ContentItem;
+  CatalogueType catalogue = contentItem
+    .AsContent<CatalogueType>()
+    .ThrowWhenNull();
 }
 
-@await Orchard.DisplayAsync(contentItem, "Brief")
+<partial name="Catalogue" model="@catalogue" />

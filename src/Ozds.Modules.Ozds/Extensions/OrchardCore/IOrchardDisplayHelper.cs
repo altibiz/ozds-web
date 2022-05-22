@@ -46,36 +46,76 @@ public static class IOrchardDisplayHelperExtensions
 
   public static Task<IHtmlContent> DisplayByIdAsync(
       this IOrchardDisplayHelper orchardDisplayHelper,
-      string id) =>
+      string id,
+      string displayType = "",
+      string groupId = "",
+      IUpdateModel? updateModel = null) =>
     orchardDisplayHelper
       .GetContentItemByIdAsync(id)
-      .ThenTask(item => orchardDisplayHelper.DisplayAsync(item));
+      .ThenTask(item => orchardDisplayHelper
+        .DisplayAsync(
+          item,
+          displayType,
+          groupId,
+          updateModel));
 
   public static Task<IHtmlContent> DisplayByAliasAsync(
       this IOrchardDisplayHelper orchardDisplayHelper,
-      string alias) =>
+      string alias,
+      string displayType = "",
+      string groupId = "",
+      IUpdateModel? updateModel = null) =>
     orchardDisplayHelper
       .GetContentItemByAliasAsync(alias)
-      .ThenTask(item => orchardDisplayHelper.DisplayAsync(item));
+      .ThenTask(item => orchardDisplayHelper
+        .DisplayAsync(
+          item,
+          displayType,
+          groupId,
+          updateModel));
 
   public static Task<IHtmlContent> DisplayBySlugAsync(
       this IOrchardDisplayHelper orchardDisplayHelper,
-      string slug) =>
+      string slug,
+      string displayType = "",
+      string groupId = "",
+      IUpdateModel? updateModel = null) =>
     orchardDisplayHelper
       .GetContentItemBySlugAsync(slug)
-      .ThenTask(item => orchardDisplayHelper.DisplayAsync(item));
+      .ThenTask(item => orchardDisplayHelper
+        .DisplayAsync(
+          item,
+          displayType,
+          groupId,
+          updateModel));
 
   public static Task<IHtmlContent> DisplayByHandleAsync(
       this IOrchardDisplayHelper orchardDisplayHelper,
-      string handle) =>
+      string handle,
+      string displayType = "",
+      string groupId = "",
+      IUpdateModel? updateModel = null) =>
     orchardDisplayHelper
       .GetContentItemByHandleAsync(handle)
-      .ThenTask(item => orchardDisplayHelper.DisplayAsync(item));
+      .ThenTask(item => orchardDisplayHelper
+        .DisplayAsync(
+          item,
+          displayType,
+          groupId,
+          updateModel));
 
   public static Task<IHtmlContent> DisplayByVersionIdAsync(
       this IOrchardDisplayHelper orchardDisplayHelper,
-      string versionId) =>
+      string versionId,
+      string displayType = "",
+      string groupId = "",
+      IUpdateModel? updateModel = null) =>
     orchardDisplayHelper
       .GetContentItemByHandleAsync(versionId)
-      .ThenTask(item => orchardDisplayHelper.DisplayAsync(item));
+      .ThenTask(item => orchardDisplayHelper
+        .DisplayAsync(
+          item,
+          displayType,
+          groupId,
+          updateModel));
 }

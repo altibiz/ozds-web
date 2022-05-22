@@ -1,0 +1,65 @@
+@page "{contentType}/{contentItemId?}"
+
+@using Microsoft.AspNetCore.Authorization
+@using Ozds.Modules.Ozds
+@using Ozds.Util
+
+@attribute [Authorize(Roles = "Administrator")]
+
+@{
+  ViewLayout = "Layout.Dashboard";
+
+  var contentItemId = Request.RouteValues.GetNullable("contentItemId");
+  var headerText = T["Dashboard"].Value;
+}
+
+@if (contentItemId is null)
+{
+  <partial name="Header" model="@headerText" />
+
+  // TODO: for users
+
+  return;
+}
+
+@{
+  var contentItem = await Orchard
+    .GetContentItemByIdAsync(contentItemId)
+    .Nullable();
+}
+
+@if (contentItem is null)
+{
+  <partial name="Header" model="@headerText" />
+  <div>
+    <h3>
+      <p>
+        @T["Wrong identifier"]
+      </p>
+    </h3>
+  </div>
+
+  return;
+}
+
+@if (contentItem.AsContent<SecondarySiteType>() is SecondarySiteType site)
+{
+  headerText = string
+    .Format(
+      T["Dashboard for {0} site"].Value,
+      site.Site.Value.DeviceId);
+
+  <partial name="Header" model="@headerText" />
+  @await Orchard.DisplayAsync(contentItem, "Dashboard")
+
+  return;
+}
+
+<partial name="Header" model="@headerText" />
+<div>
+  <h3>
+    <p>
+      @T["No dashboard available"]
+    </p>
+  </h3>
+</div>

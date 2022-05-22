@@ -1,0 +1,27 @@
+@using Ozds.Modules.Ozds
+
+@model SecondarySiteType
+
+<h3>
+  <span>
+    @Model.Title.Value.Title
+  </span>
+</h3>
+
+<div>
+  <partial name="Site" model="@Model.Site.Value" />
+</div>
+
+<div>
+  <h4>
+    @T["Catalogue"]
+  </h4>
+  <ul>
+    @foreach (var catalogue in Model.Catalogue.Value.ContentItems)
+    {
+      <li>
+        <partial name="Catalogue" model="@catalogue.AsContent<CatalogueType>()" />
+      </li>
+    }
+  </ul>
+</div>
