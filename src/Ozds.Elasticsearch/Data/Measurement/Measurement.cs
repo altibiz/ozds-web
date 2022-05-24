@@ -116,9 +116,9 @@ public class Measurement
   };
 
   public override bool Equals(object? obj) =>
-    Equals(obj as Device);
+    Equals(obj as Measurement);
 
-  public bool Equals(Device? other) =>
+  public bool Equals(Measurement? other) =>
     other is not null &&
     Id == other.Id;
 

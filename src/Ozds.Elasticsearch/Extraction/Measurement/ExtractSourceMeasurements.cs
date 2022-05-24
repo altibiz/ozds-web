@@ -35,7 +35,9 @@ public partial class Client : IClient
           .Then(devices => devices
             .Sources()
             .Select(device => provider
-              .GetMeasurementsAwait(device.ToProvisionDevice()))
+              .GetMeasurementsAwait(
+                device.ToProvisionDevice(),
+                period))
             .Flatten()))
       .ToAsyncEnumerable()
       .Flatten();
@@ -51,7 +53,9 @@ public partial class Client : IClient
           .Then(devices => devices
             .Sources()
             .Select(device => provider
-              .GetMeasurementsAsync(device.ToProvisionDevice())))
+              .GetMeasurementsAsync(
+                device.ToProvisionDevice(),
+                period)))
           .ThenTask(Enumerables.Await)
           .Then(Enumerables.Flatten),
         Enumerables.Empty<IExtractionBucket<ExtractionMeasurement>>);
@@ -66,7 +70,9 @@ public partial class Client : IClient
         SearchDevicesBySource(source)
           .Sources()
           .Select(device => provider
-            .GetMeasurements(device.ToProvisionDevice()))
+            .GetMeasurements(
+              device.ToProvisionDevice(),
+              period))
           .Flatten(),
         Enumerables.Empty<IExtractionBucket<ExtractionMeasurement>>);
 }

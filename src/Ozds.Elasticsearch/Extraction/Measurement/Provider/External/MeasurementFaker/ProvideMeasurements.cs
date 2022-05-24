@@ -20,7 +20,6 @@ public sealed partial class Client : IClient
       Period? period = null) =>
     GetMeasurements(device, period).ToTask();
 
-  // TODO: functional
   public IEnumerable<IExtractionBucket<ExtractionMeasurement>>
   GetMeasurements(
       ProvisionDevice device,
@@ -31,48 +30,17 @@ public sealed partial class Client : IClient
     : (period ?? s_defaultPeriod)
         .SplitAscending(s_defaultTimeSpan)
         .Select(period =>
-          {
-            var timeSpan = period.To - period.From;
-
-            if (timeSpan.TotalMinutes < 0)
-            {
-              timeSpan = s_defaultTimeSpan;
-              period = new Period { From = period.To, To = period.To };
-            }
-
-            if (timeSpan.TotalMinutes > s_maxTimeSpanMinutes)
-            {
-              timeSpan = s_defaultTimeSpan;
-              period =
-                  new Period
-                  {
-                    From = period.To.Subtract(timeSpan),
-                    To = period.To
-                  };
-            }
-
-            var measurementCount =
-              (int)(timeSpan.TotalMinutes * s_measurementsPerMinute) - 1;
-            var currentMeasurementTimestamp = period.From.AddSeconds(1);
-            Logger.LogDebug(
-                $"Faking {measurementCount} measurements " +
-                $"for {device.Id} " + $"in {period}");
-
-            var result = new List<ExtractionMeasurement>();
-            foreach (var _ in Enumerable.Range(0, (measurementCount)))
-            {
-              // TODO: simply generate ExtractionMeasurement
-              result.Add(
+          new ExtractionBucket<ExtractionMeasurement>(
+            period,
+            period
+              .SplitAscending(s_measurementInterval)
+              // NOTE: could be that the last period span is less than 1 second
+              .SkipLast(1)
+              .Select(period =>
                 Convert(Measurement
                   .Generate(
                     device.SourceDeviceId,
-                    currentMeasurementTimestamp)));
-              currentMeasurementTimestamp = currentMeasurementTimestamp
-                .AddSeconds(60 / s_measurementsPerMinute);
-            }
-
-            return new ExtractionBucket<ExtractionMeasurement>(period, result);
-          });
+                    period.From + TimeSpan.FromSeconds(1))))));
 
   private ExtractionMeasurement Convert(
       Measurement measurement) =>
@@ -124,6 +92,8 @@ public sealed partial class Client : IClient
     };
 
   private static readonly int s_measurementsPerMinute = 4;
+  private static readonly TimeSpan s_measurementInterval =
+    TimeSpan.FromSeconds(15);
 
   private static readonly int s_maxTimeSpanMinutes = 1000;
 

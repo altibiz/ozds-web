@@ -69,9 +69,9 @@ public class Log
   }
 
   public override bool Equals(object? obj) =>
-    Equals(obj as Device);
+    Equals(obj as Log);
 
-  public bool Equals(Device? other) =>
+  public bool Equals(Log? other) =>
     other is not null &&
     Id == other.Id;
 
