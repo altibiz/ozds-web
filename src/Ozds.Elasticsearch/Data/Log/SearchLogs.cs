@@ -17,22 +17,26 @@ public partial interface IClient
   public Task<ISearchResponse<Log>>
   SearchLogsSortedByTimestampAsync(
       string type,
-      int? size = null);
+      int? size = null,
+      Period? period = null);
 
   public ISearchResponse<Log>
   SearchLogsSortedByTimestamp(
       string type,
-      int? size = null);
+      int? size = null,
+      Period? period = null);
 
   public Task<ISearchResponse<Log>>
   SearchLogsSortedByPeriodAsync(
       string type,
-      int? size = null);
+      int? size = null,
+      Period? period = null);
 
   public ISearchResponse<Log>
   SearchLogsSortedByPeriod(
       string type,
-      int? size = null);
+      int? size = null,
+      Period? period = null);
 
   public Task<ISearchResponse<Log>>
   SearchLogsAsync(
@@ -50,25 +54,29 @@ public partial interface IClient
   SearchLogsSortedByTimestampAsync(
       string type,
       string resource,
-      int? size = null);
+      int? size = null,
+      Period? period = null);
 
   public ISearchResponse<Log>
   SearchLogsSortedByTimestamp(
       string type,
       string resource,
-      int? size = null);
+      int? size = null,
+      Period? period = null);
 
   public Task<ISearchResponse<Log>>
   SearchLogsSortedByPeriodAsync(
       string type,
       string resource,
-      int? size = null);
+      int? size = null,
+      Period? period = null);
 
   public ISearchResponse<Log>
   SearchLogsSortedByPeriod(
       string type,
       string resource,
-      int? size = null);
+      int? size = null,
+      Period? period = null);
 };
 
 public sealed partial class Client : IClient
@@ -96,9 +104,16 @@ public sealed partial class Client : IClient
   public Task<ISearchResponse<Log>>
   SearchLogsSortedByTimestampAsync(
       string type,
-      int? size = null) =>
+      int? size = null,
+      Period? period = null) =>
     Elasticsearch.SearchAsync<Log>(s => s
       .Query(q => q
+        .DateRange(r => r
+          .Field(f => f.Timestamp)
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThanOrEquals(
+            period?.To ?? DateTime.UtcNow)) && q
         .Term(t => t.Type, type))
       .Size(size)
       .Sort(s => s
@@ -108,9 +123,16 @@ public sealed partial class Client : IClient
   public ISearchResponse<Log>
   SearchLogsSortedByTimestamp(
       string type,
-      int? size = null) =>
+      int? size = null,
+      Period? period = null) =>
     Elasticsearch.Search<Log>(s => s
       .Query(q => q
+        .DateRange(r => r
+          .Field(f => f.Timestamp)
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThanOrEquals(
+            period?.To ?? DateTime.UtcNow)) && q
         .Term(t => t.Type, type))
       .Size(size)
       .Sort(s => s
@@ -120,9 +142,16 @@ public sealed partial class Client : IClient
   public ISearchResponse<Log>
   SearchLogsSortedByPeriod(
       string type,
-      int? size = null) =>
+      int? size = null,
+      Period? period = null) =>
     Elasticsearch.Search<Log>(s => s
       .Query(q => q
+        .DateRange(r => r
+          .Field(f => f.Data.Period!.To)
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThanOrEquals(
+            period?.To ?? DateTime.UtcNow)) && q
         .Term(t => t.Type, type))
       .Size(size)
       .Index(LogIndexName)
@@ -132,9 +161,16 @@ public sealed partial class Client : IClient
   public Task<ISearchResponse<Log>>
   SearchLogsSortedByPeriodAsync(
       string type,
-      int? size = null) =>
+      int? size = null,
+      Period? period = null) =>
     Elasticsearch.SearchAsync<Log>(s => s
       .Query(q => q
+        .DateRange(r => r
+          .Field(f => f.Data.Period!.To)
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThanOrEquals(
+            period?.To ?? DateTime.UtcNow)) && q
         .Term(t => t.Type, type))
       .Size(size)
       .Index(LogIndexName)
@@ -169,9 +205,16 @@ public sealed partial class Client : IClient
   SearchLogsSortedByTimestampAsync(
       string type,
       string resource,
-      int? size = null) =>
+      int? size = null,
+      Period? period = null) =>
     Elasticsearch.SearchAsync<Log>(s => s
       .Query(q => q
+        .DateRange(r => r
+          .Field(f => f.Timestamp)
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThanOrEquals(
+            period?.To ?? DateTime.UtcNow)) && q
         .Term(t => t.Type, type) && q
         .Term(t => t.Resource, resource))
       .Size(size)
@@ -183,9 +226,16 @@ public sealed partial class Client : IClient
   SearchLogsSortedByTimestamp(
       string type,
       string resource,
-      int? size = null) =>
+      int? size = null,
+      Period? period = null) =>
     Elasticsearch.Search<Log>(s => s
       .Query(q => q
+        .DateRange(r => r
+          .Field(f => f.Timestamp)
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThanOrEquals(
+            period?.To ?? DateTime.UtcNow)) && q
         .Term(t => t.Type, type) && q
         .Term(t => t.Resource, resource))
       .Size(size)
@@ -197,9 +247,16 @@ public sealed partial class Client : IClient
   SearchLogsSortedByPeriod(
       string type,
       string resource,
-      int? size = null) =>
+      int? size = null,
+      Period? period = null) =>
     Elasticsearch.Search<Log>(s => s
       .Query(q => q
+        .DateRange(r => r
+          .Field(f => f.Data.Period!.To)
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThanOrEquals(
+            period?.To ?? DateTime.UtcNow)) && q
         .Term(t => t.Type, type) && q
         .Term(t => t.Resource, resource))
       .Size(size)
@@ -211,9 +268,16 @@ public sealed partial class Client : IClient
   SearchLogsSortedByPeriodAsync(
       string type,
       string resource,
-      int? size = null) =>
+      int? size = null,
+      Period? period = null) =>
     Elasticsearch.SearchAsync<Log>(s => s
       .Query(q => q
+        .DateRange(r => r
+          .Field(f => f.Data.Period!.To)
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThanOrEquals(
+            period?.To ?? DateTime.UtcNow)) && q
         .Term(t => t.Type, type) && q
         .Term(t => t.Resource, resource))
       .Size(size)

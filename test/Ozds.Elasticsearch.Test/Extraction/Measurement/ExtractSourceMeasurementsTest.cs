@@ -15,7 +15,7 @@ public partial class ClientTest
     Thread.Sleep(1000);
     var buckets = Client
       .ExtractSourceMeasurements(
-          Ozds.Elasticsearch.MeasurementFaker.Client.FakeSource);
+          Elasticsearch.MeasurementFaker.Client.FakeSource);
     Assert.NotEmpty(buckets);
     Assert.All(buckets, bucket =>
       Assert.All(bucket, measurement =>
@@ -36,7 +36,7 @@ public partial class ClientTest
     Thread.Sleep(1000);
     var buckets = await Client
       .ExtractSourceMeasurementsAsync(
-        Ozds.Elasticsearch.MeasurementFaker.Client.FakeSource);
+        Elasticsearch.MeasurementFaker.Client.FakeSource);
     Assert.All(buckets, bucket =>
       Assert.All(bucket, measurement =>
       {
@@ -57,7 +57,7 @@ public partial class ClientTest
     Thread.Sleep(1000);
     var buckets = await Client
       .ExtractSourceMeasurementsAsync(
-        Ozds.Elasticsearch.MeasurementFaker.Client.FakeSource, period);
+        Elasticsearch.MeasurementFaker.Client.FakeSource, period);
     Assert.All(buckets, bucket =>
       Assert.All(bucket, measurement =>
       {

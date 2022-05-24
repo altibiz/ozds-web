@@ -6,42 +6,43 @@ public static partial class Data
 {
   public static readonly Device MyEnergyCommunityDevice =
     new Device(
-      "HelbOzds",
-      "TestCenterId",
-      "TestCenterUserId",
-      "TestOwnerId",
-      "TestOwnerUserId",
-      "MyEnergyCommunity",
-      "W1N2CSTX",
-      10,
-      DateTime.UtcNow,
-      ((int)TimeSpan.FromMinutes(5).TotalSeconds),
-      ((int)TimeSpan.FromMinutes(5).TotalSeconds),
-      5,
-      ((int)TimeSpan.FromHours(1).TotalSeconds),
-      new Device.KnownSourceDeviceData
-      {
-        OwnerId = "test-owner"
-      },
-      DeviceState.Active);
+      @operator: "HelbOzds",
+      centerId: "TestCenterId",
+      centerUserId: "TestCenterUserId",
+      ownerId: "TestOwnerId",
+      ownerUserId: "TestOwnerUserId",
+      source: "MyEnergyCommunity",
+      sourceDeviceId: "W1N2CSTX",
+      measurementIntervalInSeconds: ((int)TimeSpan.FromSeconds(10).TotalSeconds),
+      extractionStart: DateTime.UtcNow.AddMinutes(-10),
+      extractionOffsetInSeconds: ((int)TimeSpan.FromMinutes(5).TotalSeconds),
+      extractionTimeoutInSeconds: ((int)TimeSpan.FromMinutes(5).TotalSeconds),
+      extractionRetries: 5,
+      validationIntervalInSeconds: ((int)TimeSpan.FromHours(1).TotalSeconds),
+      sourceDeviceData:
+        new Device.KnownSourceDeviceData
+        {
+          OwnerId = "test-owner"
+        },
+      state: DeviceState.Active);
 
   public static readonly Device FakeDevice =
     new Device(
-      "HelbOzds",
-      "TestCenterId",
-      "TestCenterUserId",
-      "TestOwnerId",
-      "TestOwnerUserId",
-      Ozds.Elasticsearch.MeasurementFaker.Client.FakeSource,
-      Ozds.Elasticsearch.MeasurementFaker.Client.FakeDeviceId,
-      10,
-      DateTime.UtcNow,
-      ((int)TimeSpan.FromMinutes(5).TotalSeconds),
-      ((int)TimeSpan.FromMinutes(5).TotalSeconds),
-      5,
-      ((int)TimeSpan.FromHours(1).TotalSeconds),
-      null,
-      DeviceState.Active);
+      @operator: "HelbOzds",
+      centerId: "TestCenterId",
+      centerUserId: "TestCenterUserId",
+      ownerId: "TestOwnerId",
+      ownerUserId: "TestOwnerUserId",
+      source: Ozds.Elasticsearch.MeasurementFaker.Client.FakeSource,
+      sourceDeviceId: Ozds.Elasticsearch.MeasurementFaker.Client.FakeDeviceId,
+      measurementIntervalInSeconds: ((int)TimeSpan.FromSeconds(10).TotalSeconds),
+      extractionStart: DateTime.UtcNow.AddMinutes(-10),
+      extractionOffsetInSeconds: ((int)TimeSpan.FromMinutes(5).TotalSeconds),
+      extractionTimeoutInSeconds: ((int)TimeSpan.FromMinutes(5).TotalSeconds),
+      extractionRetries: 5,
+      validationIntervalInSeconds: ((int)TimeSpan.FromHours(1).TotalSeconds),
+      sourceDeviceData: null,
+      state: DeviceState.Active);
 
   public static IEnumerable<object[]> GenerateDevices()
   {

@@ -11,7 +11,7 @@ public readonly record struct ExtractionOutcomeItem
 
 public readonly record struct ExtractionPlan
 (ExtractionDevice Device,
- ExtractionPlanItem[] Items);
+ IEnumerable<ExtractionPlanItem> Items);
 
 public readonly record struct ExtractionPlanItem
 (Period Period,
