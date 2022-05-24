@@ -61,13 +61,10 @@ public partial class Client : IClient
                 .Select(missingDataLog =>
                   new ExtractionPlanItem
                   {
-                    Period =
-                      missingDataLog.Data.Period.ThrowWhenNull(),
-                    Retries =
-                      missingDataLog.Data.Retries.ThrowWhenNull(),
+                    Period = missingDataLog.Data.Period.ThrowWhenNull(),
+                    Retries = missingDataLog.Data.Retries ?? 0,
                     Timeout = device.ExtractionTimeout,
-                    Due =
-                      missingDataLog.Data.NextExtraction.ThrowWhenNull(),
+                    Due = missingDataLog.Data.NextExtraction.ThrowWhenNull(),
                     ShouldValidate =
                       missingDataLog.Data.ShouldValidate ?? false,
                   })
@@ -132,13 +129,10 @@ public partial class Client : IClient
               .Select(missingDataLog =>
                 new ExtractionPlanItem
                 {
-                  Period =
-                    missingDataLog.Data.Period.ThrowWhenNull(),
-                  Retries =
-                    missingDataLog.Data.Retries.ThrowWhenNull(),
+                  Period = missingDataLog.Data.Period.ThrowWhenNull(),
+                  Retries = missingDataLog.Data.Retries ?? 0,
                   Timeout = device.ExtractionTimeout,
-                  Due =
-                    missingDataLog.Data.NextExtraction.ThrowWhenNull(),
+                  Due = missingDataLog.Data.NextExtraction.ThrowWhenNull(),
                   ShouldValidate =
                     missingDataLog.Data.ShouldValidate ?? false,
                 })

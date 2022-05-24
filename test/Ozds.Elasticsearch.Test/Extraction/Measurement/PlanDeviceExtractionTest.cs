@@ -141,4 +141,78 @@ public partial class ClientTest
         });
     }
   }
+
+  [Theory]
+  [MemberData(nameof(Data.GenerateDevices), MemberType = typeof(Data))]
+  public void PlanDeviceExtractionWithMissingDataTest(
+      IEnumerable<Device> devices)
+  {
+    var deviceIds = devices.Select(d => d.Id);
+    var extractionDevices = devices
+      .Select(ExtractionDeviceExtensions.ToExtractionDevice);
+    SetupDevices(devices);
+
+    foreach (var device in extractionDevices)
+    {
+      var missingDataNow = DateTime.UtcNow;
+      var missingDataNextExtraction = missingDataNow;
+      var missingDataPeriod =
+        new Period
+        {
+          From = missingDataNow.AddMinutes(-25),
+          To = missingDataNow.AddMinutes(-20)
+        };
+      Client.IndexLog(
+        new Log(
+          LogType.MissingData,
+          device.Id,
+          new Log.KnownData
+          {
+            Period = missingDataPeriod,
+            NextExtraction = missingDataNextExtraction,
+          }));
+
+      // NOTE: preparation for searching
+      Thread.Sleep(1000);
+      var measurementsPerExtractionPlanItem = 20;
+      var extractionPlan = Client
+        .PlanDeviceExtraction(
+            device,
+            null,
+            measurementsPerExtractionPlanItem);
+      var now = DateTime.UtcNow;
+      var period =
+        new Period
+        {
+          From = device.ExtractionStart,
+          To = now
+        };
+
+      var extractionPlanItems = extractionPlan.Items.ToList();
+      var missingDataItem = extractionPlanItems
+        .FirstOrDefault(item => item.Due == missingDataNextExtraction);
+      Assert.NotNull(missingDataItem);
+      Assert.Equal(missingDataItem.Period, missingDataPeriod);
+      Assert.Equal(missingDataItem.Retries, 0);
+      Assert.Equal(missingDataItem.Timeout, device.ExtractionTimeout);
+
+      extractionPlanItems.Remove(missingDataItem);
+      Assert.Equal(extractionPlan.Device, device);
+      Assert.Equal(
+        extractionPlanItems.Count(),
+        Math.Ceiling(
+          period.Span.TotalSeconds /
+          (device.MeasurementInterval.TotalSeconds *
+          measurementsPerExtractionPlanItem)));
+      Assert.All(
+        extractionPlanItems,
+        item =>
+        {
+          Assert.InRange(item.Period.From, period.From, period.To);
+          Assert.InRange(item.Period.To, period.From, period.To);
+          Assert.Equal(item.Retries, 0);
+          Assert.Equal(item.Timeout, device.ExtractionTimeout);
+        });
+    }
+  }
 }
