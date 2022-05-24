@@ -164,8 +164,8 @@ public partial class Client : IClient
                     Retries = 0,
                     Timeout = device.ExtractionTimeout,
                     Due = now,
-                      // TODO: ??
-                      ShouldValidate = false,
+                    // TODO: ??
+                    ShouldValidate = false,
                   }))
         }
     };

@@ -16,9 +16,40 @@ public partial class ClientTest
 
     // NOTE: preparation for searching
     Thread.Sleep(1000);
+    var measurementsPerExtractionPlanItem = 20;
     var extractionPlans = await Client
       .PlanSourceExtractionAsync(
-        Elasticsearch.MeasurementFaker.Client.FakeSource);
+        Elasticsearch.MeasurementFaker.Client.FakeSource,
+        null,
+        measurementsPerExtractionPlanItem);
+    foreach (var extractionPlan in extractionPlans)
+    {
+      var device = extractionDevices
+        .FirstOrDefault(device => device == extractionPlan.Device);
+      Assert.NotNull(device);
+      var now = DateTime.UtcNow;
+      var period =
+        new Period
+        {
+          From = device.ExtractionStart,
+          To = now
+        };
+      Assert.Equal(
+        extractionPlan.Items.Count(),
+        Math.Ceiling(
+          period.Span.TotalSeconds /
+          (device.MeasurementInterval.TotalSeconds *
+          measurementsPerExtractionPlanItem)));
+      Assert.All(
+        extractionPlan.Items,
+        item =>
+        {
+          Assert.InRange(item.Period.From, period.From, period.To);
+          Assert.InRange(item.Period.To, period.From, period.To);
+          Assert.Equal(item.Retries, 0);
+          Assert.Equal(item.Timeout, device.ExtractionTimeout);
+        });
+    }
   }
 
   [Theory]
@@ -32,9 +63,41 @@ public partial class ClientTest
 
     // NOTE: preparation for searching
     Thread.Sleep(1000);
+    var measurementsPerExtractionPlanItem = 20;
     var extractionPlans = Client
       .PlanSourceExtraction(
-        Elasticsearch.MeasurementFaker.Client.FakeSource);
+        Elasticsearch.MeasurementFaker.Client.FakeSource,
+        null,
+        measurementsPerExtractionPlanItem);
+
+    foreach (var extractionPlan in extractionPlans)
+    {
+      var device = extractionDevices
+        .FirstOrDefault(device => device == extractionPlan.Device);
+      Assert.NotNull(device);
+      var now = DateTime.UtcNow;
+      var period =
+        new Period
+        {
+          From = device.ExtractionStart,
+          To = now
+        };
+      Assert.Equal(
+        extractionPlan.Items.Count(),
+        Math.Ceiling(
+          period.Span.TotalSeconds /
+          (device.MeasurementInterval.TotalSeconds *
+          measurementsPerExtractionPlanItem)));
+      Assert.All(
+        extractionPlan.Items,
+        item =>
+        {
+          Assert.InRange(item.Period.From, period.From, period.To);
+          Assert.InRange(item.Period.To, period.From, period.To);
+          Assert.Equal(item.Retries, 0);
+          Assert.Equal(item.Timeout, device.ExtractionTimeout);
+        });
+    }
   }
 
   [Theory]
@@ -45,18 +108,43 @@ public partial class ClientTest
     var extractionDevices = devices
       .Select(ExtractionDeviceExtensions.ToExtractionDevice);
     SetupDevices(devices);
-    var period =
-      new Period
-      {
-        From = DateTime.UtcNow.AddMinutes(-5),
-        To = DateTime.UtcNow
-      };
 
     // NOTE: preparation for searching
     Thread.Sleep(1000);
+    var now = DateTime.UtcNow;
+    var period =
+      new Period
+      {
+        From = now.AddMinutes(-5),
+        To = now
+      };
+    var measurementsPerExtractionPlanItem = 20;
     var extractionPlans = Client
       .PlanSourceExtraction(
         Elasticsearch.MeasurementFaker.Client.FakeSource,
-        period);
+        period,
+        measurementsPerExtractionPlanItem);
+
+    foreach (var extractionPlan in extractionPlans)
+    {
+      var device = extractionDevices
+        .FirstOrDefault(device => device == extractionPlan.Device);
+      Assert.NotNull(device);
+      Assert.Equal(
+        extractionPlan.Items.Count(),
+        Math.Ceiling(
+          period.Span.TotalSeconds /
+          (device.MeasurementInterval.TotalSeconds *
+          measurementsPerExtractionPlanItem)));
+      Assert.All(
+        extractionPlan.Items,
+        item =>
+        {
+          Assert.InRange(item.Period.From, period.From, period.To);
+          Assert.InRange(item.Period.To, period.From, period.To);
+          Assert.Equal(item.Retries, 0);
+          Assert.Equal(item.Timeout, device.ExtractionTimeout);
+        });
+    }
   }
 }

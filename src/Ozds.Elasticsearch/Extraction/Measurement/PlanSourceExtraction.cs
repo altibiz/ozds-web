@@ -7,17 +7,23 @@ public partial interface IMeasurementExtractor
   public IAsyncEnumerable<ExtractionPlan>
   PlanSourceExtractionAwait(
       string source,
-      Period? period = null);
+      Period? period = null,
+      int measurementsPerExtractionPlanItem =
+        DefaultMeasurementsPerExtractionPlanItem);
 
   public Task<IEnumerable<ExtractionPlan>>
   PlanSourceExtractionAsync(
       string source,
-      Period? period = null);
+      Period? period = null,
+      int measurementsPerExtractionPlanItem =
+        DefaultMeasurementsPerExtractionPlanItem);
 
   public IEnumerable<ExtractionPlan>
   PlanSourceExtraction(
       string source,
-      Period? period = null);
+      Period? period = null,
+      int measurementsPerExtractionPlanItem =
+        DefaultMeasurementsPerExtractionPlanItem);
 }
 
 public partial interface IClient : IMeasurementExtractor { }
@@ -27,14 +33,17 @@ public partial class Client : IClient
   public IAsyncEnumerable<ExtractionPlan>
   PlanSourceExtractionAwait(
       string source,
-      Period? period = null) =>
+      Period? period = null,
+      int measurementsPerExtractionPlanItem =
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem) =>
     SearchDevicesBySourceAsync(source)
       .Then(devices => devices
         .Sources()
         .Select(device =>
           PlanDeviceExtractionAsync(
             device.ToExtractionDevice(),
-            period))
+            period,
+            measurementsPerExtractionPlanItem))
         .ToAsync())
       .ToAsyncEnumerableNonNullable()
       .Flatten();
@@ -42,25 +51,31 @@ public partial class Client : IClient
   public Task<IEnumerable<ExtractionPlan>>
   PlanSourceExtractionAsync(
       string source,
-      Period? period = null) =>
+      Period? period = null,
+      int measurementsPerExtractionPlanItem =
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem) =>
     SearchDevicesBySourceAsync(source)
       .Then(devices => devices
         .Sources()
         .Select(device =>
           PlanDeviceExtractionAsync(
             device.ToExtractionDevice(),
-            period))
+            period,
+            measurementsPerExtractionPlanItem))
         .Await())
       .FlattenTask();
 
   public IEnumerable<ExtractionPlan>
   PlanSourceExtraction(
       string source,
-      Period? period = null) =>
+      Period? period = null,
+      int measurementsPerExtractionPlanItem =
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem) =>
     SearchDevicesBySource(source)
       .Sources()
       .Select(device =>
         PlanDeviceExtraction(
           device.ToExtractionDevice(),
-          period));
+          period,
+          measurementsPerExtractionPlanItem));
 }
