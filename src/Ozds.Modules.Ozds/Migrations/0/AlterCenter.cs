@@ -3,6 +3,7 @@ using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
 using OrchardCore.Lists.Models;
 using OrchardCore.Flows.Models;
+using OrchardCore.ContentFields.Settings;
 
 namespace Ozds.Modules.Ozds.M0;
 
@@ -31,28 +32,16 @@ public static partial class AlterCenter
         .WithPart("Center", "Center",
           part => part
             .WithPosition("2")
-            .WithDisplayName("Centar")
-            .WithSettings(
-              new FieldEditorSettings
-              {
-              }))
+            .WithDisplayName("Centar"))
         .WithPart("Operator", "Person",
           part => part
             .WithDisplayName("Operator ZDS-a")
-            .WithPosition("3")
-            .WithSettings(
-              new FieldEditorSettings
-              {
-              }))
+            .WithPosition("3"))
         // NOTE: Owner clashes with the internal Orchard Core Owner field
         .WithPart("CenterOwner", "Person",
           part => part
             .WithDisplayName("Vlasnik")
-            .WithPosition("4")
-            .WithSettings(
-              new FieldEditorSettings
-              {
-              }))
+            .WithPosition("4"))
         .WithPart("Catalogues", "BagPart",
           part => part
             .WithDisplayName("Cjenik")
@@ -81,5 +70,19 @@ public static partial class AlterCenter
 
   public static void AlterCenterPart(
       this IContentDefinitionManager contentDefinitionManager) =>
-    contentDefinitionManager.AlterPartDefinition("Center", part => { });
+    contentDefinitionManager.AlterPartDefinition("Center",
+      part => part
+        .Attachable()
+        .Reusable()
+        .WithDisplayName("ZDS")
+        .WithField("User",
+          field => field
+            .OfType("UserPickerField")
+            .WithDisplayName("Korisnik")
+            .WithPosition("1")
+            .WithSettings(
+              new UserPickerFieldSettings
+              {
+                Required = true,
+              })));
 }

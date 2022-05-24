@@ -33,11 +33,7 @@ public static partial class AlterCatalogueItem
             }))
         .WithPart("CatalogueItem", "CatalogueItem", part => part
           .WithPosition("2")
-          .WithDisplayName("Stavka cjenika")
-          .WithSettings(
-            new FieldEditorSettings
-            {
-            })));
+          .WithDisplayName("Stavka cjenika")));
 
   public static void AlterCatalogueItemPart(
       this IContentDefinitionManager content) =>

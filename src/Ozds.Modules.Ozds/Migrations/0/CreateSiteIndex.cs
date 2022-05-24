@@ -9,6 +9,8 @@ public static class CreateSiteIndex
     schema.CreateMapIndexTable<SiteIndex>(
       table => table
         .Column<string>("ContentItemId", column => column.WithLength(30))
+        .Column<string>("OwnerContentItemId", column => column.WithLength(30))
+        .Column<string>("UserContentItemId", column => column.WithLength(30))
         .Column<string>("SourceTermId", column => column.WithLength(30))
         .Column<string>("DeviceId", column => column.WithLength(30))
         .Column<string>("StatusTermId", column => column.WithLength(30)));

@@ -18,7 +18,11 @@
           "TitlePart": {
             "Title": "Arena Centar"
           },
-          "Center": {},
+          "Center": {
+            "User": {
+              "UserIds": ["TestOwnerId"]
+            }
+          },
           "Operator": {
             "Name": {
               "Text": "HELB"

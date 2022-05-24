@@ -64,6 +64,9 @@
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
+                "AliasPart": {
+                  "Path": "radna-energija-jt"
+                },
                 "TermPart": {
                   "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4"
                 },
@@ -103,6 +106,9 @@
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
+                },
+                "AliasPart": {
+                  "Path": "radna-energija-vt"
                 },
                 "TermPart": {
                   "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4"
@@ -144,6 +150,9 @@
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
+                "AliasPart": {
+                  "Alias": "radna-energija-nt"
+                },
                 "TermPart": {
                   "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4"
                 },
@@ -184,6 +193,9 @@
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
+                "AliasPart": {
+                  "Alias": "radna-snaga-svt"
+                },
                 "TermPart": {
                   "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4"
                 },
@@ -223,6 +235,9 @@
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "naknada-za-obracunsko-mjerno-mjesto-nomm"
                 },
                 "TermPart": {
                   "TaxonomyContentItemId": "4v6ax991xqge9wyk8g6z4e6vn4"

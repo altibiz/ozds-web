@@ -1,10 +1,10 @@
-@page "{contentType}/{contentItemId?}"
+@page "{contentItemId?}"
 
 @using Microsoft.AspNetCore.Authorization
 @using Ozds.Modules.Ozds
 @using Ozds.Util
 
-@attribute [Authorize(Roles = "Administrator")]
+@attribute [Authorize(Roles = "Administrator,User")]
 
 @{
   ViewLayout = "Layout.Dashboard";
@@ -30,6 +30,8 @@
 
 @if (contentItem is null)
 {
+  headerText = T["Error"].Value;
+
   <partial name="Header" model="@headerText" />
   <div>
     <h3>
@@ -42,24 +44,5 @@
   return;
 }
 
-@if (contentItem.AsContent<SecondarySiteType>() is SecondarySiteType site)
-{
-  headerText = string
-    .Format(
-      T["Dashboard for {0} site"].Value,
-      site.Site.Value.DeviceId);
-
-  <partial name="Header" model="@headerText" />
-  @await Orchard.DisplayAsync(contentItem, "Dashboard")
-
-  return;
-}
-
 <partial name="Header" model="@headerText" />
-<div>
-  <h3>
-    <p>
-      @T["No dashboard available"]
-    </p>
-  </h3>
-</div>
+@await Orchard.DisplayAsync(contentItem, "Dashboard")

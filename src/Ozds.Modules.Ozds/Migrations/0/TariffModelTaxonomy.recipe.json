@@ -54,6 +54,9 @@
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
+                "AliasPart": {
+                  "Alias": "bijeli-vn"
+                },
                 "TermPart": {
                   "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca"
                 },
@@ -83,6 +86,9 @@
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "bijeli-sn"
                 },
                 "TermPart": {
                   "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca"
@@ -114,6 +120,9 @@
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
+                "AliasPart": {
+                  "Alias": "plavi"
+                },
                 "TermPart": {
                   "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca"
                 },
@@ -143,6 +152,9 @@
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "bijeli-nn"
                 },
                 "TermPart": {
                   "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca"
@@ -174,6 +186,9 @@
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
+                "AliasPart": {
+                  "Alias": "crveni"
+                },
                 "TermPart": {
                   "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca"
                 },
@@ -198,11 +213,14 @@
                 },
                 "Tag": {},
                 "AutoroutePart": {
-                  "Path": "zuti-jr-",
+                  "Path": "zuti-jr",
                   "SetHomepage": false,
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "zuti-jr"
                 },
                 "TermPart": {
                   "TaxonomyContentItemId": "42d7a5kashgdgztx5ehjb4deca"

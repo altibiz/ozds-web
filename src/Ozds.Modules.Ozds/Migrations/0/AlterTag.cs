@@ -2,6 +2,7 @@ using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
 using OrchardCore.Autoroute.Models;
+using OrchardCore.Alias.Settings;
 
 namespace Ozds.Modules.Ozds.M0;
 
@@ -18,7 +19,6 @@ public static partial class AlterTag
         .WithPart("TitlePart",
           part => part
             .WithPosition("1")
-            .WithDisplayName("Naziv")
             .WithDisplayName("Naziv značajke")
             .WithSettings(
               new TitlePartSettings
@@ -41,6 +41,21 @@ public static partial class AlterTag
             .WithSettings(
               new AutoroutePartSettings
               {
+                Pattern =
+                @"
+{%- assign title = ContentItem.Content.TitlePart -%}
+{{- title.Title | slugify -}}
+                "
+              }))
+        .WithPart("AliasPart",
+          part => part
+            .WithPosition("4")
+            .WithDisplayName("Alias")
+            .WithDescription("Automatski generiran alias značajke")
+            .WithSettings(
+              new AliasPartSettings
+              {
+                Options = AliasPartOptions.GeneratedDisabled,
                 Pattern =
                 @"
 {%- assign title = ContentItem.Content.TitlePart -%}

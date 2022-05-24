@@ -24,9 +24,11 @@ public class Receipt : ContentPart
 
 public readonly record struct ReceiptData
 {
+  public readonly string CenterUserId { get; init; }
   public readonly PersonData Operator { get; init; }
   public readonly PersonData CenterOwner { get; init; }
   public readonly string CenterTitle { get; init; }
+  public readonly string ConsumerUserId { get; init; }
   public readonly PersonData Consumer { get; init; }
   public readonly CalculationData Calculation { get; init; }
   public readonly ReceiptItemData[] Items { get; init; }
@@ -38,9 +40,11 @@ public readonly record struct ReceiptData
 
   public static Task<ReceiptData> Create(
       TaxonomyCacheService taxonomy,
+      string centerUserId,
       PersonData @operator,
       PersonData centerOwner,
       string centerTitle,
+      string consumerUderId,
       PersonData consumer,
       CalculationData calculation,
       decimal taxRate) =>
@@ -56,9 +60,11 @@ public readonly record struct ReceiptData
     .Then(data =>
       new ReceiptData
       {
+        CenterUserId = centerUserId,
         Operator = @operator,
         CenterOwner = centerOwner,
         CenterTitle = centerTitle,
+        ConsumerUserId = consumerUderId,
         Consumer = consumer,
         Calculation = calculation,
         Items = data.items,

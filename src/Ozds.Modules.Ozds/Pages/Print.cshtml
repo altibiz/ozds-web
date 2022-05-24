@@ -1,17 +1,18 @@
-﻿@page "{contentType}/{contentItemId?}"
+﻿@page "{contentType}/{contentItemId}"
 
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Configuration
 @using Ozds.Modules.Ozds
 @using Ozds.Util
 
-@attribute [Authorize(Roles = "Administrator")]
+@attribute [Authorize(Roles = "Administrator,User")]
 
 @inject IConfiguration Configuration
 
 @{
   ViewLayout = "Layout.Print";
 
+  var contentType = Request.RouteValues.GetNonNullable("contentType");
   var contentItemId = Request.RouteValues.GetNonNullable("contentItemId");
   var contentItem = await Orchard.GetContentItemByIdAsync(contentItemId);
   var headerText = T["Print"].Value;
@@ -30,10 +31,21 @@
 
 @if (contentItem is null)
 {
+  headerText = T["Error"].Value;
 
+  <partial name="Header" model="@headerText" />
+  <div>
+    <h3>
+      <p>
+        @T["Wrong identifier"]
+      </p>
+    </h3>
+  </div>
+
+  return;
 }
 
-@await Orchard.DisplayByIdAsync(contentItemId, "Print")
+@await Orchard.DisplayAsync(contentItem, "Print")
 
 <a href='@downloadLink' target="_blank">
   @T["Download"]

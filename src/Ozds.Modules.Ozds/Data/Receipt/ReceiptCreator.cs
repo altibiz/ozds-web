@@ -33,46 +33,37 @@ public class ReceiptCreator : ContentHandlerBase
     var dateFrom = receipt.DateFrom.Value.ThrowWhenNull();
     var dateTo = receipt.DateTo.Value.ThrowWhenNull();
 
-    var secondarySite =
-      await content
-        .GetContentAsync<SecondarySiteType>(siteContentItemId)
-        .ThrowWhenNull();
-    var consumer =
-      await Session
-        .Query<ContentItem, PersonIndex>(person =>
-            person.SiteContentItemId == siteContentItemId)
-        .FirstOrDefaultAsync()
-        .Nullable()
-        .ThrowWhenNull()
-        .Then(item => item.AsContent<ConsumerType>())
-        .ThrowWhenNull();
-    var center =
-      await content
-        .GetAsync(
-            consumer.ContainedPart.Value.ThrowWhenNull().ListContentItemId)
-        .ThrowWhenNull()
-        .Then(item => item.AsContent<CenterType>())
-        .ThrowWhenNull();
+    var secondarySite = await content
+      .GetContentAsync<SecondarySiteType>(
+        siteContentItemId)
+      .ThrowWhenNull();
+    var consumer = await content
+      .GetContentAsync<ConsumerType>(
+        secondarySite.ContainedPart.Value
+        .ThrowWhenNull().ListContentItemId)
+      .ThrowWhenNull();
+    var center = await content
+      .GetContentAsync<CenterType>(
+        consumer.ContainedPart.Value
+        .ThrowWhenNull().ListContentItemId)
+      .ThrowWhenNull();
 
-    var catalogue =
-      secondarySite.Catalogue.Value.ContentItems
-        .FirstOrDefault()
-        .ThrowWhenNull()
-        .As<Catalogue>()
-        .ThrowWhenNull();
-    var operatorCatalogue =
-      await content
-        .GetAsync(
-          OperatorCatalogue.ContentItemIdFor(
-            catalogue.TariffModel.TermContentItemIds.First()))
-        .ThrowWhenNull()
-        .Then(item => item.As<Catalogue>())
-        .Nullable()
-        .ThrowWhenNull();
+    var catalogue = secondarySite.Catalogue.Value.ContentItems
+      .First()
+      .As<Catalogue>()
+      .ThrowWhenNull();
+    var operatorCatalogue = await content
+      .GetContentAsync<CatalogueType>(
+        OperatorCatalogue.ContentItemIdFor(
+          catalogue.TariffModel.TermContentItemIds.First())
+          .ThrowWhenNull())
+      .ThrowWhenNull()
+      .Then(catalogue => catalogue.Catalogue.Value);
 
     var source =
       SiteMeasurementSource.GetElasticsearchSource(
-          secondarySite.Site.Value.Source.TermContentItemIds[0])
+          secondarySite.Site.Value.Source.TermContentItemIds
+          .First())
         .ThrowWhenNull();
     var deviceId = secondarySite.Site.Value.DeviceId.Text;
     var (beginEnergyMeasurement, endEnergyMeasurement) =
@@ -99,9 +90,11 @@ public class ReceiptCreator : ContentHandlerBase
     receipt.Data =
       await ReceiptData.Create(
         Taxonomy,
+        center.Center.Value.User.UserIds[0],
         center.Operator.Value.Data.Value,
         center.CenterOwner.Value.Data.Value,
         center.Title.Value.Title,
+        consumer.Consumer.Value.User.UserIds[0],
         consumer.Person.Value.Data.Value,
         await CalculationData.Create(
           Taxonomy,

@@ -2,6 +2,7 @@ using OrchardCore.ContentManagement;
 using OrchardCore.Flows.Models;
 using OrchardCore.Title.Models;
 using OrchardCore.Lists.Models;
+using OrchardCore.ContentFields.Fields;
 
 namespace Ozds.Modules.Ozds;
 
@@ -19,4 +20,5 @@ public class CenterType : ContentTypeBase
 
 public class Center : ContentPart
 {
+  public UserPickerField User { get; init; } = new();
 }

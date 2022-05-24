@@ -19,11 +19,8 @@
             "Title": "Dubravica"
           },
           "Consumer": {
-            "SecondarySites": {
-              "ContentItemIds": [
-                "4fnzd5fywmg2dz3gxzcy0x9cd7",
-                "4cxae7ke9gr5btyfbdsg4nb4ck"
-              ]
+            "User": {
+              "UserIds": ["TestMemberId"]
             }
           },
           "Person": {
@@ -45,6 +42,10 @@
             "Contact": {
               "Text": "info@pekara-dubravica.hr"
             }
+          },
+          "SecondarySites": {
+            "FeedProxyUrl": null,
+            "FeedItemsCount": 20
           },
           "ContainedPart": {
             "ListContentItemId": "4gk51z3vfezzgtk8kqr231y9x7",

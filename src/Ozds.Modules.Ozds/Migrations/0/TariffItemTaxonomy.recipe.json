@@ -64,6 +64,9 @@
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
+                "AliasPart": {
+                  "Alias": "koristenje-mreze-rjt-r1"
+                },
                 "TermPart": {
                   "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
                 },
@@ -103,6 +106,9 @@
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "koristenje-mreze-u-doba-vise-tarife-rvt-r1"
                 },
                 "TermPart": {
                   "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
@@ -144,6 +150,9 @@
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
+                "AliasPart": {
+                  "Alias": "koristenje-mreze-u-doba-nize-tarife-rnt-r2"
+                },
                 "TermPart": {
                   "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
                 },
@@ -183,6 +192,9 @@
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "angazirana-snaga-u-doba-vise-tarife-svt"
                 },
                 "TermPart": {
                   "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
@@ -224,6 +236,9 @@
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
+                "AliasPart": {
+                  "Alias": "naknada-za-mjernu-uslugu-svt"
+                },
                 "TermPart": {
                   "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
                 },
@@ -263,6 +278,9 @@
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "opskrba-elektricnom-energijom-rjt"
                 },
                 "TermPart": {
                   "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
@@ -304,6 +322,9 @@
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
+                "AliasPart": {
+                  "Alias": "opskrba-elektricnom-energijom-u-doba-vise-tarife-rvt"
+                },
                 "TermPart": {
                   "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
                 },
@@ -343,6 +364,9 @@
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "opskrba-elektricnom-energijom-u-doba-nize-tarife-rnt"
                 },
                 "TermPart": {
                   "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
@@ -384,6 +408,9 @@
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
+                "AliasPart": {
+                  "Alias": "naknada-za-poticanje-proizvodnje-iz-obnovljivih-izvora-i-kogeneracije-oieik"
+                },
                 "TermPart": {
                   "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"
                 },
@@ -423,6 +450,9 @@
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "trosarina-za-poslovnu-upotrebu-trp"
                 },
                 "TermPart": {
                   "TaxonomyContentItemId": "4van7f3sda11fx2nm0pbqjef45"

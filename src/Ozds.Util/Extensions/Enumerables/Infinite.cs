@@ -16,6 +16,17 @@ public static partial class Enumerables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
+  public static async IAsyncEnumerable<T> InfiniteAsync<T>(
+      this T generator)
+  {
+    do
+    {
+      yield return await Task.FromResult(generator);
+    }
+    while (true);
+  }
+
+  [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static IEnumerable<T> Infinite<T>(
       this Func<T> generator)
   {

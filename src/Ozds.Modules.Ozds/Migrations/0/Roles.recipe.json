@@ -1,0 +1,19 @@
+{
+  "steps": [
+    {
+      "name": "Roles",
+      "roles": [
+        {
+          "Name": "Anonymous",
+          "Description": "Anonymous role",
+          "Permissions": []
+        },
+        {
+          "Name": "User",
+          "Description": "User role",
+          "Permissions": ["ViewContent", "QueryLuceneSearchIndex"]
+        }
+      ]
+    }
+  ]
+}

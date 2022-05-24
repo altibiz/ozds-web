@@ -10,8 +10,12 @@ public class ReceiptIndex : MapIndex
   public string ContentItemId { get; init; } = default!;
   public string SiteContentItemId { get; init; } = default!;
   public string TariffModelTermId { get; init; } = default!;
+  public string ConsumerContentItemId { get; init; } = default!;
+  public string ConsumerUserId { get; init; } = default!;
   public string ConsumerName { get; init; } = default!;
   public string ConsumerOib { get; init; } = default!;
+  public string CenterContentItemId { get; init; } = default!;
+  public string CenterUserId { get; init; } = default!;
   public string CenterOwnerName { get; init; } = default!;
   public string CenterOwnerOib { get; init; } = default!;
   public string OperatorName { get; init; } = default!;
@@ -36,8 +40,16 @@ public class ReceiptIndexProvider :
               receipt.Data.Calculation.SiteContentItemId,
             TariffModelTermId =
               receipt.Data.Calculation.TariffModelTermId,
+            ConsumerContentItemId =
+              receipt.Data.Consumer.ContentItemId,
+            ConsumerUserId =
+              receipt.Data.ConsumerUserId,
             ConsumerName = receipt.Data.Consumer.Name,
             ConsumerOib = receipt.Data.Consumer.Oib,
+            CenterContentItemId =
+              receipt.Data.CenterOwner.ContentItemId,
+            CenterUserId =
+              receipt.Data.CenterUserId,
             CenterOwnerName = receipt.Data.CenterOwner.Name,
             CenterOwnerOib = receipt.Data.CenterOwner.Oib,
             OperatorName = receipt.Data.Operator.Name,

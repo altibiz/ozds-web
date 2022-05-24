@@ -54,6 +54,9 @@
                   "RouteContainedItems": false,
                   "Absolute": false
                 },
+                "AliasPart": {
+                  "Alias": "helbozds"
+                },
                 "TermPart": {
                   "TaxonomyContentItemId": "4k4556m076b1vvsmmqjccbjwn5"
                 },
@@ -83,6 +86,9 @@
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "myenergycommunity"
                 },
                 "TermPart": {
                   "TaxonomyContentItemId": "4k4556m076b1vvsmmqjccbjwn5"

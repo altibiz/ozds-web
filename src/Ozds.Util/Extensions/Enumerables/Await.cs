@@ -9,7 +9,10 @@ public static partial class Enumerables
       this IAsyncEnumerable<T> @this)
   {
     var result = new List<T>();
-    await foreach (var current in @this) { result.Add(current); }
+    await foreach (var current in @this)
+    {
+      result.Add(current);
+    }
     return result;
   }
 

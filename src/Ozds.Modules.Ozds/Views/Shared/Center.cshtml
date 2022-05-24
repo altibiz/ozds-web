@@ -10,6 +10,14 @@
 
 <div>
   <h3>
+    @T["Operator"]
+  </h3>
+
+  <partial name="Person" model="@Model.Operator.Value" />
+</div>
+
+<div>
+  <h3>
     @T["Owner"]
   </h3>
 
@@ -28,12 +36,4 @@
       </li>
     }
   </ul>
-</div>
-
-<div>
-  <h3>
-    @T["Operator"]
-  </h3>
-
-  <partial name="Person" model="@Model.Operator.Value" />
 </div>

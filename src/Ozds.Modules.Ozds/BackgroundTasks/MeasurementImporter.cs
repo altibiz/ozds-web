@@ -1,5 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.BackgroundTasks;
+using Ozds.Elasticsearch;
+using Ozds.Util;
 
 namespace Ozds.Modules.Ozds;
 
@@ -12,6 +14,7 @@ public class MeasurementImporter : IBackgroundTask
       IServiceProvider services,
       CancellationToken token) =>
     services
-      .GetRequiredService<Elasticsearch.IMeasurementImporter>()
-      .ImportMeasurementsAsync();
+      .GetRequiredService<Elasticsearch.IMeasurementLoader>()
+      .LoadMeasurementsAsync(
+        Enumerables.Empty<IExtractionBucket<LoadMeasurement>>());
 }

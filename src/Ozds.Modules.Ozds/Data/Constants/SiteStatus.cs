@@ -24,6 +24,9 @@ public static class SiteStatus
   public static string? GetElasticsearchStatus(string termId) =>
     SiteStatusTermIdToElasticsearchStatue.GetOrDefault(termId);
 
+  public static string? GetElasticsearchStatus(TaxonomyField field) =>
+    GetElasticsearchStatus(field.TermContentItemIds.First());
+
   private readonly static IDictionary<string, string>
   SiteStatusTermIdToElasticsearchStatue =
     new Dictionary<string, string>()

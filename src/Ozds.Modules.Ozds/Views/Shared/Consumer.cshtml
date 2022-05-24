@@ -3,10 +3,6 @@
 
 @model ConsumerType
 
-@{
-  var siteContentItemIds = Model.Consumer.Value.SecondarySites.ContentItemIds;
-}
-
 <h2>
   <span>
     @Model.Title.Value.Title
@@ -15,23 +11,4 @@
 
 <div>
   <partial name="Person" model="@Model.Consumer.Value" />
-</div>
-
-<div>
-  <h3>
-    <span>
-      @T["Secondary sites"]
-    </span>
-  </h3>
-  <ul>
-    @foreach (var siteContentItemId in siteContentItemIds)
-    {
-      var site = await Orchard
-      .GetContentItemByIdAsync(siteContentItemId)
-      .Then(item => item.AsContent<SecondarySiteType>());
-      <li>
-        <partial name="SecondarySite" model="@site" />
-      </li>
-    }
-  </ul>
 </div>

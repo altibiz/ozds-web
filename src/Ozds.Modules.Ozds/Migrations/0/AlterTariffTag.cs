@@ -3,6 +3,7 @@ using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
 using OrchardCore.ContentFields.Settings;
 using OrchardCore.Autoroute.Models;
+using OrchardCore.Alias.Settings;
 
 namespace Ozds.Modules.Ozds.M0;
 
@@ -40,7 +41,6 @@ public static partial class AlterTariffTag
         .WithPart("TariffTag",
           part => part
             .WithPosition("2")
-            .WithDisplayMode("")
             .WithSettings(
               new FieldEditorSettings
               {
@@ -49,10 +49,25 @@ public static partial class AlterTariffTag
           part => part
             .WithPosition("3")
             .WithDisplayName("Ruta")
-            .WithDescription("Automatski generirana ruta tarifnog elementa")
+            .WithDescription("Automatski generirana ruta značajke")
             .WithSettings(
               new AutoroutePartSettings
               {
+                Pattern =
+                @"
+{%- assign title = ContentItem.Content.TitlePart -%}
+{{- title.Title | slugify -}}
+                "
+              }))
+        .WithPart("AliasPart",
+          part => part
+            .WithPosition("4")
+            .WithDisplayName("Alias")
+            .WithDescription("Automatski generiran alias značajke")
+            .WithSettings(
+              new AliasPartSettings
+              {
+                Options = AliasPartOptions.GeneratedDisabled,
                 Pattern =
                 @"
 {%- assign title = ContentItem.Content.TitlePart -%}

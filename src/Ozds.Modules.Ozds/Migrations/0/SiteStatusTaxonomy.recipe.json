@@ -46,7 +46,6 @@
                 "TitlePart": {
                   "Title": "Aktivno"
                 },
-
                 "Tag": {},
                 "AutoroutePart": {
                   "Path": "aktivno",
@@ -54,6 +53,9 @@
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "aktivno"
                 },
                 "TermPart": {
                   "TaxonomyContentItemId": "47p9e5rkms3m012qv3z2t26jcg"
@@ -70,23 +72,23 @@
                 "Latest": false,
                 "Published": false,
                 "ModifiedUtc": "2022-05-03T10:26:42.6032156Z",
-
                 "PublishedUtc": null,
                 "CreatedUtc": null,
                 "Owner": null,
                 "Author": "admin",
-
                 "TitlePart": {
                   "Title": "Neaktivno"
                 },
                 "Tag": {},
-
                 "AutoroutePart": {
                   "Path": "neaktivno",
                   "SetHomepage": false,
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "neaktivno"
                 },
                 "TermPart": {
                   "TaxonomyContentItemId": "47p9e5rkms3m012qv3z2t26jcg"
@@ -117,6 +119,9 @@
                   "Disabled": false,
                   "RouteContainedItems": false,
                   "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "privremeno-neaktivno"
                 },
                 "TermPart": {
                   "TaxonomyContentItemId": "47p9e5rkms3m012qv3z2t26jcg"

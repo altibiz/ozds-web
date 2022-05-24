@@ -30,17 +30,17 @@ public sealed partial class Client : IClientPrototype, IClient
       if (Env.IsDevelopment())
       {
         throw new WebException(
-          $"Could not connect to {Source}\n" +
+          $"Could not connect to Elasticsearch\n" +
           $"Ping response debug information: {pingResponse.DebugInformation}");
       }
       else
       {
         throw new WebException(
-          $"Could not connect to {Source}\n" +
+          $"Could not connect to Elasticsearch\n" +
           $"Ping response: {pingResponse}");
       }
     }
-    Logger.LogInformation($"Successfully connected to {Source}");
+    Logger.LogInformation($"Successfully connected to Elasticsearch");
 
     Providers = providers.ToList();
     if (Providers.Count > 0)

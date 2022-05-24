@@ -48,21 +48,95 @@ public static partial class AlterSite
               new DictionaryFieldSettings
               {
               }))
-        .WithField("MeasurementFrequency",
+        .WithField("MeasurementIntervalInSeconds",
           field => field
             .OfType("NumericField")
-            .WithDisplayName("Frekvencija mjerenja uređaja u sekundama")
+            .WithDisplayName("Interval mjeranja")
+            .WithDescription(
+              "Količina vremena između uzastopnih mjerenja uređaja")
             .WithPosition("4")
             .WithSettings(
               new NumericFieldSettings
               {
-                Required = true
+                Required = true,
+                Minimum = 0,
+                Scale = 0
+              }))
+        .WithField("ExtractionStart",
+          field => field
+            .OfType("DateTimeField")
+            .WithDisplayName("Početak mjerenja")
+            .WithDescription("Trenutak u kojem je uređaj počeo mjeriti")
+            .WithPosition("5")
+            .WithSettings(
+              new DateTimeFieldSettings
+              {
+                Required = true,
+              }))
+        .WithField("ExtractionOffsetInSeconds",
+          field => field
+            .OfType("NumericField")
+            .WithDisplayName("Odstupanje preuzimanja mjerenja")
+            .WithDescription(
+              "Količina vremena u sekundama koja je potrebna " +
+              "da bi mjerenja uređaja bila raspoloživa na izvoru")
+            .WithPosition("6")
+            .WithSettings(
+              new NumericFieldSettings
+              {
+                Required = true,
+                Minimum = 0,
+                Scale = 0
+              }))
+        .WithField("ExtractionTimeoutInSeconds",
+          field => field
+            .OfType("NumericField")
+            .WithDisplayName("Odstupanje preuzimanja nedostataka")
+            .WithDescription(
+              "Količina vremena u sekundama nakon koje će nastupiti " +
+              "ponovni pokušaj preuzimanja mjerenja u iznimnim situacijama")
+            .WithPosition("7")
+            .WithSettings(
+              new NumericFieldSettings
+              {
+                Required = true,
+                Minimum = 0,
+                Scale = 0
+              }))
+        .WithField("ExtractionRetries",
+          field => field
+            .OfType("NumericField")
+            .WithDisplayName("Količina ponovnih pokušaja preuzimanja")
+            .WithDescription(
+              "Koliko će se puta mjerenja ponovno pukušati preuzeti " +
+              "u iznimnim situacijama")
+            .WithPosition("8")
+            .WithSettings(
+              new NumericFieldSettings
+              {
+                Required = true,
+                Minimum = 0,
+                Scale = 0
+              }))
+        .WithField("ValidationIntervalInSeconds",
+          field => field
+            .OfType("NumericField")
+            .WithDisplayName("Interval validacije mjerenja")
+            .WithDescription(
+              "Mjerenja će se provjeravati za validnost svaki interval")
+            .WithPosition("9")
+            .WithSettings(
+              new NumericFieldSettings
+              {
+                Required = true,
+                Minimum = 0,
+                Scale = 0
               }))
         .WithField("Status",
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Status")
-            .WithPosition("5")
+            .WithPosition("10")
             .WithSettings(
               new TaxonomyFieldSettings
               {

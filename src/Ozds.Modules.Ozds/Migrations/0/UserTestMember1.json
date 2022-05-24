@@ -1,0 +1,18 @@
+{
+  "UserId": "TestMemberId",
+  "UserName": "TestMember",
+  "NormalizedUserName": "TESTMEMBER",
+  "Email": "test-member@helb.hr",
+  "NormalizedEmail": "TEST-MEMBER@HELB.HR",
+  "PasswordHash": "AQAAAAEAACcQAAAAEC7oGuyqEtLdGITON1V5gwKOJlrarIntKd1VbOhl9FWP/vqRGwWQ6UwUVQM8GYqO0Q==",
+  "SecurityStamp": "AT55WB4DR7OT5G4YZ5ADW5ZGIHWVDZNP",
+  "EmailConfirmed": true,
+  "IsEnabled": true,
+  "IsLockoutEnabled": true,
+  "AccessFailedCount": 0,
+  "RoleNames": ["User"],
+  "UserClaims": [],
+  "LoginInfos": [],
+  "UserTokens": [],
+  "Properties": {}
+}

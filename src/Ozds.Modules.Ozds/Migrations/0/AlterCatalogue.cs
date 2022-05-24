@@ -36,11 +36,7 @@ public static partial class AlterCatalogue
         .WithPart("Catalogue",
           part => part
             .WithPosition("2")
-            .WithDisplayName("Cjenik")
-            .WithSettings(
-              new FieldEditorSettings
-              {
-              }))
+            .WithDisplayName("Cjenik"))
         .WithPart("Items", "BagPart",
           part => part
             .WithDisplayName("Stavke")

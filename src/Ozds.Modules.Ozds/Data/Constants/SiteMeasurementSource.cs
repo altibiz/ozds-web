@@ -26,6 +26,10 @@ public static class SiteMeasurementSource
     SiteMeasurementSourceTermIdToElasticsearchSource
       .GetOrDefault(termId);
 
+  public static string? GetElasticsearchSource(
+      TaxonomyField field) =>
+    GetElasticsearchSource(field.TermContentItemIds.First());
+
   public static bool IsFake(string termId) =>
     termId == FakeSourceTermId;
 

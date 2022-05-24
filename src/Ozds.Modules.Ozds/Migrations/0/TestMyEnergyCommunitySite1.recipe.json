@@ -20,6 +20,9 @@
           },
           "SecondarySite": {},
           "Site": {
+            "Owner": {
+              "ContentItemIds": ["4svpv279hbbc4vpgxey41nys46"]
+            },
             "Source": {
               "TaxonomyContentItemId": "4k4556m076b1vvsmmqjccbjwn5",
               "TermContentItemIds": ["481mx70mkj8y769kc85vqhw55c"]
@@ -147,6 +150,9 @@
                 }
               }
             ]
+          },
+          "ContainedPart": {
+            "ListContentItemId": "4svpv279hbbc4vpgxey41nys46"
           }
         }
       ]

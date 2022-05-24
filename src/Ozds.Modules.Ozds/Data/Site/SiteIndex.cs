@@ -8,6 +8,8 @@ namespace Ozds.Modules.Ozds;
 public class SiteIndex : MapIndex
 {
   public string ContentItemId { get; init; } = default!;
+  public string OwnerContentItemId { get; init; } = default!;
+  public string UserContentItemId { get; init; } = default!;
   public string SourceTermId { get; init; } = default!;
   public string DeviceId { get; init; } = default!;
   public string StatusTermId { get; init; } = default!;
@@ -22,24 +24,19 @@ public class SiteIndexProvider :
     context
       .For<SiteIndex>()
       .Map(item =>
-        ((item.AsReal<SecondarySite>(),
-          item.As<Site>().Nullable()) switch
+        ((item.AsContent<SecondarySiteType>()) switch
         {
-          (SecondarySite secondary, Site site) =>
-          (site.Source.TermContentItemIds.FirstOrDefault(),
-           site.Status.TermContentItemIds.FirstOrDefault())
-          switch
+          (SecondarySiteType site) =>
+          new SiteIndex
           {
-            (string sourceTermId,
-             string statusTermId) =>
-              new SiteIndex
-              {
-                ContentItemId = item.ContentItemId,
-                SourceTermId = sourceTermId,
-                DeviceId = site.DeviceId.Text,
-                StatusTermId = statusTermId,
-              },
-            _ => null
+            ContentItemId = item.ContentItemId,
+            OwnerContentItemId = site.ContainedPart.Value
+              .ThrowWhenNull().ListContentItemId,
+            SourceTermId = site.Site.Value.Source.TermContentItemIds
+              .First(),
+            DeviceId = site.Site.Value.DeviceId.Text,
+            StatusTermId = site.Site.Value.Status.TermContentItemIds
+              .First(),
           },
           _ => null,
         })

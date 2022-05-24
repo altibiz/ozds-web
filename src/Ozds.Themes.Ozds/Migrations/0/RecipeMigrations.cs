@@ -14,10 +14,6 @@ public static partial class RecipeMigrations
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/Layers.recipe.json", migration);
 
-  public static IRecipeMigrator ExecuteAnonymousRole(
-      this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/AnonymousRole.recipe.json", migration);
-
   public static IRecipeMigrator ExecuteLuceneFullTextSearch(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/LuceneFullTextSearch.recipe.json", migration);
@@ -27,7 +23,6 @@ public static partial class RecipeMigrations
     recipe
       .ExecuteLocalization(migration)
       .ExecuteLayers(migration)
-      .ExecuteAnonymousRole(migration)
       .ExecuteLuceneFullTextSearch(migration);
 
   public static IRecipeMigrator ExecuteTestSettings(
@@ -35,7 +30,6 @@ public static partial class RecipeMigrations
     recipe
       .ExecuteLocalization(migration)
       .ExecuteLayers(migration)
-      .ExecuteAnonymousRole(migration)
       .ExecuteLuceneFullTextSearch(migration);
 
 

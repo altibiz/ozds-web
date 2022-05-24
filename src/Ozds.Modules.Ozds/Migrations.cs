@@ -20,6 +20,7 @@ public sealed class Migrations : DataMigration
       Recipe.ExecuteTestSettings(this);
       Recipe.ExecuteTestTaxonomies(this);
       Content.AlterContent();
+      Session.SaveTestData();
       Recipe.ExecuteTestContent(this);
     }
     else
@@ -29,6 +30,7 @@ public sealed class Migrations : DataMigration
       Recipe.ExecuteSettings(this);
       Recipe.ExecuteTaxonomies(this);
       Content.AlterContent();
+      Session.SaveData();
       Recipe.ExecuteContent(this);
     }
 
