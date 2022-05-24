@@ -1,4 +1,5 @@
 using Xunit;
+using Ozds.Util;
 
 namespace Ozds.Elasticsearch.Test;
 
@@ -12,6 +13,7 @@ public partial class ClientTest
     {
       var buckets = Client
         .ExtractDeviceMeasurements(device.ToExtractionDevice());
+      Logger.LogDebug(buckets.ToJson());
       Assert.NotEmpty(buckets);
       Assert.All(buckets, bucket =>
         Assert.All(bucket, measurement =>

@@ -7,7 +7,7 @@ public partial class ClientTest
 {
   [Theory]
   [MemberData(nameof(Data.GenerateDevices), MemberType = typeof(Data))]
-  public async Task PlanDeviceExtractionAsyncTest(
+  public async Task ExecuteDeviceExtractionPlanAsyncTest(
       IEnumerable<Device> devices)
   {
     var deviceIds = devices.Select(d => d.Id);
@@ -19,12 +19,6 @@ public partial class ClientTest
     Thread.Sleep(1000);
     foreach (var device in extractionDevices)
     {
-      var measurementsPerExtractionPlanItem = 20;
-      var extractionPlan = await Client
-        .PlanDeviceExtractionAsync(
-            device,
-            null,
-            measurementsPerExtractionPlanItem);
       var now = DateTime.UtcNow;
       var period =
         new Period
@@ -32,29 +26,38 @@ public partial class ClientTest
           From = device.ExtractionStart,
           To = now
         };
-      Logger.LogDebug(extractionPlan.ToJson());
-      Assert.Equal(extractionPlan.Device, device);
+      var measurementsPerExtractionPlanItem = 20;
+      var extractionPlan = await Client
+        .PlanDeviceExtractionAsync(
+            device,
+            null,
+            measurementsPerExtractionPlanItem);
+
+      var extractionOutcome = await Client
+        .ExecuteExtractionPlanAsync(extractionPlan);
+      Logger.LogDebug(extractionOutcome.ToJson());
+      Assert.Equal(extractionOutcome.Device, device);
       Assert.Equal(
-        extractionPlan.Items.Count(),
-        Math.Ceiling(
-          period.Span.TotalSeconds /
-          (device.MeasurementInterval.TotalSeconds *
-          measurementsPerExtractionPlanItem)));
+        extractionOutcome.Items.Select(item => item.Original),
+        extractionPlan.Items);
       Assert.All(
-        extractionPlan.Items,
+        extractionOutcome.Items,
         item =>
         {
-          Assert.InRange(item.Period.From, period.From, period.To);
-          Assert.InRange(item.Period.To, period.From, period.To);
-          Assert.Equal(0, item.Retries);
-          Assert.Equal(device.ExtractionTimeout, item.Timeout);
+          Assert.Null(item.Next);
+          Assert.All(
+            item.Bucket,
+            measurement =>
+            {
+              Assert.True(measurement.Validate());
+            });
         });
     }
   }
 
   [Theory]
   [MemberData(nameof(Data.GenerateDevices), MemberType = typeof(Data))]
-  public void PlanDeviceExtractionTest(
+  public void ExecuteDeviceExtractionPlanTest(
       IEnumerable<Device> devices)
   {
     var deviceIds = devices.Select(d => d.Id);
@@ -79,39 +82,43 @@ public partial class ClientTest
           From = device.ExtractionStart,
           To = now
         };
-      Assert.Equal(extractionPlan.Device, device);
+
+      var extractionOutcome = Client
+        .ExecuteExtractionPlan(extractionPlan);
+      Assert.Equal(extractionOutcome.Device, device);
       Assert.Equal(
-        extractionPlan.Items.Count(),
-        Math.Ceiling(
-          period.Span.TotalSeconds /
-          (device.MeasurementInterval.TotalSeconds *
-          measurementsPerExtractionPlanItem)));
+        extractionOutcome.Items.Select(item => item.Original),
+        extractionPlan.Items);
       Assert.All(
-        extractionPlan.Items,
+        extractionOutcome.Items,
         item =>
         {
-          Assert.InRange(item.Period.From, period.From, period.To);
-          Assert.InRange(item.Period.To, period.From, period.To);
-          Assert.Equal(0, item.Retries);
-          Assert.Equal(device.ExtractionTimeout, item.Timeout);
+          Assert.Null(item.Next);
+          Assert.All(
+            item.Bucket,
+            measurement =>
+            {
+              Assert.True(measurement.Validate());
+            });
         });
     }
   }
 
   [Theory]
   [MemberData(nameof(Data.GenerateDevices), MemberType = typeof(Data))]
-  public void PlanDeviceExtractionInPeriodTest(
+  public void ExecuteDeviceExtractionPlanInPeriodTest(
       IEnumerable<Device> devices)
   {
     var deviceIds = devices.Select(d => d.Id);
     var extractionDevices = devices
       .Select(ExtractionDeviceExtensions.ToExtractionDevice);
     SetupDevices(devices);
+    var now = DateTime.UtcNow;
     var period =
       new Period
       {
-        From = DateTime.UtcNow.AddMinutes(-5),
-        To = DateTime.UtcNow
+        From = now.AddMinutes(-5),
+        To = now
       };
 
     // NOTE: preparation for searching
@@ -124,29 +131,31 @@ public partial class ClientTest
             device,
             period,
             measurementsPerExtractionPlanItem);
-      var now = DateTime.UtcNow;
-      Assert.Equal(extractionPlan.Device, device);
+
+      var extractionOutcome = Client
+        .ExecuteExtractionPlan(extractionPlan);
+      Assert.Equal(extractionOutcome.Device, device);
       Assert.Equal(
-        extractionPlan.Items.Count(),
-        Math.Ceiling(
-          period.Span.TotalSeconds /
-          (device.MeasurementInterval.TotalSeconds *
-          measurementsPerExtractionPlanItem)));
+        extractionOutcome.Items.Select(item => item.Original),
+        extractionPlan.Items);
       Assert.All(
-        extractionPlan.Items,
+        extractionOutcome.Items,
         item =>
         {
-          Assert.InRange(item.Period.From, period.From, period.To);
-          Assert.InRange(item.Period.To, period.From, period.To);
-          Assert.Equal(0, item.Retries);
-          Assert.Equal(device.ExtractionTimeout, item.Timeout);
+          Assert.Null(item.Next);
+          Assert.All(
+            item.Bucket,
+            measurement =>
+            {
+              Assert.True(measurement.Validate());
+            });
         });
     }
   }
 
   [Theory]
   [MemberData(nameof(Data.GenerateDevices), MemberType = typeof(Data))]
-  public void PlanDeviceExtractionWithMissingDataTest(
+  public void ExecuteDeviceExtractionPlanWithMissingDataTest(
       IEnumerable<Device> devices)
   {
     var deviceIds = devices.Select(d => d.Id);
@@ -190,30 +199,35 @@ public partial class ClientTest
           To = now
         };
 
-      var extractionPlanItems = extractionPlan.Items.ToList();
-      var missingDataItem = extractionPlanItems
-        .FirstOrDefault(item => item.Due == missingDataNextExtraction);
-      Assert.NotEqual(default, missingDataItem);
-      Assert.Equal(missingDataItem.Period, missingDataPeriod);
-      Assert.Equal(0, missingDataItem.Retries);
-      Assert.Equal(missingDataItem.Timeout, device.ExtractionTimeout);
+      var extractionOutcome = Client
+        .ExecuteExtractionPlan(extractionPlan);
 
-      extractionPlanItems.Remove(missingDataItem);
-      Assert.Equal(extractionPlan.Device, device);
+      var extractionOutcomeItems = extractionOutcome.Items.ToList();
       Assert.Equal(
-        extractionPlanItems.Count(),
-        Math.Ceiling(
-          period.Span.TotalSeconds /
-          (device.MeasurementInterval.TotalSeconds *
-          measurementsPerExtractionPlanItem)));
+        extractionOutcomeItems.Select(item => item.Original),
+        extractionPlan.Items);
+
+      var missingDataItem = extractionOutcomeItems
+        .FirstOrDefault(item => item.Original.Due == missingDataNextExtraction);
+      Assert.NotEqual(default, missingDataItem);
+      Assert.Equal(missingDataItem.Original.Period, missingDataPeriod);
+      Assert.Equal(0, missingDataItem.Original.Retries);
+      Assert.Equal(missingDataItem.Original.Timeout, device.ExtractionTimeout);
+      Assert.Null(missingDataItem.Next);
+
+      extractionOutcomeItems.Remove(missingDataItem);
+      Assert.Equal(extractionOutcome.Device, device);
       Assert.All(
-        extractionPlanItems,
+        extractionOutcomeItems,
         item =>
         {
-          Assert.InRange(item.Period.From, period.From, period.To);
-          Assert.InRange(item.Period.To, period.From, period.To);
-          Assert.Equal(0, item.Retries);
-          Assert.Equal(device.ExtractionTimeout, item.Timeout);
+          Assert.Null(item.Next);
+          Assert.All(
+            item.Bucket,
+            measurement =>
+            {
+              Assert.True(measurement.Validate());
+            });
         });
     }
   }

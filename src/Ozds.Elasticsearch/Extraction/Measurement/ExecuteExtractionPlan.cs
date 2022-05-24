@@ -82,10 +82,12 @@ public partial class Client : IClient
       ExtractionDevice device,
       ExtractionPlanItem item,
       IExtractionBucket<ExtractionMeasurement> bucket) =>
-    item.Retries >= device.ExtractionRetries &&
+    item.Retries >= device.ExtractionRetries ||
     bucket switch
     {
-      (Period period, null, List<ExtractionMeasurement> measurements) =>
+      (Period period,
+       null,
+       IEnumerable<ExtractionMeasurement> measurements) =>
         ExtractionPlanItemConsistent(device, item, measurements) &&
         item.ShouldValidate ?
           ExtractionPlanItemValid(device, item, measurements)
@@ -96,14 +98,14 @@ public partial class Client : IClient
   private static bool ExtractionPlanItemConsistent(
       ExtractionDevice device,
       ExtractionPlanItem item,
-      List<ExtractionMeasurement> measurements) =>
-    measurements.Count >=
+      IEnumerable<ExtractionMeasurement> measurements) =>
+    measurements.Count() >=
       item.Period.Span.TotalSeconds /
       device.MeasurementInterval.TotalSeconds;
 
   private static bool ExtractionPlanItemValid(
       ExtractionDevice device,
       ExtractionPlanItem item,
-      List<ExtractionMeasurement> measurements) =>
+      IEnumerable<ExtractionMeasurement> measurements) =>
     measurements.All(ExtractionMeasurementExtensions.Validate);
 }

@@ -26,7 +26,7 @@ public partial class ClientTest
     {
       var device = extractionDevices
         .FirstOrDefault(device => device == extractionPlan.Device);
-      Assert.NotNull(device);
+      Assert.NotEqual(default, device);
       var now = DateTime.UtcNow;
       var period =
         new Period
@@ -46,8 +46,8 @@ public partial class ClientTest
         {
           Assert.InRange(item.Period.From, period.From, period.To);
           Assert.InRange(item.Period.To, period.From, period.To);
-          Assert.Equal(item.Retries, 0);
-          Assert.Equal(item.Timeout, device.ExtractionTimeout);
+          Assert.Equal(0, item.Retries);
+          Assert.Equal(device.ExtractionTimeout, item.Timeout);
         });
     }
   }
@@ -74,7 +74,7 @@ public partial class ClientTest
     {
       var device = extractionDevices
         .FirstOrDefault(device => device == extractionPlan.Device);
-      Assert.NotNull(device);
+      Assert.NotEqual(default, device);
       var now = DateTime.UtcNow;
       var period =
         new Period
@@ -94,8 +94,8 @@ public partial class ClientTest
         {
           Assert.InRange(item.Period.From, period.From, period.To);
           Assert.InRange(item.Period.To, period.From, period.To);
-          Assert.Equal(item.Retries, 0);
-          Assert.Equal(item.Timeout, device.ExtractionTimeout);
+          Assert.Equal(0, item.Retries);
+          Assert.Equal(device.ExtractionTimeout, item.Timeout);
         });
     }
   }
@@ -129,7 +129,7 @@ public partial class ClientTest
     {
       var device = extractionDevices
         .FirstOrDefault(device => device == extractionPlan.Device);
-      Assert.NotNull(device);
+      Assert.NotEqual(default, device);
       Assert.Equal(
         extractionPlan.Items.Count(),
         Math.Ceiling(
@@ -142,8 +142,8 @@ public partial class ClientTest
         {
           Assert.InRange(item.Period.From, period.From, period.To);
           Assert.InRange(item.Period.To, period.From, period.To);
-          Assert.Equal(item.Retries, 0);
-          Assert.Equal(item.Timeout, device.ExtractionTimeout);
+          Assert.Equal(0, item.Retries);
+          Assert.Equal(device.ExtractionTimeout, item.Timeout);
         });
     }
   }
