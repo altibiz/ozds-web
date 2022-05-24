@@ -10,16 +10,20 @@ public partial interface IClient :
 public sealed partial class Client : IClient
 {
   public Task<IEnumerable<DashboardMeasurement>>
-  GetDashboardMeasurementsAsync(string source, string deviceId) =>
+  GetDashboardMeasurementsAsync(
+      string source,
+      string deviceId,
+      Period? period = null) =>
     DateTime.UtcNow
       .WhenNullable(now =>
         SearchMeasurementsByDeviceSortedAsync(
           Device.MakeId(source, deviceId),
-          new Period
-          {
-            From = now.AddMinutes(-5),
-            To = now
-          })
+          period ??
+            new Period
+            {
+              From = now.AddMinutes(-5),
+              To = now
+            })
           .Then(response =>
             response.Hits.Select(hit =>
               new DashboardMeasurement
@@ -32,6 +36,27 @@ public sealed partial class Client : IClient
               })));
 
   public IEnumerable<DashboardMeasurement>
-  GetDashboardMeasurements(string source, string deviceId) =>
-    GetDashboardMeasurementsAsync(source, deviceId).BlockTask();
+  GetDashboardMeasurements(
+      string source,
+      string deviceId,
+      Period? period = null) =>
+    DateTime.UtcNow
+      .WhenNullable(now =>
+        SearchMeasurementsByDeviceSorted(
+          Device.MakeId(source, deviceId),
+          period ??
+            new Period
+            {
+              From = now.AddMinutes(-5),
+              To = now
+            })
+        .Hits.Select(hit =>
+          new DashboardMeasurement
+          {
+            Date = hit.Source.MeasurementTimestamp,
+            Energy = hit.Source.Data.energyIn,
+            HighCostEnergy = hit.Source.Data.energyIn_T1,
+            LowCostEnergy = hit.Source.Data.energyIn_T2,
+            Power = hit.Source.Data.powerIn,
+          }));
 }

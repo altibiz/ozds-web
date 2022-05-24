@@ -6,7 +6,10 @@ public sealed partial class FakeDashboardMeasurementProvider :
   IDashboardMeasurementProvider
 {
   public Task<IEnumerable<DashboardMeasurement>>
-  GetDashboardMeasurementsAsync(string source, string deviceId) =>
+  GetDashboardMeasurementsAsync(
+      string source,
+      string deviceId,
+      Period? period = null) =>
     DateTime.UtcNow
       .WhenNullable(now =>
         Enumerables
@@ -34,8 +37,11 @@ public sealed partial class FakeDashboardMeasurementProvider :
           .ToTask());
 
   public IEnumerable<DashboardMeasurement>
-  GetDashboardMeasurements(string source, string deviceId) =>
-    GetDashboardMeasurementsAsync(source, deviceId)
+  GetDashboardMeasurements(
+      string source,
+      string deviceId,
+      Period? period = null) =>
+    GetDashboardMeasurementsAsync(source, deviceId, period)
       .BlockTask();
 
   private static readonly MinMax s_energyMinMaxStart = new(100, 150);
