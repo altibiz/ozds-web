@@ -3,14 +3,14 @@ namespace Ozds.Elasticsearch;
 public class FakeMeasurementLoader : IMeasurementLoader
 {
   public Task LoadMeasurementsAwait(
-      IAsyncEnumerable<IExtractionBucket<LoadMeasurement>> measurements) =>
+      EnrichedExtractionOutcomeAsync _) =>
     Task.CompletedTask;
 
   public Task LoadMeasurementsAsync(
-      IEnumerable<IExtractionBucket<LoadMeasurement>> measurements) =>
+      EnrichedExtractionOutcomeAsync _) =>
     Task.CompletedTask;
 
   public void LoadMeasurements(
-      IEnumerable<IExtractionBucket<LoadMeasurement>> measurements)
+      EnrichedExtractionOutcome _)
   { }
 }

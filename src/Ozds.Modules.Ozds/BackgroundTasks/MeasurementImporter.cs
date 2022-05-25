@@ -12,36 +12,48 @@ public class MeasurementImporter : IBackgroundTask
 {
   public Task DoWorkAsync(
       IServiceProvider services,
-      CancellationToken token) =>
-   services
-     .GetRequiredService<IMeasurementExtractor>()
-     .PlanExtractionAwait()
-     .ForEachAwaitAsync(plan => services
-      .GetRequiredService<IMeasurementLoader>()
-      .LoadMeasurementsAwait(services
-        .GetRequiredService<IMeasurementExtractor>()
-        .ExecuteExtractionPlanAsync(plan)
-        .Items.SelectAwait(async item =>
-          {
-            // TODO: log missing/invalid/duplicate and load here
+      CancellationToken token)
+  {
+    var extractor = services.GetRequiredService<IMeasurementExtractor>();
+    var loader = services.GetRequiredService<IMeasurementLoader>();
+    var cache = services.GetRequiredService<MeasurementImporterCache>();
 
-            return new ExtractionBucket<LoadMeasurement>(
-              item.Original.Period,
-              await item.Bucket
-                .Select(measurement =>
-                  services
-                    .GetRequiredService<MeasurementImporterCache>()
-                    .GetDeviceData(
-                      Device.MakeId(
-                        measurement.Source,
-                        measurement.SourceDeviceId))
-                    .Then(data => measurement
-                      .ToLoadMeasurement(
-                        data.Operator,
-                        data.CenterId,
-                        data.CenterUserId,
-                        data.OwnerId,
-                        data.OwnerUserId)))
-                .Await());
-          })));
+    return extractor
+      .PlanExtractionAwait()
+      .ForEachAwaitAsync(plan => loader
+        .LoadMeasurementsAwait(
+          new EnrichedExtractionOutcomeAsync
+          {
+            Device = plan.Device,
+            Items =
+              extractor
+                .ExecuteExtractionPlanAsync(plan)
+                .Items.SelectAwait<ExtractionOutcomeItem,
+                EnrichedExtractionOutcomeItem>(item => item.Bucket
+                  .Select(measurement =>
+                    cache
+                      .GetDeviceData(
+                        Device.MakeId(
+                          measurement.Source,
+                          measurement.SourceDeviceId))
+                      .Then(data => measurement
+                        .ToLoadMeasurement(
+                          data.Operator,
+                          data.CenterId,
+                          data.CenterUserId,
+                          data.OwnerId,
+                          data.OwnerUserId)))
+                  .AwaitValueTask()
+                  .Then(items =>
+                    new EnrichedExtractionOutcomeItem
+                    {
+                      Original = item.Original,
+                      Next = item.Next,
+                      Bucket =
+                        new ExtractionBucket<LoadMeasurement>(
+                          item.Original.Period,
+                          items)
+                    }))
+          }));
+  }
 }
