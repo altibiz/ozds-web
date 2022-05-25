@@ -30,8 +30,23 @@
             "SourceData": {
               "data": []
             },
-            "MeasurementFrequency": {
+            "MeasurementIntervalInSeconds": {
               "Value": 10
+            },
+            "ExtractionStart": {
+              "Value": "[js: new Date().toISOString()]"
+            },
+            "ExtractionOffsetInSeconds": {
+              "Value": 30
+            },
+            "ExtractionTimeoutInSeconds": {
+              "Value": 3600
+            },
+            "ExtractionRetries": {
+              "Value": 5
+            },
+            "ValidationIntervalInSeconds": {
+              "Value": 3600
             },
             "Status": {
               "TaxonomyContentItemId": "47p9e5rkms3m012qv3z2t26jcg",

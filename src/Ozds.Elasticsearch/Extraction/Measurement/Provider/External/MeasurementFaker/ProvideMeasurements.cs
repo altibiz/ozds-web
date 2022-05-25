@@ -27,13 +27,18 @@ public sealed partial class Client : IClient
     (device.SourceDeviceId != Client.FakeDeviceId) &&
     (!Client.FakeDeviceIds.Contains(device.SourceDeviceId)) ?
       Enumerable.Empty<IExtractionBucket<ExtractionMeasurement>>()
-    : (period ?? s_defaultPeriod)
-        .SplitAscending(s_defaultTimeSpan)
+    : (period ??
+        new()
+        {
+          From = DateTime.UtcNow.AddMinutes(-5),
+          To = DateTime.UtcNow
+        })
+        .SplitAscending(TimeSpan.FromMinutes(5))
         .Select(period =>
           new ExtractionBucket<ExtractionMeasurement>(
             period,
             period
-              .SplitAscending(s_measurementInterval)
+              .SplitAscending(TimeSpan.FromSeconds(15))
               // NOTE: could be that the last period span is less than 1 second
               .SkipLast(1)
               .Select(period =>
@@ -92,23 +97,4 @@ public sealed partial class Client : IClient
         voltageL3 = measurement.Data.voltageL3,
       }
     };
-
-  private static readonly int s_measurementsPerMinute = 4;
-  private static readonly TimeSpan s_measurementInterval =
-    TimeSpan.FromSeconds(15);
-
-  private static readonly int s_maxTimeSpanMinutes = 1000;
-
-  private static Period s_defaultPeriod
-  {
-    get =>
-      new()
-      {
-        From = DateTime.UtcNow.AddMinutes(-5),
-        To = DateTime.UtcNow
-      };
-  }
-
-  private static readonly TimeSpan s_defaultTimeSpan =
-    TimeSpan.FromMinutes(5);
 }
