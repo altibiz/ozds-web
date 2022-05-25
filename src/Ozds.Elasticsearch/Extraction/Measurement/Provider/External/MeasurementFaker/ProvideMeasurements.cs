@@ -38,13 +38,16 @@ public sealed partial class Client : IClient
           new ExtractionBucket<ExtractionMeasurement>(
             period,
             period
-              .SplitAscending(TimeSpan.FromSeconds(15))
-              // NOTE: could be that the last period span is less than 1 second
+              // NOTE: always consistent
+              .SplitAscending(TimeSpan.FromSeconds(
+                  MeasurementIntervalInSeconds - 2))
+              // NOTE: last might fall out of bounds
               .SkipLast(1)
               .Select(period =>
                 Convert(Measurement
                   .Generate(
                     device.SourceDeviceId,
+                    // NOTE: add a second so were surely within limits
                     period.From + TimeSpan.FromSeconds(1))))));
 
   private ExtractionMeasurement Convert(

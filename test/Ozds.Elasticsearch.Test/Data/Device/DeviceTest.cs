@@ -15,8 +15,8 @@ public static partial class Data
       sourceDeviceId: "W1N2CSTX",
       measurementIntervalInSeconds: ((int)TimeSpan.FromSeconds(10).TotalSeconds),
       extractionStart: DateTime.UtcNow.AddMinutes(-10),
-      extractionOffsetInSeconds: ((int)TimeSpan.FromMinutes(5).TotalSeconds),
-      extractionTimeoutInSeconds: ((int)TimeSpan.FromMinutes(5).TotalSeconds),
+      extractionOffsetInSeconds: ((int)TimeSpan.FromSeconds(30).TotalSeconds),
+      extractionTimeoutInSeconds: ((int)TimeSpan.FromMinutes(1).TotalSeconds),
       extractionRetries: 5,
       validationIntervalInSeconds: ((int)TimeSpan.FromHours(1).TotalSeconds),
       sourceDeviceData:
@@ -33,11 +33,14 @@ public static partial class Data
       centerUserId: "TestCenterUserId",
       ownerId: "TestOwnerId",
       ownerUserId: "TestOwnerUserId",
-      source: Ozds.Elasticsearch.MeasurementFaker.Client.FakeSource,
-      sourceDeviceId: Ozds.Elasticsearch.MeasurementFaker.Client.FakeDeviceId,
-      measurementIntervalInSeconds: ((int)TimeSpan.FromSeconds(10).TotalSeconds),
+      source:
+        Elasticsearch.MeasurementFaker.Client.FakeSource,
+      sourceDeviceId:
+        Elasticsearch.MeasurementFaker.Client.FakeDeviceId,
+      measurementIntervalInSeconds:
+        Elasticsearch.MeasurementFaker.Client.MeasurementIntervalInSeconds,
       extractionStart: DateTime.UtcNow.AddMinutes(-10),
-      extractionOffsetInSeconds: ((int)TimeSpan.FromMinutes(5).TotalSeconds),
+      extractionOffsetInSeconds: ((int)TimeSpan.FromSeconds(30).TotalSeconds),
       extractionTimeoutInSeconds: ((int)TimeSpan.FromMinutes(5).TotalSeconds),
       extractionRetries: 5,
       validationIntervalInSeconds: ((int)TimeSpan.FromHours(1).TotalSeconds),

@@ -11,6 +11,7 @@ public sealed partial class Client : IClient
       "fakeDevice2",
       "fakeDevice3",
     };
+  public const int MeasurementIntervalInSeconds = 15;
 
   public Client(ILogger<Client> logger) { Logger = logger; }
 

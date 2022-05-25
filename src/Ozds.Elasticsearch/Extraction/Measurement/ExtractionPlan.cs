@@ -2,6 +2,7 @@ namespace Ozds.Elasticsearch;
 
 public readonly record struct ExtractionPlan
 (ExtractionDevice Device,
+ Period Period,
  IEnumerable<ExtractionPlanItem> Items);
 
 public readonly record struct ExtractionPlanItem

@@ -30,7 +30,7 @@ public partial class ClientTest
         new Period
         {
           From = device.ExtractionStart,
-          To = now
+          To = now.Subtract(device.ExtractionOffset)
         };
       Logger.LogDebug(extractionPlan.ToJson());
       Assert.Equal(extractionPlan.Device, device);
@@ -77,7 +77,7 @@ public partial class ClientTest
         new Period
         {
           From = device.ExtractionStart,
-          To = now
+          To = now.Subtract(device.ExtractionOffset)
         };
       Assert.Equal(extractionPlan.Device, device);
       Assert.Equal(
@@ -110,8 +110,8 @@ public partial class ClientTest
     var period =
       new Period
       {
-        From = DateTime.UtcNow.AddMinutes(-5),
-        To = DateTime.UtcNow
+        From = DateTime.UtcNow.AddMinutes(-10),
+        To = DateTime.UtcNow.AddMinutes(-5)
       };
 
     // NOTE: preparation for searching
@@ -187,7 +187,7 @@ public partial class ClientTest
         new Period
         {
           From = device.ExtractionStart,
-          To = now
+          To = now.Subtract(device.ExtractionOffset)
         };
 
       var extractionPlanItems = extractionPlan.Items.ToList();

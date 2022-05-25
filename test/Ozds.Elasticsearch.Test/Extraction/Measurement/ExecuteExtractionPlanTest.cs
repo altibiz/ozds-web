@@ -24,7 +24,7 @@ public partial class ClientTest
         new Period
         {
           From = device.ExtractionStart,
-          To = now
+          To = now.Subtract(device.ExtractionOffset)
         };
       var measurementsPerExtractionPlanItem = 20;
       var extractionPlan = await Client
@@ -80,7 +80,7 @@ public partial class ClientTest
         new Period
         {
           From = device.ExtractionStart,
-          To = now
+          To = now.Subtract(device.ExtractionOffset)
         };
 
       var extractionOutcome = Client
@@ -117,8 +117,8 @@ public partial class ClientTest
     var period =
       new Period
       {
-        From = now.AddMinutes(-5),
-        To = now
+        From = now.AddMinutes(-10),
+        To = now.AddMinutes(-5)
       };
 
     // NOTE: preparation for searching
@@ -186,18 +186,18 @@ public partial class ClientTest
       // NOTE: preparation for searching
       Thread.Sleep(1000);
       var measurementsPerExtractionPlanItem = 20;
-      var extractionPlan = Client
-        .PlanDeviceExtraction(
-            device,
-            null,
-            measurementsPerExtractionPlanItem);
       var now = DateTime.UtcNow;
       var period =
         new Period
         {
           From = device.ExtractionStart,
-          To = now
+          To = now.Subtract(device.ExtractionOffset)
         };
+      var extractionPlan = Client
+        .PlanDeviceExtraction(
+            device,
+            null,
+            measurementsPerExtractionPlanItem);
 
       var extractionOutcome = Client
         .ExecuteExtractionPlan(extractionPlan);

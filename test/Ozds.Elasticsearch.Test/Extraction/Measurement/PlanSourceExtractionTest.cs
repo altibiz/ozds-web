@@ -32,7 +32,7 @@ public partial class ClientTest
         new Period
         {
           From = device.ExtractionStart,
-          To = now
+          To = now.Subtract(device.ExtractionOffset)
         };
       Assert.Equal(
         extractionPlan.Items.Count(),
@@ -80,7 +80,7 @@ public partial class ClientTest
         new Period
         {
           From = device.ExtractionStart,
-          To = now
+          To = now.Subtract(device.ExtractionOffset)
         };
       Assert.Equal(
         extractionPlan.Items.Count(),
@@ -115,8 +115,8 @@ public partial class ClientTest
     var period =
       new Period
       {
-        From = now.AddMinutes(-5),
-        To = now
+        From = now.AddMinutes(-10),
+        To = now.AddMinutes(-5)
       };
     var measurementsPerExtractionPlanItem = 20;
     var extractionPlans = Client

@@ -27,7 +27,15 @@ public partial class Client : IClient
           await IndexMeasurementsAsync(item.Bucket
             .Select(LoadMeasurementExtensions.ToMeasurement));
         })
-      .Run();
+      .Run()
+      .Then(() => IndexLogAsync(
+        new(
+          LogType.LoadEnd,
+          extraction.Device.Id,
+          new()
+          {
+            Period = extraction.Period
+          })));
 
   public Task LoadMeasurementsAsync(
       EnrichedMeasurementExtractionAsync extraction) =>
@@ -50,7 +58,15 @@ public partial class Client : IClient
           await IndexMeasurementsAsync(item.Bucket
             .Select(LoadMeasurementExtensions.ToMeasurement));
         })
-      .Run();
+      .Run()
+      .Then(() => IndexLogAsync(
+        new(
+          LogType.LoadEnd,
+          extraction.Device.Id,
+          new()
+          {
+            Period = extraction.Period
+          })));
 
   public void LoadMeasurements(
       EnrichedMeasurementExtraction extraction) =>
@@ -73,5 +89,13 @@ public partial class Client : IClient
           IndexMeasurements(item.Bucket
             .Select(LoadMeasurementExtensions.ToMeasurement));
         })
-      .Run();
+      .Run()
+      .Return(() => IndexLog(
+        new(
+          LogType.LoadEnd,
+          extraction.Device.Id,
+          new()
+          {
+            Period = extraction.Period
+          })));
 }

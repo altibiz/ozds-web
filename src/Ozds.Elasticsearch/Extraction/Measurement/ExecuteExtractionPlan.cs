@@ -13,7 +13,9 @@ public partial class Client : IClient
       .WhenNonNullableFinally(provider =>
         plan.Items
           .Select(item => provider
-            .GetMeasurementsAsync(plan.Device.ToProvisionDevice(), item.Period)
+            .GetMeasurementsAsync(
+              plan.Device.ToProvisionDevice(),
+              item.Period)
             .Then(buckets => buckets
               .Select(bucket => CreateOutcomeItem(plan, item, bucket))))
           .ToAsync()
@@ -23,6 +25,7 @@ public partial class Client : IClient
         new MeasurementExtractionAsync
         {
           Device = plan.Device,
+          Period = plan.Period,
           Items = items
         });
 
@@ -33,7 +36,9 @@ public partial class Client : IClient
       .WhenNonNullable(provider =>
         plan.Items
           .Select(item => provider
-            .GetMeasurements(plan.Device.ToProvisionDevice(), item.Period)
+            .GetMeasurements(
+              plan.Device.ToProvisionDevice(),
+              item.Period)
             .Select(bucket => CreateOutcomeItem(plan, item, bucket)))
           .Flatten(),
         Enumerables.Empty<MeasurementExtractionItem>)
@@ -41,6 +46,7 @@ public partial class Client : IClient
         new MeasurementExtraction
         {
           Device = plan.Device,
+          Period = plan.Period,
           Items = items
         });
 
@@ -74,7 +80,6 @@ public partial class Client : IClient
       _ => null
     };
 
-
   private static string? ExtractionPlanItemCompleted(
       ExtractionDevice device,
       ExtractionPlanItem item,
@@ -85,10 +90,10 @@ public partial class Client : IClient
       (Period period,
       null,
       IEnumerable<ExtractionMeasurement> measurements) =>
-        ExtractionPlanItemConsistent(device, item, measurements) ?
+        !ExtractionPlanItemConsistent(device, item, measurements) ?
           "Measurements inconsistent"
         : item.ShouldValidate &&
-          ExtractionPlanItemValid(device, item, measurements) ?
+          !ExtractionPlanItemValid(device, item, measurements) ?
             "Measurements invalid"
         : null,
       _ => bucket.Error
@@ -99,8 +104,9 @@ public partial class Client : IClient
       ExtractionPlanItem item,
       IEnumerable<ExtractionMeasurement> measurements) =>
     measurements.Count() >=
-      item.Period.Span.TotalSeconds /
-      device.MeasurementInterval.TotalSeconds;
+      Math.Floor(
+        item.Period.Span.TotalSeconds /
+        device.MeasurementInterval.TotalSeconds);
 
   private static bool ExtractionPlanItemValid(
       ExtractionDevice device,
