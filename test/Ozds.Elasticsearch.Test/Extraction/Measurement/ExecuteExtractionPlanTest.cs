@@ -33,15 +33,15 @@ public partial class ClientTest
             null,
             measurementsPerExtractionPlanItem);
 
-      var extractionOutcome = await Client
+      var extractionOutcome = Client
         .ExecuteExtractionPlanAsync(extractionPlan);
-      Logger.LogDebug(extractionOutcome.ToJson());
+      var extractionOutcomeItems = await extractionOutcome.Items.Await();
       Assert.Equal(extractionOutcome.Device, device);
       Assert.Equal(
-        extractionOutcome.Items.Select(item => item.Original),
+        extractionOutcomeItems.Select(item => item.Original),
         extractionPlan.Items);
       Assert.All(
-        extractionOutcome.Items,
+        extractionOutcomeItems,
         item =>
         {
           Assert.Null(item.Next);

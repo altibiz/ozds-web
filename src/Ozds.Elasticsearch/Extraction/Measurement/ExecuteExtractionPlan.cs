@@ -4,7 +4,7 @@ namespace Ozds.Elasticsearch;
 
 public partial interface IMeasurementExtractor
 {
-  public Task<ExtractionOutcome>
+  public ExtractionOutcomeAsync
   ExecuteExtractionPlanAsync(ExtractionPlan plan);
 
   public ExtractionOutcome
@@ -15,21 +15,21 @@ public partial interface IClient : IMeasurementExtractor { }
 
 public partial class Client : IClient
 {
-  public Task<ExtractionOutcome>
+  public ExtractionOutcomeAsync
   ExecuteExtractionPlanAsync(ExtractionPlan plan) =>
     Providers
       .Find(provider => provider.Source == plan.Device.Source)
-      .WhenNonNullableFinallyTask(provider =>
+      .WhenNonNullableFinally(provider =>
         plan.Items
           .Select(item => provider
             .GetMeasurementsAsync(plan.Device.ToProvisionDevice(), item.Period)
             .Then(buckets => buckets
               .Select(bucket => CreateOutcomeItem(plan, item, bucket))))
-          .Await()
-          .Then(Enumerables.Flatten),
-        Enumerables.Empty<ExtractionOutcomeItem>)
-      .Then(items =>
-        new ExtractionOutcome
+          .ToAsync()
+          .Flatten(),
+        Enumerables.EmptyAsync<ExtractionOutcomeItem>)
+      .WhenNullable(items =>
+        new ExtractionOutcomeAsync
         {
           Device = plan.Device,
           Items = items

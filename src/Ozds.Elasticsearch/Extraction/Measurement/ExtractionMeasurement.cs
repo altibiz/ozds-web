@@ -2,6 +2,8 @@ namespace Ozds.Elasticsearch;
 
 public readonly record struct ExtractionMeasurement
 (DateTime Timestamp,
+ string Source,
+ string DeviceId,
  ExtractionMeasurementGeo? Geo,
  ExtractionMeasurementData Data);
 

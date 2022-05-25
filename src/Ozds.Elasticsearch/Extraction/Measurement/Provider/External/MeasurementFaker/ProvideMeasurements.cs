@@ -48,6 +48,8 @@ public sealed partial class Client : IClient
     {
       Timestamp = measurement.Timestamp,
       Geo = null,
+      Source = FakeSource,
+      DeviceId = measurement.DeviceId,
       Data = new ExtractionMeasurementData
       {
         energyIn = measurement.Data.energyIn,
