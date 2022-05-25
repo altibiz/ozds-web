@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.BackgroundTasks;
 using Ozds.Elasticsearch;
+using Ozds.Util;
 
 namespace Ozds.Modules.Ozds;
 
@@ -20,24 +21,25 @@ public class MeasurementImporter : IBackgroundTask
       .LoadMeasurementsAwait(services
         .GetRequiredService<IMeasurementExtractor>()
         .ExecuteExtractionPlanAsync(plan)
-        .Items.Select(item =>
+        .Items.SelectAwait(async item =>
           {
             // TODO: log missing and load here
 
             return new ExtractionBucket<LoadMeasurement>(
               item.Original.Period,
-              item.Bucket
+              await item.Bucket
                 .Select(measurement =>
-                  {
-                    // TODO: load/cache operator/center/owner here
-
-                    return measurement
+                  services
+                    .GetRequiredService<MeasurementImporterStore>()
+                    .GetDeviceData(measurement.DeviceId)
+                    .Then(data => measurement
                       .ToLoadMeasurement(
-                        "",
-                        "",
-                        "",
-                        "",
-                        "");
-                  }));
+                        data.Operator,
+                        data.CenterId,
+                        data.CenterUserId,
+                        data.OwnerId,
+                        data.OwnerUserId)))
+                .Await());
+
           })));
 }

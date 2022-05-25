@@ -20,9 +20,9 @@ public class Measurement
       GeoCoordinate? geoCoordinate,
       string @operator,
       string centerId,
-      string centerUserId,
+      string? centerUserId,
       string ownerId,
-      string ownerUserId,
+      string? ownerUserId,
       string source,
       string deviceId,
       KnownData? data = null)
@@ -55,13 +55,13 @@ public class Measurement
   public string CenterId { get; init; }
 
   [Keyword(Name = "centerUserId")]
-  public string CenterUserId { get; init; }
+  public string? CenterUserId { get; init; }
 
   [Keyword(Name = "ownerId")]
   public string OwnerId { get; init; }
 
   [Keyword(Name = "ownerUserId")]
-  public string OwnerUserId { get; init; }
+  public string? OwnerUserId { get; init; }
 
   [Keyword(Name = "source")]
   public string Source { get; init; }

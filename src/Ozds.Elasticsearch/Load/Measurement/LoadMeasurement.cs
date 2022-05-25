@@ -7,9 +7,9 @@ public readonly record struct LoadMeasurement
  LoadMeasurementGeo? Geo,
  string Operator,
  string CenterId,
- string CenterUserId,
+ string? CenterUserId,
  string OwnerId,
- string OwnerUserId,
+ string? OwnerUserId,
  string Source,
  string DeviceId,
  LoadMeasurementData Data);
@@ -121,9 +121,9 @@ public static class LoadMeasurementExtensions
       this ExtractionMeasurement measurement,
       string @operator,
       string centerId,
-      string centerUserId,
+      string? centerUserId,
       string ownerId,
-      string ownerUserId) =>
+      string? ownerUserId) =>
     new LoadMeasurement
     {
       Timestamp = measurement.Timestamp,
@@ -138,8 +138,8 @@ public static class LoadMeasurementExtensions
       CenterUserId = centerUserId,
       OwnerId = ownerId,
       OwnerUserId = ownerUserId,
-      Source = "",
-      DeviceId = "",
+      Source = measurement.Source,
+      DeviceId = measurement.DeviceId,
       Data =
         new LoadMeasurementData
         {
