@@ -22,14 +22,14 @@ public class MeasurementImporter : IBackgroundTask
       .PlanExtractionAwait()
       .ForEachAwaitAsync(plan => loader
         .LoadMeasurementsAwait(
-          new EnrichedExtractionOutcomeAsync
+          new EnrichedMeasurementExtractionAsync
           {
             Device = plan.Device,
             Items =
               extractor
                 .ExecuteExtractionPlanAsync(plan)
-                .Items.SelectAwait<ExtractionOutcomeItem,
-                EnrichedExtractionOutcomeItem>(item => item.Bucket
+                .Items.SelectAwait<MeasurementExtractionItem,
+                EnrichedMeasurementExtractionItem>(item => item.Bucket
                   .Select(measurement =>
                     cache
                       .GetDeviceData(
@@ -45,7 +45,7 @@ public class MeasurementImporter : IBackgroundTask
                           data.OwnerUserId)))
                   .AwaitValueTask()
                   .Then(items =>
-                    new EnrichedExtractionOutcomeItem
+                    new EnrichedMeasurementExtractionItem
                     {
                       Original = item.Original,
                       Next = item.Next,

@@ -29,7 +29,7 @@ public static partial class Enumerables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async IAsyncEnumerable<TValue> ForEach<TValue>(
+  public static async IAsyncEnumerable<TValue> ForEachValueTask<TValue>(
       this IEnumerable<TValue> @this,
       Func<TValue, ValueTask> @do)
   {
@@ -65,7 +65,7 @@ public static partial class Enumerables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async IAsyncEnumerable<TValue> ForEach<TValue>(
+  public static async IAsyncEnumerable<TValue> ForEachValueTask<TValue>(
       this IAsyncEnumerable<TValue> @this,
       Func<TValue, ValueTask> @do)
   {
@@ -90,7 +90,7 @@ public static partial class Enumerables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<IEnumerable<TValue>> ForEachAwait<TValue>(
+  public static async Task<IEnumerable<TValue>> ForEachAwaitValueTask<TValue>(
       this IEnumerable<TValue> @this,
       Func<TValue, ValueTask> @do)
   {
@@ -123,7 +123,7 @@ public static partial class Enumerables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<IEnumerable<TValue>> ForEachAwait<TValue>(
+  public static async Task<IEnumerable<TValue>> ForEachAwaitValueTask<TValue>(
       this IAsyncEnumerable<TValue> @this,
       Func<TValue, ValueTask> @do)
   {

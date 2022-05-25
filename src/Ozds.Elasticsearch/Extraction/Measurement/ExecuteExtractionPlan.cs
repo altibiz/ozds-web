@@ -6,7 +6,7 @@ public partial interface IClient : IMeasurementExtractor { }
 
 public partial class Client : IClient
 {
-  public ExtractionOutcomeAsync
+  public MeasurementExtractionAsync
   ExecuteExtractionPlanAsync(ExtractionPlan plan) =>
     Providers
       .Find(provider => provider.Source == plan.Device.Source)
@@ -18,15 +18,15 @@ public partial class Client : IClient
               .Select(bucket => CreateOutcomeItem(plan, item, bucket))))
           .ToAsync()
           .Flatten(),
-        Enumerables.EmptyAsync<ExtractionOutcomeItem>)
+        Enumerables.EmptyAsync<MeasurementExtractionItem>)
       .WhenNullable(items =>
-        new ExtractionOutcomeAsync
+        new MeasurementExtractionAsync
         {
           Device = plan.Device,
           Items = items
         });
 
-  public ExtractionOutcome
+  public MeasurementExtraction
   ExecuteExtractionPlan(ExtractionPlan plan) =>
     Providers
       .Find(provider => provider.Source == plan.Device.Source)
@@ -36,19 +36,19 @@ public partial class Client : IClient
             .GetMeasurements(plan.Device.ToProvisionDevice(), item.Period)
             .Select(bucket => CreateOutcomeItem(plan, item, bucket)))
           .Flatten(),
-        Enumerables.Empty<ExtractionOutcomeItem>)
+        Enumerables.Empty<MeasurementExtractionItem>)
       .WhenNullable(items =>
-        new ExtractionOutcome
+        new MeasurementExtraction
         {
           Device = plan.Device,
           Items = items
         });
 
-  private ExtractionOutcomeItem CreateOutcomeItem(
+  private MeasurementExtractionItem CreateOutcomeItem(
       ExtractionPlan plan,
       ExtractionPlanItem item,
       IExtractionBucket<ExtractionMeasurement> bucket) =>
-    new ExtractionOutcomeItem
+    new MeasurementExtractionItem
     {
       Bucket = bucket,
       Original = item,
@@ -66,7 +66,8 @@ public partial class Client : IClient
       Retries = last.Retries + 1,
       Period = last.Period,
       Timeout = last.Timeout,
-      ShouldValidate = last.ShouldValidate
+      ShouldValidate = last.ShouldValidate,
+      Error = bucket.Error
     };
 
   private static bool ExtractionPlanItemCompleted(

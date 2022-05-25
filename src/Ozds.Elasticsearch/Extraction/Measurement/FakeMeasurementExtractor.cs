@@ -4,20 +4,20 @@ namespace Ozds.Elasticsearch;
 
 public class FakeMeasurementExtractor : IMeasurementExtractor
 {
-  public ExtractionOutcomeAsync
+  public MeasurementExtractionAsync
   ExecuteExtractionPlanAsync(ExtractionPlan plan) =>
-    new ExtractionOutcomeAsync
+    new MeasurementExtractionAsync
     {
       Device = plan.Device,
-      Items = Enumerables.EmptyAsync<ExtractionOutcomeItem>()
+      Items = Enumerables.EmptyAsync<MeasurementExtractionItem>()
     };
 
-  public ExtractionOutcome
+  public MeasurementExtraction
   ExecuteExtractionPlan(ExtractionPlan plan) =>
-    new ExtractionOutcome
+    new MeasurementExtraction
     {
       Device = plan.Device,
-      Items = Enumerables.Empty<ExtractionOutcomeItem>()
+      Items = Enumerables.Empty<MeasurementExtractionItem>()
     };
 
   public IAsyncEnumerable<ExtractionPlan>

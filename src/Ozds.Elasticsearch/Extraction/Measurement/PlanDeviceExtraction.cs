@@ -116,6 +116,7 @@ public partial class Client : IClient
                   Due = missingDataLog.Data.NextExtraction.ThrowWhenNull(),
                   ShouldValidate =
                     missingDataLog.Data.ShouldValidate ?? false,
+                  Error = missingDataLog.Data.Error
                 })
               .Concat(
                 new Period

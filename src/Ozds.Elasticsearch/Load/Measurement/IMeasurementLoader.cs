@@ -3,11 +3,11 @@ namespace Ozds.Elasticsearch;
 public interface IMeasurementLoader
 {
   public Task LoadMeasurementsAwait(
-      EnrichedExtractionOutcomeAsync measurements);
+      EnrichedMeasurementExtractionAsync measurements);
 
   public Task LoadMeasurementsAsync(
-      EnrichedExtractionOutcomeAsync measurements);
+      EnrichedMeasurementExtractionAsync measurements);
 
   public void LoadMeasurements(
-      EnrichedExtractionOutcome measurements);
+      EnrichedMeasurementExtraction measurements);
 }
