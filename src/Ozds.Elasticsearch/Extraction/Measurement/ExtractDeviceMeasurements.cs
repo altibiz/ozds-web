@@ -2,24 +2,6 @@ using Ozds.Util;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IMeasurementExtractor
-{
-  public Task<IEnumerable<IExtractionBucket<ExtractionMeasurement>>>
-  ExtractDeviceMeasurementsAsync(
-      ExtractionDevice device,
-      Period? period = null);
-
-  public IAsyncEnumerable<IExtractionBucket<ExtractionMeasurement>>
-  ExtractDeviceMeasurementsAwait(
-      ExtractionDevice device,
-      Period? period = null);
-
-  public IEnumerable<IExtractionBucket<ExtractionMeasurement>>
-  ExtractDeviceMeasurements(
-      ExtractionDevice device,
-      Period? period = null);
-}
-
 public partial interface IClient : IMeasurementExtractor { }
 
 public partial class Client : IClient

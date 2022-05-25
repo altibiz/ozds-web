@@ -1,6 +1,6 @@
 namespace Ozds.Elasticsearch;
 
-public class FakeDeviceIndexer : IDeviceLoader
+public class FakeDeviceLoader : IDeviceLoader
 {
   public Task LoadDeviceAsync(
       string @operator,

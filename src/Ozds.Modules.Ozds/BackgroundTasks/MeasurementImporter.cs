@@ -23,15 +23,18 @@ public class MeasurementImporter : IBackgroundTask
         .ExecuteExtractionPlanAsync(plan)
         .Items.SelectAwait(async item =>
           {
-            // TODO: log missing and load here
+            // TODO: log missing/invalid/duplicate and load here
 
             return new ExtractionBucket<LoadMeasurement>(
               item.Original.Period,
               await item.Bucket
                 .Select(measurement =>
                   services
-                    .GetRequiredService<MeasurementImporterStore>()
-                    .GetDeviceData(measurement.DeviceId)
+                    .GetRequiredService<MeasurementImporterCache>()
+                    .GetDeviceData(
+                      Device.MakeId(
+                        measurement.Source,
+                        measurement.SourceDeviceId))
                     .Then(data => measurement
                       .ToLoadMeasurement(
                         data.Operator,
@@ -40,6 +43,5 @@ public class MeasurementImporter : IBackgroundTask
                         data.OwnerId,
                         data.OwnerUserId)))
                 .Await());
-
           })));
 }

@@ -2,15 +2,6 @@ using Ozds.Util;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IMeasurementExtractor
-{
-  public ExtractionOutcomeAsync
-  ExecuteExtractionPlanAsync(ExtractionPlan plan);
-
-  public ExtractionOutcome
-  ExecuteExtractionPlan(ExtractionPlan plan);
-}
-
 public partial interface IClient : IMeasurementExtractor { }
 
 public partial class Client : IClient

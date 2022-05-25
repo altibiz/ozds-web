@@ -11,7 +11,7 @@ public readonly record struct LoadMeasurement
  string OwnerId,
  string? OwnerUserId,
  string Source,
- string DeviceId,
+ string SourceDeviceId,
  LoadMeasurementData Data);
 
 public readonly record struct LoadMeasurementGeo
@@ -74,7 +74,7 @@ public static class LoadMeasurementExtensions
       measurement.OwnerId,
       measurement.OwnerUserId,
       measurement.Source,
-      measurement.DeviceId,
+      measurement.SourceDeviceId,
       new Measurement.KnownData
       {
         energyIn = measurement.Data.energyIn,
@@ -139,7 +139,7 @@ public static class LoadMeasurementExtensions
       OwnerId = ownerId,
       OwnerUserId = ownerUserId,
       Source = measurement.Source,
-      DeviceId = measurement.DeviceId,
+      SourceDeviceId = measurement.SourceDeviceId,
       Data =
         new LoadMeasurementData
         {

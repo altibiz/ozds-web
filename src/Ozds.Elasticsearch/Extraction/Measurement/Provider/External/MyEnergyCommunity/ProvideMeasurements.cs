@@ -152,7 +152,7 @@ public sealed partial class Client : IClient
         Latitude = measurement.geoCoordinates.latitude,
       },
       Source = Source,
-      DeviceId = measurement.deviceId,
+      SourceDeviceId = measurement.deviceId,
       Data = new ExtractionMeasurementData
       {
         energyIn = measurement.measurementData.energyIn,

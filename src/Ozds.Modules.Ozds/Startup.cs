@@ -100,16 +100,20 @@ public class Startup : OrchardCore.Modules.StartupBase
       else
       {
         services.AddSingleton<
+          IDeviceLoader,
+          Elasticsearch.FakeDeviceLoader>();
+
+        services.AddSingleton<
+          IMeasurementExtractor,
+          Elasticsearch.FakeMeasurementExtractor>();
+
+        services.AddSingleton<
           IMeasurementLoader,
           Elasticsearch.FakeMeasurementLoader>();
 
         services.AddSingleton<
           IReceiptMeasurementProvider,
           Elasticsearch.FakeReceiptMeasurementProvider>();
-
-        services.AddSingleton<
-          IDeviceLoader,
-          Elasticsearch.FakeDeviceIndexer>();
 
         services.AddSingleton<
           IDashboardMeasurementProvider,
@@ -159,11 +163,13 @@ public class Startup : OrchardCore.Modules.StartupBase
   {
     // NOTE: this prevents the client from being instantiated multiple times
     services.AddSingleton<Elasticsearch.Client>();
+    services.AddSingleton<IDeviceLoader>(
+        s => s.GetRequiredService<Elasticsearch.Client>());
+    services.AddSingleton<IMeasurementExtractor>(
+        s => s.GetRequiredService<Elasticsearch.Client>());
     services.AddSingleton<IMeasurementLoader>(
         s => s.GetRequiredService<Elasticsearch.Client>());
     services.AddSingleton<IReceiptMeasurementProvider>(
-        s => s.GetRequiredService<Elasticsearch.Client>());
-    services.AddSingleton<IDeviceLoader>(
         s => s.GetRequiredService<Elasticsearch.Client>());
     services.AddSingleton<IDashboardMeasurementProvider>(
         s => s.GetRequiredService<Elasticsearch.Client>());

@@ -5,7 +5,7 @@ using Ozds.Util;
 
 namespace Ozds.Modules.Ozds;
 
-public class MeasurementImporterStore
+public class MeasurementImporterCache
 {
   public readonly record struct DeviceData
   (string Operator,
@@ -15,7 +15,7 @@ public class MeasurementImporterStore
    string? OwnerUserId);
 
   public Task<DeviceData> GetDeviceData(string deviceId) =>
-    Cache.GetOrAdd(
+    DeviceCache.GetOrAdd(
       deviceId,
       deviceId =>
         new Lazy<Task<DeviceData>>(
@@ -61,7 +61,7 @@ public class MeasurementImporterStore
       };
   }
 
-  public MeasurementImporterStore(
+  public MeasurementImporterCache(
       IContentManager content,
       ISession session)
   {
@@ -71,6 +71,11 @@ public class MeasurementImporterStore
 
   private IContentManager Content { get; }
   private ISession Session { get; }
-  private ConcurrentDictionary<string, Lazy<Task<DeviceData>>> Cache { get; } =
+
+  // NOTE: https://stackoverflow.com/a/54118193/4348107
+  // TODO: test if this is good enough
+  private ConcurrentDictionary<string, Lazy<Task<DeviceData>>>
+    DeviceCache
+  { get; } =
     new ConcurrentDictionary<string, Lazy<Task<DeviceData>>>();
 }
