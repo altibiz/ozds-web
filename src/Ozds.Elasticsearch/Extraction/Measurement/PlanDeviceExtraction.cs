@@ -39,15 +39,19 @@ public partial class Client : IClient
             Device = device,
             Items =
               missingDataLogs
-                .Select(missingDataLog =>
-                  new ExtractionPlanItem
+                .SelectFilter(missingDataLog =>
+                  missingDataLog.Data.Period is null ||
+                  missingDataLog.Data.NextExtraction is null ?
+                    null as ExtractionPlanItem?
+                  : new ExtractionPlanItem
                   {
-                    Period = missingDataLog.Data.Period.ThrowWhenNull(),
+                    Period = missingDataLog.Data.Period,
                     Retries = missingDataLog.Data.Retries ?? 0,
                     Timeout = device.ExtractionTimeout,
-                    Due = missingDataLog.Data.NextExtraction.ThrowWhenNull(),
+                    Due = missingDataLog.Data.NextExtraction.Value,
                     ShouldValidate =
-                      missingDataLog.Data.ShouldValidate ?? false,
+                        missingDataLog.Data.ShouldValidate ?? false,
+                    Error = missingDataLog.Data.Error
                   })
                 .Concat(
                   new Period
@@ -59,7 +63,7 @@ public partial class Client : IClient
                         lastDeviceLoad?.Data.Period?.To,
                         lastSourceLoad?.Data.Period?.To,
                         lastMeasurement?.MeasurementTimestamp),
-                    To = period?.To ?? now
+                    To = period?.To ?? now.Subtract(device.ExtractionOffset)
                   }
                   .SplitAscending(
                     device.MeasurementInterval *
@@ -71,7 +75,9 @@ public partial class Client : IClient
                       Retries = 0,
                       Timeout = device.ExtractionTimeout,
                       Due = now,
-                      ShouldValidate = false,
+                      ShouldValidate =
+                        device.LastValidation + device.ValidationInterval >
+                        now,
                     }))
           }
       });
@@ -107,15 +113,18 @@ public partial class Client : IClient
           Device = device,
           Items =
             missingDataLogs
-              .Select(missingDataLog =>
-                new ExtractionPlanItem
+              .SelectFilter(missingDataLog =>
+                missingDataLog.Data.Period is null ||
+                missingDataLog.Data.NextExtraction is null ?
+                  null as ExtractionPlanItem?
+                : new ExtractionPlanItem
                 {
-                  Period = missingDataLog.Data.Period.ThrowWhenNull(),
+                  Period = missingDataLog.Data.Period,
                   Retries = missingDataLog.Data.Retries ?? 0,
                   Timeout = device.ExtractionTimeout,
-                  Due = missingDataLog.Data.NextExtraction.ThrowWhenNull(),
+                  Due = missingDataLog.Data.NextExtraction.Value,
                   ShouldValidate =
-                    missingDataLog.Data.ShouldValidate ?? false,
+                      missingDataLog.Data.ShouldValidate ?? false,
                   Error = missingDataLog.Data.Error
                 })
               .Concat(
@@ -128,7 +137,7 @@ public partial class Client : IClient
                       lastDeviceLoad?.Data.Period?.To,
                       lastSourceLoad?.Data.Period?.To,
                       lastMeasurement?.MeasurementTimestamp),
-                  To = period?.To ?? now
+                  To = period?.To ?? now.Subtract(device.ExtractionOffset)
                 }
                 .SplitAscending(
                   device.MeasurementInterval *
@@ -140,7 +149,7 @@ public partial class Client : IClient
                     Retries = 0,
                     Timeout = device.ExtractionTimeout,
                     Due = now,
-                    // TODO: ??
+                    // TODO: somehow
                     ShouldValidate = false,
                   }))
         }

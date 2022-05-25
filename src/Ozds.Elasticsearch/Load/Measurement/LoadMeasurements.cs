@@ -17,6 +17,12 @@ public partial class Client : IClient
             await IndexLogAsync(item.Next.Value
               .ToMissingDataLog(extraction.Device));
           }
+          else if (item.Original.ShouldValidate)
+          {
+            await UpdateDeviceLastValidationAsync(
+              extraction.Device.Id,
+              item.Original.Due);
+          }
 
           await IndexMeasurementsAsync(item.Bucket
             .Select(LoadMeasurementExtensions.ToMeasurement));
@@ -34,6 +40,12 @@ public partial class Client : IClient
             await IndexLogAsync(item.Next.Value
               .ToMissingDataLog(extraction.Device));
           }
+          else if (item.Original.ShouldValidate)
+          {
+            await UpdateDeviceLastValidationAsync(
+              extraction.Device.Id,
+              item.Original.Due);
+          }
 
           await IndexMeasurementsAsync(item.Bucket
             .Select(LoadMeasurementExtensions.ToMeasurement));
@@ -50,6 +62,12 @@ public partial class Client : IClient
           {
             IndexLog(item.Next.Value
               .ToMissingDataLog(extraction.Device));
+          }
+          else if (item.Original.ShouldValidate)
+          {
+            UpdateDeviceLastValidation(
+              extraction.Device.Id,
+              item.Original.Due);
           }
 
           IndexMeasurements(item.Bucket
