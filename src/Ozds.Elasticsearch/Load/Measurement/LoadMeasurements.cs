@@ -30,7 +30,7 @@ public partial class Client : IClient
       .Run()
       .Then(() => IndexLogAsync(
         new(
-          LogType.LoadEnd,
+          LogType.Load,
           extraction.Device.Id,
           new()
           {
@@ -61,7 +61,7 @@ public partial class Client : IClient
       .Run()
       .Then(() => IndexLogAsync(
         new(
-          LogType.LoadEnd,
+          LogType.Load,
           extraction.Device.Id,
           new()
           {
@@ -92,7 +92,7 @@ public partial class Client : IClient
       .Run()
       .Return(() => IndexLog(
         new(
-          LogType.LoadEnd,
+          LogType.Load,
           extraction.Device.Id,
           new()
           {

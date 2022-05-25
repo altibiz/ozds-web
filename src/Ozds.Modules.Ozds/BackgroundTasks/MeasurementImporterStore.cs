@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Concurrent;
 using OrchardCore.ContentManagement;
 using YesSql;
@@ -23,54 +24,57 @@ public class MeasurementImporterCache
 
   private async Task<DeviceData> FetchData(string deviceId)
   {
-    var siteItem = await Session
-      .Query<ContentItem>()
-      .With<SiteIndex>(site => site.DeviceId == deviceId)
-      .FirstOrDefaultAsync();
-    if (siteItem is null) return default;
+    using (var scope = Services.CreateScope())
+    {
+      var session = scope.ServiceProvider.GetRequiredService<ISession>();
+      var content = scope.ServiceProvider.GetRequiredService<IContentManager>();
 
-    var site = siteItem.AsContent<SecondarySiteType>();
-    if (site is null) return default;
+      var siteItem = await session
+        .Query<ContentItem>()
+        .With<SiteIndex>(site => site.DeviceId == deviceId)
+        .FirstOrDefaultAsync();
+      if (siteItem is null) return default;
 
-    var siteOwnerContentItemId =
-      site.ContainedPart.Value?.ListContentItemId;
-    if (siteOwnerContentItemId is null) return default;
+      var site = siteItem.AsContent<SecondarySiteType>();
+      if (site is null) return default;
 
-    var owner = await Content
-      .GetContentAsync<ConsumerType>(siteOwnerContentItemId);
-    if (owner is null) return default;
+      var siteOwnerContentItemId =
+        site.ContainedPart.Value?.ListContentItemId;
+      if (siteOwnerContentItemId is null) return default;
 
-    var centerContentItemId =
-      owner.ContainedPart.Value?.ListContentItemId;
-    if (centerContentItemId is null) return default;
+      var owner = await content
+        .GetContentAsync<ConsumerType>(siteOwnerContentItemId);
+      if (owner is null) return default;
 
-    var center = await Content
-      .GetContentAsync<CenterType>(centerContentItemId);
-    if (center is null) return default;
+      var centerContentItemId =
+        owner.ContainedPart.Value?.ListContentItemId;
+      if (centerContentItemId is null) return default;
 
-    return
-      new DeviceData
-      {
-        Operator = center.Operator.Value.Name.Text,
-        CenterId = center.ContentItem.ContentItemId,
-        CenterUserId =
-          center.Center.Value.User.UserIds.FirstOrDefault(),
-        OwnerId = owner.ContentItem.ContentItemId,
-        OwnerUserId =
-          owner.Consumer.Value.User.UserIds.FirstOrDefault()
-      };
+      var center = await content
+        .GetContentAsync<CenterType>(centerContentItemId);
+      if (center is null) return default;
+
+      return
+        new DeviceData
+        {
+          Operator = center.Operator.Value.Name.Text,
+          CenterId = center.ContentItem.ContentItemId,
+          CenterUserId =
+            center.Center.Value.User.UserIds.FirstOrDefault(),
+          OwnerId = owner.ContentItem.ContentItemId,
+          OwnerUserId =
+            owner.Consumer.Value.User.UserIds.FirstOrDefault()
+        };
+    }
   }
 
   public MeasurementImporterCache(
-      IContentManager content,
-      ISession session)
+      IServiceProvider services)
   {
-    Content = content;
-    Session = session;
+    Services = services;
   }
 
-  private IContentManager Content { get; }
-  private ISession Session { get; }
+  private IServiceProvider Services { get; }
 
   // NOTE: https://stackoverflow.com/a/54118193/4348107
   // TODO: test if this is good enough

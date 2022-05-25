@@ -26,7 +26,7 @@ public class ContainedPartDisplayDriver : ContentDisplayDriver
           .As<ContainedPart>()
           .WhenNonNullable(part =>
             Initialize<ContainedPartViewModel>(
-              "ContainedPart.Navigation",
+              "ContainedPart_Navigation",
               async model => await Content
                 .GetAsync(part.ListContentItemId)
                 .ThenWith(

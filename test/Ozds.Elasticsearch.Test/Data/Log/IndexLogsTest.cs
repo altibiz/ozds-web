@@ -8,7 +8,7 @@ public partial class ClientTest
   [Fact]
   public void IndexLogsTest()
   {
-    var Logs = new List<Log> { Data.LoadBeginLog };
+    var Logs = new List<Log> { Data.LoadLog };
     var LogIds = Logs.Select(d => new Id(d.Id));
 
     var indexResponse = Client.IndexLogs(Logs);
@@ -38,7 +38,7 @@ public partial class ClientTest
   [Fact]
   public async Task IndexLogsAsyncTest()
   {
-    var logs = new List<Log> { Data.LoadBeginLog };
+    var logs = new List<Log> { Data.LoadLog };
     var logIds = logs.Select(d => new Id(d.Id));
 
     var indexResponse = await Client.IndexLogsAsync(logs);

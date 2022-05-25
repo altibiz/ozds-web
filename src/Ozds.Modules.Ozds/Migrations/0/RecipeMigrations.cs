@@ -102,7 +102,7 @@ public static partial class RecipeMigrations
     recipe
       .ExecuteOperatorCatalogue(migration)
       .ExecuteTestCenter1(migration)
+      .ExecuteTestConsumer1(migration)
       .ExecuteTestMyEnergyCommunitySite1(migration)
-      .ExecuteTestFakeSite1(migration)
-      .ExecuteTestConsumer1(migration);
+      .ExecuteTestFakeSite1(migration);
 }

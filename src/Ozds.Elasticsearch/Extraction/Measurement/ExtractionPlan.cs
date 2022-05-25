@@ -29,34 +29,4 @@ public static class ExtractionPlanItemExtensions
         ShouldValidate = item.ShouldValidate,
         Error = item.Error
       });
-
-  public static Log ToInvalidDataLog(
-      this ExtractionPlanItem item,
-      ExtractionDevice device) =>
-    new(
-      LogType.InvalidData,
-      device.Id,
-      new()
-      {
-        Period = item.Period,
-        Retries = item.Retries,
-        NextExtraction = item.Due,
-        ShouldValidate = item.ShouldValidate,
-        Error = item.Error
-      });
-
-  public static Log ToDuplicateDataLog(
-      this ExtractionPlanItem item,
-      ExtractionDevice device) =>
-    new(
-      LogType.DuplicatedData,
-      device.Id,
-      new()
-      {
-        Period = item.Period,
-        Retries = item.Retries,
-        NextExtraction = item.Due,
-        ShouldValidate = item.ShouldValidate,
-        Error = item.Error
-      });
 }

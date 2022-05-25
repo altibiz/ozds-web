@@ -7,7 +7,7 @@ public partial class ClientTest
   [Fact]
   public void IndexLogTest()
   {
-    var Log = Data.LoadBeginLog;
+    var Log = Data.LoadLog;
 
     var indexResponse = Client.IndexLog(Log);
     Assert.True(indexResponse.IsValid);
@@ -31,7 +31,7 @@ public partial class ClientTest
   [Fact]
   public async Task IndexLogAsyncTest()
   {
-    var Log = Data.LoadBeginLog;
+    var Log = Data.LoadLog;
 
     var indexResponse = await Client.IndexLogAsync(Log);
     Assert.True(indexResponse.IsValid);

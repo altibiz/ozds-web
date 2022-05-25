@@ -53,6 +53,9 @@
               "TermContentItemIds": ["444t1z24wt35hy89d6g3r5yan4"]
             }
           },
+          "ContainedPart": {
+            "ListContentItemId": "4svpv279hbbc4vpgxey41nys46"
+          },
           "Catalogue": {
             "ContentItems": [
               {
@@ -132,9 +135,6 @@
                 }
               }
             ]
-          },
-          "ContainedPart": {
-            "ListContentItemId": "4svpv279hbbc4vpgxey41nys46"
           }
         }
       ]

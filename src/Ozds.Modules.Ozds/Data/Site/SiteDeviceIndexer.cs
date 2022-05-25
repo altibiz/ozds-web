@@ -44,7 +44,7 @@ public class SiteDeviceIndexer : ContentHandlerBase
         .ThrowWhenNull().ListContentItemId)
       .ThrowWhenNull();
     var center = await content
-      .GetContentAsync<CenterType>(site.ContainedPart.Value
+      .GetContentAsync<CenterType>(consumer.ContainedPart.Value
         .ThrowWhenNull().ListContentItemId)
       .ThrowWhenNull();
 

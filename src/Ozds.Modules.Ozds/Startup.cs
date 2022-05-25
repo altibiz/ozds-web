@@ -130,6 +130,9 @@ public class Startup : OrchardCore.Modules.StartupBase
     }
 
     services.AddSingleton<
+      MeasurementImporterCache>();
+
+    services.AddSingleton<
       IBackgroundTask,
       MeasurementImporter>();
 

@@ -25,6 +25,7 @@ public class MeasurementImporter : IBackgroundTask
           new EnrichedMeasurementExtractionAsync
           {
             Device = plan.Device,
+            Period = plan.Period,
             Items =
               extractor
                 .ExecuteExtractionPlanAsync(plan)

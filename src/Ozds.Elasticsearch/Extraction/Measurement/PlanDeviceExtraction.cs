@@ -17,7 +17,7 @@ public partial class Client : IClient
         LogType.MissingData, device.Id, period: period)
       .Then(ISearchResponseExtensions.Sources),
      SearchLogsSortedByPeriodAsync(
-        LogType.LoadEnd, device.Id, size: 1, period: period)
+        LogType.Load, device.Id, size: 1, period: period)
       .Then(ISearchResponseExtensions.FirstOrDefault),
      Task.FromResult(DateTime.UtcNow))
     .Await()
@@ -88,7 +88,7 @@ public partial class Client : IClient
         LogType.MissingData, device.Id, period: period)
       .Sources(),
      SearchLogsSortedByPeriod(
-        LogType.LoadEnd, device.Id, size: 1, period: period)
+        LogType.Load, device.Id, size: 1, period: period)
       .FirstOrDefault(),
      DateTime.UtcNow) switch
     {

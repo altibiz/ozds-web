@@ -5,13 +5,8 @@ namespace Ozds.Elasticsearch;
 
 public class LogType
 {
-  public const string ExtractionBegin = "extractionBegin";
-  public const string ExtractionEnd = "extractionEnd";
-  public const string LoadBegin = "loadBegin";
-  public const string LoadEnd = "loadEnd";
+  public const string Load = "loadEnd";
   public const string MissingData = "missingData";
-  public const string DuplicatedData = "duplicatedData";
-  public const string InvalidData = "invalidData";
 };
 
 [ElasticsearchType(RelationName = "Log", IdProperty = nameof(Id))]
