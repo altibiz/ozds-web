@@ -59,32 +59,39 @@ public partial class Client : IClient
       ExtractionDevice device,
       ExtractionPlanItem last,
       IExtractionBucket<ExtractionMeasurement> bucket) =>
-    ExtractionPlanItemCompleted(device, last, bucket) ? null
-    : new ExtractionPlanItem
+    ExtractionPlanItemCompleted(device, last, bucket) switch
     {
-      Due = last.Due + (last.Timeout * Math.Pow(2, last.Retries)),
-      Retries = last.Retries + 1,
-      Period = last.Period,
-      Timeout = last.Timeout,
-      ShouldValidate = last.ShouldValidate,
-      Error = bucket.Error
+      (string error) =>
+        new ExtractionPlanItem
+        {
+          Due = last.Due + (last.Timeout * Math.Pow(2, last.Retries)),
+          Retries = last.Retries + 1,
+          Period = last.Period,
+          Timeout = last.Timeout,
+          ShouldValidate = last.ShouldValidate,
+          Error = error
+        },
+      _ => null
     };
 
-  private static bool ExtractionPlanItemCompleted(
+
+  private static string? ExtractionPlanItemCompleted(
       ExtractionDevice device,
       ExtractionPlanItem item,
       IExtractionBucket<ExtractionMeasurement> bucket) =>
-    item.Retries >= device.ExtractionRetries ||
-    bucket switch
+    item.Retries >= device.ExtractionRetries ? null
+    : bucket switch
     {
       (Period period,
-       null,
-       IEnumerable<ExtractionMeasurement> measurements) =>
-        ExtractionPlanItemConsistent(device, item, measurements) &&
-        item.ShouldValidate ?
-          ExtractionPlanItemValid(device, item, measurements)
-        : true,
-      _ => false
+      null,
+      IEnumerable<ExtractionMeasurement> measurements) =>
+        ExtractionPlanItemConsistent(device, item, measurements) ?
+          "Measurements inconsistent"
+        : item.ShouldValidate &&
+          ExtractionPlanItemValid(device, item, measurements) ?
+            "Measurements invalid"
+        : null,
+      _ => bucket.Error
     };
 
   private static bool ExtractionPlanItemConsistent(
