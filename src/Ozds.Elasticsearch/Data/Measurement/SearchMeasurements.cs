@@ -56,13 +56,13 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.SearchAsync<Measurement>(s => s
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
-          .LessThanOrEquals(period?.To ?? DateTime.UtcNow)))
+          .LessThanOrEquals(period?.To ?? DateTime.MaxValue.ToUniversalTime())))
       .Index(MeasurementIndexName));
 
   public ISearchResponse<Measurement>
@@ -70,13 +70,13 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.Search<Measurement>(s => s
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
-          .LessThanOrEquals(period?.To ?? DateTime.UtcNow)))
+          .LessThanOrEquals(period?.To ?? DateTime.MaxValue.ToUniversalTime())))
       .Index(MeasurementIndexName));
 
   public Task<ISearchResponse<Measurement>>
@@ -84,13 +84,13 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.SearchAsync<Measurement>(s => s
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
-          .LessThanOrEquals(period?.To ?? DateTime.UtcNow)))
+          .LessThanOrEquals(period?.To ?? DateTime.MaxValue.ToUniversalTime())))
       .Sort(s => s
         .Descending(h => h.Timestamp))
       .Index(MeasurementIndexName));
@@ -100,13 +100,13 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.Search<Measurement>(s => s
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
-          .LessThanOrEquals(period?.To ?? DateTime.UtcNow)))
+          .LessThanOrEquals(period?.To ?? DateTime.MaxValue.ToUniversalTime())))
       .Sort(s => s
         .Descending(h => h.Timestamp))
       .Index(MeasurementIndexName));
@@ -117,15 +117,15 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.SearchAsync<Measurement>(s => s
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
-            period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceData.DeviceId, deviceId))
+            period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
+        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))
       .Index(MeasurementIndexName));
 
   public ISearchResponse<Measurement>
@@ -134,15 +134,15 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.Search<Measurement>(s => s
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
-            period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceData.DeviceId, deviceId))
+            period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
+        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))
       .Index(MeasurementIndexName));
 
   public Task<ISearchResponse<Measurement>>
@@ -151,15 +151,15 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.SearchAsync<Measurement>(s => s
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
-            period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceData.DeviceId, deviceId))
+            period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
+        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))
       .Sort(s => s.Descending(h => h.Timestamp))
       .Index(MeasurementIndexName));
 
@@ -169,15 +169,15 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.Search<Measurement>(s => s
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
-            period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceData.DeviceId, deviceId))
+            period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
+        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))
       .Sort(s => s.Descending(h => h.Timestamp))
       .Index(MeasurementIndexName));
 }

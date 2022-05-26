@@ -5,16 +5,31 @@ namespace Ozds.Elasticsearch.Test;
 public partial class ClientTest
 {
   [Theory]
-  [MemberData(nameof(Data.GenerateDevice), MemberType = typeof(Data))]
-  public async Task GetDashboardMeasurementsAsyncTest(Device device)
+  [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
+  public async Task GetDashboardMeasurementsAsyncTest(
+      Device device,
+      IEnumerable<Measurement> measurements,
+      Period period)
   {
-    await SetupDeviceAsync(device);
+    await SetupMeasurementsAsync(device, measurements);
+
+    var dashboardMeasurements = await Client
+      .GetDashboardMeasurementsAsync(device.Id, period);
+    Assert.Equal(measurements.Count(), dashboardMeasurements.Count());
   }
 
   [Theory]
-  [MemberData(nameof(Data.GenerateDevice), MemberType = typeof(Data))]
-  public void GetDashboardMeasurementsTest(Device device)
+  [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
+  public void GetDashboardMeasurementsTest(
+      Device device,
+      IEnumerable<Measurement> measurements,
+      Period period)
   {
-    SetupDevice(device);
+    SetupMeasurements(device, measurements);
+
+    Logger.LogDebug(period.ToString());
+    var dashboardMeasurements = Client
+      .GetDashboardMeasurements(device.Id, period);
+    Assert.Equal(measurements.Count(), dashboardMeasurements.Count());
   }
 }

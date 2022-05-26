@@ -1,4 +1,5 @@
 using Xunit;
+using Ozds.Util;
 
 namespace Ozds.Elasticsearch.Test;
 
@@ -76,18 +77,22 @@ public static partial class Data
 
   public static IEnumerable<object[]> GenerateMeasurements()
   {
+    var measurements =
+      Enumerable
+        .Range(0, 20)
+        .Select(index =>
+          FakeMeasurement
+            .CloneMeasurement(
+              FakeMeasurement.Timestamp +
+              TimeSpan.FromDays(index)))
+        .ToArray();
+    var period = measurements.GetLooseMeasurementPeriod();
     yield return
       new object[]
       {
         FakeDevice,
-        Enumerable
-          .Range(0, 20)
-          .Select(index =>
-            FakeMeasurement
-              .CloneMeasurement(
-                FakeMeasurement.Timestamp +
-                TimeSpan.FromDays(index)))
-          .ToArray()
+        measurements,
+        period
       };
   }
 
@@ -108,8 +113,10 @@ public partial class ClientTest
   [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
   public async Task SetupMeasurementsAsync(
       Device device,
-      IEnumerable<Measurement> measurements)
+      IEnumerable<Measurement> measurements,
+      Period? period = null)
   {
+    period.Unused();
     await SetupDeviceAsync(device);
 
     var measurementIds =
@@ -117,34 +124,40 @@ public partial class ClientTest
 
     var measurementIndexResponse =
       await Client.IndexMeasurementsAsync(measurements);
-    Logger.LogDebug(measurementIndexResponse.DebugInformation);
     // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
     // Assert.True(measurementIndexResponse.IsValid);
 
     var indexedMeasurementIds =
       measurementIndexResponse.Items.Ids().ToStrings();
-    Assert.Equal(measurementIds, indexedMeasurementIds);
+    AssertExtensions.ElementsEqual(measurementIds, indexedMeasurementIds);
+
+    // NOTE: preparation for search
+    Thread.Sleep(1000);
   }
 
   [Theory]
   [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
   public void SetupMeasurements(
       Device device,
-      IEnumerable<Measurement> measurements)
+      IEnumerable<Measurement> measurements,
+      Period? period = null)
   {
+    period.Unused();
     SetupDevice(device);
 
     var measurementIds =
       measurements.Select(measurement => measurement.Id);
 
     var measurementIndexResponse = Client.IndexMeasurements(measurements);
-    Logger.LogDebug(measurementIndexResponse.DebugInformation);
     // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
     // Assert.True(measurementIndexResponse.IsValid);
 
     var indexedMeasurementIds =
       measurementIndexResponse.Items.Ids().ToStrings();
-    Assert.Equal(measurementIds, indexedMeasurementIds);
+    AssertExtensions.ElementsEqual(measurementIds, indexedMeasurementIds);
+
+    // NOTE: preparation for search
+    Thread.Sleep(1000);
   }
 
   [Theory]
@@ -157,7 +170,6 @@ public partial class ClientTest
 
     var measurementIndexResponse =
       await Client.IndexMeasurementAsync(measurement);
-    Logger.LogDebug(measurementIndexResponse.DebugInformation);
     Assert.True(measurementIndexResponse.IsValid);
 
     var indexedMeasurementId = measurementIndexResponse.Id;
@@ -169,6 +181,9 @@ public partial class ClientTest
 
     var gotMeasurement = measurementGetResponse.Source;
     Assert.Equal(measurement, gotMeasurement);
+
+    // NOTE: preparation for search
+    Thread.Sleep(1000);
   }
 
   [Theory]
@@ -180,7 +195,6 @@ public partial class ClientTest
     SetupDevice(device);
 
     var measurementIndexResponse = Client.IndexMeasurement(measurement);
-    Logger.LogDebug(measurementIndexResponse.DebugInformation);
     Assert.True(measurementIndexResponse.IsValid);
 
     var indexedMeasurementId = measurementIndexResponse.Id;
@@ -191,5 +205,8 @@ public partial class ClientTest
 
     var gotMeasurement = measurementGetResponse.Source;
     Assert.Equal(measurement, gotMeasurement);
+
+    // NOTE: preparation for search
+    Thread.Sleep(1000);
   }
 }

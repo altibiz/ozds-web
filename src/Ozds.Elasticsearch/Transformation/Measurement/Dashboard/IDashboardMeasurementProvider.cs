@@ -11,13 +11,11 @@ public interface IDashboardMeasurementProvider
 {
   public IEnumerable<DashboardMeasurement>
   GetDashboardMeasurements(
-      string source,
       string deviceId,
       Period? period = null);
 
   public Task<IEnumerable<DashboardMeasurement>>
   GetDashboardMeasurementsAsync(
-      string source,
       string deviceId,
       Period? period = null);
 }

@@ -4,40 +4,29 @@ public static class MeasurementExtensions
 {
   public static Period GetMeasurementPeriod(
       this IEnumerable<Measurement> measurements) =>
-      measurements.Aggregate(
-          new Period
-          {
-            From = DateTime.MaxValue.ToUniversalTime(),
-            To = DateTime.MinValue.ToUniversalTime()
-          },
-          (period, next) => new Period
-          {
-            From = (next.Timestamp.ToUniversalTime() < period.From
-                        ? next.Timestamp.ToUniversalTime()
-                        : period.From),
-            To = (next.Timestamp.ToUniversalTime() > period.To
-                      ? next.Timestamp.ToUniversalTime()
-                      : period.To)
-          });
+    new Period
+    {
+      From = measurements
+        .Select(measurement => measurement.Timestamp.ToUniversalTime())
+        .Min(),
+      To = measurements
+        .Select(measurement => measurement.Timestamp.ToUniversalTime())
+        .Max(),
+    };
 
   public static Period GetLooseMeasurementPeriod(
       this IEnumerable<Measurement> measurements)
   {
-    var measurementPeriod = measurements.GetMeasurementPeriod();
+    var period = measurements.GetMeasurementPeriod();
 
     return new Period
     {
-      From = measurementPeriod.From.AddMinutes(-1),
-      To = measurementPeriod.From.AddMinutes(1),
+      From = period.From.AddMinutes(-1),
+      To = period.To.AddMinutes(1),
     };
   }
 
   public static LoadMeasurement ToLoadMeasurement(
       this ExtractionMeasurement measurement) =>
-    measurement.ToLoadMeasurement(
-      "",
-      "",
-      "",
-      "",
-      "");
+    measurement.ToLoadMeasurement("", "", "", "", "");
 }

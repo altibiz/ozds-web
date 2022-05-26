@@ -73,7 +73,7 @@ public sealed partial class Client : IClient
       .Query(q => q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, LoadLog.Type))
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Index(LogIndexName));
 
   public ISearchResponse<LoadLog>
@@ -84,7 +84,7 @@ public sealed partial class Client : IClient
       .Query(q => q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, LoadLog.Type))
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Index(LogIndexName));
 
   public ISearchResponse<LoadLog>
@@ -96,11 +96,13 @@ public sealed partial class Client : IClient
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Period!.To)
-          .GreaterThanOrEquals(period?.From)
-          .LessThan(period?.To)) && q
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThan(
+            period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, LoadLog.Type))
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Index(LogIndexName)
       .Sort(s => s
         .Descending(d => d.Period!.To)));
@@ -114,11 +116,13 @@ public sealed partial class Client : IClient
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Period!.To)
-          .GreaterThanOrEquals(period?.From)
-          .LessThan(period?.To)) && q
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThan(
+            period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, LoadLog.Type))
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Index(LogIndexName)
       .Sort(s => s
         .Descending(d => d.Period!.To)));
@@ -131,7 +135,7 @@ public sealed partial class Client : IClient
       .Query(q => q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Index(LogIndexName));
 
   public ISearchResponse<MissingDataLog>
@@ -142,7 +146,7 @@ public sealed partial class Client : IClient
       .Query(q => q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Index(LogIndexName));
 
   public ISearchResponse<MissingDataLog>
@@ -154,11 +158,13 @@ public sealed partial class Client : IClient
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Period!.To)
-          .GreaterThanOrEquals(period?.From)
-          .LessThan(period?.To)) && q
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThan(
+            period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Index(LogIndexName)
       .Sort(s => s
         .Ascending(d => d.Period!.To)));
@@ -172,11 +178,13 @@ public sealed partial class Client : IClient
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Period!.To)
-          .GreaterThanOrEquals(period?.From)
-          .LessThan(period?.To)) && q
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThan(
+            period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Index(LogIndexName)
       .Sort(s => s
         .Ascending(d => d.Period!.To)));
@@ -191,14 +199,16 @@ public sealed partial class Client : IClient
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Period!.To)
-          .GreaterThanOrEquals(period?.From)
-          .LessThan(period?.To)) && q
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThan(
+            period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
         .DateRange(r => r
           .Field(f => f.NextExtraction)
           .LessThanOrEquals(due)) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Index(LogIndexName)
       .Sort(s => s
         .Ascending(d => d.Period!.To)));
@@ -213,14 +223,16 @@ public sealed partial class Client : IClient
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Period!.To)
-          .GreaterThanOrEquals(period?.From)
-          .LessThan(period?.To)) && q
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThan(
+            period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
         .DateRange(r => r
           .Field(f => f.NextExtraction)
           .LessThanOrEquals(due)) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
-      .Size(size)
+      .Size(size ?? IClient.MaxSize)
       .Index(LogIndexName)
       .Sort(s => s
         .Ascending(d => d.Period!.To)));

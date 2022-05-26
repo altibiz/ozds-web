@@ -100,13 +100,15 @@ public partial class ClientTest
     var deviceIds = devices.Select(device => device.Id);
 
     var deviceIndexResponse = await Client.IndexDevicesAsync(devices);
-    Logger.LogDebug(deviceIndexResponse.DebugInformation);
     // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
     // Assert.True(deviceIndexResponse.IsValid);
 
     var indexedMeasurementIds =
       deviceIndexResponse.Items.Ids().ToStrings();
     Assert.Equal(deviceIds, indexedMeasurementIds);
+
+    // NOTE: preparation for search
+    Thread.Sleep(1000);
   }
 
   [Theory]
@@ -116,13 +118,15 @@ public partial class ClientTest
     var deviceIds = devices.Select(device => device.Id);
 
     var deviceIndexResponse = Client.IndexDevices(devices);
-    Logger.LogDebug(deviceIndexResponse.DebugInformation);
     // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
     // Assert.True(deviceIndexResponse.IsValid);
 
     var indexedMeasurementIds =
       deviceIndexResponse.Items.Ids().ToStrings();
     Assert.Equal(deviceIds, indexedMeasurementIds);
+
+    // NOTE: preparation for search
+    Thread.Sleep(1000);
   }
 
   [Theory]
@@ -130,7 +134,6 @@ public partial class ClientTest
   public async Task SetupDeviceAsync(Device device)
   {
     var deviceIndexResponse = await Client.IndexDeviceAsync(device);
-    Logger.LogDebug(deviceIndexResponse.DebugInformation);
     Assert.True(deviceIndexResponse.IsValid);
 
     var indexedDeviceId = deviceIndexResponse.Id;
@@ -141,6 +144,9 @@ public partial class ClientTest
 
     var gotDevice = deviceGetResponse.Source;
     Assert.Equal(device, gotDevice);
+
+    // NOTE: preparation for search
+    Thread.Sleep(1000);
   }
 
   [Theory]
@@ -148,7 +154,6 @@ public partial class ClientTest
   public void SetupDevice(Device device)
   {
     var deviceIndexResponse = Client.IndexDevice(device);
-    Logger.LogDebug(deviceIndexResponse.DebugInformation);
     Assert.True(deviceIndexResponse.IsValid);
 
     var indexedDeviceId = deviceIndexResponse.Id;
@@ -159,5 +164,8 @@ public partial class ClientTest
 
     var gotDevice = deviceGetResponse.Source;
     Assert.Equal(device, gotDevice);
+
+    // NOTE: preparation for search
+    Thread.Sleep(1000);
   }
 }

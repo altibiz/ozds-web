@@ -1,71 +1,75 @@
 using Xunit;
-using Nest;
 
 namespace Ozds.Elasticsearch.Test;
 
 public partial class ClientTest
 {
-  [Fact]
-  public void SearchMeasurementsTest()
+  [Theory]
+  [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
+  public void SearchMeasurementsTest(
+      Device device,
+      IEnumerable<Measurement> measurements,
+      Period period)
   {
-    var measurements =
-        new List<Measurement> { Data.MyEnergyCommunityMeasurement };
-    var measurementIds = measurements.Select(d => new Id(d.Id));
-    var measurementPeriod = measurements.GetLooseMeasurementPeriod();
+    SetupMeasurements(device, measurements, period);
 
-    var indexResponse = Client.IndexMeasurements(measurements);
-    // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
-    // Assert.True(indexResponse.IsValid);
-
-    var indexedMeasurementIds = indexResponse.Items.Ids();
-    AssertExtensions.ElementsEqual(measurementIds, indexedMeasurementIds);
-
-    // NOTE: ES needs some time to prepare for searching
-    System.Threading.Thread.Sleep(1000);
-    var searchResponse = Client.SearchMeasurements(measurementPeriod);
+    var searchResponse = Client.SearchMeasurements(period);
     Assert.True(searchResponse.IsValid);
 
     var searchedMeasurements = searchResponse.Sources();
-    AssertExtensions.Superset(measurements, searchedMeasurements);
-
-    var deleteResponse = Client.DeleteMeasurements(measurementIds);
-    // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
-    // Assert.True(deleteResponse.IsValid);
-
-    var deletedMeasurementIds = deleteResponse.Items.Ids();
-    AssertExtensions.ElementsEqual(measurementIds, deletedMeasurementIds);
+    AssertExtensions.ElementsEqual(measurements, searchedMeasurements);
   }
 
-  [Fact]
-  public async Task SearchMeasurementsAsyncTest()
+  [Theory]
+  [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
+  public async Task SearchMeasurementsAsyncTest(
+      Device device,
+      IEnumerable<Measurement> measurements,
+      Period period)
   {
-    var measurements =
-        new List<Measurement> { Data.MyEnergyCommunityMeasurement };
-    var measurementIds = measurements.Select(d => new Id(d.Id));
-    var measurementPeriod = measurements.GetLooseMeasurementPeriod();
+    await SetupMeasurementsAsync(device, measurements, period);
 
-    var indexResponse = await Client.IndexMeasurementsAsync(measurements);
-    // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
-    // Assert.True(indexResponse.IsValid);
-
-    var indexedMeasurementIds = indexResponse.Items.Ids();
-    AssertExtensions.ElementsEqual(measurementIds, indexedMeasurementIds);
-
-    // NOTE: ES needs some time to prepare for searching
-    System.Threading.Thread.Sleep(1000);
     var searchResponse =
-        await Client.SearchMeasurementsAsync(measurementPeriod);
+        await Client.SearchMeasurementsAsync(period);
+    Logger.LogDebug(searchResponse.DebugInformation);
     Assert.True(searchResponse.IsValid);
 
     var searchedMeasurements = searchResponse.Sources();
-    AssertExtensions.Superset(measurements, searchedMeasurements);
+    Assert.Equal(measurements.Count(), searchedMeasurements.Count());
+    AssertExtensions.ElementsEqual(measurements, searchedMeasurements);
+  }
 
-    var deleteResponse =
-        await Client.DeleteMeasurementsAsync(measurementIds);
-    // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
-    // Assert.True(deleteResponse.IsValid);
+  [Theory]
+  [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
+  public void SearchMeasurementsByDeviceTest(
+      Device device,
+      IEnumerable<Measurement> measurements,
+      Period period)
+  {
+    SetupMeasurements(device, measurements, period);
 
-    var deletedMeasurementIds = deleteResponse.Items.Ids();
-    AssertExtensions.ElementsEqual(measurementIds, deletedMeasurementIds);
+    var searchResponse = Client.SearchMeasurementsByDevice(device.Id);
+    Assert.True(searchResponse.IsValid);
+
+    var searchedMeasurements = searchResponse.Sources();
+    AssertExtensions.ElementsEqual(measurements, searchedMeasurements);
+  }
+
+  [Theory]
+  [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
+  public async Task SearchMeasurementsByDeviceAsyncTest(
+      Device device,
+      IEnumerable<Measurement> measurements,
+      Period period)
+  {
+    await SetupMeasurementsAsync(device, measurements, period);
+
+    var searchResponse = await Client
+      .SearchMeasurementsByDeviceAsync(device.Id);
+    Logger.LogDebug(searchResponse.DebugInformation);
+    Assert.True(searchResponse.IsValid);
+
+    var searchedMeasurements = searchResponse.Sources();
+    AssertExtensions.ElementsEqual(measurements, searchedMeasurements);
   }
 }

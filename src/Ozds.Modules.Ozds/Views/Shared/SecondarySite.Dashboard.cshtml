@@ -17,8 +17,15 @@
     .ThrowWhenNull();
   var deviceId = secondarySite.Site.Value.DeviceId.Text;
 
+  var now = DateTime.UtcNow;
   var measurements = await Provider
-    .GetDashboardMeasurementsAsync(source, deviceId)
+    .GetDashboardMeasurementsAsync(
+      Device.MakeId(source, deviceId),
+      new Period
+      {
+        From = now.AddMinutes(-5),
+        To = now
+      })
     .Then(measurements => measurements.ToList());
 }
 

@@ -8,19 +8,13 @@ public sealed partial class Client : IClient
 {
   public Task<IEnumerable<DashboardMeasurement>>
   GetDashboardMeasurementsAsync(
-      string source,
       string deviceId,
       Period? period = null) =>
     DateTime.UtcNow
       .WhenNullable(now =>
         SearchMeasurementsByDeviceSortedAsync(
-          Device.MakeId(source, deviceId),
-          period ??
-            new Period
-            {
-              From = now.AddMinutes(-5),
-              To = now
-            })
+          deviceId,
+          period)
           .Then(response =>
             response.Hits.Select(hit =>
               new DashboardMeasurement
@@ -34,19 +28,13 @@ public sealed partial class Client : IClient
 
   public IEnumerable<DashboardMeasurement>
   GetDashboardMeasurements(
-      string source,
       string deviceId,
       Period? period = null) =>
     DateTime.UtcNow
       .WhenNullable(now =>
         SearchMeasurementsByDeviceSorted(
-          Device.MakeId(source, deviceId),
-          period ??
-            new Period
-            {
-              From = now.AddMinutes(-5),
-              To = now
-            })
+          deviceId,
+          period)
         .Hits.Select(hit =>
           new DashboardMeasurement
           {
