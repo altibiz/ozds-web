@@ -12,7 +12,12 @@ public class MeasurementImporter : IBackgroundTask
 {
   public Task DoWorkAsync(
       IServiceProvider services,
-      CancellationToken token)
+      CancellationToken token) =>
+    Import(services, token);
+
+  public Task Import(
+    IServiceProvider services,
+    CancellationToken token)
   {
     var extractor = services.GetRequiredService<IMeasurementExtractor>();
     var loader = services.GetRequiredService<IMeasurementLoader>();

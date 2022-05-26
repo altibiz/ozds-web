@@ -50,32 +50,44 @@ public class SiteDeviceIndexer : ContentHandlerBase
 
     await Loader
       .LoadDeviceAsync(
-        SiteMeasurementSource
-          .GetElasticsearchSource(site.Site.Value.Source)
-          .ThrowWhenNull(),
-        site.Site.Value.DeviceId.Text,
-        new DeviceSourceDeviceData
-        {
-          ownerId = site.Site.Value.SourceData.Data
-            .FirstOrDefault(data => data.Name == "OwnerId")?.Value,
-        },
-        new DeviceOwnerData(
-          center.Operator.Value.Name.Text,
-          center.ContentItem.ContentItemId,
-          center.Center.Value.User.UserIds.First(),
-          consumer.ContentItem.ContentItemId,
-          consumer.Consumer.Value.User.UserIds.First()),
-        new DeviceMeasurementData(
-          ((int)site.Site.Value.MeasurementIntervalInSeconds.Value!),
-          site.Site.Value.ExtractionStart.Value!.Value,
-          ((int)site.Site.Value.ExtractionOffsetInSeconds.Value!),
-          ((int)site.Site.Value.ExtractionTimeoutInSeconds.Value!),
-          ((int)site.Site.Value.ExtractionRetries.Value!),
-          ((int)site.Site.Value.ValidationIntervalInSeconds.Value!)),
-        new DeviceStateData(
-          status ?? SiteStatus
-            .GetElasticsearchStatus(site.Site.Value.Status)
-            .ThrowWhenNull()));
+        source:
+          SiteMeasurementSource
+            .GetElasticsearchSource(site.Site.Value.Source)
+            .ThrowWhenNull(),
+        sourceDeviceId:
+          site.Site.Value.DeviceId.Text,
+        sourceDeviceData:
+          new DeviceSourceDeviceData
+          {
+            ownerId = site.Site.Value.SourceData.Data
+              .FirstOrDefault(data => data.Name == "OwnerId")?.Value,
+          },
+        owner:
+          new DeviceOwnerData(
+            @operator: center.Operator.Value.Name.Text,
+            centerId: center.ContentItem.ContentItemId,
+            centerUserId: center.Center.Value.User.UserIds.First(),
+            ownerId: consumer.ContentItem.ContentItemId,
+            ownerUserId: consumer.Consumer.Value.User.UserIds.First()),
+        measurement:
+          new DeviceMeasurementData(
+            measurementIntervalInSeconds:
+              ((int)site.Site.Value.MeasurementIntervalInSeconds.Value!),
+            extractionStart:
+              site.Site.Value.ExtractionStart.Value!.Value,
+            extractionOffsetInSeconds:
+              ((int)site.Site.Value.ExtractionOffsetInSeconds.Value!),
+            extractionTimeoutInSeconds:
+              ((int)site.Site.Value.ExtractionTimeoutInSeconds.Value!),
+            extractionRetries:
+              ((int)site.Site.Value.ExtractionRetries.Value!),
+            validationIntervalInSeconds:
+              ((int)site.Site.Value.ValidationIntervalInSeconds.Value!)),
+        state:
+          new DeviceStateData(
+            state: status ?? SiteStatus
+              .GetElasticsearchStatus(site.Site.Value.Status)
+              .ThrowWhenNull()));
   }
 
   public SiteDeviceIndexer(

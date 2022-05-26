@@ -112,16 +112,16 @@ public class Device
     public MeasurementDataType(
         int measurementIntervalInSeconds,
         DateTime extractionStart,
-        int extractionRetries,
         int extractionOffsetInSeconds,
+        int extractionRetries,
         int extractionTimeoutInSeconds,
         int validationIntervalInSeconds,
         DateTime? lastValidation = null)
     {
       MeasurementIntervalInSeconds = measurementIntervalInSeconds;
       ExtractionStart = extractionStart;
-      ExtractionRetries = extractionRetries;
       ExtractionOffsetInSeconds = extractionOffsetInSeconds;
+      ExtractionRetries = extractionRetries;
       ExtractionTimeoutInSeconds = extractionTimeoutInSeconds;
       ValidationIntervalInSeconds = validationIntervalInSeconds;
       LastValidation = lastValidation ?? DateTime.UtcNow;
@@ -133,11 +133,11 @@ public class Device
     [Date(Name = "extractionStart")]
     public DateTime ExtractionStart { get; init; }
 
-    [Number(NumberType.Integer, Name = "extractionRetries")]
-    public int ExtractionRetries { get; init; }
-
     [Number(NumberType.Integer, Name = "extractionOffsetInSeconds")]
     public int ExtractionOffsetInSeconds { get; init; }
+
+    [Number(NumberType.Integer, Name = "extractionRetries")]
+    public int ExtractionRetries { get; init; }
 
     [Number(NumberType.Integer, Name = "extractionTimeoutInSeconds")]
     public int ExtractionTimeoutInSeconds { get; init; }

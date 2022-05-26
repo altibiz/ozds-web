@@ -2,10 +2,7 @@ using Ozds.Util;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient :
-  IDashboardMeasurementProvider
-{
-}
+public partial interface IClient : IDashboardMeasurementProvider { }
 
 public sealed partial class Client : IClient
 {

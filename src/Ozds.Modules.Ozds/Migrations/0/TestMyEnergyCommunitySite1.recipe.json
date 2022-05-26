@@ -39,19 +39,19 @@
               ]
             },
             "MeasurementIntervalInSeconds": {
-              "Value": 10
+              "Value": 60
             },
             "ExtractionStart": {
-              "Value": "[js: new Date().toISOString()]"
+              "Value": "[js: new Date().toUTCString()]"
             },
             "ExtractionOffsetInSeconds": {
               "Value": 30
             },
             "ExtractionTimeoutInSeconds": {
-              "Value": 3600
+              "Value": 300
             },
             "ExtractionRetries": {
-              "Value": 5
+              "Value": 10
             },
             "ValidationIntervalInSeconds": {
               "Value": 3600

@@ -53,6 +53,7 @@ using OrchardCore.Modules.Manifest;
         "OrchardCore.Widgets",
         "OrchardCore.Workflows",
         "OrchardCore.Localization",
+        "OrchardCore.ContentLocalization",
         "OrchardCore.ContentLocalization.ContentCulturePicker",
         "OrchardCore.ContentFields.Indexing.SQL.UserPicker",
         "OrchardCore.BackgroundTasks",

@@ -13,27 +13,39 @@ public partial class Client : IClient
       DeviceStateData state) =>
     IndexDeviceAsync(
       new Device(
-        source,
-        sourceDeviceId,
-        new Device.SourceDeviceDataType
-        {
-          OwnerId = sourceDeviceData?.ownerId
-        },
-        new Device.OwnerDataType(
-          owner.@operator,
-          owner.centerId,
-          owner.centerUserId,
-          owner.ownerId,
-          owner.ownerUserId),
-        new Device.MeasurementDataType(
-          measurement.measurementIntervalInSeconds,
-          measurement.extractionStart,
-          measurement.extractionOffsetInSeconds,
-          measurement.extractionTimeoutInSeconds,
-          measurement.extractionRetries,
-          measurement.validationIntervalInSeconds),
-        new Device.StateDataType(
-          state.state)));
+        source:
+          source,
+        sourceDeviceId:
+          sourceDeviceId,
+        sourceDeviceData:
+          new Device.SourceDeviceDataType
+          {
+            OwnerId = sourceDeviceData?.ownerId
+          },
+        owner:
+          new Device.OwnerDataType(
+            @operator: owner.@operator,
+            centerId: owner.centerId,
+            centerUserId: owner.centerUserId,
+            ownerId: owner.ownerId,
+            ownerUserId: owner.ownerUserId),
+        measurement:
+          new Device.MeasurementDataType(
+            measurementIntervalInSeconds:
+              measurement.measurementIntervalInSeconds,
+            extractionStart:
+              measurement.extractionStart,
+            extractionOffsetInSeconds:
+              measurement.extractionOffsetInSeconds,
+            extractionRetries:
+              measurement.extractionRetries,
+            extractionTimeoutInSeconds:
+              measurement.extractionTimeoutInSeconds,
+            validationIntervalInSeconds:
+              measurement.validationIntervalInSeconds),
+        state:
+          new Device.StateDataType(
+            state.state)));
 
   public void LoadDevice(
       string source,
@@ -44,25 +56,37 @@ public partial class Client : IClient
       DeviceStateData state) =>
     IndexDevice(
       new Device(
-        source,
-        sourceDeviceId,
-        new Device.SourceDeviceDataType
-        {
-          OwnerId = sourceDeviceData?.ownerId
-        },
-        new Device.OwnerDataType(
-          owner.@operator,
-          owner.centerId,
-          owner.centerUserId,
-          owner.ownerId,
-          owner.ownerUserId),
-        new Device.MeasurementDataType(
-          measurement.measurementIntervalInSeconds,
-          measurement.extractionStart,
-          measurement.extractionOffsetInSeconds,
-          measurement.extractionTimeoutInSeconds,
-          measurement.extractionRetries,
-          measurement.validationIntervalInSeconds),
-        new Device.StateDataType(
-          state.state)));
+        source:
+          source,
+        sourceDeviceId:
+          sourceDeviceId,
+        sourceDeviceData:
+          new Device.SourceDeviceDataType
+          {
+            OwnerId = sourceDeviceData?.ownerId
+          },
+        owner:
+          new Device.OwnerDataType(
+            @operator: owner.@operator,
+            centerId: owner.centerId,
+            centerUserId: owner.centerUserId,
+            ownerId: owner.ownerId,
+            ownerUserId: owner.ownerUserId),
+        measurement:
+          new Device.MeasurementDataType(
+            measurementIntervalInSeconds:
+              measurement.measurementIntervalInSeconds,
+            extractionStart:
+              measurement.extractionStart,
+            extractionOffsetInSeconds:
+              measurement.extractionOffsetInSeconds,
+            extractionRetries:
+              measurement.extractionRetries,
+            extractionTimeoutInSeconds:
+              measurement.extractionTimeoutInSeconds,
+            validationIntervalInSeconds:
+              measurement.validationIntervalInSeconds),
+        state:
+          new Device.StateDataType(
+            state.state)));
 }

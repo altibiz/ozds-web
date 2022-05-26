@@ -6,14 +6,14 @@ public partial class ClientTest
 {
   [Theory]
   [MemberData(nameof(Data.GenerateDevice), MemberType = typeof(Data))]
-  public async Task GetReceiptMeasurementsAsyncTest(Device device)
+  public async Task GetDashboardMeasurementsAsyncTest(Device device)
   {
     await SetupDeviceAsync(device);
   }
 
   [Theory]
   [MemberData(nameof(Data.GenerateDevice), MemberType = typeof(Data))]
-  public void GetReceiptMeasurementsTest(Device device)
+  public void GetDashboardMeasurementsTest(Device device)
   {
     SetupDevice(device);
   }

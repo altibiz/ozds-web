@@ -3,9 +3,7 @@ using Ozds.Util;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient : IReceiptMeasurementProvider
-{
-}
+public partial interface IClient : IReceiptMeasurementProvider { }
 
 public partial class Client : IClient
 {

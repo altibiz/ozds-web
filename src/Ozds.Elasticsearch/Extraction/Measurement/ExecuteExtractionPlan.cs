@@ -17,6 +17,10 @@ public partial class Client : IClient
               plan.Device.ToProvisionDevice(),
               item.Period)
             .Then(buckets => buckets
+              .ForEach(bucket => Logger.LogDebug(
+                $"Extracted {bucket.Count()} measurements at {plan.Period} " +
+                $"for {plan.Device.Id} from {provider.Source}")))
+            .Then(buckets => buckets
               .Select(bucket => CreateOutcomeItem(plan, item, bucket))))
           .ToAsync()
           .Flatten(),
@@ -39,6 +43,9 @@ public partial class Client : IClient
             .GetMeasurements(
               plan.Device.ToProvisionDevice(),
               item.Period)
+            .ForEach(bucket => Logger.LogDebug(
+              $"Extracted {bucket.Count()} measurements at {plan.Period} " +
+              $"for {plan.Device.Id} from {provider.Source}"))
             .Select(bucket => CreateOutcomeItem(plan, item, bucket)))
           .Flatten(),
         Enumerables.Empty<MeasurementExtractionItem>)

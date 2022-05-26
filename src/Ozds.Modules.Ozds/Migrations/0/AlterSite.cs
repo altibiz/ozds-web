@@ -60,7 +60,6 @@ public static partial class AlterSite
               {
                 Required = true,
                 Minimum = 0,
-                Scale = 0
               }))
         .WithField("ExtractionStart",
           field => field
@@ -86,7 +85,6 @@ public static partial class AlterSite
               {
                 Required = true,
                 Minimum = 0,
-                Scale = 0
               }))
         .WithField("ExtractionTimeoutInSeconds",
           field => field
@@ -101,7 +99,6 @@ public static partial class AlterSite
               {
                 Required = true,
                 Minimum = 0,
-                Scale = 0
               }))
         .WithField("ExtractionRetries",
           field => field
@@ -116,7 +113,6 @@ public static partial class AlterSite
               {
                 Required = true,
                 Minimum = 0,
-                Scale = 0
               }))
         .WithField("ValidationIntervalInSeconds",
           field => field
@@ -130,7 +126,6 @@ public static partial class AlterSite
               {
                 Required = true,
                 Minimum = 0,
-                Scale = 0
               }))
         .WithField("Status",
           field => field

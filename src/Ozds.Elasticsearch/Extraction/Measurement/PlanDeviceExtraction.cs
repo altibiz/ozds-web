@@ -65,24 +65,34 @@ public partial class Client : IClient
       int measurementsPerExtractionPlanItem,
       DateTime now,
       IEnumerable<MissingDataLog> missingDataLogs,
-      LoadLog? loadLog) =>
-    new Period
-    {
-      From =
+      LoadLog? loadLog)
+  {
+    var extractionOffset = now.Subtract(device.ExtractionOffset);
+    var from =
+      Objects.Min(
+        extractionOffset,
         Objects.Max(
           device.ExtractionStart,
           period?.From,
-          loadLog?.Period.To),
-      To =
+          loadLog?.Period.To));
+    var to =
+      Objects.Max(
+        from,
         Objects.Min(
-          now.Subtract(device.ExtractionOffset),
-          period?.To)
-    }
-    .WhenNullable(period =>
+          extractionOffset,
+          period?.To));
+    var optimizedPeriod =
+      new Period
+      {
+        From = from,
+        To = to,
+      };
+
+    return
       new ExtractionPlan
       {
         Device = device,
-        Period = period,
+        Period = optimizedPeriod,
         Items =
           missingDataLogs
             .Select(missingDataLog =>
@@ -95,7 +105,7 @@ public partial class Client : IClient
                 ShouldValidate = missingDataLog.ShouldValidate,
                 Error = missingDataLog.Error
               })
-            .Concat(period
+            .Concat(optimizedPeriod
               .SplitAscending(
                 device.MeasurementInterval *
                 measurementsPerExtractionPlanItem)
@@ -107,8 +117,8 @@ public partial class Client : IClient
                   Timeout = device.ExtractionTimeout,
                   Due = now,
                   ShouldValidate =
-                    device.LastValidation + device.ValidationInterval >
-                    now,
+                    now >= device.LastValidation + device.ValidationInterval,
                 }))
-      });
+      };
+  }
 }

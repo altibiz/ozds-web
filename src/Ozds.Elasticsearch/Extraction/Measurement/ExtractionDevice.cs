@@ -32,18 +32,18 @@ public static class ExtractionDeviceExtensions
         },
       MeasurementInterval =
         TimeSpan.FromSeconds(
-            device.MeasurementData.MeasurementIntervalInSeconds),
+          device.MeasurementData.MeasurementIntervalInSeconds),
       ExtractionStart = device.MeasurementData.ExtractionStart,
       ExtractionOffset =
         TimeSpan.FromSeconds(
-            device.MeasurementData.ExtractionOffsetInSeconds),
+          device.MeasurementData.ExtractionOffsetInSeconds),
       ExtractionTimeout =
         TimeSpan.FromSeconds(
-            device.MeasurementData.ExtractionTimeoutInSeconds),
+          device.MeasurementData.ExtractionTimeoutInSeconds),
       ExtractionRetries = device.MeasurementData.ExtractionRetries,
       ValidationInterval =
         TimeSpan.FromSeconds(
-            device.MeasurementData.ValidationIntervalInSeconds),
+          device.MeasurementData.ValidationIntervalInSeconds),
       LastValidation = device.MeasurementData.LastValidation
     };
 }

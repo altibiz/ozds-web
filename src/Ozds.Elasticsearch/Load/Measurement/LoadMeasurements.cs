@@ -16,6 +16,15 @@ public partial class Client : IClient
           {
             await IndexMissingDataLogAsync(item.Next.Value
               .ToMissingDataLogFor(extraction.Device));
+
+            var minimumMeasurements =
+              extraction.Period.Span.TotalSeconds /
+              extraction.Device.MeasurementInterval.TotalSeconds;
+            Logger.LogDebug(
+              $"Missing data for {extraction.Device.Id} " +
+              $"at {extraction.Period}\n" +
+              $"Expected at least {minimumMeasurements} measurements but " +
+              $"got {item.Bucket.Count()}");
           }
           else
           {
@@ -25,6 +34,10 @@ public partial class Client : IClient
                 MissingDataLog.MakeId(
                   extraction.Device.Id,
                   item.Original.Period));
+
+              Logger.LogDebug(
+                $"Recovered missing data for {extraction.Device.Id} " +
+                $"at {extraction.Period}");
             }
 
             if (item.Original.ShouldValidate)
@@ -32,6 +45,10 @@ public partial class Client : IClient
               await UpdateDeviceLastValidationAsync(
                 extraction.Device.Id,
                 item.Original.Due);
+
+              Logger.LogDebug(
+                $"Validated data for {extraction.Device.Id} " +
+                $"at {extraction.Period}");
             }
           }
 
@@ -42,7 +59,10 @@ public partial class Client : IClient
       .ThenTask(() =>
         ExtendLoadLogPeriodAsync(
           LoadLog.MakeId(extraction.Device.Id),
-          extraction.Period.To));
+          extraction.Period.To))
+      .Then(() => Logger.LogDebug(
+        $"Finished load for {extraction.Device.Id} " +
+        $"at {extraction.Period}"));
 
   public Task LoadMeasurementsAsync(
       EnrichedMeasurementExtractionAsync extraction) =>
@@ -80,7 +100,9 @@ public partial class Client : IClient
       .ThenTask(() =>
         ExtendLoadLogPeriodAsync(
           LoadLog.MakeId(extraction.Device.Id),
-          extraction.Period.To));
+          extraction.Period.To))
+      .Then(() => Logger.LogDebug(
+        $"Finished load for {extraction.Device.Id} at {extraction.Period}"));
 
   public void LoadMeasurements(
       EnrichedMeasurementExtraction extraction) =>
@@ -118,5 +140,7 @@ public partial class Client : IClient
       .Return(() =>
         ExtendLoadLogPeriod(
           LoadLog.MakeId(extraction.Device.Id),
-          extraction.Period.To));
+          extraction.Period.To))
+      .Return(() => Logger.LogDebug(
+        $"Finished load for {extraction.Device.Id} at {extraction.Period}"));
 }

@@ -79,6 +79,15 @@ public static partial class Data
       };
   }
 
+  public static IEnumerable<object[]> GenerateDevice()
+  {
+    yield return
+      new object[]
+      {
+        Data.FakeDevice
+      };
+  }
+
   private static TimeSpan s_defaultTimeSpan = TimeSpan.FromMinutes(5);
 }
 
@@ -86,41 +95,55 @@ public partial class ClientTest
 {
   [Theory]
   [MemberData(nameof(Data.GenerateDevices), MemberType = typeof(Data))]
-  public void SetupDevices(IEnumerable<Device> devices)
+  public async Task SetupDevicesAsync(IEnumerable<Device> devices)
   {
     foreach (var device in devices)
     {
-      var deviceIndexResponse = Client.IndexDevice(device);
-      Assert.True(deviceIndexResponse.IsValid);
-
-      var indexedDeviceId = deviceIndexResponse.Id;
-      Assert.Equal(device.Id, indexedDeviceId);
-
-      var deviceGetResponse = Client.GetDevice(device.Id);
-      Assert.True(deviceGetResponse.IsValid);
-
-      var gotDevice = deviceGetResponse.Source;
-      Assert.Equal(device, gotDevice);
+      await SetupDeviceAsync(device);
     }
   }
 
   [Theory]
   [MemberData(nameof(Data.GenerateDevices), MemberType = typeof(Data))]
-  public async Task SetupDevicesAsync(IEnumerable<Device> devices)
+  public void SetupDevices(IEnumerable<Device> devices)
   {
     foreach (var device in devices)
     {
-      var deviceIndexResponse = await Client.IndexDeviceAsync(device);
-      Assert.True(deviceIndexResponse.IsValid);
-
-      var indexedDeviceId = deviceIndexResponse.Id;
-      Assert.Equal(device.Id, indexedDeviceId);
-
-      var deviceGetResponse = await Client.GetDeviceAsync(device.Id);
-      Assert.True(deviceGetResponse.IsValid);
-
-      var gotDevice = deviceGetResponse.Source;
-      Assert.Equal(device, gotDevice);
+      SetupDevice(device);
     }
+  }
+
+  [Theory]
+  [MemberData(nameof(Data.GenerateDevice), MemberType = typeof(Data))]
+  public async Task SetupDeviceAsync(Device device)
+  {
+    var deviceIndexResponse = await Client.IndexDeviceAsync(device);
+    Assert.True(deviceIndexResponse.IsValid);
+
+    var indexedDeviceId = deviceIndexResponse.Id;
+    Assert.Equal(device.Id, indexedDeviceId);
+
+    var deviceGetResponse = await Client.GetDeviceAsync(device.Id);
+    Assert.True(deviceGetResponse.IsValid);
+
+    var gotDevice = deviceGetResponse.Source;
+    Assert.Equal(device, gotDevice);
+  }
+
+  [Theory]
+  [MemberData(nameof(Data.GenerateDevice), MemberType = typeof(Data))]
+  public void SetupDevice(Device device)
+  {
+    var deviceIndexResponse = Client.IndexDevice(device);
+    Assert.True(deviceIndexResponse.IsValid);
+
+    var indexedDeviceId = deviceIndexResponse.Id;
+    Assert.Equal(device.Id, indexedDeviceId);
+
+    var deviceGetResponse = Client.GetDevice(device.Id);
+    Assert.True(deviceGetResponse.IsValid);
+
+    var gotDevice = deviceGetResponse.Source;
+    Assert.Equal(device, gotDevice);
   }
 }
