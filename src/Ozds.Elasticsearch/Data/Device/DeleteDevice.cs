@@ -1,19 +1,28 @@
 using Nest;
+using Ozds.Util;
 
 namespace Ozds.Elasticsearch;
 
 public partial interface IClient
 {
-  public DeleteResponse DeleteDevice(Id id);
   public Task<DeleteResponse> DeleteDeviceAsync(Id id);
+
+  public DeleteResponse DeleteDevice(Id id);
 };
 
 public sealed partial class Client : IClient
 {
-  public DeleteResponse DeleteDevice(Id id) => this.Elasticsearch.Delete(
-      DocumentPath<Device>.Id(id), s => s.Index(DeviceIndexName));
+  public Task<DeleteResponse> DeleteDeviceAsync(Id id) =>
+    Elasticsearch.DeleteAsync(
+      DocumentPath<Device>.Id(id),
+      s => s.Index(DeviceIndexName))
+      .ThenWithTask(_ => DeleteLoadLogAsync(LoadLog
+        .MakeId(id.ToString())));
 
-  public async Task<DeleteResponse>
-  DeleteDeviceAsync(Id id) => await this.Elasticsearch.DeleteAsync(
-      DocumentPath<Device>.Id(id), s => s.Index(DeviceIndexName));
+  public DeleteResponse DeleteDevice(Id id) =>
+    Elasticsearch.Delete(
+      DocumentPath<Device>.Id(id),
+      s => s.Index(DeviceIndexName))
+      .WithNullable(_ => DeleteLoadLog(LoadLog
+        .MakeId(id.ToString())));
 }

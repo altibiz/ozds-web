@@ -4,284 +4,224 @@ namespace Ozds.Elasticsearch;
 
 public partial interface IClient
 {
-  public Task<ISearchResponse<Log>>
-  SearchLogsAsync(
-      string type,
-      int? size = null);
-
-  public ISearchResponse<Log>
-  SearchLogs(
-      string type,
-      int? size = null);
-
-  public Task<ISearchResponse<Log>>
-  SearchLogsSortedByTimestampAsync(
-      string type,
-      int? size = null,
-      Period? period = null);
-
-  public ISearchResponse<Log>
-  SearchLogsSortedByTimestamp(
-      string type,
-      int? size = null,
-      Period? period = null);
-
-  public Task<ISearchResponse<Log>>
-  SearchLogsSortedByPeriodAsync(
-      string type,
-      int? size = null,
-      Period? period = null);
-
-  public ISearchResponse<Log>
-  SearchLogsSortedByPeriod(
-      string type,
-      int? size = null,
-      Period? period = null);
-
-  public Task<ISearchResponse<Log>>
-  SearchLogsAsync(
-      string type,
+  public Task<ISearchResponse<LoadLog>>
+  SearchLoadLogsAsync(
       string resource,
       int? size = null);
 
-  public ISearchResponse<Log>
-  SearchLogs(
-      string type,
+  public ISearchResponse<LoadLog>
+  SearchLoadLogs(
       string resource,
       int? size = null);
 
-  public Task<ISearchResponse<Log>>
-  SearchLogsSortedByTimestampAsync(
-      string type,
+  public Task<ISearchResponse<LoadLog>>
+  SearchLoadLogsSortedByPeriodAsync(
       string resource,
       int? size = null,
       Period? period = null);
 
-  public ISearchResponse<Log>
-  SearchLogsSortedByTimestamp(
-      string type,
+  public ISearchResponse<LoadLog>
+  SearchLoadLogsSortedByPeriod(
       string resource,
       int? size = null,
       Period? period = null);
 
-  public Task<ISearchResponse<Log>>
-  SearchLogsSortedByPeriodAsync(
-      string type,
+  public Task<ISearchResponse<MissingDataLog>>
+  SearchMissingDataLogsAsync(
+      string resource,
+      int? size = null);
+
+  public ISearchResponse<MissingDataLog>
+  SearchMissingDataLogs(
+      string resource,
+      int? size = null);
+
+  public Task<ISearchResponse<MissingDataLog>>
+  SearchMissingDataLogsSortedByPeriodAsync(
       string resource,
       int? size = null,
       Period? period = null);
 
-  public ISearchResponse<Log>
-  SearchLogsSortedByPeriod(
-      string type,
+  public ISearchResponse<MissingDataLog>
+  SearchMissingDataLogsSortedByPeriod(
       string resource,
+      int? size = null,
+      Period? period = null);
+
+  public Task<ISearchResponse<MissingDataLog>>
+  SearchMissingDataLogsSortedByPeriodAsync(
+      string resource,
+      DateTime due,
+      int? size = null,
+      Period? period = null);
+
+  public ISearchResponse<MissingDataLog>
+  SearchMissingDataLogsSortedByPeriod(
+      string resource,
+      DateTime due,
       int? size = null,
       Period? period = null);
 };
 
 public sealed partial class Client : IClient
 {
-  public Task<ISearchResponse<Log>>
-  SearchLogsAsync(
-      string type,
+  public Task<ISearchResponse<LoadLog>>
+  SearchLoadLogsAsync(
+      string resource,
       int? size = null) =>
-    Elasticsearch.SearchAsync<Log>(s => s
+    Elasticsearch.SearchAsync<LoadLog>(s => s
       .Query(q => q
-        .Term(t => t.Type, type))
+        .Term(t => t.Resource, resource) && q
+        .Term(t => t.LogType, LoadLog.Type))
       .Size(size)
       .Index(LogIndexName));
 
-  public ISearchResponse<Log>
-  SearchLogs(
-      string type,
+  public ISearchResponse<LoadLog>
+  SearchLoadLogs(
+      string resource,
       int? size = null) =>
-    Elasticsearch.Search<Log>(s => s
+    Elasticsearch.Search<LoadLog>(s => s
       .Query(q => q
-        .Term(t => t.Type, type))
+        .Term(t => t.Resource, resource) && q
+        .Term(t => t.LogType, LoadLog.Type))
       .Size(size)
       .Index(LogIndexName));
 
-  public Task<ISearchResponse<Log>>
-  SearchLogsSortedByTimestampAsync(
-      string type,
+  public ISearchResponse<LoadLog>
+  SearchLoadLogsSortedByPeriod(
+      string resource,
       int? size = null,
       Period? period = null) =>
-    Elasticsearch.SearchAsync<Log>(s => s
+    Elasticsearch.Search<LoadLog>(s => s
       .Query(q => q
         .DateRange(r => r
-          .Field(f => f.Timestamp)
-          .GreaterThanOrEquals(
-            period?.From ?? DateTime.MinValue.ToUniversalTime())
-          .LessThanOrEquals(
-            period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.Type, type))
-      .Size(size)
-      .Sort(s => s
-        .Descending(h => h.Timestamp))
-      .Index(LogIndexName));
-
-  public ISearchResponse<Log>
-  SearchLogsSortedByTimestamp(
-      string type,
-      int? size = null,
-      Period? period = null) =>
-    Elasticsearch.Search<Log>(s => s
-      .Query(q => q
-        .DateRange(r => r
-          .Field(f => f.Timestamp)
-          .GreaterThanOrEquals(
-            period?.From ?? DateTime.MinValue.ToUniversalTime())
-          .LessThanOrEquals(
-            period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.Type, type))
-      .Size(size)
-      .Sort(s => s
-        .Descending(h => h.Timestamp))
-      .Index(LogIndexName));
-
-  public ISearchResponse<Log>
-  SearchLogsSortedByPeriod(
-      string type,
-      int? size = null,
-      Period? period = null) =>
-    Elasticsearch.Search<Log>(s => s
-      .Query(q => q
-        .DateRange(r => r
-          .Field(f => f.Data.Period!.To)
-          .GreaterThanOrEquals(
-            period?.From ?? DateTime.MinValue.ToUniversalTime())
-          .LessThanOrEquals(
-            period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.Type, type))
+          .Field(f => f.Period!.To)
+          .GreaterThanOrEquals(period?.From)
+          .LessThan(period?.To)) && q
+        .Term(t => t.Resource, resource) && q
+        .Term(t => t.LogType, LoadLog.Type))
       .Size(size)
       .Index(LogIndexName)
       .Sort(s => s
-        .Descending(d => d.Data.Period!.To)));
+        .Descending(d => d.Period!.To)));
 
-  public Task<ISearchResponse<Log>>
-  SearchLogsSortedByPeriodAsync(
-      string type,
+  public Task<ISearchResponse<LoadLog>>
+  SearchLoadLogsSortedByPeriodAsync(
+      string resource,
       int? size = null,
       Period? period = null) =>
-    Elasticsearch.SearchAsync<Log>(s => s
+    Elasticsearch.SearchAsync<LoadLog>(s => s
       .Query(q => q
         .DateRange(r => r
-          .Field(f => f.Data.Period!.To)
-          .GreaterThanOrEquals(
-            period?.From ?? DateTime.MinValue.ToUniversalTime())
-          .LessThanOrEquals(
-            period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.Type, type))
+          .Field(f => f.Period!.To)
+          .GreaterThanOrEquals(period?.From)
+          .LessThan(period?.To)) && q
+        .Term(t => t.Resource, resource) && q
+        .Term(t => t.LogType, LoadLog.Type))
       .Size(size)
       .Index(LogIndexName)
       .Sort(s => s
-        .Descending(d => d.Data.Period!.To)));
+        .Descending(d => d.Period!.To)));
 
-  public Task<ISearchResponse<Log>>
-  SearchLogsAsync(
-      string type,
+  public Task<ISearchResponse<MissingDataLog>>
+  SearchMissingDataLogsAsync(
       string resource,
       int? size = null) =>
-    Elasticsearch.SearchAsync<Log>(s => s
+    Elasticsearch.SearchAsync<MissingDataLog>(s => s
       .Query(q => q
-        .Term(t => t.Type, type) && q
-        .Term(t => t.Resource, resource))
+        .Term(t => t.Resource, resource) && q
+        .Term(t => t.LogType, MissingDataLog.Type))
       .Size(size)
       .Index(LogIndexName));
 
-  public ISearchResponse<Log>
-  SearchLogs(
-      string type,
+  public ISearchResponse<MissingDataLog>
+  SearchMissingDataLogs(
       string resource,
       int? size = null) =>
-    Elasticsearch.Search<Log>(s => s
+    Elasticsearch.Search<MissingDataLog>(s => s
       .Query(q => q
-        .Term(t => t.Type, type) && q
-        .Term(t => t.Resource, resource))
+        .Term(t => t.Resource, resource) && q
+        .Term(t => t.LogType, MissingDataLog.Type))
       .Size(size)
       .Index(LogIndexName));
 
-  public Task<ISearchResponse<Log>>
-  SearchLogsSortedByTimestampAsync(
-      string type,
+  public ISearchResponse<MissingDataLog>
+  SearchMissingDataLogsSortedByPeriod(
       string resource,
       int? size = null,
       Period? period = null) =>
-    Elasticsearch.SearchAsync<Log>(s => s
+    Elasticsearch.Search<MissingDataLog>(s => s
       .Query(q => q
         .DateRange(r => r
-          .Field(f => f.Timestamp)
-          .GreaterThanOrEquals(
-            period?.From ?? DateTime.MinValue.ToUniversalTime())
-          .LessThanOrEquals(
-            period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.Type, type) && q
-        .Term(t => t.Resource, resource))
-      .Size(size)
-      .Sort(s => s
-        .Descending(h => h.Timestamp))
-      .Index(LogIndexName));
-
-  public ISearchResponse<Log>
-  SearchLogsSortedByTimestamp(
-      string type,
-      string resource,
-      int? size = null,
-      Period? period = null) =>
-    Elasticsearch.Search<Log>(s => s
-      .Query(q => q
-        .DateRange(r => r
-          .Field(f => f.Timestamp)
-          .GreaterThanOrEquals(
-            period?.From ?? DateTime.MinValue.ToUniversalTime())
-          .LessThanOrEquals(
-            period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.Type, type) && q
-        .Term(t => t.Resource, resource))
-      .Size(size)
-      .Sort(s => s
-        .Descending(h => h.Timestamp))
-      .Index(LogIndexName));
-
-  public ISearchResponse<Log>
-  SearchLogsSortedByPeriod(
-      string type,
-      string resource,
-      int? size = null,
-      Period? period = null) =>
-    Elasticsearch.Search<Log>(s => s
-      .Query(q => q
-        .DateRange(r => r
-          .Field(f => f.Data.Period!.To)
-          .GreaterThanOrEquals(
-            period?.From ?? DateTime.MinValue.ToUniversalTime())
-          .LessThanOrEquals(
-            period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.Type, type) && q
-        .Term(t => t.Resource, resource))
+          .Field(f => f.Period!.To)
+          .GreaterThanOrEquals(period?.From)
+          .LessThan(period?.To)) && q
+        .Term(t => t.Resource, resource) && q
+        .Term(t => t.LogType, MissingDataLog.Type))
       .Size(size)
       .Index(LogIndexName)
       .Sort(s => s
-        .Descending(d => d.Data.Period!.To)));
+        .Ascending(d => d.Period!.To)));
 
-  public Task<ISearchResponse<Log>>
-  SearchLogsSortedByPeriodAsync(
-      string type,
+  public Task<ISearchResponse<MissingDataLog>>
+  SearchMissingDataLogsSortedByPeriodAsync(
       string resource,
       int? size = null,
       Period? period = null) =>
-    Elasticsearch.SearchAsync<Log>(s => s
+    Elasticsearch.SearchAsync<MissingDataLog>(s => s
       .Query(q => q
         .DateRange(r => r
-          .Field(f => f.Data.Period!.To)
-          .GreaterThanOrEquals(
-            period?.From ?? DateTime.MinValue.ToUniversalTime())
-          .LessThanOrEquals(
-            period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.Type, type) && q
-        .Term(t => t.Resource, resource))
+          .Field(f => f.Period!.To)
+          .GreaterThanOrEquals(period?.From)
+          .LessThan(period?.To)) && q
+        .Term(t => t.Resource, resource) && q
+        .Term(t => t.LogType, MissingDataLog.Type))
       .Size(size)
       .Index(LogIndexName)
       .Sort(s => s
-        .Descending(d => d.Data.Period!.To)));
+        .Ascending(d => d.Period!.To)));
+
+  public ISearchResponse<MissingDataLog>
+  SearchMissingDataLogsSortedByPeriod(
+      string resource,
+      DateTime due,
+      int? size = null,
+      Period? period = null) =>
+    Elasticsearch.Search<MissingDataLog>(s => s
+      .Query(q => q
+        .DateRange(r => r
+          .Field(f => f.Period!.To)
+          .GreaterThanOrEquals(period?.From)
+          .LessThan(period?.To)) && q
+        .DateRange(r => r
+          .Field(f => f.NextExtraction)
+          .LessThanOrEquals(due)) && q
+        .Term(t => t.Resource, resource) && q
+        .Term(t => t.LogType, MissingDataLog.Type))
+      .Size(size)
+      .Index(LogIndexName)
+      .Sort(s => s
+        .Ascending(d => d.Period!.To)));
+
+  public Task<ISearchResponse<MissingDataLog>>
+  SearchMissingDataLogsSortedByPeriodAsync(
+      string resource,
+      DateTime due,
+      int? size = null,
+      Period? period = null) =>
+    Elasticsearch.SearchAsync<MissingDataLog>(s => s
+      .Query(q => q
+        .DateRange(r => r
+          .Field(f => f.Period!.To)
+          .GreaterThanOrEquals(period?.From)
+          .LessThan(period?.To)) && q
+        .DateRange(r => r
+          .Field(f => f.NextExtraction)
+          .LessThanOrEquals(due)) && q
+        .Term(t => t.Resource, resource) && q
+        .Term(t => t.LogType, MissingDataLog.Type))
+      .Size(size)
+      .Index(LogIndexName)
+      .Sort(s => s
+        .Ascending(d => d.Period!.To)));
 }

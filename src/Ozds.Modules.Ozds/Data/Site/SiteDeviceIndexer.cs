@@ -50,29 +50,32 @@ public class SiteDeviceIndexer : ContentHandlerBase
 
     await Loader
       .LoadDeviceAsync(
-        center.Operator.Value.Name.Text,
-        center.ContentItem.ContentItemId,
-        center.Center.Value.User.UserIds.First(),
-        consumer.ContentItem.ContentItemId,
-        consumer.Consumer.Value.User.UserIds.First(),
         SiteMeasurementSource
           .GetElasticsearchSource(site.Site.Value.Source)
           .ThrowWhenNull(),
         site.Site.Value.DeviceId.Text,
-        ((int)site.Site.Value.MeasurementIntervalInSeconds.Value!),
-        site.Site.Value.ExtractionStart.Value!.Value,
-        ((int)site.Site.Value.ExtractionOffsetInSeconds.Value!),
-        ((int)site.Site.Value.ExtractionTimeoutInSeconds.Value!),
-        ((int)site.Site.Value.ExtractionRetries.Value!),
-        ((int)site.Site.Value.ValidationIntervalInSeconds.Value!),
-        new SourceDeviceData
+        new DeviceSourceDeviceData
         {
           ownerId = site.Site.Value.SourceData.Data
             .FirstOrDefault(data => data.Name == "OwnerId")?.Value,
         },
-        status ?? SiteStatus
-          .GetElasticsearchStatus(site.Site.Value.Status)
-          .ThrowWhenNull());
+        new DeviceOwnerData(
+          center.Operator.Value.Name.Text,
+          center.ContentItem.ContentItemId,
+          center.Center.Value.User.UserIds.First(),
+          consumer.ContentItem.ContentItemId,
+          consumer.Consumer.Value.User.UserIds.First()),
+        new DeviceMeasurementData(
+          ((int)site.Site.Value.MeasurementIntervalInSeconds.Value!),
+          site.Site.Value.ExtractionStart.Value!.Value,
+          ((int)site.Site.Value.ExtractionOffsetInSeconds.Value!),
+          ((int)site.Site.Value.ExtractionTimeoutInSeconds.Value!),
+          ((int)site.Site.Value.ExtractionRetries.Value!),
+          ((int)site.Site.Value.ValidationIntervalInSeconds.Value!)),
+        new DeviceStateData(
+          status ?? SiteStatus
+            .GetElasticsearchStatus(site.Site.Value.Status)
+            .ThrowWhenNull()));
   }
 
   public SiteDeviceIndexer(

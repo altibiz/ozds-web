@@ -5,15 +5,15 @@ public static partial class Data
   public static readonly Measurement MyEnergyCommunityMeasurement =
     new Measurement(
       DateTime.UtcNow,
-      null,
-      "HelbOzds",
-      "TestCenterId",
-      "TestCenterUserId",
-      "TestOwnerId",
-      "TestOwnerUserId",
-      "MyEnergyCommunity",
-      "M9EQCU59",
-      new Measurement.KnownData
+      new Measurement.DeviceDataType(
+        "MyEnergyCommunity",
+        "M9EQCU59",
+        "HelbOzds",
+        "TestCenterId",
+        "TestCenterUserId",
+        "TestOwnerId",
+        "TestOwnerUserId"),
+      new Measurement.MeasurementDataType
       {
         energyIn = 2803.013M,
         energyIn_T1 = 719.16M,
@@ -56,15 +56,15 @@ public static partial class Data
   public static readonly Measurement FakeMeasurement =
     new Measurement(
       DateTime.UtcNow,
-      null,
-      "HelbOzds",
-      "TestCenterId",
-      "TestCenterUserId",
-      "TestOwnerId",
-      "TestOwnerUserId",
-      Ozds.Elasticsearch.MeasurementFaker.Client.FakeSource,
-      Ozds.Elasticsearch.MeasurementFaker.Client.FakeDeviceId,
-      new Measurement.KnownData
+      new Measurement.DeviceDataType(
+        "HelbOzds",
+        "TestCenterId",
+        "TestCenterUserId",
+        "TestOwnerId",
+        "TestOwnerUserId",
+        Ozds.Elasticsearch.MeasurementFaker.Client.FakeSource,
+        Ozds.Elasticsearch.MeasurementFaker.Client.FakeDeviceId),
+      new Measurement.MeasurementDataType
       {
         energyIn = 2803.013M,
         energyIn_T1 = 719.16M,

@@ -4,15 +4,18 @@ namespace Ozds.Elasticsearch;
 
 public readonly record struct LoadMeasurement
 (DateTime Timestamp,
- LoadMeasurementGeo? Geo,
+ LoadMeasurementDevice Device,
+ LoadMeasurementData Data,
+ LoadMeasurementGeo? Geo = null);
+
+public readonly record struct LoadMeasurementDevice
+(string Source,
+ string SourceDeviceId,
  string Operator,
  string CenterId,
  string? CenterUserId,
  string OwnerId,
- string? OwnerUserId,
- string Source,
- string SourceDeviceId,
- LoadMeasurementData Data);
+ string? OwnerUserId);
 
 public readonly record struct LoadMeasurementGeo
 (decimal Longitude,
@@ -64,18 +67,15 @@ public static class LoadMeasurementExtensions
       this LoadMeasurement measurement) =>
     new Measurement(
       measurement.Timestamp,
-      measurement.Geo.WhenNonNullable(geo =>
-        new Nest.GeoCoordinate(
-          (double)geo.Latitude,
-          (double)geo.Longitude)),
-      measurement.Operator,
-      measurement.CenterId,
-      measurement.CenterUserId,
-      measurement.OwnerId,
-      measurement.OwnerUserId,
-      measurement.Source,
-      measurement.SourceDeviceId,
-      new Measurement.KnownData
+      new Measurement.DeviceDataType(
+        measurement.Device.Source,
+        measurement.Device.SourceDeviceId,
+        measurement.Device.Operator,
+        measurement.Device.CenterId,
+        measurement.Device.CenterUserId,
+        measurement.Device.OwnerId,
+        measurement.Device.OwnerUserId),
+      new Measurement.MeasurementDataType
       {
         energyIn = measurement.Data.energyIn,
         energyIn_T1 = measurement.Data.energyIn_T1,
@@ -115,7 +115,11 @@ public static class LoadMeasurementExtensions
         voltageL1 = measurement.Data.voltageL1,
         voltageL2 = measurement.Data.voltageL2,
         voltageL3 = measurement.Data.voltageL3,
-      });
+      },
+      measurement.Geo.WhenNonNullable(geo =>
+        new Nest.GeoCoordinate(
+          (double)geo.Latitude,
+          (double)geo.Longitude)));
 
   public static LoadMeasurement ToLoadMeasurement(
       this ExtractionMeasurement measurement,
@@ -127,19 +131,17 @@ public static class LoadMeasurementExtensions
     new LoadMeasurement
     {
       Timestamp = measurement.Timestamp,
-      Geo = measurement.Geo.WhenNonNullable(geo =>
-        new LoadMeasurementGeo
+      Device =
+        new LoadMeasurementDevice
         {
-          Latitude = geo.Latitude,
-          Longitude = geo.Longitude,
-        }),
-      Operator = @operator,
-      CenterId = centerId,
-      CenterUserId = centerUserId,
-      OwnerId = ownerId,
-      OwnerUserId = ownerUserId,
-      Source = measurement.Source,
-      SourceDeviceId = measurement.SourceDeviceId,
+          Operator = @operator,
+          CenterId = centerId,
+          CenterUserId = centerUserId,
+          OwnerId = ownerId,
+          OwnerUserId = ownerUserId,
+          Source = measurement.Source,
+          SourceDeviceId = measurement.SourceDeviceId,
+        },
       Data =
         new LoadMeasurementData
         {
@@ -181,6 +183,12 @@ public static class LoadMeasurementExtensions
           voltageL1 = measurement.Data.voltageL1,
           voltageL2 = measurement.Data.voltageL2,
           voltageL3 = measurement.Data.voltageL3,
-        }
+        },
+      Geo = measurement.Geo.WhenNonNullable(geo =>
+        new LoadMeasurementGeo
+        {
+          Latitude = geo.Latitude,
+          Longitude = geo.Longitude,
+        }),
     };
 }

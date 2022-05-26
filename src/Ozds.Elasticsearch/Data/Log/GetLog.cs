@@ -4,17 +4,26 @@ namespace Ozds.Elasticsearch;
 
 public partial interface IClient
 {
-  public IGetResponse<Log> GetLog(Id id);
+  public Task<GetResponse<LoadLog>> GetLoadLogAsync(Id id);
 
-  public Task<IGetResponse<Log>> GetLogAsync(Id id);
+  public GetResponse<LoadLog> GetLoadLog(Id id);
+
+  public Task<GetResponse<MissingDataLog>> GetMissingDataLogAsync(Id id);
+
+  public GetResponse<MissingDataLog> GetMissingDataLog(Id id);
 };
 
 public sealed partial class Client : IClient
 {
-  public IGetResponse<Log> GetLog(Id id) => Elasticsearch.Get<Log>(
-      id, d => d.Index(LogIndexName));
+  public Task<GetResponse<LoadLog>> GetLoadLogAsync(Id id) =>
+    Elasticsearch.GetAsync<LoadLog>(id, d => d.Index(LogIndexName));
 
-  public async Task<IGetResponse<Log>> GetLogAsync(
-      Id id) => await Elasticsearch.GetAsync<Log>(id,
-      d => d.Index(LogIndexName));
+  public GetResponse<LoadLog> GetLoadLog(Id id) =>
+    Elasticsearch.Get<LoadLog>(id, d => d.Index(LogIndexName));
+
+  public Task<GetResponse<MissingDataLog>> GetMissingDataLogAsync(Id id) =>
+    Elasticsearch.GetAsync<MissingDataLog>(id, d => d.Index(LogIndexName));
+
+  public GetResponse<MissingDataLog> GetMissingDataLog(Id id) =>
+    Elasticsearch.Get<MissingDataLog>(id, d => d.Index(LogIndexName));
 }

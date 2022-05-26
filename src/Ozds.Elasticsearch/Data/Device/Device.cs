@@ -25,57 +25,26 @@ public class Device
         sourceDeviceId);
 
   public Device(
-      string @operator,
-      string centerId,
-      string centerUserId,
-      string ownerId,
-      string ownerUserId,
       string source,
       string sourceDeviceId,
-      int measurementIntervalInSeconds,
-      DateTime extractionStart,
-      int extractionOffsetInSeconds,
-      int extractionTimeoutInSeconds,
-      int extractionRetries,
-      int validationIntervalInSeconds,
-      KnownSourceDeviceData? sourceDeviceData = null,
-      string? state = null)
+      SourceDeviceDataType? sourceDeviceData,
+      OwnerDataType owner,
+      MeasurementDataType measurement,
+      StateDataType? state = null)
   {
-    Operator = @operator;
-    CenterId = centerId;
-    CenterUserId = centerUserId;
-    OwnerId = ownerId;
-    OwnerUserId = ownerUserId;
     Source = source;
     SourceDeviceId = sourceDeviceId;
-    MeasurementIntervalInSeconds = measurementIntervalInSeconds;
-    ExtractionStart = extractionStart;
-    ExtractionOffsetInSeconds = extractionOffsetInSeconds;
-    ExtractionTimeoutInSeconds = extractionTimeoutInSeconds;
-    ExtractionRetries = extractionRetries;
-    ValidationIntervalInSeconds = validationIntervalInSeconds;
-    LastValidation = DateTime.UtcNow;
-    SourceDeviceData = sourceDeviceData ?? new KnownSourceDeviceData { };
-    State = state ?? DeviceState.Added;
+    SourceDeviceData = sourceDeviceData ?? new SourceDeviceDataType { };
+
+    OwnerData = owner;
+    MeasurementData = measurement;
+
+    StateData = state ?? new StateDataType(DeviceState.Added);
+
     Id = MakeId(Source, SourceDeviceId);
   }
 
   public string Id { get; init; }
-
-  [Keyword(Name = "operator")]
-  public string Operator { get; init; }
-
-  [Keyword(Name = "centerId")]
-  public string CenterId { get; init; }
-
-  [Keyword(Name = "centerUserId")]
-  public string CenterUserId { get; init; }
-
-  [Keyword(Name = "ownerId")]
-  public string OwnerId { get; init; }
-
-  [Keyword(Name = "ownerUserId")]
-  public string OwnerUserId { get; init; }
 
   [Keyword(Name = "source")]
   public string Source { get; init; }
@@ -84,44 +53,122 @@ public class Device
   public string SourceDeviceId { get; init; }
 
   [Object(Name = "sourceDeviceData")]
-  public KnownSourceDeviceData SourceDeviceData { get; init; } =
-    new KnownSourceDeviceData { };
+  public SourceDeviceDataType SourceDeviceData { get; init; } =
+    new SourceDeviceDataType { };
 
-  [Number(NumberType.Integer, Name = "measurementInterval")]
-  public int MeasurementIntervalInSeconds { get; init; }
+  [Object(Name = "owner")]
+  public OwnerDataType OwnerData { get; init; }
 
-  [Date(Name = "extractionStart")]
-  public DateTime ExtractionStart { get; init; }
+  [Object(Name = "measurement")]
+  public MeasurementDataType MeasurementData { get; init; }
 
-  [Number(NumberType.Integer, Name = "extractionRetries")]
-  public int ExtractionRetries { get; init; }
+  [Object(Name = "state")]
+  public StateDataType StateData { get; init; }
 
-  [Number(NumberType.Integer, Name = "extractionOffsetInSeconds")]
-  public int ExtractionOffsetInSeconds { get; init; }
-
-  [Number(NumberType.Integer, Name = "extractionTimeoutInSeconds")]
-  public int ExtractionTimeoutInSeconds { get; init; }
-
-  [Number(NumberType.Integer, Name = "validationIntervalInSeconds")]
-  public int ValidationIntervalInSeconds { get; init; }
-
-  [Date(Name = "lastValidation")]
-  public DateTime LastValidation { get; init; }
-
-  [Keyword(Name = "state")]
-  public string State { get; init; }
-
-  [Date(Name = "dateAdded")]
-  public DateTime DateAdded { get; init; } = DateTime.UtcNow;
-
-  [Date(Name = "dateRemoved")]
-  public DateTime? DateRemoved { get; init; } = null;
-
-  [ElasticsearchType(RelationName = "deviceSourceData")]
-  public class KnownSourceDeviceData
+  [ElasticsearchType(RelationName = "deviceSourceDeviceData")]
+  public class SourceDeviceDataType
   {
     [Keyword(Name = "ownerId")]
     public string? OwnerId { get; init; } = default;
+  }
+
+  [ElasticsearchType(RelationName = "deviceOwnerData")]
+  public class OwnerDataType
+  {
+    public OwnerDataType(
+      string @operator,
+      string centerId,
+      string? centerUserId,
+      string ownerId,
+      string? ownerUserId)
+    {
+      Operator = @operator;
+      CenterId = centerId;
+      CenterUserId = CenterUserId;
+      OwnerId = ownerId;
+      OwnerUserId = ownerUserId;
+    }
+
+    [Keyword(Name = "operator")]
+    public string Operator { get; init; }
+
+    [Keyword(Name = "centerId")]
+    public string CenterId { get; init; }
+
+    [Keyword(Name = "centerUserId")]
+    public string? CenterUserId { get; init; }
+
+    [Keyword(Name = "ownerId")]
+    public string OwnerId { get; init; }
+
+    [Keyword(Name = "ownerUserId")]
+    public string? OwnerUserId { get; init; }
+  }
+
+  [ElasticsearchType(RelationName = "deviceMeasurementData")]
+  public class MeasurementDataType
+  {
+    public MeasurementDataType(
+        int measurementIntervalInSeconds,
+        DateTime extractionStart,
+        int extractionRetries,
+        int extractionOffsetInSeconds,
+        int extractionTimeoutInSeconds,
+        int validationIntervalInSeconds,
+        DateTime? lastValidation = null)
+    {
+      MeasurementIntervalInSeconds = measurementIntervalInSeconds;
+      ExtractionStart = extractionStart;
+      ExtractionRetries = extractionRetries;
+      ExtractionOffsetInSeconds = extractionOffsetInSeconds;
+      ExtractionTimeoutInSeconds = extractionTimeoutInSeconds;
+      ValidationIntervalInSeconds = validationIntervalInSeconds;
+      LastValidation = lastValidation ?? DateTime.UtcNow;
+    }
+
+    [Number(NumberType.Integer, Name = "measurementInterval")]
+    public int MeasurementIntervalInSeconds { get; init; }
+
+    [Date(Name = "extractionStart")]
+    public DateTime ExtractionStart { get; init; }
+
+    [Number(NumberType.Integer, Name = "extractionRetries")]
+    public int ExtractionRetries { get; init; }
+
+    [Number(NumberType.Integer, Name = "extractionOffsetInSeconds")]
+    public int ExtractionOffsetInSeconds { get; init; }
+
+    [Number(NumberType.Integer, Name = "extractionTimeoutInSeconds")]
+    public int ExtractionTimeoutInSeconds { get; init; }
+
+    [Number(NumberType.Integer, Name = "validationIntervalInSeconds")]
+    public int ValidationIntervalInSeconds { get; init; }
+
+    [Date(Name = "lastValidation")]
+    public DateTime LastValidation { get; init; }
+  }
+
+  [ElasticsearchType(RelationName = "deviceStateData")]
+  public class StateDataType
+  {
+    public StateDataType(
+        string? state = null,
+        DateTime? dateAdded = null,
+        DateTime? dateRemoved = null)
+    {
+      State = state ?? DeviceState.Added;
+      DateAdded = dateAdded ?? DateTime.UtcNow;
+      DateRemoved = dateRemoved;
+    }
+
+    [Keyword(Name = "state")]
+    public string State { get; init; }
+
+    [Date(Name = "dateAdded")]
+    public DateTime DateAdded { get; init; } = DateTime.UtcNow;
+
+    [Date(Name = "dateRemoved")]
+    public DateTime? DateRemoved { get; init; } = null;
   }
 
   public override bool Equals(object? obj) =>

@@ -7,18 +7,18 @@ public class Measurement
   public Measurement(
       string deviceId,
       DateTime? timestamp = null,
-      KnownData? data = null)
+      DataType? data = null)
   {
     DeviceId = deviceId;
     Timestamp = timestamp ?? DateTime.UtcNow.AddMinutes(-1);
-    Data = data ?? new KnownData { };
+    Data = data ?? new DataType { };
   }
 
   public DateTime Timestamp { get; init; } = DateTime.UtcNow.AddMinutes(-1);
   public string DeviceId { get; init; } = Client.FakeDeviceId;
-  public KnownData Data { get; init; } = new KnownData { };
+  public DataType Data { get; init; } = new DataType { };
 
-  public class KnownData
+  public class DataType
   {
     public decimal energyIn { get; init; } = default;
     public decimal energyIn_T1 { get; init; } = default;

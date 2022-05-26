@@ -78,11 +78,12 @@
         .map(measurement =>
           ({
             ...measurement,
-            date: new Date(measurement.date)
+            timestamp: new Date(measurement.timestamp)
           }))
-        .sort((a, b) => a.date - b.date);
+        .sort((a, b) => a.timestamp - b.timestamp);
     const lineLabels =
-      measurements.map(measurement => measurement.date.toLocaleTimeString());
+      measurements.map(measurement =>
+        measurement.timestamp.toLocaleTimeString());
     const energy = measurements[measurements.length -1].energy;
     const power = measurements[measurements.length -1].power;
 

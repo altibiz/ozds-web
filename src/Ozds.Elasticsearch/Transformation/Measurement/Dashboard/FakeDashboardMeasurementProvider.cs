@@ -26,7 +26,7 @@ public sealed partial class FakeDashboardMeasurementProvider :
               return
                 new DashboardMeasurement
                 {
-                  Date = date,
+                  Timestamp = date,
                   Energy = energy,
                   LowCostEnergy = energy,
                   HighCostEnergy = energy,

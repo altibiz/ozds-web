@@ -26,8 +26,9 @@ public static class ProvisionDeviceExtensions
           OwnerId = device.SourceDeviceData.OwnerId
         },
       MeasurementInterval =
-        TimeSpan.FromSeconds(device.MeasurementIntervalInSeconds),
-      ExtractionStart = device.ExtractionStart,
+        TimeSpan.FromSeconds(
+            device.MeasurementData.MeasurementIntervalInSeconds),
+      ExtractionStart = device.MeasurementData.ExtractionStart,
     };
 
   public static ProvisionDevice ToProvisionDevice(

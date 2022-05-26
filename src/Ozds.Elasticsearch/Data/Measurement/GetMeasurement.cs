@@ -4,9 +4,9 @@ namespace Ozds.Elasticsearch;
 
 public partial interface IClient
 {
-  public GetResponse<Measurement> GetMeasurement(Id id);
-
   public Task<GetResponse<Measurement>> GetMeasurementAsync(Id id);
+
+  public GetResponse<Measurement> GetMeasurement(Id id);
 };
 
 public sealed partial class Client : IClient

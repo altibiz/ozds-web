@@ -59,7 +59,7 @@ public sealed partial class Client : IClient
       .Size(size)
       .Query(q => q
         .DateRange(r => r
-          .Field(f => f.MeasurementTimestamp)
+          .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(period?.To ?? DateTime.UtcNow)))
@@ -73,7 +73,7 @@ public sealed partial class Client : IClient
       .Size(size)
       .Query(q => q
         .DateRange(r => r
-          .Field(f => f.MeasurementTimestamp)
+          .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(period?.To ?? DateTime.UtcNow)))
@@ -87,12 +87,12 @@ public sealed partial class Client : IClient
       .Size(size)
       .Query(q => q
         .DateRange(r => r
-          .Field(f => f.MeasurementTimestamp)
+          .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(period?.To ?? DateTime.UtcNow)))
       .Sort(s => s
-        .Descending(h => h.MeasurementTimestamp))
+        .Descending(h => h.Timestamp))
       .Index(MeasurementIndexName));
 
   public ISearchResponse<Measurement>
@@ -103,12 +103,12 @@ public sealed partial class Client : IClient
       .Size(size)
       .Query(q => q
         .DateRange(r => r
-          .Field(f => f.MeasurementTimestamp)
+          .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(period?.To ?? DateTime.UtcNow)))
       .Sort(s => s
-        .Descending(h => h.MeasurementTimestamp))
+        .Descending(h => h.Timestamp))
       .Index(MeasurementIndexName));
 
   public Task<ISearchResponse<Measurement>>
@@ -120,12 +120,12 @@ public sealed partial class Client : IClient
       .Size(size)
       .Query(q => q
         .DateRange(r => r
-          .Field(f => f.MeasurementTimestamp)
+          .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceId, deviceId))
+        .Term(t => t.DeviceData.DeviceId, deviceId))
       .Index(MeasurementIndexName));
 
   public ISearchResponse<Measurement>
@@ -137,12 +137,12 @@ public sealed partial class Client : IClient
       .Size(size)
       .Query(q => q
         .DateRange(r => r
-          .Field(f => f.MeasurementTimestamp)
+          .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceId, deviceId))
+        .Term(t => t.DeviceData.DeviceId, deviceId))
       .Index(MeasurementIndexName));
 
   public Task<ISearchResponse<Measurement>>
@@ -154,13 +154,13 @@ public sealed partial class Client : IClient
       .Size(size)
       .Query(q => q
         .DateRange(r => r
-          .Field(f => f.MeasurementTimestamp)
+          .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceId, deviceId))
-      .Sort(s => s.Descending(h => h.MeasurementTimestamp))
+        .Term(t => t.DeviceData.DeviceId, deviceId))
+      .Sort(s => s.Descending(h => h.Timestamp))
       .Index(MeasurementIndexName));
 
   public ISearchResponse<Measurement>
@@ -172,12 +172,12 @@ public sealed partial class Client : IClient
       .Size(size)
       .Query(q => q
         .DateRange(r => r
-          .Field(f => f.MeasurementTimestamp)
+          .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceId, deviceId))
-      .Sort(s => s.Descending(h => h.MeasurementTimestamp))
+        .Term(t => t.DeviceData.DeviceId, deviceId))
+      .Sort(s => s.Descending(h => h.Timestamp))
       .Index(MeasurementIndexName));
 }

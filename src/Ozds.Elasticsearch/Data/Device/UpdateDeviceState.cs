@@ -44,10 +44,19 @@ internal class DeviceStateUpdatePartial
       string state,
       DateTime? dateRemoved)
   {
-    State = state;
-    DateRemoved = dateRemoved;
+    StateData =
+      new StateDataPartial
+      {
+        State = state,
+        DateRemoved = dateRemoved
+      };
   }
 
-  public string State { get; init; }
-  public DateTime? DateRemoved { get; init; }
+  public StateDataPartial StateData { get; }
+
+  internal class StateDataPartial
+  {
+    public string State { get; init; } = default!;
+    public DateTime? DateRemoved { get; init; } = default!;
+  }
 }

@@ -173,15 +173,14 @@ public partial class ClientTest
           From = missingDataNow.AddMinutes(-25),
           To = missingDataNow.AddMinutes(-20)
         };
-      Client.IndexLog(
-        new Log(
-          LogType.MissingData,
+      Client.IndexMissingDataLog(
+        new MissingDataLog(
           device.Id,
-          new Log.KnownData
-          {
-            Period = missingDataPeriod,
-            NextExtraction = missingDataNextExtraction,
-          }));
+          missingDataPeriod,
+          missingDataNextExtraction,
+          5,
+          false,
+          "Unknown error"));
 
       // NOTE: preparation for searching
       Thread.Sleep(1000);

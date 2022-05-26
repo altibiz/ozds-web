@@ -28,11 +28,11 @@ public sealed partial class Client : IClient
             response.Hits.Select(hit =>
               new DashboardMeasurement
               {
-                Date = hit.Source.MeasurementTimestamp,
-                Energy = hit.Source.Data.energyIn,
-                HighCostEnergy = hit.Source.Data.energyIn_T1,
-                LowCostEnergy = hit.Source.Data.energyIn_T2,
-                Power = hit.Source.Data.powerIn,
+                Timestamp = hit.Source.Timestamp,
+                Energy = hit.Source.MeasurementData.energyIn,
+                HighCostEnergy = hit.Source.MeasurementData.energyIn_T1,
+                LowCostEnergy = hit.Source.MeasurementData.energyIn_T2,
+                Power = hit.Source.MeasurementData.powerIn,
               })));
 
   public IEnumerable<DashboardMeasurement>
@@ -53,10 +53,10 @@ public sealed partial class Client : IClient
         .Hits.Select(hit =>
           new DashboardMeasurement
           {
-            Date = hit.Source.MeasurementTimestamp,
-            Energy = hit.Source.Data.energyIn,
-            HighCostEnergy = hit.Source.Data.energyIn_T1,
-            LowCostEnergy = hit.Source.Data.energyIn_T2,
-            Power = hit.Source.Data.powerIn,
+            Timestamp = hit.Source.Timestamp,
+            Energy = hit.Source.MeasurementData.energyIn,
+            HighCostEnergy = hit.Source.MeasurementData.energyIn_T1,
+            LowCostEnergy = hit.Source.MeasurementData.energyIn_T2,
+            Power = hit.Source.MeasurementData.powerIn,
           }));
 }

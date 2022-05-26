@@ -9,7 +9,7 @@ public partial class ClientTest
   {
     var device = Data.MyEnergyCommunityDevice;
     var deviceId = device.Id;
-    var deviceState = device.State;
+    var deviceState = device.StateData.State;
     var newDeviceLastValidation = DateTime.UtcNow;
 
     var indexResponse = Client.IndexDevice(device);
@@ -30,7 +30,7 @@ public partial class ClientTest
 
     var gotDevice = getResponse.Source;
     var gotDeviceId = gotDevice.Id;
-    var gotDeviceLastValidation = gotDevice.LastValidation;
+    var gotDeviceLastValidation = gotDevice.MeasurementData.LastValidation;
     Assert.Equal(deviceId, gotDeviceId);
     Assert.Equal(newDeviceLastValidation, gotDeviceLastValidation);
 
@@ -46,7 +46,7 @@ public partial class ClientTest
   {
     var device = Data.MyEnergyCommunityDevice;
     var deviceId = device.Id;
-    var deviceState = device.State;
+    var deviceState = device.StateData.State;
     var newDeviceLastValidation = DateTime.UtcNow;
 
     var indexResponse = await Client.IndexDeviceAsync(device);
@@ -67,7 +67,7 @@ public partial class ClientTest
 
     var gotDevice = getResponse.Source;
     var gotDeviceId = gotDevice.Id;
-    var gotDeviceLastValidation = gotDevice.LastValidation;
+    var gotDeviceLastValidation = gotDevice.MeasurementData.LastValidation;
     Assert.Equal(deviceId, gotDeviceId);
     Assert.Equal(newDeviceLastValidation, gotDeviceLastValidation);
 

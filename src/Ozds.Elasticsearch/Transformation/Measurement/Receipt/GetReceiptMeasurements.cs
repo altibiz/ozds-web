@@ -22,17 +22,25 @@ public partial class Client : IClient
         .WhenNonNullable(measurements =>
           (new EnergyMeasurement
           {
-            Energy = measurements.Item1.Source.Data.energyIn,
-            HighCostEnergy = measurements.Item1.Source.Data.energyIn_T1,
-            LowCostEnergy = measurements.Item1.Source.Data.energyIn_T2,
-            Date = measurements.Item1.Source.MeasurementTimestamp
+            Energy =
+              measurements.Item1.Source.MeasurementData.energyIn,
+            HighCostEnergy =
+              measurements.Item1.Source.MeasurementData.energyIn_T1,
+            LowCostEnergy =
+              measurements.Item1.Source.MeasurementData.energyIn_T2,
+            Timestamp =
+              measurements.Item1.Source.Timestamp
           },
            new EnergyMeasurement
            {
-             Energy = measurements.Item2.Source.Data.energyIn,
-             HighCostEnergy = measurements.Item2.Source.Data.energyIn_T1,
-             LowCostEnergy = measurements.Item2.Source.Data.energyIn_T2,
-             Date = measurements.Item2.Source.MeasurementTimestamp
+             Energy =
+              measurements.Item2.Source.MeasurementData.energyIn,
+             HighCostEnergy =
+              measurements.Item2.Source.MeasurementData.energyIn_T1,
+             LowCostEnergy =
+              measurements.Item2.Source.MeasurementData.energyIn_T2,
+             Timestamp =
+              measurements.Item2.Source.Timestamp
            })));
 
   public (EnergyMeasurement Begin, EnergyMeasurement End)
@@ -83,30 +91,30 @@ public partial class Client : IClient
       .Size(1)
       .Index(MeasurementIndexName)
       .Sort(s => s
-        .Ascending(f => f.MeasurementTimestamp))
+        .Ascending(f => f.Timestamp))
       .Query(q => q
         .DateRange(r => r
-          .Field(f => f.MeasurementTimestamp)
+          .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ??
             DateTime.MinValue.ToUniversalTime())
           .LessThan(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceId, Device.MakeId(source, deviceId)))),
+        .Term(t => t.DeviceData.DeviceId, Device.MakeId(source, deviceId)))),
      Elasticsearch.SearchAsync<Measurement>(s => s
       .Size(1)
       .Index(MeasurementIndexName)
       .Sort(s => s
-        .Descending(f => f.MeasurementTimestamp))
+        .Descending(f => f.Timestamp))
       .Query(q => q
         .DateRange(r => r
-          .Field(f => f.MeasurementTimestamp)
+          .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ??
             DateTime.MinValue.ToUniversalTime())
           .LessThan(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceId, Device.MakeId(source, deviceId)))))
+        .Term(t => t.DeviceData.DeviceId, Device.MakeId(source, deviceId)))))
     .Await();
 
   // NOTE: https://stackoverflow.com/a/51726136/4348107
@@ -120,20 +128,20 @@ public partial class Client : IClient
       .Index(MeasurementIndexName)
       .Query(q => q
         .DateRange(r => r
-          .Field(f => f.MeasurementTimestamp)
+          .Field(f => f.Timestamp)
           .GreaterThanOrEquals(
             period?.From ??
             DateTime.MinValue.ToUniversalTime())
           .LessThan(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceId, Device.MakeId(source, deviceId)))
+        .Term(t => t.DeviceData.DeviceId, Device.MakeId(source, deviceId)))
       .Aggregations(a => a
         .DateHistogram("timestamp_by_fifteen_minutes", h => h
-          .Field(f => f.MeasurementTimestamp)
+          .Field(f => f.Timestamp)
           .CalendarInterval(TimeSpan.FromMinutes(15))
           .Aggregations(a => a
             .Average("average_power", a => a
-              .Field(f => f.Data.powerIn)))))
+              .Field(f => f.MeasurementData.powerIn)))))
       .Aggregations(a => a
         .AverageBucket("average_power_by_fifteen_minutes", a => a
           .BucketsPath("timestamp_by_fifteen_minutes>average_power"))));

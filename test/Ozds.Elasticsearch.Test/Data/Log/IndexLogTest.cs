@@ -9,19 +9,19 @@ public partial class ClientTest
   {
     var Log = Data.LoadLog;
 
-    var indexResponse = Client.IndexLog(Log);
+    var indexResponse = Client.IndexLoadLog(Log);
     Assert.True(indexResponse.IsValid);
 
     var indexedId = indexResponse.Id;
     Assert.Equal(indexedId, Log.Id.ToString());
 
-    var getResponse = Client.GetLog(Log.Id);
+    var getResponse = Client.GetLoadLog(Log.Id);
     Assert.True(getResponse.IsValid);
 
     var gotLogId = getResponse.Source.Id;
     Assert.Equal(gotLogId, Log.Id);
 
-    var deleteResponse = Client.DeleteLog(Log.Id);
+    var deleteResponse = Client.DeleteLoadLog(Log.Id);
     Assert.True(deleteResponse.IsValid);
 
     var deletedLogId = deleteResponse.Id;
@@ -33,19 +33,19 @@ public partial class ClientTest
   {
     var Log = Data.LoadLog;
 
-    var indexResponse = await Client.IndexLogAsync(Log);
+    var indexResponse = await Client.IndexLoadLogAsync(Log);
     Assert.True(indexResponse.IsValid);
 
     var indexedId = indexResponse.Id;
     Assert.Equal(indexedId, Log.Id.ToString());
 
-    var getResponse = await Client.GetLogAsync(Log.Id);
+    var getResponse = await Client.GetLoadLogAsync(Log.Id);
     Assert.True(getResponse.IsValid);
 
     var gotLogId = getResponse.Source.Id;
     Assert.Equal(gotLogId, Log.Id);
 
-    var deleteResponse = await Client.DeleteLogAsync(Log.Id);
+    var deleteResponse = await Client.DeleteLoadLogAsync(Log.Id);
     Assert.True(deleteResponse.IsValid);
 
     var deletedLogId = deleteResponse.Id;

@@ -6,46 +6,48 @@ public static partial class Data
 {
   public static readonly Device MyEnergyCommunityDevice =
     new Device(
-      @operator: "HelbOzds",
-      centerId: "TestCenterId",
-      centerUserId: "TestCenterUserId",
-      ownerId: "TestOwnerId",
-      ownerUserId: "TestOwnerUserId",
-      source: "MyEnergyCommunity",
-      sourceDeviceId: "W1N2CSTX",
-      measurementIntervalInSeconds: ((int)TimeSpan.FromSeconds(10).TotalSeconds),
-      extractionStart: DateTime.UtcNow.AddMinutes(-10),
-      extractionOffsetInSeconds: ((int)TimeSpan.FromSeconds(30).TotalSeconds),
-      extractionTimeoutInSeconds: ((int)TimeSpan.FromMinutes(1).TotalSeconds),
-      extractionRetries: 5,
-      validationIntervalInSeconds: ((int)TimeSpan.FromHours(1).TotalSeconds),
-      sourceDeviceData:
-        new Device.KnownSourceDeviceData
-        {
-          OwnerId = "test-owner"
-        },
-      state: DeviceState.Active);
+      "MyEnergyCommunity",
+      "W1N2CSTX",
+      new Device.SourceDeviceDataType
+      {
+        OwnerId = "test-owner"
+      },
+      new Device.OwnerDataType(
+        "HelbOzds",
+        "TestCenterId",
+        "TestCenterUserId",
+        "TestOwnerId",
+        "TestOwnerUserId"),
+      new Device.MeasurementDataType(
+        ((int)TimeSpan.FromSeconds(10).TotalSeconds),
+         DateTime.UtcNow.AddMinutes(-10),
+        ((int)TimeSpan.FromSeconds(30).TotalSeconds),
+        ((int)TimeSpan.FromMinutes(1).TotalSeconds),
+        5,
+        ((int)TimeSpan.FromHours(1).TotalSeconds)),
+      new Device.StateDataType(
+        DeviceState.Active));
 
   public static readonly Device FakeDevice =
     new Device(
-      @operator: "HelbOzds",
-      centerId: "TestCenterId",
-      centerUserId: "TestCenterUserId",
-      ownerId: "TestOwnerId",
-      ownerUserId: "TestOwnerUserId",
-      source:
-        Elasticsearch.MeasurementFaker.Client.FakeSource,
-      sourceDeviceId:
-        Elasticsearch.MeasurementFaker.Client.FakeDeviceId,
-      measurementIntervalInSeconds:
-        Elasticsearch.MeasurementFaker.Client.MeasurementIntervalInSeconds,
-      extractionStart: DateTime.UtcNow.AddMinutes(-10),
-      extractionOffsetInSeconds: ((int)TimeSpan.FromSeconds(30).TotalSeconds),
-      extractionTimeoutInSeconds: ((int)TimeSpan.FromMinutes(5).TotalSeconds),
-      extractionRetries: 5,
-      validationIntervalInSeconds: ((int)TimeSpan.FromHours(1).TotalSeconds),
-      sourceDeviceData: null,
-      state: DeviceState.Active);
+      Elasticsearch.MeasurementFaker.Client.FakeSource,
+      Elasticsearch.MeasurementFaker.Client.FakeDeviceId,
+      null,
+      new Device.OwnerDataType(
+        "HelbOzds",
+        "TestCenterId",
+        "TestCenterUserId",
+        "TestOwnerId",
+        "TestOwnerUserId"),
+      new Device.MeasurementDataType(
+        ((int)TimeSpan.FromSeconds(10).TotalSeconds),
+         DateTime.UtcNow.AddMinutes(-10),
+        ((int)TimeSpan.FromSeconds(30).TotalSeconds),
+        ((int)TimeSpan.FromMinutes(1).TotalSeconds),
+        5,
+        ((int)TimeSpan.FromHours(1).TotalSeconds)),
+      new Device.StateDataType(
+        DeviceState.Active));
 
   public static IEnumerable<object[]> GenerateDevices()
   {

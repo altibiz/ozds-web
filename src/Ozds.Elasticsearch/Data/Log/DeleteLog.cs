@@ -4,16 +4,34 @@ namespace Ozds.Elasticsearch;
 
 public partial interface IClient
 {
-  public DeleteResponse DeleteLog(Id id);
-  public Task<DeleteResponse> DeleteLogAsync(Id id);
+  public Task<DeleteResponse> DeleteLoadLogAsync(Id id);
+
+  public DeleteResponse DeleteLoadLog(Id id);
 };
 
 public sealed partial class Client : IClient
 {
-  public DeleteResponse DeleteLog(Id id) => this.Elasticsearch.Delete(
-      DocumentPath<Log>.Id(id), s => s.Index(LogIndexName));
+  public Task<DeleteResponse> DeleteLoadLogAsync(Id id) =>
+    Elasticsearch.DeleteAsync(
+      DocumentPath<LoadLog>.Id(id),
+      s => s
+        .Index(LogIndexName));
 
-  public async Task<DeleteResponse> DeleteLogAsync(
-      Id id) => await this.Elasticsearch.DeleteAsync(DocumentPath<Log>.Id(id),
-      s => s.Index(LogIndexName));
+  public DeleteResponse DeleteLoadLog(Id id) =>
+    Elasticsearch.Delete(
+      DocumentPath<LoadLog>.Id(id),
+      s => s
+        .Index(LogIndexName));
+
+  public Task<DeleteResponse> DeleteMissingDataLogAsync(Id id) =>
+    Elasticsearch.DeleteAsync(
+      DocumentPath<MissingDataLog>.Id(id),
+      s => s
+        .Index(LogIndexName));
+
+  public DeleteResponse DeleteMissingDataLog(Id id) =>
+    Elasticsearch.Delete(
+      DocumentPath<MissingDataLog>.Id(id),
+      s => s
+        .Index(LogIndexName));
 }

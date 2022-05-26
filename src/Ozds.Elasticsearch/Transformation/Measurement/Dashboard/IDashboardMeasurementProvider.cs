@@ -1,11 +1,11 @@
 namespace Ozds.Elasticsearch;
 
 public readonly record struct DashboardMeasurement
-(decimal Energy,
+(DateTime Timestamp,
+ decimal Energy,
  decimal LowCostEnergy,
  decimal HighCostEnergy,
- decimal Power,
- DateTime Date);
+ decimal Power);
 
 public interface IDashboardMeasurementProvider
 {

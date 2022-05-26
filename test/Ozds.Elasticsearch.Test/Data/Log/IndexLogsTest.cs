@@ -8,10 +8,10 @@ public partial class ClientTest
   [Fact]
   public void IndexLogsTest()
   {
-    var Logs = new List<Log> { Data.LoadLog };
+    var Logs = new List<LoadLog> { Data.LoadLog };
     var LogIds = Logs.Select(d => new Id(d.Id));
 
-    var indexResponse = Client.IndexLogs(Logs);
+    var indexResponse = Client.IndexLoadLogs(Logs);
     // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
     // Assert.True(indexResponse.IsValid);
 
@@ -20,7 +20,7 @@ public partial class ClientTest
 
     foreach (var Log in Logs)
     {
-      var getResponse = Client.GetLog(Log.Id);
+      var getResponse = Client.GetLoadLog(Log.Id);
       Assert.True(getResponse.IsValid);
 
       var gotLog = getResponse.Source;
@@ -38,10 +38,10 @@ public partial class ClientTest
   [Fact]
   public async Task IndexLogsAsyncTest()
   {
-    var logs = new List<Log> { Data.LoadLog };
+    var logs = new List<LoadLog> { Data.LoadLog };
     var logIds = logs.Select(d => new Id(d.Id));
 
-    var indexResponse = await Client.IndexLogsAsync(logs);
+    var indexResponse = await Client.IndexLoadLogsAsync(logs);
     // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
     // Assert.True(indexResponse.IsValid);
 
@@ -50,7 +50,7 @@ public partial class ClientTest
 
     foreach (var log in logs)
     {
-      var getResponse = await Client.GetLogAsync(log.Id);
+      var getResponse = await Client.GetLoadLogAsync(log.Id);
       Assert.True(getResponse.IsValid);
 
       var gotLog = getResponse.Source;

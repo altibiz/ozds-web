@@ -39,8 +39,17 @@ internal class DeviceLastValidationUpdatePartial
   public DeviceLastValidationUpdatePartial(
       DateTime lastValidation)
   {
-    LastValidation = lastValidation;
+    MeasurementData =
+      new MeasurementDataPartial
+      {
+        LastValidation = lastValidation
+      };
   }
 
-  public DateTime LastValidation { get; }
+  public MeasurementDataPartial MeasurementData { get; }
+
+  internal class MeasurementDataPartial
+  {
+    public DateTime LastValidation { get; init; } = default!;
+  }
 }

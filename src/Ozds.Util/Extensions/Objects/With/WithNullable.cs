@@ -14,7 +14,7 @@ public static partial class Objects
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<TIn> WithNullableTask<TIn>(
+  public static async Task<TIn> WithNullable<TIn>(
       this TIn @this,
       Func<TIn, Task> action)
   {
@@ -23,7 +23,7 @@ public static partial class Objects
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async ValueTask<TIn> WithNullableValueTask<TIn>(
+  public static async ValueTask<TIn> WithNullable<TIn>(
       this TIn @this,
       Func<TIn, ValueTask> action)
   {

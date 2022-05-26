@@ -31,15 +31,19 @@ public static class ExtractionDeviceExtensions
           OwnerId = device.SourceDeviceData.OwnerId
         },
       MeasurementInterval =
-        TimeSpan.FromSeconds(device.MeasurementIntervalInSeconds),
-      ExtractionStart = device.ExtractionStart,
+        TimeSpan.FromSeconds(
+            device.MeasurementData.MeasurementIntervalInSeconds),
+      ExtractionStart = device.MeasurementData.ExtractionStart,
       ExtractionOffset =
-        TimeSpan.FromSeconds(device.ExtractionOffsetInSeconds),
+        TimeSpan.FromSeconds(
+            device.MeasurementData.ExtractionOffsetInSeconds),
       ExtractionTimeout =
-        TimeSpan.FromSeconds(device.ExtractionTimeoutInSeconds),
-      ExtractionRetries = device.ExtractionRetries,
+        TimeSpan.FromSeconds(
+            device.MeasurementData.ExtractionTimeoutInSeconds),
+      ExtractionRetries = device.MeasurementData.ExtractionRetries,
       ValidationInterval =
-        TimeSpan.FromSeconds(device.ValidationIntervalInSeconds),
-      LastValidation = device.LastValidation
+        TimeSpan.FromSeconds(
+            device.MeasurementData.ValidationIntervalInSeconds),
+      LastValidation = device.MeasurementData.LastValidation
     };
 }

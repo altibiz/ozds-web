@@ -4,7 +4,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OrchardCore.ContentManagement.Handlers;
 using OrchardCore.ContentManagement;
-using YesSql;
 using Ozds.Util;
 using Ozds.Elasticsearch;
 
@@ -99,8 +98,8 @@ public class ReceiptCreator : ContentHandlerBase
         await CalculationData.Create(
           Taxonomy,
           date,
-          beginEnergyMeasurement.Date,
-          endEnergyMeasurement.Date,
+          beginEnergyMeasurement.Timestamp,
+          endEnergyMeasurement.Timestamp,
           secondarySite.ContentItem.ContentItemId,
           secondarySite.Title.Value.Title,
           catalogue.Data.Value,

@@ -15,14 +15,14 @@ public class FakeReceiptMeasurementProvider : IReceiptMeasurementProvider
         Energy = Random.Shared.Next(s_energyBeginMinMax),
         HighCostEnergy = Random.Shared.Next(s_energyBeginMinMax),
         LowCostEnergy = Random.Shared.Next(s_energyBeginMinMax),
-        Date = period.From,
+        Timestamp = period.From,
       },
       new EnergyMeasurement
       {
         Energy = Random.Shared.Next(s_energyEndMinMax),
         HighCostEnergy = Random.Shared.Next(s_energyEndMinMax),
         LowCostEnergy = Random.Shared.Next(s_energyEndMinMax),
-        Date = period.To,
+        Timestamp = period.To,
       }));
 
   public (EnergyMeasurement Begin, EnergyMeasurement End)

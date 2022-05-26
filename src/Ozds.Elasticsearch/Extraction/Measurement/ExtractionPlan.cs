@@ -15,18 +15,14 @@ public readonly record struct ExtractionPlanItem
 
 public static class ExtractionPlanItemExtensions
 {
-  public static Log ToMissingDataLog(
+  public static MissingDataLog ToMissingDataLog(
       this ExtractionPlanItem item,
       ExtractionDevice device) =>
     new(
-      LogType.MissingData,
       device.Id,
-      new()
-      {
-        Period = item.Period,
-        Retries = item.Retries,
-        NextExtraction = item.Due,
-        ShouldValidate = item.ShouldValidate,
-        Error = item.Error
-      });
+      item.Period,
+      item.Due,
+      item.Retries,
+      item.ShouldValidate,
+      item.Error ?? "");
 }

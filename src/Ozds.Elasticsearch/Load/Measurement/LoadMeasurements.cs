@@ -14,7 +14,7 @@ public partial class Client : IClient
         {
           if (item.Next.HasValue)
           {
-            await IndexLogAsync(item.Next.Value
+            await IndexMissingDataLogAsync(item.Next.Value
               .ToMissingDataLog(extraction.Device));
           }
           else if (item.Original.ShouldValidate)
@@ -28,14 +28,10 @@ public partial class Client : IClient
             .Select(LoadMeasurementExtensions.ToMeasurement));
         })
       .Run()
-      .Then(() => IndexLogAsync(
-        new(
-          LogType.Load,
-          extraction.Device.Id,
-          new()
-          {
-            Period = extraction.Period
-          })));
+      .ThenTask(() =>
+        ExtendLoadLogPeriodAsync(
+          LoadLog.MakeId(extraction.Device.Id),
+          extraction.Period.To));
 
   public Task LoadMeasurementsAsync(
       EnrichedMeasurementExtractionAsync extraction) =>
@@ -45,7 +41,7 @@ public partial class Client : IClient
         {
           if (item.Next.HasValue)
           {
-            await IndexLogAsync(item.Next.Value
+            await IndexMissingDataLogAsync(item.Next.Value
               .ToMissingDataLog(extraction.Device));
           }
           else if (item.Original.ShouldValidate)
@@ -59,14 +55,10 @@ public partial class Client : IClient
             .Select(LoadMeasurementExtensions.ToMeasurement));
         })
       .Run()
-      .Then(() => IndexLogAsync(
-        new(
-          LogType.Load,
-          extraction.Device.Id,
-          new()
-          {
-            Period = extraction.Period
-          })));
+      .ThenTask(() =>
+        ExtendLoadLogPeriodAsync(
+          LoadLog.MakeId(extraction.Device.Id),
+          extraction.Period.To));
 
   public void LoadMeasurements(
       EnrichedMeasurementExtraction extraction) =>
@@ -76,7 +68,7 @@ public partial class Client : IClient
         {
           if (item.Next.HasValue)
           {
-            IndexLog(item.Next.Value
+            IndexMissingDataLog(item.Next.Value
               .ToMissingDataLog(extraction.Device));
           }
           else if (item.Original.ShouldValidate)
@@ -90,12 +82,8 @@ public partial class Client : IClient
             .Select(LoadMeasurementExtensions.ToMeasurement));
         })
       .Run()
-      .Return(() => IndexLog(
-        new(
-          LogType.Load,
-          extraction.Device.Id,
-          new()
-          {
-            Period = extraction.Period
-          })));
+      .Return(() =>
+        ExtendLoadLogPeriod(
+          LoadLog.MakeId(extraction.Device.Id),
+          extraction.Period.To));
 }

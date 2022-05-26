@@ -1,10 +1,10 @@
 namespace Ozds.Elasticsearch;
 
 public readonly record struct EnergyMeasurement
-(decimal Energy,
+(DateTime Timestamp,
+ decimal Energy,
  decimal LowCostEnergy,
- decimal HighCostEnergy,
- DateTime Date);
+ decimal HighCostEnergy);
 
 public readonly record struct PowerMeasurement
 (decimal Power);

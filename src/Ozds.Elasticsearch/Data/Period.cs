@@ -13,6 +13,7 @@ public class Period :
   [Date(Name = "to")]
   public DateTime To { get; init; } = DateTime.UtcNow;
 
+  [Ignore]
   public TimeSpan Span { get => To - From; }
 
   public static Period UntilNow(DateTime from) =>

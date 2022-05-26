@@ -9,7 +9,7 @@ public partial class ClientTest
   {
     var device = Data.MyEnergyCommunityDevice;
     var deviceId = device.Id;
-    var deviceState = device.State;
+    var deviceState = device.StateData.State;
     var newDeviceState = deviceState == DeviceState.Active
                               ? DeviceState.TemporarilyInactive
                               : DeviceState.Active;
@@ -31,7 +31,7 @@ public partial class ClientTest
 
     var gotDevice = getResponse.Source;
     var gotDeviceId = gotDevice.Id;
-    var gotDeviceState = gotDevice.State;
+    var gotDeviceState = gotDevice.StateData.State;
     Assert.Equal(deviceId, gotDeviceId);
     Assert.Equal(newDeviceState, gotDeviceState);
 
@@ -47,7 +47,7 @@ public partial class ClientTest
   {
     var device = Data.MyEnergyCommunityDevice;
     var deviceId = device.Id;
-    var deviceState = device.State;
+    var deviceState = device.StateData.State;
     var newDeviceState = deviceState == DeviceState.Active
                               ? DeviceState.TemporarilyInactive
                               : DeviceState.Active;
@@ -70,7 +70,7 @@ public partial class ClientTest
 
     var gotDevice = getResponse.Source;
     var gotDeviceId = gotDevice.Id;
-    var gotDeviceState = gotDevice.State;
+    var gotDeviceState = gotDevice.StateData.State;
     Assert.Equal(deviceId, gotDeviceId);
     Assert.Equal(newDeviceState, gotDeviceState);
 

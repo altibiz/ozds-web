@@ -188,18 +188,32 @@ public sealed partial class Client : IClientPrototype, IClient
 
   private void TryDeleteIndices()
   {
-    Elasticsearch.TryDeleteIndex(MeasurementIndexName);
-    Elasticsearch.TryDeleteIndex(DeviceIndexName);
-    Elasticsearch.TryDeleteIndex(LogIndexName);
+    Elasticsearch.Indices.Delete(MeasurementIndexName);
+    Elasticsearch.Indices.Delete(DeviceIndexName);
+    Elasticsearch.Indices.Delete(LogIndexName);
     Logger.LogInformation(
         $"Deleted Elasticsearch indices{ConsoleIndexSuffix}");
   }
 
   private void TryCreateIndices()
   {
-    Elasticsearch.TryCreateIndex<Measurement>(MeasurementIndexName);
-    Elasticsearch.TryCreateIndex<Device>(DeviceIndexName);
-    Elasticsearch.TryCreateIndex<Log>(LogIndexName);
+    Elasticsearch.Indices
+      .Create(DeviceIndexName, c => c
+        .Map<Measurement>(m => m
+          .AutoMap<Measurement>()));
+
+    Elasticsearch.Indices
+      .Create(DeviceIndexName, c => c
+        .Map<Device>(m => m
+          .AutoMap<Device>()));
+
+    Elasticsearch.Indices
+      .Create(LogIndexName, c => c
+        .Map<LoadLog>(m => m
+          .AutoMap<LoadLog>())
+        .Map<MissingDataLog>(m => m
+          .AutoMap<MissingDataLog>()));
+
     Logger.LogInformation(
         $"Created Elasticsearch indices{ConsoleIndexSuffix}");
   }

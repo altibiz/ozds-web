@@ -1,83 +1,68 @@
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient : IDeviceLoader
-{
-}
+public partial interface IClient : IDeviceLoader { }
 
 public partial class Client : IClient
 {
   public Task LoadDeviceAsync(
-      string @operator,
-      string centerId,
-      string centerUserId,
-      string ownerId,
-      string ownerUserId,
       string source,
       string sourceDeviceId,
-      int measurementIntervalInSeconds,
-      DateTime extractionStart,
-      int extractionOffsetInSeconds,
-      int extractionTimeoutInSeconds,
-      int extractionRetries,
-      int validationIntervalInSeconds,
-      SourceDeviceData? sourceDeviceData = null,
-      string? state = null) =>
+      DeviceSourceDeviceData? sourceDeviceData,
+      DeviceOwnerData owner,
+      DeviceMeasurementData measurement,
+      DeviceStateData state) =>
     IndexDeviceAsync(
       new Device(
-        @operator,
-        centerId,
-        centerUserId,
-        ownerId,
-        ownerUserId,
         source,
         sourceDeviceId,
-        measurementIntervalInSeconds,
-        extractionStart,
-        extractionOffsetInSeconds,
-        extractionTimeoutInSeconds,
-        extractionRetries,
-        validationIntervalInSeconds,
-        new Device.KnownSourceDeviceData
+        new Device.SourceDeviceDataType
         {
           OwnerId = sourceDeviceData?.ownerId
         },
-        state));
-
+        new Device.OwnerDataType(
+          owner.@operator,
+          owner.centerId,
+          owner.centerUserId,
+          owner.ownerId,
+          owner.ownerUserId),
+        new Device.MeasurementDataType(
+          measurement.measurementIntervalInSeconds,
+          measurement.extractionStart,
+          measurement.extractionOffsetInSeconds,
+          measurement.extractionTimeoutInSeconds,
+          measurement.extractionRetries,
+          measurement.validationIntervalInSeconds),
+        new Device.StateDataType(
+          state.state)));
 
   public void LoadDevice(
-      string @operator,
-      string centerId,
-      string centerUserId,
-      string ownerId,
-      string ownerUserId,
       string source,
       string sourceDeviceId,
-      int measurementIntervalInSeconds,
-      DateTime extractionStart,
-      int extractionOffsetInSeconds,
-      int extractionTimeoutInSeconds,
-      int extractionRetries,
-      int validationIntervalInSeconds,
-      SourceDeviceData? sourceDeviceData = null,
-      string? state = null) =>
+      DeviceSourceDeviceData? sourceDeviceData,
+      DeviceOwnerData owner,
+      DeviceMeasurementData measurement,
+      DeviceStateData state) =>
     IndexDevice(
       new Device(
-        @operator,
-        centerId,
-        centerUserId,
-        ownerId,
-        ownerUserId,
         source,
         sourceDeviceId,
-        measurementIntervalInSeconds,
-        extractionStart,
-        extractionOffsetInSeconds,
-        extractionTimeoutInSeconds,
-        extractionRetries,
-        validationIntervalInSeconds,
-        new Device.KnownSourceDeviceData
+        new Device.SourceDeviceDataType
         {
           OwnerId = sourceDeviceData?.ownerId
         },
-        state));
+        new Device.OwnerDataType(
+          owner.@operator,
+          owner.centerId,
+          owner.centerUserId,
+          owner.ownerId,
+          owner.ownerUserId),
+        new Device.MeasurementDataType(
+          measurement.measurementIntervalInSeconds,
+          measurement.extractionStart,
+          measurement.extractionOffsetInSeconds,
+          measurement.extractionTimeoutInSeconds,
+          measurement.extractionRetries,
+          measurement.validationIntervalInSeconds),
+        new Device.StateDataType(
+          state.state)));
 }

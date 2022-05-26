@@ -10,18 +10,18 @@ public partial class Client : IClient
   ExtractSourceMeasurementsAwait(
       string source,
       Period? period = null) =>
-    Providers
-      .Find(provider => provider.Source == source)
-      .WhenNonNullableFinallyTask(provider =>
-        SearchDevicesBySourceAsync(source)
-          .Then(devices => devices
-            .Sources()
-            .Select(device => provider
-              .GetMeasurementsAwait(
-                device.ToProvisionDevice(),
-                period))
-            .Flatten()))
-      .ToAsyncEnumerable()
+    Tasks
+      .ToAsyncEnumerable(Providers
+        .Find(provider => provider.Source == source)
+        .WhenNonNullableFinallyTask(provider =>
+          SearchDevicesBySourceAsync(source)
+            .Then(devices => devices
+              .Sources()
+              .Select(device => provider
+                .GetMeasurementsAwait(
+                  device.ToProvisionDevice(),
+                  period))
+              .Flatten())))
       .Flatten();
 
   public Task<IEnumerable<IExtractionBucket<ExtractionMeasurement>>>
