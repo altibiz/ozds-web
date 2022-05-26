@@ -1,5 +1,6 @@
 using Xunit;
 using Nest;
+using Ozds.Util;
 
 namespace Ozds.Elasticsearch.Test;
 
@@ -42,6 +43,7 @@ public partial class ClientTest
     var logIds = logs.Select(d => new Id(d.Id));
 
     var indexResponse = await Client.IndexLoadLogsAsync(logs);
+    Logger.LogDebug(indexResponse.DebugInformation);
     // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
     // Assert.True(indexResponse.IsValid);
 
@@ -58,6 +60,8 @@ public partial class ClientTest
     }
 
     var deleteResponse = await Client.DeleteLogsAsync(logIds);
+    Logger.LogDebug(logIds.ToStrings().ToJson());
+    Logger.LogDebug(deleteResponse.DebugInformation);
     // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
     // Assert.True(deleteResponse.IsValid);
 

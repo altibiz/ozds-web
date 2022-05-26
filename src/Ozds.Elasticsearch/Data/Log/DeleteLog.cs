@@ -7,8 +7,13 @@ public partial interface IClient
   public Task<DeleteResponse> DeleteLoadLogAsync(Id id);
 
   public DeleteResponse DeleteLoadLog(Id id);
+
+  public Task<DeleteResponse> DeleteMissingDataLogAsync(Id id);
+
+  public DeleteResponse DeleteMissingDataLog(Id id);
 };
 
+// TODO: without the type things
 public sealed partial class Client : IClient
 {
   public Task<DeleteResponse> DeleteLoadLogAsync(Id id) =>

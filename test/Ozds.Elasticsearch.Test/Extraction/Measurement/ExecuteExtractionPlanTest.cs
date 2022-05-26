@@ -85,6 +85,19 @@ public partial class ClientTest
 
       var extractionOutcome = Client
         .ExecuteExtractionPlan(extractionPlan);
+      Logger.LogDebug(extractionOutcome.Items
+        .Select(item =>
+          new
+          {
+            Original = item.Original,
+            Next = item.Next,
+            Count = item.Bucket.Count(),
+            Interval = extractionOutcome.Device.MeasurementInterval,
+            CountInterval =
+              item.Bucket.Count() *
+              extractionOutcome.Device.MeasurementInterval
+          })
+        .ToJson());
       Assert.Equal(extractionOutcome.Device, device);
       Assert.Equal(
         extractionOutcome.Items.Select(item => item.Original),
@@ -210,7 +223,7 @@ public partial class ClientTest
         .FirstOrDefault(item => item.Original.Due == missingDataNextExtraction);
       Assert.NotEqual(default, missingDataItem);
       Assert.Equal(missingDataItem.Original.Period, missingDataPeriod);
-      Assert.Equal(0, missingDataItem.Original.Retries);
+      Assert.Equal(5, missingDataItem.Original.Retries);
       Assert.Equal(missingDataItem.Original.Timeout, device.ExtractionTimeout);
       Assert.Null(missingDataItem.Next);
 

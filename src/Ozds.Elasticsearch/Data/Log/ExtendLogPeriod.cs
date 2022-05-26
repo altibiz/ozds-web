@@ -46,10 +46,12 @@ internal class ExtendLogPeriodPartial
       };
   }
 
+  [Object(Name = "period")]
   public PeriodPartial Period { get; init; }
 
   internal class PeriodPartial
   {
+    [Date(Name = "to")]
     public DateTime To { get; init; }
   }
 }

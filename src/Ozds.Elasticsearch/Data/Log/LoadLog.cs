@@ -21,6 +21,7 @@ public class LoadLog
     Id = MakeId(Resource);
   }
 
+  [Ignore]
   public string Id { get; init; }
 
   [Keyword(Name = "resource")]

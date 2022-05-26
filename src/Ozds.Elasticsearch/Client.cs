@@ -219,36 +219,26 @@ public sealed partial class Client : IClientPrototype, IClient
   }
   #endregion // Indices
 
+  // NOTE: please don't touch this
   #region Index Names
   private string MeasurementIndexName
   {
-    get => s_measurementIndexDebugPrefix + IndexSuffix;
+    get => $"{EnvIndexPrefix}measurements{IndexSuffix}";
   }
 
   private string DeviceIndexName
   {
-    get => s_deviceIndexDebugPrefix + IndexSuffix;
+    get => $"{EnvIndexPrefix}devices{IndexSuffix}";
   }
 
   private string LogIndexName
   {
-    get => s_logIndexDebugPrefix + IndexSuffix;
+    get => $"{EnvIndexPrefix}log{IndexSuffix}";
   }
 
-#if DEBUG
-  private const string s_measurementIndexDebugPrefix =
-    "ozds.debug.measurements";
-  private const string s_deviceIndexDebugPrefix =
-    "ozds.debug.devices";
-  private const string s_logIndexDebugPrefix =
-    "ozds.debug.log";
-#else
-  private const string s_measurementIndexDebugPrefix =
-    "ozds.measurements";
-  private const string s_deviceIndexDebugPrefix =
-    "ozds.devices";
-  private const string s_logIndexDebugPrefix =
-    "ozds.log";
-#endif
+  private string EnvIndexPrefix
+  {
+    get => Env.IsDevelopment() ? "ozds.debug." : "ozds.";
+  }
   #endregion // Index Names
 }

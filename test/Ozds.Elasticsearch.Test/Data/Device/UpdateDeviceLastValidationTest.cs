@@ -57,6 +57,7 @@ public partial class ClientTest
 
     var updateResponse = await Client
       .UpdateDeviceLastValidationAsync(deviceId, newDeviceLastValidation);
+    Logger.LogDebug(updateResponse.DebugInformation);
     Assert.True(updateResponse.IsValid);
 
     var updatedDeviceId = updateResponse.Id;

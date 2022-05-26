@@ -164,14 +164,15 @@ public partial class ClientTest
           From = missingDataNow.AddMinutes(-25),
           To = missingDataNow.AddMinutes(-20)
         };
-      Client.IndexMissingDataLog(
+      var indexMissingDataResponse = Client.IndexMissingDataLog(
         new MissingDataLog(
           device.Id,
           missingDataPeriod,
           missingDataNextExtraction,
           5,
           false,
-          "Unknown error"));
+          "Test error"));
+      Logger.LogDebug(indexMissingDataResponse.DebugInformation);
 
       // NOTE: preparation for searching
       Thread.Sleep(1000);
@@ -190,11 +191,12 @@ public partial class ClientTest
         };
 
       var extractionPlanItems = extractionPlan.Items.ToList();
+      Logger.LogDebug(extractionPlan.ToJson());
       var missingDataItem = extractionPlanItems
         .FirstOrDefault(item => item.Due == missingDataNextExtraction);
       Assert.NotEqual(default, missingDataItem);
       Assert.Equal(missingDataItem.Period, missingDataPeriod);
-      Assert.Equal(0, missingDataItem.Retries);
+      Assert.Equal(5, missingDataItem.Retries);
       Assert.Equal(missingDataItem.Timeout, device.ExtractionTimeout);
 
       extractionPlanItems.Remove(missingDataItem);

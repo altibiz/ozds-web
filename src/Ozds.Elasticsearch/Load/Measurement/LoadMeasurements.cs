@@ -15,13 +15,24 @@ public partial class Client : IClient
           if (item.Next.HasValue)
           {
             await IndexMissingDataLogAsync(item.Next.Value
-              .ToMissingDataLog(extraction.Device));
+              .ToMissingDataLogFor(extraction.Device));
           }
-          else if (item.Original.ShouldValidate)
+          else
           {
-            await UpdateDeviceLastValidationAsync(
-              extraction.Device.Id,
-              item.Original.Due);
+            if (!string.IsNullOrWhiteSpace(item.Original.Error))
+            {
+              await DeleteMissingDataLogAsync(
+                MissingDataLog.MakeId(
+                  extraction.Device.Id,
+                  item.Original.Period));
+            }
+
+            if (item.Original.ShouldValidate)
+            {
+              await UpdateDeviceLastValidationAsync(
+                extraction.Device.Id,
+                item.Original.Due);
+            }
           }
 
           await IndexMeasurementsAsync(item.Bucket
@@ -42,13 +53,24 @@ public partial class Client : IClient
           if (item.Next.HasValue)
           {
             await IndexMissingDataLogAsync(item.Next.Value
-              .ToMissingDataLog(extraction.Device));
+              .ToMissingDataLogFor(extraction.Device));
           }
-          else if (item.Original.ShouldValidate)
+          else
           {
-            await UpdateDeviceLastValidationAsync(
-              extraction.Device.Id,
-              item.Original.Due);
+            if (!string.IsNullOrWhiteSpace(item.Original.Error))
+            {
+              await DeleteMissingDataLogAsync(
+                MissingDataLog.MakeId(
+                  extraction.Device.Id,
+                  item.Original.Period));
+            }
+
+            if (item.Original.ShouldValidate)
+            {
+              await UpdateDeviceLastValidationAsync(
+                extraction.Device.Id,
+                item.Original.Due);
+            }
           }
 
           await IndexMeasurementsAsync(item.Bucket
@@ -69,13 +91,24 @@ public partial class Client : IClient
           if (item.Next.HasValue)
           {
             IndexMissingDataLog(item.Next.Value
-              .ToMissingDataLog(extraction.Device));
+              .ToMissingDataLogFor(extraction.Device));
           }
-          else if (item.Original.ShouldValidate)
+          else
           {
-            UpdateDeviceLastValidation(
-              extraction.Device.Id,
-              item.Original.Due);
+            if (!string.IsNullOrWhiteSpace(item.Original.Error))
+            {
+              DeleteMissingDataLog(
+                MissingDataLog.MakeId(
+                  extraction.Device.Id,
+                  item.Original.Period));
+            }
+
+            if (item.Original.ShouldValidate)
+            {
+              UpdateDeviceLastValidation(
+                extraction.Device.Id,
+                item.Original.Due);
+            }
           }
 
           IndexMeasurements(item.Bucket

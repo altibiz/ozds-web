@@ -46,10 +46,12 @@ internal class DeviceLastValidationUpdatePartial
       };
   }
 
+  [Object(Name = "measurement")]
   public MeasurementDataPartial MeasurementData { get; }
 
   internal class MeasurementDataPartial
   {
+    [Date(Name = "lastValidation")]
     public DateTime LastValidation { get; init; } = default!;
   }
 }

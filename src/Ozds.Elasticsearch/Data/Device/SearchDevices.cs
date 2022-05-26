@@ -24,11 +24,11 @@ public sealed partial class Client : IClient
     all
     ? this.Elasticsearch.Search<Device>(s => s
         .Query(q => q
-          .Term(t => t.Source, source))
+          .Term(t => t.Source.Suffix("keyword"), source))
         .Index(DeviceIndexName))
     : this.Elasticsearch.Search<Device>(s => s
         .Query(q => q
-          .Term(t => t.Source, source) && q
+          .Term(t => t.Source.Suffix("keyword"), source) && q
           .Term(t => t.StateData.State, DeviceState.Active))
         .Index(DeviceIndexName));
 
@@ -39,11 +39,11 @@ public sealed partial class Client : IClient
     all
     ? this.Elasticsearch.SearchAsync<Device>(s => s
         .Query(q => q
-          .Term(t => t.Source, source))
+          .Term(t => t.Source.Suffix("keyword"), source))
         .Index(DeviceIndexName))
     : this.Elasticsearch.SearchAsync<Device>(s => s
         .Query(q => q
-          .Term(t => t.Source, source) && q
+          .Term(t => t.Source.Suffix("keyword"), source) && q
           .Term(t => t.StateData.State, DeviceState.Active))
         .Index(DeviceIndexName));
 }

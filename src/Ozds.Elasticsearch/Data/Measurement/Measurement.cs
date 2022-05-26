@@ -28,6 +28,7 @@ public class Measurement
     Id = MakeId(DeviceData.DeviceId, Timestamp);
   }
 
+  [Ignore]
   public string Id { get; init; }
 
   [Date(Name = "timestamp")]

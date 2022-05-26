@@ -44,6 +44,7 @@ public class Device
     Id = MakeId(Source, SourceDeviceId);
   }
 
+  [Ignore]
   public string Id { get; init; }
 
   [Keyword(Name = "source")]
@@ -84,7 +85,7 @@ public class Device
     {
       Operator = @operator;
       CenterId = centerId;
-      CenterUserId = CenterUserId;
+      CenterUserId = centerUserId;
       OwnerId = ownerId;
       OwnerUserId = ownerUserId;
     }

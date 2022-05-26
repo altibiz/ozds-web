@@ -15,7 +15,7 @@ public readonly record struct ExtractionPlanItem
 
 public static class ExtractionPlanItemExtensions
 {
-  public static MissingDataLog ToMissingDataLog(
+  public static MissingDataLog ToMissingDataLogFor(
       this ExtractionPlanItem item,
       ExtractionDevice device) =>
     new(

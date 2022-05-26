@@ -14,7 +14,8 @@ public class MissingDataLog
       Period period) =>
     Strings.CombineIntoStringId(
       "R", resource,
-      "TS", period.To.ToUtcIsoString());
+      "F", period.From.ToUtcIsoString(),
+      "T", period.To.ToUtcIsoString());
 
   public MissingDataLog(
       string resource,
@@ -33,6 +34,7 @@ public class MissingDataLog
     Id = MakeId(Resource, Period);
   }
 
+  [Ignore]
   public string Id { get; init; }
 
   [Keyword(Name = "resource")]

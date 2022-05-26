@@ -52,11 +52,15 @@ internal class DeviceStateUpdatePartial
       };
   }
 
+  [Object(Name = "state")]
   public StateDataPartial StateData { get; }
 
   internal class StateDataPartial
   {
+    [Keyword(Name = "state")]
     public string State { get; init; } = default!;
+
+    [Date(Name = "dateRemoved")]
     public DateTime? DateRemoved { get; init; } = default!;
   }
 }
