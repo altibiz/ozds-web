@@ -16,24 +16,30 @@ public static partial class AlterCatalogueItem
         .Creatable()
         .Listable()
         .Securable()
-        .WithPart("TitlePart", part => part
-          .WithPosition("1")
-          .WithDisplayName("Naziv")
-          .WithSettings(
-            new TitlePartSettings
-            {
-              RenderTitle = true,
-              Options = TitlePartOptions.GeneratedHidden,
-              Pattern =
-              @"
+        .WithPart("TitlePart",
+          part => part
+            .WithPosition("1")
+            .WithDisplayName("Naziv")
+            .WithSettings(
+              new TitlePartSettings
+              {
+                RenderTitle = true,
+                Options = TitlePartOptions.GeneratedHidden,
+                Pattern =
+                @"
 {%- assign catalogue = ContentItem.Content.Catalogue  -%}
 {%- assign tariffElement = catalogue.TariffElement | taxonomy_terms | first -%}
 {{- tariffElement -}}
-              "
-            }))
-        .WithPart("CatalogueItem", "CatalogueItem", part => part
-          .WithPosition("2")
-          .WithDisplayName("Stavka cjenika")));
+                "
+              }))
+        .WithPart("CatalogueItem",
+          part => part
+            .WithPosition("2")
+            .WithDisplayName("Stavka cjenika")
+            .WithSettings(
+              new FieldEditorSettings
+              {
+              })));
 
   public static void AlterCatalogueItemPart(
       this IContentDefinitionManager content) =>

@@ -36,11 +36,19 @@ public static partial class AlterConsumer
         .WithPart("Consumer",
           part => part
             .WithPosition("2")
-            .WithDisplayName("Korisnik ZDS-a"))
+            .WithDisplayName("Korisnik ZDS-a")
+            .WithSettings(
+              new FieldEditorSettings
+              {
+              }))
         .WithPart("Person",
           part => part
             .WithDisplayName("Osoba")
-            .WithPosition("3"))
+            .WithPosition("3")
+            .WithSettings(
+              new FieldEditorSettings
+              {
+              }))
         .WithPart("SecondarySites", "ListPart",
           part => part
             .WithDisplayName("Sekundarna obračunska mjerna mjesta")

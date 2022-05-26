@@ -35,11 +35,19 @@ public static partial class AlterSecondarySite
               }))
         .WithPart("SecondarySite",
           part => part
-            .WithPosition("2"))
+            .WithPosition("2")
+            .WithSettings(
+              new FieldEditorSettings
+              {
+              }))
         .WithPart("Site",
           part => part
             .WithDisplayName("Obračunsko mjerno mjesto")
-            .WithPosition("3"))
+            .WithPosition("3")
+            .WithSettings(
+              new FieldEditorSettings
+              {
+              }))
         .WithPart("Catalogue", "BagPart",
           part => part
             .WithDisplayName("Cjenik")

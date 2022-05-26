@@ -17,9 +17,9 @@
     .ThrowWhenNull();
   var deviceId = secondarySite.Site.Value.DeviceId.Text;
 
-  var measurements = Provider
-    .GetDashboardMeasurements(source, deviceId)
-    .ToList();
+  var measurements = await Provider
+    .GetDashboardMeasurementsAsync(source, deviceId)
+    .Then(measurements => measurements.ToList());
 }
 
 @if (measurements.EmptyEnumerable())

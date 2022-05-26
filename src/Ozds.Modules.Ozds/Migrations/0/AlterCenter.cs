@@ -33,15 +33,27 @@ public static partial class AlterCenter
           part => part
             .WithPosition("2")
             .WithDisplayName("Centar"))
+            .WithSettings(
+              new FieldEditorSettings
+              {
+              })
         .WithPart("Operator", "Person",
           part => part
             .WithDisplayName("Operator ZDS-a")
-            .WithPosition("3"))
+            .WithPosition("3")
+            .WithSettings(
+              new FieldEditorSettings
+              {
+              }))
         // NOTE: Owner clashes with the internal Orchard Core Owner field
         .WithPart("CenterOwner", "Person",
           part => part
             .WithDisplayName("Vlasnik")
-            .WithPosition("4"))
+            .WithPosition("4")
+            .WithSettings(
+              new FieldEditorSettings
+              {
+              }))
         .WithPart("Catalogues", "BagPart",
           part => part
             .WithDisplayName("Cjenik")

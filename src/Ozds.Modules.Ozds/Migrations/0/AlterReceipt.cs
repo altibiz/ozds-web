@@ -36,7 +36,11 @@ public static partial class AlterReceipt
               }))
         .WithPart("Receipt",
           part => part
-            .WithPosition("2")));
+            .WithPosition("2"))
+            .WithSettings(
+              new FieldEditorSettings
+              {
+              }));
 
   public static void AlterReceiptPart(
       this IContentDefinitionManager content) =>

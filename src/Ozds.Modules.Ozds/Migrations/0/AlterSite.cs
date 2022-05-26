@@ -51,7 +51,7 @@ public static partial class AlterSite
         .WithField("MeasurementIntervalInSeconds",
           field => field
             .OfType("NumericField")
-            .WithDisplayName("Interval mjeranja")
+            .WithDisplayName("Interval mjeranja (s)")
             .WithDescription(
               "Količina vremena između uzastopnih mjerenja uređaja")
             .WithPosition("4")
@@ -75,7 +75,7 @@ public static partial class AlterSite
         .WithField("ExtractionOffsetInSeconds",
           field => field
             .OfType("NumericField")
-            .WithDisplayName("Odstupanje preuzimanja mjerenja")
+            .WithDisplayName("Odstupanje preuzimanja mjerenja (s)")
             .WithDescription(
               "Količina vremena u sekundama koja je potrebna " +
               "da bi mjerenja uređaja bila raspoloživa na izvoru")
@@ -89,7 +89,7 @@ public static partial class AlterSite
         .WithField("ExtractionTimeoutInSeconds",
           field => field
             .OfType("NumericField")
-            .WithDisplayName("Odstupanje preuzimanja nedostataka")
+            .WithDisplayName("Odstupanje preuzimanja nedostataka (s)")
             .WithDescription(
               "Količina vremena u sekundama nakon koje će nastupiti " +
               "ponovni pokušaj preuzimanja mjerenja u iznimnim situacijama")
@@ -117,7 +117,7 @@ public static partial class AlterSite
         .WithField("ValidationIntervalInSeconds",
           field => field
             .OfType("NumericField")
-            .WithDisplayName("Interval validacije mjerenja")
+            .WithDisplayName("Interval validacije mjerenja (s)")
             .WithDescription(
               "Mjerenja će se provjeravati za validnost svaki interval")
             .WithPosition("9")
