@@ -40,7 +40,7 @@ public static partial class Data
         "TestOwnerId",
         "TestOwnerUserId"),
       new Device.MeasurementDataType(
-        ((int)TimeSpan.FromSeconds(10).TotalSeconds),
+        Elasticsearch.MeasurementFaker.Client.MeasurementIntervalInSeconds,
          DateTime.UtcNow.AddMinutes(-10),
         ((int)TimeSpan.FromSeconds(30).TotalSeconds),
         ((int)TimeSpan.FromMinutes(1).TotalSeconds),
