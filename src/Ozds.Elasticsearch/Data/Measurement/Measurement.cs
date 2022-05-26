@@ -157,9 +157,9 @@ public class Measurement : ICloneable, IEquatable<Measurement>
 
   public object Clone() => CloneMeasurement();
 
-  public Measurement CloneMeasurement() =>
+  public Measurement CloneMeasurement(DateTime? timestamp = null) =>
     new Measurement(
-      timestamp: Timestamp,
+      timestamp: timestamp ?? this.Timestamp,
       device:
         new Measurement.DeviceDataType(
           source: DeviceData.Source.CloneString(),

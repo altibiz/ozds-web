@@ -8,8 +8,8 @@ public static partial class Data
     new Measurement(
       DateTime.UtcNow,
       new Measurement.DeviceDataType(
-        "MyEnergyCommunity",
-        "M9EQCU59",
+        MyEnergyCommunityDevice.Source,
+        MyEnergyCommunityDevice.Id,
         "HelbOzds",
         "TestCenterId",
         "TestCenterUserId",
@@ -59,13 +59,13 @@ public static partial class Data
     new Measurement(
       DateTime.UtcNow,
       new Measurement.DeviceDataType(
+        FakeDevice.Source,
+        FakeDevice.Id,
         "HelbOzds",
         "TestCenterId",
         "TestCenterUserId",
         "TestOwnerId",
-        "TestOwnerUserId",
-        Ozds.Elasticsearch.MeasurementFaker.Client.FakeSource,
-        Ozds.Elasticsearch.MeasurementFaker.Client.FakeDeviceId),
+        "TestOwnerUserId"),
       new Measurement.MeasurementDataType
       {
         energyIn = 2803.013M,
@@ -79,10 +79,15 @@ public static partial class Data
     yield return
       new object[]
       {
-        new Measurement[]
-        {
-          FakeMeasurement
-        }
+        FakeDevice,
+        Enumerable
+          .Range(0, 20)
+          .Select(index =>
+            FakeMeasurement
+              .CloneMeasurement(
+                FakeMeasurement.Timestamp +
+                TimeSpan.FromDays(index)))
+          .ToArray()
       };
   }
 
@@ -91,6 +96,7 @@ public static partial class Data
     yield return
       new object[]
       {
+        FakeDevice,
         FakeMeasurement
       };
   }
@@ -100,30 +106,58 @@ public partial class ClientTest
 {
   [Theory]
   [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
-  public async Task SetupMeasurementsAsync(IEnumerable<Measurement> measurements)
+  public async Task SetupMeasurementsAsync(
+      Device device,
+      IEnumerable<Measurement> measurements)
   {
-    foreach (var measurement in measurements)
-    {
-      await SetupMeasurementAsync(measurement);
-    }
+    await SetupDeviceAsync(device);
+
+    var measurementIds =
+      measurements.Select(measurement => measurement.Id);
+
+    var measurementIndexResponse =
+      await Client.IndexMeasurementsAsync(measurements);
+    Logger.LogDebug(measurementIndexResponse.DebugInformation);
+    // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
+    // Assert.True(measurementIndexResponse.IsValid);
+
+    var indexedMeasurementIds =
+      measurementIndexResponse.Items.Ids().ToStrings();
+    Assert.Equal(measurementIds, indexedMeasurementIds);
   }
 
   [Theory]
   [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
-  public void SetupMeasurements(IEnumerable<Measurement> measurements)
+  public void SetupMeasurements(
+      Device device,
+      IEnumerable<Measurement> measurements)
   {
-    foreach (var measurement in measurements)
-    {
-      SetupMeasurement(measurement);
-    }
+    SetupDevice(device);
+
+    var measurementIds =
+      measurements.Select(measurement => measurement.Id);
+
+    var measurementIndexResponse = Client.IndexMeasurements(measurements);
+    Logger.LogDebug(measurementIndexResponse.DebugInformation);
+    // NOTE: https://github.com/elastic/elasticsearch-net/issues/6154
+    // Assert.True(measurementIndexResponse.IsValid);
+
+    var indexedMeasurementIds =
+      measurementIndexResponse.Items.Ids().ToStrings();
+    Assert.Equal(measurementIds, indexedMeasurementIds);
   }
 
   [Theory]
   [MemberData(nameof(Data.GenerateMeasurement), MemberType = typeof(Data))]
-  public async Task SetupMeasurementAsync(Measurement measurement)
+  public async Task SetupMeasurementAsync(
+      Device device,
+      Measurement measurement)
   {
+    await SetupDeviceAsync(device);
+
     var measurementIndexResponse =
       await Client.IndexMeasurementAsync(measurement);
+    Logger.LogDebug(measurementIndexResponse.DebugInformation);
     Assert.True(measurementIndexResponse.IsValid);
 
     var indexedMeasurementId = measurementIndexResponse.Id;
@@ -139,9 +173,14 @@ public partial class ClientTest
 
   [Theory]
   [MemberData(nameof(Data.GenerateMeasurement), MemberType = typeof(Data))]
-  public void SetupMeasurement(Measurement measurement)
+  public void SetupMeasurement(
+      Device device,
+      Measurement measurement)
   {
+    SetupDevice(device);
+
     var measurementIndexResponse = Client.IndexMeasurement(measurement);
+    Logger.LogDebug(measurementIndexResponse.DebugInformation);
     Assert.True(measurementIndexResponse.IsValid);
 
     var indexedMeasurementId = measurementIndexResponse.Id;
