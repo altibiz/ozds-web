@@ -1,3 +1,5 @@
+using Xunit;
+
 namespace Ozds.Elasticsearch.Test;
 
 public static partial class Data
@@ -71,4 +73,84 @@ public static partial class Data
         energyIn_T2 = 2083.848M,
         powerIn = 0M,
       });
-};
+
+  public static IEnumerable<object[]> GenerateMeasurements()
+  {
+    yield return
+      new object[]
+      {
+        new Measurement[]
+        {
+          FakeMeasurement
+        }
+      };
+  }
+
+  public static IEnumerable<object[]> GenerateMeasurement()
+  {
+    yield return
+      new object[]
+      {
+        FakeMeasurement
+      };
+  }
+}
+
+public partial class ClientTest
+{
+  [Theory]
+  [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
+  public async Task SetupMeasurementsAsync(IEnumerable<Measurement> measurements)
+  {
+    foreach (var measurement in measurements)
+    {
+      await SetupMeasurementAsync(measurement);
+    }
+  }
+
+  [Theory]
+  [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
+  public void SetupMeasurements(IEnumerable<Measurement> measurements)
+  {
+    foreach (var measurement in measurements)
+    {
+      SetupMeasurement(measurement);
+    }
+  }
+
+  [Theory]
+  [MemberData(nameof(Data.GenerateMeasurement), MemberType = typeof(Data))]
+  public async Task SetupMeasurementAsync(Measurement measurement)
+  {
+    var measurementIndexResponse =
+      await Client.IndexMeasurementAsync(measurement);
+    Assert.True(measurementIndexResponse.IsValid);
+
+    var indexedMeasurementId = measurementIndexResponse.Id;
+    Assert.Equal(measurement.Id, indexedMeasurementId);
+
+    var measurementGetResponse =
+      await Client.GetMeasurementAsync(measurement.Id);
+    Assert.True(measurementGetResponse.IsValid);
+
+    var gotMeasurement = measurementGetResponse.Source;
+    Assert.Equal(measurement, gotMeasurement);
+  }
+
+  [Theory]
+  [MemberData(nameof(Data.GenerateMeasurement), MemberType = typeof(Data))]
+  public void SetupMeasurement(Measurement measurement)
+  {
+    var measurementIndexResponse = Client.IndexMeasurement(measurement);
+    Assert.True(measurementIndexResponse.IsValid);
+
+    var indexedMeasurementId = measurementIndexResponse.Id;
+    Assert.Equal(measurement.Id, indexedMeasurementId);
+
+    var measurementGetResponse = Client.GetMeasurement(measurement.Id);
+    Assert.True(measurementGetResponse.IsValid);
+
+    var gotMeasurement = measurementGetResponse.Source;
+    Assert.Equal(measurement, gotMeasurement);
+  }
+}

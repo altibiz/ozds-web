@@ -4,7 +4,7 @@ using Ozds.Util;
 namespace Ozds.Elasticsearch;
 
 [ElasticsearchType(RelationName = "measurement", IdProperty = nameof(Id))]
-public class Measurement
+public class Measurement : ICloneable, IEquatable<Measurement>
 {
   public static string MakeId(
       string deviceId,
@@ -154,4 +154,66 @@ public class Measurement
     device = DeviceData;
     measurement = MeasurementData;
   }
+
+  public object Clone() => CloneMeasurement();
+
+  public Measurement CloneMeasurement() =>
+    new Measurement(
+      timestamp: Timestamp,
+      device:
+        new Measurement.DeviceDataType(
+          source: DeviceData.Source.CloneString(),
+          deviceId: DeviceData.DeviceId.CloneString(),
+          @operator: DeviceData.Operator.CloneString(),
+          centerId: DeviceData.CenterId.CloneString(),
+          centerUserId: DeviceData.CenterUserId?.CloneString(),
+          ownerId: DeviceData.OwnerId.CloneString(),
+          ownerUserId: DeviceData.OwnerUserId?.CloneString()),
+      measurement:
+        new Measurement.MeasurementDataType
+        {
+          energyIn = MeasurementData.energyIn,
+          energyIn_T1 = MeasurementData.energyIn_T1,
+          energyIn_T2 = MeasurementData.energyIn_T2,
+          powerIn = MeasurementData.powerIn,
+
+          dongleId = MeasurementData.dongleId,
+          meterIdent = MeasurementData.meterIdent,
+          meterSerial = MeasurementData.meterSerial,
+          localTime = MeasurementData.localTime,
+          localDate = MeasurementData.localDate,
+          tariff = MeasurementData.tariff,
+          limiter = MeasurementData.limiter,
+          fuseSupervisionL1 = MeasurementData.fuseSupervisionL1,
+          disconnectControl = MeasurementData.disconnectControl,
+          numLongPwrFailures = MeasurementData.numLongPwrFailures,
+          numPwrFailures = MeasurementData.numPwrFailures,
+          numVoltageSagsL1 = MeasurementData.numVoltageSagsL1,
+          numVoltageSagsL2 = MeasurementData.numVoltageSagsL2,
+          numVoltageSagsL3 = MeasurementData.numVoltageSagsL3,
+          numVoltageSwellsL1 = MeasurementData.numVoltageSwellsL1,
+          numVoltageSwellsL2 = MeasurementData.numVoltageSwellsL2,
+          numVoltageSwellsL3 = MeasurementData.numVoltageSwellsL3,
+          currentL1 = MeasurementData.currentL1,
+          currentL2 = MeasurementData.currentL2,
+          currentL3 = MeasurementData.currentL3,
+          energyOut = MeasurementData.energyOut,
+          energyOut_T1 = MeasurementData.energyOut_T1,
+          energyOut_T2 = MeasurementData.energyOut_T2,
+          powerInL1 = MeasurementData.powerInL1,
+          powerInL2 = MeasurementData.powerInL2,
+          powerInL3 = MeasurementData.powerInL3,
+          powerOut = MeasurementData.powerOut,
+          powerOutL1 = MeasurementData.powerOutL1,
+          powerOutL2 = MeasurementData.powerOutL2,
+          powerOutL3 = MeasurementData.powerOutL3,
+          voltageL1 = MeasurementData.voltageL1,
+          voltageL2 = MeasurementData.voltageL2,
+          voltageL3 = MeasurementData.voltageL3,
+        },
+      geo:
+        Geo.WhenNonNullable(geo =>
+          new Nest.GeoCoordinate(
+            (double)geo.Latitude,
+            (double)geo.Longitude)));
 };

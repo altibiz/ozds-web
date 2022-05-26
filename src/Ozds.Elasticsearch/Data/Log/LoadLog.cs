@@ -4,7 +4,7 @@ using Ozds.Util;
 namespace Ozds.Elasticsearch;
 
 [ElasticsearchType(RelationName = "LoadLog", IdProperty = nameof(Id))]
-public class LoadLog
+public class LoadLog : IEquatable<LoadLog>, ICloneable
 {
   // NOTE: only for elasticsearch purposes
   public const string Type = "load";
@@ -53,4 +53,16 @@ public class LoadLog
     resource = Resource;
     period = Period;
   }
+
+  public object Clone() => CloneLoadLog();
+
+  public LoadLog CloneLoadLog() =>
+    new LoadLog(
+      resource: Resource.CloneString(),
+      period:
+        new Period
+        {
+          From = Period.From,
+          To = Period.To
+        });
 };

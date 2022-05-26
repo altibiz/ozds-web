@@ -13,7 +13,7 @@ public class DeviceState
 }
 
 [ElasticsearchType(RelationName = "device", IdProperty = nameof(Id))]
-public class Device
+public class Device : IEquatable<Device>, ICloneable
 {
   public static string MakeId(
       string source,
@@ -181,4 +181,44 @@ public class Device
 
   public override int GetHashCode() =>
     Id.GetHashCode();
+
+  public object Clone() => CloneDevice();
+
+  public Device CloneDevice() =>
+    new Device(
+      source: Source.CloneString(),
+      sourceDeviceId: SourceDeviceId.CloneString(),
+      sourceDeviceData:
+        new SourceDeviceDataType
+        {
+          OwnerId = SourceDeviceData.OwnerId?.CloneString()
+        },
+      owner:
+        new OwnerDataType(
+          @operator: OwnerData.Operator.CloneString(),
+          centerId: OwnerData.CenterId.CloneString(),
+          centerUserId: OwnerData.CenterUserId?.CloneString(),
+          ownerId: OwnerData.OwnerId.CloneString(),
+          ownerUserId: OwnerData.OwnerUserId?.CloneString()),
+      measurement:
+        new MeasurementDataType(
+          measurementIntervalInSeconds:
+            MeasurementData.MeasurementIntervalInSeconds,
+          extractionStart:
+            MeasurementData.ExtractionStart,
+          extractionOffsetInSeconds:
+            MeasurementData.ExtractionOffsetInSeconds,
+          extractionRetries:
+            MeasurementData.ExtractionRetries,
+          extractionTimeoutInSeconds:
+            MeasurementData.ExtractionTimeoutInSeconds,
+          validationIntervalInSeconds:
+            MeasurementData.ValidationIntervalInSeconds,
+          lastValidation:
+            MeasurementData.LastValidation),
+      state:
+        new StateDataType(
+          state: StateData.State.CloneString(),
+          dateAdded: StateData.DateAdded,
+          dateRemoved: StateData.DateRemoved));
 }

@@ -4,7 +4,7 @@ using Ozds.Util;
 namespace Ozds.Elasticsearch;
 
 [ElasticsearchType(RelationName = "MissingDataLog", IdProperty = nameof(Id))]
-public class MissingDataLog
+public class MissingDataLog : IEquatable<MissingDataLog>, ICloneable
 {
   // NOTE: only for elasticsearch purposes
   public const string Type = "missingData";
@@ -78,4 +78,20 @@ public class MissingDataLog
     resource = Resource;
     period = Period;
   }
+
+  public object Clone() => CloneMissingDataLog();
+
+  public MissingDataLog CloneMissingDataLog() =>
+    new MissingDataLog(
+      resource: Resource.CloneString(),
+      period:
+        new Period
+        {
+          From = Period.From,
+          To = Period.To
+        },
+      nextExtraction: NextExtraction,
+      retries: Retries,
+      shouldValidate: ShouldValidate,
+      error: Error.CloneString());
 };
