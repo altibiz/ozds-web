@@ -20,7 +20,7 @@
   var now = DateTime.UtcNow;
   var measurements = await Provider
     .GetDashboardMeasurementsAsync(
-      Device.MakeId(source, deviceId),
+      deviceId,
       new Period
       {
         From = now.AddMinutes(-5),
