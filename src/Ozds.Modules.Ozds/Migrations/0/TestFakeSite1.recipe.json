@@ -51,6 +51,20 @@
             "Status": {
               "TaxonomyContentItemId": "47p9e5rkms3m012qv3z2t26jcg",
               "TermContentItemIds": ["444t1z24wt35hy89d6g3r5yan4"]
+            },
+            "Data": {
+              "OperatorName": "HELB",
+              "OperatorOib": "12312312312",
+
+              "CenterContentItemId": "4gk51z3vfezzgtk8kqr231y9x7",
+              "CenterUserId": "TestOwnerId",
+              "CenterOwnerName": "Ivo Ivić",
+              "CenterOwnerOib": "12312312313",
+
+              "OwnerContentItemId": "4svpv279hbbc4vpgxey41nys46",
+              "OwnerUserId": "TestMemberId",
+              "OwnerName": "Dubravica",
+              "OwnerOib": "12312312314"
             }
           },
           "ContainedPart": {

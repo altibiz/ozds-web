@@ -6,9 +6,9 @@ public readonly record struct DeviceSourceDeviceData
 public readonly record struct DeviceOwnerData
 (string @operator,
  string centerId,
- string centerUserId,
+ string? centerUserId,
  string ownerId,
- string ownerUserId);
+ string? ownerUserId);
 
 public readonly record struct DeviceMeasurementData
 (int measurementIntervalInSeconds,

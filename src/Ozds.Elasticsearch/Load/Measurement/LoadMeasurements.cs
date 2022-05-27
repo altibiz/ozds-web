@@ -2,6 +2,7 @@ using Ozds.Util;
 
 namespace Ozds.Elasticsearch;
 
+// TODO: recovery when elasticsearch connection fails
 public partial interface IClient : IMeasurementLoader { }
 
 public partial class Client : IClient
@@ -12,6 +13,13 @@ public partial class Client : IClient
       .ForEachValueTask(
         async item =>
         {
+          // NOTE: indexing first, so in case something happens right here, we
+          // NOTE: don't have faulty logs
+          // NOTE: duplication of measurements is not a problem ever and even
+          // NOTE: if it was ids of measurements prevent that
+          await IndexMeasurementsAsync(item.Bucket
+            .Select(LoadMeasurementExtensions.ToMeasurement));
+
           if (item.Next.HasValue)
           {
             await IndexMissingDataLogAsync(item.Next.Value
@@ -22,9 +30,8 @@ public partial class Client : IClient
               extraction.Device.MeasurementInterval.TotalSeconds;
             Logger.LogDebug(
               $"Missing data for {extraction.Device.Id} " +
-              $"at {extraction.Period}\n" +
-              $"Expected at least {minimumMeasurements} measurements but " +
-              $"got {item.Bucket.Count()}");
+              $"at {extraction.Period} " +
+              $"because {item.Next.Value.Error}");
           }
           else
           {
@@ -51,9 +58,6 @@ public partial class Client : IClient
                 $"at {extraction.Period}");
             }
           }
-
-          await IndexMeasurementsAsync(item.Bucket
-            .Select(LoadMeasurementExtensions.ToMeasurement));
         })
       .Run()
       .ThenTask(() =>
@@ -70,10 +74,22 @@ public partial class Client : IClient
       .ForEachValueTask(
         async item =>
         {
+          // NOTE: indexing first, so in case something happens right here, we
+          // NOTE: don't have faulty logs
+          // NOTE: duplication of measurements is not a problem ever and even
+          // NOTE: if it was ids of measurements prevent that
+          await IndexMeasurementsAsync(item.Bucket
+            .Select(LoadMeasurementExtensions.ToMeasurement));
+
           if (item.Next.HasValue)
           {
             await IndexMissingDataLogAsync(item.Next.Value
               .ToMissingDataLogFor(extraction.Device));
+
+            Logger.LogDebug(
+              $"Missing data for {extraction.Device.Id} " +
+              $"at {extraction.Period} " +
+              $"because {item.Next.Value.Error}");
           }
           else
           {
@@ -83,6 +99,10 @@ public partial class Client : IClient
                 MissingDataLog.MakeId(
                   extraction.Device.Id,
                   item.Original.Period));
+
+              Logger.LogDebug(
+                $"Recovered missing data for {extraction.Device.Id} " +
+                $"at {extraction.Period}");
             }
 
             if (item.Original.ShouldValidate)
@@ -90,11 +110,12 @@ public partial class Client : IClient
               await UpdateDeviceLastValidationAsync(
                 extraction.Device.Id,
                 item.Original.Due);
+
+              Logger.LogDebug(
+                $"Validated data for {extraction.Device.Id} " +
+                $"at {extraction.Period}");
             }
           }
-
-          await IndexMeasurementsAsync(item.Bucket
-            .Select(LoadMeasurementExtensions.ToMeasurement));
         })
       .Run()
       .ThenTask(() =>
@@ -110,10 +131,22 @@ public partial class Client : IClient
       .ForEach(
         item =>
         {
+          // NOTE: indexing first, so in case something happens right here, we
+          // NOTE: don't have faulty logs
+          // NOTE: duplication of measurements is not a problem ever and even
+          // NOTE: if it was ids of measurements prevent that
+          IndexMeasurements(item.Bucket
+            .Select(LoadMeasurementExtensions.ToMeasurement));
+
           if (item.Next.HasValue)
           {
             IndexMissingDataLog(item.Next.Value
               .ToMissingDataLogFor(extraction.Device));
+
+            Logger.LogDebug(
+              $"Missing data for {extraction.Device.Id} " +
+              $"at {extraction.Period} " +
+              $"because {item.Next.Value.Error}");
           }
           else
           {
@@ -123,6 +156,10 @@ public partial class Client : IClient
                 MissingDataLog.MakeId(
                   extraction.Device.Id,
                   item.Original.Period));
+
+              Logger.LogDebug(
+                $"Recovered missing data for {extraction.Device.Id} " +
+                $"at {extraction.Period}");
             }
 
             if (item.Original.ShouldValidate)
@@ -130,11 +167,12 @@ public partial class Client : IClient
               UpdateDeviceLastValidation(
                 extraction.Device.Id,
                 item.Original.Due);
+
+              Logger.LogDebug(
+                $"Validated data for {extraction.Device.Id} " +
+                $"at {extraction.Period}");
             }
           }
-
-          IndexMeasurements(item.Bucket
-            .Select(LoadMeasurementExtensions.ToMeasurement));
         })
       .Run()
       .Return(() =>

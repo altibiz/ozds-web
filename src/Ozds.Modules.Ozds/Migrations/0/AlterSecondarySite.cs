@@ -24,7 +24,7 @@ public static partial class AlterSecondarySite
               new TitlePartSettings
               {
                 RenderTitle = true,
-                Options = TitlePartOptions.GeneratedHidden,
+                Options = TitlePartOptions.Editable,
                 Pattern =
                 @"
 {%- assign site = ContentItem.Content.Site -%}

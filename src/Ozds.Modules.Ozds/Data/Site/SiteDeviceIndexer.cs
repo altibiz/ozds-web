@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement.Handlers;
 using OrchardCore.ContentManagement;
 using Ozds.Elasticsearch;
@@ -30,23 +29,7 @@ public class SiteDeviceIndexer : ContentHandlerBase
     if (site is null ||
         (Env.IsProduction() &&
          SiteMeasurementSource.IsFake(
-           site.Site.Value.Source.TermContentItemIds.First())))
-    {
-      return;
-    }
-
-    var content = Services
-      .GetRequiredService<IContentManager>()
-      .ThrowWhenNull();
-
-    var consumer = await content
-      .GetContentAsync<ConsumerType>(site.ContainedPart.Value
-        .ThrowWhenNull().ListContentItemId)
-      .ThrowWhenNull();
-    var center = await content
-      .GetContentAsync<CenterType>(consumer.ContainedPart.Value
-        .ThrowWhenNull().ListContentItemId)
-      .ThrowWhenNull();
+           site.Site.Value.Source.TermContentItemIds.First()))) return;
 
     await Loader
       .LoadDeviceAsync(
@@ -64,11 +47,11 @@ public class SiteDeviceIndexer : ContentHandlerBase
           },
         owner:
           new DeviceOwnerData(
-            @operator: center.Operator.Value.Name.Text,
-            centerId: center.ContentItem.ContentItemId,
-            centerUserId: center.Center.Value.User.UserIds.First(),
-            ownerId: consumer.ContentItem.ContentItemId,
-            ownerUserId: consumer.Consumer.Value.User.UserIds.First()),
+            @operator: site.Site.Value.Data.OperatorName,
+            centerId: site.Site.Value.Data.CenterContentItemId,
+            centerUserId: site.Site.Value.Data.CenterUserId,
+            ownerId: site.Site.Value.Data.OwnerContentItemId,
+            ownerUserId: site.Site.Value.Data.OwnerUserId),
         measurement:
           new DeviceMeasurementData(
             measurementIntervalInSeconds:
@@ -93,17 +76,14 @@ public class SiteDeviceIndexer : ContentHandlerBase
   public SiteDeviceIndexer(
       IHostEnvironment env,
       ILogger<SiteDeviceIndexer> logger,
-      IDeviceLoader loader,
-      IServiceProvider services)
+      IDeviceLoader loader)
   {
     Env = env;
     Logger = logger;
     Loader = loader;
-    Services = services;
   }
 
   IHostEnvironment Env { get; }
   ILogger Logger { get; }
   IDeviceLoader Loader { get; }
-  IServiceProvider Services { get; }
 }

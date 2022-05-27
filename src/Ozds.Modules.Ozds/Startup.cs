@@ -19,6 +19,7 @@ using OrchardCore.Taxonomies.Fields;
 using OrchardCore.Taxonomies.Drivers;
 using OrchardCore.Recipes;
 using OrchardCore.Data;
+using OrchardCore.Modules;
 using Ozds.Modules.Ozds.PartFieldSettings;
 using Ozds.Modules.Ozds.Base;
 using Ozds.Elasticsearch;
@@ -29,7 +30,11 @@ public class Startup : OrchardCore.Modules.StartupBase
 {
   public override void ConfigureServices(IServiceCollection services)
   {
-    services.AddScoped<INavigationProvider, AdminMenu>();
+    // NOTE: preventing from being instantiated twice
+    services.AddScoped<TenantActivatedEvent>();
+    services.AddScoped<IModularTenantEvents, TenantActivatedEvent>(
+        s => s.GetRequiredService<TenantActivatedEvent>());
+    services.AddSingleton<ITenantActivationChecker, TenantActivationChecker>();
     services.AddScoped<IDataMigration, Migrations>();
 
     services.AddContentPart<Tag>();
@@ -38,6 +43,7 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddContentPart<Person>();
     services.AddScoped<IScopedIndexProvider, PersonIndexProvider>();
     services.AddContentPart<Site>();
+    services.AddScoped<IContentHandler, SiteEnricher>();
     services.AddScoped<IContentHandler, SiteDeviceIndexer>();
     services.AddContentPart<SecondarySite>();
     services.AddScoped<IScopedIndexProvider, SiteIndexProvider>();
@@ -55,6 +61,8 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddRecipeExecutionStep<FastImport>();
     services.AddScoped<Importer>();
     services.AddSingleton<IBackgroundTask, FastImportBackgroundTask>();
+
+    services.AddScoped<INavigationProvider, AdminMenu>();
 
     services.AddScoped<IContentDisplayDriver, ContainedPartDisplayDriver>();
 

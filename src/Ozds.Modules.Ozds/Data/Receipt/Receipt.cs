@@ -15,21 +15,25 @@ public class ReceiptType : ContentTypeBase
 
 public class Receipt : ContentPart
 {
-  public ContentPickerField Site { get; set; } = new();
-  public DateField Date { get; set; } = new();
-  public DateField DateFrom { get; set; } = new();
-  public DateField DateTo { get; set; } = new();
+  public ContentPickerField Site { get; init; } = new();
+  public DateField Date { get; init; } = new();
+  public DateField DateFrom { get; init; } = new();
+  public DateField DateTo { get; init; } = new();
+
   public ReceiptData Data { get; set; } = default;
 }
 
 public readonly record struct ReceiptData
 {
-  public readonly string CenterUserId { get; init; }
   public readonly PersonData Operator { get; init; }
+
   public readonly PersonData CenterOwner { get; init; }
+  public readonly string? CenterUserId { get; init; }
   public readonly string CenterTitle { get; init; }
-  public readonly string ConsumerUserId { get; init; }
+
   public readonly PersonData Consumer { get; init; }
+  public readonly string? ConsumerUserId { get; init; }
+
   public readonly CalculationData Calculation { get; init; }
   public readonly ReceiptItemData[] Items { get; init; }
   public readonly decimal UsageFee { get; init; }
@@ -40,11 +44,11 @@ public readonly record struct ReceiptData
 
   public static Task<ReceiptData> Create(
       TaxonomyCacheService taxonomy,
-      string centerUserId,
+      string? centerUserId,
       PersonData @operator,
       PersonData centerOwner,
       string centerTitle,
-      string consumerUderId,
+      string? consumerUderId,
       PersonData consumer,
       CalculationData calculation,
       decimal taxRate) =>

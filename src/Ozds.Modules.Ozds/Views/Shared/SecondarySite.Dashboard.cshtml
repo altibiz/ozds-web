@@ -23,7 +23,7 @@
       deviceId,
       new Period
       {
-        From = now.AddMinutes(-5),
+        From = now.AddMinutes(-30),
         To = now
       })
     .Then(measurements => measurements.ToList());

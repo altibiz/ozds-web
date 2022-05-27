@@ -9,120 +9,121 @@ using Ozds.Elasticsearch;
 
 namespace Ozds.Modules.Ozds;
 
-// TODO: fix sites without consumer
 public class ReceiptCreator : ContentHandlerBase
 {
   public override async Task UpdatedAsync(UpdateContentContext context)
   {
-    var content =
-      Services
+    if (!Tenant.WasTenantActivated()) return;
+
+    var receipt = context.ContentItem.As<Receipt>();
+    if (receipt is null) return;
+
+    using (var scope = Services.CreateAsyncScope())
+    {
+      var content = scope.ServiceProvider
         .GetRequiredService<IContentManager>()
         .ThrowWhenNull();
 
-    var receipt =
-      context.ContentItem
-        .As<Receipt>();
-    if (receipt is null) return;
+      var siteContentItemId =
+        receipt.Site.ContentItemIds
+          .FirstOrDefault()
+          .ThrowWhenNull();
+      var date = receipt.Date.Value.ThrowWhenNull();
+      var dateFrom = receipt.DateFrom.Value.ThrowWhenNull();
+      var dateTo = receipt.DateTo.Value.ThrowWhenNull();
 
-    var siteContentItemId =
-      receipt.Site.ContentItemIds
-        .FirstOrDefault()
+      var secondarySite = await content
+        .GetContentAsync<SecondarySiteType>(
+          siteContentItemId)
         .ThrowWhenNull();
-    var date = receipt.Date.Value.ThrowWhenNull();
-    var dateFrom = receipt.DateFrom.Value.ThrowWhenNull();
-    var dateTo = receipt.DateTo.Value.ThrowWhenNull();
-
-    var secondarySite = await content
-      .GetContentAsync<SecondarySiteType>(
-        siteContentItemId)
-      .ThrowWhenNull();
-    var consumer = await content
-      .GetContentAsync<ConsumerType>(
-        secondarySite.ContainedPart.Value
-        .ThrowWhenNull().ListContentItemId)
-      .ThrowWhenNull();
-    var center = await content
-      .GetContentAsync<CenterType>(
-        consumer.ContainedPart.Value
-        .ThrowWhenNull().ListContentItemId)
-      .ThrowWhenNull();
-
-    var catalogue = secondarySite.Catalogue.Value.ContentItems
-      .First()
-      .As<Catalogue>()
-      .ThrowWhenNull();
-    var operatorCatalogue = await content
-      .GetContentAsync<CatalogueType>(
-        OperatorCatalogue.ContentItemIdFor(
-          catalogue.TariffModel.TermContentItemIds.First())
-          .ThrowWhenNull())
-      .ThrowWhenNull()
-      .Then(catalogue => catalogue.Catalogue.Value);
-
-    var source =
-      SiteMeasurementSource.GetElasticsearchSource(
-          secondarySite.Site.Value.Source.TermContentItemIds
-          .First())
+      var consumer = await content
+        .GetContentAsync<ConsumerType>(
+          secondarySite.ContainedPart.Value
+          .ThrowWhenNull().ListContentItemId)
         .ThrowWhenNull();
-    var deviceId = secondarySite.Site.Value.DeviceId.Text;
-    var (beginEnergyMeasurement, endEnergyMeasurement) =
-      await Measurements
-        .GetEnergyMeasurementsAsync(
-          source,
-          deviceId,
-          new()
-          {
-            From = dateFrom,
-            To = dateTo
-          });
-    var powerMeasurement =
-      await Measurements
-        .GetPowerMeasurementAsync(
-          source,
-          deviceId,
-          new()
-          {
-            From = dateFrom,
-            To = dateTo
-          });
+      var center = await content
+        .GetContentAsync<CenterType>(
+          consumer.ContainedPart.Value
+          .ThrowWhenNull().ListContentItemId)
+        .ThrowWhenNull();
 
-    receipt.Data =
-      await ReceiptData.Create(
-        Taxonomy,
-        center.Center.Value.User.UserIds[0],
-        center.Operator.Value.Data.Value,
-        center.CenterOwner.Value.Data.Value,
-        center.Title.Value.Title,
-        consumer.Consumer.Value.User.UserIds[0],
-        consumer.Person.Value.Data.Value,
-        await CalculationData.Create(
+      var catalogue = secondarySite.Catalogue.Value.ContentItems
+        .First()
+        .As<Catalogue>()
+        .ThrowWhenNull();
+      var operatorCatalogue = await content
+        .GetContentAsync<CatalogueType>(
+          OperatorCatalogue.ContentItemIdFor(
+            catalogue.TariffModel.TermContentItemIds.First())
+            .ThrowWhenNull())
+        .ThrowWhenNull()
+        .Then(catalogue => catalogue.Catalogue.Value);
+
+      var source =
+        SiteMeasurementSource.GetElasticsearchSource(
+            secondarySite.Site.Value.Source.TermContentItemIds
+            .First())
+          .ThrowWhenNull();
+      var deviceId = secondarySite.Site.Value.DeviceId.Text;
+      var (beginEnergyMeasurement, endEnergyMeasurement) =
+        await Measurements
+          .GetEnergyMeasurementsAsync(
+            source,
+            deviceId,
+            new()
+            {
+              From = dateFrom,
+              To = dateTo
+            });
+      var powerMeasurement =
+        await Measurements
+          .GetPowerMeasurementAsync(
+            source,
+            deviceId,
+            new()
+            {
+              From = dateFrom,
+              To = dateTo
+            });
+
+      receipt.Data =
+        await ReceiptData.Create(
           Taxonomy,
-          date,
-          beginEnergyMeasurement.Timestamp,
-          endEnergyMeasurement.Timestamp,
-          secondarySite.ContentItem.ContentItemId,
-          secondarySite.Title.Value.Title,
-          catalogue.Data.Value,
-          operatorCatalogue.Data.Value,
-          beginEnergyMeasurement.Energy,
-          endEnergyMeasurement.Energy,
-          beginEnergyMeasurement.HighCostEnergy,
-          endEnergyMeasurement.HighCostEnergy,
-          beginEnergyMeasurement.LowCostEnergy,
-          endEnergyMeasurement.LowCostEnergy,
-          powerMeasurement.Power,
-          Pricing.RenewableEnergyFeePrice,
-          Pricing.BusinessUsageFeePrice),
-        Pricing.TaxRate);
+          center.Center.Value.User.UserIds.FirstOrDefault(),
+          center.Operator.Value.Data.Value,
+          center.CenterOwner.Value.Data.Value,
+          center.Title.Value.Title,
+          consumer.Consumer.Value.User.UserIds.FirstOrDefault(),
+          consumer.Person.Value.Data.Value,
+          await CalculationData.Create(
+            Taxonomy,
+            date,
+            beginEnergyMeasurement.Timestamp,
+            endEnergyMeasurement.Timestamp,
+            secondarySite.ContentItem.ContentItemId,
+            secondarySite.Title.Value.Title,
+            catalogue.Data.Value,
+            operatorCatalogue.Data.Value,
+            beginEnergyMeasurement.Energy,
+            endEnergyMeasurement.Energy,
+            beginEnergyMeasurement.HighCostEnergy,
+            endEnergyMeasurement.HighCostEnergy,
+            beginEnergyMeasurement.LowCostEnergy,
+            endEnergyMeasurement.LowCostEnergy,
+            powerMeasurement.Power,
+            Pricing.RenewableEnergyFeePrice,
+            Pricing.BusinessUsageFeePrice),
+          Pricing.TaxRate);
 
-    context.ContentItem.Apply(receipt);
+      context.ContentItem.Apply(receipt);
 
-    Logger.LogDebug(
-      string.Format(
-        "Enriched receipt for {0} from {1} to {2}",
-        secondarySite.Site.Value.DeviceId.Text,
-        dateFrom.ToShortDateString(),
-        dateTo.ToShortDateString()));
+      Logger.LogDebug(
+        string.Format(
+          "Enriched receipt for {0} from {1} to {2}",
+          secondarySite.Site.Value.DeviceId.Text,
+          dateFrom.ToShortDateString(),
+          dateTo.ToShortDateString()));
+    }
   }
 
   public override Task InitializedAsync(InitializingContentContext context) =>
@@ -176,27 +177,27 @@ public class ReceiptCreator : ContentHandlerBase
   public ReceiptCreator(
     IHostEnvironment env,
     ILogger<ReceiptCreator> logger,
-    TaxonomyCacheService taxonomy,
-    YesSql.ISession session,
     IServiceProvider services,
     IHttpContextAccessor httpContextAccessor,
-    IReceiptMeasurementProvider measurements)
+    TaxonomyCacheService taxonomy,
+    IReceiptMeasurementProvider measurements,
+    ITenantActivationChecker tenant)
   {
     Taxonomy = taxonomy;
     Services = services;
-    Session = session;
     Measurements = measurements;
     HttpContextAccessor = httpContextAccessor;
     Env = env;
     Logger = logger;
+    Tenant = tenant;
   }
 
   private IHostEnvironment Env { get; }
   private ILogger Logger { get; }
   private TaxonomyCacheService Taxonomy { get; }
   private IServiceProvider Services { get; }
-  private YesSql.ISession Session { get; }
   private IReceiptMeasurementProvider Measurements { get; }
   private IHttpContextAccessor HttpContextAccessor { get; }
   private HttpContext? HttpContext { get => HttpContextAccessor.HttpContext; }
+  private ITenantActivationChecker Tenant { get; }
 }

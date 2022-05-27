@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Concurrent;
 using OrchardCore.ContentManagement;
 using YesSql;
-using Ozds.Util;
 
 namespace Ozds.Modules.Ozds;
 
@@ -24,10 +23,9 @@ public class MeasurementImporterCache
 
   private async Task<DeviceData> FetchData(string deviceId)
   {
-    using (var scope = Services.CreateScope())
+    using (var scope = Services.CreateAsyncScope())
     {
       var session = scope.ServiceProvider.GetRequiredService<ISession>();
-      var content = scope.ServiceProvider.GetRequiredService<IContentManager>();
 
       var siteItem = await session
         .Query<ContentItem>()
@@ -38,32 +36,14 @@ public class MeasurementImporterCache
       var site = siteItem.AsContent<SecondarySiteType>();
       if (site is null) return default;
 
-      var siteOwnerContentItemId =
-        site.ContainedPart.Value?.ListContentItemId;
-      if (siteOwnerContentItemId is null) return default;
-
-      var owner = await content
-        .GetContentAsync<ConsumerType>(siteOwnerContentItemId);
-      if (owner is null) return default;
-
-      var centerContentItemId =
-        owner.ContainedPart.Value?.ListContentItemId;
-      if (centerContentItemId is null) return default;
-
-      var center = await content
-        .GetContentAsync<CenterType>(centerContentItemId);
-      if (center is null) return default;
-
       return
         new DeviceData
         {
-          Operator = center.Operator.Value.Name.Text,
-          CenterId = center.ContentItem.ContentItemId,
-          CenterUserId =
-            center.Center.Value.User.UserIds.FirstOrDefault(),
-          OwnerId = owner.ContentItem.ContentItemId,
-          OwnerUserId =
-            owner.Consumer.Value.User.UserIds.FirstOrDefault()
+          Operator = site.Site.Value.Data.OperatorName,
+          CenterId = site.Site.Value.Data.CenterContentItemId,
+          CenterUserId = site.Site.Value.Data.CenterUserId,
+          OwnerId = site.Site.Value.Data.OwnerContentItemId,
+          OwnerUserId = site.Site.Value.Data.OwnerUserId
         };
     }
   }
