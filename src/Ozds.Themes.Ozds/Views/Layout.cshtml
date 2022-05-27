@@ -54,7 +54,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="nav-menu">
-          @if (User.Identity?.IsAuthenticated ?? false)
+          @if (User.IsInRole("User"))
           {
             <partial name="MainMenu" />
           }

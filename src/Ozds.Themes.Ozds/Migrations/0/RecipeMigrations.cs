@@ -33,10 +33,6 @@ public static partial class RecipeMigrations
       .ExecuteLuceneFullTextSearch(migration);
 
 
-  public static IRecipeMigrator ExecuteFrontPage(
-      this IRecipeMigrator recipe, IDataMigration migration) =>
-    recipe.Execute("0/FrontPage.recipe.json", migration);
-
   public static IRecipeMigrator ExecuteMainMenu(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe.Execute("0/MainMenu.recipe.json", migration);
@@ -44,12 +40,10 @@ public static partial class RecipeMigrations
   public static IRecipeMigrator ExecuteContent(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe
-      .ExecuteFrontPage(migration)
       .ExecuteMainMenu(migration);
 
   public static IRecipeMigrator ExecuteTestContent(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe
-      .ExecuteFrontPage(migration)
       .ExecuteMainMenu(migration);
 }

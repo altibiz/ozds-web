@@ -5,13 +5,13 @@
       "data": [
         {
           "ContentItemId": "4wcrqennnqbrsx71cgnxjf6fwz",
-          "ContentItemVersionId": "4kv1k2xffnbew0eb6gvxmx02mp",
+          "ContentItemVersionId": "403dd2hzh3w5ms6etyn7s1m6md",
           "ContentType": "Menu",
           "DisplayText": "MainMenu",
           "Latest": true,
           "Published": true,
-          "ModifiedUtc": "2022-05-20T13:50:42.3451347Z",
-          "PublishedUtc": "2022-05-20T13:50:42.3494402Z",
+          "ModifiedUtc": "2022-05-27T11:08:43.647069Z",
+          "PublishedUtc": "2022-05-27T11:08:43.6726556Z",
           "CreatedUtc": "2022-05-20T13:16:22.8434591Z",
           "Owner": "41a3ant9asfs82a0xpbz3kp1nn",
           "Author": "admin",
@@ -25,13 +25,13 @@
           "MenuItemsListPart": {
             "MenuItems": [
               {
-                "ContentItemId": "43kg43sdnsg70s0gxdjmk8hcn8",
+                "ContentItemId": "404d7crme7nzd7d23trmpy5wx2",
                 "ContentItemVersionId": null,
                 "ContentType": "LinkMenuItem",
-                "DisplayText": "ZDS",
+                "DisplayText": "OZDS",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2022-05-20T13:49:04.0895222Z",
+                "ModifiedUtc": "2022-05-27T11:08:38.9935645Z",
                 "PublishedUtc": null,
                 "CreatedUtc": null,
                 "Owner": null,
@@ -127,13 +127,13 @@
         },
         {
           "ContentItemId": "4e2specds1pk85yzbbdhhpvfxh",
-          "ContentItemVersionId": "4x400v38xj77mzermax3wgk644",
+          "ContentItemVersionId": "4m8rygffwyxn72rteaws8r6kmr",
           "ContentType": "Menu",
           "DisplayText": "MainMenu",
           "Latest": true,
           "Published": true,
-          "ModifiedUtc": "2022-05-20T13:48:42.5122178Z",
-          "PublishedUtc": "2022-05-20T13:48:42.5419304Z",
+          "ModifiedUtc": "2022-05-27T11:09:09.4510521Z",
+          "PublishedUtc": "2022-05-27T11:09:09.4571574Z",
           "CreatedUtc": "2022-05-20T13:14:58.1692414Z",
           "Owner": "41a3ant9asfs82a0xpbz3kp1nn",
           "Author": "admin",
@@ -147,13 +147,13 @@
           "MenuItemsListPart": {
             "MenuItems": [
               {
-                "ContentItemId": "43kg43sdnsg70s0gxdjmk8hcn8",
+                "ContentItemId": "4j3b1xr1m7kmxx9pdjyavfjam0",
                 "ContentItemVersionId": null,
                 "ContentType": "LinkMenuItem",
-                "DisplayText": "ZDS",
+                "DisplayText": "Operator",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2022-05-20T13:49:04.0895222Z",
+                "ModifiedUtc": "2022-05-27T11:09:03.0053927Z",
                 "PublishedUtc": null,
                 "CreatedUtc": null,
                 "Owner": null,

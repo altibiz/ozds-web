@@ -1,4 +1,32 @@
+@using YesSql
+@using OrchardCore.ContentFields.Indexing.SQL
+@using OrchardCore.ContentManagement
+@using Ozds.Util
+
+@inject ISession Session
+
 @{
   var user = await OrchardUser;
   var userId = user.UserId;
+
+  var userItemGroupsByContentType = await Session
+    .Query<ContentItem, UserPickerFieldIndex>(
+      index => index.SelectedUserId == userId)
+    .ListAsync()
+    .Then(items => items
+      .GroupBy(item => item.ContentType));
+}
+
+@foreach(var contentTypeGroup in userItemGroupsByContentType)
+{
+  <h1>
+    <span>
+      @T[$"{contentTypeGroup.Key}s"]
+    </span>
+  </h1>
+
+  @foreach(var contentItem in contentTypeGroup)
+  {
+    @await Orchard.DisplayAsync(contentItem, "SummaryAdmin")
+  }
 }

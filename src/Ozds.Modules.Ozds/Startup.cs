@@ -152,6 +152,7 @@ public class Startup : OrchardCore.Modules.StartupBase
       IEndpointRouteBuilder routes,
       IServiceProvider services)
   {
+    routes.MapDynamicPageRoute<LocalizedRouteTransformer>("");
     routes.MapDynamicPageRoute<LocalizedRouteTransformer>("korisnici");
     routes.MapDynamicPageRoute<LocalizedRouteTransformer>("korisnici/{page?}");
   }

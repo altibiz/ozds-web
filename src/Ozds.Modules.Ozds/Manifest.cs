@@ -6,7 +6,6 @@ using OrchardCore.Modules.Manifest;
     Dependencies =
       new string[]
       {
-        "OrchardCore.HomeRoute",
         "OrchardCore.Admin",
         "OrchardCore.Diagnostics",
         "OrchardCore.DynamicCache",

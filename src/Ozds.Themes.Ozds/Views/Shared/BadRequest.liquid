@@ -3,20 +3,20 @@
       class="masthead"
       style="background-image: url('{{
         "~/Ozds.Themes.Ozds/assets/img/center.png"
-        | href }}')">
+        | href
+        }}')">
     <div class="container position-relative">
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           <div class="page-heading">
-            <h1>
-              {{ "Not found" | t }}
-            </h1>
+            <h1>{{ "Bad request" | t }}</h1>
           </div>
         </div>
       </div>
     </div>
   </header>
 {% endzone %}
+
 <p>
-  {{ "Page not found" | t }}
+  {{ "Your browser sent a request that this server could not understand." | t }}
 </p>
