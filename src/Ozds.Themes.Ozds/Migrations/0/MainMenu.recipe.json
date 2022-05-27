@@ -37,8 +37,26 @@
                 "Owner": null,
                 "Author": "admin",
                 "LinkMenuItemPart": {
+                  "Name": "OZDS",
+                  "Url": "~/Ozds.Modules.Ozds"
+                },
+                "LinkMenuItem": {}
+              },
+              {
+                "ContentItemId": "43kg43sdnsg70s0gxdjmk8hcn8",
+                "ContentItemVersionId": null,
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "ZDS",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-20T13:49:04.0895222Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "LinkMenuItemPart": {
                   "Name": "ZDS",
-                  "Url": "~/Ozds.Modules.Ozds/Display/Center"
+                  "Url": "~/Ozds.Modules.Ozds/Center"
                 },
                 "LinkMenuItem": {}
               },
@@ -56,7 +74,7 @@
                 "Author": "admin",
                 "LinkMenuItemPart": {
                   "Name": "Korisnik ZDS-a",
-                  "Url": "~/Ozds.Modules.Ozds/Display/Consumer"
+                  "Url": "~/Ozds.Modules.Ozds/Consumer"
                 },
                 "LinkMenuItem": {}
               },
@@ -74,7 +92,7 @@
                 "Author": "admin",
                 "LinkMenuItemPart": {
                   "Name": "OMM",
-                  "Url": "~/Ozds.Modules.Ozds/Display/Site"
+                  "Url": "~/Ozds.Modules.Ozds/Site"
                 },
                 "LinkMenuItem": {}
               },
@@ -92,7 +110,7 @@
                 "Author": "admin",
                 "LinkMenuItemPart": {
                   "Name": "Račun",
-                  "Url": "~/Ozds.Modules.Ozds/Display/Receipt"
+                  "Url": "~/Ozds.Modules.Ozds/Receipt"
                 },
                 "LinkMenuItem": {}
               }
@@ -129,6 +147,24 @@
           "MenuItemsListPart": {
             "MenuItems": [
               {
+                "ContentItemId": "43kg43sdnsg70s0gxdjmk8hcn8",
+                "ContentItemVersionId": null,
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "ZDS",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-20T13:49:04.0895222Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "LinkMenuItemPart": {
+                  "Name": "Operator",
+                  "Url": "~/Ozds.Modules.Ozds"
+                },
+                "LinkMenuItem": {}
+              },
+              {
                 "ContentItemId": "4kweynzfwcan13ykj9yhybyec8",
                 "ContentItemVersionId": null,
                 "ContentType": "LinkMenuItem",
@@ -142,7 +178,7 @@
                 "Author": "admin",
                 "LinkMenuItemPart": {
                   "Name": "Center",
-                  "Url": "~/Ozds.Modules.Ozds/Display/Center"
+                  "Url": "~/Ozds.Modules.Ozds/Center"
                 },
                 "LinkMenuItem": {}
               },
@@ -160,7 +196,7 @@
                 "Author": "admin",
                 "LinkMenuItemPart": {
                   "Name": "Consumer",
-                  "Url": "~/Ozds.Modules.Ozds/Display/Consumer"
+                  "Url": "~/Ozds.Modules.Ozds/Consumer"
                 },
                 "LinkMenuItem": {}
               },
@@ -178,7 +214,7 @@
                 "Author": "admin",
                 "LinkMenuItemPart": {
                   "Name": "Site",
-                  "Url": "~/Ozds.Modules.Ozds/Display/Site"
+                  "Url": "~/Ozds.Modules.Ozds/Site"
                 },
                 "LinkMenuItem": {}
               },
@@ -196,7 +232,7 @@
                 "Author": "admin",
                 "LinkMenuItemPart": {
                   "Name": "Receipt",
-                  "Url": "~/Ozds.Modules.Ozds/Display/Receipt"
+                  "Url": "~/Ozds.Modules.Ozds/Receipt"
                 },
                 "LinkMenuItem": {}
               }

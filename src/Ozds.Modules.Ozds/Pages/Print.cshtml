@@ -1,4 +1,4 @@
-﻿@page "{contentType}/{contentItemId}"
+﻿@page "{contentItemId}"
 
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Configuration
@@ -12,7 +12,6 @@
 @{
   ViewLayout = "Layout.Print";
 
-  var contentType = Request.RouteValues.GetNonNullable("contentType");
   var contentItemId = Request.RouteValues.GetNonNullable("contentItemId");
   var contentItem = await Orchard.GetContentItemByIdAsync(contentItemId);
   var headerText = T["Print"].Value;

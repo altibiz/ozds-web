@@ -1,21 +1,17 @@
-@using OrchardCore.ContentManagement
 @using Ozds.Modules.Ozds
 @using Ozds.Elasticsearch
 @using Ozds.Util
 
 @inject IDashboardMeasurementProvider Provider
 
-@{
-  ContentItem contentItem = Model.ContentItem;
-  var secondarySite = contentItem
-    .AsContent<SecondarySiteType>()
-    .ThrowWhenNull();
+@model SecondarySiteType
 
+@{
   var source = SiteMeasurementSource
     .GetElasticsearchSource(
-        secondarySite.Site.Value.Source.TermContentItemIds[0])
+        Model.Site.Value.Source.TermContentItemIds[0])
     .ThrowWhenNull();
-  var deviceId = secondarySite.Site.Value.DeviceId.Text;
+  var deviceId = Model.Site.Value.DeviceId.Text;
 
   var now = DateTime.UtcNow;
   var measurements = await Provider

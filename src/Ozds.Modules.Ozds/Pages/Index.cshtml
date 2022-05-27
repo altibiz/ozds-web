@@ -1,3 +1,57 @@
-﻿@page
+﻿@page "{contentType?}/{contentItemId?}"
 
-<partial name="Header" model='@("Text")' />
+@using Microsoft.AspNetCore.Authorization
+@using Ozds.Modules.Ozds
+@using Ozds.Util
+
+@attribute [Authorize(Roles = "User")]
+
+@{
+  var contentType = Request.RouteValues.GetNullable("contentType");
+  var contentItemId = Request.RouteValues.GetNullable("contentItemId");
+  var userIdentity = User.Identity.ThrowWhenNull();
+  var headerText = T["Display"].Value;
+}
+
+@if (contentItemId is null)
+{
+  if (contentType is null)
+  {
+    headerText = string.Format(T["Welcome, {0}"].Value, userIdentity.Name);
+    <partial name="Header" model="@headerText" />
+    <partial name="User/User" />
+  }
+  else
+  {
+    headerText = T[contentType].Value;
+    <partial name="Header" model="@headerText" />
+    <partial name="User/User.@contentType" />
+  }
+
+  return;
+}
+
+@{
+  var contentItem = await Orchard
+    .GetContentItemByIdAsync(contentItemId)
+    .Nullable();
+}
+
+@if (contentItem is null)
+{
+  headerText = T["Error"].Value;
+
+  <partial name="Header" model="@headerText" />
+  <div>
+    <h3>
+      <p>
+        @T["Wrong identifier"]
+      </p>
+    </h3>
+  </div>
+
+  return;
+}
+
+<partial name="Header" model="@headerText" />
+@await Orchard.DisplayAsync(contentItem, "Display")

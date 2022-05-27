@@ -4,7 +4,7 @@
 @using Ozds.Modules.Ozds
 @using Ozds.Util
 
-@attribute [Authorize(Roles = "Administrator,User")]
+@attribute [Authorize(Roles = "User")]
 
 @{
   ViewLayout = "Layout.Dashboard";
@@ -16,8 +16,7 @@
 @if (contentItemId is null)
 {
   <partial name="Header" model="@headerText" />
-
-  // TODO: for users
+  <partial name="User/User.Dashboard" />
 
   return;
 }
