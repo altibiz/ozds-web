@@ -29,7 +29,7 @@ public static partial class AlterSecondarySite
                 @"
 {%- assign site = ContentItem.Content.Site -%}
 {%- assign source = site.Source | taxonomy_terms | first -%}
-{%- assign deviceId = site.DeviceId.Text -%}
+{%- assign deviceId = site.SourceDeviceId.Text -%}
 {{- source }} {{ deviceId -}}
                 ",
               }))

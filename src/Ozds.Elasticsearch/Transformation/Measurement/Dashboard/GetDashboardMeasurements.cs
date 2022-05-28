@@ -10,38 +10,50 @@ public sealed partial class Client : IClient
   GetDashboardMeasurementsAsync(
       string deviceId,
       Period? period = null) =>
-    DateTime.UtcNow
-      .WhenNullable(now =>
-        SearchMeasurementsByDeviceSortedAsync(
-          deviceId,
-          period)
-          .Then(response =>
-            response.Hits.Select(hit =>
-              new DashboardMeasurement
-              {
-                Timestamp = hit.Source.Timestamp,
-                Energy = hit.Source.MeasurementData.energyIn,
-                HighCostEnergy = hit.Source.MeasurementData.energyIn_T1,
-                LowCostEnergy = hit.Source.MeasurementData.energyIn_T2,
-                Power = hit.Source.MeasurementData.powerIn,
-              })));
+    SearchMeasurementsByDeviceSortedAsync(deviceId, period)
+      .Then(response => response
+        .Hits.Select(hit => hit.Source
+          .ToDashboardMeasurement()));
 
   public IEnumerable<DashboardMeasurement>
   GetDashboardMeasurements(
       string deviceId,
       Period? period = null) =>
-    DateTime.UtcNow
-      .WhenNullable(now =>
-        SearchMeasurementsByDeviceSorted(
-          deviceId,
-          period)
-        .Hits.Select(hit =>
-          new DashboardMeasurement
-          {
-            Timestamp = hit.Source.Timestamp,
-            Energy = hit.Source.MeasurementData.energyIn,
-            HighCostEnergy = hit.Source.MeasurementData.energyIn_T1,
-            LowCostEnergy = hit.Source.MeasurementData.energyIn_T2,
-            Power = hit.Source.MeasurementData.powerIn,
-          }));
+    SearchMeasurementsByDeviceSorted(deviceId, period)
+      .Hits.Select(hit => hit.Source
+        .ToDashboardMeasurement());
+
+  public Task<MultiDashboardMeasurements>
+  GetDashboardMeasurementsByOwnerAsync(
+      string ownerId,
+      Period? period = null) =>
+    SearchMeasurementsByOwnerSortedAsync(ownerId, period)
+      .Then(response => response
+        .Sources()
+        .ToMultiDashboardMeasurements());
+
+  public MultiDashboardMeasurements
+  GetDashboardMeasurementsByOwner(
+      string ownerId,
+      Period? period = null) =>
+    SearchMeasurementsByOwnerSorted(ownerId, period)
+      .Sources()
+      .ToMultiDashboardMeasurements();
+
+  public Task<MultiDashboardMeasurements>
+  GetDashboardMeasurementsByOwnerUserAsync(
+      string ownerUserId,
+      Period? period = null) =>
+    SearchMeasurementsByOwnerUserSortedAsync(ownerUserId, period)
+      .Then(response => response
+        .Sources()
+        .ToMultiDashboardMeasurements());
+
+  public MultiDashboardMeasurements
+  GetDashboardMeasurementsByOwnerUser(
+      string ownerUserId,
+      Period? period = null) =>
+    SearchMeasurementsByOwnerUserSorted(ownerUserId, period)
+      .Sources()
+      .ToMultiDashboardMeasurements();
 }

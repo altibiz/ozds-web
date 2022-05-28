@@ -1,0 +1,34 @@
+@using YesSql
+@using OrchardCore.ContentManagement
+@using Ozds.Modules.Ozds
+@using Ozds.Util
+@using Ozds.Elasticsearch
+
+@inject ISession Session
+@inject IDashboardMeasurementProvider Provider
+
+@{
+  var now = DateTime.UtcNow;
+
+  var user = await OrchardUser;
+  var userId = user.UserId;
+
+  var userSites = await Session
+    .Query<ContentItem, SiteIndex>(
+      index => index.OwnerUserId == userId)
+    .ListAsync()
+    .Then(siteItems => siteItems
+      .Select(siteItem => siteItem
+        .AsContent<SecondarySiteType>()));
+
+  var userMeasurements = await Provider
+    .GetDashboardMeasurementsByOwnerUserAsync(
+      userId,
+      new Period
+      {
+        From = now.AddMinutes(-5),
+        To = now
+      });
+}
+
+<partial name="MultiDashboard" model="@userMeasurements" />

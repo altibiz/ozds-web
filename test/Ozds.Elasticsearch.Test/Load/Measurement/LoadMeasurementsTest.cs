@@ -35,7 +35,7 @@ public partial class ClientTest
       var extractionOutcome = Client
         .ExecuteExtractionPlanAsync(extractionPlan);
       var enrichedExtraction = extractionOutcome
-        .Enrich(MeasurementExtensions.ToLoadMeasurement);
+        .Enrich(measurement => measurement.ToLoadMeasurement());
       await Client.LoadMeasurementsAsync(enrichedExtraction);
     }
   }
@@ -71,7 +71,7 @@ public partial class ClientTest
       var extractionOutcome = Client
         .ExecuteExtractionPlan(extractionPlan);
       var enrichedExtraction = extractionOutcome
-        .Enrich(MeasurementExtensions.ToLoadMeasurement);
+        .Enrich(measurement => measurement.ToLoadMeasurement());
       Client.LoadMeasurements(enrichedExtraction);
     }
   }
@@ -107,7 +107,7 @@ public partial class ClientTest
       var extractionOutcome = Client
         .ExecuteExtractionPlan(extractionPlan);
       var enrichedExtraction = extractionOutcome
-        .Enrich(MeasurementExtensions.ToLoadMeasurement);
+        .Enrich(measurement => measurement.ToLoadMeasurement());
       Client.LoadMeasurements(enrichedExtraction);
     }
   }
@@ -160,7 +160,7 @@ public partial class ClientTest
       var extractionOutcome = Client
         .ExecuteExtractionPlan(extractionPlan);
       var enrichedExtraction = extractionOutcome
-        .Enrich(MeasurementExtensions.ToLoadMeasurement);
+        .Enrich(measurement => measurement.ToLoadMeasurement());
       Client.LoadMeasurements(enrichedExtraction);
     }
   }

@@ -38,7 +38,7 @@ public class SiteDeviceIndexer : ContentHandlerBase
             .GetElasticsearchSource(site.Site.Value.Source)
             .ThrowWhenNull(),
         sourceDeviceId:
-          site.Site.Value.DeviceId.Text,
+          site.Site.Value.SourceDeviceId.Text,
         sourceDeviceData:
           new DeviceSourceDeviceData
           {

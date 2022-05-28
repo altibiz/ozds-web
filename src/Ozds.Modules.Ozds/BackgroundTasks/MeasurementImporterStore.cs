@@ -14,14 +14,14 @@ public class MeasurementImporterCache
    string OwnerId,
    string? OwnerUserId);
 
-  public Task<DeviceData> GetDeviceData(string deviceId) =>
+  public Task<DeviceData?> GetDeviceData(string deviceId) =>
     DeviceCache.GetOrAdd(
       deviceId,
       deviceId =>
-        new Lazy<Task<DeviceData>>(
+        new Lazy<Task<DeviceData?>>(
           () => FetchData(deviceId))).Value;
 
-  private async Task<DeviceData> FetchData(string deviceId)
+  private async Task<DeviceData?> FetchData(string deviceId)
   {
     using (var scope = Services.CreateAsyncScope())
     {
@@ -58,8 +58,8 @@ public class MeasurementImporterCache
 
   // NOTE: https://stackoverflow.com/a/54118193/4348107
   // TODO: test if this is good enough
-  private ConcurrentDictionary<string, Lazy<Task<DeviceData>>>
+  private ConcurrentDictionary<string, Lazy<Task<DeviceData?>>>
     DeviceCache
   { get; } =
-    new ConcurrentDictionary<string, Lazy<Task<DeviceData>>>();
+    new ConcurrentDictionary<string, Lazy<Task<DeviceData?>>>();
 }

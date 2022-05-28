@@ -1,0 +1,117 @@
+@using Ozds.Elasticsearch
+@using Ozds.Util
+
+@model MultiDashboardMeasurements
+
+@if (Model.DeviceIds.EmptyEnumerable() ||
+     Model.Measurements.EmptyEnumerable())
+{
+  <span>
+    @(T["No measurements available"].Value)
+  </span>
+  return;
+}
+
+<div class="d-flex flex-column">
+  <h5>
+    @(T["Energy"].Value)
+  </h5>
+  <div class="d-flex flex-column flex-lg-row w-100">
+    <div
+        class="
+          d-block justify-content-center
+          position-relative flex-grow-1">
+      <canvas id="energy" />
+    </div>
+  </div>
+
+  <h5>
+    @(T["Power"].Value)
+  </h5>
+  <div class="d-flex flex-column flex-lg-row w-100">
+    <div
+        class="
+          d-block justify-content-center
+          position-relative flex-grow-1">
+      <canvas id="power" />
+    </div>
+  </div>
+</div>
+
+
+<script asp-name="ozdstheme-chart" at="Foot"/>
+<script at="Foot">
+  window.onload = () => {
+    const modelString = '@Html.Raw(Json.Serialize(Model))';
+    const model = JSON.parse(modelString);
+    const deviceIds = model.deviceIds;
+    const measurements = model.measurements
+      .map(measurement =>
+        ({
+          ...measurement,
+          timestamp: new Date(measurement.timestamp)
+        }))
+      .sort((a, b) => a.timestamp - b.timestamp);
+    const lineLabels =
+      measurements.map(measurement =>
+        measurement.timestamp.toLocaleTimeString());
+    const rainbow = [
+      "Red",
+      "Green",
+      "Blue",
+      "Cyan",
+      "Yellow",
+      "Magenta"
+    ];
+
+    new Chart(
+      "energy",
+      {
+        type: "line",
+        data: {
+          labels: lineLabels,
+          datasets:
+            deviceIds
+              .map((deviceId, index) =>
+                ({
+                  label: `@T["Energy"].Value ${deviceId} (kW)`,
+                  data: measurements.map(deviceMeasurement =>
+                      deviceMeasurement.data[deviceId].energy),
+                  borderColor: rainbow[index % rainbow.length],
+                  backgroundColor: rainbow[index % rainbow.length],
+                })),
+        },
+        options: {
+          maintainAspectRatio: false,
+          plugins: {
+            legend: false
+          },
+        },
+      });
+
+    new Chart(
+      "power",
+      {
+        type: "line",
+        data: {
+          labels: lineLabels,
+          datasets:
+            deviceIds
+              .map((deviceId, index) =>
+                ({
+                  label: `@T["Power"].Value ${deviceId} (kW)`,
+                  data: measurements.map(deviceMeasurement =>
+                      deviceMeasurement.data[deviceId].power),
+                  borderColor: rainbow[index % rainbow.length],
+                  backgroundColor: rainbow[index % rainbow.length],
+                })),
+        },
+        options: {
+          maintainAspectRatio: false,
+          plugins: {
+            legend: false
+          },
+        },
+      });
+  }
+</script>

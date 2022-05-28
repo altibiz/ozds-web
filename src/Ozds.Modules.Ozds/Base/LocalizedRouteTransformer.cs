@@ -19,15 +19,14 @@ public class LocalizedRouteTransformer : DynamicRouteValueTransformer
       {
         "page",
         values
-          .WriteTitledJson("yes")
           .WhenNonNullable(
             values => values
               .GetOrDefault("page")
               .WhenFinally(
                 page => !page.In("index", "Index", "/", "/index", "/Index"),
                 page => $"/{page}",
-                "/Display"),
-            "/Display")
+                "/Overview"),
+            "/Overview")
       }
     }.ToValueTask();
 }

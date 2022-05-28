@@ -26,7 +26,7 @@ public static partial class AlterSite
                 Required = true,
                 Unique = true,
               }))
-        .WithField("DeviceId",
+        .WithField("SourceDeviceId",
           field => field
             .OfType("TextField")
             .WithDisplayName("Identifikator uređaja")

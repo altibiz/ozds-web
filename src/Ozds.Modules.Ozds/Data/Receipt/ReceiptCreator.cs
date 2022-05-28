@@ -64,7 +64,7 @@ public class ReceiptCreator : ContentHandlerBase
             secondarySite.Site.Value.Source.TermContentItemIds
             .First())
           .ThrowWhenNull();
-      var deviceId = secondarySite.Site.Value.DeviceId.Text;
+      var deviceId = secondarySite.Site.Value.SourceDeviceId.Text;
       var (beginEnergyMeasurement, endEnergyMeasurement) =
         await Measurements
           .GetEnergyMeasurementsAsync(
@@ -120,7 +120,7 @@ public class ReceiptCreator : ContentHandlerBase
       Logger.LogDebug(
         string.Format(
           "Enriched receipt for {0} from {1} to {2}",
-          secondarySite.Site.Value.DeviceId.Text,
+          secondarySite.Site.Value.SourceDeviceId.Text,
           dateFrom.ToShortDateString(),
           dateTo.ToShortDateString()));
     }

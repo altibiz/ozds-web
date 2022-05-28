@@ -60,7 +60,7 @@ public class SiteEnricher : ContentHandlerBase
         string.Format(
           "Enricheded site {0} with device {1}",
           site.ContentItem.ContentItemId,
-          secondarySite.Site.Value.DeviceId.Text));
+          secondarySite.Site.Value.SourceDeviceId.Text));
     }
   }
 

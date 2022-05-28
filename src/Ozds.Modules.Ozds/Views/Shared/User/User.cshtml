@@ -17,16 +17,36 @@
       .GroupBy(item => item.ContentType));
 }
 
-@foreach(var contentTypeGroup in userItemGroupsByContentType)
+@if (userItemGroupsByContentType.EmptyEnumerable())
 {
-  <h1>
-    <span>
-      @T[$"{contentTypeGroup.Key}s"]
-    </span>
-  </h1>
-
-  @foreach(var contentItem in contentTypeGroup)
+  <div>
+    <p>
+      @T["It seems that you are not the owner of user of any center."]
+    </p>
+    <p>
+      @(T[
+        "If you are, please wait until our administrators add you as " +
+        "a center owner or user."
+      ])
+    </p>
+  </div>
+}
+else
+{
+  foreach(var contentTypeGroup in userItemGroupsByContentType)
   {
-    @await Orchard.DisplayAsync(contentItem, "SummaryAdmin")
+    if (!contentTypeGroup.EmptyEnumerable())
+    {
+      <h1>
+        <span>
+          @T[$"{contentTypeGroup.Key}s"]
+        </span>
+      </h1>
+
+      foreach(var contentItem in contentTypeGroup)
+      {
+        @await Orchard.DisplayAsync(contentItem, "Summary")
+      }
+    }
   }
 }

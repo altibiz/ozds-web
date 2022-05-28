@@ -24,7 +24,7 @@
               "TaxonomyContentItemId": "4k4556m076b1vvsmmqjccbjwn5",
               "TermContentItemIds": ["4ajzfswsjftfzym6sj9fc223ms"]
             },
-            "DeviceId": {
+            "SourceDeviceId": {
               "Text": "fakeDevice1"
             },
             "SourceData": {

@@ -2,13 +2,16 @@ using OrchardCore.ContentFields.Fields;
 using OrchardCore.Taxonomies.Fields;
 using OrchardCore.ContentManagement;
 using Etch.OrchardCore.Fields.Dictionary.Fields;
+using Newtonsoft.Json;
+using Ozds.Elasticsearch;
+using Ozds.Util;
 
 namespace Ozds.Modules.Ozds;
 
 public class Site : ContentPart
 {
   public TaxonomyField Source { get; init; } = new();
-  public TextField DeviceId { get; init; } = new();
+  public TextField SourceDeviceId { get; init; } = new();
   public DictionaryField SourceData { get; init; } = new();
 
   public NumericField MeasurementIntervalInSeconds { get; init; } = new();
@@ -21,6 +24,17 @@ public class Site : ContentPart
   public TaxonomyField Status { get; init; } = new();
 
   public SiteData Data { get; set; } = default;
+
+  [JsonIgnore]
+  public string DeviceId
+  {
+    get =>
+      Device.MakeId(
+        SiteMeasurementSource.GetElasticsearchSource(
+          Source.TermContentItemIds.First())
+        .ThrowWhenNull(),
+        SourceDeviceId.Text);
+  }
 }
 
 public readonly record struct SiteData

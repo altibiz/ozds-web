@@ -1,3 +1,5 @@
+using Ozds.Util;
+
 namespace Ozds.Elasticsearch;
 
 public readonly record struct EnrichedMeasurementExtractionAsync
@@ -17,7 +19,6 @@ public readonly record struct EnrichedMeasurementExtractionItem
 
 public static class EnrichedMeasurementExtractionExtensions
 {
-
   public static EnrichedMeasurementExtraction Enrich(
       this MeasurementExtraction measurement,
       Func<ExtractionMeasurement, LoadMeasurement> enrich) =>
@@ -56,5 +57,29 @@ public static class EnrichedMeasurementExtractionExtensions
                 item.Bucket.Period,
                 item.Bucket.Select(enrich))
           })
+    };
+
+  public static EnrichedMeasurementExtractionAsync Enrich(
+      this MeasurementExtractionAsync measurement,
+      Func<ExtractionMeasurement, ValueTask<LoadMeasurement>> enrich) =>
+    new EnrichedMeasurementExtractionAsync
+    {
+      Device = measurement.Device,
+      Period = measurement.Period,
+      Items = measurement.Items
+        .SelectAwait(item =>
+          item.Bucket
+            .Select(enrich)
+            .AwaitValueTask()
+            .Then(bucket =>
+              new EnrichedMeasurementExtractionItem
+              {
+                Original = item.Original,
+                Next = item.Next,
+                Bucket =
+                  new ExtractionBucket<LoadMeasurement>(
+                    item.Bucket.Period,
+                    bucket)
+              }))
     };
 }

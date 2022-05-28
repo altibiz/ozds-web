@@ -2,15 +2,16 @@ using YesSql.Indexes;
 using OrchardCore.Data;
 using OrchardCore.ContentManagement;
 using Ozds.Util;
+using Ozds.Elasticsearch;
 
 namespace Ozds.Modules.Ozds;
 
 public class SiteIndex : MapIndex
 {
   public string ContentItemId { get; init; } = default!;
+  public string SourceTermId { get; init; } = default!;
   public string DeviceId { get; init; } = default!;
   public string StatusTermId { get; init; } = default!;
-  public string SourceTermId { get; init; } = default!;
 
   public string OperatorName { get; init; } = default!;
   public string OperatorOib { get; init; } = default!;
@@ -34,15 +35,19 @@ public class SiteIndexProvider :
       DescribeContext<ContentItem> context) =>
     context
       .For<SiteIndex>()
-      .Map(item =>
-        ((item.AsContent<SecondarySiteType>()) switch
-        {
-          (SecondarySiteType site) =>
+      .Map(item => item
+        .AsContent<SecondarySiteType>()
+        .WhenNonNullable(site =>
           new SiteIndex
           {
             ContentItemId = item.ContentItemId,
             SourceTermId = site.Site.Value.Source.TermContentItemIds.First(),
-            DeviceId = site.Site.Value.DeviceId.Text,
+            DeviceId = Device.MakeId(
+                SiteMeasurementSource
+                  .GetElasticsearchSource(
+                    site.Site.Value.Source.TermContentItemIds.First())
+                  .ThrowWhenNull(),
+                site.Site.Value.SourceDeviceId.Text),
             StatusTermId = site.Site.Value.Status.TermContentItemIds.First(),
 
             OperatorName = site.Site.Value.Data.OperatorName,
@@ -57,9 +62,7 @@ public class SiteIndexProvider :
             OwnerOib = site.Site.Value.Data.OwnerOib,
             OwnerContentItemId = site.Site.Value.Data.OwnerContentItemId,
             OwnerUserId = site.Site.Value.Data.OwnerUserId,
-          },
-          _ => null,
-        })
+          })
         // NOTE: YesSql expects null values here
         .NonNullable());
 }

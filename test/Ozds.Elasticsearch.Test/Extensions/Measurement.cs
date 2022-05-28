@@ -25,8 +25,4 @@ public static class MeasurementExtensions
       To = period.To.AddMinutes(1),
     };
   }
-
-  public static LoadMeasurement ToLoadMeasurement(
-      this ExtractionMeasurement measurement) =>
-    measurement.ToLoadMeasurement("", "", "", "", "");
 }

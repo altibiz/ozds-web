@@ -27,39 +27,23 @@ public class MeasurementImporter : IBackgroundTask
       .PlanExtractionAwait()
       .ForEachAwaitAsync(plan => loader
         .LoadMeasurementsAwait(
-          new EnrichedMeasurementExtractionAsync
-          {
-            Device = plan.Device,
-            Period = plan.Period,
-            Items =
-              extractor
-                .ExecuteExtractionPlanAsync(plan)
-                .Items.SelectAwait<MeasurementExtractionItem,
-                EnrichedMeasurementExtractionItem>(item => item.Bucket
-                  .Select(measurement =>
-                    cache
-                      .GetDeviceData(
-                        Device.MakeId(
-                          measurement.Source,
-                          measurement.SourceDeviceId))
-                      .Then(data => measurement
-                        .ToLoadMeasurement(
-                          data.Operator,
-                          data.CenterId,
-                          data.CenterUserId,
-                          data.OwnerId,
-                          data.OwnerUserId)))
-                  .AwaitValueTask()
-                  .Then(items =>
-                    new EnrichedMeasurementExtractionItem
-                    {
-                      Original = item.Original,
-                      Next = item.Next,
-                      Bucket =
-                        new ExtractionBucket<LoadMeasurement>(
-                          item.Original.Period,
-                          items)
-                    }))
-          }));
+          extractor
+            .ExecuteExtractionPlanAsync(plan)
+            .Enrich(measurement =>
+              cache
+                .GetDeviceData(
+                  Device.MakeId(
+                    measurement.Source,
+                    measurement.SourceDeviceId))
+                .Then(data =>
+                  data is null ? measurement.ToLoadMeasurement()
+                  : measurement
+                    .ToLoadMeasurement(
+                      data.Value.Operator,
+                      data.Value.CenterId,
+                      data.Value.CenterUserId,
+                      data.Value.OwnerId,
+                      data.Value.OwnerUserId))
+                .ToValueTask())));
   }
 }

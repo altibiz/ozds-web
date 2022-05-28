@@ -62,7 +62,7 @@ public partial class Client : IClient
         period)
       .Then(measurement => measurement
         .Aggregations
-        .AverageBucket("average_power_by_fifteen_minutes")
+        .AverageBucket("averagePowerByFifteenMinutes")
         .WhenNonNullable(average =>
           new PowerMeasurement((decimal?)average.Value ?? default)));
 
@@ -124,6 +124,7 @@ public partial class Client : IClient
       Period? period = null) =>
     Elasticsearch.SearchAsync<Measurement>(s => s
       .Index(MeasurementIndexName)
+      .Size(0)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -134,13 +135,13 @@ public partial class Client : IClient
             period?.To ?? DateTime.UtcNow)) && q
         .Term(t => t.DeviceData.DeviceId, Device.MakeId(source, deviceId)))
       .Aggregations(a => a
-        .DateHistogram("timestamp_by_fifteen_minutes", h => h
+        .DateHistogram("timestampByFifteenMinutes", h => h
           .Field(f => f.Timestamp)
           .CalendarInterval(TimeSpan.FromMinutes(15))
           .Aggregations(a => a
-            .Average("average_power", a => a
+            .Average("averagePower", a => a
               .Field(f => f.MeasurementData.powerIn)))))
       .Aggregations(a => a
-        .AverageBucket("average_power_by_fifteen_minutes", a => a
-          .BucketsPath("timestamp_by_fifteen_minutes>average_power"))));
+        .AverageBucket("averagePowerByFifteenMinutes", a => a
+          .BucketsPath("timestampByFifteenMinutes>averagePower"))));
 }

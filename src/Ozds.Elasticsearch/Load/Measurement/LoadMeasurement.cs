@@ -191,4 +191,8 @@ public static class LoadMeasurementExtensions
           Longitude = geo.Longitude,
         }),
     };
+
+  public static LoadMeasurement ToLoadMeasurement(
+      this ExtractionMeasurement measurement) =>
+    measurement.ToLoadMeasurement("", "", "", "", "");
 }

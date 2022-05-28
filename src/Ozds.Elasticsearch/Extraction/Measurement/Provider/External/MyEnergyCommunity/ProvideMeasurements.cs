@@ -35,7 +35,7 @@ public sealed partial class Client : IClient
       ProvisionDevice device,
       Period? period = null) =>
     period
-      .OnlyWhenNullable(Period.UntilNow(device.ExtractionStart))
+      .OnlyWhenNullable(device.ExtractionStart.UntilNow())
       // NOTE: API can output max 20 measurements per request without the need
       // NOTE: of a continuation token
       .SplitAscending(device.MeasurementInterval * 15)

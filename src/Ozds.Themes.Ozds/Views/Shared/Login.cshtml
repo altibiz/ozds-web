@@ -28,6 +28,18 @@
       UserRegistrationType.AllowRegistration;
 	var allowResetPassword = resetPasswordSettings.AllowResetPassword;
 	var disableLocalLogin = loginSettings.DisableLocalLogin;
+
+  var loginReturnUrl =
+    ViewData["returnUrl"] ??
+    Url.RouteUrl(
+      new
+      {
+        Area = "Ozds.Modules.Ozds",
+        Page = "Overview"
+      });
+
+  var registrationReturnUrl =
+    ViewData["returnUrl"];
 }
 
 <partial name="Header" model='@T["Log In"].Value' />
@@ -50,7 +62,7 @@
         <form
             asp-controller="Account"
             asp-action="Login"
-            asp-route-returnurl='@ViewData["ReturnUrl"]'
+            asp-route-returnurl='@loginReturnUrl'
             method="post"
             class="mb-4"
             id="auth-form">
@@ -133,7 +145,7 @@
                   asp-controller="Registration"
                   class="btn btn-info"
                   asp-action="Register"
-                  asp-route-returnurl='@ViewData["ReturnUrl"]'>
+                  asp-route-returnurl='@registrationReturnUrl'>
                 @T["Sign Up"]
               </a>
             </div>
@@ -144,6 +156,7 @@
 
     @if (externalAuthenticationSchemes.Count > 0)
     {
+
       <div class="col-md-6 @(disableLocalLogin ? "offset-md-3" : String.Empty)">
         <section>
           <h4>
@@ -154,7 +167,7 @@
           <form
               asp-controller="Account"
               asp-action="ExternalLogin"
-              asp-route-returnurl='@ViewData["ReturnUrl"]'
+              asp-route-returnurl='@loginReturnUrl'
               method="post"
               class="form-horizontal">
             <div>

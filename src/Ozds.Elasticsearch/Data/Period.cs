@@ -5,7 +5,8 @@ namespace Ozds.Elasticsearch;
 [ElasticsearchType(RelationName = "period")]
 public class Period :
   IEquatable<Period>,
-  IComparable<Period>
+  IComparable<Period>,
+  ICloneable
 {
   [Date(Name = "from")]
   public DateTime From { get; init; } = DateTime.MinValue.ToUniversalTime();
@@ -16,12 +17,35 @@ public class Period :
   [Ignore]
   public TimeSpan Span { get => To - From; }
 
+  [Ignore]
+  public DateTime Interpolation { get => From + (Span / 2); }
+
   public static Period UntilNow(DateTime from) =>
     new Period
     {
       From = from,
       To = DateTime.UtcNow
     };
+
+  public static Period Encompassing(IEnumerable<DateTime> events) =>
+    new Period
+    {
+      From = events.Min(),
+      To = events.Max()
+    };
+
+  public static Period LooselyEncompassing(IEnumerable<DateTime> events) =>
+    new Period
+    {
+      From = events.Min().AddMinutes(-1),
+      To = events.Max().AddMinutes(1)
+    };
+
+  public decimal Interpolate(decimal begin, decimal end, DateTime at) =>
+    (begin + end) * (decimal)((To - From) / (at - From));
+
+  public IEnumerable<Period> SplitAscending(int times) =>
+    SplitAscending(Span / times);
 
   public IEnumerable<Period> SplitAscending(TimeSpan span)
   {
@@ -47,6 +71,9 @@ public class Period :
         To = To,
       };
   }
+
+  public IEnumerable<Period> SplitDescending(int times) =>
+    SplitAscending(Span / times);
 
   public IEnumerable<Period> SplitDescending(TimeSpan span)
   {
@@ -99,4 +126,19 @@ public class Period :
     from = From;
     to = To;
   }
+
+  public object Clone() => ClonePeriod();
+
+  public Period ClonePeriod() =>
+    new Period
+    {
+      From = From,
+      To = To,
+    };
 };
+
+public static class PeriodExtensions
+{
+  public static Period UntilNow(this DateTime @this) =>
+    Period.UntilNow(@this);
+}

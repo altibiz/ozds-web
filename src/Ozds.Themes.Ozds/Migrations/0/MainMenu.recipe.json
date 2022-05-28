@@ -5,13 +5,13 @@
       "data": [
         {
           "ContentItemId": "4wcrqennnqbrsx71cgnxjf6fwz",
-          "ContentItemVersionId": "403dd2hzh3w5ms6etyn7s1m6md",
+          "ContentItemVersionId": "479wk4mr7p41g2nfq2ssgms7dt",
           "ContentType": "Menu",
           "DisplayText": "MainMenu",
           "Latest": true,
           "Published": true,
-          "ModifiedUtc": "2022-05-27T11:08:43.647069Z",
-          "PublishedUtc": "2022-05-27T11:08:43.6726556Z",
+          "ModifiedUtc": "2022-05-27T17:21:27.9470162Z",
+          "PublishedUtc": "2022-05-27T17:21:27.9511284Z",
           "CreatedUtc": "2022-05-20T13:16:22.8434591Z",
           "Owner": "41a3ant9asfs82a0xpbz3kp1nn",
           "Author": "admin",
@@ -28,7 +28,7 @@
                 "ContentItemId": "404d7crme7nzd7d23trmpy5wx2",
                 "ContentItemVersionId": null,
                 "ContentType": "LinkMenuItem",
-                "DisplayText": "OZDS",
+                "DisplayText": "Pregled",
                 "Latest": false,
                 "Published": false,
                 "ModifiedUtc": "2022-05-27T11:08:38.9935645Z",
@@ -37,8 +37,26 @@
                 "Owner": null,
                 "Author": "admin",
                 "LinkMenuItemPart": {
-                  "Name": "OZDS",
-                  "Url": "~/Ozds.Modules.Ozds"
+                  "Name": "Pregled",
+                  "Url": "~/Ozds.Modules.Ozds/Overview"
+                },
+                "LinkMenuItem": {}
+              },
+              {
+                "ContentItemId": "4xj18ccmpyv6crkaa83s63tex0",
+                "ContentItemVersionId": null,
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Mjerenja",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-27T17:20:17.1246107Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "LinkMenuItemPart": {
+                  "Name": "Mjerenja",
+                  "Url": "~/Ozds.Modules.Ozds/Dashboard"
                 },
                 "LinkMenuItem": {}
               },
@@ -56,7 +74,7 @@
                 "Author": "admin",
                 "LinkMenuItemPart": {
                   "Name": "ZDS",
-                  "Url": "~/Ozds.Modules.Ozds/Center"
+                  "Url": "~/Ozds.Modules.Ozds/Overview/Center"
                 },
                 "LinkMenuItem": {}
               },
@@ -74,7 +92,7 @@
                 "Author": "admin",
                 "LinkMenuItemPart": {
                   "Name": "Korisnik ZDS-a",
-                  "Url": "~/Ozds.Modules.Ozds/Consumer"
+                  "Url": "~/Ozds.Modules.Ozds/Overview/Consumer"
                 },
                 "LinkMenuItem": {}
               },
@@ -92,7 +110,7 @@
                 "Author": "admin",
                 "LinkMenuItemPart": {
                   "Name": "OMM",
-                  "Url": "~/Ozds.Modules.Ozds/Site"
+                  "Url": "~/Ozds.Modules.Ozds/Overview/Site"
                 },
                 "LinkMenuItem": {}
               },
@@ -110,7 +128,7 @@
                 "Author": "admin",
                 "LinkMenuItemPart": {
                   "Name": "Račun",
-                  "Url": "~/Ozds.Modules.Ozds/Receipt"
+                  "Url": "~/Ozds.Modules.Ozds/Overview/Receipt"
                 },
                 "LinkMenuItem": {}
               }
@@ -127,13 +145,13 @@
         },
         {
           "ContentItemId": "4e2specds1pk85yzbbdhhpvfxh",
-          "ContentItemVersionId": "4m8rygffwyxn72rteaws8r6kmr",
+          "ContentItemVersionId": "491ng50ce1fnkwna721eb2fr5t",
           "ContentType": "Menu",
           "DisplayText": "MainMenu",
           "Latest": true,
           "Published": true,
-          "ModifiedUtc": "2022-05-27T11:09:09.4510521Z",
-          "PublishedUtc": "2022-05-27T11:09:09.4571574Z",
+          "ModifiedUtc": "2022-05-27T17:19:52.5196635Z",
+          "PublishedUtc": "2022-05-27T17:19:52.5244029Z",
           "CreatedUtc": "2022-05-20T13:14:58.1692414Z",
           "Owner": "41a3ant9asfs82a0xpbz3kp1nn",
           "Author": "admin",
@@ -150,7 +168,7 @@
                 "ContentItemId": "4j3b1xr1m7kmxx9pdjyavfjam0",
                 "ContentItemVersionId": null,
                 "ContentType": "LinkMenuItem",
-                "DisplayText": "Operator",
+                "DisplayText": "Overview",
                 "Latest": false,
                 "Published": false,
                 "ModifiedUtc": "2022-05-27T11:09:03.0053927Z",
@@ -159,8 +177,26 @@
                 "Owner": null,
                 "Author": "admin",
                 "LinkMenuItemPart": {
-                  "Name": "Operator",
-                  "Url": "~/Ozds.Modules.Ozds"
+                  "Name": "Overview",
+                  "Url": "~/Ozds.Modules.Ozds/Overview"
+                },
+                "LinkMenuItem": {}
+              },
+              {
+                "ContentItemId": "449bpn602hd6fv8dj35hgvq4wx",
+                "ContentItemVersionId": null,
+                "ContentType": "LinkMenuItem",
+                "DisplayText": "Dashboard",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-05-27T17:17:35.0609459Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "LinkMenuItemPart": {
+                  "Name": "Dashboard",
+                  "Url": "~/Ozds.Modules.Ozds/Dashboard"
                 },
                 "LinkMenuItem": {}
               },
@@ -178,7 +214,7 @@
                 "Author": "admin",
                 "LinkMenuItemPart": {
                   "Name": "Center",
-                  "Url": "~/Ozds.Modules.Ozds/Center"
+                  "Url": "~/Ozds.Modules.Ozds/Overview/Center"
                 },
                 "LinkMenuItem": {}
               },
@@ -196,7 +232,7 @@
                 "Author": "admin",
                 "LinkMenuItemPart": {
                   "Name": "Consumer",
-                  "Url": "~/Ozds.Modules.Ozds/Consumer"
+                  "Url": "~/Ozds.Modules.Ozds/Overview/Consumer"
                 },
                 "LinkMenuItem": {}
               },
@@ -214,7 +250,7 @@
                 "Author": "admin",
                 "LinkMenuItemPart": {
                   "Name": "Site",
-                  "Url": "~/Ozds.Modules.Ozds/Site"
+                  "Url": "~/Ozds.Modules.Ozds/Overview/Site"
                 },
                 "LinkMenuItem": {}
               },
@@ -232,7 +268,7 @@
                 "Author": "admin",
                 "LinkMenuItemPart": {
                   "Name": "Receipt",
-                  "Url": "~/Ozds.Modules.Ozds/Receipt"
+                  "Url": "~/Ozds.Modules.Ozds/Overview/Receipt"
                 },
                 "LinkMenuItem": {}
               }
