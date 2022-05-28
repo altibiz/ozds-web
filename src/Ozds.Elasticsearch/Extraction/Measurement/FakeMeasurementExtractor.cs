@@ -24,21 +24,33 @@ public class FakeMeasurementExtractor : IMeasurementExtractor
   PlanExtractionAwait(
       Period? period = null,
       int measurementsPerExtractionPlanItem =
-        DefaultMeasurementsPerExtractionPlanItem) =>
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
+      int missingDataExtractionPlanItemsLimit =
+        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
+      int loadExtractionSpanLimitInSeconds =
+        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
     Enumerables.EmptyAsync<ExtractionPlan>();
 
   public Task<IEnumerable<ExtractionPlan>>
   PlanExtractionAsync(
       Period? period = null,
       int measurementsPerExtractionPlanItem =
-        DefaultMeasurementsPerExtractionPlanItem) =>
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
+      int missingDataExtractionPlanItemsLimit =
+        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
+      int loadExtractionSpanLimitInSeconds =
+        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
     Enumerables.Empty<ExtractionPlan>().ToTask();
 
   public IEnumerable<ExtractionPlan>
   PlanExtraction(
       Period? period = null,
       int measurementsPerExtractionPlanItem =
-        DefaultMeasurementsPerExtractionPlanItem) =>
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
+      int missingDataExtractionPlanItemsLimit =
+        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
+      int loadExtractionSpanLimitInSeconds =
+        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
     Enumerables.Empty<ExtractionPlan>();
 
   public IAsyncEnumerable<ExtractionPlan>
@@ -46,7 +58,11 @@ public class FakeMeasurementExtractor : IMeasurementExtractor
       string source,
       Period? period = null,
       int measurementsPerExtractionPlanItem =
-        DefaultMeasurementsPerExtractionPlanItem) =>
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
+      int missingDataExtractionPlanItemsLimit =
+        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
+      int loadExtractionSpanLimitInSeconds =
+        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
     Enumerables.EmptyAsync<ExtractionPlan>();
 
   public Task<IEnumerable<ExtractionPlan>>
@@ -54,7 +70,11 @@ public class FakeMeasurementExtractor : IMeasurementExtractor
       string source,
       Period? period = null,
       int measurementsPerExtractionPlanItem =
-        DefaultMeasurementsPerExtractionPlanItem) =>
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
+      int missingDataExtractionPlanItemsLimit =
+        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
+      int loadExtractionSpanLimitInSeconds =
+        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
     Enumerables.Empty<ExtractionPlan>().ToTask();
 
   public IEnumerable<ExtractionPlan>
@@ -62,17 +82,23 @@ public class FakeMeasurementExtractor : IMeasurementExtractor
       string source,
       Period? period = null,
       int measurementsPerExtractionPlanItem =
-        DefaultMeasurementsPerExtractionPlanItem) =>
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
+      int missingDataExtractionPlanItemsLimit =
+        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
+      int loadExtractionSpanLimitInSeconds =
+        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
     Enumerables.Empty<ExtractionPlan>();
-
-  public const int DefaultMeasurementsPerExtractionPlanItem = 100;
 
   public Task<ExtractionPlan>
   PlanDeviceExtractionAsync(
       ExtractionDevice device,
       Period? period = null,
       int measurementsPerExtractionPlanItem =
-        DefaultMeasurementsPerExtractionPlanItem) =>
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
+      int missingDataExtractionPlanItemsLimit =
+        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
+      int loadExtractionSpanLimitInSeconds =
+        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
     new ExtractionPlan
     {
       Device = device,
@@ -85,7 +111,11 @@ public class FakeMeasurementExtractor : IMeasurementExtractor
       ExtractionDevice device,
       Period? period = null,
       int measurementsPerExtractionPlanItem =
-        DefaultMeasurementsPerExtractionPlanItem) =>
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
+      int missingDataExtractionPlanItemsLimit =
+        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
+      int loadExtractionSpanLimitInSeconds =
+        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
     new ExtractionPlan
     {
       Device = device,

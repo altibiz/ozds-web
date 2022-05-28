@@ -18,7 +18,7 @@ public class Period :
   public TimeSpan Span { get => To - From; }
 
   [Ignore]
-  public DateTime Interpolation { get => From + (Span / 2); }
+  public DateTime HalfPoint { get => From + (Span / 2); }
 
   public static Period UntilNow(DateTime from) =>
     new Period
@@ -51,6 +51,24 @@ public class Period :
       ((begin * beginTicks) + (end * endTicks)) /
       (decimal)ticks;
   }
+
+  public Period LimitFrom(TimeSpan span) =>
+    Span > span ?
+      new()
+      {
+        From = To - span,
+        To = To
+      }
+    : ClonePeriod();
+
+  public Period LimitTo(TimeSpan span) =>
+    Span > span ?
+      new()
+      {
+        From = From,
+        To = From + span
+      }
+    : ClonePeriod();
 
   public IEnumerable<Period> SplitAscending(int times) =>
     SplitAscending(Span / times);

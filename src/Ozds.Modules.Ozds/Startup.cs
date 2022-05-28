@@ -62,6 +62,8 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddScoped<Importer>();
     services.AddSingleton<IBackgroundTask, FastImportBackgroundTask>();
 
+    services.AddRecipeExecutionStep<UserImport>();
+
     services.AddScoped<INavigationProvider, AdminMenu>();
 
     services.AddScoped<IContentDisplayDriver, ContainedPartDisplayDriver>();

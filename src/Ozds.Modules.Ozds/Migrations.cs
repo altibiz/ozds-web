@@ -1,9 +1,13 @@
 using YesSql;
 using YesSql.Sql;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.Data.Migration;
 using OrchardCore.Recipes.Services;
+using Ozds.Modules.Ozds.Extensions.OrchardCore;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 using Ozds.Modules.Ozds.M0;
 
@@ -20,8 +24,20 @@ public sealed class Migrations : DataMigration
       Recipe.ExecuteTestSettings(this);
       Recipe.ExecuteTestTaxonomies(this);
       Content.AlterContent();
-      Session.SaveTestData();
-      Recipe.ExecuteTestContent(this);
+
+      if (Conf
+            .GetSection("Ozds")
+            .GetSection("Modules")
+            .GetSection("Ozds")
+            .GetValue<object?>("IsDemo") is not null)
+      {
+        Recipe.Execute("Sensitive/demo.recipe.json", this);
+      }
+      else
+      {
+        Session.SaveTestData();
+        Recipe.ExecuteTestContent(this);
+      }
     }
     else
     {
@@ -39,11 +55,15 @@ public sealed class Migrations : DataMigration
 
   public Migrations(
       IHostEnvironment env,
+      IConfiguration conf,
+      ILogger<Migrations> log,
       IRecipeMigrator recipe,
       IContentDefinitionManager content,
       ISession session)
   {
     Env = env;
+    Conf = conf;
+    Log = log;
 
     Session = session;
 
@@ -51,7 +71,9 @@ public sealed class Migrations : DataMigration
     Content = content;
   }
 
+  private IConfiguration Conf { get; }
   private IHostEnvironment Env { get; }
+  private ILogger Log { get; }
 
   private ISchemaBuilder Schema { get => SchemaBuilder; }
 

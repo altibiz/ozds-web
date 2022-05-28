@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using OrchardCore.Navigation;
 using Ozds.Util;
@@ -16,9 +17,14 @@ public class AdminMenu : INavigationProvider
           name, "admin",
           StringComparison.OrdinalIgnoreCase),
         _ =>
-          Env.IsDevelopment() ?
+          Env.IsDevelopment() &&
+          (Conf
+            .GetSection("Ozds")
+            .GetSection("Modules")
+            .GetSection("Ozds")
+            .GetValue<object?>("IsDemo") is null) ?
             BuildDevelopmentNavigation(builder)
-            : BuildProductionNavigation(builder)));
+          : BuildProductionNavigation(builder)));
 
   public NavigationBuilder BuildDevelopmentNavigation(
       NavigationBuilder builder) =>
@@ -159,13 +165,18 @@ public class AdminMenu : INavigationProvider
         });
 
   public AdminMenu(
-      IStringLocalizer<AdminMenu> localizer,
-      IHostEnvironment env)
+      IHostEnvironment env,
+      IConfiguration conf,
+      IStringLocalizer<AdminMenu> localizer)
   {
-    S = localizer;
     Env = env;
+    Conf = conf;
+
+    S = localizer;
   }
 
-  private IStringLocalizer S { get; }
   private IHostEnvironment Env { get; }
+  private IConfiguration Conf { get; }
+
+  private IStringLocalizer S { get; }
 }

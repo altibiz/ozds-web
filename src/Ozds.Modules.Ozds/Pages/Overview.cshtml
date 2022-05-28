@@ -1,10 +1,23 @@
 @page "{contentType?}/{contentItemId?}"
 
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Options
+@using OrchardCore.Admin
 @using Ozds.Modules.Ozds
 @using Ozds.Util
 
-@attribute [Authorize(Roles = "User")]
+@attribute [Authorize(Roles = "Administrator,User")]
+
+@inject IOptions<AdminOptions> AdminOptions
+
+@{
+  if (User.IsInRole("Administrator"))
+  {
+    Response.Redirect(Url
+      .Content(AdminOptions.Value.AdminUrlPrefix)
+      .ThrowWhenNull());
+  }
+}
 
 @{
   var contentType = Request.RouteValues.GetNullable("contentType");

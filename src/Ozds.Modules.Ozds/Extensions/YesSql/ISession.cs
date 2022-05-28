@@ -27,7 +27,21 @@ public static class ISessionExtensions
       .Using(stream =>
         JsonSerializer
           .Deserialize(stream.ReadToEnd(), type)
-          .With(@object => session.Save(@object)))
+          .ThrowWhenNull()
+          .With(@object =>
+            {
+              if (@object is IEnumerable<object> objects)
+              {
+                objects
+                  .ForEach(@object => session
+                    .Save(@object))
+                  .Run();
+              }
+              else
+              {
+                session.Save(@object);
+              }
+            }))
       .Return(session);
 
   public static Task<ContentItem?> GetItemById(

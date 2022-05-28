@@ -74,7 +74,7 @@ public static class DashboardMeasurementExtensions
       Period
         .Encompassing(@this.Select(measurement => measurement.Timestamp))
         .SplitAscending(deviceGroups.Select(group => group.Count()).Max())
-        .Select(period => period.Interpolation);
+        .Select(period => period.HalfPoint);
 
     // TODO: optimize
     return

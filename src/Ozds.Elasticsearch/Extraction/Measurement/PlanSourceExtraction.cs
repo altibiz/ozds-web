@@ -11,7 +11,11 @@ public partial class Client : IClient
       string source,
       Period? period = null,
       int measurementsPerExtractionPlanItem =
-        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem) =>
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
+      int missingDataExtractionPlanItemsLimit =
+        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
+      int loadExtractionSpanLimitInSeconds =
+        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
     SearchDevicesBySourceAsync(source)
       .Then(devices => devices
         .Sources()
@@ -19,7 +23,9 @@ public partial class Client : IClient
           PlanDeviceExtractionAsync(
             device.ToExtractionDevice(),
             period,
-            measurementsPerExtractionPlanItem))
+            measurementsPerExtractionPlanItem,
+            missingDataExtractionPlanItemsLimit,
+            loadExtractionSpanLimitInSeconds))
         .ToAsync())
       .ToAsyncEnumerableNonNullable()
       .Flatten();
@@ -29,7 +35,11 @@ public partial class Client : IClient
       string source,
       Period? period = null,
       int measurementsPerExtractionPlanItem =
-        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem) =>
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
+      int missingDataExtractionPlanItemsLimit =
+        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
+      int loadExtractionSpanLimitInSeconds =
+        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
     SearchDevicesBySourceAsync(source)
       .Then(devices => devices
         .Sources()
@@ -37,7 +47,9 @@ public partial class Client : IClient
           PlanDeviceExtractionAsync(
             device.ToExtractionDevice(),
             period,
-            measurementsPerExtractionPlanItem))
+            measurementsPerExtractionPlanItem,
+            missingDataExtractionPlanItemsLimit,
+            loadExtractionSpanLimitInSeconds))
         .Await())
       .FlattenTask();
 
@@ -46,12 +58,18 @@ public partial class Client : IClient
       string source,
       Period? period = null,
       int measurementsPerExtractionPlanItem =
-        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem) =>
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
+      int missingDataExtractionPlanItemsLimit =
+        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
+      int loadExtractionSpanLimitInSeconds =
+        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
     SearchDevicesBySource(source)
       .Sources()
       .Select(device =>
         PlanDeviceExtraction(
           device.ToExtractionDevice(),
           period,
-          measurementsPerExtractionPlanItem));
+          measurementsPerExtractionPlanItem,
+          missingDataExtractionPlanItemsLimit,
+          loadExtractionSpanLimitInSeconds));
 }

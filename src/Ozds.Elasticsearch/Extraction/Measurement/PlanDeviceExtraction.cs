@@ -11,12 +11,19 @@ public partial class Client : IClient
       ExtractionDevice device,
       Period? period = null,
       int measurementsPerExtractionPlanItem =
-        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem)
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
+      int missingDataExtractionPlanItemsLimit =
+        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
+      int loadExtractionSpanLimitInSeconds =
+        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds)
   {
     var now = DateTime.UtcNow;
     var missingDataLogs =
       await SearchMissingDataLogsSortedByPeriodAsync(
-          device.Id, due: now, period: period)
+          device.Id,
+          due: now,
+          period: period,
+          size: missingDataExtractionPlanItemsLimit)
         .Then(response => response.Sources());
     var loadLog =
       await GetLoadLogAsync(LoadLog.MakeId(device.Id))
@@ -27,6 +34,8 @@ public partial class Client : IClient
        device,
        period,
        measurementsPerExtractionPlanItem,
+       missingDataExtractionPlanItemsLimit,
+       loadExtractionSpanLimitInSeconds,
        now,
        missingDataLogs,
        loadLog);
@@ -37,12 +46,19 @@ public partial class Client : IClient
       ExtractionDevice device,
       Period? period = null,
       int measurementsPerExtractionPlanItem =
-        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem)
+        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
+      int missingDataExtractionPlanItemsLimit =
+        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
+      int loadExtractionSpanLimitInSeconds =
+        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds)
   {
     var now = DateTime.UtcNow;
     var missingDataLogs =
       SearchMissingDataLogsSortedByPeriod(
-          device.Id, due: now, period: period)
+          device.Id,
+          due: now,
+          period: period,
+          size: missingDataExtractionPlanItemsLimit)
         .Sources();
     var loadLog =
       GetLoadLog(LoadLog.MakeId(device.Id))
@@ -53,6 +69,8 @@ public partial class Client : IClient
        device,
        period,
        measurementsPerExtractionPlanItem,
+       missingDataExtractionPlanItemsLimit,
+       loadExtractionSpanLimitInSeconds,
        now,
        missingDataLogs,
        loadLog);
@@ -63,6 +81,8 @@ public partial class Client : IClient
       ExtractionDevice device,
       Period? period,
       int measurementsPerExtractionPlanItem,
+      int missingDataExtractionPlanItemsLimit,
+      int loadExtractionSpanLimitInSeconds,
       DateTime now,
       IEnumerable<MissingDataLog> missingDataLogs,
       LoadLog? loadLog)
@@ -86,7 +106,8 @@ public partial class Client : IClient
       {
         From = from,
         To = to,
-      };
+      }.LimitTo(TimeSpan
+        .FromSeconds(loadExtractionSpanLimitInSeconds));
 
     return
       new ExtractionPlan

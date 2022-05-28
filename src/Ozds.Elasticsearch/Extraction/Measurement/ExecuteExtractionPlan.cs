@@ -13,16 +13,20 @@ public partial class Client : IClient
       .WhenNonNullableFinally(provider =>
         plan.Items
           .Select(item => provider
-            .GetMeasurementsAsync(
+            .GetMeasurementsAwait(
               plan.Device.ToProvisionDevice(),
               item.Period)
-            .Then(buckets => buckets
-              .ForEach(bucket => Logger.LogDebug(
-                $"Extracted {bucket.Count()} measurements at {plan.Period} " +
-                $"for {plan.Device.Id} from {provider.Source}")))
-            .Then(buckets => buckets
-              .Select(bucket => CreateOutcomeItem(plan, item, bucket))))
-          .ToAsync()
+            .ForEach(bucket => Logger
+              .LogDebug(
+                $"Extracted {bucket.Count()} measurements " +
+                $"at {plan.Period} " +
+                $"for {plan.Device.Id} " +
+                $"from {provider.Source}"))
+            .Select(bucket =>
+              CreateExtractionItem(
+                plan,
+                item,
+                bucket)))
           .Flatten(),
         Enumerables.EmptyAsync<MeasurementExtractionItem>)
       .WhenNullable(items =>
@@ -43,10 +47,17 @@ public partial class Client : IClient
             .GetMeasurements(
               plan.Device.ToProvisionDevice(),
               item.Period)
-            .ForEach(bucket => Logger.LogDebug(
-              $"Extracted {bucket.Count()} measurements at {plan.Period} " +
-              $"for {plan.Device.Id} from {provider.Source}"))
-            .Select(bucket => CreateOutcomeItem(plan, item, bucket)))
+            .ForEach(bucket => Logger
+              .LogDebug(
+                $"Extracted {bucket.Count()} measurements " +
+                $"at {plan.Period} " +
+                $"for {plan.Device.Id} " +
+                $"from {provider.Source}"))
+            .Select(bucket =>
+              CreateExtractionItem(
+                plan,
+                item,
+                bucket)))
           .Flatten(),
         Enumerables.Empty<MeasurementExtractionItem>)
       .WhenNullable(items =>
@@ -57,7 +68,7 @@ public partial class Client : IClient
           Items = items
         });
 
-  private MeasurementExtractionItem CreateOutcomeItem(
+  private MeasurementExtractionItem CreateExtractionItem(
       ExtractionPlan plan,
       ExtractionPlanItem item,
       IExtractionBucket<ExtractionMeasurement> bucket) =>
@@ -65,10 +76,10 @@ public partial class Client : IClient
     {
       Bucket = bucket,
       Original = item,
-      Next = PlanNextExtraction(plan.Device, item, bucket)
+      Next = PlanNextExtractionItem(plan.Device, item, bucket)
     };
 
-  private ExtractionPlanItem? PlanNextExtraction(
+  private ExtractionPlanItem? PlanNextExtractionItem(
       ExtractionDevice device,
       ExtractionPlanItem last,
       IExtractionBucket<ExtractionMeasurement> bucket) =>
@@ -79,7 +90,7 @@ public partial class Client : IClient
         {
           Due = last.Due + (last.Timeout * Math.Pow(2, last.Retries)),
           Retries = last.Retries + 1,
-          Period = last.Period,
+          Period = bucket.Period,
           Timeout = last.Timeout,
           ShouldValidate = last.ShouldValidate,
           Error = error
@@ -97,21 +108,21 @@ public partial class Client : IClient
       (Period period,
       null,
       IEnumerable<ExtractionMeasurement> measurements) =>
-        ExtractionPlanItemConsistent(device, item, measurements) ??
+        ExtractedMeasurementsConsistent(device, period, measurements) ??
         (item.ShouldValidate ?
-          ExtractionPlanItemValid(device, item, measurements)
+          ExtractedMeasurementsValid(device, period, measurements)
           : null),
       _ => bucket.Error
     };
 
-  private static string? ExtractionPlanItemConsistent(
+  private static string? ExtractedMeasurementsConsistent(
       ExtractionDevice device,
-      ExtractionPlanItem item,
+      Period period,
       IEnumerable<ExtractionMeasurement> measurements)
   {
     var expected =
       Math.Floor(
-        item.Period.Span.TotalSeconds /
+        period.Span.TotalSeconds /
         device.MeasurementInterval.TotalSeconds);
     var got = measurements.Count();
 
@@ -121,9 +132,9 @@ public partial class Client : IClient
       : null;
   }
 
-  private static string? ExtractionPlanItemValid(
+  private static string? ExtractedMeasurementsValid(
       ExtractionDevice device,
-      ExtractionPlanItem item,
+      Period period,
       IEnumerable<ExtractionMeasurement> measurements) =>
     measurements.All(ExtractionMeasurementExtensions.Validate) ? null
     : "Measurements invalid";
