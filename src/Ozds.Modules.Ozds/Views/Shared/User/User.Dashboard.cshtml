@@ -13,14 +13,6 @@
   var user = await OrchardUser;
   var userId = user.UserId;
 
-  var userSites = await Session
-    .Query<ContentItem, SiteIndex>(
-      index => index.OwnerUserId == userId)
-    .ListAsync()
-    .Then(siteItems => siteItems
-      .Select(siteItem => siteItem
-        .AsContent<SecondarySiteType>()));
-
   var userMeasurements = await Provider
     .GetDashboardMeasurementsByOwnerUserAsync(
       userId,
@@ -32,3 +24,5 @@
 }
 
 <partial name="MultiDashboard" model="@userMeasurements" />
+
+<partial name="User/User.Site" />

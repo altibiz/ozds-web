@@ -10,7 +10,7 @@
   var contentType = Request.RouteValues.GetNullable("contentType");
   var contentItemId = Request.RouteValues.GetNullable("contentItemId");
   var userIdentity = User.Identity.ThrowWhenNull();
-  var headerText = T["Display"].Value;
+  var headerText = T["Overview"].Value;
 }
 
 @if (contentItemId is null)
@@ -54,4 +54,4 @@
 }
 
 <partial name="Header" model="@headerText" />
-@await Orchard.DisplayAsync(contentItem, "Display")
+@await Orchard.DisplayAsync(contentItem, "Detail")

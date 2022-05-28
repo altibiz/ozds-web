@@ -75,5 +75,10 @@ public static partial class AlterConsumer
               new UserPickerFieldSettings
               {
                 Required = true,
+                DisplayedRoles =
+                  new[]
+                  {
+                    "User"
+                  }
               })));
 }

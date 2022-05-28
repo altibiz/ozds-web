@@ -1,0 +1,20 @@
+@using OrchardCore.ContentManagement
+@using Ozds.Modules.Ozds
+@using Ozds.Util
+
+@{
+  ContentItem contentItem = Model.ContentItem;
+  SecondarySiteType receipt = contentItem
+    .AsContent<SecondarySiteType>()
+    .ThrowWhenNull();
+}
+
+<a
+    asp-area="Ozds.Modules.Ozds"
+    asp-page="/Overview"
+    asp-route-contenttype="SecondarySite"
+    asp-route-contentitemid="@contentItem.ContentItemId">
+  <span>
+    @receipt.Title.Value.Title
+  </span>
+</a>

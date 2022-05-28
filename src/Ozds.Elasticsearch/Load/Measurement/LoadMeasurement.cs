@@ -10,7 +10,7 @@ public readonly record struct LoadMeasurement
 
 public readonly record struct LoadMeasurementDevice
 (string Source,
- string SourceDeviceId,
+ string DeviceId,
  string Operator,
  string CenterId,
  string? CenterUserId,
@@ -69,7 +69,7 @@ public static class LoadMeasurementExtensions
       measurement.Timestamp,
       new Measurement.DeviceDataType(
         measurement.Device.Source,
-        measurement.Device.SourceDeviceId,
+        measurement.Device.DeviceId,
         measurement.Device.Operator,
         measurement.Device.CenterId,
         measurement.Device.CenterUserId,
@@ -140,7 +140,10 @@ public static class LoadMeasurementExtensions
           OwnerId = ownerId,
           OwnerUserId = ownerUserId,
           Source = measurement.Source,
-          SourceDeviceId = measurement.SourceDeviceId,
+          DeviceId =
+            Device.MakeId(
+              measurement.Source,
+              measurement.SourceDeviceId),
         },
       Data =
         new LoadMeasurementData
@@ -194,5 +197,10 @@ public static class LoadMeasurementExtensions
 
   public static LoadMeasurement ToLoadMeasurement(
       this ExtractionMeasurement measurement) =>
-    measurement.ToLoadMeasurement("", "", "", "", "");
+    measurement.ToLoadMeasurement(
+      default!,
+      default!,
+      default!,
+      default!,
+      default!);
 }

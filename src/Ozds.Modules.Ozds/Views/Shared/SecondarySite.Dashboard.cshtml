@@ -15,8 +15,7 @@
       {
         From = now.AddMinutes(-30),
         To = now
-      })
-    .Then(measurements => measurements.ToList());
+      });
 }
 
 <partial name="Dashboard" model="@measurements" />

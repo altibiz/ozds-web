@@ -96,5 +96,10 @@ public static partial class AlterCenter
               new UserPickerFieldSettings
               {
                 Required = true,
+                DisplayedRoles =
+                  new[]
+                  {
+                    "User"
+                  }
               })));
 }

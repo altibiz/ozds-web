@@ -1,0 +1,36 @@
+@using YesSql
+@using OrchardCore.ContentManagement
+@using Ozds.Modules.Ozds
+@using Ozds.Util
+
+@inject ISession Session
+
+@{
+  var user = await OrchardUser;
+  var userId = user.UserId;
+
+  var userReceipts = await Session
+    .Query<ContentItem, ReceiptIndex>(
+      index => index.ConsumerUserId == userId)
+    .ListAsync()
+    .Then(items => items
+      .SelectFilter(item => item.AsContent<SecondarySiteType>()));
+}
+
+@if (userReceipts.EmptyEnumerable())
+{
+  <div>
+    <p>
+      @T["No receipts."]
+    </p>
+  </div>
+}
+
+<div>
+  @foreach (var site in userReceipts)
+  {
+    <div>
+      @await Orchard.DisplayAsync(site.ContentItem, "Summary")
+    </div>
+  }
+</div>

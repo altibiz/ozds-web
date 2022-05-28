@@ -1,0 +1,20 @@
+@using OrchardCore.ContentManagement
+@using Ozds.Modules.Ozds
+@using Ozds.Util
+
+@{
+  ContentItem contentItem = Model.ContentItem;
+  ReceiptType receipt = contentItem
+    .AsContent<ReceiptType>()
+    .ThrowWhenNull();
+}
+
+<a
+    asp-area="Ozds.Modules.Ozds"
+    asp-page="/Overview"
+    asp-route-contenttype="Receipt"
+    asp-route-contentitemid="@contentItem.ContentItemId">
+  <span>
+    @receipt.Title.Value.Title
+  </span>
+</a>

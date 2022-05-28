@@ -31,6 +31,12 @@ public class TenantActivationChecker : ITenantActivationChecker
 
 public class TenantActivatedEvent : ModularTenantEvents
 {
+  public override Task ActivatingAsync()
+  {
+    TenantActivated = false;
+    return Task.CompletedTask;
+  }
+
   public override Task ActivatedAsync()
   {
     TenantActivated = true;
@@ -39,7 +45,7 @@ public class TenantActivatedEvent : ModularTenantEvents
 
   public TenantActivatedEvent()
   {
-    TenantActivated = false;
+    TenantActivated = true;
   }
 
   public bool TenantActivated { get; private set; }

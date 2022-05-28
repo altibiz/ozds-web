@@ -44,7 +44,7 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddScoped<IScopedIndexProvider, PersonIndexProvider>();
     services.AddContentPart<Site>();
     services.AddScoped<IContentHandler, SiteEnricher>();
-    services.AddScoped<IContentHandler, SiteDeviceIndexer>();
+    services.AddScoped<IContentHandler, SiteDeviceLoader>();
     services.AddContentPart<SecondarySite>();
     services.AddScoped<IScopedIndexProvider, SiteIndexProvider>();
     services.AddContentPart<Consumer>();
@@ -53,7 +53,7 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddContentPart<Catalogue>();
     services.AddContentPart<CatalogueItem>();
     services.AddContentPart<Receipt>();
-    services.AddScoped<IContentHandler, ReceiptCreator>();
+    services.AddScoped<IContentHandler, ReceiptEnricher>();
     services.AddScoped<IScopedIndexProvider, ReceiptIndexProvider>();
 
     services.AddScoped<TaxonomyCacheService>();

@@ -46,6 +46,11 @@ else
       foreach(var contentItem in contentTypeGroup)
       {
         @await Orchard.DisplayAsync(contentItem, "Summary")
+
+        if (contentTypeGroup.Key == "Consumer")
+        {
+          
+        }
       }
     }
   }

@@ -1,0 +1,20 @@
+@using OrchardCore.ContentManagement
+@using Ozds.Modules.Ozds
+@using Ozds.Util
+
+@{
+  ContentItem contentItem = Model.ContentItem;
+  CenterType center = contentItem
+    .AsContent<CenterType>()
+    .ThrowWhenNull();
+}
+
+<a
+    asp-area="Ozds.Modules.Ozds"
+    asp-page="/Overview"
+    asp-route-contenttype="Center"
+    asp-route-contentitemid="@contentItem.ContentItemId">
+  <span>
+    @center.Title.Value.Title
+  </span>
+</a>

@@ -7,14 +7,18 @@ using Ozds.Util;
 
 namespace Ozds.Modules.Ozds;
 
-public class SiteDeviceIndexer : ContentHandlerBase
+public class SiteDeviceLoader : ContentHandlerBase
 {
-  public override Task UpdatedAsync(
-      UpdateContentContext context) =>
-    IndexDevice(context.ContentItem);
-
   public override Task DraftSavedAsync(
       SaveDraftContentContext context) =>
+    IndexDevice(context.ContentItem, DeviceState.Added);
+
+  public override Task PublishedAsync(
+      PublishContentContext context) =>
+    IndexDevice(context.ContentItem);
+
+  public override Task UnpublishedAsync(
+      PublishContentContext context) =>
     IndexDevice(context.ContentItem, DeviceState.Added);
 
   public override Task RemovedAsync(
@@ -31,14 +35,17 @@ public class SiteDeviceIndexer : ContentHandlerBase
          SiteMeasurementSource.IsFake(
            site.Site.Value.Source.TermContentItemIds.First()))) return;
 
+    var source =
+      SiteMeasurementSource
+        .GetElasticsearchSource(site.Site.Value.Source)
+        .ThrowWhenNull();
+    var sourceDeviceId = site.Site.Value.SourceDeviceId.Text;
+    var deviceId = Device.MakeId(source, sourceDeviceId);
+
     await Loader
       .LoadDeviceAsync(
-        source:
-          SiteMeasurementSource
-            .GetElasticsearchSource(site.Site.Value.Source)
-            .ThrowWhenNull(),
-        sourceDeviceId:
-          site.Site.Value.SourceDeviceId.Text,
+        source: source,
+        sourceDeviceId: sourceDeviceId,
         sourceDeviceData:
           new DeviceSourceDeviceData
           {
@@ -71,11 +78,14 @@ public class SiteDeviceIndexer : ContentHandlerBase
             state: status ?? SiteStatus
               .GetElasticsearchStatus(site.Site.Value.Status)
               .ThrowWhenNull()));
+
+    Logger.LogDebug(
+      $"Indexed device {deviceId} for site {item.ContentItemId}");
   }
 
-  public SiteDeviceIndexer(
+  public SiteDeviceLoader(
       IHostEnvironment env,
-      ILogger<SiteDeviceIndexer> logger,
+      ILogger<SiteDeviceLoader> logger,
       IDeviceLoader loader)
   {
     Env = env;

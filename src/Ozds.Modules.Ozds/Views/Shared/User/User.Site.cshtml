@@ -1,0 +1,42 @@
+@using YesSql
+@using OrchardCore.ContentManagement
+@using Ozds.Modules.Ozds
+@using Ozds.Util
+
+@inject ISession Session
+
+@{
+  var user = await OrchardUser;
+  var userId = user.UserId;
+
+  var userSites = await Session
+    .Query<ContentItem, SiteIndex>(
+      index => index.OwnerUserId == userId)
+    .ListAsync()
+    .Then(items => items
+      .SelectFilter(item => item.AsContent<SecondarySiteType>()));
+}
+
+@if (userSites.EmptyEnumerable())
+{
+  <div>
+    <p>
+      @T["No registered sites."]
+    </p>
+    <p>
+      @(T[
+        "If you have a registered site, " +
+        "please wait until our administrators add it."
+      ])
+    </p>
+  </div>
+}
+
+<div>
+  @foreach (var site in userSites)
+  {
+    <div>
+      @await Orchard.DisplayAsync(site.ContentItem, "Summary")
+    </div>
+  }
+</div>

@@ -61,42 +61,6 @@
                 "LinkMenuItem": {}
               },
               {
-                "ContentItemId": "43kg43sdnsg70s0gxdjmk8hcn8",
-                "ContentItemVersionId": null,
-                "ContentType": "LinkMenuItem",
-                "DisplayText": "ZDS",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-20T13:49:04.0895222Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "LinkMenuItemPart": {
-                  "Name": "ZDS",
-                  "Url": "~/Ozds.Modules.Ozds/Overview/Center"
-                },
-                "LinkMenuItem": {}
-              },
-              {
-                "ContentItemId": "41vnf5kvj16yntc5sr703kt1nr",
-                "ContentItemVersionId": null,
-                "ContentType": "LinkMenuItem",
-                "DisplayText": "Korisnik ZDS-a",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-20T13:49:27.0137109Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "LinkMenuItemPart": {
-                  "Name": "Korisnik ZDS-a",
-                  "Url": "~/Ozds.Modules.Ozds/Overview/Consumer"
-                },
-                "LinkMenuItem": {}
-              },
-              {
                 "ContentItemId": "4s0nzahq5tm2pxrtq1bfzmytx5",
                 "ContentItemVersionId": null,
                 "ContentType": "LinkMenuItem",
@@ -109,7 +73,7 @@
                 "Owner": null,
                 "Author": "admin",
                 "LinkMenuItemPart": {
-                  "Name": "OMM",
+                  "Name": "Obračunska mjerna mjesta",
                   "Url": "~/Ozds.Modules.Ozds/Overview/Site"
                 },
                 "LinkMenuItem": {}
@@ -127,7 +91,7 @@
                 "Owner": null,
                 "Author": "admin",
                 "LinkMenuItemPart": {
-                  "Name": "Račun",
+                  "Name": "Računi",
                   "Url": "~/Ozds.Modules.Ozds/Overview/Receipt"
                 },
                 "LinkMenuItem": {}
@@ -201,42 +165,6 @@
                 "LinkMenuItem": {}
               },
               {
-                "ContentItemId": "4kweynzfwcan13ykj9yhybyec8",
-                "ContentItemVersionId": null,
-                "ContentType": "LinkMenuItem",
-                "DisplayText": "Center",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-20T13:46:05.1302844Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "LinkMenuItemPart": {
-                  "Name": "Center",
-                  "Url": "~/Ozds.Modules.Ozds/Overview/Center"
-                },
-                "LinkMenuItem": {}
-              },
-              {
-                "ContentItemId": "4qwpgm2hda0bs7wr07h80fp54z",
-                "ContentItemVersionId": null,
-                "ContentType": "LinkMenuItem",
-                "DisplayText": "Consumer",
-                "Latest": false,
-                "Published": false,
-                "ModifiedUtc": "2022-05-20T13:46:18.1007171Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "LinkMenuItemPart": {
-                  "Name": "Consumer",
-                  "Url": "~/Ozds.Modules.Ozds/Overview/Consumer"
-                },
-                "LinkMenuItem": {}
-              },
-              {
                 "ContentItemId": "4dmvxs9vwavca5jgggwc16qvma",
                 "ContentItemVersionId": null,
                 "ContentType": "LinkMenuItem",
@@ -249,7 +177,7 @@
                 "Owner": null,
                 "Author": "admin",
                 "LinkMenuItemPart": {
-                  "Name": "Site",
+                  "Name": "Sites",
                   "Url": "~/Ozds.Modules.Ozds/Overview/Site"
                 },
                 "LinkMenuItem": {}
@@ -267,7 +195,7 @@
                 "Owner": null,
                 "Author": "admin",
                 "LinkMenuItemPart": {
-                  "Name": "Receipt",
+                  "Name": "Receipts",
                   "Url": "~/Ozds.Modules.Ozds/Overview/Receipt"
                 },
                 "LinkMenuItem": {}

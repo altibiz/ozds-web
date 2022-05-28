@@ -86,7 +86,9 @@ public static partial class Data
               FakeMeasurement.Timestamp +
               TimeSpan.FromDays(index)))
         .ToArray();
-    var period = measurements.GetLooseMeasurementPeriod();
+    var period = Period.LooselyEncompassing(
+        measurements.Select(measurement => measurement.Timestamp
+          .ToUniversalTime()));
     yield return
       new object[]
       {
