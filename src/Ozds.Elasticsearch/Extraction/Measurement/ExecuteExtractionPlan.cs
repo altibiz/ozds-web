@@ -97,27 +97,34 @@ public partial class Client : IClient
       (Period period,
       null,
       IEnumerable<ExtractionMeasurement> measurements) =>
-        !ExtractionPlanItemConsistent(device, item, measurements) ?
-          "Measurements inconsistent"
-        : item.ShouldValidate &&
-          !ExtractionPlanItemValid(device, item, measurements) ?
-            "Measurements invalid"
-        : null,
+        ExtractionPlanItemConsistent(device, item, measurements) ??
+        (item.ShouldValidate ?
+          ExtractionPlanItemValid(device, item, measurements)
+          : null),
       _ => bucket.Error
     };
 
-  private static bool ExtractionPlanItemConsistent(
+  private static string? ExtractionPlanItemConsistent(
       ExtractionDevice device,
       ExtractionPlanItem item,
-      IEnumerable<ExtractionMeasurement> measurements) =>
-    measurements.Count() >=
+      IEnumerable<ExtractionMeasurement> measurements)
+  {
+    var expected =
       Math.Floor(
         item.Period.Span.TotalSeconds /
         device.MeasurementInterval.TotalSeconds);
+    var got = measurements.Count();
 
-  private static bool ExtractionPlanItemValid(
+    return
+      got < expected ?
+        $"Measurements inconsistent because expected {expected} but got {got}"
+      : null;
+  }
+
+  private static string? ExtractionPlanItemValid(
       ExtractionDevice device,
       ExtractionPlanItem item,
       IEnumerable<ExtractionMeasurement> measurements) =>
-    measurements.All(ExtractionMeasurementExtensions.Validate);
+    measurements.All(ExtractionMeasurementExtensions.Validate) ? null
+    : "Measurements invalid";
 }
