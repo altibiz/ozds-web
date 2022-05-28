@@ -57,10 +57,17 @@ public static class DashboardMeasurementExtensions
   {
     if (@this.EmptyEnumerable())
     {
-      return default;
+      return
+        new MultiDashboardMeasurements
+        {
+          DeviceIds = Enumerable.Empty<string>(),
+          Measurements = Enumerable.Empty<MultiDashboardMeasurementData>()
+        };
     }
 
-    var deviceGroups = @this.GroupBy(measurement => measurement.DeviceId);
+    var deviceGroups = @this
+      .OrderBy(measurement => measurement.Timestamp)
+      .GroupBy(measurement => measurement.DeviceId);
     var deviceIds = deviceGroups.Select(group => group.Key);
 
     var events =
@@ -74,18 +81,18 @@ public static class DashboardMeasurementExtensions
       new MultiDashboardMeasurements
       {
         DeviceIds = deviceIds,
-        Measurements =
-            events.Select(@event =>
-              new MultiDashboardMeasurementData
-              {
-                Timestamp = @event,
-                Data = deviceGroups
-                  .Select(deviceMeasurements => deviceMeasurements
-                    .Interpolate(@event))
-                  .ToDictionary(
-                    pair => pair.Key,
-                    pair => pair.Value)
-              }),
+        Measurements = events
+          .Select(@event =>
+            new MultiDashboardMeasurementData
+            {
+              Timestamp = @event,
+              Data = deviceGroups
+                .Select(deviceMeasurements => deviceMeasurements
+                  .Interpolate(@event))
+                .ToDictionary(
+                  pair => pair.Key,
+                  pair => pair.Value)
+            }),
       };
   }
 
@@ -98,7 +105,7 @@ public static class DashboardMeasurementExtensions
 
     foreach (var current in @this)
     {
-      if (current.Timestamp > at)
+      if (current.Timestamp.ToUniversalTime() > at.ToUniversalTime())
       {
         if (last == default)
         {
@@ -115,6 +122,7 @@ public static class DashboardMeasurementExtensions
               From = last.Timestamp,
               To = current.Timestamp
             };
+
           return
             new KeyValuePair<string, DashboardMeasurementData>(
               current.DeviceId,
@@ -130,11 +138,11 @@ public static class DashboardMeasurementExtensions
                   at),
                 LowCostEnergy = period.Interpolate(
                   last.Data.LowCostEnergy,
-                  last.Data.HighCostEnergy,
+                  current.Data.HighCostEnergy,
                   at),
                 HighCostEnergy = period.Interpolate(
                   last.Data.HighCostEnergy,
-                  last.Data.HighCostEnergy,
+                  current.Data.HighCostEnergy,
                   at),
               });
         }

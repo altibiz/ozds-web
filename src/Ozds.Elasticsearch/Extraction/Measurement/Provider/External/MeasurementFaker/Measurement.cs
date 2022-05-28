@@ -75,6 +75,6 @@ public class Measurement
       });
 
 
-  private static MinMax s_energyMinMax = new(100, 200);
+  private static MinMax s_energyMinMax = new(15000, 16000);
   private static MinMax s_powerMinMax = new(10, 20);
 };

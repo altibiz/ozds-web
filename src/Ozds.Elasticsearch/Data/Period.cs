@@ -41,8 +41,16 @@ public class Period :
       To = events.Max().AddMinutes(1)
     };
 
-  public decimal Interpolate(decimal begin, decimal end, DateTime at) =>
-    (begin + end) * (decimal)((To - From) / (at - From));
+  public decimal Interpolate(decimal begin, decimal end, DateTime at)
+  {
+    var ticks = (To - From).Ticks;
+    var beginTicks = (at - From).Ticks;
+    var endTicks = (To - at).Ticks;
+
+    return
+      ((begin * beginTicks) + (end * endTicks)) /
+      (decimal)ticks;
+  }
 
   public IEnumerable<Period> SplitAscending(int times) =>
     SplitAscending(Span / times);

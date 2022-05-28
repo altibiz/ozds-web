@@ -82,6 +82,6 @@ public sealed partial class FakeDashboardMeasurementProvider :
               };
           }));
 
-  private static readonly MinMax s_energyMinMaxStart = new(100, 150);
+  private static readonly MinMax s_energyMinMaxStart = new(15000, 16000);
   private static readonly MinMax s_powerMinMax = new(10, 20);
 }
