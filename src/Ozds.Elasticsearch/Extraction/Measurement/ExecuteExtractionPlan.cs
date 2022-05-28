@@ -19,7 +19,7 @@ public partial class Client : IClient
             .ForEach(bucket => Logger
               .LogDebug(
                 $"Extracted {bucket.Count()} measurements " +
-                $"at {plan.Period} " +
+                $"at {bucket.Period} " +
                 $"for {plan.Device.Id} " +
                 $"from {provider.Source}"))
             .Select(bucket =>
@@ -50,7 +50,7 @@ public partial class Client : IClient
             .ForEach(bucket => Logger
               .LogDebug(
                 $"Extracted {bucket.Count()} measurements " +
-                $"at {plan.Period} " +
+                $"at {bucket.Period} " +
                 $"for {plan.Device.Id} " +
                 $"from {provider.Source}"))
             .Select(bucket =>

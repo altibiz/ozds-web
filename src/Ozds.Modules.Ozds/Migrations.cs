@@ -31,6 +31,8 @@ public sealed class Migrations : DataMigration
             .GetSection("Ozds")
             .GetValue<object?>("IsDemo") is not null)
       {
+        Session.SaveData();
+        Recipe.ExecuteContent(this);
         Recipe.Execute("Sensitive/demo.recipe.json", this);
       }
       else

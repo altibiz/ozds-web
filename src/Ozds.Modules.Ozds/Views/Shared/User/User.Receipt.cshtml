@@ -14,7 +14,7 @@
       index => index.ConsumerUserId == userId)
     .ListAsync()
     .Then(items => items
-      .SelectFilter(item => item.AsContent<SecondarySiteType>()));
+      .SelectFilter(item => item.AsContent<ReceiptType>()));
 }
 
 @if (userReceipts.EmptyEnumerable())
@@ -27,10 +27,10 @@
 }
 
 <div>
-  @foreach (var site in userReceipts)
+  @foreach (var receipt in userReceipts)
   {
     <div>
-      @await Orchard.DisplayAsync(site.ContentItem, "Summary")
+      @await Orchard.DisplayAsync(receipt.ContentItem, "Summary")
     </div>
   }
 </div>

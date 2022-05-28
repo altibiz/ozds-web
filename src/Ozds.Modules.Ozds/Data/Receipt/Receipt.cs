@@ -58,8 +58,7 @@ public readonly record struct ReceiptData
       calculation.SupplyExpenditure.Items.Select(
         item => taxonomy.CreateReceiptItemData(item)))
     .Await()
-    .Then(items =>
-      items.ToArray())
+    .Then(items => items.ToArray())
     .Then(items => (items, inTotal: items.Sum(item => item.InTotal)))
     .Then(data =>
       new ReceiptData

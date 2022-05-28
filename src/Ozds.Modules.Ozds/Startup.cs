@@ -139,12 +139,10 @@ public class Startup : OrchardCore.Modules.StartupBase
       AddElasticsearchClient(services);
     }
 
-    services.AddSingleton<
-      MeasurementImporterCache>();
-
-    services.AddSingleton<
-      IBackgroundTask,
-      MeasurementImporter>();
+    services.AddSingleton<MeasurementImporterCache>();
+    services.AddSingleton<MeasurementImporter>();
+    services.AddSingleton<IBackgroundTask, MeasurementImporter>(
+      services => services.GetRequiredService<MeasurementImporter>());
 
     services.AddScoped<LocalizedRouteTransformer>();
   }
