@@ -34,7 +34,7 @@ public class FakeReceiptMeasurementProvider : IReceiptMeasurementProvider
         source,
         deviceId,
         period)
-      .BlockTask();
+      .Block();
 
   public Task<PowerMeasurement>
   GetPowerMeasurementAsync(
@@ -56,7 +56,7 @@ public class FakeReceiptMeasurementProvider : IReceiptMeasurementProvider
         source,
         deviceId,
         period)
-      .BlockTask();
+      .Block();
 
   private static readonly MinMax s_energyBeginMinMax = new(100, 200);
   private static readonly MinMax s_energyEndMinMax = new(200, 300);

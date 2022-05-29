@@ -14,7 +14,7 @@ public partial class Client : IClient
         ExtractSourceMeasurementsAwait(
           provider.Source,
           period))
-      .Flatten();
+      .FlattenAsync();
 
   public Task<IEnumerable<IExtractionBucket<ExtractionMeasurement>>>
   ExtractMeasurementsAsync(

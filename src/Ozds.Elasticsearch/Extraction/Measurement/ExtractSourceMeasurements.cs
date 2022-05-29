@@ -10,19 +10,19 @@ public partial class Client : IClient
   ExtractSourceMeasurementsAwait(
       string source,
       Period? period = null) =>
-    Tasks
-      .ToAsyncEnumerable(Providers
-        .Find(provider => provider.Source == source)
-        .WhenNonNullableFinallyTask(provider =>
-          SearchDevicesBySourceAsync(source)
-            .Then(devices => devices
-              .Sources()
-              .Select(device => provider
-                .GetMeasurementsAwait(
-                  device.ToProvisionDevice(),
-                  period))
-              .Flatten())))
-      .Flatten();
+    Providers
+      .Find(provider => provider.Source == source)
+      .WhenNonNullableFinallyTask(provider =>
+        SearchDevicesBySourceAsync(source)
+          .Then(devices => devices
+            .Sources()
+            .Select(device => provider
+              .GetMeasurementsAwait(
+                device.ToProvisionDevice(),
+                period))
+            .FlattenAsync()))
+    .ToAsyncEnumerableNullable()
+    .FlattenAsync();
 
   public Task<IEnumerable<IExtractionBucket<ExtractionMeasurement>>>
   ExtractSourceMeasurementsAsync(
@@ -40,7 +40,7 @@ public partial class Client : IClient
                 period)))
           .ThenTask(Enumerables.Await)
           .Then(Enumerables.Flatten),
-        Enumerables.Empty<IExtractionBucket<ExtractionMeasurement>>);
+        Enumerable.Empty<IExtractionBucket<ExtractionMeasurement>>);
 
   public IEnumerable<IExtractionBucket<ExtractionMeasurement>>
   ExtractSourceMeasurements(
@@ -56,5 +56,5 @@ public partial class Client : IClient
               device.ToProvisionDevice(),
               period))
           .Flatten(),
-        Enumerables.Empty<IExtractionBucket<ExtractionMeasurement>>);
+        Enumerable.Empty<IExtractionBucket<ExtractionMeasurement>>);
 }

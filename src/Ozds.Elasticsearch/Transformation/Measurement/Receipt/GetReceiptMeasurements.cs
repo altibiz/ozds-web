@@ -49,7 +49,7 @@ public partial class Client : IClient
     GetEnergyMeasurementsAsync(
         source,
         deviceId,
-        period).BlockTask();
+        period).Block();
 
   public Task<PowerMeasurement>
   GetPowerMeasurementAsync(
@@ -74,7 +74,7 @@ public partial class Client : IClient
     GetPowerMeasurementAsync(
         source,
         deviceId,
-        period).BlockTask();
+        period).Block();
 
   // NOTE: the first is ascending and second descending
   // NOTE: gte and then lt so we dont mix up first/last measurements

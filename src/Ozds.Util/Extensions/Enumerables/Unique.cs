@@ -5,7 +5,8 @@ namespace Ozds.Extensions;
 public static partial class Enumerables
 {
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static IEnumerable<T> Unique<T>(
+  public static IEnumerable<T>
+  Unique<T>(
       this IEnumerable<T> @this)
   {
     HashSet<T> uniques = new();
@@ -20,7 +21,8 @@ public static partial class Enumerables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async IAsyncEnumerable<T> Unique<T>(
+  public static async IAsyncEnumerable<T>
+  Unique<T>(
       this IAsyncEnumerable<T> @this)
   {
     HashSet<T> uniques = new();
@@ -35,7 +37,8 @@ public static partial class Enumerables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static IEnumerable<TValue> Unique<TValue, TSelected>(
+  public static IEnumerable<TValue>
+  Unique<TValue, TSelected>(
       this IEnumerable<TValue> @this,
       Func<TValue, TSelected> selector)
   {
@@ -51,7 +54,8 @@ public static partial class Enumerables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async IAsyncEnumerable<TValue> Unique<TValue, TSelected>(
+  public static async IAsyncEnumerable<TValue>
+  UniqueAsync<TValue, TSelected>(
       this IAsyncEnumerable<TValue> @this,
       Func<TValue, TSelected> selector)
   {
@@ -67,7 +71,8 @@ public static partial class Enumerables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async IAsyncEnumerable<TValue> Unique<TValue, TSelected>(
+  public static async IAsyncEnumerable<TValue>
+  UniqueAwaitAsync<TValue, TSelected>(
       this IEnumerable<TValue> @this,
       Func<TValue, ValueTask<TSelected>> selector)
   {
@@ -83,7 +88,8 @@ public static partial class Enumerables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async IAsyncEnumerable<TValue> Unique<TValue, TSelected>(
+  public static async IAsyncEnumerable<TValue>
+  UniqueAwaitAsync<TValue, TSelected>(
       this IAsyncEnumerable<TValue> @this,
       Func<TValue, ValueTask<TSelected>> selector)
   {

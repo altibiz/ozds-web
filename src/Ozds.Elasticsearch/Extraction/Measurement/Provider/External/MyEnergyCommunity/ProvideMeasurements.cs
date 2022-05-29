@@ -28,7 +28,7 @@ public sealed partial class Client : IClient
   GetMeasurements(
       ProvisionDevice device,
       Period? period = null) =>
-    GetMeasurementsAsync(device, period).BlockTask();
+    GetMeasurementsAsync(device, period).Block();
 
   private IAsyncEnumerable<IExtractionBucket<ExtractionMeasurement>>
   GetMeasurementsViaSplitting(

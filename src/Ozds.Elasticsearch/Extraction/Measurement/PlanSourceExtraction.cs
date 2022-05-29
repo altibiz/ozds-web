@@ -27,8 +27,8 @@ public partial class Client : IClient
             missingDataExtractionPlanItemsLimit,
             loadExtractionSpanLimitInSeconds))
         .ToAsync())
-      .ToAsyncEnumerableNonNullable()
-      .Flatten();
+      .ToAsyncEnumerable()
+      .FlattenAsync();
 
   public Task<IEnumerable<ExtractionPlan>>
   PlanSourceExtractionAsync(
@@ -51,7 +51,7 @@ public partial class Client : IClient
             missingDataExtractionPlanItemsLimit,
             loadExtractionSpanLimitInSeconds))
         .Await())
-      .FlattenTask();
+      .Flatten();
 
   public IEnumerable<ExtractionPlan>
   PlanSourceExtraction(

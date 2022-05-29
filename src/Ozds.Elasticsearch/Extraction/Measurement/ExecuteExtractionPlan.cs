@@ -16,7 +16,7 @@ public partial class Client : IClient
             .GetMeasurementsAwait(
               plan.Device.ToProvisionDevice(),
               item.Period)
-            .ForEach(bucket => Logger
+            .ForEachAsync(bucket => Logger
               .LogDebug(
                 $"Extracted {bucket.Count()} measurements " +
                 $"at {bucket.Period} " +
@@ -27,8 +27,8 @@ public partial class Client : IClient
                 plan,
                 item,
                 bucket)))
-          .Flatten(),
-        Enumerables.EmptyAsync<MeasurementExtractionItem>)
+          .FlattenAsync(),
+        AsyncEnumerable.Empty<MeasurementExtractionItem>)
       .WhenNullable(items =>
         new MeasurementExtractionAsync
         {
@@ -59,7 +59,7 @@ public partial class Client : IClient
                 item,
                 bucket)))
           .Flatten(),
-        Enumerables.Empty<MeasurementExtractionItem>)
+        Enumerable.Empty<MeasurementExtractionItem>)
       .WhenNullable(items =>
         new MeasurementExtraction
         {

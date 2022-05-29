@@ -184,35 +184,35 @@ public readonly record struct ExpenditureData
       decimal beginLowCostEnergy,
       decimal endLowCostEnergy,
       decimal maxPower) =>
-    catalogue.Items.SelectFilter(
-      item =>
+    catalogue.Items.SelectFilterAwaitAsync(
+      async item =>
         item.TariffElementTermId switch
         {
           TariffElement.EnergyTermId =>
-            taxonomy.CreateExpenditureItemData(
+            await taxonomy.CreateExpenditureItemData(
               TariffItem.UsageTermId,
               beginEnergy,
               endEnergy,
               item.Price),
           TariffElement.HighCostEnergyTermId =>
-            taxonomy.CreateExpenditureItemData(
+            await taxonomy.CreateExpenditureItemData(
               TariffItem.HighCostUsageTermId,
               beginHighCostEnergy,
               endHighCostEnergy,
               item.Price),
           TariffElement.LowCostEnergyTermId =>
-            taxonomy.CreateExpenditureItemData(
+            await taxonomy.CreateExpenditureItemData(
               TariffItem.LowCostUsageTermId,
               beginLowCostEnergy,
               endLowCostEnergy,
               item.Price),
           TariffElement.MaxPowerTermId =>
-            taxonomy.CreateExpenditureItemData(
+            await taxonomy.CreateExpenditureItemData(
               TariffItem.MaxPowerTermId,
               maxPower,
               item.Price),
           TariffElement.SiteFeeTermId =>
-            taxonomy.CreateExpenditureItemData(
+            await taxonomy.CreateExpenditureItemData(
               TariffItem.MeasurementServiceFeeTermId,
               item.Price),
           _ => default,
@@ -231,23 +231,23 @@ public readonly record struct ExpenditureData
       decimal endLowCostEnergy,
       decimal renewableEnergyFeePrice,
       decimal businessUsageFeePrice) =>
-    catalogue.Items.SelectFilter(item =>
+    catalogue.Items.SelectFilterAwaitAsync(async item =>
       item.TariffElementTermId switch
       {
         TariffElement.EnergyTermId =>
-          taxonomy.CreateExpenditureItemData(
+          await taxonomy.CreateExpenditureItemData(
             TariffItem.SupplyTermId,
             beginEnergy,
             endEnergy,
             item.Price),
         TariffElement.HighCostEnergyTermId =>
-          taxonomy.CreateExpenditureItemData(
+          await taxonomy.CreateExpenditureItemData(
             TariffItem.HighCostSupplyTermId,
             beginHighCostEnergy,
             endHighCostEnergy,
             item.Price),
         TariffElement.LowCostEnergyTermId =>
-          taxonomy.CreateExpenditureItemData(
+          await taxonomy.CreateExpenditureItemData(
             TariffItem.LowCostSupplyTermId,
             beginLowCostEnergy,
             endLowCostEnergy,

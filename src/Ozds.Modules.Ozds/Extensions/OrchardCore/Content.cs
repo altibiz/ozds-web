@@ -81,12 +81,13 @@ public static partial class ContentExtensions
           property => property.GetValue(part) is null,
           property => ContentFieldTypes
             .FirstOrDefault(type => type == property.PropertyType)
-            .Construct<ContentField>()
-            .With(field =>
-            {
-              field.ContentItem = part.ContentItem;
-              property.SetValue(part, field);
-            })))
+            .WhenNonNullable(type => type
+              .Construct<ContentField>()
+              .With(field =>
+              {
+                field.ContentItem = part.ContentItem;
+                property.SetValue(part, field);
+              }))))
       .Return(part);
 
   private static List<Type> ContentFieldTypes { get; } =

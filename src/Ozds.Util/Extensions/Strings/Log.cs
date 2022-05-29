@@ -10,4 +10,12 @@ public static partial class Strings
     Console.WriteLine(str);
     return str;
   }
+
+  [MethodImpl(MethodImplOptions.AggressiveInlining)]
+  public static string ConsoleTitledLog(this string str, string title)
+  {
+    Console.WriteLine(title);
+    Console.WriteLine(str);
+    return str;
+  }
 }

@@ -11,9 +11,9 @@ public class PartServiceHandler<TPart, TService> : ContentPartHandler<TPart>
   public override Task ValidatingAsync(
       ValidateContentContext context,
       TPart part) =>
-    Service
+    AsyncEnumerable.ForEachAsync(Service
       .ValidateAsync(part)
-      .ForEachAsync(item => context.Fail(item));
+, item => context.Fail(item));
 
   public override Task InitializingAsync(
       InitializingContentContext context,

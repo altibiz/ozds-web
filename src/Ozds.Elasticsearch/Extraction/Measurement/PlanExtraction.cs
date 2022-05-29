@@ -23,7 +23,7 @@ public partial class Client : IClient
           measurementsPerExtractionPlanItem,
           missingDataExtractionPlanItemsLimit,
           loadExtractionSpanLimitInSeconds))
-      .Flatten();
+      .FlattenAsync();
 
   public Task<IEnumerable<ExtractionPlan>>
   PlanExtractionAsync(

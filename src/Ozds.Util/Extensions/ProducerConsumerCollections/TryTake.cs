@@ -1,5 +1,4 @@
 using System.Runtime.CompilerServices;
-
 using System.Collections.Concurrent;
 
 namespace Ozds.Extensions;

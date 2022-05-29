@@ -10,7 +10,7 @@ public static partial class Enumerables
   {
     foreach (var item in @this)
     {
-      yield return await Task.FromResult(item);
+      yield return await ValueTask.FromResult(item);
     }
   }
 

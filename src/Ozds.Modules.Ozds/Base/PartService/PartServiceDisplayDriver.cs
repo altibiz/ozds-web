@@ -23,8 +23,8 @@ public class PartServiceDisplayDriver<TPart, TService>
   public override Task<IDisplayResult> UpdateAsync(
       TPart model, IUpdateModel updater, UpdatePartEditorContext context) =>
       updater.TryUpdateModelAsync(model, Prefix)
-          .After(() => Service.ValidateAsync(model)
-            .ForEachAsync(item => updater.ModelState
+          .After(() => AsyncEnumerable.ForEachAsync(Service.ValidateAsync(model)
+, item => updater.ModelState
               .BindValidationResult(Prefix, item)))
           .After(() => Edit(model, context));
 

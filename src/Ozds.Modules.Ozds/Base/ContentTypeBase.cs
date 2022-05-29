@@ -130,7 +130,7 @@ public static class ContentTypeBaseExtensions
               content.ContentItem
                 .CreateLazy(partType, property.Name)
                 .WithNullable(lazy =>
-                  content.SetProperty(property, lazy))))
+                  content.Set(property, lazy))))
       .Run()
       .Return(content);
 

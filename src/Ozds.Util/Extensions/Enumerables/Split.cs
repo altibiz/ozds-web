@@ -19,17 +19,6 @@ public static partial class Enumerables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static IEnumerable<T> Split<T>(
-      this IEnumerator<T> @this,
-      Predicate<T> on)
-  {
-    while (!on(@this.Current) && @this.MoveNext())
-    {
-      yield return @this.Current;
-    }
-  }
-
-  [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static IEnumerable<IEnumerable<T>> Split<T>(
       this IEnumerable<T> @this,
       int every)
@@ -40,6 +29,17 @@ public static partial class Enumerables
       {
         yield return enumerator.Split(every);
       }
+    }
+  }
+
+  [MethodImpl(MethodImplOptions.AggressiveInlining)]
+  public static IEnumerable<T> Split<T>(
+      this IEnumerator<T> @this,
+      Predicate<T> on)
+  {
+    while (!on(@this.Current) && @this.MoveNext())
+    {
+      yield return @this.Current;
     }
   }
 

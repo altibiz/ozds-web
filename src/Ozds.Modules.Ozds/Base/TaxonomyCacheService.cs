@@ -10,7 +10,7 @@ public class TaxonomyCacheService
   public IAsyncEnumerable<T> GetTerms<T>(
       TaxonomyField field) where T : ContentTypeBase =>
     GetTerms(field)
-      .SelectFilter(term => term.AsContent<T>());
+      .SelectFilterAsync(term => term.AsContent<T>());
 
   public Task<T?> GetTerm<T>(
       TaxonomyField field) where T : ContentTypeBase =>
@@ -25,8 +25,9 @@ public class TaxonomyCacheService
   public IAsyncEnumerable<ContentItem> GetTerms(
       TaxonomyField field) =>
     field.TermContentItemIds
-      .SelectFilterTask(termId =>
-        GetTerm(field.TaxonomyContentItemId, termId));
+      .SelectFilterAwaitAsync(termId =>
+          GetTerm(field.TaxonomyContentItemId, termId)
+            .ToValueTask());
 
   public Task<ContentItem?> GetTerm(
       TaxonomyField field) =>

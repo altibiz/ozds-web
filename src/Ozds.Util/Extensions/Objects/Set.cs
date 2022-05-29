@@ -6,7 +6,7 @@ namespace Ozds.Extensions;
 public static partial class Objects
 {
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static T? SetProperty<T>(
+  public static T? Set<T>(
       this T? @this,
       PropertyInfo field,
       object? value) where T : class
@@ -17,7 +17,7 @@ public static partial class Objects
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static T? SetProperty<T>(
+  public static T? Set<T>(
       this T? @this,
       string field,
       object? value) where T : class
@@ -31,7 +31,7 @@ public static partial class Objects
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static T? SetProperty<T>(
+  public static T? Set<T>(
       this T? @this,
       string field,
       BindingFlags binding,

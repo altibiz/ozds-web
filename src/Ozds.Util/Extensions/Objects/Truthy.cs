@@ -8,12 +8,12 @@ public static partial class Objects
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static bool Truthy<T>(
       [NotNullWhen(true)] this T? @this) where T : struct =>
-    @this.NotEmpty();
+    !@this.Empty();
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static bool Truthy<T>(
       [NotNullWhen(true)] this T? @this) =>
-    @this.NotEmpty();
+    !@this.Empty();
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static bool Truthy(

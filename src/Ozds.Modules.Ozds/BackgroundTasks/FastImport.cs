@@ -41,22 +41,22 @@ public class Importer
             .ForEachAsync(
               batchedItems =>
                 batchedItems
-                  .ForEach(item =>
-                    item.WhenWithTask(
-                      item => !importedIds
-                        .Contains(item.ContentItemVersionId),
-                      item =>
+                  .ForEachAwait(async item =>
+                    {
+                      if (importedIds.Contains(item.ContentItemVersionId))
                       {
-                        importedIds
-                          .Add(item.ContentItemVersionId);
-                        return Handlers
-                          .InvokeAsync(
-                            (handler, context) =>
-                              handler.ImportingAsync(context),
-                            new ImportContentContext(item),
-                            Logger)
-                          .After(() => Session.Save(item));
-                      }))
+                        return;
+                      }
+
+                      importedIds.Add(item.ContentItemVersionId);
+                      await Handlers
+                        .InvokeAsync(
+                          (handler, context) =>
+                            handler.ImportingAsync(context),
+                          new ImportContentContext(item),
+                          Logger)
+                        .After(() => Session.Save(item));
+                    })
                   .Await()
                   .After(() =>
                   {

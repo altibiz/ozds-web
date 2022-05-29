@@ -49,5 +49,5 @@ public class ExtractionBucket<T> : IExtractionBucket<T>
   IEnumerator IEnumerable.GetEnumerator() =>
     Items.GetEnumerator();
 
-  private IEnumerable<T> Items { get; } = Enumerables.Empty<T>();
+  private IEnumerable<T> Items { get; } = Enumerable.Empty<T>();
 }

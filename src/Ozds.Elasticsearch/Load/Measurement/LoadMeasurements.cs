@@ -10,7 +10,7 @@ public partial class Client : IClient
   public Task LoadMeasurementsAwait(
       EnrichedMeasurementExtractionAsync extraction) =>
     extraction.Items
-      .ForEachValueTask(
+      .ForEachAwaitAsync(
         async item =>
         {
           // NOTE: indexing first, so in case something happens right here, we
@@ -71,7 +71,7 @@ public partial class Client : IClient
   public Task LoadMeasurementsAsync(
       EnrichedMeasurementExtractionAsync extraction) =>
     extraction.Items
-      .ForEachValueTask(
+      .ForEachAwaitAsync(
         async item =>
         {
           // NOTE: indexing first, so in case something happens right here, we

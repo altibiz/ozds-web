@@ -70,7 +70,7 @@ public static class EnrichedMeasurementExtractionExtensions
         .SelectAwait(item =>
           item.Bucket
             .Select(enrich)
-            .AwaitValueTask()
+            .Await()
             .Then(bucket =>
               new EnrichedMeasurementExtractionItem
               {
@@ -80,6 +80,7 @@ public static class EnrichedMeasurementExtractionExtensions
                   new ExtractionBucket<LoadMeasurement>(
                     item.Bucket.Period,
                     bucket)
-              }))
+              })
+            .ToValueTask())
     };
 }

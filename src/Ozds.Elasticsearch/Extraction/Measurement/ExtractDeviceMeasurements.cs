@@ -17,10 +17,10 @@ public partial class Client : IClient
           .GetMeasurementsAwait(
             device.ToProvisionDevice(),
             period)
-          .ForEach(bucket => Logger.LogDebug(
+          .ForEachAsync(bucket => Logger.LogDebug(
             $"Extracted {bucket.Count()} measurements at {period} " +
             $"for {device.Id} from {provider.Source}")),
-        Enumerables.EmptyAsync<IExtractionBucket<ExtractionMeasurement>>());
+        AsyncEnumerable.Empty<IExtractionBucket<ExtractionMeasurement>>());
 
   public Task<IEnumerable<IExtractionBucket<ExtractionMeasurement>>>
   ExtractDeviceMeasurementsAsync(
@@ -37,7 +37,7 @@ public partial class Client : IClient
             .ForEach(bucket => Logger.LogDebug(
               $"Extracted {bucket.Count()} measurements at {period} " +
               $"for {device.Id} from {provider.Source}"))),
-        Enumerables.Empty<IExtractionBucket<ExtractionMeasurement>>());
+        Enumerable.Empty<IExtractionBucket<ExtractionMeasurement>>());
 
   public IEnumerable<IExtractionBucket<ExtractionMeasurement>>
   ExtractDeviceMeasurements(
@@ -53,5 +53,5 @@ public partial class Client : IClient
           .ForEach(bucket => Logger.LogDebug(
             $"Extracted {bucket.Count()} measurements at {period} " +
             $"for {device.Id} from {provider.Source}")),
-        Enumerables.Empty<IExtractionBucket<ExtractionMeasurement>>());
+        Enumerable.Empty<IExtractionBucket<ExtractionMeasurement>>());
 }

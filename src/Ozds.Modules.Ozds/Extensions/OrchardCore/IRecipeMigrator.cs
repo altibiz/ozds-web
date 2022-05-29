@@ -12,6 +12,6 @@ public static class IRecipeMigratorExtensions
       IDataMigration migration) =>
     migrator
       .ExecuteAsync(recipe, migration)
-      .BlockTask()
+      .Block()
       .Return(migrator);
 }

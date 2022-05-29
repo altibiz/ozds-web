@@ -18,7 +18,7 @@ public static partial class Enumerables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async IAsyncEnumerable<T> Flatten<T>(
+  public static async IAsyncEnumerable<T> FlattenAsync<T>(
       this IEnumerable<IAsyncEnumerable<T>> @this)
   {
     foreach (var outer in @this)
@@ -31,7 +31,7 @@ public static partial class Enumerables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async IAsyncEnumerable<T> Flatten<T>(
+  public static async IAsyncEnumerable<T> FlattenAsync<T>(
       this IAsyncEnumerable<IEnumerable<T>> @this)
   {
     await foreach (var outer in @this)
@@ -44,7 +44,7 @@ public static partial class Enumerables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async IAsyncEnumerable<T> Flatten<T>(
+  public static async IAsyncEnumerable<T> FlattenAsync<T>(
       this IAsyncEnumerable<IAsyncEnumerable<T>> @this)
   {
     await foreach (var outer in @this)
