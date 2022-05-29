@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace Ozds.Extensions;
+namespace Ozds.Extensions.Disposable;
 
 public static partial class Disposables
 {
