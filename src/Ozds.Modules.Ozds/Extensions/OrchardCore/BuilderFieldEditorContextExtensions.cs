@@ -1,7 +1,7 @@
 using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.ContentManagement.Metadata.Models;
 using OrchardCore.ContentManagement.Metadata.Settings;
-using Ozds.Util;
+using Ozds.Extensions;
 
 namespace Ozds.Modules.Ozds;
 

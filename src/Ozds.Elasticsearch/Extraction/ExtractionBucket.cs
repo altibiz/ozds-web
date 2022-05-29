@@ -1,5 +1,5 @@
 using System.Collections;
-using Ozds.Util;
+using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch;
 

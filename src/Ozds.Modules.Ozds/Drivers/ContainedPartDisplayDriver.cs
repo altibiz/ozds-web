@@ -5,7 +5,7 @@ using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.Views;
 using OrchardCore.Lists.Models;
-using Ozds.Util;
+using Ozds.Extensions;
 
 namespace Ozds.Modules.Ozds.Base;
 

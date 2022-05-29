@@ -2,7 +2,7 @@ using Xunit;
 using OrchardCore.ContentManagement;
 using OrchardCore.Title.Models;
 using OrchardCore.Lists.Models;
-using Ozds.Util;
+using Ozds.Extensions;
 
 namespace Ozds.Modules.Ozds.Test;
 

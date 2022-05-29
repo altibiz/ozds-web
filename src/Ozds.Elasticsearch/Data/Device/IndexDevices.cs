@@ -1,4 +1,4 @@
-using Ozds.Util;
+using Ozds.Extensions;
 
 using Nest;
 

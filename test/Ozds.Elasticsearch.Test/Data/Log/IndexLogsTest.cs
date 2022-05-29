@@ -1,6 +1,6 @@
 using Xunit;
 using Nest;
-using Ozds.Util;
+using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch.Test;
 

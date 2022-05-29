@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Identity;
-using Ozds.Util;
+using Ozds.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;

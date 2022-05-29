@@ -4,7 +4,7 @@ using OrchardCore.ContentManagement;
 using Etch.OrchardCore.Fields.Dictionary.Fields;
 using Newtonsoft.Json;
 using Ozds.Elasticsearch;
-using Ozds.Util;
+using Ozds.Extensions;
 
 namespace Ozds.Modules.Ozds;
 

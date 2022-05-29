@@ -2,7 +2,7 @@ using Dapper;
 using YesSql;
 using YesSql.Sql;
 using YesSql.Sql.Schema;
-using Ozds.Util;
+using Ozds.Extensions;
 
 namespace Ozds.Modules.Ozds;
 

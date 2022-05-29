@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OrchardCore.ContentManagement.Handlers;
 using OrchardCore.ContentManagement;
-using Ozds.Util;
+using Ozds.Extensions;
 using Ozds.Elasticsearch;
 
 namespace Ozds.Modules.Ozds;

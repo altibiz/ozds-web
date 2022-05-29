@@ -1,7 +1,7 @@
 using YesSql.Indexes;
 using OrchardCore.Data;
 using OrchardCore.ContentManagement;
-using Ozds.Util;
+using Ozds.Extensions;
 using Ozds.Elasticsearch;
 
 namespace Ozds.Modules.Ozds;

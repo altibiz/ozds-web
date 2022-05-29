@@ -2,7 +2,7 @@ using System.Text.Json;
 // NOTE: QueryBuilder
 // TODO: dont use AspNetCore here
 using Microsoft.AspNetCore.Http.Extensions;
-using Ozds.Util;
+using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch.MyEnergyCommunity;
 

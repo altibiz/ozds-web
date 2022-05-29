@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Ozds.Util;
+namespace Ozds.Extensions;
 
 public static partial class Objects
 {

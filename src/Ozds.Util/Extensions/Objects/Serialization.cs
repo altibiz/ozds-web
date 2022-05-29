@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Ozds.Util;
+namespace Ozds.Extensions;
 
 public static partial class Objects
 {

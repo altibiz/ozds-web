@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.BackgroundTasks;
 using Ozds.Elasticsearch;
-using Ozds.Util;
+using Ozds.Extensions;
 
 namespace Ozds.Modules.Ozds;
 

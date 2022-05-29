@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace Ozds.Util;
+namespace Ozds.Extensions;
 
 public static partial class Strings
 {

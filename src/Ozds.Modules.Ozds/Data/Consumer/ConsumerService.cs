@@ -10,7 +10,7 @@ using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.Users.Models;
 using OrchardCore.Users.Services;
 using YesSql;
-using Ozds.Util;
+using Ozds.Extensions;
 using ISession = YesSql.ISession;
 
 namespace Ozds.Modules.Ozds;

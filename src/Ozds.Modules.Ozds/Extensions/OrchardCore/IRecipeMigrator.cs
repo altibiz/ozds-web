@@ -1,6 +1,6 @@
 using OrchardCore.Data.Migration;
 using OrchardCore.Recipes.Services;
-using Ozds.Util;
+using Ozds.Extensions;
 
 namespace Ozds.Modules.Ozds.Extensions.OrchardCore;
 

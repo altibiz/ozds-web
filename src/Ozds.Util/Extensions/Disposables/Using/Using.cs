@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace Ozds.Util;
+namespace Ozds.Extensions;
 
 public static partial class Disposables
 {
@@ -16,7 +16,7 @@ public static partial class Disposables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static Task UsingTask<TDisposable>(
+  public static Task Using<TDisposable>(
       this TDisposable @this,
       Func<TDisposable, Task> @do) where TDisposable : IDisposable
   {
@@ -27,7 +27,7 @@ public static partial class Disposables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static ValueTask UsingValueTask<TDisposable>(
+  public static ValueTask Using<TDisposable>(
       this TDisposable @this,
       Func<TDisposable, ValueTask> @do) where TDisposable : IDisposable
   {
@@ -49,7 +49,7 @@ public static partial class Disposables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static Task<TOut> UsingTask<TDisposable, TOut>(
+  public static Task<TOut> Using<TDisposable, TOut>(
       this TDisposable @this,
       Func<TDisposable, Task<TOut>> @do) where TDisposable : IDisposable
   {
@@ -60,7 +60,7 @@ public static partial class Disposables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static ValueTask<TOut> UsingValueTask<TDisposable, TOut>(
+  public static ValueTask<TOut> Using<TDisposable, TOut>(
       this TDisposable @this,
       Func<TDisposable, ValueTask<TOut>> @do) where TDisposable : IDisposable
   {

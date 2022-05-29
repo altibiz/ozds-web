@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.DisplayManagement.Razor;
 using OrchardCore.Users.Models;
 using OrchardCore.Users.Services;
-using Ozds.Util;
+using Ozds.Extensions;
 
 public abstract class UserPage<TModel> : RazorPage<TModel>
 {

@@ -1,5 +1,5 @@
 using Xunit.Abstractions;
-using Ozds.Util;
+using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch.Test;
 

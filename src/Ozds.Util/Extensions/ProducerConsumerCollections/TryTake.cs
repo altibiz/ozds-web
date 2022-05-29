@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 
 using System.Collections.Concurrent;
 
-namespace Ozds.Util;
+namespace Ozds.Extensions;
 
 public static class ProducerConsumerCollections
 {
