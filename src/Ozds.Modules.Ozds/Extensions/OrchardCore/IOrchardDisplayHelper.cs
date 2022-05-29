@@ -40,7 +40,7 @@ public static class IOrchardDisplayHelperExtensions
     orchardDisplayHelper
       .GetTaxonomyTermAsync(
         taxonomy.TaxonomyContentItemId,
-        taxonomy.TermContentItemIds[0])
+        taxonomy.TermContentItemIds.First())
       .ThenTask(item => orchardDisplayHelper
         .DisplayAsync(item, displayType ?? "Detail"));
 

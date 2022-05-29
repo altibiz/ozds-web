@@ -109,7 +109,7 @@ public static class ContentTypeBaseExtensions
     orchardDisplayHelper
       .GetTaxonomyTermAsync(
         taxonomy.TaxonomyContentItemId,
-        taxonomy.TermContentItemIds[0])
+        taxonomy.TermContentItemIds.First())
       .Then(item => item.AsContent<T>());
 
   internal static T PopulateContent<T>(

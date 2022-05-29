@@ -24,7 +24,7 @@ public static class TariffItem
   public static Task<TariffTagType?> GetTariffItem(
       this TaxonomyCacheService taxonomy,
       TaxonomyField field) =>
-    taxonomy.GetTariffItem(field.TermContentItemIds[0]);
+    taxonomy.GetTariffItem(field.TermContentItemIds.First());
 
   public static bool IsUsage(string tariffItemTermId) =>
     s_usageTariffItemTermIds.Contains(tariffItemTermId);

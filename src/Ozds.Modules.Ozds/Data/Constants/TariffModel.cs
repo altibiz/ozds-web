@@ -20,5 +20,5 @@ public static class TariffModel
   public static Task<TagType?> GetTariffModel(
       this TaxonomyCacheService taxonomy,
       TaxonomyField field) =>
-    taxonomy.GetTariffModel(field.TermContentItemIds[0]);
+    taxonomy.GetTariffModel(field.TermContentItemIds.First());
 }

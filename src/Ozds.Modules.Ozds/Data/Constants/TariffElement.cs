@@ -21,5 +21,5 @@ public static class TariffElement
   public static Task<TariffTagType?> GetTariffElement(
       this TaxonomyCacheService taxonomy,
       TaxonomyField field) =>
-    taxonomy.GetTariffElement(field.TermContentItemIds[0]);
+    taxonomy.GetTariffElement(field.TermContentItemIds.First());
 }

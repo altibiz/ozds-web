@@ -19,7 +19,7 @@ public static class SiteStatus
   public static Task<TagType?> GetSiteStatus(
       this TaxonomyCacheService taxonomy,
       TaxonomyField field) =>
-    taxonomy.GetSiteStatus(field.TermContentItemIds[0]);
+    taxonomy.GetSiteStatus(field.TermContentItemIds.First());
 
   public static string? GetElasticsearchStatus(string termId) =>
     SiteStatusTermIdToElasticsearchStatue.GetOrDefault(termId);
