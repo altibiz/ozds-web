@@ -72,23 +72,26 @@ public static partial class ContentExtensions
     items.Select(x => ContentItemExtensions.As<T>(x));
 
   public static T InitContentFields<T>(
-      this T part) where T : ContentPart =>
-    part
-      .GetType()
-      .GetProperties()
-      .ForEach(property => property
-        .When(
-          property => property.GetValue(part) is null,
-          property => ContentFieldTypes
-            .FirstOrDefault(type => type == property.PropertyType)
-            .WhenNonNullable(type => type
-              .Construct<ContentField>()
-              .With(field =>
-              {
-                field.ContentItem = part.ContentItem;
-                property.SetValue(part, field);
-              }))))
-      .Return(part);
+      this T part) where T : ContentPart
+  {
+    foreach (var property in typeof(T).GetProperties())
+    {
+      if (property.GetValue(part) is null)
+      {
+        ContentFieldTypes
+          .FirstOrDefault(type => type == property.PropertyType)
+          .WhenNonNullable(type => type
+            .Construct<ContentField>()
+            .With(field =>
+            {
+              field.ContentItem = part.ContentItem;
+              property.SetValue(part, field);
+            }));
+      }
+    }
+
+    return part;
+  }
 
   private static List<Type> ContentFieldTypes { get; } =
     new List<Type>

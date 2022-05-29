@@ -36,7 +36,7 @@ public class MeasurementImporter : IBackgroundTask
         extractor.PlanExtractionAwait(period),
         token,
         (plan, token) => loader
-          .LoadMeasurementsAwait(
+          .LoadMeasurementsAsync(
             extractor
               .ExecuteExtractionPlanAsync(plan)
               .Enrich(measurement =>

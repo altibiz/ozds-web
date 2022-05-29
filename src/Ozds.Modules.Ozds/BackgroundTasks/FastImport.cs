@@ -59,10 +59,10 @@ public class Importer
                     })
                   .Await()
                   .After(() =>
-                  {
-                    Logger.LogDebug("Imported: " + importedIds.Count);
-                    return Session.SaveChangesAsync();
-                  })));
+                    {
+                      Logger.LogDebug("Imported: " + importedIds.Count);
+                      return Session.SaveChangesAsync();
+                    })));
 
   public Importer(ISession session, ILogger<DefaultContentManager> logger,
       IEnumerable<IContentHandler> handlers)

@@ -113,27 +113,28 @@ public static class ContentTypeBaseExtensions
       .Then(item => item.AsContent<T>());
 
   internal static T PopulateContent<T>(
-      this T content) where T : ContentTypeBase =>
-    typeof(T)
-      .GetProperties()
-      .ForEach(property =>
-        property.PropertyType
-          .GetGenericArguments()
-          .FirstOrDefault()
-          .WhenWith(
-            partType =>
-              partType.IsAssignableTo(typeof(ContentElement)) &&
-              Equals(
-                property.PropertyType.GetGenericTypeDefinition(),
-                typeof(Lazy<>)),
-            partType =>
-              content.ContentItem
-                .CreateLazy(partType, property.Name)
-                .WithNullable(lazy =>
-                  content.Set(property, lazy))))
-      .Run()
-      .Return(content);
+      this T content) where T : ContentTypeBase
+  {
+    foreach (var property in typeof(T).GetProperties())
+    {
+      property.PropertyType
+        .GetGenericArguments()
+        .FirstOrDefault()
+        .WhenWith(
+          partType =>
+            partType.IsAssignableTo(typeof(ContentElement)) &&
+            Equals(
+              property.PropertyType.GetGenericTypeDefinition(),
+              typeof(Lazy<>)),
+          partType =>
+            content.ContentItem
+              .CreateLazy(partType, property.Name)
+              .WithNullable(lazy =>
+                content.Set(property, lazy)));
+    }
 
+    return content;
+  }
 
   private static object CreateLazy(
       this ContentItem contentItem,

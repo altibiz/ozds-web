@@ -31,12 +31,12 @@ public static class ISessionExtensions
           .ThrowWhenNull()
           .With(@object =>
             {
-              if (@object is IEnumerable<object> objects)
+              if (@object is IEnumerable<object> items)
               {
-                objects
-                  .ForEach(@object => session
-                    .Save(@object))
-                  .Run();
+                foreach (var item in items)
+                {
+                  session.Save(item);
+                }
               }
               else
               {
