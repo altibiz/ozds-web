@@ -7,16 +7,6 @@ public partial interface IClient : IMeasurementExtractor { }
 public partial class Client : IClient
 {
   public IAsyncEnumerable<IExtractionBucket<ExtractionMeasurement>>
-  ExtractMeasurementsAwait(
-      Period? period = null) =>
-    Providers
-      .Select(provider =>
-        ExtractSourceMeasurementsAwait(
-          provider.Source,
-          period))
-      .FlattenAsync();
-
-  public Task<IEnumerable<IExtractionBucket<ExtractionMeasurement>>>
   ExtractMeasurementsAsync(
       Period? period = null) =>
     Providers
@@ -24,8 +14,7 @@ public partial class Client : IClient
         ExtractSourceMeasurementsAsync(
           provider.Source,
           period))
-      .Await()
-      .Then(Enumerables.Flatten);
+      .FlattenAsync();
 
   public IEnumerable<IExtractionBucket<ExtractionMeasurement>>
   ExtractMeasurements(

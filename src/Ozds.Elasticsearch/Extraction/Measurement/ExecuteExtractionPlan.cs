@@ -6,14 +6,14 @@ public partial interface IClient : IMeasurementExtractor { }
 
 public partial class Client : IClient
 {
-  public MeasurementExtractionAsync
+  public AsyncMeasurementExtraction
   ExecuteExtractionPlanAsync(ExtractionPlan plan) =>
     Providers
       .Find(provider => provider.Source == plan.Device.Source)
       .WhenNonNullFinally(provider =>
         plan.Items
           .Select(item => provider
-            .GetMeasurementsAwait(
+            .GetMeasurementsAsync(
               plan.Device.ToProvisionDevice(),
               item.Period)
             .ForEachAsync(bucket => Logger
@@ -30,7 +30,7 @@ public partial class Client : IClient
           .FlattenAsync(),
         AsyncEnumerable.Empty<MeasurementExtractionItem>)
       .To(items =>
-        new MeasurementExtractionAsync
+        new AsyncMeasurementExtraction
         {
           Device = plan.Device,
           Period = plan.Period,
@@ -68,7 +68,7 @@ public partial class Client : IClient
           Items = items
         });
 
-  private MeasurementExtractionItem CreateExtractionItem(
+  private static MeasurementExtractionItem CreateExtractionItem(
       ExtractionPlan plan,
       ExtractionPlanItem item,
       IExtractionBucket<ExtractionMeasurement> bucket) =>
@@ -79,7 +79,7 @@ public partial class Client : IClient
       Next = PlanNextExtractionItem(plan.Device, item, bucket)
     };
 
-  private ExtractionPlanItem? PlanNextExtractionItem(
+  private static ExtractionPlanItem? PlanNextExtractionItem(
       ExtractionDevice device,
       ExtractionPlanItem last,
       IExtractionBucket<ExtractionMeasurement> bucket) =>

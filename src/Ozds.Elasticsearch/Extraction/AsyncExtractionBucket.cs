@@ -1,9 +1,7 @@
-using System.Collections;
-
 namespace Ozds.Elasticsearch;
 
 // TODO: covariance with deconstruction
-public interface IExtractionBucket<T> : IEnumerable<T>
+public interface IAsyncExtractionBucket<T> : IAsyncEnumerable<T>
 {
   public Period Period { get; }
 
@@ -12,7 +10,7 @@ public interface IExtractionBucket<T> : IEnumerable<T>
   public void Deconstruct(
       out Period period,
       out string? error,
-      out IEnumerable<T> items)
+      out IAsyncEnumerable<T> items)
   {
     period = Period;
     error = Error;
@@ -20,17 +18,17 @@ public interface IExtractionBucket<T> : IEnumerable<T>
   }
 }
 
-public class ExtractionBucket<T> : IExtractionBucket<T>
+public class AsyncExtractionBucket<T> : IAsyncExtractionBucket<T>
 {
-  public ExtractionBucket(
+  public AsyncExtractionBucket(
       Period period,
-      IEnumerable<T> items)
+      IAsyncEnumerable<T> items)
   {
     Period = period;
     Items = items;
   }
 
-  public ExtractionBucket(
+  public AsyncExtractionBucket(
       Period period,
       string error)
   {
@@ -42,11 +40,9 @@ public class ExtractionBucket<T> : IExtractionBucket<T>
 
   public string? Error { get; } = default;
 
-  IEnumerator<T> IEnumerable<T>.GetEnumerator() =>
-    Items.GetEnumerator();
+  IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(
+      CancellationToken cancellationToken) =>
+    Items.GetAsyncEnumerator(cancellationToken);
 
-  IEnumerator IEnumerable.GetEnumerator() =>
-    Items.GetEnumerator();
-
-  private IEnumerable<T> Items { get; } = Enumerable.Empty<T>();
+  private IAsyncEnumerable<T> Items { get; } = AsyncEnumerable.Empty<T>();
 }

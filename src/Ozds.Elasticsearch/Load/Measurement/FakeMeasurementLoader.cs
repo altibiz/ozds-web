@@ -3,7 +3,7 @@ namespace Ozds.Elasticsearch;
 public class FakeMeasurementLoader : IMeasurementLoader
 {
   public Task LoadMeasurementsAsync(
-      EnrichedMeasurementExtractionAsync _) =>
+      AsyncEnrichedMeasurementExtraction _) =>
     Task.CompletedTask;
 
   public void LoadMeasurements(

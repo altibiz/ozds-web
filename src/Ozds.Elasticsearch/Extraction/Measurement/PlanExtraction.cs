@@ -7,25 +7,6 @@ public partial interface IClient : IMeasurementExtractor { }
 public partial class Client : IClient
 {
   public IAsyncEnumerable<ExtractionPlan>
-  PlanExtractionAwait(
-      Period? period = null,
-      int measurementsPerExtractionPlanItem =
-        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
-      int missingDataExtractionPlanItemsLimit =
-        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
-      int loadExtractionSpanLimitInSeconds =
-        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
-    Providers
-      .Select(provider =>
-        PlanSourceExtractionAwait(
-          provider.Source,
-          period,
-          measurementsPerExtractionPlanItem,
-          missingDataExtractionPlanItemsLimit,
-          loadExtractionSpanLimitInSeconds))
-      .FlattenAsync();
-
-  public Task<IEnumerable<ExtractionPlan>>
   PlanExtractionAsync(
       Period? period = null,
       int measurementsPerExtractionPlanItem =
@@ -42,8 +23,7 @@ public partial class Client : IClient
           measurementsPerExtractionPlanItem,
           missingDataExtractionPlanItemsLimit,
           loadExtractionSpanLimitInSeconds))
-      .Await()
-      .Then(Enumerables.Flatten);
+      .FlattenAsync();
 
   public IEnumerable<ExtractionPlan>
   PlanExtraction(

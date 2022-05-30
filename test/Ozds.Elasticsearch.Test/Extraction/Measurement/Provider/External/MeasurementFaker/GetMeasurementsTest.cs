@@ -44,6 +44,7 @@ public partial class ClientTest
 
     var measurements = await Client
       .GetMeasurementsAsync(device.ToProvisionDevice(), period)
+      .Await()
       .Then(buckets => buckets
         .SelectMany(Functions.Id)
         .ToList());

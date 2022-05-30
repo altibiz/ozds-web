@@ -6,7 +6,7 @@ public partial interface IClient : IMeasurementLoader { }
 public partial class Client : IClient
 {
   public async Task LoadMeasurementsAsync(
-      EnrichedMeasurementExtractionAsync extraction)
+      AsyncEnrichedMeasurementExtraction extraction)
   {
     await foreach (var item in extraction.Items)
     {

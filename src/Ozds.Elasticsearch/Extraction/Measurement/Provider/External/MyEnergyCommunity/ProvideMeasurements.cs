@@ -13,22 +13,16 @@ public sealed partial class Client : IClient
   public string Source { get => Client.MyEnergyCommunitySource; }
 
   public IAsyncEnumerable<IExtractionBucket<ExtractionMeasurement>>
-  GetMeasurementsAwait(
-      ProvisionDevice device,
-      Period? period = null) =>
-    GetMeasurementsViaSplitting(device, period);
-
-  public Task<IEnumerable<IExtractionBucket<ExtractionMeasurement>>>
   GetMeasurementsAsync(
       ProvisionDevice device,
       Period? period = null) =>
-    GetMeasurementsAwait(device, period).Await();
+    GetMeasurementsViaSplitting(device, period);
 
   public IEnumerable<IExtractionBucket<ExtractionMeasurement>>
   GetMeasurements(
       ProvisionDevice device,
       Period? period = null) =>
-    GetMeasurementsAsync(device, period).Block();
+    GetMeasurementsAsync(device, period).Await().Block();
 
   private IAsyncEnumerable<IExtractionBucket<ExtractionMeasurement>>
   GetMeasurementsViaSplitting(

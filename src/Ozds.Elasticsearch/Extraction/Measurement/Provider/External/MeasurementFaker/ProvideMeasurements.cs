@@ -9,16 +9,10 @@ public sealed partial class Client : IClient
   public string Source { get => Client.FakeSource; }
 
   public IAsyncEnumerable<IExtractionBucket<ExtractionMeasurement>>
-  GetMeasurementsAwait(
-      ProvisionDevice device,
-      Period? period = null) =>
-    GetMeasurements(device, period).ToAsync();
-
-  public Task<IEnumerable<IExtractionBucket<ExtractionMeasurement>>>
   GetMeasurementsAsync(
       ProvisionDevice device,
       Period? period = null) =>
-    GetMeasurements(device, period).ToTask();
+    GetMeasurements(device, period).ToAsync();
 
   public IEnumerable<IExtractionBucket<ExtractionMeasurement>>
   GetMeasurements(

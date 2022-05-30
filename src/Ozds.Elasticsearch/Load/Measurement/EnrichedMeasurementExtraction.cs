@@ -2,7 +2,7 @@ using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch;
 
-public readonly record struct EnrichedMeasurementExtractionAsync
+public readonly record struct AsyncEnrichedMeasurementExtraction
 (ExtractionDevice Device,
  Period Period,
  IAsyncEnumerable<EnrichedMeasurementExtractionItem> Items);
@@ -39,10 +39,10 @@ public static class EnrichedMeasurementExtractionExtensions
           })
     };
 
-  public static EnrichedMeasurementExtractionAsync Enrich(
-      this MeasurementExtractionAsync measurement,
+  public static AsyncEnrichedMeasurementExtraction Enrich(
+      this AsyncMeasurementExtraction measurement,
       Func<ExtractionMeasurement, LoadMeasurement> enrich) =>
-    new EnrichedMeasurementExtractionAsync
+    new AsyncEnrichedMeasurementExtraction
     {
       Device = measurement.Device,
       Period = measurement.Period,
@@ -59,10 +59,10 @@ public static class EnrichedMeasurementExtractionExtensions
           })
     };
 
-  public static EnrichedMeasurementExtractionAsync EnrichAwait(
-      this MeasurementExtractionAsync measurement,
+  public static AsyncEnrichedMeasurementExtraction EnrichAwait(
+      this AsyncMeasurementExtraction measurement,
       Func<ExtractionMeasurement, ValueTask<LoadMeasurement>> enrich) =>
-    new EnrichedMeasurementExtractionAsync
+    new AsyncEnrichedMeasurementExtraction
     {
       Device = measurement.Device,
       Period = measurement.Period,

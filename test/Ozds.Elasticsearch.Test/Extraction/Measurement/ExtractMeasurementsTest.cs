@@ -33,7 +33,7 @@ public partial class ClientTest
 
     // NOTE: preparation for searching
     Thread.Sleep(1000);
-    var buckets = await Client.ExtractMeasurementsAsync();
+    var buckets = await Client.ExtractMeasurementsAsync().Await();
     Logger.LogDebug(buckets.ToJson());
     Assert.NotEmpty(buckets);
     Assert.All(buckets, bucket =>
@@ -54,7 +54,7 @@ public partial class ClientTest
 
     // NOTE: preparation for searching
     Thread.Sleep(1000);
-    var buckets = await Client.ExtractMeasurementsAsync(period);
+    var buckets = await Client.ExtractMeasurementsAsync(period).Await();
     Assert.NotEmpty(buckets);
     Assert.All(buckets, bucket =>
       Assert.All(bucket, measurement =>

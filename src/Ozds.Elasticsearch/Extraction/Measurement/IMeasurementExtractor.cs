@@ -3,7 +3,7 @@ namespace Ozds.Elasticsearch;
 public interface IMeasurementExtractor
 {
 
-  public MeasurementExtractionAsync
+  public AsyncMeasurementExtraction
   ExecuteExtractionPlanAsync(ExtractionPlan plan);
 
   public MeasurementExtraction
@@ -18,16 +18,6 @@ public interface IMeasurementExtractor
     3600; // NOTE: an hour
 
   public IAsyncEnumerable<ExtractionPlan>
-  PlanExtractionAwait(
-      Period? period = null,
-      int measurementsPerExtractionPlanItem =
-        DefaultMeasurementsPerExtractionPlanItem,
-      int missingDataExtractionPlanItemsLimit =
-        DefaultMissingDataExtractionPlanItemsLimit,
-      int loadExtractionSpanLimitInSeconds =
-        DefaultLoadExtractionSpanLimitInSeconds);
-
-  public Task<IEnumerable<ExtractionPlan>>
   PlanExtractionAsync(
       Period? period = null,
       int measurementsPerExtractionPlanItem =
@@ -48,17 +38,6 @@ public interface IMeasurementExtractor
         DefaultLoadExtractionSpanLimitInSeconds);
 
   public IAsyncEnumerable<ExtractionPlan>
-  PlanSourceExtractionAwait(
-      string source,
-      Period? period = null,
-      int measurementsPerExtractionPlanItem =
-        DefaultMeasurementsPerExtractionPlanItem,
-      int missingDataExtractionPlanItemsLimit =
-        DefaultMissingDataExtractionPlanItemsLimit,
-      int loadExtractionSpanLimitInSeconds =
-        DefaultLoadExtractionSpanLimitInSeconds);
-
-  public Task<IEnumerable<ExtractionPlan>>
   PlanSourceExtractionAsync(
       string source,
       Period? period = null,
@@ -103,10 +82,6 @@ public interface IMeasurementExtractor
         DefaultLoadExtractionSpanLimitInSeconds);
 
   public IAsyncEnumerable<IExtractionBucket<ExtractionMeasurement>>
-  ExtractMeasurementsAwait(
-      Period? period = null);
-
-  public Task<IEnumerable<IExtractionBucket<ExtractionMeasurement>>>
   ExtractMeasurementsAsync(
       Period? period = null);
 
@@ -115,11 +90,6 @@ public interface IMeasurementExtractor
       Period? period = null);
 
   public IAsyncEnumerable<IExtractionBucket<ExtractionMeasurement>>
-  ExtractSourceMeasurementsAwait(
-      string source,
-      Period? period = null);
-
-  public Task<IEnumerable<IExtractionBucket<ExtractionMeasurement>>>
   ExtractSourceMeasurementsAsync(
       string source,
       Period? period = null);
@@ -129,13 +99,8 @@ public interface IMeasurementExtractor
       string source,
       Period? period = null);
 
-  public Task<IEnumerable<IExtractionBucket<ExtractionMeasurement>>>
-  ExtractDeviceMeasurementsAsync(
-      ExtractionDevice device,
-      Period? period = null);
-
   public IAsyncEnumerable<IExtractionBucket<ExtractionMeasurement>>
-  ExtractDeviceMeasurementsAwait(
+  ExtractDeviceMeasurementsAsync(
       ExtractionDevice device,
       Period? period = null);
 

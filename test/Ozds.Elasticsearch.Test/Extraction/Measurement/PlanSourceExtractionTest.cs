@@ -1,4 +1,5 @@
 using Xunit;
+using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch.Test;
 
@@ -21,7 +22,8 @@ public partial class ClientTest
       .PlanSourceExtractionAsync(
         Elasticsearch.MeasurementFaker.Client.FakeSource,
         null,
-        measurementsPerExtractionPlanItem);
+        measurementsPerExtractionPlanItem)
+      .Await();
     foreach (var extractionPlan in extractionPlans)
     {
       var device = extractionDevices

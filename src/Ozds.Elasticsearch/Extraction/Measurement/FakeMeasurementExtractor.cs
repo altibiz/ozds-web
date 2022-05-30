@@ -4,9 +4,9 @@ namespace Ozds.Elasticsearch;
 
 public class FakeMeasurementExtractor : IMeasurementExtractor
 {
-  public MeasurementExtractionAsync
+  public AsyncMeasurementExtraction
   ExecuteExtractionPlanAsync(ExtractionPlan plan) =>
-    new MeasurementExtractionAsync
+    new AsyncMeasurementExtraction
     {
       Device = plan.Device,
       Items = AsyncEnumerable.Empty<MeasurementExtractionItem>()
@@ -21,17 +21,6 @@ public class FakeMeasurementExtractor : IMeasurementExtractor
     };
 
   public IAsyncEnumerable<ExtractionPlan>
-  PlanExtractionAwait(
-      Period? period = null,
-      int measurementsPerExtractionPlanItem =
-        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
-      int missingDataExtractionPlanItemsLimit =
-        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
-      int loadExtractionSpanLimitInSeconds =
-        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
-    AsyncEnumerable.Empty<ExtractionPlan>();
-
-  public Task<IEnumerable<ExtractionPlan>>
   PlanExtractionAsync(
       Period? period = null,
       int measurementsPerExtractionPlanItem =
@@ -40,7 +29,7 @@ public class FakeMeasurementExtractor : IMeasurementExtractor
         IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
       int loadExtractionSpanLimitInSeconds =
         IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
-    Enumerable.Empty<ExtractionPlan>().ToTask();
+    AsyncEnumerable.Empty<ExtractionPlan>();
 
   public IEnumerable<ExtractionPlan>
   PlanExtraction(
@@ -54,18 +43,6 @@ public class FakeMeasurementExtractor : IMeasurementExtractor
     Enumerable.Empty<ExtractionPlan>();
 
   public IAsyncEnumerable<ExtractionPlan>
-  PlanSourceExtractionAwait(
-      string source,
-      Period? period = null,
-      int measurementsPerExtractionPlanItem =
-        IMeasurementExtractor.DefaultMeasurementsPerExtractionPlanItem,
-      int missingDataExtractionPlanItemsLimit =
-        IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
-      int loadExtractionSpanLimitInSeconds =
-        IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
-    AsyncEnumerable.Empty<ExtractionPlan>();
-
-  public Task<IEnumerable<ExtractionPlan>>
   PlanSourceExtractionAsync(
       string source,
       Period? period = null,
@@ -75,7 +52,7 @@ public class FakeMeasurementExtractor : IMeasurementExtractor
         IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
       int loadExtractionSpanLimitInSeconds =
         IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
-    Enumerable.Empty<ExtractionPlan>().ToTask();
+    AsyncEnumerable.Empty<ExtractionPlan>();
 
   public IEnumerable<ExtractionPlan>
   PlanSourceExtraction(
@@ -123,14 +100,9 @@ public class FakeMeasurementExtractor : IMeasurementExtractor
     };
 
   public IAsyncEnumerable<IExtractionBucket<ExtractionMeasurement>>
-  ExtractMeasurementsAwait(
-      Period? period = null) =>
-    AsyncEnumerable.Empty<IExtractionBucket<ExtractionMeasurement>>();
-
-  public Task<IEnumerable<IExtractionBucket<ExtractionMeasurement>>>
   ExtractMeasurementsAsync(
       Period? period = null) =>
-    Enumerable.Empty<IExtractionBucket<ExtractionMeasurement>>().ToTask();
+    AsyncEnumerable.Empty<IExtractionBucket<ExtractionMeasurement>>();
 
   public IEnumerable<IExtractionBucket<ExtractionMeasurement>>
   ExtractMeasurements(
@@ -138,16 +110,10 @@ public class FakeMeasurementExtractor : IMeasurementExtractor
     Enumerable.Empty<IExtractionBucket<ExtractionMeasurement>>();
 
   public IAsyncEnumerable<IExtractionBucket<ExtractionMeasurement>>
-  ExtractSourceMeasurementsAwait(
-      string source,
-      Period? period = null) =>
-    AsyncEnumerable.Empty<IExtractionBucket<ExtractionMeasurement>>();
-
-  public Task<IEnumerable<IExtractionBucket<ExtractionMeasurement>>>
   ExtractSourceMeasurementsAsync(
       string source,
       Period? period = null) =>
-    Enumerable.Empty<IExtractionBucket<ExtractionMeasurement>>().ToTask();
+    AsyncEnumerable.Empty<IExtractionBucket<ExtractionMeasurement>>();
 
   public IEnumerable<IExtractionBucket<ExtractionMeasurement>>
   ExtractSourceMeasurements(
@@ -156,16 +122,10 @@ public class FakeMeasurementExtractor : IMeasurementExtractor
     Enumerable.Empty<IExtractionBucket<ExtractionMeasurement>>();
 
   public IAsyncEnumerable<IExtractionBucket<ExtractionMeasurement>>
-  ExtractDeviceMeasurementsAwait(
-      ExtractionDevice device,
-      Period? period = null) =>
-    AsyncEnumerable.Empty<IExtractionBucket<ExtractionMeasurement>>();
-
-  public Task<IEnumerable<IExtractionBucket<ExtractionMeasurement>>>
   ExtractDeviceMeasurementsAsync(
       ExtractionDevice device,
       Period? period = null) =>
-    Enumerable.Empty<IExtractionBucket<ExtractionMeasurement>>().ToTask();
+    AsyncEnumerable.Empty<IExtractionBucket<ExtractionMeasurement>>();
 
   public IEnumerable<IExtractionBucket<ExtractionMeasurement>>
   ExtractDeviceMeasurements(

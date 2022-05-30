@@ -31,7 +31,8 @@ public partial class ClientTest
     foreach (var device in devices)
     {
       var buckets = await Client
-        .ExtractDeviceMeasurementsAsync(device.ToExtractionDevice());
+        .ExtractDeviceMeasurementsAsync(device.ToExtractionDevice())
+        .Await();
       Logger.LogDebug(buckets.ToJson());
       Assert.NotEmpty(buckets);
       Assert.All(buckets, bucket =>
@@ -53,7 +54,8 @@ public partial class ClientTest
       var buckets = await Client
         .ExtractDeviceMeasurementsAsync(
             device.ToExtractionDevice(),
-            period);
+            period)
+        .Await();
       Logger.LogDebug(buckets.ToJson());
       Assert.NotEmpty(buckets);
       Assert.All(buckets, bucket =>

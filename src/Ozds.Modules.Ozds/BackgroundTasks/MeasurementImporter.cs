@@ -33,7 +33,7 @@ public class MeasurementImporter : IBackgroundTask
     {
       // NOTE: each plan is for one device which is safe to parallelize
       await Parallel.ForEachAsync(
-        extractor.PlanExtractionAwait(period),
+        extractor.PlanExtractionAsync(period),
         token,
         async (plan, token) => await loader
           .LoadMeasurementsAsync(
