@@ -11,4 +11,9 @@ public static class DateTimeExtensions
     @this
       .ToUniversalTime()
       .ToString("o", CultureInfo.InvariantCulture);
+
+  [MethodImpl(MethodImplOptions.AggressiveInlining)]
+  public static DateTime ToUtcIsoDateTime(
+      this string @this) =>
+    DateTime.Parse(@this).ToUniversalTime();
 }

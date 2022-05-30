@@ -1,5 +1,6 @@
 @using YesSql
 @using Ozds.Elasticsearch
+@using Ozds.Extensions
 
 @inject ISession Session
 @inject IDashboardMeasurementProvider Provider
@@ -15,8 +16,16 @@
       userId,
       new Period
       {
-        From = now.AddMinutes(-30),
-        To = now
+        From =
+          Context.Request.Query["from"]
+            .FirstOrDefault()
+            .WhenNonNull(dateString => dateString.ToUtcIsoDateTime())
+            .WhenNull(now.AddMinutes(-60)),
+        To =
+          Context.Request.Query["to"]
+            .FirstOrDefault()
+            .WhenNonNull(dateString => dateString.ToUtcIsoDateTime())
+            .WhenNull(now),
       });
 }
 
