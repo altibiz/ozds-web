@@ -118,9 +118,10 @@ public static class ContentTypeBaseExtensions
   {
     foreach (var property in typeof(T).GetProperties())
     {
-      if (Equals(
-          property.PropertyType.GetGenericTypeDefinition(),
-          typeof(Lazy<>)))
+      if (!property.PropertyType.IsGenericType ||
+          !Equals(
+            property.PropertyType.GetGenericTypeDefinition(),
+            typeof(Lazy<>)))
       {
         continue;
       }
