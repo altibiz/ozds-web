@@ -11,7 +11,7 @@ public abstract class UserPage<TModel> : RazorPage<TModel>
   {
     get =>
       _orchardUser
-        .OnlyWhenNullable(() => _orchardUser =
+        .WhenNull(() => _orchardUser =
           Context.RequestServices
             .GetService<IUserService>()
             .ThrowWhenNull()

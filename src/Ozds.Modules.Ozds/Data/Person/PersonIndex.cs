@@ -34,7 +34,7 @@ public class PersonIndexProvider :
           _ => null
         })
         // NOTE: this is okay because YesSql expects null values
-        .NonNullable());
+        .NonNull());
 
   private PersonIndex FromPerson(
       ContentItem item,

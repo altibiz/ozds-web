@@ -15,7 +15,7 @@ public static partial class Objects
     await @this;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async ValueTask<T?> Nullable<T>(
+  public static async Task<T?> Nullable<T>(
       this ValueTask<T> @this) =>
     await @this;
 
@@ -30,27 +30,27 @@ public static partial class Objects
     @this;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static T NonNullable<T>(
+  public static T NonNull<T>(
       this T? @this) =>
     @this!;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<T> NonNullable<T>(
+  public static Task<T> NonNull<T>(
       this Task<T?> @this) =>
-    (await @this)!;
+    @this!;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async ValueTask<T> NonNullable<T>(
+  public static ValueTask<T> NonNull<T>(
       this ValueTask<T?> @this) =>
-    (await @this)!;
+    @this!;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static IEnumerable<T> NonNullable<T>(
+  public static IEnumerable<T> NonNull<T>(
       this IEnumerable<T?> @this) =>
     @this!;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static IAsyncEnumerable<T> NonNullable<T>(
+  public static IAsyncEnumerable<T> NonNull<T>(
       this IAsyncEnumerable<T?> @this) =>
     @this!;
 }

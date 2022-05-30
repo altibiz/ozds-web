@@ -11,7 +11,7 @@ public class ContentTypeBaseConstructs
   [Fact]
   public void Title() =>
     new ContentItem()
-      .WithNullable(item =>
+      .With(item =>
         {
           item.ContentType = "Title";
           item.Weld(
@@ -24,7 +24,7 @@ public class ContentTypeBaseConstructs
         })
       .AsContent<TitleType>()
       .AssertNotNull()
-      .WithNullable(type =>
+      .With(type =>
         {
           type
             .TitlePart
@@ -45,7 +45,7 @@ public class ContentTypeBaseConstructs
   [Fact]
   public void TwoTitles() =>
     new ContentItem()
-      .WithNullable(item =>
+      .With(item =>
         {
           item.ContentType = "TwoTitles";
           item.Weld(
@@ -64,7 +64,7 @@ public class ContentTypeBaseConstructs
         })
       .AsContent<TwoTitlesType>()
       .AssertNotNull()
-      .WithNullable(type =>
+      .With(type =>
         {
           type
             .FirstTitle
@@ -94,7 +94,7 @@ public class ContentTypeBaseConstructs
   [Fact]
   public void Contained() =>
     new ContentItem()
-      .WithNullable(item =>
+      .With(item =>
         {
           item.ContentType = "Contained";
           item.Weld(
@@ -114,7 +114,7 @@ public class ContentTypeBaseConstructs
         })
       .AsContent<ContainedType>()
       .AssertNotNull()
-      .WithNullable(type =>
+      .With(type =>
         {
           type
             .TitlePart
@@ -129,7 +129,7 @@ public class ContentTypeBaseConstructs
               .AssertNotNull()
             .Value
               .AssertNotNull()
-              .WithNullable(part =>
+              .With(part =>
                 {
                   part
                     .ListContentItemId
@@ -153,7 +153,7 @@ public class ContentTypeBaseConstructs
   [Fact]
   public void Derived() =>
     new ContentItem()
-      .WithNullable(item =>
+      .With(item =>
         {
           item.ContentType = "Title";
           item.Weld(
@@ -165,7 +165,7 @@ public class ContentTypeBaseConstructs
           item
             .Construct<DerivedType>()
             .AssertNotNull()
-            .WithNullable(type =>
+            .With(type =>
               {
                 type
                   .TitlePart
@@ -188,7 +188,7 @@ public class ContentTypeBaseConstructs
   // [Fact]
   // public void Tag() =>
   //   new ContentItem()
-  //     .WithNullable(item =>
+  //     .With(item =>
   //       {
   //         item.ContentType = "Tag";
   //         item.Weld(
@@ -200,7 +200,7 @@ public class ContentTypeBaseConstructs
   //         item
   //           .Construct<TagType>()
   //           .AssertNotNull()
-  //           .WithNullable(type =>
+  //           .With(type =>
   //             {
   //               type
   //                 .Title
@@ -215,7 +215,7 @@ public class ContentTypeBaseConstructs
   // [Fact]
   // public void TariffTag() =>
   //   new ContentItem()
-  //     .WithNullable(item =>
+  //     .With(item =>
   //       {
   //         item.ContentType = "TariffTag";
   //         item.Weld(
@@ -227,7 +227,7 @@ public class ContentTypeBaseConstructs
   //         item
   //           .Construct<TariffTagType>()
   //           .AssertNotNull()
-  //           .WithNullable(type =>
+  //           .With(type =>
   //             {
   //               type
   //                 .Title

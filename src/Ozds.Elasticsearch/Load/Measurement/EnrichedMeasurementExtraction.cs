@@ -59,7 +59,7 @@ public static class EnrichedMeasurementExtractionExtensions
           })
     };
 
-  public static EnrichedMeasurementExtractionAsync Enrich(
+  public static EnrichedMeasurementExtractionAsync EnrichAwait(
       this MeasurementExtractionAsync measurement,
       Func<ExtractionMeasurement, ValueTask<LoadMeasurement>> enrich) =>
     new EnrichedMeasurementExtractionAsync
@@ -67,20 +67,18 @@ public static class EnrichedMeasurementExtractionExtensions
       Device = measurement.Device,
       Period = measurement.Period,
       Items = measurement.Items
-        .SelectAwait(item =>
-          item.Bucket
-            .Select(enrich)
-            .Await()
-            .Then(bucket =>
-              new EnrichedMeasurementExtractionItem
-              {
-                Original = item.Original,
-                Next = item.Next,
-                Bucket =
-                  new ExtractionBucket<LoadMeasurement>(
-                    item.Bucket.Period,
-                    bucket)
-              })
-            .ToValueTask())
+        .SelectAwait(async item => await item.Bucket
+          .Select(enrich)
+          .Await()
+          .Then(bucket =>
+            new EnrichedMeasurementExtractionItem
+            {
+              Original = item.Original,
+              Next = item.Next,
+              Bucket =
+                new ExtractionBucket<LoadMeasurement>(
+                  item.Bucket.Period,
+                  bucket)
+            }))
     };
 }

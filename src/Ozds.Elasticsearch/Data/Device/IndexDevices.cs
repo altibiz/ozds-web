@@ -18,7 +18,7 @@ public sealed partial class Client : IClient
       .BulkAsync(s => s
         .IndexMany(devices)
         .Index(DeviceIndexName))
-      .ThenWithTask(_ => IndexLoadLogsAsync(
+      .ThenWith(_ => IndexLoadLogsAsync(
         devices.Select(device =>
           new LoadLog(
             device.Id,
@@ -33,7 +33,7 @@ public sealed partial class Client : IClient
       .Bulk(s => s
         .IndexMany(devices)
         .Index(DeviceIndexName))
-      .WithNullable(_ => IndexLoadLogs(
+      .With(_ => IndexLoadLogs(
         devices.Select(device =>
           new LoadLog(
             device.Id,

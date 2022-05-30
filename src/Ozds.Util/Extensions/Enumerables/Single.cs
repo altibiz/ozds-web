@@ -36,9 +36,9 @@ public static partial class Enumerables
   public static IEnumerable<T> SingleNullable<T>(
       this T? generator)
   {
-    if (generator is T nonNullable)
+    if (generator is T NonNull)
     {
-      yield return nonNullable;
+      yield return NonNull;
     }
   }
 

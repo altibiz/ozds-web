@@ -116,7 +116,7 @@ public static class LoadMeasurementExtensions
         voltageL2 = measurement.Data.voltageL2,
         voltageL3 = measurement.Data.voltageL3,
       },
-      measurement.Geo.WhenNonNullable(geo =>
+      measurement.Geo.WhenNonNull(geo =>
         new Nest.GeoCoordinate(
           (double)geo.Latitude,
           (double)geo.Longitude)));
@@ -187,7 +187,7 @@ public static class LoadMeasurementExtensions
           voltageL2 = measurement.Data.voltageL2,
           voltageL3 = measurement.Data.voltageL3,
         },
-      Geo = measurement.Geo.WhenNonNullable(geo =>
+      Geo = measurement.Geo.WhenNonNull(geo =>
         new LoadMeasurementGeo
         {
           Latitude = geo.Latitude,

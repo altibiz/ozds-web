@@ -50,13 +50,13 @@ public sealed partial class FakeDashboardMeasurementProvider :
   private IEnumerable<DashboardMeasurement>
   GenerateDashboardMeasurements(Period? period = null) =>
     period
-      .OnlyWhenNullable(() =>
+      .WhenNull(() =>
         new Period
         {
           From = DateTime.UtcNow.AddMinutes(-5),
           To = DateTime.UtcNow
         })
-      .WhenNullable(period => period
+      .To(period => period
         .SplitDescending(TimeSpan.FromSeconds(10))
         .Select((period, index) =>
           {

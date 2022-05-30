@@ -17,6 +17,6 @@ public static class ISchemaBuilderExtensions
         System.Reflection.BindingFlags.NonPublic |
         System.Reflection.BindingFlags.Instance)
       ?.CreateSql(new SqlStatementCommand(sql))
-      .WhenNonNullable(sql => schemaBuilder.Connection
+      .WhenNonNull(sql => schemaBuilder.Connection
         .Execute(sql.FirstOrDefault(), null, schemaBuilder.Transaction));
 }

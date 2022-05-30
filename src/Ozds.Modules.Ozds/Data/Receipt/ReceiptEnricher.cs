@@ -140,12 +140,12 @@ public class ReceiptEnricher : ContentHandlerBase
   private Task Initialize(ContentItem item) =>
     item
       .As<Receipt>()
-      .With(receipt =>
+      .WithNonNull(receipt =>
         HttpContext
-          .WhenNonNullable(httpContext =>
+          .WhenNonNull(httpContext =>
             httpContext.Request.Query["siteContentItemId"]
               .FirstOrDefault()
-              .With(siteContentItemId =>
+              .WithNonNull(siteContentItemId =>
                 {
                   var now = DateTime.UtcNow;
 

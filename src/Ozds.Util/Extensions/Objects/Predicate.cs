@@ -8,23 +8,35 @@ public static partial class Objects
   public static bool WithPredicate<T>(
       this T? @this,
       Predicate<T> predicate) =>
-    !@this.Truthy() ? false : predicate(@this);
+    @this is null ? false : predicate(@this);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static bool WithPredicate<T>(
       this T? @this,
       Func<T, bool> predicate) =>
-    !@this.Truthy() ? false : predicate(@this);
+    @this is null ? false : predicate(@this);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static Task<bool> WithPredicateTask<T>(
-      this T? @this,
-      Func<T, Task<bool>> predicate) =>
-    !@this.Truthy() ? false.ToTask() : predicate(@this);
-
-  [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static ValueTask<bool> WithPredicateValueTask<T>(
+  public static async Task<bool> WithPredicateValueTask<T>(
       this T? @this,
       Func<T, ValueTask<bool>> predicate) =>
-    !@this.Truthy() ? false.ToValueTask() : predicate(@this);
+    @this is null ? false : await predicate(@this);
+
+  [MethodImpl(MethodImplOptions.AggressiveInlining)]
+  public static bool WithPredicate<T>(
+      this T? @this,
+      Predicate<T> predicate) where T : struct =>
+    @this is null ? false : predicate(@this.Value);
+
+  [MethodImpl(MethodImplOptions.AggressiveInlining)]
+  public static bool WithPredicate<T>(
+      this T? @this,
+      Func<T, bool> predicate) where T : struct =>
+    @this is null ? false : predicate(@this.Value);
+
+  [MethodImpl(MethodImplOptions.AggressiveInlining)]
+  public static async Task<bool> WithPredicateValueTask<T>(
+      this T? @this,
+      Func<T, ValueTask<bool>> predicate) where T : struct =>
+    @this is null ? false : await predicate(@this.Value);
 }

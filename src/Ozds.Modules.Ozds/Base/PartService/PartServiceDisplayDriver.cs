@@ -16,17 +16,17 @@ public class PartServiceDisplayDriver<TPart, TService>
   public override IDisplayResult Edit(
       TPart part, BuildPartEditorContext context) =>
       Service.GetEditModel(part, context)
-          .WhenNonNullable(
+          .WhenNonNull(
               model => Initialize(GetEditorShapeType(context), model),
               () => base.Edit(part));
 
   public override Task<IDisplayResult> UpdateAsync(
       TPart model, IUpdateModel updater, UpdatePartEditorContext context) =>
       updater.TryUpdateModelAsync(model, Prefix)
-          .After(() => AsyncEnumerable.ForEachAsync(Service.ValidateAsync(model)
+          .Then<Task>(() => AsyncEnumerable.ForEachAsync(Service.ValidateAsync(model)
 , item => updater.ModelState
               .BindValidationResult(Prefix, item)))
-          .After(() => Edit(model, context));
+          .Then(() => Edit(model, context));
 
   public PartServiceDisplayDriver(TService service) { Service = service; }
 

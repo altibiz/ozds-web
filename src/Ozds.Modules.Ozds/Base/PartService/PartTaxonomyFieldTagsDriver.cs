@@ -23,7 +23,7 @@ namespace Ozds.Modules.Ozds.PartFieldSettings
         TaxonomyField field, BuildFieldEditorContext context) =>
       context
         .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
-        .WhenNonNullable(fieldDefinition =>
+        .WhenNonNull(fieldDefinition =>
             Initialize<EditTagTaxonomyFieldViewModel>(
               GetEditorShapeType(fieldDefinition),
               async model =>
@@ -61,13 +61,15 @@ namespace Ozds.Modules.Ozds.PartFieldSettings
                 model.PartFieldDefinition = fieldDefinition;
               }));
 
-    public override Task<IDisplayResult?> UpdateAsync(TaxonomyField field,
-        IUpdateModel updater, UpdateFieldEditorContext context) =>
+    public override async Task<IDisplayResult?> UpdateAsync(
+        TaxonomyField field,
+        IUpdateModel updater,
+        UpdateFieldEditorContext context) =>
     context
       .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
-      .WhenTask(fieldDefinition => fieldDefinition.Editor() != "Disabled",
-        _ => base.UpdateAsync(field, updater, context),
-        () => Edit(field, context));
+      .Editor() != "Disabled" ?
+      await base.UpdateAsync(field, updater, context) :
+      Edit(field, context);
 
     public PartTaxonomyFieldTagsDriver(
         IStringLocalizer<TaxonomyFieldTagsDisplayDriver> localizer,

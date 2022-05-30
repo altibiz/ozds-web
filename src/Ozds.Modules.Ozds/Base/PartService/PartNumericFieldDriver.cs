@@ -20,7 +20,7 @@ public class PartNumericFieldDriver : NumericFieldDisplayDriver
       NumericField field, BuildFieldEditorContext context) =>
       context
           .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
-          .WhenNonNullable(fieldDefinition =>
+          .WhenNonNull(fieldDefinition =>
             Initialize<EditNumericFieldViewModel>(
               GetEditorShapeType(fieldDefinition),
               model =>
@@ -37,14 +37,15 @@ public class PartNumericFieldDriver : NumericFieldDisplayDriver
                 model.PartFieldDefinition = fieldDefinition;
               }));
 
-  public override Task<IDisplayResult?> UpdateAsync(NumericField field,
-      IUpdateModel updater, UpdateFieldEditorContext context) =>
-      context
-          .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
-          .When(fieldDefinition => fieldDefinition.Editor() == "Disabled",
-              _ => Edit(field, context),
-              () => base.UpdateAsync(field, updater, context))
-          .ToTask();
+  public override async Task<IDisplayResult?> UpdateAsync(
+      NumericField field,
+      IUpdateModel updater,
+      UpdateFieldEditorContext context) =>
+    context
+      .GetFieldDefinition(AdminAttribute.IsApplied(HttpContext.HttpContext))
+      .Editor() == "Disabled" ?
+      Edit(field, context)
+    : await base.UpdateAsync(field, updater, context);
 
   public PartNumericFieldDriver(
       IStringLocalizer<NumericFieldDisplayDriver> localizer,

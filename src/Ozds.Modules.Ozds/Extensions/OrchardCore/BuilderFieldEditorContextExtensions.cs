@@ -13,10 +13,10 @@ public static class BuildFieldEditorContextExtensions
           .SelectFirst(property =>
               ImplementingTypes
                 .GetOrDefault(property.Name)
-                  .WhenNonNullable(type => property.Value
+                  .WhenNonNull(type => property.Value
                     .ToObject(type)
                     .As<IFieldEditorSettings>()))
-          .WhenNonNullable(partSettings =>
+          .WhenNonNull(partSettings =>
           {
             var oldSettings = context.PartFieldDefinition
               .GetSettings<ContentPartFieldSettings>();

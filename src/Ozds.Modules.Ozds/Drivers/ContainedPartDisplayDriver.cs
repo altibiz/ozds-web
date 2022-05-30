@@ -19,26 +19,23 @@ public class ContainedPartDisplayDriver : ContentDisplayDriver
 {
   public override Task<IDisplayResult?> EditAsync(
       ContentItem model, BuildEditorContext context) =>
-    model
-      .WhenFinallyTask(
-        _ => AdminAttribute.IsApplied(HttpContext),
-        item => item
-          .As<ContainedPart>()
-          .WhenNonNullable(part =>
-            Initialize<ContainedPartViewModel>(
-              "ContainedPart_Navigation",
-              async model => await Content
-                .GetAsync(part.ListContentItemId)
-                .ThenWith(
-                  list =>
-                  {
-                    model.ListContentItemId = part.ListContentItemId;
-                    model.ParentName = list.DisplayText;
-                  }))
-            .Location("Content"))
-          .As<IDisplayResult>()
-          // NOTE: it has to be a Task for the override
-          .ToTask());
+    Task.Run(() =>
+      AdminAttribute.IsApplied(HttpContext) ? model
+        .As<ContainedPart>()
+        .WhenNonNull(part =>
+          Initialize<ContainedPartViewModel>(
+            "ContainedPart_Navigation",
+            async model => await Content
+              .GetAsync(part.ListContentItemId)
+              .ThenWith(
+                list =>
+                {
+                  model.ListContentItemId = part.ListContentItemId;
+                  model.ParentName = list.DisplayText;
+                }))
+          .Location("Content"))
+        .As<IDisplayResult>()
+      : null);
 
   public ContainedPartDisplayDriver(
       IHttpContextAccessor httpContextAccessor,

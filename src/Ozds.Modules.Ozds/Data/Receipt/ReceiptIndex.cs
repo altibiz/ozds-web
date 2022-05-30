@@ -34,7 +34,7 @@ public class ReceiptIndexProvider :
     context
       .For<ReceiptIndex>()
       .Map(item => item.AsReal<Receipt>()
-        .WhenNonNullable(receipt =>
+        .WhenNonNull(receipt =>
           // NOTE: no way these are not nullable
           new ReceiptIndex
           {
@@ -56,5 +56,5 @@ public class ReceiptIndexProvider :
             ConsumerOib = receipt.Data.Consumer.Oib,
           })
         // NOTE: YesSql expects null here
-        .NonNullable());
+        .NonNull());
 }

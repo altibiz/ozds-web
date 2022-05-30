@@ -12,7 +12,7 @@ public partial class Client : IClient
       Period? period = null) =>
     Providers
       .Find(provider => provider.Source == source)
-      .WhenNonNullableFinallyTask(provider =>
+      .WhenNonNullFinallyAsync(provider =>
         SearchDevicesBySourceAsync(source)
           .Then(devices => devices
             .Sources()
@@ -30,7 +30,7 @@ public partial class Client : IClient
       Period? period = null) =>
     Providers
       .Find(provider => provider.Source == source)
-      .WhenNonNullableFinallyTask(provider =>
+      .WhenNonNullFinallyAsync(provider =>
         SearchDevicesBySourceAsync(source)
           .Then(devices => devices
             .Sources()
@@ -38,7 +38,7 @@ public partial class Client : IClient
               .GetMeasurementsAsync(
                 device.ToProvisionDevice(),
                 period)))
-          .ThenTask(Enumerables.Await)
+          .ThenAwait(async buckets => await Enumerables.Await(buckets))
           .Then(Enumerables.Flatten),
         Enumerable.Empty<IExtractionBucket<ExtractionMeasurement>>);
 
@@ -48,7 +48,7 @@ public partial class Client : IClient
       Period? period = null) =>
     Providers
       .Find(provider => provider.Source == source)
-      .WhenNonNullableFinally(provider =>
+      .WhenNonNullFinally(provider =>
         SearchDevicesBySource(source)
           .Sources()
           .Select(device => provider

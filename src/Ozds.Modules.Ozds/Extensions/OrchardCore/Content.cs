@@ -28,22 +28,22 @@ public static partial class ContentExtensions
 
   public static T? AsReal<T>(
       this ContentItem? item) where T : ContentPart =>
-    item.When(
-        item => item.Latest || item.Published,
-        item => ContentItemExtensions.As<T>(item));
+    item is not null && (item.Latest || item.Published) ?
+      item.As<T>()
+    : null;
 
   public static IEnumerable<T>? FromBag<T>(
       this ContentItem? item,
       string? name = null) where T : ContentPart =>
     item.Get<BagPart>(name ?? typeof(BagPart).Name)
-      .WhenNonNullable(bag => bag.ContentItems
+      .WhenNonNull(bag => bag.ContentItems
           .SelectFilter(item => ContentItemExtensions.As<T>(item)));
 
   public static IEnumerable<T>? FromFlow<T>(
       this ContentItem? item,
       string? name = null) where T : ContentPart =>
     item.Get<FlowPart>(name ?? typeof(FlowPart).Name)
-      .WhenNonNullable(flow => flow.Widgets
+      .WhenNonNull(flow => flow.Widgets
           .SelectFilter(item => ContentItemExtensions.As<T>(item)));
 
   public static string? GetId(this ContentPickerField contentPickerField) =>
@@ -80,9 +80,9 @@ public static partial class ContentExtensions
       {
         ContentFieldTypes
           .FirstOrDefault(type => type == property.PropertyType)
-          .WhenNonNullable(type => type
+          .WhenNonNull(type => type
             .Construct<ContentField>()
-            .With(field =>
+            .WithNonNull(field =>
             {
               field.ContentItem = part.ContentItem;
               property.SetValue(part, field);

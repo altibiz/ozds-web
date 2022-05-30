@@ -8,7 +8,7 @@ public static partial class Objects
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static bool Empty<T>(
       [NotNullWhen(true)] this T? @this) where T : struct =>
-    !@this.HasValue;
+    @this is null;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static bool Empty<T>(
@@ -46,7 +46,7 @@ public static partial class Objects
     (await @this).Empty();
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async ValueTask<bool> EmptyValueTask<T>(
+  public static async Task<bool> EmptyValueTask<T>(
       [NotNullWhen(true)] this ValueTask<T> @this) =>
     (await @this).Empty();
 

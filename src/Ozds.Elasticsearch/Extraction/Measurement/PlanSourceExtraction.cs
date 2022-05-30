@@ -41,7 +41,7 @@ public partial class Client : IClient
       int loadExtractionSpanLimitInSeconds =
         IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
     SearchDevicesBySourceAsync(source)
-      .Then(devices => devices
+      .Then<Nest.ISearchResponse<Device>, Task<IEnumerable<ExtractionPlan>>>(devices => devices
         .Sources()
         .Select(device =>
           PlanDeviceExtractionAsync(

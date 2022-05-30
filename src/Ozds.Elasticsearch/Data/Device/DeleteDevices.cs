@@ -16,13 +16,13 @@ public sealed partial class Client : IClient
     Elasticsearch.BulkAsync(s => s
       .DeleteMany<Device>(deviceIds.ToStrings())
       .Index(DeviceIndexName))
-      .ThenWithTask(_ => DeleteLogsAsync(deviceIds
+      .ThenWith(_ => DeleteLogsAsync(deviceIds
         .Select(id => new Nest.Id(LoadLog.MakeId(id.ToString())))));
 
   public BulkResponse DeleteDevices(IEnumerable<Id> deviceIds) =>
     Elasticsearch.Bulk(s => s
       .DeleteMany<Device>(deviceIds.ToStrings())
       .Index(DeviceIndexName))
-      .WithNullable(_ => DeleteLogs(deviceIds
+      .With(_ => DeleteLogs(deviceIds
         .Select(id => new Nest.Id(LoadLog.MakeId(id.ToString())))));
 }

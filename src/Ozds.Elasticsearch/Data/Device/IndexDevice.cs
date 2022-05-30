@@ -14,7 +14,7 @@ public sealed partial class Client : IClient
 {
   public Task<IndexResponse> IndexDeviceAsync(Device device) =>
     Elasticsearch.IndexAsync(device, s => s.Index(DeviceIndexName))
-      .ThenWithTask(_ => IndexLoadLogAsync(
+      .ThenWith(_ => IndexLoadLogAsync(
         new LoadLog(
           device.Id,
           new()
@@ -25,7 +25,7 @@ public sealed partial class Client : IClient
 
   public IndexResponse IndexDevice(Device device) =>
     Elasticsearch.Index(device, s => s.Index(DeviceIndexName))
-      .WithNullable(_ => IndexLoadLog(
+      .With(_ => IndexLoadLog(
         new LoadLog(
           device.Id,
           new()

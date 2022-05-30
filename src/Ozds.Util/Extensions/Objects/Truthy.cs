@@ -26,7 +26,7 @@ public static partial class Objects
     (await @this).Truthy();
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async ValueTask<bool> TruthyValueTask<T>(
+  public static async Task<bool> TruthyValueTask<T>(
       [NotNullWhen(true)] this ValueTask<T> @this) =>
     (await @this).Truthy();
 }

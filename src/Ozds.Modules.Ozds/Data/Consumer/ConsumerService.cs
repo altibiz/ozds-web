@@ -60,9 +60,9 @@ await query.ListAsync();
 
   public async Task<ContentItem> GetByOib(string oib)
   {
-    return await Session.Query<ContentItem>()
-        .With<PersonIndex>(x => x.Oib == oib)
-        .FirstOrDefaultAsync();
+    return await Session
+      .Query<ContentItem, PersonIndex>(x => x.Oib == oib)
+      .FirstOrDefaultAsync();
   }
 
   public async Task<(ContentItem item, IShape shape)> GetNewItem(

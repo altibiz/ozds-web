@@ -28,8 +28,7 @@ public class MeasurementImporterCache
       var session = scope.ServiceProvider.GetRequiredService<ISession>();
 
       var siteItem = await session
-        .Query<ContentItem>()
-        .With<SiteIndex>(site => site.DeviceId == deviceId)
+        .Query<ContentItem, SiteIndex>(site => site.DeviceId == deviceId)
         .FirstOrDefaultAsync();
       if (siteItem is null) return default;
 

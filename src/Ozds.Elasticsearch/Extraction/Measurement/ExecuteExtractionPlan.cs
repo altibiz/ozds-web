@@ -10,7 +10,7 @@ public partial class Client : IClient
   ExecuteExtractionPlanAsync(ExtractionPlan plan) =>
     Providers
       .Find(provider => provider.Source == plan.Device.Source)
-      .WhenNonNullableFinally(provider =>
+      .WhenNonNullFinally(provider =>
         plan.Items
           .Select(item => provider
             .GetMeasurementsAwait(
@@ -29,7 +29,7 @@ public partial class Client : IClient
                 bucket)))
           .FlattenAsync(),
         AsyncEnumerable.Empty<MeasurementExtractionItem>)
-      .WhenNullable(items =>
+      .To(items =>
         new MeasurementExtractionAsync
         {
           Device = plan.Device,
@@ -41,7 +41,7 @@ public partial class Client : IClient
   ExecuteExtractionPlan(ExtractionPlan plan) =>
     Providers
       .Find(provider => provider.Source == plan.Device.Source)
-      .WhenNonNullable(provider =>
+      .WhenNonNull(provider =>
         plan.Items
           .Select(item => provider
             .GetMeasurements(
@@ -60,7 +60,7 @@ public partial class Client : IClient
                 bucket)))
           .Flatten(),
         Enumerable.Empty<MeasurementExtractionItem>)
-      .WhenNullable(items =>
+      .To(items =>
         new MeasurementExtraction
         {
           Device = plan.Device,

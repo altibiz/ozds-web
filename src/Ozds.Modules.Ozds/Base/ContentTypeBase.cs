@@ -53,11 +53,12 @@ public static class ContentTypeBaseExtensions
           new[] { @this },
           null)
         .As<T>()
-        .When(
-          content => !content.GetType()
-            .IsAssignableTo<IContentTypeBaseDerivedIndicator>(),
-          content => content
-            .PopulateContent());
+        .WhenNonNull(
+          content =>
+            !content.GetType()
+              .IsAssignableTo<IContentTypeBaseDerivedIndicator>() ?
+              content.PopulateContent()
+            : null);
 
   public static Task<T?> NewContentAsync<T>(
       this IContentManager content) where T : ContentTypeBase =>
@@ -117,20 +118,26 @@ public static class ContentTypeBaseExtensions
   {
     foreach (var property in typeof(T).GetProperties())
     {
-      property.PropertyType
+      if (Equals(
+          property.PropertyType.GetGenericTypeDefinition(),
+          typeof(Lazy<>)))
+      {
+        continue;
+      }
+
+      var partType = property.PropertyType
         .GetGenericArguments()
-        .FirstOrDefault()
-        .WhenWith(
-          partType =>
-            partType.IsAssignableTo(typeof(ContentElement)) &&
-            Equals(
-              property.PropertyType.GetGenericTypeDefinition(),
-              typeof(Lazy<>)),
-          partType =>
-            content.ContentItem
-              .CreateLazy(partType, property.Name)
-              .WithNullable(lazy =>
-                content.Set(property, lazy)));
+        .FirstOrDefault();
+      if (partType is null ||
+          !partType.IsAssignableTo(typeof(ContentElement)))
+      {
+        continue;
+      }
+
+      content.ContentItem
+        .CreateLazy(partType, property.Name)
+        .With(lazy =>
+          content.Set(property, lazy));
     }
 
     return content;

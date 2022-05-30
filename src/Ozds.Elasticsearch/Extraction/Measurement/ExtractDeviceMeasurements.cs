@@ -12,7 +12,7 @@ public partial class Client : IClient
       Period? period = null) =>
     Providers
       .Find(provider => provider.Source == device.Source)
-      .WhenNonNullableFinally(
+      .WhenNonNullFinally(
         provider => provider
           .GetMeasurementsAwait(
             device.ToProvisionDevice(),
@@ -28,7 +28,7 @@ public partial class Client : IClient
       Period? period = null) =>
     Providers
       .Find(provider => provider.Source == device.Source)
-      .WhenNonNullableFinallyTask(
+      .WhenNonNullFinallyAsync(
         provider => provider
           .GetMeasurementsAsync(
             device.ToProvisionDevice(),
@@ -45,7 +45,7 @@ public partial class Client : IClient
       Period? period = null) =>
     Providers
       .Find(provider => provider.Source == device.Source)
-      .WhenNonNullableFinally(
+      .WhenNonNullFinally(
         provider => provider
           .GetMeasurements(
             device.ToProvisionDevice(),

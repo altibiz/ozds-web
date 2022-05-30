@@ -212,7 +212,7 @@ public class Measurement : ICloneable, IEquatable<Measurement>
           voltageL3 = MeasurementData.voltageL3,
         },
       geo:
-        Geo.WhenNonNullable(geo =>
+        Geo.WhenNonNull(geo =>
           new Nest.GeoCoordinate(
             (double)geo.Latitude,
             (double)geo.Longitude)));

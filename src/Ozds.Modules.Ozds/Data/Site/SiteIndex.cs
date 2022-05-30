@@ -37,7 +37,7 @@ public class SiteIndexProvider :
       .For<SiteIndex>()
       .Map(item => item
         .AsContent<SecondarySiteType>()
-        .WhenNonNullable(site =>
+        .WhenNonNull(site =>
           new SiteIndex
           {
             ContentItemId = item.ContentItemId,
@@ -64,5 +64,5 @@ public class SiteIndexProvider :
             OwnerUserId = site.Site.Value.Data.OwnerUserId,
           })
         // NOTE: YesSql expects null values here
-        .NonNullable());
+        .NonNull());
 }

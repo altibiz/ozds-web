@@ -35,27 +35,24 @@ public class MeasurementImporter : IBackgroundTask
       await Parallel.ForEachAsync(
         extractor.PlanExtractionAwait(period),
         token,
-        (plan, token) => loader
+        async (plan, token) => await loader
           .LoadMeasurementsAsync(
             extractor
               .ExecuteExtractionPlanAsync(plan)
-              .Enrich(measurement =>
-                cache
-                  .GetDeviceData(
-                    Device.MakeId(
-                      measurement.Source,
-                      measurement.SourceDeviceId))
-                  .Then(data =>
-                    data is null ? measurement.ToLoadMeasurement()
-                    : measurement
-                      .ToLoadMeasurement(
-                        data.Value.Operator,
-                        data.Value.CenterId,
-                        data.Value.CenterUserId,
-                        data.Value.OwnerId,
-                        data.Value.OwnerUserId))
-                  .ToValueTask()))
-          .ToValueTask());
+              .EnrichAwait(async measurement => await cache
+                .GetDeviceData(
+                  Device.MakeId(
+                    measurement.Source,
+                    measurement.SourceDeviceId))
+                .Then(data =>
+                  data is null ? measurement.ToLoadMeasurement()
+                  : measurement
+                    .ToLoadMeasurement(
+                      data.Value.Operator,
+                      data.Value.CenterId,
+                      data.Value.CenterUserId,
+                      data.Value.OwnerId,
+                      data.Value.OwnerUserId)))));
     }
     finally
     {

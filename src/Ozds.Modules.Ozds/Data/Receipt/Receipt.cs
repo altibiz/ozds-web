@@ -255,7 +255,7 @@ public readonly record struct ExpenditureData
         _ => default,
       })
       .Await()
-      .ThenTask(items =>
+      .ThenAwait(async items => await
         (taxonomy.GetTariffItem(TariffItem.RenewableEnergyFeeTermId),
          taxonomy.GetTariffItem(TariffItem.BusinessUsageFeeTermId))
           .Await()
@@ -360,7 +360,7 @@ public static class ExpenditureItemDataTaxonomyExtensions
       decimal unitPrice) =>
     taxonomy
       .GetTariffItem(termId)
-      .ThenWhenNonNullable(tag => ExpenditureItemData
+      .ThenWhenNonNull(tag => ExpenditureItemData
         .Create(tag, valueFrom, valueTo, unitPrice));
 
   public static Task<ExpenditureItemData> CreateExpenditureItemData(
@@ -370,7 +370,7 @@ public static class ExpenditureItemDataTaxonomyExtensions
       decimal unitPrice) =>
     taxonomy
       .GetTariffItem(termId)
-      .ThenWhenNonNullable(tag => ExpenditureItemData
+      .ThenWhenNonNull(tag => ExpenditureItemData
         .Create(tag, amount, unitPrice));
 
   public static Task<ExpenditureItemData> CreateExpenditureItemData(
@@ -379,7 +379,7 @@ public static class ExpenditureItemDataTaxonomyExtensions
       decimal unitPrice) =>
     taxonomy
       .GetTariffItem(termId)
-      .ThenWhenNonNullable(tag => ExpenditureItemData
+      .ThenWhenNonNull(tag => ExpenditureItemData
         .Create(tag, unitPrice));
 }
 
@@ -421,7 +421,7 @@ public static class ReceiptItemDataTaxonomyExtensions
       decimal price) =>
     taxonomy
       .GetTariffItem(termId)
-      .ThenWhenNonNullable(tag => ReceiptItemData
+      .ThenWhenNonNull(tag => ReceiptItemData
         .Create(tag, amount, price));
 
   public static Task<ReceiptItemData> CreateReceiptItemData(
@@ -429,6 +429,6 @@ public static class ReceiptItemDataTaxonomyExtensions
       ExpenditureItemData item) =>
     taxonomy
       .GetTariffItem(item.TariffItemTermId)
-      .ThenWhenNonNullable(tag => ReceiptItemData
+      .ThenWhenNonNull(tag => ReceiptItemData
         .Create(tag, item));
 }

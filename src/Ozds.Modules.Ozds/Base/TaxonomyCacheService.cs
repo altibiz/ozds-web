@@ -14,40 +14,36 @@ public class TaxonomyCacheService
 
   public Task<T?> GetTerm<T>(
       TaxonomyField field) where T : ContentTypeBase =>
-    GetTerm(field).ThenWhenNonNullable(term => term.AsContent<T>());
+    GetTerm(field).ThenWhenNonNull(term => term.AsContent<T>());
 
   public Task<T?> GetTerm<T>(
       string contentItemId, string termId) where T : ContentTypeBase =>
     GetTerm(contentItemId, termId)
-      .ThenWhenNonNullable(term =>
+      .ThenWhenNonNull(term =>
         term.AsContent<T>());
 
   public IAsyncEnumerable<ContentItem> GetTerms(
       TaxonomyField field) =>
     field.TermContentItemIds
-      .SelectFilterAwaitAsync(termId =>
-          GetTerm(field.TaxonomyContentItemId, termId)
-            .ToValueTask());
+      .SelectFilterAwaitAsync(async termId =>
+          await GetTerm(field.TaxonomyContentItemId, termId));
 
   public Task<ContentItem?> GetTerm(
       TaxonomyField field) =>
     field.TermContentItemIds
       .FirstOrDefault()
-      .WhenNonNullable(
+      .WhenNonNull(
         termId => GetTerm(field.TaxonomyContentItemId, termId),
         Task.FromResult(null as ContentItem));
 
-  public Task<ContentItem?> GetTerm(
+  public async Task<ContentItem?> GetTerm(
       string contentItemId, string termId) =>
-    (id: contentItemId, term: termId)
-      .When(
-        key => !Cache.ContainsKey(key),
-        key => Helper
-          .GetTaxonomyTermAsync(key.id, key.term).Nullable()
-          .Then(item => item
-            .WhenNonNullable(item => Cache[key] = item)),
-        () => Task.FromResult(
-          Cache.GetOrDefault((contentItemId, termId))));
+    Cache.ContainsKey((contentItemId, termId)) ?
+      Cache.GetOrDefault((contentItemId, termId))
+    : await Helper
+        .GetTaxonomyTermAsync(contentItemId, termId).Nullable()
+        .Then(item => item
+          .WhenNonNull(item => Cache[(contentItemId, termId)] = item));
 
   public TaxonomyCacheService(IOrchardHelper helper)
   {

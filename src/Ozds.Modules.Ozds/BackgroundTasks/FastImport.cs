@@ -18,23 +18,37 @@ public class FastImport : IRecipeStepHandler
   private record StepModel(JArray Data);
 
   public Task ExecuteAsync(RecipeExecutionContext? context) =>
-    context
-      .When(context => string.Equals(
-        context.Name, "fastimport", StringComparison.OrdinalIgnoreCase),
-        context =>
-          context.Step
-            .ToObject<StepModel>()?.Data
-            .ToObject<ContentItem[]>()
-            .With(contentItems => FastImportBackgroundTask.PendingImports
-              .Enqueue(contentItems)))
-      .Return(Task.CompletedTask);
+    Task.Run(() =>
+      {
+        if (context is null)
+        {
+          return;
+        }
+
+        if (!string.Equals(
+            context.Name, "fastimport",
+            StringComparison.OrdinalIgnoreCase))
+        {
+          return;
+        }
+
+        var items = context.Step
+          .ToObject<StepModel>()
+          ?.Data.ToObject<ContentItem[]>();
+        if (items is null)
+        {
+          throw new InvalidOperationException("'fastimport' step requires a 'data' argument");
+        }
+
+        FastImportBackgroundTask.PendingImports.Enqueue(items);
+      });
 }
 
 public class Importer
 {
   public Task ImportAsync(IEnumerable<ContentItem> contentItems) =>
     (new HashSet<string>())
-      .WithTask(
+      .WithNonNullAsync(
         importedIds =>
           contentItems
             .Split(ImportBatchSize)
@@ -58,7 +72,7 @@ public class Importer
                         .After(() => Session.Save(item));
                     })
                   .Await()
-                  .After(() =>
+                  .Then(() =>
                     {
                       Logger.LogDebug("Imported: " + importedIds.Count);
                       return Session.SaveChangesAsync();
@@ -95,7 +109,7 @@ public class FastImportBackgroundTask : IBackgroundTask
       CancellationToken token) =>
     PendingImports
       .TryTake()
-      .WithTask(imports => services
+      .WithNonNullAsync(imports => services
           .GetRequiredService<Importer>()
           .ImportAsync(imports));
 

@@ -18,15 +18,12 @@ public class LocalizedRouteTransformer : DynamicRouteValueTransformer
       },
       {
         "page",
-        values
-          .WhenNonNullable(
-            values => values
-              .GetOrDefault("page")
-              .WhenFinally(
-                page => !page.In("index", "Index", "/", "/index", "/Index"),
-                page => $"/{page}",
-                "/Overview"),
-            "/Overview")
+        values?.GetOrDefault("page") switch
+        {
+          var page when page.In("/", "/Index", "/index") => $"/Overview",
+          string page => $"/{page}",
+          _ => "/Overview",
+        }
       }
     }.ToValueTask();
 }

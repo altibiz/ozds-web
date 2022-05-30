@@ -52,7 +52,7 @@ public static partial class Dictionaries
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async ValueTask<TOut> GetOrDefault<TIn, TOut>(
+  public static async Task<TOut> GetOrDefault<TIn, TOut>(
       this IDictionary<TIn, TOut> @this,
       TIn key,
       Func<Task<TOut>> @default)
@@ -68,7 +68,7 @@ public static partial class Dictionaries
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async ValueTask<TOut> GetOrDefault<TIn, TOut>(
+  public static async Task<TOut> GetOrDefault<TIn, TOut>(
       this IDictionary<TIn, TOut> @this,
       TIn key,
       Func<ValueTask<TOut>> @default)

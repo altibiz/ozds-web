@@ -20,7 +20,7 @@
     <span>
       @(await Orchard
       .GetTaxonomyTermAsync<TagType>(Model.Status)
-      .ThenWhenNonNullable(tag => tag.Title.Value.Title))
+      .ThenWhenNonNull(tag => tag.Title.Value.Title))
     </span>
   </span>
 </div>

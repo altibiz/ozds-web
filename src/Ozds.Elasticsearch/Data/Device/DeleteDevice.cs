@@ -16,13 +16,13 @@ public sealed partial class Client : IClient
     Elasticsearch.DeleteAsync(
       DocumentPath<Device>.Id(id),
       s => s.Index(DeviceIndexName))
-      .ThenWithTask(_ => DeleteLoadLogAsync(LoadLog
+      .ThenWith(_ => DeleteLoadLogAsync(LoadLog
         .MakeId(id.ToString())));
 
   public DeleteResponse DeleteDevice(Id id) =>
     Elasticsearch.Delete(
       DocumentPath<Device>.Id(id),
       s => s.Index(DeviceIndexName))
-      .WithNullable(_ => DeleteLoadLog(LoadLog
+      .With(_ => DeleteLoadLog(LoadLog
         .MakeId(id.ToString())));
 }

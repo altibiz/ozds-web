@@ -5,27 +5,27 @@ namespace Ozds.Extensions;
 public static partial class Objects
 {
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static TIn WithNullable<TIn>(
-      this TIn @this,
-      Action<TIn> action)
+  public static T With<T>(
+      this T @this,
+      Action<T> action)
   {
     action(@this);
     return @this;
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<TIn> WithNullable<TIn>(
-      this TIn @this,
-      Func<TIn, Task> action)
+  public static async Task<T> WithAsync<T>(
+      this T @this,
+      Func<T, Task> action)
   {
     await action(@this);
     return @this;
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async ValueTask<TIn> WithNullable<TIn>(
-      this TIn @this,
-      Func<TIn, ValueTask> action)
+  public static async Task<T> WithAsync<T>(
+      this T @this,
+      Func<T, ValueTask> action)
   {
     await action(@this);
     return @this;

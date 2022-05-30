@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using OrchardCore.Navigation;
-using Ozds.Extensions;
 
 namespace Ozds.Modules.Ozds;
 
@@ -12,19 +11,19 @@ public class AdminMenu : INavigationProvider
       string name,
       NavigationBuilder builder) =>
     Task.Run(() =>
-      name.When(
-        name => string.Equals(
-          name, "admin",
-          StringComparison.OrdinalIgnoreCase),
-        _ =>
-          Env.IsDevelopment() &&
-          (Conf
-            .GetSection("Ozds")
-            .GetSection("Modules")
-            .GetSection("Ozds")
-            .GetValue<object?>("IsDemo") is null) ?
-            BuildDevelopmentNavigation(builder)
-          : BuildProductionNavigation(builder)));
+      string.Equals(
+            name, "admin",
+            StringComparison.OrdinalIgnoreCase) ?
+        Env.IsDevelopment() &&
+        (Conf
+          .GetSection("Ozds")
+          .GetSection("Modules")
+          .GetSection("Ozds")
+          .GetValue<object?>("IsDemo") is null) ?
+          BuildDevelopmentNavigation(builder)
+        : BuildProductionNavigation(builder)
+      : null);
+
 
   public NavigationBuilder BuildDevelopmentNavigation(
       NavigationBuilder builder) =>

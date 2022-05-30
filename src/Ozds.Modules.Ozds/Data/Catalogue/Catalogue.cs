@@ -32,7 +32,7 @@ public class Catalogue : ContentPart
           TariffModelTermId = TariffModel.TermContentItemIds.First(),
           Items = ContentItem
             .AsContent<CatalogueType>()
-            .WhenNonNullable(catalogue =>
+            .WhenNonNull(catalogue =>
               catalogue.Items.Value.ContentItems
                 .Select(item =>
                   item.AsContent<CatalogueItemType>()

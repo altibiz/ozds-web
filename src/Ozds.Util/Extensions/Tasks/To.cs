@@ -25,12 +25,12 @@ public static partial class Tasks
     ValueTask.FromResult(@this);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async ValueTask ToValueTask(
+  public static async Task ToValueTask(
       this Task @this) =>
     await @this;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async ValueTask<TOut> ToValueTask<TOut>(
+  public static async Task<TOut> ToValueTask<TOut>(
       this Task<TOut> @this) =>
     await @this;
 

@@ -30,7 +30,7 @@ public static partial class Objects
       Action<string> logger) =>
     @this
       .ToJson()
-      .WithNullable(logger)
+      .With(logger)
       .Return(@this);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -40,7 +40,7 @@ public static partial class Objects
       Action<string> logger) =>
     @this
       .ToTitledJson(title)
-      .WithNullable(logger)
+      .With(logger)
       .Return(@this);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -57,17 +57,17 @@ public static partial class Objects
     @this.Then(@this => @this.LogTitledJson(title, logger));
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static ValueTask<T> LogJsonValueTask<T>(
+  public static async Task<T> LogJsonValueTask<T>(
       this ValueTask<T> @this,
       Action<string> logger) =>
-    @this.Then(@this => @this.LogJson(logger));
+    await @this.Then(@this => @this.LogJson(logger));
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static ValueTask<T> LogTitledJsonValueTask<T>(
+  public static async Task<T> LogTitledJsonValueTask<T>(
       this ValueTask<T> @this,
       string title,
       Action<string> logger) =>
-    @this.Then(@this => @this.LogTitledJson(title, logger));
+    await @this.Then(@this => @this.LogTitledJson(title, logger));
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static T WriteJson<T>(
@@ -92,13 +92,13 @@ public static partial class Objects
     @this.LogTitledJsonTask(title, Console.WriteLine);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static ValueTask<T> WriteJsonValueTask<T>(
+  public static async Task<T> WriteJsonValueTask<T>(
       this ValueTask<T> @this) =>
-    @this.LogJsonValueTask(Console.WriteLine);
+    await @this.LogJsonValueTask(Console.WriteLine);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static ValueTask<T> WriteTitledJsonValueTask<T>(
+  public static async Task<T> WriteTitledJsonValueTask<T>(
       this ValueTask<T> @this,
       string title) =>
-    @this.LogTitledJsonValueTask(title, Console.WriteLine);
+    await @this.LogTitledJsonValueTask(title, Console.WriteLine);
 }

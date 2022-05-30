@@ -5,12 +5,12 @@ namespace Ozds.Modules.Ozds;
 
 public static class RouteValueDictionaryExtensions
 {
-  public static string GetNonNullable(
+  public static string GetNonNull(
       this RouteValueDictionary routes,
       string key) =>
     routes[key].As<string>().ThrowWhenNull();
 
-  public static T GetNonNullable<T>(
+  public static T GetNonNull<T>(
       this RouteValueDictionary routes,
       string key) where T : class =>
     routes[key].As<T>().ThrowWhenNull();

@@ -12,7 +12,7 @@
 @{
   ViewLayout = "Layout.Print";
 
-  var contentItemId = Request.RouteValues.GetNonNullable("contentItemId");
+  var contentItemId = Request.RouteValues.GetNonNull("contentItemId");
   var contentItem = await Orchard.GetContentItemByIdAsync(contentItemId);
   var headerText = T["Print"].Value;
 

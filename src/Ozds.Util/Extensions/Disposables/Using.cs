@@ -16,7 +16,7 @@ public static partial class Disposables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async ValueTask UsingAwait<TDisposable>(
+  public static async Task UsingAwait<TDisposable>(
       this TDisposable @this,
       Func<TDisposable, ValueTask> @do) where TDisposable : IDisposable
   {
@@ -38,7 +38,7 @@ public static partial class Disposables
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async ValueTask<TOut> UsingAwait<TDisposable, TOut>(
+  public static async Task<TOut> UsingAwait<TDisposable, TOut>(
       this TDisposable @this,
       Func<TDisposable, ValueTask<TOut>> @do) where TDisposable : IDisposable
   {

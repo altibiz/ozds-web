@@ -9,9 +9,9 @@ public static partial class Objects
       this T? @this,
       IEnumerable<T?>? enumerable) =>
     @this
-      .WhenNonNullable(
+      .WhenNonNull(
         element => enumerable
-          .WhenNonNullable(
+          .WhenNonNull(
             enumerable => enumerable.Contains(element),
             false),
         false);
@@ -21,9 +21,9 @@ public static partial class Objects
       this T? @this,
       params T?[]? enumerable) =>
     @this
-      .WhenNonNullable(
+      .WhenNonNull(
         element => enumerable
-          .WhenNonNullable(
+          .WhenNonNull(
             enumerable => enumerable.Contains(element),
             false),
         false);
@@ -34,9 +34,9 @@ public static partial class Objects
       IEnumerable<TElement?>? enumerable) where TElement : class =>
     @this
       .As<TElement>()
-      .WhenNonNullable(
+      .WhenNonNull(
         element => enumerable
-          .WhenNonNullable(
+          .WhenNonNull(
             enumerable => enumerable.Contains(element),
             false),
         false);
@@ -47,9 +47,9 @@ public static partial class Objects
       params TElement?[]? enumerable) where TElement : class =>
     @this
       .As<TElement>()
-      .WhenNonNullable(
+      .WhenNonNull(
         element => enumerable
-          .WhenNonNullable(
+          .WhenNonNull(
             enumerable => enumerable.Contains(element),
             false),
         false);

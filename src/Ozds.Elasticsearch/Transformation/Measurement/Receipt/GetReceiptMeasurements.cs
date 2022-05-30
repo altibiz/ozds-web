@@ -17,7 +17,7 @@ public partial class Client : IClient
         (measurements.begin.Hits.FirstOrDefault(),
          measurements.end.Hits.FirstOrDefault())
         .FilterNull()
-        .WhenNonNullable(measurements =>
+        .WhenNonNull(measurements =>
           (new EnergyMeasurement
           {
             Energy =
@@ -63,7 +63,7 @@ public partial class Client : IClient
       .Then(measurement => measurement
         .Aggregations
         .AverageBucket("averagePowerByFifteenMinutes")
-        .WhenNonNullable(average =>
+        .WhenNonNull(average =>
           new PowerMeasurement((decimal?)average.Value ?? default)));
 
   public PowerMeasurement

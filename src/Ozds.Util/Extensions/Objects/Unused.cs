@@ -5,10 +5,5 @@ namespace Ozds.Extensions;
 public static partial class Objects
 {
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static T Unused<T>(
-      this T @this)
-  {
-    return @this;
-  }
-
+  public static T Unused<T>(this T @this) => @this;
 }

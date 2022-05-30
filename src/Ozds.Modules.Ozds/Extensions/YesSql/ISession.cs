@@ -29,7 +29,7 @@ public static class ISessionExtensions
         JsonSerializer
           .Deserialize(stream.ReadToEnd(), type)
           .ThrowWhenNull()
-          .With(@object =>
+          .WithNonNull(@object =>
             {
               if (@object is IEnumerable<object> items)
               {
@@ -58,7 +58,7 @@ public static class ISessionExtensions
       this ISession session, ContentItem child) =>
     child
       .As<ContainedPart>()
-      .WhenNonNullableFinallyTask(part => session
+      .WhenNonNullFinallyAsync(part => session
         .GetItemById(part.ListContentItemId));
 
   public static Task<ContentItem> FirstOrDefaultAsync<TIndex>(

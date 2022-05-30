@@ -7,8 +7,7 @@ public static partial class Objects
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static void Return<TIn>(
       this TIn? @this)
-  {
-  }
+  { }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
   public static TOut Return<TIn, TOut>(
@@ -23,14 +22,8 @@ public static partial class Objects
     result();
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static Task<TOut> ReturnTask<TIn, TOut>(
-      this TIn? @this,
-      Func<Task<TOut>> result) =>
-    result();
-
-  [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static ValueTask<TOut> ReturnValueTask<TIn, TOut>(
+  public static async Task<TOut> ReturnAsync<TIn, TOut>(
       this TIn? @this,
       Func<ValueTask<TOut>> result) =>
-    result();
+    await result();
 }

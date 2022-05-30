@@ -22,7 +22,7 @@ public static partial class Objects
   public static T Min<T>(
       T lhs,
       T? rhs) where T : struct, IComparable<T> =>
-    !rhs.HasValue ? lhs
+    rhs is null ? lhs
     : lhs.CompareTo(rhs.Value) < 0 ? lhs
     : rhs.Value;
 

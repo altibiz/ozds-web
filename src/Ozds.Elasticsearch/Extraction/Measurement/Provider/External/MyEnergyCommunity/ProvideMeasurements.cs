@@ -35,7 +35,7 @@ public sealed partial class Client : IClient
       ProvisionDevice device,
       Period? period = null) =>
     period
-      .OnlyWhenNullable(device.ExtractionStart.UntilNow())
+      .WhenNull(device.ExtractionStart.UntilNow())
       // NOTE: API can output max 20 measurements per request without the need
       // NOTE: of a continuation token
       .SplitAscending(device.MeasurementInterval * 15)
@@ -124,7 +124,7 @@ public sealed partial class Client : IClient
     {
       var response = await message.Content
         .ReadAsStreamAsync()
-        .ThenValueTask(content => JsonSerializer
+        .ThenAwait(content => JsonSerializer
           .DeserializeAsync<Response<Measurement>>(content));
       if (response is null)
       {
