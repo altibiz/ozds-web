@@ -29,18 +29,6 @@ public partial class Client : IClient
       }
       else
       {
-        if (!string.IsNullOrWhiteSpace(item.Original.Error))
-        {
-          await DeleteMissingDataLogAsync(
-            MissingDataLog.MakeId(
-              extraction.Device.Id,
-              item.Original.Period));
-
-          Logger.LogDebug(
-            $"Recovered missing data for {extraction.Device.Id} " +
-            $"at {extraction.Period}");
-        }
-
         if (item.Original.ShouldValidate)
         {
           await UpdateDeviceLastValidationAsync(
@@ -87,18 +75,6 @@ public partial class Client : IClient
       }
       else
       {
-        if (!string.IsNullOrWhiteSpace(item.Original.Error))
-        {
-          DeleteMissingDataLog(
-            MissingDataLog.MakeId(
-              extraction.Device.Id,
-              item.Original.Period));
-
-          Logger.LogDebug(
-            $"Recovered missing data for {extraction.Device.Id} " +
-            $"at {extraction.Period}");
-        }
-
         if (item.Original.ShouldValidate)
         {
           UpdateDeviceLastValidation(

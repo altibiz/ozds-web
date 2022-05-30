@@ -19,9 +19,10 @@ public partial class Client : IClient
   {
     var now = DateTime.UtcNow;
     var missingDataLogs =
-      await SearchMissingDataLogsSortedByPeriodAsync(
+      await SearchExtractionMissingDataLogsAsync(
           device.Id,
           due: now,
+          retries: device.ExtractionRetries,
           period: period,
           size: missingDataExtractionPlanItemsLimit)
         .Then(response => response.Sources());
@@ -54,9 +55,10 @@ public partial class Client : IClient
   {
     var now = DateTime.UtcNow;
     var missingDataLogs =
-      SearchMissingDataLogsSortedByPeriod(
+      SearchExtractionMissingDataLogs(
           device.Id,
           due: now,
+          retries: device.ExtractionRetries,
           period: period,
           size: missingDataExtractionPlanItemsLimit)
         .Sources();

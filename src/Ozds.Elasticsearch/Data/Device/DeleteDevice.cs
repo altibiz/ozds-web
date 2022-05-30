@@ -1,5 +1,4 @@
 using Nest;
-using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch;
 
@@ -15,14 +14,10 @@ public sealed partial class Client : IClient
   public Task<DeleteResponse> DeleteDeviceAsync(Id id) =>
     Elasticsearch.DeleteAsync(
       DocumentPath<Device>.Id(id),
-      s => s.Index(DeviceIndexName))
-      .ThenWith(_ => DeleteLoadLogAsync(LoadLog
-        .MakeId(id.ToString())));
+      s => s.Index(DeviceIndexName));
 
   public DeleteResponse DeleteDevice(Id id) =>
     Elasticsearch.Delete(
       DocumentPath<Device>.Id(id),
-      s => s.Index(DeviceIndexName))
-      .With(_ => DeleteLoadLog(LoadLog
-        .MakeId(id.ToString())));
+      s => s.Index(DeviceIndexName));
 }

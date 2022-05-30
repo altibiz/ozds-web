@@ -49,16 +49,18 @@ public partial interface IClient
       Period? period = null);
 
   public Task<ISearchResponse<MissingDataLog>>
-  SearchMissingDataLogsSortedByPeriodAsync(
+  SearchExtractionMissingDataLogsAsync(
       string resource,
       DateTime due,
+      int retries,
       int? size = null,
       Period? period = null);
 
   public ISearchResponse<MissingDataLog>
-  SearchMissingDataLogsSortedByPeriod(
+  SearchExtractionMissingDataLogs(
       string resource,
       DateTime due,
+      int retries,
       int? size = null,
       Period? period = null);
 };
@@ -190,9 +192,10 @@ public sealed partial class Client : IClient
         .Ascending(d => d.Period!.To)));
 
   public ISearchResponse<MissingDataLog>
-  SearchMissingDataLogsSortedByPeriod(
+  SearchExtractionMissingDataLogs(
       string resource,
       DateTime due,
+      int retries,
       int? size = null,
       Period? period = null) =>
     Elasticsearch.Search<MissingDataLog>(s => s
@@ -214,9 +217,10 @@ public sealed partial class Client : IClient
         .Ascending(d => d.Period!.To)));
 
   public Task<ISearchResponse<MissingDataLog>>
-  SearchMissingDataLogsSortedByPeriodAsync(
+  SearchExtractionMissingDataLogsAsync(
       string resource,
       DateTime due,
+      int retries,
       int? size = null,
       Period? period = null) =>
     Elasticsearch.SearchAsync<MissingDataLog>(s => s
@@ -230,6 +234,9 @@ public sealed partial class Client : IClient
         .DateRange(r => r
           .Field(f => f.NextExtraction)
           .LessThanOrEquals(due)) && q
+        .Range(r => r
+          .Field(f => f.Retries)
+          .LessThan(retries)) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
       .Size(size ?? IClient.MaxSize)
