@@ -52,6 +52,20 @@ public partial interface IClient
   SearchExtractionMissingDataLogsAsync(
       string resource,
       DateTime due,
+      int? size = null,
+      Period? period = null);
+
+  public ISearchResponse<MissingDataLog>
+  SearchExtractionMissingDataLogs(
+      string resource,
+      DateTime due,
+      int? size = null,
+      Period? period = null);
+
+  public Task<ISearchResponse<MissingDataLog>>
+  SearchExtractionMissingDataLogsAsync(
+      string resource,
+      DateTime due,
       int retries,
       int? size = null,
       Period? period = null);
@@ -195,6 +209,54 @@ public sealed partial class Client : IClient
   SearchExtractionMissingDataLogs(
       string resource,
       DateTime due,
+      int? size = null,
+      Period? period = null) =>
+    Elasticsearch.Search<MissingDataLog>(s => s
+      .Query(q => q
+        .DateRange(r => r
+          .Field(f => f.Period!.To)
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThan(
+            period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
+        .DateRange(r => r
+          .Field(f => f.NextExtraction)
+          .LessThanOrEquals(due)) && q
+        .Term(t => t.Resource, resource) && q
+        .Term(t => t.LogType, MissingDataLog.Type))
+      .Size(size ?? IClient.MaxSize)
+      .Index(LogIndexName)
+      .Sort(s => s
+        .Ascending(d => d.Period!.To)));
+
+  public Task<ISearchResponse<MissingDataLog>>
+  SearchExtractionMissingDataLogsAsync(
+      string resource,
+      DateTime due,
+      int? size = null,
+      Period? period = null) =>
+    Elasticsearch.SearchAsync<MissingDataLog>(s => s
+      .Query(q => q
+        .DateRange(r => r
+          .Field(f => f.Period!.To)
+          .GreaterThanOrEquals(
+            period?.From ?? DateTime.MinValue.ToUniversalTime())
+          .LessThan(
+            period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
+        .DateRange(r => r
+          .Field(f => f.NextExtraction)
+          .LessThanOrEquals(due)) && q
+        .Term(t => t.Resource, resource) && q
+        .Term(t => t.LogType, MissingDataLog.Type))
+      .Size(size ?? IClient.MaxSize)
+      .Index(LogIndexName)
+      .Sort(s => s
+        .Ascending(d => d.Period!.To)));
+
+  public ISearchResponse<MissingDataLog>
+  SearchExtractionMissingDataLogs(
+      string resource,
+      DateTime due,
       int retries,
       int? size = null,
       Period? period = null) =>
@@ -209,6 +271,9 @@ public sealed partial class Client : IClient
         .DateRange(r => r
           .Field(f => f.NextExtraction)
           .LessThanOrEquals(due)) && q
+        .Range(r => r
+          .Field(f => f.Retries)
+          .LessThan(retries)) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
       .Size(size ?? IClient.MaxSize)
