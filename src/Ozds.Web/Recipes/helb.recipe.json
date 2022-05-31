@@ -1,8 +1,13 @@
 {
   "name": "Helb",
-  "displayName": "OZDS HELB",
-  "description": "OZDS HELB Tenant Recipe",
+  "displayName": "Helb",
+  "description": "Helb",
+  "author": "Altibiz",
+  "website": "altibiz.com",
+  "version": "1.0.0",
   "issetuprecipe": true,
+  "categories": ["Module"],
+  "tags": ["Module"],
   "steps": [
     {
       "name": "feature",
