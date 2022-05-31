@@ -11,21 +11,23 @@
   var user = await OrchardUser;
   var userId = user.UserId;
 
+  var fromQuery = Context.Request.Query["from"].FirstOrDefault();
+  var from =
+    string.IsNullOrEmpty(fromQuery) ? now.AddMinutes(-60)
+    : fromQuery.ToUtcIsoDateTime();
+
+  var toQuery = Context.Request.Query["to"].FirstOrDefault();
+  var to =
+    string.IsNullOrEmpty(toQuery) ? now
+    : toQuery.ToUtcIsoDateTime();
+
   var userMeasurements = await Provider
     .GetDashboardMeasurementsByOwnerUserAsync(
       userId,
       new Period
       {
-        From =
-          Context.Request.Query["from"]
-            .FirstOrDefault()
-            .WhenNonNull(dateString => dateString.ToUtcIsoDateTime())
-            .WhenNull(now.AddMinutes(-60)),
-        To =
-          Context.Request.Query["to"]
-            .FirstOrDefault()
-            .WhenNonNull(dateString => dateString.ToUtcIsoDateTime())
-            .WhenNull(now),
+        From = from,
+        To = to,
       });
 }
 
