@@ -15,14 +15,18 @@ public partial class Client : IClient
         IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
       int loadExtractionSpanLimitInSeconds =
         IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
-    Providers
-      .Select(provider =>
-        PlanSourceExtractionAsync(
-          provider.Source,
-          period,
-          measurementsPerExtractionPlanItem,
-          missingDataExtractionPlanItemsLimit,
-          loadExtractionSpanLimitInSeconds))
+    SearchDevicesAsync()
+        .Then(devices => devices
+          .Sources()
+          .Select(device =>
+            PlanDeviceExtractionAsync(
+              device.ToExtractionDevice(),
+              period,
+              measurementsPerExtractionPlanItem,
+              missingDataExtractionPlanItemsLimit,
+              loadExtractionSpanLimitInSeconds))
+          .ToAsync())
+      .ToAsyncEnumerable()
       .FlattenAsync();
 
   public IEnumerable<ExtractionPlan>
@@ -34,13 +38,13 @@ public partial class Client : IClient
         IMeasurementExtractor.DefaultMissingDataExtractionPlanItemsLimit,
       int loadExtractionSpanLimitInSeconds =
         IMeasurementExtractor.DefaultLoadExtractionSpanLimitInSeconds) =>
-    Providers
-      .Select(provider =>
-        PlanSourceExtraction(
-          provider.Source,
+    SearchDevices()
+      .Sources()
+      .Select(device =>
+        PlanDeviceExtraction(
+          device.ToExtractionDevice(),
           period,
           measurementsPerExtractionPlanItem,
           missingDataExtractionPlanItemsLimit,
-          loadExtractionSpanLimitInSeconds))
-      .Flatten();
+          loadExtractionSpanLimitInSeconds));
 }
