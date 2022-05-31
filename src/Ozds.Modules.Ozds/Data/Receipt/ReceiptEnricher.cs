@@ -31,7 +31,6 @@ public class ReceiptEnricher : ContentHandlerBase
     {
       return;
     }
-    Console.WriteLine("here");
 
     var content = Services
       .GetRequiredService<IContentManager>()

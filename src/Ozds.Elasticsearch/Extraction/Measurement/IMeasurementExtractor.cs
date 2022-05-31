@@ -15,7 +15,7 @@ public interface IMeasurementExtractor
   public const int DefaultMissingDataExtractionPlanItemsLimit =
     20;
   public const int DefaultLoadExtractionSpanLimitInSeconds =
-    10800; // NOTE: three hours
+    7200; // NOTE: two hours
 
   public IAsyncEnumerable<ExtractionPlan>
   PlanExtractionAsync(
