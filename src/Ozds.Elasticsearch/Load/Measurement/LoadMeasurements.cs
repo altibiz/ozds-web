@@ -8,6 +8,8 @@ public partial class Client : IClient
   public async Task LoadMeasurementsAsync(
       AsyncEnrichedMeasurementExtraction extraction)
   {
+    var containsItemsThatShouldBeValidated = false;
+    var itemsThatShouldBeValidatedValid = true;
     await foreach (var item in extraction.Items)
     {
       // NOTE: indexing first, so in case something happens right here, we
@@ -16,6 +18,11 @@ public partial class Client : IClient
       // NOTE: if it was ids of measurements prevent that
       await IndexMeasurementsAsync(item.Bucket
         .Select(LoadMeasurementExtensions.ToMeasurement));
+
+      if (item.Original.ShouldValidate)
+      {
+        containsItemsThatShouldBeValidated = true;
+      }
 
       if (item.Next.HasValue)
       {
@@ -26,20 +33,23 @@ public partial class Client : IClient
           $"Missing data for {extraction.Device.Id} " +
           $"at {extraction.Period} " +
           $"because {item.Next.Value.Error}");
-      }
-      else
-      {
-        if (item.Original.ShouldValidate)
-        {
-          await UpdateDeviceLastValidationAsync(
-            extraction.Device.Id,
-            item.Original.Due);
 
-          Logger.LogDebug(
-            $"Validated data for {extraction.Device.Id} " +
-            $"at {extraction.Period}");
+        if (item.Original.ShouldValidate && item.Original.Error is null)
+        {
+          itemsThatShouldBeValidatedValid = false;
         }
       }
+    }
+
+    if (containsItemsThatShouldBeValidated && itemsThatShouldBeValidatedValid)
+    {
+      await UpdateDeviceLastValidationAsync(
+        extraction.Device.Id,
+        extraction.Period.To);
+
+      Logger.LogDebug(
+        $"Validated data for {extraction.Device.Id} " +
+        $"at {extraction.Period}");
     }
 
     await ExtendLoadLogPeriodAsync(
@@ -54,6 +64,8 @@ public partial class Client : IClient
   public void LoadMeasurements(
       EnrichedMeasurementExtraction extraction)
   {
+    var containsItemsThatShouldBeValidated = false;
+    var itemsThatShouldBeValidatedValid = true;
     foreach (var item in extraction.Items)
     {
       // NOTE: indexing first, so in case something happens right here, we
@@ -62,6 +74,11 @@ public partial class Client : IClient
       // NOTE: if it was ids of measurements prevent that
       IndexMeasurements(item.Bucket
         .Select(LoadMeasurementExtensions.ToMeasurement));
+
+      if (item.Original.ShouldValidate)
+      {
+        containsItemsThatShouldBeValidated = true;
+      }
 
       if (item.Next.HasValue)
       {
@@ -72,20 +89,23 @@ public partial class Client : IClient
           $"Missing data for {extraction.Device.Id} " +
           $"at {extraction.Period} " +
           $"because {item.Next.Value.Error}");
-      }
-      else
-      {
+
         if (item.Original.ShouldValidate)
         {
-          UpdateDeviceLastValidation(
-            extraction.Device.Id,
-            item.Original.Due);
-
-          Logger.LogDebug(
-            $"Validated data for {extraction.Device.Id} " +
-            $"at {extraction.Period}");
+          itemsThatShouldBeValidatedValid = false;
         }
       }
+    }
+
+    if (containsItemsThatShouldBeValidated && itemsThatShouldBeValidatedValid)
+    {
+      UpdateDeviceLastValidation(
+        extraction.Device.Id,
+        extraction.Period.To);
+
+      Logger.LogDebug(
+        $"Validated data for {extraction.Device.Id} " +
+        $"at {extraction.Period}");
     }
 
     ExtendLoadLogPeriod(

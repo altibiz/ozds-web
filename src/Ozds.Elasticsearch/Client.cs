@@ -107,7 +107,8 @@ public sealed partial class Client : IClientPrototype, IClient
         .BasicAuthentication(user, password);
     }
 
-    if (!string.IsNullOrWhiteSpace(caPath))
+    if (!string.IsNullOrWhiteSpace(caPath) &&
+        File.Exists(caPath))
     {
       settings = settings
         .ServerCertificateValidationCallback(

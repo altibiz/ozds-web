@@ -2,7 +2,6 @@ namespace Ozds.Elasticsearch;
 
 public interface IMeasurementExtractor
 {
-
   public AsyncMeasurementExtraction
   ExecuteExtractionPlanAsync(ExtractionPlan plan);
 

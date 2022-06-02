@@ -92,7 +92,7 @@ public static class ContentTypeBaseExtensions
       this IContentManager content,
       string id) where T : ContentTypeBase =>
     content
-      .GetAsync(id)
+      .GetVersionAsync(id)
       .Then(item => item.AsContent<T>());
 
   public static Task<IEnumerable<T>> GetContentAsync<T>(

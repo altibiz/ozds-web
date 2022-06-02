@@ -92,7 +92,7 @@ public partial class Client : IClient
           Retries = last.Retries + 1,
           Period = bucket.Period,
           Timeout = last.Timeout,
-          ShouldValidate = last.ShouldValidate,
+          ShouldValidate = false,
           Error = error
         },
       _ => null

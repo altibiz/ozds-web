@@ -54,7 +54,8 @@
       .sort((a, b) => a.timestamp - b.timestamp);
     const lineLabels =
       measurements.map(measurement =>
-        measurement.timestamp.toLocaleTimeString());
+        measurement.timestamp.toLocaleTimeString(
+          '@Html.Raw(Orchard.CultureName())'));
     const rainbow = [
       "Red",
       "Green",
