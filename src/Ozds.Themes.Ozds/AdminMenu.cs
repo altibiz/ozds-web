@@ -14,103 +14,117 @@ public class AdminMenu : INavigationProvider
       string name,
       NavigationBuilder builder) =>
     Task.Run(() =>
-      string.Equals(
-          name, "admin",
-          StringComparison.OrdinalIgnoreCase) &&
-        Conf
-          .GetSection("Ozds")
-          .GetSection("Modules")
-          .GetSection("Ozds")
-          .GetValue<object?>("IsDemo") is not null ?
-        builder
-          .Add(
-            S["Security"],
-            NavigationConstants.AdminMenuSecurityPosition,
-            security => security
-              .AddClass("security")
-              .Id("security")
-              .Add(
-                S["Users"],
-                S["Users"].PrefixPosition(),
-                users => users
-                  .AddClass("users")
-                  .Id("users")
-                  .Action("Index", "Admin", "OrchardCore.Users")
-                  .Permission(UserPermissions.ViewUsers)
-                  .Resource(new User())
-                  .LocalNav()))
-          .Add(
-            S["Import/Export"],
-            S["Import/Export"].PrefixPosition(),
-            import => import
-              .Add(
-                S["Deployment Plans"],
-                S["Deployment Plans"].PrefixPosition(),
-                deployment => deployment
-                  .Action(
-                    "Index",
-                    "DeploymentPlan",
-                    new
-                    {
-                      area = "OrchardCore.Deployment"
-                    })
-                  .Permission(DeploymentPermissions.Export)
-                  .LocalNav())
-              .Add(
-                S["Package Import"],
-                S["Package Import"].PrefixPosition(),
-                deployment => deployment
-                  .Action(
-                    "Index",
-                    "Import",
-                    new
-                    {
-                      area = "OrchardCore.Deployment"
-                    })
-                  .Permission(DeploymentPermissions.Import)
-                  .LocalNav())
-              .Add(
-                S["JSON Import"],
-                S["JSON Import"].PrefixPosition(),
-                deployment => deployment
-                  .Action(
-                    "Json",
-                    "Import",
-                    new
-                    {
-                      area = "OrchardCore.Deployment"
-                    })
-                  .Permission(DeploymentPermissions.Import)
-                  .LocalNav()))
-      : string.Equals(
-          name, "admin",
-          StringComparison.OrdinalIgnoreCase) &&
-        Env.IsDevelopment() ?
-        builder
-          .Add(
-            S["Content"],
-            S["Content"].PrefixPosition(),
-            root => root
-              .Add(
-                S["Content Items"],
-                S["Content Items"].PrefixPosition(),
-                child => child
-                  .Action("ContentItems", "Admin",
-                    new
-                    {
-                      area = "OrchardCore.Contents"
-                    }))
+      {
+        if (!string.Equals(
+              name, "admin",
+              StringComparison.OrdinalIgnoreCase))
+        {
+          return Task.CompletedTask;
+        }
+
+        if (Env.IsProduction())
+        {
+          builder
+            .Remove(_ => true)
             .Add(
-              S["Taxonomies"],
-              S["Taxonomies"].PrefixPosition(),
-              child => child
-                .Action("List", "Admin",
-                  new
-                  {
-                    area = "OrchardCore.Contents",
-                    contentTypeId = "Taxonomy"
-                  })))
-      : builder);
+              S["Security"],
+              NavigationConstants.AdminMenuSecurityPosition,
+              security => security
+                .AddClass("security")
+                .Id("security")
+                .Add(
+                  S["Users"],
+                  S["Users"].PrefixPosition(),
+                  users => users
+                    .AddClass("users")
+                    .Id("users")
+                    .Action("Index", "Admin", "OrchardCore.Users")
+                    .Permission(UserPermissions.ViewUsers)
+                    .Resource(new User())
+                    .LocalNav()));
+
+          if (Conf
+              .GetSection("Ozds")
+              .GetSection("Modules")
+              .GetSection("Ozds")
+              .GetValue<object?>("IsDemo") is not null)
+          {
+            builder
+              .Add(
+                S["Import/Export"],
+                S["Import/Export"].PrefixPosition(),
+                import => import
+                  .Add(
+                    S["Deployment Plans"],
+                    S["Deployment Plans"].PrefixPosition(),
+                    deployment => deployment
+                      .Action(
+                        "Index",
+                        "DeploymentPlan",
+                        new
+                        {
+                          area = "OrchardCore.Deployment"
+                        })
+                      .Permission(DeploymentPermissions.Export)
+                      .LocalNav())
+                  .Add(
+                    S["Package Import"],
+                    S["Package Import"].PrefixPosition(),
+                    deployment => deployment
+                      .Action(
+                        "Index",
+                        "Import",
+                        new
+                        {
+                          area = "OrchardCore.Deployment"
+                        })
+                      .Permission(DeploymentPermissions.Import)
+                      .LocalNav())
+                  .Add(
+                    S["JSON Import"],
+                    S["JSON Import"].PrefixPosition(),
+                    deployment => deployment
+                      .Action(
+                        "Json",
+                        "Import",
+                        new
+                        {
+                          area = "OrchardCore.Deployment"
+                        })
+                      .Permission(DeploymentPermissions.Import)
+                      .LocalNav()));
+          }
+        }
+        else
+        {
+          builder
+            .Add(
+              S["Content"],
+              S["Content"].PrefixPosition(),
+              root => root
+                .Add(
+                  S["Content Items"],
+                  S["Content Items"].PrefixPosition(),
+                  child => child
+                    .Action("ContentItems", "Admin",
+                      new
+                      {
+                        area = "OrchardCore.Contents"
+                      }))
+              .Add(
+                S["Taxonomies"],
+                S["Taxonomies"].PrefixPosition(),
+                child => child
+                  .Action("List", "Admin",
+                    new
+                    {
+                      area = "OrchardCore.Contents",
+                      contentTypeId = "Taxonomy"
+                    })));
+        }
+
+        return Task.CompletedTask;
+      });
 
   public AdminMenu(
       IHostEnvironment env,

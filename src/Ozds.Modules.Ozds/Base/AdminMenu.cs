@@ -14,15 +14,10 @@ public class AdminMenu : INavigationProvider
       string.Equals(
             name, "admin",
             StringComparison.OrdinalIgnoreCase) ?
-        Env.IsDevelopment() &&
-        (Conf
-          .GetSection("Ozds")
-          .GetSection("Modules")
-          .GetSection("Ozds")
-          .GetValue<object?>("IsDemo") is null) ?
+        Env.IsDevelopment() ?
           BuildDevelopmentNavigation(builder)
         : BuildProductionNavigation(builder)
-      : null);
+      : builder);
 
 
   public NavigationBuilder BuildDevelopmentNavigation(
@@ -101,7 +96,6 @@ public class AdminMenu : INavigationProvider
   public NavigationBuilder BuildProductionNavigation(
       NavigationBuilder builder) =>
     builder
-      .Remove(_ => true)
       .Add(S["Cjenik"], "1", child => child
         .Action("List", "Admin",
           new
