@@ -16,4 +16,5 @@ git clean -Xd \
   -e '!.vs/**' \
   -e '!**/*.csproj.user' \
   -e '!.vscode/**' \
+  -e '!**/Sensitive' \
   $@;
