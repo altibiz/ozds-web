@@ -325,4 +325,4 @@ src/Ozds.Web/Localization
 is-cache
 secrets.json
 secrets.sh
-Sensitive/
+Sensitive
