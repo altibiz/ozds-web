@@ -25,7 +25,7 @@ public class DashboardMeasurementObjectGraphType :
       .Resolve(s => s.Source.Timestamp);
 
     Field<DashboardMeasurementDataObjectGraphType, DashboardMeasurementData>()
-      .Name("dashboardMeasurement")
+      .Name("data")
       .Description(S["Measurement data for drawing graphs on dashboards"])
       .Resolve(s => s.Source.Data);
   }

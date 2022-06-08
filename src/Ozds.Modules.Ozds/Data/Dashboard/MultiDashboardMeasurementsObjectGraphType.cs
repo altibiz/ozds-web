@@ -14,7 +14,7 @@ public class MultiDashboardMeasurementsObjectGraphType :
     Description = S["Interpolated dashboard measurements of multiple devices"];
 
     Field<ListGraphType<StringGraphType>, IEnumerable<string>>()
-      .Name("deviceId")
+      .Name("deviceIds")
       .Description(S["Ids of the devices which measured the data"])
       .Resolve(s => s.Source.DeviceIds);
 
