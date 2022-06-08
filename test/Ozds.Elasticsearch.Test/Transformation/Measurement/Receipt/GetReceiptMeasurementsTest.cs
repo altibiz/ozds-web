@@ -4,17 +4,25 @@ namespace Ozds.Elasticsearch.Test;
 
 public partial class ClientTest
 {
+  // TODO: test
   [Theory]
-  [MemberData(nameof(Data.GenerateDevice), MemberType = typeof(Data))]
-  public async Task GetReceiptMeasurementsAsyncTest(Device device)
+  [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
+  public async Task GetReceiptMeasurementsAsyncTest(
+      Device device,
+      IEnumerable<Measurement> measurements,
+      Period period)
   {
-    await SetupDeviceAsync(device);
+    await SetupMeasurementsAsync(device, measurements);
   }
 
+  // TODO: test
   [Theory]
-  [MemberData(nameof(Data.GenerateDevice), MemberType = typeof(Data))]
-  public void GetReceiptMeasurementsTest(Device device)
+  [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
+  public void GetReceiptMeasurementsTest(
+      Device device,
+      IEnumerable<Measurement> measurements,
+      Period period)
   {
-    SetupDevice(device);
+    SetupMeasurements(device, measurements);
   }
 }

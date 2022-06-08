@@ -13,32 +13,94 @@
 
 <div class="d-flex flex-column">
   <h5>
-    @(T["Energy"].Value)
+    @T["Cumulative"]
   </h5>
   <div class="d-flex flex-column flex-lg-row w-100">
-    <div
-        class="
-          d-block justify-content-center
-          position-relative flex-shrink-1">
-      <canvas id="energy-doughnut" />
+    <div class="d-flex flex-column align-items-center h-100">
+      <div
+          class="
+            d-block justify-content-center
+            position-relative flex-shrink-1">
+        <canvas id="cumulative-doughnut" />
+      </div>
+      <div style="margin-top: -50px;">
+        <div>
+          <strong style="color: Red;">
+            @T["Power"] (kW) :
+          </strong>
+          <span>
+            @decimal.Round(Model.Last().Data.Power, 2)
+          </span>
+          <span>
+            / @Dashboard.MaxPower
+          </span>
+        </div>
+        <div>
+          <strong style="color: Blue;">
+            @T["Energy"] (kWh) :
+          </strong>
+          <span>
+            @decimal.Round(Model.Last().Data.Energy, 2)
+          </span>
+        </div>
+      </div>
     </div>
     <div
         class="
           d-block justify-content-center
           position-relative flex-grow-1">
-      <canvas id="energy-lines" />
+      <canvas id="cumulative-lines" />
     </div>
   </div>
+</div>
 
+<div class="d-flex flex-column mt-5">
   <h5>
-    @(T["Power"].Value)
+    @T["Power phases"]
   </h5>
   <div class="d-flex flex-column flex-lg-row w-100">
-    <div
-        class="
-          d-block justify-content-center
-          position-relative flex-shrink-1">
-      <canvas id="power-doughnut" />
+    <div class="d-flex flex-column align-items-center h-100">
+      <div
+          class="
+            d-block justify-content-center
+            position-relative flex-shrink-1">
+        <canvas id="power-doughnut" />
+      </div>
+      <div style="margin-top: -50px;">
+        <div>
+          <strong style="color: Green;">
+            @T["PowerL1"] (kW) :
+          </strong>
+          <span>
+            @decimal.Round(Model.Last().Data.PowerL1, 2)
+          </span>
+          <span>
+            / @Dashboard.MaxPower
+          </span>
+        </div>
+        <div>
+          <strong style="color: Orange;">
+            @T["PowerL2"] (kW) :
+          </strong>
+          <span>
+            @decimal.Round(Model.Last().Data.PowerL2, 2)
+          </span>
+          <span>
+            / @Dashboard.MaxPower
+          </span>
+        </div>
+        <div>
+          <strong style="color: Cyan;">
+            @T["PowerL3"] (kW) :
+          </strong>
+          <span>
+            @decimal.Round(Model.Last().Data.PowerL2, 2)
+          </span>
+          <span>
+            / @Dashboard.MaxPower
+          </span>
+        </div>
+      </div>
     </div>
     <div
         class="
@@ -49,6 +111,74 @@
   </div>
 </div>
 
+<div class="d-flex flex-column mt-5">
+  <h5>
+    @T["Current phases"]
+  </h5>
+  <div class="d-flex flex-column flex-lg-row w-100">
+    <div class="d-flex flex-column align-items-center h-100">
+      <div
+          class="
+            d-block justify-content-center
+            position-relative flex-shrink-1">
+        <canvas id="current-doughnut" />
+      </div>
+      <div style="margin-top: -50px;">
+        <div>
+          <strong style="color: Green;">
+            @T["CurrentL1"] (A) :
+          </strong>
+          <span>
+            @decimal.Round(Model.Last().Data.CurrentL1, 2)
+          </span>
+          <span>
+            / @Dashboard.MaxCurrent
+          </span>
+        </div>
+        <div>
+          <strong style="color: Orange;">
+            @T["CurrentL2"] (A) :
+          </strong>
+          <span>
+            @decimal.Round(Model.Last().Data.CurrentL2, 2)
+          </span>
+          <span>
+            / @Dashboard.MaxCurrent
+          </span>
+        </div>
+        <div>
+          <strong style="color: Cyan;">
+            @T["CurrentL3"] (A) :
+          </strong>
+          <span>
+            @decimal.Round(Model.Last().Data.CurrentL2, 2)
+          </span>
+          <span>
+            / @Dashboard.MaxCurrent
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+        class="
+          d-block justify-content-center
+          position-relative flex-grow-1">
+      <canvas id="current-lines" />
+    </div>
+  </div>
+</div>
+
+<div class="d-flex flex-column mt-5" style="height: 400px;">
+  <h5>
+    @T["Voltage phases"]
+  </h5>
+  <div
+      class="
+        d-block justify-content-center
+        position-relative flex-grow-1">
+    <canvas id="voltage-lines" />
+  </div>
+</div>
 
 <script asp-name="ozdstheme-chart" at="Foot"/>
 <script at="Foot">
@@ -64,13 +194,23 @@
       .sort((a, b) => a.timestamp - b.timestamp);
     const lineLabels =
       measurements.map(measurement =>
-        measurement.timestamp.toLocaleTimeString(
+        measurement.timestamp.toLocaleString(
           '@Html.Raw(Orchard.CultureName())'));
-    const energy = measurements[measurements.length -1].data.energy;
-    const power = measurements[measurements.length -1].data.power;
+    const lastMeasurement = measurements[measurements.length - 1]
+    const energy = lastMeasurement.data.energy;
+    const power = lastMeasurement.data.power;
+    const powerL1 = lastMeasurement.data.powerL1;
+    const powerL2 = lastMeasurement.data.powerL2;
+    const powerL3 = lastMeasurement.data.powerL3;
+    const currentL1 = lastMeasurement.data.currentL1;
+    const currentL2 = lastMeasurement.data.currentL2;
+    const currentL3 = lastMeasurement.data.currentL3;
+    const voltageL1 = lastMeasurement.data.voltageL1;
+    const voltageL2 = lastMeasurement.data.voltageL2;
+    const voltageL3 = lastMeasurement.data.voltageL3;
 
     new Chart(
-      "energy-lines",
+      "cumulative-lines",
       {
         type: "line",
         data: {
@@ -81,11 +221,58 @@
               data: measurements.map(measurement => measurement.data.energy),
               borderColor: "Blue",
               backgroundColor: "Blue",
+              yAxisID: "energy",
+            },
+            {
+              label: '@T["Power"].Value (kW)',
+              data: measurements.map(measurement => measurement.data.power),
+              borderColor: "Red",
+              backgroundColor: "Red",
+              yAxisID: "power",
             },
           ],
         },
         options: {
           maintainAspectRatio: false,
+          plugins: {
+            legend: false
+          },
+          scales: {
+            power: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+            },
+            energy: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              grid: {
+                drawOnChartArea: false,
+              },
+            },
+          },
+        },
+      });
+
+    new Chart(
+      "cumulative-doughnut",
+      {
+        type: "doughnut",
+        data: {
+          labels: [ '@T["Power"].Value (kW)' ],
+          datasets: [
+            {
+              label: [ '@T["Current Power"].Value (kW)', '' ],
+              data: [ power, @Dashboard.MaxPower - power ],
+              backgroundColor: ["Red", "#DDDDDD"]
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          rotation: 270,
+          circumference: 180,
           plugins: {
             legend: false
           },
@@ -100,39 +287,30 @@
           labels: lineLabels,
           datasets: [
             {
-              label: '@T["Power"].Value (kW)',
-              data: measurements.map(measurement => measurement.data.power),
-              borderColor: "Red",
-              backgroundColor: "Red",
+              label: '@T["PowerL1"].Value (kW)',
+              data: measurements.map(measurement => measurement.data.powerL1),
+              borderColor: "Green",
+              backgroundColor: "Green",
+              yAxisID: "power",
             },
-          ],
-        },
-        options: {
-          maintainAspectRatio: false,
-          plugins: {
-            legend: false
-          },
-        },
-      });
-
-    new Chart(
-      "energy-doughnut",
-      {
-        type: "doughnut",
-        data: {
-          labels: [ '@T["Energy"].Value (kWh)' ],
-          datasets: [
             {
-              label: [ '@T["Current Energy"].Value (kWh)', '' ],
-              data: [ energy, 300 - energy ],
-              backgroundColor: ["Blue", "White"],
+              label: '@T["PowerL2"].Value (kW)',
+              data: measurements.map(measurement => measurement.data.powerL2),
+              borderColor: "Orange",
+              backgroundColor: "Orange",
+              yAxisID: "power",
+            },
+            {
+              label: '@T["PowerL3"].Value (kW)',
+              data: measurements.map(measurement => measurement.data.powerL3),
+              borderColor: "Cyan",
+              backgroundColor: "Cyan",
+              yAxisID: "power",
             },
           ],
         },
         options: {
           maintainAspectRatio: false,
-          rotation: 270,
-          circumference: 180,
           plugins: {
             legend: false
           },
@@ -144,12 +322,21 @@
       {
         type: "doughnut",
         data: {
-          labels: [ '@T["Power"].Value (kW)' ],
           datasets: [
             {
-              label: [ '@T["Current Power"].Value (kW)', '' ],
-              data: [ power, 20 - power ],
-              backgroundColor: ["Red", "White"]
+              label: [ '@T["PowerL1"].Value (kW)', '' ],
+              data: [ powerL1, @Dashboard.MaxPower - powerL1 ],
+              backgroundColor: ["Green", "#DDDDDD"]
+            },
+            {
+              label: [ '@T["PowerL2"].Value (kW)', '' ],
+              data: [ powerL2, @Dashboard.MaxPower - powerL2 ],
+              backgroundColor: ["Orange", "#DDDDDD"]
+            },
+            {
+              label: [ '@T["PowerL3"].Value (kW)', '' ],
+              data: [ powerL3, @Dashboard.MaxPower - powerL3 ],
+              backgroundColor: ["Cyan", "#DDDDDD"]
             },
           ],
         },
@@ -159,6 +346,115 @@
           circumference: 180,
           plugins: {
             legend: false
+          },
+        },
+      });
+
+    new Chart(
+      "current-lines",
+      {
+        type: "line",
+        data: {
+          labels: lineLabels,
+          datasets: [
+            {
+              label: '@T["CurrentL1"].Value (kW)',
+              data: measurements.map(measurement => measurement.data.currentL1),
+              borderColor: "Green",
+              backgroundColor: "Green",
+              yAxisID: "current",
+            },
+            {
+              label: '@T["CurrentL2"].Value (kW)',
+              data: measurements.map(measurement => measurement.data.currentL2),
+              borderColor: "Orange",
+              backgroundColor: "Orange",
+              yAxisID: "current",
+            },
+            {
+              label: '@T["CurrentL3"].Value (kW)',
+              data: measurements.map(measurement => measurement.data.currentL3),
+              borderColor: "Cyan",
+              backgroundColor: "Cyan",
+              yAxisID: "current",
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          plugins: {
+            legend: false
+          },
+        },
+      });
+
+    new Chart(
+      "current-doughnut",
+      {
+        type: "doughnut",
+        data: {
+          datasets: [
+            {
+              label: [ '@T["CurrentL1"].Value (kW)', '' ],
+              data: [ currentL1, @Dashboard.MaxCurrent - currentL1 ],
+              backgroundColor: ["Green", "#DDDDDD"]
+            },
+            {
+              label: [ '@T["CurrentL2"].Value (kW)', '' ],
+              data: [ currentL2, @Dashboard.MaxCurrent - currentL2 ],
+              backgroundColor: ["Orange", "#DDDDDD"]
+            },
+            {
+              label: [ '@T["CurrentL3"].Value (kW)', '' ],
+              data: [ currentL3, @Dashboard.MaxCurrent - currentL3 ],
+              backgroundColor: ["Cyan", "#DDDDDD"]
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          rotation: 270,
+          circumference: 180,
+          plugins: {
+            legend: false
+          },
+        },
+      });
+
+    new Chart(
+      "voltage-lines",
+      {
+        type: "line",
+        data: {
+          labels: lineLabels,
+          datasets: [
+            {
+              label: '@T["VoltageL1"].Value (kW)',
+              data: measurements.map(measurement => measurement.data.voltageL1),
+              borderColor: "Green",
+              backgroundColor: "Green",
+              yAxisID: "voltage",
+            },
+            {
+              label: '@T["VoltageL2"].Value (kW)',
+              data: measurements.map(measurement => measurement.data.voltageL2),
+              borderColor: "Orange",
+              backgroundColor: "Orange",
+              yAxisID: "voltage",
+            },
+            {
+              label: '@T["VoltageL3"].Value (kW)',
+              data: measurements.map(measurement => measurement.data.voltageL3),
+              borderColor: "Cyan",
+              backgroundColor: "Cyan",
+              yAxisID: "voltage",
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          plugins: {
+            legend: true
           },
         },
       });

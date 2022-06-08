@@ -27,6 +27,65 @@
         From = from,
         To = to,
       });
+
+  var lastHour = string
+    .Format(
+      "{0}?from={1}&to={2}",
+      Context.Request.Path,
+      now.AddHours(-1).ToUtcIsoString(),
+      now.ToUtcIsoString());
+
+  var lastDay = string
+    .Format(
+      "{0}?from={1}&to={2}",
+      Context.Request.Path,
+      now.AddDays(-1).ToUtcIsoString(),
+      now.ToUtcIsoString());
+
+  var lastWeek = string
+    .Format(
+      "{0}?from={1}&to={2}",
+      Context.Request.Path,
+      now.AddDays(-7).ToUtcIsoString(),
+      now.ToUtcIsoString());
+
+  var lastMonth = string
+    .Format(
+      "{0}?from={1}&to={2}",
+      Context.Request.Path,
+      now.AddMonths(-1).ToUtcIsoString(),
+      now.ToUtcIsoString());
 }
+
+<div class="d-flex flex-row">
+  <h4>
+    @T["Get measurements for:"]
+  </h4>
+  <div class="d-flex flex-row justify-content-around flex-grow-1">
+    <a
+        href="@lastHour"
+        class="btn btn-primary">
+      @T["Last hour"]
+    </a>
+
+    <a
+        href="@lastDay"
+        class="btn btn-primary">
+      @T["Last day"]
+    </a>
+
+    <a
+        href="@lastWeek"
+        class="btn btn-primary">
+      @T["Last week"]
+    </a>
+
+    <a
+        href="@lastMonth"
+        class="btn btn-primary">
+      @T["Last month"]
+    </a>
+  </div>
+</div>
 
 <partial name="Dashboard" model="@measurements" />

@@ -24,7 +24,16 @@ public readonly record struct DashboardMeasurementData
 (decimal Energy,
  decimal LowCostEnergy,
  decimal HighCostEnergy,
- decimal Power);
+ decimal Power,
+ decimal PowerL1,
+ decimal PowerL2,
+ decimal PowerL3,
+ decimal CurrentL1,
+ decimal CurrentL2,
+ decimal CurrentL3,
+ decimal VoltageL1,
+ decimal VoltageL2,
+ decimal VoltageL3);
 
 public static class DashboardMeasurementExtensions
 {
@@ -46,7 +55,16 @@ public static class DashboardMeasurementExtensions
       Energy = @this.MeasurementData.energyIn,
       LowCostEnergy = @this.MeasurementData.energyIn_T2,
       HighCostEnergy = @this.MeasurementData.energyIn_T1,
-      Power = @this.MeasurementData.powerIn
+      Power = @this.MeasurementData.powerIn,
+      PowerL1 = @this.MeasurementData.currentL1 ?? 0M,
+      PowerL2 = @this.MeasurementData.currentL2 ?? 0M,
+      PowerL3 = @this.MeasurementData.currentL3 ?? 0M,
+      CurrentL1 = @this.MeasurementData.currentL1 ?? 0M,
+      CurrentL2 = @this.MeasurementData.currentL2 ?? 0M,
+      CurrentL3 = @this.MeasurementData.currentL3 ?? 0M,
+      VoltageL1 = @this.MeasurementData.voltageL1 ?? 0M,
+      VoltageL2 = @this.MeasurementData.voltageL2 ?? 0M,
+      VoltageL3 = @this.MeasurementData.voltageL3 ?? 0M,
     };
 
   public static MultiDashboardMeasurements
@@ -133,10 +151,6 @@ public static class DashboardMeasurementExtensions
               current.DeviceId,
               new DashboardMeasurementData
               {
-                Power = period.Interpolate(
-                  last.Data.Power,
-                  current.Data.Power,
-                  at),
                 Energy = period.Interpolate(
                   last.Data.Energy,
                   current.Data.Energy,
@@ -148,6 +162,34 @@ public static class DashboardMeasurementExtensions
                 HighCostEnergy = period.Interpolate(
                   last.Data.HighCostEnergy,
                   current.Data.HighCostEnergy,
+                  at),
+                Power = period.Interpolate(
+                  last.Data.Power,
+                  current.Data.Power,
+                  at),
+                CurrentL1 = period.Interpolate(
+                  last.Data.CurrentL1,
+                  current.Data.CurrentL1,
+                  at),
+                CurrentL2 = period.Interpolate(
+                  last.Data.CurrentL2,
+                  current.Data.CurrentL2,
+                  at),
+                CurrentL3 = period.Interpolate(
+                  last.Data.CurrentL3,
+                  current.Data.CurrentL3,
+                  at),
+                VoltageL1 = period.Interpolate(
+                  last.Data.VoltageL1,
+                  current.Data.VoltageL1,
+                  at),
+                VoltageL2 = period.Interpolate(
+                  last.Data.VoltageL2,
+                  current.Data.VoltageL2,
+                  at),
+                VoltageL3 = period.Interpolate(
+                  last.Data.VoltageL3,
+                  current.Data.VoltageL3,
                   at),
               });
         }

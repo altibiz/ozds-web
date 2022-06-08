@@ -27,8 +27,8 @@ public static partial class AlterCatalogueItem
                 Options = TitlePartOptions.GeneratedHidden,
                 Pattern =
                 @"
-{%- assign catalogue = ContentItem.Content.Catalogue  -%}
-{%- assign tariffElement = catalogue.TariffElement | taxonomy_terms | first -%}
+{%- assign catalogueItem = ContentItem.Content.CatalogueItem  -%}
+{%- assign tariffElement = catalogueItem.TariffElement | taxonomy_terms | first -%}
 {{- tariffElement -}}
                 "
               }))

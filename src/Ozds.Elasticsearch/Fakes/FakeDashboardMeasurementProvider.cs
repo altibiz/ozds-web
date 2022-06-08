@@ -57,16 +57,15 @@ public sealed partial class FakeDashboardMeasurementProvider :
           To = DateTime.UtcNow
         })
       .To(period => period
-        .SplitDescending(TimeSpan.FromSeconds(10))
+        .SplitAscending(100)
         .Select((period, index) =>
           {
-            var energy = Random.Shared.Next(
+            var energy = Random.Shared.NextDecimal(
                 new MinMax
                 {
-                  Min = s_energyMinMaxStart.Min + 50 * index,
-                  Max = s_energyMinMaxStart.Max + 50 * index
+                  Min = s_energyMinMaxStart.Min + 5 * index,
+                  Max = s_energyMinMaxStart.Max + 5 * index
                 });
-            var power = Random.Shared.Next(s_powerMinMax);
             return
               new DashboardMeasurement
               {
@@ -77,11 +76,22 @@ public sealed partial class FakeDashboardMeasurementProvider :
                     Energy = energy,
                     LowCostEnergy = energy,
                     HighCostEnergy = energy,
-                    Power = power,
+                    Power = Random.Shared.NextDecimal(s_powerMinMax),
+                    PowerL1 = Random.Shared.NextDecimal(s_powerMinMax),
+                    PowerL2 = Random.Shared.NextDecimal(s_powerMinMax),
+                    PowerL3 = Random.Shared.NextDecimal(s_powerMinMax),
+                    CurrentL1 = Random.Shared.NextDecimal(s_currentMinMax),
+                    CurrentL2 = Random.Shared.NextDecimal(s_currentMinMax),
+                    CurrentL3 = Random.Shared.NextDecimal(s_currentMinMax),
+                    VoltageL1 = Random.Shared.NextDecimal(s_voltageMinMax),
+                    VoltageL2 = Random.Shared.NextDecimal(s_voltageMinMax),
+                    VoltageL3 = Random.Shared.NextDecimal(s_voltageMinMax),
                   },
               };
           }));
 
-  private static readonly MinMax s_energyMinMaxStart = new(15000, 16000);
+  private static readonly MinMax s_energyMinMaxStart = new(15995, 16000);
   private static readonly MinMax s_powerMinMax = new(10, 20);
+  private static readonly MinMax s_currentMinMax = new(5, 15);
+  private static readonly MinMax s_voltageMinMax = new(239, 241);
 }
