@@ -10,6 +10,11 @@ public readonly record struct MultiDashboardMeasurementData
 (DateTime Timestamp,
  IDictionary<string, DashboardMeasurementData> Data);
 
+// TODO: use a list of these instead of a dictionary
+public readonly record struct DeviceDashboardMeasurementData
+(string DeviceId,
+ DashboardMeasurementData Data);
+
 public readonly record struct DashboardMeasurement
 (DateTime Timestamp,
  string DeviceId,

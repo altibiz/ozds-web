@@ -93,7 +93,7 @@ public class SiteDeviceLoader : ContentHandlerBase
     Loader = loader;
   }
 
-  IHostEnvironment Env { get; }
-  ILogger Logger { get; }
-  IDeviceLoader Loader { get; }
+  private IHostEnvironment Env { get; }
+  private ILogger Logger { get; }
+  private IDeviceLoader Loader { get; }
 }

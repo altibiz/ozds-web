@@ -145,6 +145,17 @@ public class Startup : OrchardCore.Modules.StartupBase
       services => services.GetRequiredService<MeasurementImporter>());
 
     services.AddScoped<LocalizedRouteTransformer>();
+
+    // NOTE: https://graphql-dotnet.github.io/docs/getting-started/dependency-injection
+    // NOTE: OrchardCore uses services.AddObjectGraphType from OrchardCore.Apis
+    // NOTE: which does roughly the same thing
+    services.AddSingleton<DashboardMeasurementDataObjectGraphType>();
+    services.AddSingleton<DeviceDashboardMeasurementDataObjectGraphType>();
+
+    services.AddSingleton<MultiDashboardMeasurementDataObjectGraphType>();
+
+    services.AddSingleton<DashboardMeasurementObjectGraphType>();
+    services.AddSingleton<MultiDashboardMeasurementsObjectGraphType>();
   }
 
   public override void Configure(

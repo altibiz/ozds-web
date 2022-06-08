@@ -28,7 +28,7 @@ public class MeasurementImporter : IBackgroundTask
     // NOTE: https://stackoverflow.com/a/45769160/4348107
     // NOTE: we don't want to cause any race conditions here
     // TODO: optimize locking strategy per device
-    await semaphoreSlim.WaitAsync();
+    await semaphore.WaitAsync();
     try
     {
       // NOTE: each plan is for one device which is safe to parallelize
@@ -56,9 +56,9 @@ public class MeasurementImporter : IBackgroundTask
     }
     finally
     {
-      semaphoreSlim.Release();
+      semaphore.Release();
     }
   }
 
-  SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
+  SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
 }

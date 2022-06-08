@@ -5,6 +5,8 @@ using Ozds.Extensions;
 
 namespace Ozds.Modules.Ozds;
 
+// TODO: move logic to ReceiptEnricher
+
 public class ReceiptType : ContentTypeBase
 {
   public Lazy<TitlePart> Title { get; init; } = default!;

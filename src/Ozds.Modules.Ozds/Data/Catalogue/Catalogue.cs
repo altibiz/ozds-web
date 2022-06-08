@@ -18,7 +18,7 @@ public class CatalogueType : ContentTypeBase
 
 public class Catalogue : ContentPart
 {
-  public TaxonomyField TariffModel { get; set; } = default!;
+  public TaxonomyField TariffModel { get; init; } = new();
 
   [JsonIgnore]
   public Lazy<CatalogueData> Data { get; }

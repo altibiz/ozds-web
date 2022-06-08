@@ -58,5 +58,6 @@ using OrchardCore.Modules.Manifest;
         "OrchardCore.BackgroundTasks",
         "OrchardCore.Spatial",
         "OrchardCore.Contents.Deployment.Download",
+        "OrchardCore.Apis.GraphQL",
         "Etch.OrchardCore.Fields.Dictionary"
       })]

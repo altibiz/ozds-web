@@ -52,5 +52,6 @@ public class TaxonomyCacheService
 
   private IOrchardHelper Helper { get; }
 
-  private Dictionary<(string, string), ContentItem> Cache { get; } = new();
+  private IDictionary<(string, string), ContentItem> Cache { get; } =
+    new Dictionary<(string, string), ContentItem>();
 }

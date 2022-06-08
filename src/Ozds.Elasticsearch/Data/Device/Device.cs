@@ -3,7 +3,7 @@ using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch;
 
-public class DeviceState
+public static class DeviceState
 {
   public const string Added = "added";
   public const string Active = "healthy";
