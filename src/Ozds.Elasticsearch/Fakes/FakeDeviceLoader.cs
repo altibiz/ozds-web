@@ -5,6 +5,7 @@ public class FakeDeviceLoader : IDeviceLoader
   public Task LoadDeviceAsync(
       string source,
       string sourceDeviceId,
+      string phase,
       DeviceSourceDeviceData? sourceDeviceData,
       DeviceOwnerData owner,
       DeviceMeasurementData measurement,
@@ -13,6 +14,7 @@ public class FakeDeviceLoader : IDeviceLoader
   public void LoadDevice(
       string source,
       string sourceDeviceId,
+      string phase,
       DeviceSourceDeviceData? sourceDeviceData,
       DeviceOwnerData owner,
       DeviceMeasurementData measurement,

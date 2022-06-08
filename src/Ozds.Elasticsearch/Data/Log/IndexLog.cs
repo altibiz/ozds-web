@@ -2,7 +2,7 @@ using Nest;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient
+public partial interface IElasticsearchClient
 {
   public Task<IndexResponse> IndexLoadLogAsync(LoadLog log);
 
@@ -13,7 +13,7 @@ public partial interface IClient
   public IndexResponse IndexMissingDataLog(MissingDataLog log);
 };
 
-public sealed partial class Client : IClient
+public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<IndexResponse> IndexLoadLogAsync(LoadLog log) =>
     Elasticsearch
@@ -23,7 +23,7 @@ public sealed partial class Client : IClient
   public IndexResponse IndexLoadLog(LoadLog log) =>
     Elasticsearch
       .Index(log, s => s
-          .Index(LogIndexName));
+        .Index(LogIndexName));
 
   public Task<IndexResponse> IndexMissingDataLogAsync(MissingDataLog log) =>
     Elasticsearch
@@ -33,5 +33,5 @@ public sealed partial class Client : IClient
   public IndexResponse IndexMissingDataLog(MissingDataLog log) =>
     Elasticsearch
       .Index(log, s => s
-          .Index(LogIndexName));
+        .Index(LogIndexName));
 }

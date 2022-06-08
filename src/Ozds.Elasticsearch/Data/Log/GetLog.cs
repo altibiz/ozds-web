@@ -2,7 +2,7 @@ using Nest;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient
+public partial interface IElasticsearchClient
 {
   public Task<GetResponse<LoadLog>> GetLoadLogAsync(Id id);
 
@@ -13,7 +13,7 @@ public partial interface IClient
   public GetResponse<MissingDataLog> GetMissingDataLog(Id id);
 };
 
-public sealed partial class Client : IClient
+public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<GetResponse<LoadLog>> GetLoadLogAsync(Id id) =>
     Elasticsearch.GetAsync<LoadLog>(id, d => d.Index(LogIndexName));

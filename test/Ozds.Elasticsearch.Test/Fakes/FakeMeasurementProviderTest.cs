@@ -5,6 +5,15 @@ namespace Ozds.Elasticsearch.Test.MeasurementFaker;
 
 public partial class ClientTest
 {
+  public ClientTest(FakeMeasurementProvider faker, ILogger<ClientTest> logger)
+  {
+    Logger = logger;
+    Faker = faker;
+  }
+
+  private FakeMeasurementProvider Faker { get; }
+  private ILogger Logger { get; }
+
   [Fact]
   public void GetMeasurementsTest()
   {
@@ -15,7 +24,7 @@ public partial class ClientTest
       To = DateTime.UtcNow
     };
 
-    var measurements = Client
+    var measurements = Faker
       .GetMeasurements(device.ToProvisionDevice(), period)
       .SelectMany(Functions.Id)
       .ToList();
@@ -42,7 +51,7 @@ public partial class ClientTest
       To = DateTime.UtcNow
     };
 
-    var measurements = await Client
+    var measurements = await Faker
       .GetMeasurementsAsync(device.ToProvisionDevice(), period)
       .Await()
       .Then(buckets => buckets

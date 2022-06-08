@@ -3,7 +3,18 @@
 
 @model Site
 
-<div class="d-flex flex-row justify-content-between">
+<div class="d-flex flex-column">
+  <span>
+    <strong>
+      @(T["Phase"])
+    </strong>
+    <span>
+      @(await Orchard
+        .GetTaxonomyTermAsync<TagType>(Model.Phase)
+        .ThenWhenNonNull(tag => tag.Title.Value.Title))
+    </span>
+  </span>
+
   <span>
     <strong>
       @(T["Measurement interval (s)"])
@@ -19,8 +30,8 @@
     </strong>
     <span>
       @(await Orchard
-      .GetTaxonomyTermAsync<TagType>(Model.Status)
-      .ThenWhenNonNull(tag => tag.Title.Value.Title))
+        .GetTaxonomyTermAsync<TagType>(Model.Status)
+        .ThenWhenNonNull(tag => tag.Title.Value.Title))
     </span>
   </span>
 </div>

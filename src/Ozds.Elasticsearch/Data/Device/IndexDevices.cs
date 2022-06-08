@@ -4,21 +4,21 @@ using Nest;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient
+public partial interface IElasticsearchClient
 {
   public Task<BulkResponse> IndexDevicesAsync(IEnumerable<Device> devices);
 
   public BulkResponse IndexDevices(IEnumerable<Device> devices);
 };
 
-public sealed partial class Client : IClient
+public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<BulkResponse> IndexDevicesAsync(IEnumerable<Device> devices) =>
     Elasticsearch
       .BulkAsync(s => s
         .IndexMany(devices)
         .Index(DeviceIndexName))
-      .ThenWith(_ => IndexLoadLogsAsync(
+      .ThenWith(_ => CreateLoadLogsAsync(
         devices.Select(device =>
           new LoadLog(
             device.Id,
@@ -33,7 +33,7 @@ public sealed partial class Client : IClient
       .Bulk(s => s
         .IndexMany(devices)
         .Index(DeviceIndexName))
-      .With(_ => IndexLoadLogs(
+      .With(_ => CreateLoadLogs(
         devices.Select(device =>
           new LoadLog(
             device.Id,

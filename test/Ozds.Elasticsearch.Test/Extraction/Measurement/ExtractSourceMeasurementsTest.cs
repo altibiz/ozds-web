@@ -16,7 +16,7 @@ public partial class ClientTest
     Thread.Sleep(1000);
     var buckets = Client
       .ExtractSourceMeasurements(
-          Elasticsearch.MeasurementFaker.Client.FakeSource);
+          FakeMeasurementProvider.FakeSource);
     Logger.LogDebug(buckets.ToJson());
     Assert.NotEmpty(buckets);
     Assert.All(buckets, bucket =>
@@ -38,7 +38,7 @@ public partial class ClientTest
     Thread.Sleep(1000);
     var buckets = await Client
       .ExtractSourceMeasurementsAsync(
-        Elasticsearch.MeasurementFaker.Client.FakeSource)
+        FakeMeasurementProvider.FakeSource)
       .Await();
     Logger.LogDebug(buckets.ToJson());
     Assert.NotEmpty(buckets);
@@ -62,7 +62,7 @@ public partial class ClientTest
     Thread.Sleep(1000);
     var buckets = await Client
       .ExtractSourceMeasurementsAsync(
-        Elasticsearch.MeasurementFaker.Client.FakeSource, period)
+        FakeMeasurementProvider.FakeSource, period)
       .Await();
     Logger.LogDebug(buckets.ToJson());
     Assert.NotEmpty(buckets);

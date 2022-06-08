@@ -19,6 +19,11 @@ public static class CreateSiteIndex
             .WithLength(30))
 
         .Column<string>(
+          "PhaseTermId",
+          column => column
+            .WithLength(30))
+
+        .Column<string>(
           "DeviceId",
           column => column
             .WithLength(30))

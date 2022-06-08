@@ -22,7 +22,7 @@ public partial class ClientTest
     // NOTE: ES needs some time to prepare for searching
     System.Threading.Thread.Sleep(1000);
     var searchResponse = Client.SearchDevicesBySource(
-      Elasticsearch.MeasurementFaker.Client.FakeSource);
+      FakeMeasurementProvider.FakeSource);
     Logger.LogDebug(searchResponse.DebugInformation);
     Assert.True(searchResponse.IsValid);
 
@@ -56,7 +56,7 @@ public partial class ClientTest
     System.Threading.Thread.Sleep(1000);
     var searchResponse =
         await Client.SearchDevicesBySourceAsync(
-            Elasticsearch.MeasurementFaker.Client.FakeSource);
+            FakeMeasurementProvider.FakeSource);
     Assert.True(searchResponse.IsValid);
 
     var searchedDevices = searchResponse.Sources();

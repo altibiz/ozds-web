@@ -38,6 +38,10 @@
                 }
               ]
             },
+            "Phase": {
+              "TaxonomyContentItemId": "44sfyxngjywp5xtz7ggs45j9w4",
+              "TermContentItemIds": ["4zg6j54bzryenz2rfj9kr9bdch"]
+            },
             "MeasurementIntervalInSeconds": {
               "Value": 60
             },

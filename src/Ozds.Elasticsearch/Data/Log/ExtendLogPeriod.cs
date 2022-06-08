@@ -2,7 +2,7 @@ using Nest;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient
+public partial interface IElasticsearchClient
 {
   public Task<UpdateResponse<LoadLog>> ExtendLoadLogPeriodAsync(
       Id id,
@@ -13,7 +13,7 @@ public partial interface IClient
       DateTime to);
 };
 
-public sealed partial class Client : IClient
+public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<UpdateResponse<LoadLog>> ExtendLoadLogPeriodAsync(
       Id id,

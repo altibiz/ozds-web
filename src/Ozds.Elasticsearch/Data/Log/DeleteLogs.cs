@@ -2,14 +2,14 @@ using Nest;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient
+public partial interface IElasticsearchClient
 {
   public Task<BulkResponse> DeleteLogsAsync(IEnumerable<Id> logIds);
 
   public BulkResponse DeleteLogs(IEnumerable<Id> logIds);
 };
 
-public sealed partial class Client : IClient
+public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<BulkResponse>
   DeleteLogsAsync(IEnumerable<Id> logIds) =>

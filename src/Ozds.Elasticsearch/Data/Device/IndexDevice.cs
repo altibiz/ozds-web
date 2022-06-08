@@ -3,18 +3,18 @@ using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient
+public partial interface IElasticsearchClient
 {
   public Task<IndexResponse> IndexDeviceAsync(Device device);
 
   public IndexResponse IndexDevice(Device device);
 };
 
-public sealed partial class Client : IClient
+public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<IndexResponse> IndexDeviceAsync(Device device) =>
     Elasticsearch.IndexAsync(device, s => s.Index(DeviceIndexName))
-      .ThenWith(_ => IndexLoadLogAsync(
+      .ThenWith(_ => CreateLoadLogAsync(
         new LoadLog(
           device.Id,
           new()
@@ -25,7 +25,7 @@ public sealed partial class Client : IClient
 
   public IndexResponse IndexDevice(Device device) =>
     Elasticsearch.Index(device, s => s.Index(DeviceIndexName))
-      .With(_ => IndexLoadLog(
+      .With(_ => CreateLoadLog(
         new LoadLog(
           device.Id,
           new()

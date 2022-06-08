@@ -12,6 +12,14 @@ public static class DeviceState
   public const string Removed = "removed";
 }
 
+public static class DevicePhase
+{
+  public const string L1 = "L1";
+  public const string L2 = "L2";
+  public const string L3 = "L3";
+  public const string Triphasic = "triphasic";
+}
+
 [ElasticsearchType(RelationName = "device", IdProperty = nameof(Id))]
 public class Device : IEquatable<Device>, ICloneable
 {
@@ -27,6 +35,7 @@ public class Device : IEquatable<Device>, ICloneable
   public Device(
       string source,
       string sourceDeviceId,
+      string phase,
       SourceDeviceDataType? sourceDeviceData,
       OwnerDataType owner,
       MeasurementDataType measurement,
@@ -35,6 +44,8 @@ public class Device : IEquatable<Device>, ICloneable
     Source = source;
     SourceDeviceId = sourceDeviceId;
     SourceDeviceData = sourceDeviceData ?? new SourceDeviceDataType { };
+
+    Phase = phase;
 
     OwnerData = owner;
     MeasurementData = measurement;
@@ -56,6 +67,9 @@ public class Device : IEquatable<Device>, ICloneable
   [Object(Name = "sourceDeviceData")]
   public SourceDeviceDataType SourceDeviceData { get; init; } =
     new SourceDeviceDataType { };
+
+  [Keyword(Name = "phase")]
+  public string Phase { get; init; }
 
   [Object(Name = "owner")]
   public OwnerDataType OwnerData { get; init; }
@@ -193,6 +207,7 @@ public class Device : IEquatable<Device>, ICloneable
         {
           OwnerId = SourceDeviceData.OwnerId?.CloneString()
         },
+      phase: Phase,
       owner:
         new OwnerDataType(
           @operator: OwnerData.Operator.CloneString(),

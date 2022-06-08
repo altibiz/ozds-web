@@ -2,9 +2,9 @@ using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient : IMeasurementExtractor { }
+public partial interface IElasticsearchClient : IMeasurementExtractor { }
 
-public partial class Client : IClient
+public partial class ElasticsearchClient : IElasticsearchClient
 {
   public IAsyncEnumerable<ExtractionPlan>
   PlanSourceExtractionAsync(

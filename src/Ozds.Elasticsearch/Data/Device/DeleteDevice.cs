@@ -2,14 +2,14 @@ using Nest;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient
+public partial interface IElasticsearchClient
 {
   public Task<DeleteResponse> DeleteDeviceAsync(Id id);
 
   public DeleteResponse DeleteDevice(Id id);
 };
 
-public sealed partial class Client : IClient
+public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<DeleteResponse> DeleteDeviceAsync(Id id) =>
     Elasticsearch.DeleteAsync(

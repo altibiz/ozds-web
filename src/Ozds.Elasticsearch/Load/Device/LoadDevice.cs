@@ -1,12 +1,13 @@
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient : IDeviceLoader { }
+public partial interface IElasticsearchClient : IDeviceLoader { }
 
-public partial class Client : IClient
+public partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task LoadDeviceAsync(
       string source,
       string sourceDeviceId,
+      string phase,
       DeviceSourceDeviceData? sourceDeviceData,
       DeviceOwnerData owner,
       DeviceMeasurementData measurement,
@@ -22,6 +23,7 @@ public partial class Client : IClient
           {
             OwnerId = sourceDeviceData?.ownerId
           },
+        phase: phase,
         owner:
           new Device.OwnerDataType(
             @operator: owner.@operator,
@@ -50,6 +52,7 @@ public partial class Client : IClient
   public void LoadDevice(
       string source,
       string sourceDeviceId,
+      string phase,
       DeviceSourceDeviceData? sourceDeviceData,
       DeviceOwnerData owner,
       DeviceMeasurementData measurement,
@@ -65,6 +68,7 @@ public partial class Client : IClient
           {
             OwnerId = sourceDeviceData?.ownerId
           },
+        phase: phase,
         owner:
           new Device.OwnerDataType(
             @operator: owner.@operator,

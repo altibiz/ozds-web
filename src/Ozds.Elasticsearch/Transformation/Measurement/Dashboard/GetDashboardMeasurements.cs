@@ -2,9 +2,9 @@ using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient : IDashboardMeasurementProvider { }
+public partial interface IElasticsearchClient : IDashboardMeasurementProvider { }
 
-public sealed partial class Client : IClient
+public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<IEnumerable<DashboardMeasurement>>
   GetDashboardMeasurementsAsync(

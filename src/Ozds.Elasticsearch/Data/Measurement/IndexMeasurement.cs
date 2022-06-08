@@ -2,14 +2,14 @@ using Nest;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient
+public partial interface IElasticsearchClient
 {
   public Task<IndexResponse> IndexMeasurementAsync(Measurement measurement);
 
   public IndexResponse IndexMeasurement(Measurement measurement);
 };
 
-public sealed partial class Client : IClient
+public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public IndexResponse IndexMeasurement(Measurement measurement) =>
     Elasticsearch.Index(measurement, s => s

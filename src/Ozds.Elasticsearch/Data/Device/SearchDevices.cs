@@ -2,7 +2,7 @@ using Nest;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient
+public partial interface IElasticsearchClient
 {
   public Task<ISearchResponse<Device>>
   SearchDevicesAsync(
@@ -23,7 +23,7 @@ public partial interface IClient
       bool all = false);
 };
 
-public sealed partial class Client : IClient
+public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public ISearchResponse<Device>
   SearchDevices(

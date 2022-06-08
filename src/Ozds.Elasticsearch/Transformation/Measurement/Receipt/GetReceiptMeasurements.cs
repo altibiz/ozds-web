@@ -3,9 +3,9 @@ using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient : IReceiptMeasurementProvider { }
+public partial interface IElasticsearchClient : IReceiptMeasurementProvider { }
 
-public partial class Client : IClient
+public partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<(EnergyMeasurement Begin, EnergyMeasurement End)>
   GetEnergyMeasurementsAsync(

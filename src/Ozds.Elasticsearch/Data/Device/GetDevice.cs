@@ -2,14 +2,14 @@ using Nest;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient
+public partial interface IElasticsearchClient
 {
   public GetResponse<Device> GetDevice(Id id);
 
   public Task<GetResponse<Device>> GetDeviceAsync(Id id);
 };
 
-public sealed partial class Client : IClient
+public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public GetResponse<Device> GetDevice(Id id) =>
     Elasticsearch.Get<Device>(id, s => s.Index(DeviceIndexName));

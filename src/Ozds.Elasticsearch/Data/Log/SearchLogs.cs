@@ -2,7 +2,7 @@ using Nest;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient
+public partial interface IElasticsearchClient
 {
   public Task<ISearchResponse<LoadLog>>
   SearchLoadLogsAsync(
@@ -79,7 +79,7 @@ public partial interface IClient
       Period? period = null);
 };
 
-public sealed partial class Client : IClient
+public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<ISearchResponse<LoadLog>>
   SearchLoadLogsAsync(
@@ -89,7 +89,7 @@ public sealed partial class Client : IClient
       .Query(q => q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, LoadLog.Type))
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Index(LogIndexName));
 
   public ISearchResponse<LoadLog>
@@ -100,7 +100,7 @@ public sealed partial class Client : IClient
       .Query(q => q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, LoadLog.Type))
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Index(LogIndexName));
 
   public ISearchResponse<LoadLog>
@@ -118,7 +118,7 @@ public sealed partial class Client : IClient
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, LoadLog.Type))
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Index(LogIndexName)
       .Sort(s => s
         .Descending(d => d.Period!.To)));
@@ -138,7 +138,7 @@ public sealed partial class Client : IClient
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, LoadLog.Type))
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Index(LogIndexName)
       .Sort(s => s
         .Descending(d => d.Period!.To)));
@@ -151,7 +151,7 @@ public sealed partial class Client : IClient
       .Query(q => q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Index(LogIndexName));
 
   public ISearchResponse<MissingDataLog>
@@ -162,7 +162,7 @@ public sealed partial class Client : IClient
       .Query(q => q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Index(LogIndexName));
 
   public ISearchResponse<MissingDataLog>
@@ -180,7 +180,7 @@ public sealed partial class Client : IClient
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Index(LogIndexName)
       .Sort(s => s
         .Ascending(d => d.Period!.To)));
@@ -200,7 +200,7 @@ public sealed partial class Client : IClient
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Index(LogIndexName)
       .Sort(s => s
         .Ascending(d => d.Period!.To)));
@@ -224,7 +224,7 @@ public sealed partial class Client : IClient
           .LessThanOrEquals(due)) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Index(LogIndexName)
       .Sort(s => s
         .Ascending(d => d.Period!.To)));
@@ -248,7 +248,7 @@ public sealed partial class Client : IClient
           .LessThanOrEquals(due)) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Index(LogIndexName)
       .Sort(s => s
         .Ascending(d => d.Period!.To)));
@@ -276,7 +276,7 @@ public sealed partial class Client : IClient
           .LessThan(retries)) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Index(LogIndexName)
       .Sort(s => s
         .Ascending(d => d.Period!.To)));
@@ -304,7 +304,7 @@ public sealed partial class Client : IClient
           .LessThan(retries)) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Index(LogIndexName)
       .Sort(s => s
         .Ascending(d => d.Period!.To)));

@@ -17,30 +17,27 @@ public class Startup
 
   public void ConfigureServices(IServiceCollection services)
   {
-    services.AddSingleton<IMeasurementProvider,
-        Elasticsearch.MeasurementFaker.Client>();
+    services.AddSingleton<IMeasurementProvider, FakeMeasurementProvider>();
 
     services.AddSingleton<
-      Ozds.Elasticsearch.IClientPrototype,
-      Ozds.Elasticsearch.Client>();
-    services.AddScoped<Ozds.Elasticsearch.IClient>(s => s
-      .GetRequiredService<Ozds.Elasticsearch.IClientPrototype>()
+      IElasticsearchClientPrototype,
+      ElasticsearchClient>();
+    services.AddScoped<IElasticsearchClient>(s => s
+      .GetRequiredService<IElasticsearchClientPrototype>()
       .ClonePrototype(s
         .GetRequiredService<ITestOutputHelperAccessor>().Output
         ?.GetTest()
         ?.GetCorrespondingIndexName()));
 
     services.AddSingleton<
-      Ozds.Elasticsearch.HelbOzds.IClient,
-      Ozds.Elasticsearch.HelbOzds.Client>();
+      Elasticsearch.HelbOzds.IClient,
+      Elasticsearch.HelbOzds.Client>();
 
     services.AddSingleton<
-      Ozds.Elasticsearch.MyEnergyCommunity.IClient,
-      Ozds.Elasticsearch.MyEnergyCommunity.Client>();
+      Elasticsearch.MyEnergyCommunity.IClient,
+      Elasticsearch.MyEnergyCommunity.Client>();
 
-    services.AddSingleton<
-      Ozds.Elasticsearch.MeasurementFaker.IClient,
-      Ozds.Elasticsearch.MeasurementFaker.Client>();
+    services.AddSingleton<FakeMeasurementProvider>();
   }
 
   public void Configure(

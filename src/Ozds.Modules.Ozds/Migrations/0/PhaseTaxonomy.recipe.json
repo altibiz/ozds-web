@@ -1,0 +1,172 @@
+{
+  "steps": [
+    {
+      "name": "content",
+      "data": [
+        {
+          "ContentItemId": "44sfyxngjywp5xtz7ggs45j9w4",
+          "ContentItemVersionId": "4wpbfyn9ce3yv5efsxnxq005ch",
+          "ContentType": "Taxonomy",
+          "DisplayText": "Faza",
+          "Latest": true,
+          "Published": true,
+          "ModifiedUtc": "2022-06-08T14:44:31.3303658Z",
+          "PublishedUtc": "2022-06-08T14:44:31.3361174Z",
+          "CreatedUtc": "2022-06-08T14:43:37.5868039Z",
+          "Owner": "4njkq27ddqz3ht9fpfvyw9wfd8",
+          "Author": "admin",
+          "TitlePart": {
+            "Title": "Faza"
+          },
+          "AliasPart": {
+            "Alias": "phase"
+          },
+          "AutoroutePart": {
+            "Path": "faza",
+            "SetHomepage": false,
+            "Disabled": false,
+            "RouteContainedItems": false,
+            "Absolute": false
+          },
+          "TaxonomyPart": {
+            "TermContentType": "Tag",
+            "Terms": [
+              {
+                "ContentItemId": "4jf2ckcj5wp15w32xfmca9afnf",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Jednofazno - L1",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-06-08T14:44:03.1387467Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Jednofazno - L1"
+                },
+                "Tag": {},
+                "AutoroutePart": {
+                  "Path": "jednofazno-l1",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "jednofazno-l1"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "44sfyxngjywp5xtz7ggs45j9w4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4n1ja6t83rbxjsjg7j89j6mzce",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Jednofazno - L2",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-06-08T14:44:12.6239048Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Jednofazno - L2"
+                },
+                "Tag": {},
+                "AutoroutePart": {
+                  "Path": "jednofazno-l2",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "jednofazno-l2"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "44sfyxngjywp5xtz7ggs45j9w4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "40303xxc59ycnx2rxn6rv5ysmr",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Jednofazno - L3",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-06-08T14:44:22.6721505Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Jednofazno - L3"
+                },
+                "Tag": {},
+                "AutoroutePart": {
+                  "Path": "jednofazno-l3",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "jednofazno-l3"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "44sfyxngjywp5xtz7ggs45j9w4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              },
+              {
+                "ContentItemId": "4zg6j54bzryenz2rfj9kr9bdch",
+                "ContentItemVersionId": null,
+                "ContentType": "Tag",
+                "DisplayText": "Trofazno",
+                "Latest": false,
+                "Published": false,
+                "ModifiedUtc": "2022-06-08T14:44:29.2208433Z",
+                "PublishedUtc": null,
+                "CreatedUtc": null,
+                "Owner": null,
+                "Author": "admin",
+                "TitlePart": {
+                  "Title": "Trofazno"
+                },
+                "Tag": {},
+                "AutoroutePart": {
+                  "Path": "trofazno",
+                  "SetHomepage": false,
+                  "Disabled": false,
+                  "RouteContainedItems": false,
+                  "Absolute": false
+                },
+                "AliasPart": {
+                  "Alias": "trofazno"
+                },
+                "TermPart": {
+                  "TaxonomyContentItemId": "44sfyxngjywp5xtz7ggs45j9w4"
+                },
+                "@WeldedPartSettings": {
+                  "TermPart": {}
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

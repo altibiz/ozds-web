@@ -48,13 +48,25 @@ public static partial class AlterSite
               new DictionaryFieldSettings
               {
               }))
+        .WithField("Phase",
+          field => field
+            .OfType("TaxonomyField")
+            .WithDisplayName("Faza uređaja")
+            .WithPosition("4")
+            .WithSettings(
+              new TaxonomyFieldSettings
+              {
+                TaxonomyContentItemId = "44sfyxngjywp5xtz7ggs45j9w4",
+                Required = true,
+                Unique = true,
+              }))
         .WithField("MeasurementIntervalInSeconds",
           field => field
             .OfType("NumericField")
             .WithDisplayName("Interval mjeranja (s)")
             .WithDescription(
               "Količina vremena između uzastopnih mjerenja uređaja")
-            .WithPosition("4")
+            .WithPosition("5")
             .WithSettings(
               new NumericFieldSettings
               {
@@ -66,7 +78,7 @@ public static partial class AlterSite
             .OfType("DateTimeField")
             .WithDisplayName("Početak mjerenja")
             .WithDescription("Trenutak u kojem je uređaj počeo mjeriti")
-            .WithPosition("5")
+            .WithPosition("6")
             .WithSettings(
               new DateTimeFieldSettings
               {
@@ -79,7 +91,7 @@ public static partial class AlterSite
             .WithDescription(
               "Količina vremena u sekundama koja je potrebna " +
               "da bi mjerenja uređaja bila raspoloživa na izvoru")
-            .WithPosition("6")
+            .WithPosition("7")
             .WithSettings(
               new NumericFieldSettings
               {
@@ -93,7 +105,7 @@ public static partial class AlterSite
             .WithDescription(
               "Količina vremena u sekundama nakon koje će nastupiti " +
               "ponovni pokušaj preuzimanja mjerenja u iznimnim situacijama")
-            .WithPosition("7")
+            .WithPosition("8")
             .WithSettings(
               new NumericFieldSettings
               {
@@ -107,7 +119,7 @@ public static partial class AlterSite
             .WithDescription(
               "Koliko će se puta mjerenja ponovno pukušati preuzeti " +
               "u iznimnim situacijama")
-            .WithPosition("8")
+            .WithPosition("9")
             .WithSettings(
               new NumericFieldSettings
               {
@@ -120,7 +132,7 @@ public static partial class AlterSite
             .WithDisplayName("Interval validacije mjerenja (s)")
             .WithDescription(
               "Mjerenja će se provjeravati za validnost svaki interval")
-            .WithPosition("9")
+            .WithPosition("10")
             .WithSettings(
               new NumericFieldSettings
               {
@@ -131,7 +143,7 @@ public static partial class AlterSite
           field => field
             .OfType("TaxonomyField")
             .WithDisplayName("Status")
-            .WithPosition("10")
+            .WithPosition("11")
             .WithSettings(
               new TaxonomyFieldSettings
               {

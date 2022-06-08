@@ -5,18 +5,20 @@ using Elasticsearch.Net;
 
 namespace Ozds.Elasticsearch;
 
-public interface IClientPrototype
+public interface IElasticsearchClientPrototype
 {
-  public IClient ClonePrototype(string? indexSuffix = null);
+  public IElasticsearchClient ClonePrototype(string? indexSuffix = null);
 }
 
-public sealed partial class Client : IClientPrototype, IClient
+public sealed partial class ElasticsearchClient :
+  IElasticsearchClientPrototype,
+  IElasticsearchClient
 {
 
   #region Constructors
-  public Client(
+  public ElasticsearchClient(
     IHostEnvironment env,
-    ILogger<IClient> logger,
+    ILogger<IElasticsearchClient> logger,
     IConfiguration conf,
     IEnumerable<IMeasurementProvider> providers)
   {
@@ -128,12 +130,12 @@ public sealed partial class Client : IClientPrototype, IClient
   #endregion // Constructors
 
   #region Prototype
-  public IClient ClonePrototype(string? indexSuffix = null)
+  public IElasticsearchClient ClonePrototype(string? indexSuffix = null)
   {
-    return new Client(this, indexSuffix);
+    return new ElasticsearchClient(this, indexSuffix);
   }
 
-  private Client(Client other, string? indexSuffix)
+  private ElasticsearchClient(ElasticsearchClient other, string? indexSuffix)
   {
     Env = other.Env;
     Logger = other.Logger;

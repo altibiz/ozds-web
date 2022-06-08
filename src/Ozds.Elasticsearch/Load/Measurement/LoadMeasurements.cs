@@ -1,9 +1,9 @@
 namespace Ozds.Elasticsearch;
 
 // TODO: recovery when elasticsearch connection fails
-public partial interface IClient : IMeasurementLoader { }
+public partial interface IElasticsearchClient : IMeasurementLoader { }
 
-public partial class Client : IClient
+public partial class ElasticsearchClient : IElasticsearchClient
 {
   public async Task LoadMeasurementsAsync(
       AsyncEnrichedMeasurementExtraction extraction)

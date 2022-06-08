@@ -72,7 +72,7 @@ public class ReceiptEnricher : ContentHandlerBase
       .Then(catalogue => catalogue.Catalogue.Value);
 
     var source =
-      SiteMeasurementSource.GetElasticsearchSource(
+      SiteMeasurementSource.GetDeviceMeasurementSource(
           secondarySite.Site.Value.Source.TermContentItemIds
           .First())
         .ThrowWhenNull();

@@ -14,6 +14,8 @@ public class Site : ContentPart
   public TextField SourceDeviceId { get; init; } = new();
   public DictionaryField SourceData { get; init; } = new();
 
+  public TaxonomyField Phase { get; init; } = new();
+
   public NumericField MeasurementIntervalInSeconds { get; init; } = new();
   public DateTimeField ExtractionStart { get; init; } = new();
   public NumericField ExtractionOffsetInSeconds { get; init; } = new();
@@ -30,7 +32,7 @@ public class Site : ContentPart
   {
     get =>
       Device.MakeId(
-        SiteMeasurementSource.GetElasticsearchSource(
+        SiteMeasurementSource.GetDeviceMeasurementSource(
           Source.TermContentItemIds.First())
         .ThrowWhenNull(),
         SourceDeviceId.Text);

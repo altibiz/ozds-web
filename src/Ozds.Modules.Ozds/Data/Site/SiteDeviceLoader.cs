@@ -37,9 +37,13 @@ public class SiteDeviceLoader : ContentHandlerBase
 
     var source =
       SiteMeasurementSource
-        .GetElasticsearchSource(site.Site.Value.Source)
+        .GetDeviceMeasurementSource(site.Site.Value.Source)
         .ThrowWhenNull();
     var sourceDeviceId = site.Site.Value.SourceDeviceId.Text;
+    var phase =
+      SitePhase
+        .GetDevicePhase(site.Site.Value.Phase)
+        .ThrowWhenNull();
     var deviceId = Device.MakeId(source, sourceDeviceId);
 
     await Loader
@@ -52,6 +56,7 @@ public class SiteDeviceLoader : ContentHandlerBase
             ownerId = site.Site.Value.SourceData.Data
               .FirstOrDefault(data => data.Name == "OwnerId")?.Value,
           },
+        phase: phase,
         owner:
           new DeviceOwnerData(
             @operator: site.Site.Value.Data.OperatorName,

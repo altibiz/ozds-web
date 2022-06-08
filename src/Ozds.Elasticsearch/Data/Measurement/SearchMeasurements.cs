@@ -2,7 +2,7 @@ using Nest;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient
+public partial interface IElasticsearchClient
 {
   public Task<ISearchResponse<Measurement>>
   SearchMeasurementsAsync(
@@ -97,14 +97,14 @@ public partial interface IClient
       int? size = null);
 };
 
-public sealed partial class Client : IClient
+public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<ISearchResponse<Measurement>>
   SearchMeasurementsAsync(
       Period? period = null,
       int? size = null) =>
     Elasticsearch.SearchAsync<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -118,7 +118,7 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.Search<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -132,7 +132,7 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.SearchAsync<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -148,7 +148,7 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.Search<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -165,7 +165,7 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.SearchAsync<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -182,7 +182,7 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.Search<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -199,7 +199,7 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.SearchAsync<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -217,7 +217,7 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.Search<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -235,7 +235,7 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.SearchAsync<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -252,7 +252,7 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.Search<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -269,7 +269,7 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.SearchAsync<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -287,7 +287,7 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.Search<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -305,7 +305,7 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.SearchAsync<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -322,7 +322,7 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.Search<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -339,7 +339,7 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.SearchAsync<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)
@@ -357,7 +357,7 @@ public sealed partial class Client : IClient
       Period? period = null,
       int? size = null) =>
     Elasticsearch.Search<Measurement>(s => s
-      .Size(size ?? IClient.MaxSize)
+      .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Timestamp)

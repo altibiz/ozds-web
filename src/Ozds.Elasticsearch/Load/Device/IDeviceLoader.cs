@@ -26,6 +26,7 @@ public interface IDeviceLoader
   public Task LoadDeviceAsync(
       string source,
       string sourceDeviceId,
+      string phase,
       DeviceSourceDeviceData? sourceDeviceData,
       DeviceOwnerData owner,
       DeviceMeasurementData measurement,
@@ -34,6 +35,7 @@ public interface IDeviceLoader
   public void LoadDevice(
       string source,
       string sourceDeviceId,
+      string phase,
       DeviceSourceDeviceData? sourceDeviceData,
       DeviceOwnerData owner,
       DeviceMeasurementData measurement,

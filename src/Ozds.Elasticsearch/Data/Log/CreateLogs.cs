@@ -4,46 +4,46 @@ namespace Ozds.Elasticsearch;
 
 public partial interface IElasticsearchClient
 {
-  public Task<BulkResponse> IndexLoadLogsAsync(
+  public Task<BulkResponse> CreateLoadLogsAsync(
       IEnumerable<LoadLog> logs);
 
-  public BulkResponse IndexLoadLogs(
+  public BulkResponse CreateLoadLogs(
       IEnumerable<LoadLog> logs);
 
-  public Task<BulkResponse> IndexMissingDataLogsAsync(
+  public Task<BulkResponse> CreateMissingDataLogsAsync(
       IEnumerable<MissingDataLog> logs);
 
-  public BulkResponse IndexMissingDataLogs(
+  public BulkResponse CreateMissingDataLogs(
       IEnumerable<MissingDataLog> logs);
 };
 
 public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
-  public Task<BulkResponse> IndexLoadLogsAsync(
+  public Task<BulkResponse> CreateLoadLogsAsync(
       IEnumerable<LoadLog> logs) =>
     Elasticsearch
       .BulkAsync(s => s
-        .IndexMany(logs)
+        .CreateMany(logs)
         .Index(LogIndexName));
 
-  public BulkResponse IndexLoadLogs(
+  public BulkResponse CreateLoadLogs(
       IEnumerable<LoadLog> logs) =>
     Elasticsearch
       .Bulk(s => s
-        .IndexMany(logs)
+        .CreateMany(logs)
         .Index(LogIndexName));
 
-  public Task<BulkResponse> IndexMissingDataLogsAsync(
+  public Task<BulkResponse> CreateMissingDataLogsAsync(
       IEnumerable<MissingDataLog> logs) =>
     Elasticsearch
       .BulkAsync(s => s
-        .IndexMany(logs)
+        .CreateMany(logs)
         .Index(LogIndexName));
 
-  public BulkResponse IndexMissingDataLogs(
+  public BulkResponse CreateMissingDataLogs(
       IEnumerable<MissingDataLog> logs) =>
     Elasticsearch
       .Bulk(s => s
-        .IndexMany(logs)
+        .CreateMany(logs)
         .Index(LogIndexName));
 }

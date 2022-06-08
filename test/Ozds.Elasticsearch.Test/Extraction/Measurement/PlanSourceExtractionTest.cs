@@ -20,7 +20,7 @@ public partial class ClientTest
     var measurementsPerExtractionPlanItem = 20;
     var extractionPlans = await Client
       .PlanSourceExtractionAsync(
-        Elasticsearch.MeasurementFaker.Client.FakeSource,
+        FakeMeasurementProvider.FakeSource,
         null,
         measurementsPerExtractionPlanItem)
       .Await();
@@ -68,7 +68,7 @@ public partial class ClientTest
     var measurementsPerExtractionPlanItem = 20;
     var extractionPlans = Client
       .PlanSourceExtraction(
-        Elasticsearch.MeasurementFaker.Client.FakeSource,
+        FakeMeasurementProvider.FakeSource,
         null,
         measurementsPerExtractionPlanItem);
 
@@ -123,7 +123,7 @@ public partial class ClientTest
     var measurementsPerExtractionPlanItem = 20;
     var extractionPlans = Client
       .PlanSourceExtraction(
-        Elasticsearch.MeasurementFaker.Client.FakeSource,
+        FakeMeasurementProvider.FakeSource,
         period,
         measurementsPerExtractionPlanItem);
 

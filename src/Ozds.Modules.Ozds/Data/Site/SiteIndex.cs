@@ -12,6 +12,7 @@ public class SiteIndex : MapIndex
   public string SourceTermId { get; init; } = default!;
   public string DeviceId { get; init; } = default!;
   public string StatusTermId { get; init; } = default!;
+  public string PhaseTermId { get; init; } = default!;
 
   public string OperatorName { get; init; } = default!;
   public string OperatorOib { get; init; } = default!;
@@ -44,11 +45,12 @@ public class SiteIndexProvider :
             SourceTermId = site.Site.Value.Source.TermContentItemIds.First(),
             DeviceId = Device.MakeId(
                 SiteMeasurementSource
-                  .GetElasticsearchSource(
+                  .GetDeviceMeasurementSource(
                     site.Site.Value.Source.TermContentItemIds.First())
                   .ThrowWhenNull(),
                 site.Site.Value.SourceDeviceId.Text),
             StatusTermId = site.Site.Value.Status.TermContentItemIds.First(),
+            PhaseTermId = site.Site.Value.Phase.TermContentItemIds.First(),
 
             OperatorName = site.Site.Value.Data.OperatorName,
             OperatorOib = site.Site.Value.Data.OperatorOib,

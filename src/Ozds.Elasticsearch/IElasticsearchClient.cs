@@ -1,6 +1,6 @@
 namespace Ozds.Elasticsearch
 {
-  public partial interface IClient
+  public partial interface IElasticsearchClient
   {
     // TODO: from NEST?
     public const int MaxSize = 10000;

@@ -2,7 +2,7 @@ using Nest;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient
+public partial interface IElasticsearchClient
 {
   public Task<BulkResponse> DeleteMeasurementsAsync(
       IEnumerable<Id> measurementIds);
@@ -11,7 +11,7 @@ public partial interface IClient
       IEnumerable<Id> measurementIds);
 };
 
-public sealed partial class Client : IClient
+public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public BulkResponse DeleteMeasurements(
       IEnumerable<Id> measurementIds) =>

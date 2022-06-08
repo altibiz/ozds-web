@@ -1,5 +1,5 @@
 using OrchardCore.Taxonomies.Fields;
-
+using Ozds.Elasticsearch;
 using Ozds.Extensions;
 
 namespace Ozds.Modules.Ozds;
@@ -16,30 +16,30 @@ public static class SiteMeasurementSource
       string termId) =>
     taxonomy.GetTerm<TagType>(ContentItemId, termId);
 
-  public static Task<TagType?> GetSiteStatus(
+  public static Task<TagType?> GetSiteMeasurementSource(
       this TaxonomyCacheService taxonomy,
       TaxonomyField field) =>
     taxonomy.GetSiteStatus(field.TermContentItemIds.First());
 
-  public static string? GetElasticsearchSource(
+  public static string? GetDeviceMeasurementSource(
       string termId) =>
-    SiteMeasurementSourceTermIdToElasticsearchSource
+    SiteMeasurementSourceTermIdToDeviceMeasurementSource
       .GetOrDefault(termId);
 
-  public static string? GetElasticsearchSource(
+  public static string? GetDeviceMeasurementSource(
       TaxonomyField field) =>
-    GetElasticsearchSource(field.TermContentItemIds.First());
+    GetDeviceMeasurementSource(field.TermContentItemIds.First());
 
   public static bool IsFake(string termId) =>
     termId == FakeSourceTermId;
 
   private readonly static IDictionary<string, string>
-  SiteMeasurementSourceTermIdToElasticsearchSource =
+  SiteMeasurementSourceTermIdToDeviceMeasurementSource =
     new Dictionary<string, string>()
     {
       {
         FakeSourceTermId,
-        Elasticsearch.MeasurementFaker.Client.FakeSource
+        FakeMeasurementProvider.FakeSource
       },
       {
         MyEnergyCommunityTermId,

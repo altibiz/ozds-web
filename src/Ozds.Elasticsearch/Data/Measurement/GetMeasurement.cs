@@ -2,14 +2,14 @@ using Nest;
 
 namespace Ozds.Elasticsearch;
 
-public partial interface IClient
+public partial interface IElasticsearchClient
 {
   public Task<GetResponse<Measurement>> GetMeasurementAsync(Id id);
 
   public GetResponse<Measurement> GetMeasurement(Id id);
 };
 
-public sealed partial class Client : IClient
+public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<GetResponse<Measurement>> GetMeasurementAsync(Id id) =>
     Elasticsearch

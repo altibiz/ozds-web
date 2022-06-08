@@ -3,13 +3,13 @@ namespace Ozds.Elasticsearch.Test;
 public partial class ClientTest
 {
   public ClientTest(
-      Elasticsearch.IClient client,
+      IElasticsearchClient client,
       ILogger<ClientTest> logger)
   {
     Logger = logger;
     Client = client;
   }
 
-  private IClient Client { get; }
+  private IElasticsearchClient Client { get; }
   private ILogger Logger { get; }
 }

@@ -8,6 +8,7 @@ public static partial class Data
     new Device(
       "MyEnergyCommunity",
       "W1N2CSTX",
+      DevicePhase.Triphasic,
       new Device.SourceDeviceDataType
       {
         OwnerId = "test-owner"
@@ -30,8 +31,9 @@ public static partial class Data
 
   public static readonly Device FakeDevice =
     new Device(
-      Elasticsearch.MeasurementFaker.Client.FakeSource,
-      Elasticsearch.MeasurementFaker.Client.FakeDeviceId,
+      FakeMeasurementProvider.FakeSource,
+      FakeMeasurementProvider.FakeDeviceId,
+      DevicePhase.Triphasic,
       null,
       new Device.OwnerDataType(
         "HelbOzds",
@@ -40,7 +42,7 @@ public static partial class Data
         "TestOwnerId",
         "TestOwnerUserId"),
       new Device.MeasurementDataType(
-        Elasticsearch.MeasurementFaker.Client.MeasurementIntervalInSeconds,
+        FakeMeasurementProvider.MeasurementIntervalInSeconds,
          DateTime.UtcNow.AddMinutes(-10),
         ((int)TimeSpan.FromSeconds(30).TotalSeconds),
         ((int)TimeSpan.FromMinutes(1).TotalSeconds),
