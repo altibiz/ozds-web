@@ -1,4 +1,5 @@
 using Xunit;
+using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch.Test;
 
@@ -12,6 +13,7 @@ public partial class ClientTest
       IEnumerable<Measurement> measurements,
       Period period)
   {
+    period.Unused();
     await SetupMeasurementsAsync(device, measurements);
   }
 
@@ -23,6 +25,7 @@ public partial class ClientTest
       IEnumerable<Measurement> measurements,
       Period period)
   {
+    period.Unused();
     SetupMeasurements(device, measurements);
   }
 }
