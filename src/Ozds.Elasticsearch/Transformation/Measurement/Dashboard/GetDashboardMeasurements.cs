@@ -338,31 +338,44 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
                             new DashboardMeasurementData
                             {
                               Energy = (decimal?)bucket
-                                .AverageBucket("averageEnergy").Value ?? default,
+                                .AverageBucket("averageEnergy")
+                                .Value ?? default,
                               LowCostEnergy = (decimal?)bucket
-                                .AverageBucket("averageLowCostEnergy").Value ?? default,
+                                .AverageBucket("averageLowCostEnergy")
+                                .Value ?? default,
                               HighCostEnergy = (decimal?)bucket
-                                .AverageBucket("averageHighCostEnergy").Value ?? default,
+                                .AverageBucket("averageHighCostEnergy")
+                                .Value ?? default,
                               Power = (decimal?)bucket
-                                .AverageBucket("averagePower").Value ?? default,
+                                .AverageBucket("averagePower")
+                                .Value ?? default,
                               PowerL1 = (decimal?)bucket
-                                .AverageBucket("averagePowerL1").Value ?? default,
+                                .AverageBucket("averagePowerL1")
+                                .Value ?? default,
                               PowerL2 = (decimal?)bucket
-                                .AverageBucket("averagePowerL2").Value ?? default,
+                                .AverageBucket("averagePowerL2")
+                                .Value ?? default,
                               PowerL3 = (decimal?)bucket
-                                .AverageBucket("averagePowerL3").Value ?? default,
+                                .AverageBucket("averagePowerL3")
+                                .Value ?? default,
                               CurrentL1 = (decimal?)bucket
-                                .AverageBucket("averageCurrentL1").Value ?? default,
+                                .AverageBucket("averageCurrentL1")
+                                .Value ?? default,
                               CurrentL2 = (decimal?)bucket
-                                .AverageBucket("averageCurrentL2").Value ?? default,
+                                .AverageBucket("averageCurrentL2")
+                                .Value ?? default,
                               CurrentL3 = (decimal?)bucket
-                                .AverageBucket("averageCurrentL3").Value ?? default,
+                                .AverageBucket("averageCurrentL3")
+                                .Value ?? default,
                               VoltageL1 = (decimal?)bucket
-                                .AverageBucket("averageVoltageL1").Value ?? default,
+                                .AverageBucket("averageVoltageL1")
+                                .Value ?? default,
                               VoltageL2 = (decimal?)bucket
-                                .AverageBucket("averageVoltageL2").Value ?? default,
+                                .AverageBucket("averageVoltageL2")
+                                .Value ?? default,
                               VoltageL3 = (decimal?)bucket
-                                .AverageBucket("averageVoltageL3").Value ?? default,
+                                .AverageBucket("averageVoltageL3")
+                                .Value ?? default,
                             }))
                         .ToDictionary(
                           kv => kv.Key,
@@ -416,31 +429,44 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
                             new DashboardMeasurementData
                             {
                               Energy = (decimal?)bucket
-                                .AverageBucket("averageEnergy").Value ?? default,
+                                .AverageBucket("averageEnergy")
+                                .Value ?? default,
                               LowCostEnergy = (decimal?)bucket
-                                .AverageBucket("averageLowCostEnergy").Value ?? default,
+                                .AverageBucket("averageLowCostEnergy")
+                                .Value ?? default,
                               HighCostEnergy = (decimal?)bucket
-                                .AverageBucket("averageHighCostEnergy").Value ?? default,
+                                .AverageBucket("averageHighCostEnergy")
+                                .Value ?? default,
                               Power = (decimal?)bucket
-                                .AverageBucket("averagePower").Value ?? default,
+                                .AverageBucket("averagePower")
+                                .Value ?? default,
                               PowerL1 = (decimal?)bucket
-                                .AverageBucket("averagePowerL1").Value ?? default,
+                                .AverageBucket("averagePowerL1")
+                                .Value ?? default,
                               PowerL2 = (decimal?)bucket
-                                .AverageBucket("averagePowerL2").Value ?? default,
+                                .AverageBucket("averagePowerL2")
+                                .Value ?? default,
                               PowerL3 = (decimal?)bucket
-                                .AverageBucket("averagePowerL3").Value ?? default,
+                                .AverageBucket("averagePowerL3")
+                                .Value ?? default,
                               CurrentL1 = (decimal?)bucket
-                                .AverageBucket("averageCurrentL1").Value ?? default,
+                                .AverageBucket("averageCurrentL1")
+                                .Value ?? default,
                               CurrentL2 = (decimal?)bucket
-                                .AverageBucket("averageCurrentL2").Value ?? default,
+                                .AverageBucket("averageCurrentL2")
+                                .Value ?? default,
                               CurrentL3 = (decimal?)bucket
-                                .AverageBucket("averageCurrentL3").Value ?? default,
+                                .AverageBucket("averageCurrentL3")
+                                .Value ?? default,
                               VoltageL1 = (decimal?)bucket
-                                .AverageBucket("averageVoltageL1").Value ?? default,
+                                .AverageBucket("averageVoltageL1")
+                                .Value ?? default,
                               VoltageL2 = (decimal?)bucket
-                                .AverageBucket("averageVoltageL2").Value ?? default,
+                                .AverageBucket("averageVoltageL2")
+                                .Value ?? default,
                               VoltageL3 = (decimal?)bucket
-                                .AverageBucket("averageVoltageL3").Value ?? default,
+                                .AverageBucket("averageVoltageL3")
+                                .Value ?? default,
                             }))
                         .ToDictionary(
                           kv => kv.Key,
@@ -477,7 +503,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
           .FixedInterval(interval)
           .Aggregations(a => a
             .Terms("measurementsByDeviceId", t => t
-              .Field(f => f.DeviceData.DeviceId)
+              .Field(f => f.DeviceData.DeviceId.Suffix("keyword"))
               .Aggregations(a => a
                 .Average("averageEnergy", a => a
                   .Field(f => f.MeasurementData.energyIn))
@@ -529,7 +555,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
           .FixedInterval(interval)
           .Aggregations(a => a
             .Terms("measurementsByDeviceId", t => t
-              .Field(f => f.DeviceData.DeviceId)
+              .Field(f => f.DeviceData.DeviceId.Suffix("keyword"))
               .Aggregations(a => a
                 .Average("averageEnergy", a => a
                   .Field(f => f.MeasurementData.energyIn))
@@ -581,7 +607,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
           .FixedInterval(interval)
           .Aggregations(a => a
             .Terms("measurementsByDeviceId", t => t
-              .Field(f => f.DeviceData.DeviceId)
+              .Field(f => f.DeviceData.DeviceId.Suffix("keyword"))
               .Aggregations(a => a
                 .Average("averageEnergy", a => a
                   .Field(f => f.MeasurementData.energyIn))
@@ -633,7 +659,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
           .FixedInterval(interval)
           .Aggregations(a => a
             .Terms("measurementsByDeviceId", t => t
-              .Field(f => f.DeviceData.DeviceId)
+              .Field(f => f.DeviceData.DeviceId.Suffix("keyword"))
               .Aggregations(a => a
                 .Average("averageEnergy", a => a
                   .Field(f => f.MeasurementData.energyIn))

@@ -429,21 +429,21 @@
           labels: lineLabels,
           datasets: [
             {
-              label: '@T["VoltageL1"].Value (kW)',
+              label: '@T["VoltageL1"].Value (V)',
               data: measurements.map(measurement => measurement.data.voltageL1),
               borderColor: "Green",
               backgroundColor: "Green",
               yAxisID: "voltage",
             },
             {
-              label: '@T["VoltageL2"].Value (kW)',
+              label: '@T["VoltageL2"].Value (V)',
               data: measurements.map(measurement => measurement.data.voltageL2),
               borderColor: "Orange",
               backgroundColor: "Orange",
               yAxisID: "voltage",
             },
             {
-              label: '@T["VoltageL3"].Value (kW)',
+              label: '@T["VoltageL3"].Value (V)',
               data: measurements.map(measurement => measurement.data.voltageL3),
               borderColor: "Cyan",
               backgroundColor: "Cyan",
