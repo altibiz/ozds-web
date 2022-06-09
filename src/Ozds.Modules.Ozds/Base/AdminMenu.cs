@@ -28,6 +28,7 @@ public class AdminMenu : INavigationProvider
         "0",
         root => root
           .Add(S["Cjenik"], "1", child => child
+            .AddClass("ozds-admin-menu")
             .Action("List", "Admin",
               new
               {
@@ -40,6 +41,7 @@ public class AdminMenu : INavigationProvider
               "icon-class-fa-euro-sign"
             })
           .Add(S["ZDS"], "2", child => child
+            .AddClass("ozds-admin-menu")
             .Action("List", "Admin",
               new
               {
@@ -52,6 +54,7 @@ public class AdminMenu : INavigationProvider
               "icon-class-fa-bolt"
             })
           .Add(S["Korisnici ZDS-a"], "3", child => child
+            .AddClass("ozds-admin-menu")
             .Action("List", "Admin",
               new
               {
@@ -64,6 +67,7 @@ public class AdminMenu : INavigationProvider
               "icon-class-fa-users"
             })
           .Add(S["OMM"], "4", child => child
+            .AddClass("ozds-admin-menu")
             .Action("List", "Admin",
               new
               {
@@ -76,6 +80,7 @@ public class AdminMenu : INavigationProvider
               "icon-class-fa-tachometer"
             })
           .Add(S["Računi"], "5", child => child
+            .AddClass("ozds-admin-menu")
             .Action("List", "Admin",
               new
               {
@@ -97,6 +102,7 @@ public class AdminMenu : INavigationProvider
       NavigationBuilder builder) =>
     builder
       .Add(S["Cjenik"], "1", child => child
+        .AddClass("ozds-admin-menu")
         .Action("List", "Admin",
           new
           {
@@ -109,6 +115,7 @@ public class AdminMenu : INavigationProvider
           "icon-class-fa-euro-sign"
         })
       .Add(S["ZDS"], "2", child => child
+        .AddClass("ozds-admin-menu")
         .Action("List", "Admin",
           new
           {
@@ -121,6 +128,7 @@ public class AdminMenu : INavigationProvider
           "icon-class-fa-bolt"
         })
       .Add(S["Korisnici ZDS-a"], "3", child => child
+        .AddClass("ozds-admin-menu")
         .Action("List", "Admin",
           new
           {
@@ -133,6 +141,7 @@ public class AdminMenu : INavigationProvider
           "icon-class-fa-users"
         })
       .Add(S["OMM"], "4", child => child
+        .AddClass("ozds-admin-menu")
         .Action("List", "Admin",
           new
           {
@@ -145,6 +154,7 @@ public class AdminMenu : INavigationProvider
           "icon-class-fa-tachometer"
         })
       .Add(S["Računi"], "5", child => child
+        .AddClass("ozds-admin-menu")
         .Action("List", "Admin",
           new
           {

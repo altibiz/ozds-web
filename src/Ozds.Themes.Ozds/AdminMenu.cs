@@ -24,8 +24,9 @@ public class AdminMenu : INavigationProvider
 
         if (Env.IsProduction())
         {
-          builder
-            .Remove(_ => true)
+          builder = builder
+            .Remove(item => !item.Classes
+              .Contains("ozds-admin-menu"))
             .Add(
               S["Security"],
               NavigationConstants.AdminMenuSecurityPosition,
@@ -49,7 +50,7 @@ public class AdminMenu : INavigationProvider
               .GetSection("Ozds")
               .GetValue<object?>("IsDemo") is not null)
           {
-            builder
+            builder = builder
               .Add(
                 S["Import/Export"],
                 S["Import/Export"].PrefixPosition(),
@@ -97,7 +98,7 @@ public class AdminMenu : INavigationProvider
         }
         else
         {
-          builder
+          builder = builder
             .Add(
               S["Content"],
               S["Content"].PrefixPosition(),
@@ -111,16 +112,16 @@ public class AdminMenu : INavigationProvider
                       {
                         area = "OrchardCore.Contents"
                       }))
-              .Add(
-                S["Taxonomies"],
-                S["Taxonomies"].PrefixPosition(),
-                child => child
-                  .Action("List", "Admin",
-                    new
-                    {
-                      area = "OrchardCore.Contents",
-                      contentTypeId = "Taxonomy"
-                    })));
+                .Add(
+                  S["Taxonomies"],
+                  S["Taxonomies"].PrefixPosition(),
+                  child => child
+                    .Action("List", "Admin",
+                      new
+                      {
+                        area = "OrchardCore.Contents",
+                        contentTypeId = "Taxonomy"
+                      })));
         }
 
         return Task.CompletedTask;

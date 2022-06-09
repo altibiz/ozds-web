@@ -121,9 +121,11 @@ public sealed partial class ElasticsearchClient :
     if (env.IsDevelopment())
     {
       settings = settings
-        .PrettyJson(true)
-        .DisableDirectStreaming();
+        .PrettyJson(true);
     }
+
+    settings = settings
+      .DisableDirectStreaming();
 
     return new ElasticClient(settings);
   }
