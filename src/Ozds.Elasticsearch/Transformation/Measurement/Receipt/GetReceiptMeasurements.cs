@@ -9,80 +9,94 @@ public partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<(EnergyMeasurement Begin, EnergyMeasurement End)>
   GetEnergyMeasurementsAsync(
-      string source,
       string deviceId,
       Period period) =>
-    SearchFirstAndLastEnergyMeasurements(source, deviceId, period)
+    SearchFirstAndLastEnergyMeasurementsAsync(deviceId, period)
       .Then(measurements =>
-        (measurements.begin.Hits.FirstOrDefault(),
-         measurements.end.Hits.FirstOrDefault())
-        .FilterNull()
-        .WhenNonNull(measurements =>
+        (measurements.Begin.Sources().FirstOrDefault(),
+         measurements.End.Sources().FirstOrDefault()) switch
+        {
+          (Measurement begin, Measurement end) =>
           (new EnergyMeasurement
           {
-            Energy =
-              measurements.Item1.Source.MeasurementData.energyIn,
-            HighCostEnergy =
-              measurements.Item1.Source.MeasurementData.energyIn_T1,
-            LowCostEnergy =
-              measurements.Item1.Source.MeasurementData.energyIn_T2,
-            Timestamp =
-              measurements.Item1.Source.Timestamp
+            Energy = begin.MeasurementData.energyIn,
+            HighCostEnergy = begin.MeasurementData.energyIn_T1,
+            LowCostEnergy = begin.MeasurementData.energyIn_T2,
+            Timestamp = begin.Timestamp
           },
-           new EnergyMeasurement
-           {
-             Energy =
-              measurements.Item2.Source.MeasurementData.energyIn,
-             HighCostEnergy =
-              measurements.Item2.Source.MeasurementData.energyIn_T1,
-             LowCostEnergy =
-              measurements.Item2.Source.MeasurementData.energyIn_T2,
-             Timestamp =
-              measurements.Item2.Source.Timestamp
-           })));
+            new EnergyMeasurement
+            {
+              Energy = end.MeasurementData.energyIn,
+              HighCostEnergy = end.MeasurementData.energyIn_T1,
+              LowCostEnergy = end.MeasurementData.energyIn_T2,
+              Timestamp = end.Timestamp
+            }),
+          _ => default
+        });
 
   public (EnergyMeasurement Begin, EnergyMeasurement End)
   GetEnergyMeasurements(
-      string source,
       string deviceId,
       Period period) =>
-    GetEnergyMeasurementsAsync(
-        source,
-        deviceId,
-        period).Block();
+    SearchFirstAndLastEnergyMeasurements(deviceId, period)
+      .Var(measurements =>
+        (measurements.Begin.Sources().FirstOrDefault(),
+         measurements.End.Sources().FirstOrDefault()) switch
+        {
+          (Measurement begin, Measurement end) =>
+          (new EnergyMeasurement
+          {
+            Energy = begin.MeasurementData.energyIn,
+            HighCostEnergy = begin.MeasurementData.energyIn_T1,
+            LowCostEnergy = begin.MeasurementData.energyIn_T2,
+            Timestamp = begin.Timestamp
+          },
+            new EnergyMeasurement
+            {
+              Energy = end.MeasurementData.energyIn,
+              HighCostEnergy = end.MeasurementData.energyIn_T1,
+              LowCostEnergy = end.MeasurementData.energyIn_T2,
+              Timestamp = end.Timestamp
+            }),
+          _ => default
+        });
 
   public Task<PowerMeasurement>
   GetPowerMeasurementAsync(
-      string source,
       string deviceId,
       Period period) =>
-    SearchAveragePowerByFifteenMinutes(
-        source,
+    SearchMaxPowerPerFifteenMinutesAsync(
         deviceId,
         period)
-      .Then(measurement => measurement
-        .Aggregations
-        .AverageBucket("averagePowerByFifteenMinutes")
-        .WhenNonNull(average =>
-          new PowerMeasurement((decimal?)average.Value ?? default)));
+      .Then(measurement =>
+        new PowerMeasurement
+        {
+          Power = (decimal)measurement
+            .Aggregations
+            .MaxBucket("maxPowerPerFifteenMinutes")
+            .Value!,
+        });
 
   public PowerMeasurement
   GetPowerMeasurement(
-      string source,
       string deviceId,
       Period period) =>
-    GetPowerMeasurementAsync(
-        source,
+    SearchMaxPowerPerFifteenMinutes(
         deviceId,
-        period).Block();
+        period)
+      .Var(measurement =>
+        new PowerMeasurement
+        {
+          Power = (decimal)measurement
+            .Aggregations
+            .MaxBucket("maxPowerPerFifteenMinutes")
+            .Value!,
+        });
 
-  // NOTE: the first is ascending and second descending
-  // NOTE: gte and then lt so we dont mix up first/last measurements
   private Task<(
-      ISearchResponse<Measurement> begin,
-      ISearchResponse<Measurement> end)>
-  SearchFirstAndLastEnergyMeasurements(
-      string source,
+      ISearchResponse<Measurement> Begin,
+      ISearchResponse<Measurement> End)>
+  SearchFirstAndLastEnergyMeasurementsAsync(
       string deviceId,
       Period period) =>
     (Elasticsearch.SearchAsync<Measurement>(s => s
@@ -98,7 +112,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
             DateTime.MinValue.ToUniversalTime())
           .LessThan(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceData.DeviceId, Device.MakeId(source, deviceId)))),
+        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))),
      Elasticsearch.SearchAsync<Measurement>(s => s
       .Size(1)
       .Index(MeasurementIndexName)
@@ -112,14 +126,72 @@ public partial class ElasticsearchClient : IElasticsearchClient
             DateTime.MinValue.ToUniversalTime())
           .LessThan(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceData.DeviceId, Device.MakeId(source, deviceId)))))
+        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))))
     .Await();
 
-  // NOTE: https://stackoverflow.com/a/51726136/4348107
-  // NOTE: gte and then lt so we dont mix up first/last measurements
+  private (
+      ISearchResponse<Measurement> Begin,
+      ISearchResponse<Measurement> End)
+  SearchFirstAndLastEnergyMeasurements(
+      string deviceId,
+      Period period) =>
+    (Elasticsearch.Search<Measurement>(s => s
+      .Size(1)
+      .Index(MeasurementIndexName)
+      .Sort(s => s
+        .Ascending(f => f.Timestamp))
+      .Query(q => q
+        .DateRange(r => r
+          .Field(f => f.Timestamp)
+          .GreaterThanOrEquals(
+            period?.From ??
+            DateTime.MinValue.ToUniversalTime())
+          .LessThan(
+            period?.To ?? DateTime.UtcNow)) && q
+        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))),
+     Elasticsearch.Search<Measurement>(s => s
+      .Size(1)
+      .Index(MeasurementIndexName)
+      .Sort(s => s
+        .Descending(f => f.Timestamp))
+      .Query(q => q
+        .DateRange(r => r
+          .Field(f => f.Timestamp)
+          .GreaterThanOrEquals(
+            period?.From ??
+            DateTime.MinValue.ToUniversalTime())
+          .LessThan(
+            period?.To ?? DateTime.UtcNow)) && q
+        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))));
+
+  private ISearchResponse<Measurement>
+  SearchMaxPowerPerFifteenMinutes(
+      string deviceId,
+      Period? period = null) =>
+    Elasticsearch.Search<Measurement>(s => s
+      .Index(MeasurementIndexName)
+      .Size(0)
+      .Query(q => q
+        .DateRange(r => r
+          .Field(f => f.Timestamp)
+          .GreaterThanOrEquals(
+            period?.From ??
+            DateTime.MinValue.ToUniversalTime())
+          .LessThan(
+            period?.To ?? DateTime.UtcNow)) && q
+        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))
+      .Aggregations(a => a
+        .DateHistogram("measurementsPerFifteenMinutes", h => h
+          .Field(f => f.Timestamp)
+          .FixedInterval(TimeSpan.FromMinutes(15))
+          .Aggregations(a => a
+            .Average("averagePower", a => a
+              .Field(f => f.MeasurementData.powerIn))))
+        .MaxBucket("maxPowerPerFifteenMinutes", a => a
+          .BucketsPath("measurementsPerFifteenMinutes>averagePower"))));
+
   private Task<ISearchResponse<Measurement>>
-  SearchAveragePowerByFifteenMinutes(
-      string source,
+  SearchMaxPowerPerFifteenMinutesAsync(
       string deviceId,
       Period? period = null) =>
     Elasticsearch.SearchAsync<Measurement>(s => s
@@ -133,15 +205,14 @@ public partial class ElasticsearchClient : IElasticsearchClient
             DateTime.MinValue.ToUniversalTime())
           .LessThan(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceData.DeviceId, Device.MakeId(source, deviceId)))
+        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))
       .Aggregations(a => a
-        .DateHistogram("timestampByFifteenMinutes", h => h
+        .DateHistogram("measurementsPerFifteenMinutes", h => h
           .Field(f => f.Timestamp)
-          .CalendarInterval(TimeSpan.FromMinutes(15))
+          .FixedInterval(TimeSpan.FromMinutes(15))
           .Aggregations(a => a
             .Average("averagePower", a => a
-              .Field(f => f.MeasurementData.powerIn)))))
-      .Aggregations(a => a
-        .AverageBucket("averagePowerByFifteenMinutes", a => a
-          .BucketsPath("timestampByFifteenMinutes>averagePower"))));
+              .Field(f => f.MeasurementData.powerIn))))
+        .MaxBucket("maxPowerPerFifteenMinutes", a => a
+          .BucketsPath("measurementsPerFifteenMinutes>averagePower"))));
 }

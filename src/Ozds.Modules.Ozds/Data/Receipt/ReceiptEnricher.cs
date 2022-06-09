@@ -80,8 +80,7 @@ public class ReceiptEnricher : ContentHandlerBase
     var (beginEnergyMeasurement, endEnergyMeasurement) =
       await Measurements
         .GetEnergyMeasurementsAsync(
-          source,
-          deviceId,
+          Device.MakeId(source, deviceId),
           new()
           {
             From = dateFrom,
@@ -90,8 +89,7 @@ public class ReceiptEnricher : ContentHandlerBase
     var powerMeasurement =
       await Measurements
         .GetPowerMeasurementAsync(
-          source,
-          deviceId,
+          Device.MakeId(source, deviceId),
           new()
           {
             From = dateFrom,

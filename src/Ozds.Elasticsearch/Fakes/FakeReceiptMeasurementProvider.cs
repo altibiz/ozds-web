@@ -6,7 +6,6 @@ public class FakeReceiptMeasurementProvider : IReceiptMeasurementProvider
 {
   public Task<(EnergyMeasurement Begin, EnergyMeasurement End)>
   GetEnergyMeasurementsAsync(
-      string source,
       string deviceId,
       Period period) =>
     Task.FromResult((
@@ -27,18 +26,15 @@ public class FakeReceiptMeasurementProvider : IReceiptMeasurementProvider
 
   public (EnergyMeasurement Begin, EnergyMeasurement End)
   GetEnergyMeasurements(
-      string source,
       string deviceId,
       Period period) =>
     GetEnergyMeasurementsAsync(
-        source,
         deviceId,
         period)
       .Block();
 
   public Task<PowerMeasurement>
   GetPowerMeasurementAsync(
-      string source,
       string deviceId,
       Period period) =>
     Task.FromResult(
@@ -49,11 +45,9 @@ public class FakeReceiptMeasurementProvider : IReceiptMeasurementProvider
 
   public PowerMeasurement
   GetPowerMeasurement(
-      string source,
       string deviceId,
       Period period) =>
     GetPowerMeasurementAsync(
-        source,
         deviceId,
         period)
       .Block();
