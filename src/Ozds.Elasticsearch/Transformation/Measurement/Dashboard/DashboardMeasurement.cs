@@ -8,7 +8,7 @@ public readonly record struct MultiDashboardMeasurements
 
 public readonly record struct MultiDashboardMeasurementData
 (DateTime Timestamp,
- IDictionary<string, DashboardMeasurementData> Data);
+ IEnumerable<DeviceDashboardMeasurementData> Data);
 
 // TODO: use a list of these instead of a dictionary
 public readonly record struct DeviceDashboardMeasurementData
@@ -112,14 +112,11 @@ public static class DashboardMeasurementExtensions
               Data = deviceGroups
                 .Select(deviceMeasurements => deviceMeasurements
                   .Interpolate(@event))
-                .ToDictionary(
-                  pair => pair.Key,
-                  pair => pair.Value)
             }),
       };
   }
 
-  private static KeyValuePair<string, DashboardMeasurementData>
+  private static DeviceDashboardMeasurementData
   Interpolate(
       this IEnumerable<DashboardMeasurement> @this,
       DateTime at)
@@ -133,7 +130,7 @@ public static class DashboardMeasurementExtensions
         if (last == default)
         {
           return
-            new KeyValuePair<string, DashboardMeasurementData>(
+            new DeviceDashboardMeasurementData(
               current.DeviceId,
               current.Data);
         }
@@ -147,7 +144,7 @@ public static class DashboardMeasurementExtensions
             };
 
           return
-            new KeyValuePair<string, DashboardMeasurementData>(
+            new DeviceDashboardMeasurementData(
               current.DeviceId,
               new DashboardMeasurementData
               {
@@ -199,7 +196,7 @@ public static class DashboardMeasurementExtensions
     }
 
     return
-      new KeyValuePair<string, DashboardMeasurementData>(
+      new DeviceDashboardMeasurementData(
         last.DeviceId,
         last.Data);
   }

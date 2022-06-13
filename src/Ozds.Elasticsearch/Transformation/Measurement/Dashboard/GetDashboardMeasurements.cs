@@ -177,7 +177,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
                       Data = bucket
                         .Terms("measurementsByDeviceId").Buckets
                         .Select(bucket =>
-                          new KeyValuePair<string, DashboardMeasurementData>(
+                          new DeviceDashboardMeasurementData(
                             bucket.Key,
                             new DashboardMeasurementData
                             {
@@ -207,10 +207,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
                                 .AverageBucket("averageVoltageL2").Value ?? default,
                               VoltageL3 = (decimal?)bucket
                                 .AverageBucket("averageVoltageL3").Value ?? default,
-                            }))
-                        .ToDictionary(
-                          kv => kv.Key,
-                          kv => kv.Value),
+                            })),
                     }),
             }),
       (var shortPeriod) =>
@@ -255,7 +252,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
                       Data = bucket
                         .Terms("measurementsByDeviceId").Buckets
                         .Select(bucket =>
-                          new KeyValuePair<string, DashboardMeasurementData>(
+                          new DeviceDashboardMeasurementData(
                             bucket.Key,
                             new DashboardMeasurementData
                             {
@@ -285,10 +282,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
                                 .AverageBucket("averageVoltageL2").Value ?? default,
                               VoltageL3 = (decimal?)bucket
                                 .AverageBucket("averageVoltageL3").Value ?? default,
-                            }))
-                        .ToDictionary(
-                          kv => kv.Key,
-                          kv => kv.Value),
+                            })),
                     }),
             }),
       (var shortPeriod) =>
@@ -333,7 +327,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
                       Data = bucket
                         .Terms("measurementsByDeviceId").Buckets
                         .Select(bucket =>
-                          new KeyValuePair<string, DashboardMeasurementData>(
+                          new DeviceDashboardMeasurementData(
                             bucket.Key,
                             new DashboardMeasurementData
                             {
@@ -376,10 +370,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
                               VoltageL3 = (decimal?)bucket
                                 .AverageBucket("averageVoltageL3")
                                 .Value ?? default,
-                            }))
-                        .ToDictionary(
-                          kv => kv.Key,
-                          kv => kv.Value),
+                            })),
                     }),
             }),
       (var shortPeriod) =>
@@ -424,7 +415,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
                       Data = bucket
                         .Terms("measurementsByDeviceId").Buckets
                         .Select(bucket =>
-                          new KeyValuePair<string, DashboardMeasurementData>(
+                          new DeviceDashboardMeasurementData(
                             bucket.Key,
                             new DashboardMeasurementData
                             {
@@ -467,10 +458,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
                               VoltageL3 = (decimal?)bucket
                                 .AverageBucket("averageVoltageL3")
                                 .Value ?? default,
-                            }))
-                        .ToDictionary(
-                          kv => kv.Key,
-                          kv => kv.Value),
+                            })),
                     }),
             }),
       (var shortPeriod) =>

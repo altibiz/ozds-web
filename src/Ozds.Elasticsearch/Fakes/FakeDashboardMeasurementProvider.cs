@@ -9,19 +9,26 @@ public sealed partial class FakeDashboardMeasurementProvider :
   GetDashboardMeasurementsAsync(
       string deviceId,
       Period? period = null) =>
-    GenerateDashboardMeasurements(period).ToTask();
+    GenerateDashboardMeasurements(
+        deviceId,
+        period)
+      .ToTask();
 
   public IEnumerable<DashboardMeasurement>
   GetDashboardMeasurements(
       string deviceId,
       Period? period = null) =>
-    GenerateDashboardMeasurements(period);
+    GenerateDashboardMeasurements(
+        deviceId,
+        period);
 
   public Task<MultiDashboardMeasurements>
   GetDashboardMeasurementsByOwnerAsync(
       string ownerId,
       Period? period = null) =>
-    GenerateDashboardMeasurements(period)
+    GenerateDashboardMeasurements(
+        FakeMeasurementProvider.FakeDeviceId,
+        period)
       .ToMultiDashboardMeasurements()
       .ToTask();
 
@@ -29,14 +36,18 @@ public sealed partial class FakeDashboardMeasurementProvider :
   GetDashboardMeasurementsByOwner(
       string ownerId,
       Period? period = null) =>
-    GenerateDashboardMeasurements(period)
+    GenerateDashboardMeasurements(
+        FakeMeasurementProvider.FakeDeviceId,
+        period)
       .ToMultiDashboardMeasurements();
 
   public Task<MultiDashboardMeasurements>
   GetDashboardMeasurementsByOwnerUserAsync(
       string ownerUserId,
       Period? period = null) =>
-    GenerateDashboardMeasurements(period)
+    GenerateDashboardMeasurements(
+        FakeMeasurementProvider.FakeDeviceId,
+        period)
       .ToMultiDashboardMeasurements()
       .ToTask();
 
@@ -44,11 +55,15 @@ public sealed partial class FakeDashboardMeasurementProvider :
   GetDashboardMeasurementsByOwnerUser(
       string ownerUserId,
       Period? period = null) =>
-    GenerateDashboardMeasurements(period)
+    GenerateDashboardMeasurements(
+        FakeMeasurementProvider.FakeDeviceId,
+        period)
       .ToMultiDashboardMeasurements();
 
   private IEnumerable<DashboardMeasurement>
-  GenerateDashboardMeasurements(Period? period = null) =>
+  GenerateDashboardMeasurements(
+      string deviceId,
+      Period? period = null) =>
     period
       .WhenNull(() =>
         new Period
@@ -69,6 +84,10 @@ public sealed partial class FakeDashboardMeasurementProvider :
             return
               new DashboardMeasurement
               {
+                DeviceId =
+                  Device.MakeId(
+                    FakeMeasurementProvider.FakeSource,
+                    deviceId),
                 Timestamp = period.From,
                 Data =
                   new DashboardMeasurementData

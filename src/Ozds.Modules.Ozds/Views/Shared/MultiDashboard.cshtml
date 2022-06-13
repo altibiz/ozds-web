@@ -80,7 +80,10 @@
                 ({
                   label: `@T["Energy"].Value ${deviceId} (kW)`,
                   data: measurements.map(deviceMeasurement =>
-                      deviceMeasurement.data[deviceId]?.energy),
+                    deviceMeasurement.data
+                      .find(measurement =>
+                        measurement.deviceId === deviceId)
+                      ?.data?.energy),
                   borderColor: rainbow[index % rainbow.length],
                   backgroundColor: rainbow[index % rainbow.length],
                 })),
@@ -105,7 +108,10 @@
                 ({
                   label: `@T["Power"].Value ${deviceId} (kW)`,
                   data: measurements.map(deviceMeasurement =>
-                      deviceMeasurement.data[deviceId]?.power),
+                    deviceMeasurement.data
+                      .find(measurement =>
+                        measurement.deviceId === deviceId)
+                      ?.data?.power),
                   borderColor: rainbow[index % rainbow.length],
                   backgroundColor: rainbow[index % rainbow.length],
                 })),

@@ -146,16 +146,16 @@ public class Startup : OrchardCore.Modules.StartupBase
 
     services.AddScoped<LocalizedRouteTransformer>();
 
-    // NOTE: https://graphql-dotnet.github.io/docs/getting-started/dependency-injection
-    // NOTE: OrchardCore uses services.AddObjectGraphType from OrchardCore.Apis
-    // NOTE: which does roughly the same thing
-    services.AddSingleton<DashboardMeasurementDataObjectGraphType>();
-    services.AddSingleton<DeviceDashboardMeasurementDataObjectGraphType>();
-
-    services.AddSingleton<MultiDashboardMeasurementDataObjectGraphType>();
-
-    services.AddSingleton<DashboardMeasurementObjectGraphType>();
-    services.AddSingleton<MultiDashboardMeasurementsObjectGraphType>();
+    services
+      .AddGraphQLServer()
+      .AddAuthorization()
+      .AddQueryType<Query>()
+      .AddType<MultiDashboardMeasurementsType>()
+      .AddType<MultiDashboardMeasurementDataType>()
+      .AddType<DeviceDashboardMeasurementDataType>()
+      .AddType<DashboardMeasurementType>()
+      .AddType<DashboardMeasurementDataType>()
+      .AddType<PeriodType>();
   }
 
   public override void Configure(
@@ -166,6 +166,14 @@ public class Startup : OrchardCore.Modules.StartupBase
     routes.MapDynamicPageRoute<LocalizedRouteTransformer>("");
     routes.MapDynamicPageRoute<LocalizedRouteTransformer>("korisnici");
     routes.MapDynamicPageRoute<LocalizedRouteTransformer>("korisnici/{page?}");
+
+    app.UseEndpoints(endpoints => endpoints
+      .MapGraphQL()
+      .RequireAuthorization(
+        new AuthorizeData
+        {
+          Roles = "Administrator,User"
+        }));
   }
 
   public Startup(

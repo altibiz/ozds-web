@@ -1,4 +1,5 @@
 using OrchardCore.Modules.Manifest;
+using Module = OrchardCore.Modules.Manifest.ModuleAttribute;
 
 [assembly: Module(
     Id = "Ozds.Modules.Ozds",
@@ -58,6 +59,5 @@ using OrchardCore.Modules.Manifest;
         "OrchardCore.BackgroundTasks",
         "OrchardCore.Spatial",
         "OrchardCore.Contents.Deployment.Download",
-        "OrchardCore.Apis.GraphQL",
         "Etch.OrchardCore.Fields.Dictionary"
       })]

@@ -25,147 +25,109 @@ public class AdminMenu : INavigationProvider
     builder
       .Add(
         S["OZDS"],
-        "0",
-        root => root
-          .Add(S["Cjenik"], "1", child => child
-            .AddClass("ozds-admin-menu")
-            .Action("List", "Admin",
-              new
-              {
-                area = "OrchardCore.Contents",
-                contentTypeId = "Catalogue"
-              }),
-            new[]
-            {
-              "icon-class-fas",
-              "icon-class-fa-euro-sign"
-            })
-          .Add(S["ZDS"], "2", child => child
-            .AddClass("ozds-admin-menu")
-            .Action("List", "Admin",
-              new
-              {
-                area = "OrchardCore.Contents",
-                contentTypeId = "Center"
-              }),
-            new[]
-            {
-              "icon-class-fas",
-              "icon-class-fa-bolt"
-            })
-          .Add(S["Korisnici ZDS-a"], "3", child => child
-            .AddClass("ozds-admin-menu")
-            .Action("List", "Admin",
-              new
-              {
-                area = "OrchardCore.Contents",
-                contentTypeId = "Consumer"
-              }),
-            new[]
-            {
-              "icon-class-fas",
-              "icon-class-fa-users"
-            })
-          .Add(S["OMM"], "4", child => child
-            .AddClass("ozds-admin-menu")
-            .Action("List", "Admin",
-              new
-              {
-                area = "OrchardCore.Contents",
-                contentTypeId = "SecondarySite"
-              }),
-            new[]
-            {
-              "icon-class-fas",
-              "icon-class-fa-tachometer"
-            })
-          .Add(S["Računi"], "5", child => child
-            .AddClass("ozds-admin-menu")
-            .Action("List", "Admin",
-              new
-              {
-                area = "OrchardCore.Contents",
-                contentTypeId = "Receipt",
-              }),
-            new[]
-            {
-              "icon-class-fas",
-              "icon-class-fa-receipt"
-            }),
+        S["OZDS"].PrefixPosition(),
+        root => BuildOzdsMenu(root),
         new[]
         {
           "icon-class-fas",
           "icon-class-fa-users"
+        })
+      .Add(
+        S["GraphQL"],
+        S["GraphQL"].PrefixPosition(),
+        root => root.Url("/graphql"),
+        new[]
+        {
+          "icon-class-fas",
+          "icon-class-fa-database"
         });
 
   public NavigationBuilder BuildProductionNavigation(
       NavigationBuilder builder) =>
+    BuildOzdsMenu(builder);
+
+  private NavigationBuilder BuildOzdsMenu(NavigationBuilder builder) =>
     builder
-      .Add(S["Cjenik"], "1", child => child
-        .AddClass("ozds-admin-menu")
-        .Action("List", "Admin",
-          new
+      .Add(
+        S["Cjenik"],
+        S["Cjenik"].PrefixPosition(),
+        child => child
+          .AddClass("ozds-admin-menu")
+          .Action("List", "Admin",
+            new
+            {
+              area = "OrchardCore.Contents",
+              contentTypeId = "Catalogue"
+            }),
+          new[]
           {
-            area = "OrchardCore.Contents",
-            contentTypeId = "Catalogue"
-          }),
-        new[]
-        {
-          "icon-class-fas",
-          "icon-class-fa-euro-sign"
-        })
-      .Add(S["ZDS"], "2", child => child
-        .AddClass("ozds-admin-menu")
-        .Action("List", "Admin",
-          new
+            "icon-class-fas",
+            "icon-class-fa-euro-sign"
+          })
+      .Add(
+        S["ZDS"],
+        S["ZDS"].PrefixPosition(),
+        child => child
+          .AddClass("ozds-admin-menu")
+          .Action("List", "Admin",
+            new
+            {
+              area = "OrchardCore.Contents",
+              contentTypeId = "Center"
+            }),
+          new[]
           {
-            area = "OrchardCore.Contents",
-            contentTypeId = "Center"
-          }),
-        new[]
-        {
-          "icon-class-fas",
-          "icon-class-fa-bolt"
-        })
-      .Add(S["Korisnici ZDS-a"], "3", child => child
-        .AddClass("ozds-admin-menu")
-        .Action("List", "Admin",
-          new
+            "icon-class-fas",
+            "icon-class-fa-bolt"
+          })
+      .Add(
+        S["Korisnici ZDS-a"],
+        S["Korisnici ZDS-a"].PrefixPosition(),
+        child => child
+          .AddClass("ozds-admin-menu")
+          .Action("List", "Admin",
+            new
+            {
+              area = "OrchardCore.Contents",
+              contentTypeId = "Consumer"
+            }),
+          new[]
           {
-            area = "OrchardCore.Contents",
-            contentTypeId = "Consumer"
-          }),
-        new[]
-        {
-          "icon-class-fas",
-          "icon-class-fa-users"
-        })
-      .Add(S["OMM"], "4", child => child
-        .AddClass("ozds-admin-menu")
-        .Action("List", "Admin",
-          new
+            "icon-class-fas",
+            "icon-class-fa-users"
+          })
+      .Add(
+        S["OMM"],
+        S["OMM"].PrefixPosition(),
+        child => child
+          .AddClass("ozds-admin-menu")
+          .Action("List", "Admin",
+            new
+            {
+              area = "OrchardCore.Contents",
+              contentTypeId = "SecondarySite"
+            }),
+          new[]
           {
-            area = "OrchardCore.Contents",
-            contentTypeId = "SecondarySite"
-          }),
-        new[]
-        {
-          "icon-class-fas",
-          "icon-class-fa-tachometer"
-        })
-      .Add(S["Računi"], "5", child => child
-        .AddClass("ozds-admin-menu")
-        .Action("List", "Admin",
-          new
+            "icon-class-fas",
+            "icon-class-fa-tachometer"
+          })
+      .Add(
+        S["Računi"],
+        S["Računi"].PrefixPosition(),
+        child => child
+          .AddClass("ozds-admin-menu")
+          .Action("List", "Admin",
+            new
+            {
+              area = "OrchardCore.Contents",
+              contentTypeId = "Receipt",
+            }),
+          new[]
           {
-            area = "OrchardCore.Contents",
-            contentTypeId = "Receipt",
-          }),
-        new[]
-        {
-          "icon-class-fas",
-          "icon-class-fa-receipt"
-        });
+            "icon-class-fas",
+            "icon-class-fa-receipt"
+          });
 
   public AdminMenu(
       IHostEnvironment env,
