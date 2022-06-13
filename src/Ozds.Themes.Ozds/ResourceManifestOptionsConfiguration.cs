@@ -27,6 +27,13 @@ namespace Ozds.Themes.Ozds
             "~/Ozds.Themes.Ozds/css/styles.css");
 
       _manifest
+        .DefineScript("ozdstheme-dashboard")
+        .SetDependencies("bootstrap")
+        .SetUrl(
+            "~/Ozds.Themes.Ozds/js/dashboard.min.js",
+            "~/Ozds.Themes.Ozds/js/dashboard.js");
+
+      _manifest
         .DefineScript("ozdstheme-barcode")
         .SetDependencies("libbcmath", "bcmath", "pdf417");
 
