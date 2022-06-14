@@ -9,25 +9,6 @@
 @{
   var now = DateTime.UtcNow;
 
-  var fromQuery = Context.Request.Query["from"].FirstOrDefault();
-  var from =
-    string.IsNullOrEmpty(fromQuery) ? now.AddMinutes(-60)
-    : fromQuery.ToUtcIsoDateTime();
-
-  var toQuery = Context.Request.Query["to"].FirstOrDefault();
-  var to =
-    string.IsNullOrEmpty(toQuery) ? now
-    : toQuery.ToUtcIsoDateTime();
-
-  var measurements = await Provider
-    .GetDashboardMeasurementsAsync(
-      Model.Site.Value.DeviceId,
-      new Period
-      {
-        From = from,
-        To = to,
-      });
-
   var lastHour = string
     .Format(
       "{0}?from={1}&to={2}",
@@ -89,4 +70,41 @@
   </div>
 </div>
 
-<partial name="Dashboard" model="@measurements" />
+@{
+  var fromQuery = Context.Request.Query["from"].FirstOrDefault();
+  var from =
+    string.IsNullOrEmpty(fromQuery) ? now.AddMinutes(-60)
+    : fromQuery.ToUtcIsoDateTime();
+
+  var toQuery = Context.Request.Query["to"].FirstOrDefault();
+  var to =
+    string.IsNullOrEmpty(toQuery) ? now
+    : toQuery.ToUtcIsoDateTime();
+
+  var deviceId = Model.Site.Value.DeviceId;
+  var period =
+    new Period
+    {
+      From = from,
+      To = to,
+    };
+
+  var measurements = await Provider
+    .GetDashboardMeasurementsAsync(
+      deviceId,
+      period);
+
+  var initialQuery =
+    new InitialQuery<IEnumerable<DashboardMeasurement>>
+    {
+      Variables =
+        new
+        {
+          DeviceId = deviceId,
+          Period = period,
+        },
+      Result = measurements
+    };
+}
+
+<partial name="Dashboard" model="@initialQuery" />

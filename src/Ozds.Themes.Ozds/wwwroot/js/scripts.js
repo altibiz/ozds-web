@@ -15,7 +15,6 @@ window.addEventListener("DOMContentLoaded", function () {
       if (currentTop > 0 && navRoot.classList.contains("is-fixed")) {
         navRoot.classList.add("is-visible");
       } else {
-        console.log(123);
         navRoot.classList.remove("is-visible", "is-fixed");
       }
     } else {

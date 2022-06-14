@@ -1,10 +1,10 @@
 @using Ozds.Elasticsearch
 @using Ozds.Extensions
 
-@model MultiDashboardMeasurements
+@model InitialQuery<MultiDashboardMeasurements>
 
-@if (Model.DeviceIds.EmptyEnumerable() ||
-     Model.Measurements.EmptyEnumerable())
+@if (Model.Result.DeviceIds.EmptyEnumerable() ||
+     Model.Result.Measurements.EmptyEnumerable())
 {
   <span>
     @(T["No measurements available"].Value)
@@ -21,7 +21,7 @@
         class="
           d-block justify-content-center
           position-relative flex-grow-1">
-      <canvas id="energy" />
+      <canvas id="energy-lines" />
     </div>
   </div>
 </div>
@@ -35,85 +35,65 @@
         class="
           d-block justify-content-center
           position-relative flex-grow-1">
-      <canvas id="power" />
+      <canvas id="power-lines" />
     </div>
   </div>
 </div>
 
-
-<script asp-name="ozdstheme-chart" at="Foot"/>
 <script at="Foot">
-  window.onload = () => {
-    const modelString = '@Html.Raw(Json.Serialize(Model))';
-    const model = JSON.parse(modelString);
-    const deviceIds = model.deviceIds;
-    const measurements = model.measurements
-      .map(measurement =>
-        ({
-          ...measurement,
-          timestamp: new Date(measurement.timestamp)
-        }))
-      .sort((a, b) => a.timestamp - b.timestamp);
-    const lineLabels =
-      measurements.map(measurement =>
-        measurement.timestamp.toLocaleTimeString(
-          '@Html.Raw(Orchard.CultureName())'));
-    const rainbow = [
-      "Red",
-      "Green",
-      "Blue",
-      "Cyan",
-      "Yellow",
-      "Magenta"
-    ];
+  // TODO: investigate null values here
+  const createCharts = (multi, max, culture) => {
+    const deviceIds = multi.deviceIds;
+    const measurements = multi.measurements;
+    const metadata = createMeasurementMetadata(multi, culture);
 
-    // TODO: investigate null values here
-    new Chart(
-      "energy",
-      {
-        type: "line",
-        data: {
-          labels: lineLabels,
-          datasets:
-            deviceIds
-              .map((deviceId, index) =>
-                ({
-                  label: `@T["Energy"].Value ${deviceId} (kW)`,
-                  data: measurements.map(deviceMeasurement =>
-                    deviceMeasurement.data
-                      .find(measurement =>
-                        measurement.deviceId === deviceId)
-                      ?.data?.energy),
-                  borderColor: rainbow[index % rainbow.length],
-                  backgroundColor: rainbow[index % rainbow.length],
-                })),
-        },
-        options: {
-          maintainAspectRatio: false,
-          plugins: {
-            legend: true
+    return {
+      energyLines: new Chart(
+        "energy-lines",
+        {
+          type: "line",
+          data: {
+            labels: metadata.lineLabels,
+            datasets:
+              deviceIds
+                .map((deviceId, index) =>
+                  ({
+                    label: `@T["Energy of"].Value ${deviceId} (kW)`,
+                    deviceId: deviceId,
+                    data: measurements.map(measurementsByDevice =>
+                      measurementsByDevice.data
+                        .find(measurement => measurement.deviceId === deviceId)
+                        ?.data?.energy),
+                    borderColor: metadata.rainbow[index % rainbow.length],
+                    backgroundColor: metadata.rainbow[index % rainbow.length],
+                  })),
           },
-        },
-      });
+          options: {
+            maintainAspectRatio: false,
+            plugins: {
+              legend: true
+            },
+          },
+        }),
 
-    new Chart(
-      "power",
+    powerLines: new Chart(
+      "power-lines",
       {
         type: "line",
         data: {
-          labels: lineLabels,
+          labels: metadata.lineLabels,
           datasets:
             deviceIds
               .map((deviceId, index) =>
                 ({
-                  label: `@T["Power"].Value ${deviceId} (kW)`,
-                  data: measurements.map(deviceMeasurement =>
-                    deviceMeasurement.data
+                  label: `@T["Power of"].Value ${deviceId} (kW)`,
+                  data: measurements.map(measurementsByDevice =>
+                    measurementsByDevice.data
                       .find(measurement =>
                         measurement.deviceId === deviceId)
                       ?.data?.power),
-                  borderColor: rainbow[index % rainbow.length],
-                  backgroundColor: rainbow[index % rainbow.length],
+                  borderColor: metadata.rainbow[index % rainbow.length],
+                  backgroundColor: metadata.rainbow[index % rainbow.length],
                 })),
         },
         options: {
@@ -122,6 +102,113 @@
             legend: true
           },
         },
-      });
-  }
+      }),
+    };
+  };
+
+  const updateCharts = (multi, max, culture, charts) => {
+    const measurements = multi.measurements;
+    const metadata = createMeasurementMetadata(multi, culture);
+
+    charts.energyLines.data.labels.push(metadata.lineLabels);
+    charts.energyLines.data.datasets.forEach(dataset =>
+      dataset.data.push(measurements
+        .map(measurementsByDevice => measurementsByDevice.data
+          .find(measurement => measurement.deviceId === dataset.deviceId)
+          ?.data?.energy)));
+
+    charts.powerLines.data.labels.push(metadata.lineLabels);
+    charts.powerLines.data.datasets.forEach(dataset =>
+      dataset.data.push(measurements
+        .map(measurementsByDevice => measurementsByDevice.data
+          .find(measurement => measurement.deviceId === dataset.deviceId)
+          ?.data?.power)));
+
+    charts.energyLines.update();
+    charts.powerLines.update();
+  };
+
+  const createMeasurementMetadata = (multi, culture) => {
+    return {
+      lineLabels: multi.measurements
+        .map(measurement => measurement.timestamp
+          .setLocale(culture)
+          .toLocaleString(luxon.DateTime.TIME_WITH_SECONDS)),
+      rainbow: [
+        "Red",
+        "Green",
+        "Blue",
+        "Cyan",
+        "Yellow",
+        "Magenta"
+      ],
+    }
+  };
+
+  const getMeasurements = async (model, period) =>
+    period ?
+      model.variables.ownerId ?
+        await GraphQL
+          .getDashboardMeasurementsByOwner(
+            model.variables.ownerId,
+            period)
+      : model.variables.ownerUserId ?
+        await GraphQL
+          .getDashboardMeasurementsByOwnerUser(
+            model.variables.ownerUserId,
+            period)
+      : null
+    : GraphQL
+        .normalizeMultiDashboardMeasurements(
+          model.result);
+
+  const updatePeriod = (model, period) =>
+    period ?
+      {
+        from: period.to,
+        to: luxon.DateTime.now()
+      }
+    : GraphQL.deserializePeriod(model.variables.period);
+
+  const createOrUpdateCharts = (model, max, culture, charts) =>
+    charts ? updateCharts(model, max, culture, charts)
+    : createCharts(model, max, culture);
+
+  const update = async ({model, max, culture, charts, period}) => {
+    const measurements = await getMeasurements(model, period);
+    period = updatePeriod(model, period);
+    charts = createOrUpdateCharts(measurements, max, culture, charts);
+    return { period, charts };
+  };
+
+  window.onload = () => {
+    const modelString = '@Html.Raw(Json.Serialize(Model))';
+    const model = JSON.parse(modelString);
+
+    const maxString = `{
+      "power": @Dashboard.MaxPower,
+      "current": @Dashboard.MaxCurrent,
+      "voltage": @Dashboard.MaxVoltage
+    }`;
+    const max = JSON.parse(maxString);
+
+    const culture = '@Html.Raw(Orchard.CultureName())';
+
+    let period = null;
+    let charts = null;
+    const callback = async () => {
+      const updated = await update({model, max, culture, charts, period});
+      period = updated.period;
+      charts = updated.charts;
+    }
+
+    callback();
+    const interval = setInterval(callback, 10000);
+    window.onunload = () => {
+      clearInterval(interval);
+    };
+  };
 </script>
+<script asp-name="ozdstheme-luxon" at="Head"></script>
+<script asp-name="ozdstheme-chart" at="Head"></script>
+<script asp-name="ozdstheme-graphql" at="Head"></script>

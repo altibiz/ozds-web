@@ -8,6 +8,10 @@ public class AuthorizeData : IAuthorizeData
   public string? AuthenticationSchemes { get; set; }
 }
 
+public readonly record struct InitialQuery<R>
+(dynamic Variables,
+ R Result);
+
 public class Query
 {
   public Task<IEnumerable<DashboardMeasurement>>

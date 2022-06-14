@@ -341,6 +341,16 @@ function buildJsPipeline(assetGroup, doConcat, doRebuild) {
           presets: [
             ["@babel/preset-env", { modules: false }, "@babel/preset-flow"],
           ],
+          plugins: [
+            // NOTE: needed for async/await
+            [
+              "@babel/plugin-transform-runtime",
+              {
+                helpers: false,
+                regenerator: false,
+              },
+            ],
+          ],
         }),
       )
       .pipe(gulpif(doConcat, concat(assetGroup.outputFileName)))
