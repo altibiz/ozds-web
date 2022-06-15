@@ -53,7 +53,7 @@
         {
           type: "line",
           data: {
-            labels: metadata.lineLabels,
+            labels: metadata.labels,
             datasets:
               deviceIds
                 .map((deviceId, index) =>
@@ -73,36 +73,56 @@
             plugins: {
               legend: true
             },
+            scales: {
+              x: {
+                type: 'time',
+                adapters: {
+                  date: {
+                    locale: culture,
+                  },
+                },
+              },
+            },
           },
         }),
 
-    powerLines: new Chart(
-      "power-lines",
-      {
-        type: "line",
-        data: {
-          labels: metadata.lineLabels,
-          datasets:
-            deviceIds
-              .map((deviceId, index) =>
-                ({
-                  label: `@T["Power of"].Value ${deviceId} (kW)`,
-                  data: measurements.map(measurementsByDevice =>
-                    measurementsByDevice.data
-                      .find(measurement =>
-                        measurement.deviceId === deviceId)
-                      ?.data?.power),
-                  borderColor: metadata.rainbow[index % rainbow.length],
-                  backgroundColor: metadata.rainbow[index % rainbow.length],
-                })),
-        },
-        options: {
-          maintainAspectRatio: false,
-          plugins: {
-            legend: true
+      powerLines: new Chart(
+        "power-lines",
+        {
+          type: "line",
+          data: {
+            labels: metadata.labels,
+            datasets:
+              deviceIds
+                .map((deviceId, index) =>
+                  ({
+                    label: `@T["Power of"].Value ${deviceId} (kW)`,
+                    data: measurements.map(measurementsByDevice =>
+                      measurementsByDevice.data
+                        .find(measurement =>
+                          measurement.deviceId === deviceId)
+                        ?.data?.power),
+                    borderColor: metadata.rainbow[index % rainbow.length],
+                    backgroundColor: metadata.rainbow[index % rainbow.length],
+                  })),
           },
-        },
-      }),
+          options: {
+            maintainAspectRatio: false,
+            plugins: {
+              legend: true
+            },
+            scales: {
+              x: {
+                type: 'time',
+                adapters: {
+                  date: {
+                    locale: culture,
+                  },
+                },
+              },
+            },
+          },
+        }),
     };
   };
 
@@ -110,16 +130,16 @@
     const measurements = multi.measurements;
     const metadata = createMeasurementMetadata(multi, culture);
 
-    charts.energyLines.data.labels.push(metadata.lineLabels);
+    charts.energyLines.data.labels.push(...metadata.labels);
     charts.energyLines.data.datasets.forEach(dataset =>
-      dataset.data.push(measurements
+      dataset.data.push(...measurements
         .map(measurementsByDevice => measurementsByDevice.data
           .find(measurement => measurement.deviceId === dataset.deviceId)
           ?.data?.energy)));
 
-    charts.powerLines.data.labels.push(metadata.lineLabels);
+    charts.powerLines.data.labels.push(...metadata.labels);
     charts.powerLines.data.datasets.forEach(dataset =>
-      dataset.data.push(measurements
+      dataset.data.push(...measurements
         .map(measurementsByDevice => measurementsByDevice.data
           .find(measurement => measurement.deviceId === dataset.deviceId)
           ?.data?.power)));
@@ -130,18 +150,8 @@
 
   const createMeasurementMetadata = (multi, culture) => {
     return {
-      lineLabels: multi.measurements
-        .map(measurement => measurement.timestamp
-          .setLocale(culture)
-          .toLocaleString(luxon.DateTime.TIME_WITH_SECONDS)),
-      rainbow: [
-        "Red",
-        "Green",
-        "Blue",
-        "Cyan",
-        "Yellow",
-        "Magenta"
-      ],
+      labels: measurements.map(measurement => measurement.timestamp),
+      rainbow: [ "Red", "Green", "Blue", "Cyan", "Yellow", "Magenta" ],
     }
   };
 
@@ -168,18 +178,24 @@
         from: period.to,
         to: luxon.DateTime.now()
       }
-    : GraphQL.deserializePeriod(model.variables.period);
+    : {
+        from: GraphQL.deserializeDateTime(model.variables.period.to),
+        to: luxon.DateTime.now()
+      };
 
   const createOrUpdateCharts = (model, max, culture, charts) =>
     charts ? updateCharts(model, max, culture, charts)
     : createCharts(model, max, culture);
 
-  const update = async ({model, max, culture, charts, period}) => {
-    const measurements = await getMeasurements(model, period);
-    period = updatePeriod(model, period);
-    charts = createOrUpdateCharts(measurements, max, culture, charts);
-    return { period, charts };
-  };
+  const update = async ({model, max, culture, charts, period}) =>
+    ({
+      charts: createOrUpdateCharts(
+        await getMeasurements(model, period),
+        max,
+        culture,
+        charts),
+      period: updatePeriod(model, period)
+    });;
 
   window.onload = () => {
     const modelString = '@Html.Raw(Json.Serialize(Model))';

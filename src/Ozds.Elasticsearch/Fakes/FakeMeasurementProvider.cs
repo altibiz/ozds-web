@@ -44,14 +44,11 @@ public sealed partial class FakeMeasurementProvider : IMeasurementProvider
               // NOTE: always consistent
               .SplitAscending(TimeSpan.FromSeconds(
                   MeasurementIntervalInSeconds - 2))
-              // NOTE: last might fall out of bounds
-              .SkipLast(1)
               .Select(period =>
                 Convert(Measurement
                   .Generate(
                     device.SourceDeviceId,
-                    // NOTE: add a second so were surely within limits
-                    period.From + TimeSpan.FromSeconds(1))))));
+                    period.HalfPoint)))));
 
   public FakeMeasurementProvider(ILogger<FakeMeasurementProvider> logger) { Logger = logger; }
 

@@ -182,31 +182,38 @@
 </div>
 
 <script at="Foot">
-  const createCharts = (measurements, max, culture) => {
-    const metadata = createMeasurementMetadata(measurements, culture);
-    return {
+  // TODO: doughnut data strategy
+  const createCharts = (measurements, doughnuts, max, culture) =>
+    ({
+      measurements,
+      doughnuts,
       cumulativeLines: new Chart(
         "cumulative-lines",
         {
           type: "line",
           data: {
-            labels: metadata.lineLabels,
             datasets: [
               {
                 label: '@T["Energy"].Value (kWh)',
-                data: measurements.map(measurement =>
-                  measurement.data.energy),
+                data: measurements,
+                parsing: {
+                  xAxisKey: "timestamp",
+                  yAxisKey: "data.energy"
+                },
+                yAxisID: "energy",
                 borderColor: "Blue",
                 backgroundColor: "Blue",
-                yAxisID: "energy",
               },
               {
                 label: '@T["Power"].Value (kW)',
-                data: measurements.map(measurement =>
-                  measurement.data.power),
+                data: measurements,
+                parsing: {
+                  xAxisKey: "timestamp",
+                  yAxisKey: "data.power"
+                },
+                yAxisID: "power",
                 borderColor: "Red",
                 backgroundColor: "Red",
-                yAxisID: "power",
               },
             ],
           },
@@ -216,6 +223,14 @@
               legend: false
             },
             scales: {
+              x: {
+                type: 'time',
+                adapters: {
+                  date: {
+                    locale: culture,
+                  },
+                },
+              },
               power: {
                 type: 'linear',
                 display: true,
@@ -242,10 +257,10 @@
             datasets: [
               {
                 label: [ '@T["Current Power"].Value (kW)', '' ],
-                data: [
-                  metadata.power,
-                  max.power - metadata.power
-                ],
+                data: doughnuts,
+                parsing: {
+                  key: 'power'
+                },
                 backgroundColor: ["Red", "#DDDDDD"]
               },
             ],
@@ -265,31 +280,39 @@
         {
           type: "line",
           data: {
-            labels: metadata.lineLabels,
             datasets: [
               {
                 label: '@T["PowerL1"].Value (kW)',
-                data: measurements.map(measurement =>
-                  measurement.data.powerL1),
+                data: measurements,
+                parsing: {
+                  xAxisKey: "timestamp",
+                  yAxisKey: "data.powerL1"
+                },
+                yAxisID: "power",
                 borderColor: "Green",
                 backgroundColor: "Green",
-                yAxisID: "power",
               },
               {
                 label: '@T["PowerL2"].Value (kW)',
-                data: measurements.map(measurement =>
-                  measurement.data.powerL2),
+                data: measurements,
+                parsing: {
+                  xAxisKey: "timestamp",
+                  yAxisKey: "data.powerL2"
+                },
+                yAxisID: "power",
                 borderColor: "Orange",
                 backgroundColor: "Orange",
-                yAxisID: "power",
               },
               {
                 label: '@T["PowerL3"].Value (kW)',
-                data: measurements.map(measurement =>
-                  measurement.data.powerL3),
+                data: measurements,
+                parsing: {
+                  xAxisKey: "timestamp",
+                  yAxisKey: "data.powerL3"
+                },
+                yAxisID: "power",
                 borderColor: "Cyan",
                 backgroundColor: "Cyan",
-                yAxisID: "power",
               },
             ],
           },
@@ -297,6 +320,16 @@
             maintainAspectRatio: false,
             plugins: {
               legend: false
+            },
+            scales: {
+              x: {
+                type: 'time',
+                adapters: {
+                  date: {
+                    locale: culture,
+                  },
+                },
+              },
             },
           },
         }),
@@ -309,26 +342,26 @@
             datasets: [
               {
                 label: [ '@T["PowerL1"].Value (kW)', '' ],
-                data: [
-                  metadata.powerL1,
-                  max.power - metadata.powerL1
-                ],
+                data: doughnuts,
+                parsing: {
+                  key: 'powerL1'
+                },
                 backgroundColor: ["Green", "#DDDDDD"]
               },
               {
                 label: [ '@T["PowerL2"].Value (kW)', '' ],
-                data: [
-                  metadata.powerL2,
-                  max.power - metadata.powerL2
-                ],
+                data: doughnuts,
+                parsing: {
+                  key: 'powerL2'
+                },
                 backgroundColor: ["Orange", "#DDDDDD"]
               },
               {
                 label: [ '@T["PowerL3"].Value (kW)', '' ],
-                data: [
-                  metadata.powerL3,
-                  max.power - metadata.powerL3
-                ],
+                data: doughnuts,
+                parsing: {
+                  key: 'powerL3'
+                },
                 backgroundColor: ["Cyan", "#DDDDDD"]
               },
             ],
@@ -348,28 +381,38 @@
         {
           type: "line",
           data: {
-            labels: metadata.lineLabels,
             datasets: [
               {
                 label: '@T["CurrentL1"].Value (kW)',
-                data: measurements.map(measurement =>
-                  measurement.data.currentL1),
+                data: measurements,
+                parsing: {
+                  xAxisKey: "timestamp",
+                  yAxisKey: "data.currentL1"
+                },
+                yAxisID: "current",
                 borderColor: "Green",
                 backgroundColor: "Green",
-                yAxisID: "current",
               },
               {
                 label: '@T["CurrentL2"].Value (kW)',
-                data: measurements.map(measurement =>
-                  measurement.data.currentL2),
+                data: measurements,
+                parsing: {
+                  xAxisKey: "timestamp",
+                  yAxisKey: "data.currentL2"
+                },
+                yAxisID: "current",
                 borderColor: "Orange",
                 backgroundColor: "Orange",
                 yAxisID: "current",
               },
               {
                 label: '@T["CurrentL3"].Value (kW)',
-                data: measurements.map(measurement =>
-                  measurement.data.currentL3),
+                data: measurements,
+                parsing: {
+                  xAxisKey: "timestamp",
+                  yAxisKey: "data.currentL3"
+                },
+                yAxisID: "current",
                 borderColor: "Cyan",
                 backgroundColor: "Cyan",
                 yAxisID: "current",
@@ -380,6 +423,16 @@
             maintainAspectRatio: false,
             plugins: {
               legend: false
+            },
+            scales: {
+              x: {
+                type: 'time',
+                adapters: {
+                  date: {
+                    locale: culture,
+                  },
+                },
+              },
             },
           },
         }),
@@ -392,26 +445,26 @@
             datasets: [
               {
                 label: [ '@T["CurrentL1"].Value (kW)', '' ],
-                data: [
-                  metadata.currentL1,
-                  max.current - metadata.currentL1
-                ],
+                data: doughnuts,
+                parsing: {
+                  key: 'currentL1'
+                },
                 backgroundColor: ["Green", "#DDDDDD"]
               },
               {
                 label: [ '@T["CurrentL2"].Value (kW)', '' ],
-                data: [
-                  metadata.currentL2,
-                  max.current - metadata.currentL2
-                ],
+                data: doughnuts,
+                parsing: {
+                  key: 'currentL2'
+                },
                 backgroundColor: ["Orange", "#DDDDDD"]
               },
               {
                 label: [ '@T["CurrentL3"].Value (kW)', '' ],
-                data: [
-                  metadata.currentL3,
-                  max.current - metadata.currentL3
-                ],
+                data: doughnuts,
+                parsing: {
+                  key: 'currentL3'
+                },
                 backgroundColor: ["Cyan", "#DDDDDD"]
               },
             ],
@@ -431,31 +484,39 @@
         {
           type: "line",
           data: {
-            labels: metadata.lineLabels,
             datasets: [
               {
                 label: '@T["VoltageL1"].Value (V)',
-                data: measurements.map(measurement =>
-                  measurement.data.voltageL1),
+                data: measurements,
+                parsing: {
+                  xAxisKey: "timestamp",
+                  yAxisKey: "data.voltageL1"
+                },
+                yAxisID: "voltage",
                 borderColor: "Green",
                 backgroundColor: "Green",
-                yAxisID: "voltage",
               },
               {
                 label: '@T["VoltageL2"].Value (V)',
-                data: measurements.map(measurement =>
-                  measurement.data.voltageL2),
+                data: measurements,
+                parsing: {
+                  xAxisKey: "timestamp",
+                  yAxisKey: "data.voltageL2"
+                },
+                yAxisID: "voltage",
                 borderColor: "Orange",
                 backgroundColor: "Orange",
-                yAxisID: "voltage",
               },
               {
                 label: '@T["VoltageL3"].Value (V)',
-                data: measurements.map(measurement =>
-                  measurement.data.voltageL3),
+                data: measurements,
+                parsing: {
+                  xAxisKey: "timestamp",
+                  yAxisKey: "data.voltageL3"
+                },
+                yAxisID: "voltage",
                 borderColor: "Cyan",
                 backgroundColor: "Cyan",
-                yAxisID: "voltage",
               },
             ],
           },
@@ -464,118 +525,52 @@
             plugins: {
               legend: true
             },
+            scales: {
+              x: {
+                type: 'time',
+                adapters: {
+                  date: {
+                    locale: culture,
+                  },
+                },
+              },
+            },
           },
         }),
-    };
-  };
+    })
 
-  const updateCharts = (measurements, max, culture, charts) => {
-    const metadata = createMeasurementMetadata(measurements, culture);
-
-    charts.cumulativeLines.data.labels.push(metadata.lineLabels);
-    charts.cumulativeLines.data.datasets[0].data
-      .push(measurements
-        .map(measurement => measurement.data.energy));
-    charts.cumulativeLines.data.datasets[1].data
-      .push(measurements
-        .map(measurement => measurement.data.power));
-
-    charts.cumulativeDoughnut.data.datasets[0].data = [
-      metadata.power,
-      max.power - metadata.power
-    ];
-
-    charts.powerLines.data.labels.push(metadata.lineLabels);
-    charts.powerLines.data.datasets[0].data
-      .push(measurements
-        .map(measurement => measurement.data.powerL1));
-    charts.powerLines.data.datasets[1].data
-      .push(measurements
-        .map(measurement => measurement.data.powerL2));
-    charts.powerLines.data.datasets[2].data
-      .push(measurements
-        .map(measurement => measurement.data.powerL3));
-
-    charts.powerDoughnut.data.datasets[0].data = [
-      metadata.powerL1,
-      max.power - metadata.powerL1
-    ];
-    charts.powerDoughnut.data.datasets[1].data = [
-      metadata.powerL2,
-      max.power - metadata.powerL2
-    ];
-    charts.powerDoughnut.data.datasets[2].data = [
-      metadata.powerL3,
-      max.power - metadata.powerL3
-    ];
-
-    charts.currentLines.data.labels.push(metadata.lineLabels);
-    charts.currentLines.data.datasets[0].data
-      .push(measurements
-        .map(measurement => measurement.data.currentL1));
-    charts.currentLines.data.datasets[1].data
-      .push(measurements
-        .map(measurement => measurement.data.currentL2));
-    charts.currentLines.data.datasets[2].data
-      .push(measurements
-        .map(measurement => measurement.data.currentL3));
-
-    charts.currentDoughnut.data.datasets[0].data = [
-      metadata.currentL1,
-      max.current - metadata.currentL1
-    ];
-    charts.currentDoughnut.data.datasets[1].data = [
-      metadata.currentL2,
-      max.current - metadata.currentL2
-    ];
-    charts.currentDoughnut.data.datasets[2].data = [
-      metadata.currentL3,
-      max.current - metadata.currentL3
-    ];
-
-    charts.voltageLines.data.labels.push(metadata.lineLabels);
-    charts.voltageLines.data.datasets[0].data
-      .push(measurements
-        .map(measurement => measurement.data.voltageL1));
-    charts.voltageLines.data.datasets[1].data
-      .push(measurements
-        .map(measurement => measurement.data.voltageL2));
-    charts.voltageLines.data.datasets[2].data
-      .push(measurements
-        .map(measurement => measurement.data.voltageL3));
-
+  const updateCharts = (measurements, doughnuts, max, culture, charts) => {
+    charts.measurements.push(...measurements);
     charts.cumulativeLines.update();
-    charts.cumulativeDoughnut.update();
     charts.powerLines.update();
-    charts.powerDoughnut.update();
     charts.currentLines.update();
-    charts.currentDoughnut.update();
     charts.voltageLines.update();
 
-    return charts;
-  }
+    Object
+      .keys(charts.doughnuts)
+      .forEach(key => charts.doughnuts[key] = doughnuts[key]);
+    charts.cumulativeDoughnut.update();
+    charts.powerDoughnut.update();
+    charts.currentDoughnut.update();
 
-  const createMeasurementMetadata = (measurements, culture) => {
-    const lastMeasurement = measurements[measurements.length - 1];
-    return {
-      lineLabels: measurements
-        .map(measurement => measurement.timestamp
-          .setLocale(culture)
-          .toLocaleString(luxon.DateTime.TIME_WITH_SECONDS)),
-      lastMeasurement,
-      energy: lastMeasurement.data.energy,
-      power: lastMeasurement.data.power,
-      powerL1: lastMeasurement.data.powerL1,
-      powerL2: lastMeasurement.data.powerL2,
-      powerL3: lastMeasurement.data.powerL3,
-      currentL1: lastMeasurement.data.currentL1,
-      currentL2: lastMeasurement.data.currentL2,
-      currentL3: lastMeasurement.data.currentL3,
-      voltageL1: lastMeasurement.data.voltageL1,
-      voltageL2: lastMeasurement.data.voltageL2,
-      voltageL3: lastMeasurement.data.voltageL3,
-    }
+    return charts;
   };
+
+  const createDoughnut = (value, max) => [value, max - value];
+  const createDoughnuts = (measurement, max, culture) =>
+    ({
+      energy: createDoughnut(measurement.data.energy, max.energy),
+      power: createDoughnut(measurement.data.power, max.power),
+      powerL1: createDoughnut(measurement.data.powerL1, max.power),
+      powerL2: createDoughnut(measurement.data.powerL2, max.power),
+      powerL3: createDoughnut(measurement.data.powerL3, max.power),
+      currentL1: createDoughnut(measurement.data.currentL1, max.current),
+      currentL2: createDoughnut(measurement.data.currentL2, max.current),
+      currentL3: createDoughnut(measurement.data.currentL3, max.current),
+      voltageL1: createDoughnut(measurement.data.voltageL1, max.voltage),
+      voltageL2: createDoughnut(measurement.data.voltageL2, max.voltage),
+      voltageL3: createDoughnut(measurement.data.voltageL3, max.voltage),
+    });
 
   const getMeasurements = async (model, period) =>
     period ?
@@ -593,17 +588,39 @@
         from: period.to,
         to: luxon.DateTime.now()
       }
-    : GraphQL.deserializePeriod(model.variables.period);
+    : {
+        from: GraphQL.deserializeDateTime(model.variables.period.to),
+        to: luxon.DateTime.now()
+      };
 
+  const last = (array) => array[array.length - 1];
   const createOrUpdateCharts = (measurements, max, culture, charts) =>
-    charts ? updateCharts(measurements, max, culture, charts)
-    : createCharts(measurements, max, culture);
+    charts ?
+      updateCharts(
+        measurements,
+        createDoughnuts(last(measurements), max, culture),
+        max,
+        culture,
+        charts)
+    : createCharts(
+        measurements,
+        createDoughnuts(last(measurements), max, culture),
+        max,
+        culture);
 
-  const update = async ({model, max, culture, charts, period}) => {
-    const measurements = await getMeasurements(model, period);
-    charts = createOrUpdateCharts(measurements, max, culture, charts);
-    period = updatePeriod(model, period);
-    return { period, charts };
+  const update = async ({model, max, culture, charts, period}) =>
+    ({
+      charts: createOrUpdateCharts(
+        await getMeasurements(model, period),
+        max,
+        culture,
+        charts),
+      period: updatePeriod(model, period)
+    });
+
+  const intervalNow = (callback, timeout) => {
+    callback();
+    setInterval(callback, timeout);
   }
 
   window.onload = () => {
@@ -621,17 +638,11 @@
 
     let period = null;
     let charts = null;
-    const callback = async () => {
+    intervalNow(async () => {
       const updated = await update({model, max, culture, charts, period});
       period = updated.period;
       charts = updated.charts;
-    }
-
-    callback();
-    const interval = setInterval(callback, 10000);
-    window.onunload = () => {
-      clearInterval(interval);
-    };
+    }, 10000);
   }
 </script>
 <script asp-name="ozdstheme-luxon" at="Head"></script>

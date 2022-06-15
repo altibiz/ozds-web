@@ -22,6 +22,10 @@
  *   deserializePeriod
  * @property {typeof serializePeriod}
  *   serializePeriod
+ * @property {typeof deserializeDateTime}
+ *   deserializeDateTime
+ * @property {typeof serializeDateTime}
+ *   serializeDateTime
  */
 
 /**
@@ -179,9 +183,9 @@ const normalizeMultiDashboardMeasurements = (multi) => ({
   measurements: multi.measurements
     .map((measurement) => ({
       ...measurement,
-      timestamp: new luxon.DateTime(measurement.timestamp),
+      timestamp: deserializeDateTime(measurement.timestamp),
     }))
-    .sort((a, b) => a.timestamp - b.timestamp),
+    .sort((a, b) => compareDateTime(a.timestamp, b.timestamp)),
 });
 
 /**
@@ -192,17 +196,17 @@ const normalizeDashboardMeasurements = (measurements) =>
   measurements
     .map((measurement) => ({
       ...measurement,
-      timestamp: new luxon.DateTime(measurement.timestamp),
+      timestamp: deserializeDateTime(measurement.timestamp),
     }))
-    .sort((a, b) => a.timestamp - b.timestamp);
+    .sort((a, b) => compareDateTime(a.timestamp, b.timestamp));
 
 /**
  * @param {SerializedPeriod} period
  * @returns {Period}
  */
 const deserializePeriod = (period) => ({
-  from: new luxon.DateTime(period.from),
-  to: new luxon.DateTime(period.to),
+  from: deserializeDateTime(period.from),
+  to: deserializeDateTime(period.to),
 });
 
 /**
@@ -210,9 +214,22 @@ const deserializePeriod = (period) => ({
  * @returns {SerializedPeriod}
  */
 const serializePeriod = (period) => ({
-  from: period.from.toISO(),
-  to: period.to.toISO(),
+  from: serializeDateTime(period.from),
+  to: serializeDateTime(period.to),
 });
+
+/**
+ * @param {string} dateTime
+ * @returns {DateTime}
+ */
+const deserializeDateTime = (dateTime) =>
+  luxon.DateTime.fromISO(dateTime, { zone: "utc" });
+
+/**
+ * @param {DateTime} dateTime
+ * @returns {string}
+ */
+const serializeDateTime = (dateTime) => dateTime.toISO();
 
 /**
  * @typedef {Object} DashboardMeasurementData
@@ -285,6 +302,9 @@ const query = async (body) => {
   }
 };
 
+// NOTE: https://stackoverflow.com/a/64855525/4348107
+const compareDateTime = (a, b) => a.toMillis() - b.toMillis();
+
 window.GraphQL = {
   getDashboardMeasurements,
   getDashboardMeasurementsByOwner,
@@ -293,6 +313,8 @@ window.GraphQL = {
   normalizeMultiDashboardMeasurements,
   deserializePeriod,
   serializePeriod,
+  deserializeDateTime,
+  serializeDateTime,
 };
 
 // NOTE: just for intellisense

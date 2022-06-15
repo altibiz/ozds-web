@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch;
@@ -60,6 +61,7 @@ public sealed partial class FakeDashboardMeasurementProvider :
         period)
       .ToMultiDashboardMeasurements();
 
+  // TODO: better faking for energy
   private IEnumerable<DashboardMeasurement>
   GenerateDashboardMeasurements(
       string deviceId,
@@ -72,15 +74,25 @@ public sealed partial class FakeDashboardMeasurementProvider :
           To = DateTime.UtcNow
         })
       .To(period => period
-        .SplitAscending(100)
+        .SplitAscending(Objects
+          .Max(TimeSpan
+            .FromSeconds(FakeMeasurementProvider
+              .MeasurementIntervalInSeconds),
+            period.Span / 400))
         .Select((period, index) =>
           {
+            index = DeviceCurrentEnergyIndex
+              .AddOrUpdate(
+                deviceId,
+                _ => index,
+                (_, index) => index + 1);
             var energy = Random.Shared.NextDecimal(
                 new MinMax
                 {
                   Min = s_energyMinMaxStart.Min + 5 * index,
-                  Max = s_energyMinMaxStart.Max + 5 * index
+                  Max = s_energyMinMaxStart.Max + 5 * index,
                 });
+
             return
               new DashboardMeasurement
               {
@@ -88,7 +100,7 @@ public sealed partial class FakeDashboardMeasurementProvider :
                   Device.MakeId(
                     FakeMeasurementProvider.FakeSource,
                     deviceId),
-                Timestamp = period.From,
+                Timestamp = period.HalfPoint,
                 Data =
                   new DashboardMeasurementData
                   {
@@ -108,6 +120,9 @@ public sealed partial class FakeDashboardMeasurementProvider :
                   },
               };
           }));
+
+  private static ConcurrentDictionary<string, int> DeviceCurrentEnergyIndex =
+    new ConcurrentDictionary<string, int>();
 
   private static readonly MinMax s_energyMinMaxStart = new(15995, 16000);
   private static readonly MinMax s_powerMinMax = new(10, 20);

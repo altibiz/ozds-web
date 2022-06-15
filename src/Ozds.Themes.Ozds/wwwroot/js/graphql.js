@@ -41,6 +41,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  *   deserializePeriod
  * @property {typeof serializePeriod}
  *   serializePeriod
+ * @property {typeof deserializeDateTime}
+ *   deserializeDateTime
+ * @property {typeof serializeDateTime}
+ *   serializeDateTime
  */
 
 /**
@@ -195,10 +199,10 @@ var normalizeMultiDashboardMeasurements = function normalizeMultiDashboardMeasur
   return _objectSpread(_objectSpread({}, multi), {}, {
     measurements: multi.measurements.map(function (measurement) {
       return _objectSpread(_objectSpread({}, measurement), {}, {
-        timestamp: new luxon.DateTime(measurement.timestamp)
+        timestamp: deserializeDateTime(measurement.timestamp)
       });
     }).sort(function (a, b) {
-      return a.timestamp - b.timestamp;
+      return compareDateTime(a.timestamp, b.timestamp);
     })
   });
 };
@@ -211,10 +215,10 @@ var normalizeMultiDashboardMeasurements = function normalizeMultiDashboardMeasur
 var normalizeDashboardMeasurements = function normalizeDashboardMeasurements(measurements) {
   return measurements.map(function (measurement) {
     return _objectSpread(_objectSpread({}, measurement), {}, {
-      timestamp: new luxon.DateTime(measurement.timestamp)
+      timestamp: deserializeDateTime(measurement.timestamp)
     });
   }).sort(function (a, b) {
-    return a.timestamp - b.timestamp;
+    return compareDateTime(a.timestamp, b.timestamp);
   });
 };
 /**
@@ -225,8 +229,8 @@ var normalizeDashboardMeasurements = function normalizeDashboardMeasurements(mea
 
 var deserializePeriod = function deserializePeriod(period) {
   return {
-    from: new luxon.DateTime(period.from),
-    to: new luxon.DateTime(period.to)
+    from: deserializeDateTime(period.from),
+    to: deserializeDateTime(period.to)
   };
 };
 /**
@@ -237,9 +241,29 @@ var deserializePeriod = function deserializePeriod(period) {
 
 var serializePeriod = function serializePeriod(period) {
   return {
-    from: period.from.toISO(),
-    to: period.to.toISO()
+    from: serializeDateTime(period.from),
+    to: serializeDateTime(period.to)
   };
+};
+/**
+ * @param {string} dateTime
+ * @returns {DateTime}
+ */
+
+
+var deserializeDateTime = function deserializeDateTime(dateTime) {
+  return luxon.DateTime.fromISO(dateTime, {
+    zone: "utc"
+  });
+};
+/**
+ * @param {DateTime} dateTime
+ * @returns {string}
+ */
+
+
+var serializeDateTime = function serializeDateTime(dateTime) {
+  return dateTime.toISO();
 };
 /**
  * @typedef {Object} DashboardMeasurementData
@@ -338,7 +362,12 @@ var query = /*#__PURE__*/function () {
   return function query(_x7) {
     return _ref4.apply(this, arguments);
   };
-}();
+}(); // NOTE: https://stackoverflow.com/a/64855525/4348107
+
+
+var compareDateTime = function compareDateTime(a, b) {
+  return a.toMillis() - b.toMillis();
+};
 
 window.GraphQL = {
   getDashboardMeasurements: getDashboardMeasurements,
@@ -347,7 +376,9 @@ window.GraphQL = {
   normalizeDashboardMeasurements: normalizeDashboardMeasurements,
   normalizeMultiDashboardMeasurements: normalizeMultiDashboardMeasurements,
   deserializePeriod: deserializePeriod,
-  serializePeriod: serializePeriod
+  serializePeriod: serializePeriod,
+  deserializeDateTime: deserializeDateTime,
+  serializeDateTime: serializeDateTime
 }; // NOTE: just for intellisense
 
 var gql = function gql(strings) {

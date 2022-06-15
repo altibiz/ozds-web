@@ -67,7 +67,21 @@ namespace Ozds.Themes.Ozds
 
       _manifest
         .DefineScript("ozdstheme-chart")
-        .SetDependencies("chartjs");
+        .SetDependencies(
+          "chartjs",
+          "chartjs-adapter-luxon",
+          "luxon");
+
+      _manifest
+        .DefineScript("chartjs-adapter-luxon")
+        .SetCdn(
+          "https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0/dist/chartjs-adapter-luxon.min.js",
+          "https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0/dist/chartjs-adapter-luxon.js")
+        .SetCdnIntegrity(
+          // TODO: find a way to ignore this codespell warning
+          "sha256-tOhXNe/Ue+TjR33s/CryFYOGMwNfkTjTuvM4LEOAHzc=",
+          "sha256-q2NAytoP6eS3ONNWvLhccUNJ2kTlP++ZAhU89aIKt2Y=")
+        .SetVersion("1.1.0");
 
       _manifest
         .DefineScript("chartjs")

@@ -20,10 +20,9 @@ public static partial class Dictionaries
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static TOut GetOrDefault<TIn, TOut>(
+  public static TOut? GetOrDefaultValue<TIn, TOut>(
       this IDictionary<TIn, TOut> @this,
-      TIn key,
-      TOut @default)
+      TIn key) where TOut : struct
   {
     try
     {
@@ -31,55 +30,7 @@ public static partial class Dictionaries
     }
     catch (KeyNotFoundException)
     {
-      return @default;
-    }
-  }
-
-  [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static TOut GetOrDefault<TIn, TOut>(
-      this IDictionary<TIn, TOut> @this,
-      TIn key,
-      Func<TOut> @default)
-  {
-    try
-    {
-      return @this[key];
-    }
-    catch (KeyNotFoundException)
-    {
-      return @default();
-    }
-  }
-
-  [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<TOut> GetOrDefault<TIn, TOut>(
-      this IDictionary<TIn, TOut> @this,
-      TIn key,
-      Func<Task<TOut>> @default)
-  {
-    try
-    {
-      return @this[key];
-    }
-    catch (KeyNotFoundException)
-    {
-      return await @default();
-    }
-  }
-
-  [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<TOut> GetOrDefault<TIn, TOut>(
-      this IDictionary<TIn, TOut> @this,
-      TIn key,
-      Func<ValueTask<TOut>> @default)
-  {
-    try
-    {
-      return @this[key];
-    }
-    catch (KeyNotFoundException)
-    {
-      return await @default();
+      return default;
     }
   }
 }
