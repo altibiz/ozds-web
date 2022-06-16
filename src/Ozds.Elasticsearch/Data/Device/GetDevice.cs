@@ -12,8 +12,8 @@ public partial interface IElasticsearchClient
 public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public GetResponse<Device> GetDevice(Id id) =>
-    Elasticsearch.Get<Device>(id, s => s.Index(DeviceIndexName));
+    Elastic.Get<Device>(id, s => s.Index(DeviceIndexName));
 
   public Task<GetResponse<Device>> GetDeviceAsync(Id id) =>
-    Elasticsearch.GetAsync<Device>(id, s => s.Index(DeviceIndexName));
+    Elastic.GetAsync<Device>(id, s => s.Index(DeviceIndexName));
 }

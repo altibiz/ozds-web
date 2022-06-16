@@ -33,7 +33,7 @@
             @decimal.Round(Model.Result.Last().Data.Power, 2)
           </span>
           <span>
-            / @Dashboard.MaxPower
+            / @IDashboardMeasurementProvider.MaxPower
           </span>
         </div>
         <div>
@@ -76,7 +76,7 @@
             @decimal.Round(Model.Result.Last().Data.PowerL1, 2)
           </span>
           <span>
-            / @Dashboard.MaxPower
+            / @IDashboardMeasurementProvider.MaxPower
           </span>
         </div>
         <div>
@@ -87,7 +87,7 @@
             @decimal.Round(Model.Result.Last().Data.PowerL2, 2)
           </span>
           <span>
-            / @Dashboard.MaxPower
+            / @IDashboardMeasurementProvider.MaxPower
           </span>
         </div>
         <div>
@@ -98,7 +98,7 @@
             @decimal.Round(Model.Result.Last().Data.PowerL3, 2)
           </span>
           <span>
-            / @Dashboard.MaxPower
+            / @IDashboardMeasurementProvider.MaxPower
           </span>
         </div>
       </div>
@@ -133,7 +133,7 @@
             @decimal.Round(Model.Result.Last().Data.CurrentL1, 2)
           </span>
           <span>
-            / @Dashboard.MaxCurrent
+            / @IDashboardMeasurementProvider.MaxCurrent
           </span>
         </div>
         <div>
@@ -144,7 +144,7 @@
             @decimal.Round(Model.Result.Last().Data.CurrentL2, 2)
           </span>
           <span>
-            / @Dashboard.MaxCurrent
+            / @IDashboardMeasurementProvider.MaxCurrent
           </span>
         </div>
         <div>
@@ -155,7 +155,7 @@
             @decimal.Round(Model.Result.Last().Data.CurrentL3, 2)
           </span>
           <span>
-            / @Dashboard.MaxCurrent
+            / @IDashboardMeasurementProvider.MaxCurrent
           </span>
         </div>
       </div>
@@ -257,10 +257,7 @@
             datasets: [
               {
                 label: [ '@T["Current Power"].Value (kW)', '' ],
-                data: doughnuts,
-                parsing: {
-                  key: 'power'
-                },
+                data: doughnuts.power,
                 backgroundColor: ["Red", "#DDDDDD"]
               },
             ],
@@ -342,26 +339,17 @@
             datasets: [
               {
                 label: [ '@T["PowerL1"].Value (kW)', '' ],
-                data: doughnuts,
-                parsing: {
-                  key: 'powerL1'
-                },
+                data: doughnuts.powerL1,
                 backgroundColor: ["Green", "#DDDDDD"]
               },
               {
                 label: [ '@T["PowerL2"].Value (kW)', '' ],
-                data: doughnuts,
-                parsing: {
-                  key: 'powerL2'
-                },
+                data: doughnuts.powerL2,
                 backgroundColor: ["Orange", "#DDDDDD"]
               },
               {
                 label: [ '@T["PowerL3"].Value (kW)', '' ],
-                data: doughnuts,
-                parsing: {
-                  key: 'powerL3'
-                },
+                data: doughnuts.powerL3,
                 backgroundColor: ["Cyan", "#DDDDDD"]
               },
             ],
@@ -445,26 +433,17 @@
             datasets: [
               {
                 label: [ '@T["CurrentL1"].Value (kW)', '' ],
-                data: doughnuts,
-                parsing: {
-                  key: 'currentL1'
-                },
+                data: doughnuts.currentL1,
                 backgroundColor: ["Green", "#DDDDDD"]
               },
               {
                 label: [ '@T["CurrentL2"].Value (kW)', '' ],
-                data: doughnuts,
-                parsing: {
-                  key: 'currentL2'
-                },
+                data: doughnuts.currentL2,
                 backgroundColor: ["Orange", "#DDDDDD"]
               },
               {
                 label: [ '@T["CurrentL3"].Value (kW)', '' ],
-                data: doughnuts,
-                parsing: {
-                  key: 'currentL3'
-                },
+                data: doughnuts.currentL3,
                 backgroundColor: ["Cyan", "#DDDDDD"]
               },
             ],
@@ -539,6 +518,12 @@
         }),
     })
 
+  const createDoughnut = (value, max) => [value, max - value];
+  const updateDoughnut = (doughnut, value) => {
+    doughnut[0] = value[0];
+    doughnut[1] = value[1];
+  }
+
   const updateCharts = (measurements, doughnuts, max, culture, charts) => {
     charts.measurements.push(...measurements);
     charts.cumulativeLines.update();
@@ -548,7 +533,9 @@
 
     Object
       .keys(charts.doughnuts)
-      .forEach(key => charts.doughnuts[key] = doughnuts[key]);
+      .forEach(key => updateDoughnut(
+        charts.doughnuts[key],
+        doughnuts[key]));
     charts.cumulativeDoughnut.update();
     charts.powerDoughnut.update();
     charts.currentDoughnut.update();
@@ -556,7 +543,6 @@
     return charts;
   };
 
-  const createDoughnut = (value, max) => [value, max - value];
   const createDoughnuts = (measurement, max, culture) =>
     ({
       energy: createDoughnut(measurement.data.energy, max.energy),
@@ -575,7 +561,7 @@
   const getMeasurements = async (model, period) =>
     period ?
       await GraphQL
-        .getDashboardMeasurements(
+        .getDashboardMeasurementsByDevice(
           model.variables.deviceId,
           period)
     : GraphQL
@@ -628,9 +614,9 @@
     const model = JSON.parse(modelString);
 
     const maxString = `{
-      "power": @Dashboard.MaxPower,
-      "current": @Dashboard.MaxCurrent,
-      "voltage": @Dashboard.MaxVoltage
+      "power": @IDashboardMeasurementProvider.MaxPower,
+      "current": @IDashboardMeasurementProvider.MaxCurrent,
+      "voltage": @IDashboardMeasurementProvider.MaxVoltage
     }`;
     const max = JSON.parse(maxString);
 
@@ -642,6 +628,7 @@
       const updated = await update({model, max, culture, charts, period});
       period = updated.period;
       charts = updated.charts;
+      // TODO: tune this
     }, 10000);
   }
 </script>

@@ -18,7 +18,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   public Task<UpdateResponse<Device>> UpdateDeviceLastValidationAsync(
       Id deviceId,
       DateTime lastValidation) =>
-    Elasticsearch.UpdateAsync<Device, DeviceLastValidationUpdatePartial>(
+    Elastic.UpdateAsync<Device, DeviceLastValidationUpdatePartial>(
         deviceId,
         d => d
           .Doc(new DeviceLastValidationUpdatePartial(lastValidation))
@@ -27,7 +27,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   public UpdateResponse<Device> UpdateDeviceLastValidation(
       Id deviceId,
       DateTime lastValidation) =>
-    Elasticsearch.Update<Device, DeviceLastValidationUpdatePartial>(
+    Elastic.Update<Device, DeviceLastValidationUpdatePartial>(
         deviceId,
         d => d
           .Doc(new DeviceLastValidationUpdatePartial(lastValidation))

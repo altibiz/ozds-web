@@ -150,9 +150,6 @@ public class Startup : OrchardCore.Modules.StartupBase
       .AddGraphQLServer()
       .AddAuthorization()
       .AddQueryType<Query>()
-      .AddType<MultiDashboardMeasurementsType>()
-      .AddType<MultiDashboardMeasurementDataType>()
-      .AddType<DeviceDashboardMeasurementDataType>()
       .AddType<DashboardMeasurementType>()
       .AddType<DashboardMeasurementDataType>()
       .AddType<PeriodType>();

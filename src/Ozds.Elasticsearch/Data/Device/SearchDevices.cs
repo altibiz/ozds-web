@@ -29,9 +29,9 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   SearchDevices(
       bool all = false) =>
     all
-    ? this.Elasticsearch.Search<Device>(s => s
+    ? this.Elastic.Search<Device>(s => s
         .Index(DeviceIndexName))
-    : this.Elasticsearch.Search<Device>(s => s
+    : this.Elastic.Search<Device>(s => s
         .Query(q => q
           .Term(t => t.StateData.State, DeviceState.Active))
         .Index(DeviceIndexName));
@@ -40,9 +40,9 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   SearchDevicesAsync(
       bool all = false) =>
     all
-    ? this.Elasticsearch.SearchAsync<Device>(s => s
+    ? this.Elastic.SearchAsync<Device>(s => s
         .Index(DeviceIndexName))
-    : this.Elasticsearch.SearchAsync<Device>(s => s
+    : this.Elastic.SearchAsync<Device>(s => s
         .Query(q => q
           .Term(t => t.StateData.State, DeviceState.Active))
         .Index(DeviceIndexName));
@@ -52,11 +52,11 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string source,
       bool all = false) =>
     all
-    ? this.Elasticsearch.Search<Device>(s => s
+    ? this.Elastic.Search<Device>(s => s
         .Query(q => q
           .Term(t => t.Source.Suffix("keyword"), source))
         .Index(DeviceIndexName))
-    : this.Elasticsearch.Search<Device>(s => s
+    : this.Elastic.Search<Device>(s => s
         .Query(q => q
           .Term(t => t.Source.Suffix("keyword"), source) && q
           .Term(t => t.StateData.State, DeviceState.Active))
@@ -67,11 +67,11 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string source,
       bool all = false) =>
     all
-    ? this.Elasticsearch.SearchAsync<Device>(s => s
+    ? this.Elastic.SearchAsync<Device>(s => s
         .Query(q => q
           .Term(t => t.Source.Suffix("keyword"), source))
         .Index(DeviceIndexName))
-    : this.Elasticsearch.SearchAsync<Device>(s => s
+    : this.Elastic.SearchAsync<Device>(s => s
         .Query(q => q
           .Term(t => t.Source.Suffix("keyword"), source) && q
           .Term(t => t.StateData.State, DeviceState.Active))

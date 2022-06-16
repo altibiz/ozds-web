@@ -14,7 +14,7 @@ public partial interface IElasticsearchClient
 public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<BulkResponse> IndexDevicesAsync(IEnumerable<Device> devices) =>
-    Elasticsearch
+    Elastic
       .BulkAsync(s => s
         .IndexMany(devices)
         .Index(DeviceIndexName))
@@ -29,7 +29,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             }))));
 
   public BulkResponse IndexDevices(IEnumerable<Device> devices) =>
-    Elasticsearch
+    Elastic
       .Bulk(s => s
         .IndexMany(devices)
         .Index(DeviceIndexName))

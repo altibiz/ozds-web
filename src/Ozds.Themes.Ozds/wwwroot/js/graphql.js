@@ -17,42 +17,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-// TODO: move to Ozds.Modules.Ozds or something and use TypeScript
+// TODO: move to Ozds.Modules.Ozds or something and use TypeScript?
 // TODO: better error management
 // NOTE: requires luxon
-
-/**
- * @typedef {Window & GraphQL} GraphQLWindow
- */
-
-/**
- * @typedef {Object} GraphQL
- * @property {typeof getDashboardMeasurements}
- *   getDashboardMeasurements
- * @property {typeof getDashboardMeasurementsByOwner}
- *   getDashboardMeasurementsByOwner
- * @property {typeof getDashboardMeasurementsByOwnerUser}
- *   getDashboardMeasurementsByOwnerUser
- * @property {typeof normalizeDashboardMeasurements}
- *   normalizeDashboardMeasurements
- * @property {typeof normalizeMultiDashboardMeasurements}
- *   normalizeMultiDashboardMeasurements
- * @property {typeof deserializePeriod}
- *   deserializePeriod
- * @property {typeof serializePeriod}
- *   serializePeriod
- * @property {typeof deserializeDateTime}
- *   deserializeDateTime
- * @property {typeof serializeDateTime}
- *   serializeDateTime
- */
-
-/**
- * @param {string} deviceId
- * @param {Period} period
- * @returns {Promise<DashboardMeasurement[]>}
- */
-var getDashboardMeasurements = /*#__PURE__*/function () {
+var getDashboardMeasurementsByDevice = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(deviceId, period) {
     var response;
     return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -61,7 +29,7 @@ var getDashboardMeasurements = /*#__PURE__*/function () {
           case 0:
             _context.next = 2;
             return query({
-              query: gql(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      query ($deviceId: String!, $period: PeriodInput) {\n        dashboardMeasurements(deviceId: $deviceId, period: $period) {\n          timestamp\n          deviceId\n          data {\n            energy\n            highCostEnergy\n            lowCostEnergy\n            power\n            powerL1\n            powerL2\n            powerL3\n            currentL1\n            currentL2\n            currentL3\n            voltageL1\n            voltageL2\n            voltageL3\n          }\n        }\n      }\n    "]))),
+              query: gql(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      query ($deviceId: String!, $period: PeriodInput) {\n        dashboardMeasurementsByDevice(deviceId: $deviceId, period: $period) {\n          timestamp\n          deviceId\n          data {\n            energy\n            highCostEnergy\n            lowCostEnergy\n            power\n            powerL1\n            powerL2\n            powerL3\n            currentL1\n            currentL2\n            currentL3\n            voltageL1\n            voltageL2\n            voltageL3\n          }\n        }\n      }\n    "]))),
               variables: {
                 deviceId: deviceId,
                 period: serializePeriod(period)
@@ -76,10 +44,10 @@ var getDashboardMeasurements = /*#__PURE__*/function () {
               break;
             }
 
-            throw new Error("Failed fetching");
+            throw new Error("Failed fetching ");
 
           case 5:
-            return _context.abrupt("return", normalizeDashboardMeasurements(response.data.dashboardMeasurements));
+            return _context.abrupt("return", normalizeDashboardMeasurements(response.data.dashboardMeasurementsByDevice));
 
           case 6:
           case "end":
@@ -89,16 +57,10 @@ var getDashboardMeasurements = /*#__PURE__*/function () {
     }, _callee);
   }));
 
-  return function getDashboardMeasurements(_x, _x2) {
+  return function getDashboardMeasurementsByDevice(_x, _x2) {
     return _ref.apply(this, arguments);
   };
 }();
-/**
- * @param {string} ownerId
- * @param {Period} period
- * @returns {Promise<MultiDashboardMeasurements>}
- */
-
 
 var getDashboardMeasurementsByOwner = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ownerId, period) {
@@ -109,7 +71,7 @@ var getDashboardMeasurementsByOwner = /*#__PURE__*/function () {
           case 0:
             _context2.next = 2;
             return query({
-              query: gql(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n      query ($ownerId: String!, $period: PeriodInput) {\n        dashboardMeasurementsByOwner(ownerId: $ownerId, period: $period) {\n          deviceIds\n          measurements {\n            timestamp\n            data {\n              deviceId\n              data {\n                energy\n                highCostEnergy\n                lowCostEnergy\n                power\n                powerL1\n                powerL2\n                powerL3\n                currentL1\n                currentL2\n                currentL3\n                voltageL1\n                voltageL2\n                voltageL3\n              }\n            }\n          }\n        }\n      }\n    "]))),
+              query: gql(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n      query ($ownerId: String!, $period: PeriodInput) {\n        dashboardMeasurementsByOwner(ownerId: $ownerId, period: $period) {\n          timestamp\n          deviceId\n          data {\n            energy\n            highCostEnergy\n            lowCostEnergy\n            power\n            powerL1\n            powerL2\n            powerL3\n            currentL1\n            currentL2\n            currentL3\n            voltageL1\n            voltageL2\n            voltageL3\n          }\n        }\n      }\n    "]))),
               variables: {
                 ownerId: ownerId,
                 period: serializePeriod(period)
@@ -141,12 +103,6 @@ var getDashboardMeasurementsByOwner = /*#__PURE__*/function () {
     return _ref2.apply(this, arguments);
   };
 }();
-/**
- * @param {string} ownerUserId
- * @param {Period} period
- * @returns {Promise<MultiDashboardMeasurements>}
- */
-
 
 var getDashboardMeasurementsByOwnerUser = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(ownerUserId, period) {
@@ -157,7 +113,7 @@ var getDashboardMeasurementsByOwnerUser = /*#__PURE__*/function () {
           case 0:
             _context3.next = 2;
             return query({
-              query: gql(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n      query ($ownerUserId: String!, $period: PeriodInput) {\n        dashboardMeasurementsByOnwerUser(\n          ownerUserId: $ownerUserId\n          period: $period\n        ) {\n          deviceIds\n          measurements {\n            timestamp\n            data {\n              deviceId\n              data {\n                energy\n                highCostEnergy\n                lowCostEnergy\n                power\n                powerL1\n                powerL2\n                powerL3\n                currentL1\n                currentL2\n                currentL3\n                voltageL1\n                voltageL2\n                voltageL3\n              }\n            }\n          }\n        }\n      }\n    "]))),
+              query: gql(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n      query ($ownerUserId: String!, $period: PeriodInput) {\n        dashboardMeasurementsByOwnerUser(\n          ownerUserId: $ownerUserId\n          period: $period\n        ) {\n          timestamp\n          deviceId\n          data {\n            energy\n            highCostEnergy\n            lowCostEnergy\n            power\n            powerL1\n            powerL2\n            powerL3\n            currentL1\n            currentL2\n            currentL3\n            voltageL1\n            voltageL2\n            voltageL3\n          }\n        }\n      }\n    "]))),
               variables: {
                 ownerUserId: ownerUserId,
                 period: serializePeriod(period)
@@ -175,7 +131,7 @@ var getDashboardMeasurementsByOwnerUser = /*#__PURE__*/function () {
             throw new Error("Failed fetching");
 
           case 5:
-            return _context3.abrupt("return", normalizeMultiDashboardMeasurements(response.data.dashboardMeasurementsByOnwerUser));
+            return _context3.abrupt("return", normalizeMultiDashboardMeasurements(response.data.dashboardMeasurementsByOwnerUser));
 
           case 6:
           case "end":
@@ -189,28 +145,6 @@ var getDashboardMeasurementsByOwnerUser = /*#__PURE__*/function () {
     return _ref3.apply(this, arguments);
   };
 }();
-/**
- * @param {any} multi
- * @returns {MultiDashboardMeasurements}
- */
-
-
-var normalizeMultiDashboardMeasurements = function normalizeMultiDashboardMeasurements(multi) {
-  return _objectSpread(_objectSpread({}, multi), {}, {
-    measurements: multi.measurements.map(function (measurement) {
-      return _objectSpread(_objectSpread({}, measurement), {}, {
-        timestamp: deserializeDateTime(measurement.timestamp)
-      });
-    }).sort(function (a, b) {
-      return compareDateTime(a.timestamp, b.timestamp);
-    })
-  });
-};
-/**
- * @param {any} measurements
- * @returns {DashboardMeasurement[]}
- */
-
 
 var normalizeDashboardMeasurements = function normalizeDashboardMeasurements(measurements) {
   return measurements.map(function (measurement) {
@@ -221,11 +155,27 @@ var normalizeDashboardMeasurements = function normalizeDashboardMeasurements(mea
     return compareDateTime(a.timestamp, b.timestamp);
   });
 };
-/**
- * @param {SerializedPeriod} period
- * @returns {Period}
- */
 
+var normalizeMultiDashboardMeasurements = function normalizeMultiDashboardMeasurements(measurements) {
+  measurements = measurements.reduce(function (current, next) {
+    next = _objectSpread(_objectSpread({}, next), {}, {
+      timestamp: deserializeDateTime(next.timestamp)
+    });
+
+    if (!current[next.deviceId]) {
+      current[next.deviceId] = [];
+    }
+
+    current[next.deviceId].push(next);
+    return current;
+  }, {});
+  Object.values(measurements).forEach(function (deviceMeasurements) {
+    return deviceMeasurements.sort(function (a, b) {
+      return compareDateTime(a.timestamp, b.timestamp);
+    });
+  });
+  return measurements;
+};
 
 var deserializePeriod = function deserializePeriod(period) {
   return {
@@ -233,11 +183,6 @@ var deserializePeriod = function deserializePeriod(period) {
     to: deserializeDateTime(period.to)
   };
 };
-/**
- * @param {Period} period
- * @returns {SerializedPeriod}
- */
-
 
 var serializePeriod = function serializePeriod(period) {
   return {
@@ -245,80 +190,16 @@ var serializePeriod = function serializePeriod(period) {
     to: serializeDateTime(period.to)
   };
 };
-/**
- * @param {string} dateTime
- * @returns {DateTime}
- */
-
 
 var deserializeDateTime = function deserializeDateTime(dateTime) {
   return luxon.DateTime.fromISO(dateTime, {
     zone: "utc"
   });
 };
-/**
- * @param {DateTime} dateTime
- * @returns {string}
- */
-
 
 var serializeDateTime = function serializeDateTime(dateTime) {
   return dateTime.toISO();
 };
-/**
- * @typedef {Object} DashboardMeasurementData
- * @property {number} energy
- * @property {number} highCostEnergy
- * @property {number} lowCostEnergy
- * @property {number} power
- * @property {number} powerL1
- * @property {number} powerL2
- * @property {number} powerL3
- * @property {number} currentL1
- * @property {number} currentL2
- * @property {number} currentL3
- * @property {number} voltageL1
- * @property {number} voltageL2
- * @property {number} voltageL3
- */
-
-/**
- * @typedef {Object} DashboardMeasurement
- * @property {luxon.DateTime} timestamp
- * @property {string} deviceId
- * @property {DashboardMeasurementData} data
- */
-
-/**
- * @typedef {Object} DeviceDashboardMeasurementData
- * @property {string} deviceId
- * @property {DashboardMeasurementData} data
- */
-
-/**
- * @typedef {Object} MultiDashboardMeasurementData
- * @property {luxon.DateTime} timestamp
- * @property {DeviceDashboardMeasurementData[]} data
- */
-
-/**
- * @typedef {Object} MultiDashboardMeasurements
- * @property {string[]} deviceIds
- * @property {MultiDashboardMeasurementData[]} data
- */
-
-/**
- * @typedef {Object} Period
- * @property {luxon.DateTime} from
- * @property {luxon.DateTime} to
- */
-
-/**
- * @typedef {Object} SerializedPeriod
- * @property {string} from
- * @property {string} to
- */
-
 
 var query = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(body) {
@@ -367,10 +248,15 @@ var query = /*#__PURE__*/function () {
 
 var compareDateTime = function compareDateTime(a, b) {
   return a.toMillis() - b.toMillis();
+}; // NOTE: just for intellisense
+
+
+var gql = function gql(strings) {
+  return strings[0];
 };
 
 window.GraphQL = {
-  getDashboardMeasurements: getDashboardMeasurements,
+  getDashboardMeasurementsByDevice: getDashboardMeasurementsByDevice,
   getDashboardMeasurementsByOwner: getDashboardMeasurementsByOwner,
   getDashboardMeasurementsByOwnerUser: getDashboardMeasurementsByOwnerUser,
   normalizeDashboardMeasurements: normalizeDashboardMeasurements,
@@ -379,8 +265,4 @@ window.GraphQL = {
   serializePeriod: serializePeriod,
   deserializeDateTime: deserializeDateTime,
   serializeDateTime: serializeDateTime
-}; // NOTE: just for intellisense
-
-var gql = function gql(strings) {
-  return strings[0];
 };

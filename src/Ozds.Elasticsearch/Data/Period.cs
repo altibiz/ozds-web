@@ -1,4 +1,5 @@
 using Nest;
+using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch;
 

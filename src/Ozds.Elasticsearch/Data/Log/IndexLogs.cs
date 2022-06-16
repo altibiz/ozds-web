@@ -21,28 +21,28 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<BulkResponse> IndexLoadLogsAsync(
       IEnumerable<LoadLog> logs) =>
-    Elasticsearch
+    Elastic
       .BulkAsync(s => s
         .IndexMany(logs)
         .Index(LogIndexName));
 
   public BulkResponse IndexLoadLogs(
       IEnumerable<LoadLog> logs) =>
-    Elasticsearch
+    Elastic
       .Bulk(s => s
         .IndexMany(logs)
         .Index(LogIndexName));
 
   public Task<BulkResponse> IndexMissingDataLogsAsync(
       IEnumerable<MissingDataLog> logs) =>
-    Elasticsearch
+    Elastic
       .BulkAsync(s => s
         .IndexMany(logs)
         .Index(LogIndexName));
 
   public BulkResponse IndexMissingDataLogs(
       IEnumerable<MissingDataLog> logs) =>
-    Elasticsearch
+    Elastic
       .Bulk(s => s
         .IndexMany(logs)
         .Index(LogIndexName));

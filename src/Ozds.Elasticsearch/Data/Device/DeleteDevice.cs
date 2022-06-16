@@ -12,12 +12,12 @@ public partial interface IElasticsearchClient
 public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<DeleteResponse> DeleteDeviceAsync(Id id) =>
-    Elasticsearch.DeleteAsync(
+    Elastic.DeleteAsync(
       DocumentPath<Device>.Id(id),
       s => s.Index(DeviceIndexName));
 
   public DeleteResponse DeleteDevice(Id id) =>
-    Elasticsearch.Delete(
+    Elastic.Delete(
       DocumentPath<Device>.Id(id),
       s => s.Index(DeviceIndexName));
 }

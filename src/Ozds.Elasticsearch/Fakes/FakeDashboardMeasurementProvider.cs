@@ -7,7 +7,7 @@ public sealed partial class FakeDashboardMeasurementProvider :
   IDashboardMeasurementProvider
 {
   public Task<IEnumerable<DashboardMeasurement>>
-  GetDashboardMeasurementsAsync(
+  GetDashboardMeasurementsByDeviceAsync(
       string deviceId,
       Period? period = null) =>
     GenerateDashboardMeasurements(
@@ -16,50 +16,46 @@ public sealed partial class FakeDashboardMeasurementProvider :
       .ToTask();
 
   public IEnumerable<DashboardMeasurement>
-  GetDashboardMeasurements(
+  GetDashboardMeasurementsByDevice(
       string deviceId,
       Period? period = null) =>
     GenerateDashboardMeasurements(
         deviceId,
         period);
 
-  public Task<MultiDashboardMeasurements>
+  public Task<IEnumerable<DashboardMeasurement>>
   GetDashboardMeasurementsByOwnerAsync(
       string ownerId,
       Period? period = null) =>
     GenerateDashboardMeasurements(
         FakeMeasurementProvider.FakeDeviceId,
         period)
-      .ToMultiDashboardMeasurements()
       .ToTask();
 
-  public MultiDashboardMeasurements
+  public IEnumerable<DashboardMeasurement>
   GetDashboardMeasurementsByOwner(
       string ownerId,
       Period? period = null) =>
     GenerateDashboardMeasurements(
         FakeMeasurementProvider.FakeDeviceId,
-        period)
-      .ToMultiDashboardMeasurements();
+        period);
 
-  public Task<MultiDashboardMeasurements>
+  public Task<IEnumerable<DashboardMeasurement>>
   GetDashboardMeasurementsByOwnerUserAsync(
       string ownerUserId,
       Period? period = null) =>
     GenerateDashboardMeasurements(
         FakeMeasurementProvider.FakeDeviceId,
         period)
-      .ToMultiDashboardMeasurements()
       .ToTask();
 
-  public MultiDashboardMeasurements
+  public IEnumerable<DashboardMeasurement>
   GetDashboardMeasurementsByOwnerUser(
       string ownerUserId,
       Period? period = null) =>
     GenerateDashboardMeasurements(
         FakeMeasurementProvider.FakeDeviceId,
-        period)
-      .ToMultiDashboardMeasurements();
+        period);
 
   // TODO: better faking for energy
   private IEnumerable<DashboardMeasurement>

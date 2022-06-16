@@ -5,6 +5,8 @@
 @inject ISession Session
 @inject IDashboardMeasurementProvider Provider
 
+<partial name="DashboardButtons" />
+
 @{
   var now = DateTime.UtcNow;
 
@@ -21,76 +23,31 @@
     string.IsNullOrEmpty(toQuery) ? now
     : toQuery.ToUtcIsoDateTime();
 
-  var userMeasurements = await Provider
+  var period =
+    new Period
+    {
+      From = from,
+      To = to,
+    };
+
+  var measurements = await Provider
     .GetDashboardMeasurementsByOwnerUserAsync(
       userId,
-      new Period
-      {
-        From = from,
-        To = to,
-      });
+      period);
 
-  var lastHour = string
-    .Format(
-      "{0}?from={1}&to={2}",
-      Context.Request.Path,
-      now.AddHours(-1).ToUtcIsoString(),
-      now.ToUtcIsoString());
-
-  var lastDay = string
-    .Format(
-      "{0}?from={1}&to={2}",
-      Context.Request.Path,
-      now.AddDays(-1).ToUtcIsoString(),
-      now.ToUtcIsoString());
-
-  var lastWeek = string
-    .Format(
-      "{0}?from={1}&to={2}",
-      Context.Request.Path,
-      now.AddDays(-7).ToUtcIsoString(),
-      now.ToUtcIsoString());
-
-  var lastMonth = string
-    .Format(
-      "{0}?from={1}&to={2}",
-      Context.Request.Path,
-      now.AddMonths(-1).ToUtcIsoString(),
-      now.ToUtcIsoString());
+  var initialQuery =
+    new InitialQuery<IEnumerable<DashboardMeasurement>>
+    {
+      Variables =
+        new
+        {
+          OwnerUserId = userId,
+          Period = period,
+        },
+      Result = measurements,
+    };
 }
 
-<!-- TODO: extract these into partial -->
-<div class="d-flex flex-column mb-5">
-  <h4>
-    @T["Get measurements for:"]
-  </h4>
-  <div class="d-flex flex-column flex-lg-row justify-content-around">
-    <a
-        href="@lastHour"
-        class="btn btn-primary m-2">
-      @T["Last hour"]
-    </a>
-
-    <a
-        href="@lastDay"
-        class="btn btn-primary m-2">
-      @T["Last day"]
-    </a>
-
-    <a
-        href="@lastWeek"
-        class="btn btn-primary m-2">
-      @T["Last week"]
-    </a>
-
-    <a
-        href="@lastMonth"
-        class="btn btn-primary m-2">
-      @T["Last month"]
-    </a>
-  </div>
-</div>
-
-<partial name="MultiDashboard" model="@userMeasurements" />
+<partial name="MultiDashboard" model="@initialQuery" />
 
 <partial name="User/User.Site" />

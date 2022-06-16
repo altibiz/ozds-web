@@ -16,22 +16,22 @@ public partial interface IElasticsearchClient
 public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<IndexResponse> IndexLoadLogAsync(LoadLog log) =>
-    Elasticsearch
+    Elastic
       .IndexAsync(log, s => s
         .Index(LogIndexName));
 
   public IndexResponse IndexLoadLog(LoadLog log) =>
-    Elasticsearch
+    Elastic
       .Index(log, s => s
         .Index(LogIndexName));
 
   public Task<IndexResponse> IndexMissingDataLogAsync(MissingDataLog log) =>
-    Elasticsearch
+    Elastic
       .IndexAsync(log, s => s
         .Index(LogIndexName));
 
   public IndexResponse IndexMissingDataLog(MissingDataLog log) =>
-    Elasticsearch
+    Elastic
       .Index(log, s => s
         .Index(LogIndexName));
 }

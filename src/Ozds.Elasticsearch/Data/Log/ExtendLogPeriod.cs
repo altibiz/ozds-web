@@ -18,7 +18,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   public Task<UpdateResponse<LoadLog>> ExtendLoadLogPeriodAsync(
       Id id,
       DateTime to) =>
-    Elasticsearch.UpdateAsync<LoadLog, ExtendLogPeriodPartial>(
+    Elastic.UpdateAsync<LoadLog, ExtendLogPeriodPartial>(
         id,
         d => d
           .Doc(new ExtendLogPeriodPartial(to))
@@ -27,7 +27,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   public UpdateResponse<LoadLog> ExtendLoadLogPeriod(
       Id id,
       DateTime to) =>
-    Elasticsearch.Update<LoadLog, ExtendLogPeriodPartial>(
+    Elastic.Update<LoadLog, ExtendLogPeriodPartial>(
         id,
         d => d
           .Doc(new ExtendLogPeriodPartial(to))

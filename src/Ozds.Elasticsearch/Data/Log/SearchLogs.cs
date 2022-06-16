@@ -85,7 +85,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   SearchLoadLogsAsync(
       string resource,
       int? size = null) =>
-    Elasticsearch.SearchAsync<LoadLog>(s => s
+    Elastic.SearchAsync<LoadLog>(s => s
       .Query(q => q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, LoadLog.Type))
@@ -96,7 +96,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   SearchLoadLogs(
       string resource,
       int? size = null) =>
-    Elasticsearch.Search<LoadLog>(s => s
+    Elastic.Search<LoadLog>(s => s
       .Query(q => q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, LoadLog.Type))
@@ -108,7 +108,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string resource,
       int? size = null,
       Period? period = null) =>
-    Elasticsearch.Search<LoadLog>(s => s
+    Elastic.Search<LoadLog>(s => s
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Period!.To)
@@ -128,7 +128,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string resource,
       int? size = null,
       Period? period = null) =>
-    Elasticsearch.SearchAsync<LoadLog>(s => s
+    Elastic.SearchAsync<LoadLog>(s => s
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Period!.To)
@@ -147,7 +147,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   SearchMissingDataLogsAsync(
       string resource,
       int? size = null) =>
-    Elasticsearch.SearchAsync<MissingDataLog>(s => s
+    Elastic.SearchAsync<MissingDataLog>(s => s
       .Query(q => q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
@@ -158,7 +158,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   SearchMissingDataLogs(
       string resource,
       int? size = null) =>
-    Elasticsearch.Search<MissingDataLog>(s => s
+    Elastic.Search<MissingDataLog>(s => s
       .Query(q => q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
@@ -170,7 +170,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string resource,
       int? size = null,
       Period? period = null) =>
-    Elasticsearch.Search<MissingDataLog>(s => s
+    Elastic.Search<MissingDataLog>(s => s
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Period!.To)
@@ -190,7 +190,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string resource,
       int? size = null,
       Period? period = null) =>
-    Elasticsearch.SearchAsync<MissingDataLog>(s => s
+    Elastic.SearchAsync<MissingDataLog>(s => s
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Period!.To)
@@ -211,7 +211,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       DateTime due,
       int? size = null,
       Period? period = null) =>
-    Elasticsearch.Search<MissingDataLog>(s => s
+    Elastic.Search<MissingDataLog>(s => s
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Period!.To)
@@ -235,7 +235,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       DateTime due,
       int? size = null,
       Period? period = null) =>
-    Elasticsearch.SearchAsync<MissingDataLog>(s => s
+    Elastic.SearchAsync<MissingDataLog>(s => s
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Period!.To)
@@ -260,7 +260,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       int retries,
       int? size = null,
       Period? period = null) =>
-    Elasticsearch.Search<MissingDataLog>(s => s
+    Elastic.Search<MissingDataLog>(s => s
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Period!.To)
@@ -288,7 +288,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       int retries,
       int? size = null,
       Period? period = null) =>
-    Elasticsearch.SearchAsync<MissingDataLog>(s => s
+    Elastic.SearchAsync<MissingDataLog>(s => s
       .Query(q => q
         .DateRange(r => r
           .Field(f => f.Period!.To)

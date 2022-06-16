@@ -103,7 +103,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   SearchMeasurementsAsync(
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.SearchAsync<Measurement>(s => s
+    Elastic.SearchAsync<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
@@ -117,7 +117,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   SearchMeasurements(
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.Search<Measurement>(s => s
+    Elastic.Search<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
@@ -131,7 +131,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   SearchMeasurementsSortedAsync(
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.SearchAsync<Measurement>(s => s
+    Elastic.SearchAsync<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
@@ -147,7 +147,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   SearchMeasurementsSorted(
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.Search<Measurement>(s => s
+    Elastic.Search<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
@@ -164,7 +164,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string deviceId,
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.SearchAsync<Measurement>(s => s
+    Elastic.SearchAsync<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
@@ -181,7 +181,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string deviceId,
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.Search<Measurement>(s => s
+    Elastic.Search<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
@@ -198,7 +198,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string deviceId,
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.SearchAsync<Measurement>(s => s
+    Elastic.SearchAsync<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
@@ -216,7 +216,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string deviceId,
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.Search<Measurement>(s => s
+    Elastic.Search<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
@@ -234,7 +234,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string ownerId,
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.SearchAsync<Measurement>(s => s
+    Elastic.SearchAsync<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
@@ -251,7 +251,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string ownerId,
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.Search<Measurement>(s => s
+    Elastic.Search<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
@@ -268,7 +268,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string ownerId,
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.SearchAsync<Measurement>(s => s
+    Elastic.SearchAsync<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
@@ -286,7 +286,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string ownerId,
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.Search<Measurement>(s => s
+    Elastic.Search<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
@@ -304,7 +304,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string ownerUserId,
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.SearchAsync<Measurement>(s => s
+    Elastic.SearchAsync<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
@@ -321,7 +321,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string ownerUserId,
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.Search<Measurement>(s => s
+    Elastic.Search<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
@@ -338,7 +338,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string ownerUserId,
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.SearchAsync<Measurement>(s => s
+    Elastic.SearchAsync<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r
@@ -356,7 +356,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       string ownerUserId,
       Period? period = null,
       int? size = null) =>
-    Elasticsearch.Search<Measurement>(s => s
+    Elastic.Search<Measurement>(s => s
       .Size(size ?? IElasticsearchClient.MaxSize)
       .Query(q => q
         .DateRange(r => r

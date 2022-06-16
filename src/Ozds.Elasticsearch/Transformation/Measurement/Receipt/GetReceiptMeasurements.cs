@@ -99,7 +99,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
   SearchFirstAndLastEnergyMeasurementsAsync(
       string deviceId,
       Period period) =>
-    (Elasticsearch.SearchAsync<Measurement>(s => s
+    (Elastic.SearchAsync<Measurement>(s => s
       .Size(1)
       .Index(MeasurementIndexName)
       .Sort(s => s
@@ -113,7 +113,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
           .LessThan(
             period?.To ?? DateTime.UtcNow)) && q
         .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))),
-     Elasticsearch.SearchAsync<Measurement>(s => s
+     Elastic.SearchAsync<Measurement>(s => s
       .Size(1)
       .Index(MeasurementIndexName)
       .Sort(s => s
@@ -135,7 +135,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
   SearchFirstAndLastEnergyMeasurements(
       string deviceId,
       Period period) =>
-    (Elasticsearch.Search<Measurement>(s => s
+    (Elastic.Search<Measurement>(s => s
       .Size(1)
       .Index(MeasurementIndexName)
       .Sort(s => s
@@ -149,7 +149,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
           .LessThan(
             period?.To ?? DateTime.UtcNow)) && q
         .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))),
-     Elasticsearch.Search<Measurement>(s => s
+     Elastic.Search<Measurement>(s => s
       .Size(1)
       .Index(MeasurementIndexName)
       .Sort(s => s
@@ -168,7 +168,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
   SearchMaxPowerPerFifteenMinutes(
       string deviceId,
       Period? period = null) =>
-    Elasticsearch.Search<Measurement>(s => s
+    Elastic.Search<Measurement>(s => s
       .Index(MeasurementIndexName)
       .Size(0)
       .Query(q => q
@@ -194,7 +194,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
   SearchMaxPowerPerFifteenMinutesAsync(
       string deviceId,
       Period? period = null) =>
-    Elasticsearch.SearchAsync<Measurement>(s => s
+    Elastic.SearchAsync<Measurement>(s => s
       .Index(MeasurementIndexName)
       .Size(0)
       .Query(q => q

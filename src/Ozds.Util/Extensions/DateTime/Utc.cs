@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using System.Globalization;
 
-namespace Ozds.Elasticsearch;
+namespace Ozds.Extensions;
 
 public static class DateTimeExtensions
 {

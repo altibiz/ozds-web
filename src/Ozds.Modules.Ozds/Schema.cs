@@ -15,73 +15,25 @@ public readonly record struct InitialQuery<R>
 public class Query
 {
   public Task<IEnumerable<DashboardMeasurement>>
-  GetDashboardMeasurements(
+  GetDashboardMeasurementsByDevice(
       [Service] IDashboardMeasurementProvider provider,
       string deviceId,
       Period? period = null) =>
-    provider.GetDashboardMeasurementsAsync(deviceId, period);
+    provider.GetDashboardMeasurementsByDeviceAsync(deviceId, period);
 
-  public Task<MultiDashboardMeasurements>
+  public Task<IEnumerable<DashboardMeasurement>>
   GetDashboardMeasurementsByOwner(
       [Service] IDashboardMeasurementProvider provider,
       string ownerId,
       Period? period = null) =>
     provider.GetDashboardMeasurementsByOwnerAsync(ownerId, period);
 
-  public Task<MultiDashboardMeasurements>
+  public Task<IEnumerable<DashboardMeasurement>>
   GetDashboardMeasurementsByOwnerUser(
       [Service] IDashboardMeasurementProvider provider,
-      string userId,
+      string ownerUserId,
       Period? period = null) =>
-    provider.GetDashboardMeasurementsByOwnerUserAsync(userId, period);
-}
-
-public class MultiDashboardMeasurementsType :
-  ObjectType<MultiDashboardMeasurements>
-{
-  protected override void Configure(
-      IObjectTypeDescriptor<MultiDashboardMeasurements> descriptor)
-  {
-    descriptor
-      .Field(f => f.DeviceIds)
-      .Type<ListType<StringType>>();
-
-    descriptor
-      .Field(f => f.Measurements)
-      .Type<ListType<MultiDashboardMeasurementDataType>>();
-  }
-}
-
-public class MultiDashboardMeasurementDataType :
-  ObjectType<MultiDashboardMeasurementData>
-{
-  protected override void Configure(
-      IObjectTypeDescriptor<MultiDashboardMeasurementData> descriptor)
-  {
-    descriptor
-      .Field(f => f.Timestamp)
-      .Type<DateTimeType>();
-
-    descriptor
-      .Field(f => f.Data)
-      .Type<ListType<DeviceDashboardMeasurementDataType>>();
-  }
-}
-
-public class DeviceDashboardMeasurementDataType :
-  ObjectType<DeviceDashboardMeasurementData>
-{
-  protected override void Configure(
-      IObjectTypeDescriptor<DeviceDashboardMeasurementData> descriptor)
-  {
-    descriptor
-      .Field(f => f.DeviceId)
-      .Type<StringType>();
-
-    descriptor
-      .Field(f => f.Data)
-      .Type<DashboardMeasurementDataType>();
-  }
+    provider.GetDashboardMeasurementsByOwnerUserAsync(ownerUserId, period);
 }
 
 public class DashboardMeasurementType :
@@ -178,7 +130,10 @@ public class PeriodType :
       .Field(f => f.To)
       .Type<DateTimeType>();
 
-    descriptor.Ignore(f => f.Span);
-    descriptor.Ignore(f => f.HalfPoint);
+    descriptor
+      .Ignore(f => f.Span);
+
+    descriptor
+      .Ignore(f => f.HalfPoint);
   }
 }

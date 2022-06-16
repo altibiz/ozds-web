@@ -1,10 +1,9 @@
 @using Ozds.Elasticsearch
 @using Ozds.Extensions
 
-@model InitialQuery<MultiDashboardMeasurements>
+@model InitialQuery<IEnumerable<DashboardMeasurement>>
 
-@if (Model.Result.DeviceIds.EmptyEnumerable() ||
-     Model.Result.Measurements.EmptyEnumerable())
+@if (Model.Result.EmptyEnumerable())
 {
   <span>
     @(T["No measurements available"].Value)
@@ -41,32 +40,27 @@
 </div>
 
 <script at="Foot">
-  // TODO: investigate null values here
-  const createCharts = (multi, max, culture) => {
-    const deviceIds = multi.deviceIds;
-    const measurements = multi.measurements;
-    const metadata = createMeasurementMetadata(multi, culture);
-
-    return {
+  const createCharts = (measurements, rainbow, max, culture) =>
+    ({
+      measurements,
       energyLines: new Chart(
         "energy-lines",
         {
           type: "line",
           data: {
-            labels: metadata.labels,
-            datasets:
-              deviceIds
-                .map((deviceId, index) =>
-                  ({
-                    label: `@T["Energy of"].Value ${deviceId} (kW)`,
-                    deviceId: deviceId,
-                    data: measurements.map(measurementsByDevice =>
-                      measurementsByDevice.data
-                        .find(measurement => measurement.deviceId === deviceId)
-                        ?.data?.energy),
-                    borderColor: metadata.rainbow[index % rainbow.length],
-                    backgroundColor: metadata.rainbow[index % rainbow.length],
-                  })),
+            datasets: Object
+              .entries(measurements)
+              .map(([deviceId, deviceMeasurements], index) =>
+                ({
+                  label: `@T["Energy of"].Value ${deviceId} (kW)`,
+                  data: deviceMeasurements,
+                  parsing: {
+                    xAxisKey: "timestamp",
+                    yAxisKey: "data.energy"
+                  },
+                  borderColor: rainbow[index % rainbow.length],
+                  backgroundColor: rainbow[index % rainbow.length],
+                })),
           },
           options: {
             maintainAspectRatio: false,
@@ -91,20 +85,19 @@
         {
           type: "line",
           data: {
-            labels: metadata.labels,
-            datasets:
-              deviceIds
-                .map((deviceId, index) =>
-                  ({
-                    label: `@T["Power of"].Value ${deviceId} (kW)`,
-                    data: measurements.map(measurementsByDevice =>
-                      measurementsByDevice.data
-                        .find(measurement =>
-                          measurement.deviceId === deviceId)
-                        ?.data?.power),
-                    borderColor: metadata.rainbow[index % rainbow.length],
-                    backgroundColor: metadata.rainbow[index % rainbow.length],
-                  })),
+            datasets: Object
+              .entries(measurements)
+              .map(([deviceId, deviceMeasurements], index) =>
+                ({
+                  label: `@T["Energy of"].Value ${deviceId} (kW)`,
+                  data: deviceMeasurements,
+                  parsing: {
+                    xAxisKey: "timestamp",
+                    yAxisKey: "data.power"
+                  },
+                  borderColor: rainbow[index % rainbow.length],
+                  backgroundColor: rainbow[index % rainbow.length],
+                })),
           },
           options: {
             maintainAspectRatio: false,
@@ -123,37 +116,29 @@
             },
           },
         }),
-    };
-  };
+    })
 
-  const updateCharts = (multi, max, culture, charts) => {
-    const measurements = multi.measurements;
-    const metadata = createMeasurementMetadata(multi, culture);
-
-    charts.energyLines.data.labels.push(...metadata.labels);
-    charts.energyLines.data.datasets.forEach(dataset =>
-      dataset.data.push(...measurements
-        .map(measurementsByDevice => measurementsByDevice.data
-          .find(measurement => measurement.deviceId === dataset.deviceId)
-          ?.data?.energy)));
-
-    charts.powerLines.data.labels.push(...metadata.labels);
-    charts.powerLines.data.datasets.forEach(dataset =>
-      dataset.data.push(...measurements
-        .map(measurementsByDevice => measurementsByDevice.data
-          .find(measurement => measurement.deviceId === dataset.deviceId)
-          ?.data?.power)));
-
+  const updateCharts = (measurements, max, culture, charts) => {
+    Object
+      .entries(charts.measurements)
+      .forEach(([deviceId, deviceMeasurements]) =>
+        measurements[deviceId] && deviceMeasurements
+          .push(...measurements[deviceId]));
     charts.energyLines.update();
     charts.powerLines.update();
+
+    return charts;
   };
 
-  const createMeasurementMetadata = (multi, culture) => {
-    return {
-      labels: measurements.map(measurement => measurement.timestamp),
-      rainbow: [ "Red", "Green", "Blue", "Cyan", "Yellow", "Magenta" ],
-    }
-  };
+  const createRainbow = (measurements, max, culture) =>
+    [
+      "Red",
+      "Green",
+      "Blue",
+      "Cyan",
+      "Yellow",
+      "Magenta"
+    ];
 
   const getMeasurements = async (model, period) =>
     period ?
@@ -183,9 +168,18 @@
         to: luxon.DateTime.now()
       };
 
-  const createOrUpdateCharts = (model, max, culture, charts) =>
-    charts ? updateCharts(model, max, culture, charts)
-    : createCharts(model, max, culture);
+  const createOrUpdateCharts = (measurements, max, culture, charts) =>
+    charts ?
+      updateCharts(
+        measurements,
+        max,
+        culture,
+        charts)
+    : createCharts(
+        measurements,
+        createRainbow(measurements, max, culture),
+        max,
+        culture);
 
   const update = async ({model, max, culture, charts, period}) =>
     ({
@@ -195,16 +189,21 @@
         culture,
         charts),
       period: updatePeriod(model, period)
-    });;
+    });
+
+  const intervalNow = (callback, timeout) => {
+    callback();
+    setInterval(callback, timeout);
+  }
 
   window.onload = () => {
     const modelString = '@Html.Raw(Json.Serialize(Model))';
     const model = JSON.parse(modelString);
 
     const maxString = `{
-      "power": @Dashboard.MaxPower,
-      "current": @Dashboard.MaxCurrent,
-      "voltage": @Dashboard.MaxVoltage
+      "power": @IDashboardMeasurementProvider.MaxPower,
+      "current": @IDashboardMeasurementProvider.MaxCurrent,
+      "voltage": @IDashboardMeasurementProvider.MaxVoltage
     }`;
     const max = JSON.parse(maxString);
 
@@ -212,17 +211,12 @@
 
     let period = null;
     let charts = null;
-    const callback = async () => {
+    intervalNow(async () => {
       const updated = await update({model, max, culture, charts, period});
       period = updated.period;
       charts = updated.charts;
-    }
-
-    callback();
-    const interval = setInterval(callback, 10000);
-    window.onunload = () => {
-      clearInterval(interval);
-    };
+      // TODO: tune this
+    }, 10000);
   };
 </script>
 <script asp-name="ozdstheme-luxon" at="Head"></script>

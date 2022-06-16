@@ -25,8 +25,8 @@ public sealed partial class ElasticsearchClient :
     Env = env;
     Logger = logger;
 
-    Elasticsearch = CreateElasticClient(env, conf);
-    var pingResponse = Elasticsearch.Ping();
+    Elastic = CreateElasticClient(env, conf);
+    var pingResponse = Elastic.Ping();
     if (!pingResponse.IsValid)
     {
       if (Env.IsDevelopment())
@@ -142,7 +142,7 @@ public sealed partial class ElasticsearchClient :
     Env = other.Env;
     Logger = other.Logger;
 
-    Elasticsearch = other.Elasticsearch;
+    Elastic = other.Elastic;
 
     Providers = other.Providers;
 
@@ -153,7 +153,7 @@ public sealed partial class ElasticsearchClient :
   private IHostEnvironment Env { get; }
   private ILogger Logger { get; }
 
-  private IElasticClient Elasticsearch { get; init; }
+  private IElasticClient Elastic { get; init; }
 
   private List<IMeasurementProvider> Providers { get; }
 
@@ -193,26 +193,26 @@ public sealed partial class ElasticsearchClient :
 
   private void TryDeleteIndices()
   {
-    Elasticsearch.Indices.Delete(MeasurementIndexName);
-    Elasticsearch.Indices.Delete(DeviceIndexName);
-    Elasticsearch.Indices.Delete(LogIndexName);
+    Elastic.Indices.Delete(MeasurementIndexName);
+    Elastic.Indices.Delete(DeviceIndexName);
+    Elastic.Indices.Delete(LogIndexName);
     Logger.LogInformation(
         $"Deleted Elasticsearch indices{ConsoleIndexSuffix}");
   }
 
   private void TryCreateIndices()
   {
-    Elasticsearch.Indices
+    Elastic.Indices
       .Create(DeviceIndexName, c => c
         .Map<Measurement>(m => m
           .AutoMap<Measurement>()));
 
-    Elasticsearch.Indices
+    Elastic.Indices
       .Create(DeviceIndexName, c => c
         .Map<Device>(m => m
           .AutoMap<Device>()));
 
-    Elasticsearch.Indices
+    Elastic.Indices
       .Create(LogIndexName, c => c
         .Map<LoadLog>(m => m
           .AutoMap<LoadLog>())

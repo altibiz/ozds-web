@@ -1,19 +1,4 @@
-using Ozds.Extensions;
-
 namespace Ozds.Elasticsearch;
-
-public readonly record struct MultiDashboardMeasurements
-(IEnumerable<string> DeviceIds,
- IEnumerable<MultiDashboardMeasurementData> Measurements);
-
-public readonly record struct MultiDashboardMeasurementData
-(DateTime Timestamp,
- IEnumerable<DeviceDashboardMeasurementData> Data);
-
-// TODO: use a list of these instead of a dictionary
-public readonly record struct DeviceDashboardMeasurementData
-(string DeviceId,
- DashboardMeasurementData Data);
 
 public readonly record struct DashboardMeasurement
 (DateTime Timestamp,
@@ -38,8 +23,7 @@ public readonly record struct DashboardMeasurementData
 public static class DashboardMeasurementExtensions
 {
   public static DashboardMeasurement
-  ToDashboardMeasurement(
-      this Measurement @this) =>
+  ToDashboardMeasurement(this Measurement @this) =>
     new DashboardMeasurement
     {
       Timestamp = @this.Timestamp,
@@ -48,8 +32,7 @@ public static class DashboardMeasurementExtensions
     };
 
   public static DashboardMeasurementData
-  ToDashboardMeasurementData(
-      this Measurement @this) =>
+  ToDashboardMeasurementData(this Measurement @this) =>
     new DashboardMeasurementData
     {
       Energy = @this.MeasurementData.energyIn,
@@ -66,138 +49,4 @@ public static class DashboardMeasurementExtensions
       VoltageL2 = @this.MeasurementData.voltageL2 ?? 0M,
       VoltageL3 = @this.MeasurementData.voltageL3 ?? 0M,
     };
-
-  public static MultiDashboardMeasurements
-  ToMultiDashboardMeasurements(
-      this IEnumerable<Measurement> @this) =>
-    @this
-      .Select(measurement => measurement.ToDashboardMeasurement())
-      .ToMultiDashboardMeasurements();
-
-  public static MultiDashboardMeasurements
-  ToMultiDashboardMeasurements(
-      this IEnumerable<DashboardMeasurement> @this)
-  {
-    if (@this.EmptyEnumerable())
-    {
-      return
-        new MultiDashboardMeasurements
-        {
-          DeviceIds = Enumerable.Empty<string>(),
-          Measurements = Enumerable.Empty<MultiDashboardMeasurementData>()
-        };
-    }
-
-    var deviceGroups = @this
-      .OrderBy(measurement => measurement.Timestamp)
-      .GroupBy(measurement => measurement.DeviceId);
-    var deviceIds = deviceGroups.Select(group => group.Key);
-
-    var events =
-      Period
-        .Encompassing(@this.Select(measurement => measurement.Timestamp))
-        .SplitAscending(deviceGroups.Select(group => group.Count()).Max())
-        .Select(period => period.HalfPoint);
-
-    // TODO: optimize
-    return
-      new MultiDashboardMeasurements
-      {
-        DeviceIds = deviceIds,
-        Measurements = events
-          .Select(@event =>
-            new MultiDashboardMeasurementData
-            {
-              Timestamp = @event,
-              Data = deviceGroups
-                .Select(deviceMeasurements => deviceMeasurements
-                  .Interpolate(@event))
-            }),
-      };
-  }
-
-  private static DeviceDashboardMeasurementData
-  Interpolate(
-      this IEnumerable<DashboardMeasurement> @this,
-      DateTime at)
-  {
-    DashboardMeasurement last = default;
-
-    foreach (var current in @this)
-    {
-      if (current.Timestamp.ToUniversalTime() > at.ToUniversalTime())
-      {
-        if (last == default)
-        {
-          return
-            new DeviceDashboardMeasurementData(
-              current.DeviceId,
-              current.Data);
-        }
-        else
-        {
-          var period =
-            new Period
-            {
-              From = last.Timestamp,
-              To = current.Timestamp
-            };
-
-          return
-            new DeviceDashboardMeasurementData(
-              current.DeviceId,
-              new DashboardMeasurementData
-              {
-                Energy = period.Interpolate(
-                  last.Data.Energy,
-                  current.Data.Energy,
-                  at),
-                LowCostEnergy = period.Interpolate(
-                  last.Data.LowCostEnergy,
-                  current.Data.HighCostEnergy,
-                  at),
-                HighCostEnergy = period.Interpolate(
-                  last.Data.HighCostEnergy,
-                  current.Data.HighCostEnergy,
-                  at),
-                Power = period.Interpolate(
-                  last.Data.Power,
-                  current.Data.Power,
-                  at),
-                CurrentL1 = period.Interpolate(
-                  last.Data.CurrentL1,
-                  current.Data.CurrentL1,
-                  at),
-                CurrentL2 = period.Interpolate(
-                  last.Data.CurrentL2,
-                  current.Data.CurrentL2,
-                  at),
-                CurrentL3 = period.Interpolate(
-                  last.Data.CurrentL3,
-                  current.Data.CurrentL3,
-                  at),
-                VoltageL1 = period.Interpolate(
-                  last.Data.VoltageL1,
-                  current.Data.VoltageL1,
-                  at),
-                VoltageL2 = period.Interpolate(
-                  last.Data.VoltageL2,
-                  current.Data.VoltageL2,
-                  at),
-                VoltageL3 = period.Interpolate(
-                  last.Data.VoltageL3,
-                  current.Data.VoltageL3,
-                  at),
-              });
-        }
-      }
-
-      last = current;
-    }
-
-    return
-      new DeviceDashboardMeasurementData(
-        last.DeviceId,
-        last.Data);
-  }
 }

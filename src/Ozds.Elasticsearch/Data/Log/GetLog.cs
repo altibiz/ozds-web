@@ -16,14 +16,14 @@ public partial interface IElasticsearchClient
 public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<GetResponse<LoadLog>> GetLoadLogAsync(Id id) =>
-    Elasticsearch.GetAsync<LoadLog>(id, d => d.Index(LogIndexName));
+    Elastic.GetAsync<LoadLog>(id, d => d.Index(LogIndexName));
 
   public GetResponse<LoadLog> GetLoadLog(Id id) =>
-    Elasticsearch.Get<LoadLog>(id, d => d.Index(LogIndexName));
+    Elastic.Get<LoadLog>(id, d => d.Index(LogIndexName));
 
   public Task<GetResponse<MissingDataLog>> GetMissingDataLogAsync(Id id) =>
-    Elasticsearch.GetAsync<MissingDataLog>(id, d => d.Index(LogIndexName));
+    Elastic.GetAsync<MissingDataLog>(id, d => d.Index(LogIndexName));
 
   public GetResponse<MissingDataLog> GetMissingDataLog(Id id) =>
-    Elasticsearch.Get<MissingDataLog>(id, d => d.Index(LogIndexName));
+    Elastic.Get<MissingDataLog>(id, d => d.Index(LogIndexName));
 }

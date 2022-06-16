@@ -15,13 +15,13 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<BulkResponse> IndexMeasurementsAsync(
       IEnumerable<Measurement> measurements) =>
-    Elasticsearch.BulkAsync(s => s
+    Elastic.BulkAsync(s => s
       .IndexMany(measurements)
       .Index(MeasurementIndexName));
 
   public BulkResponse IndexMeasurements(
       IEnumerable<Measurement> measurements) =>
-    Elasticsearch.Bulk(s => s
+    Elastic.Bulk(s => s
       .IndexMany(measurements)
       .Index(MeasurementIndexName));
 }

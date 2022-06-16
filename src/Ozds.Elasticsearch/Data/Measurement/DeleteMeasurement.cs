@@ -13,12 +13,12 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<DeleteResponse>
   DeleteMeasurementAsync(Id id) =>
-    Elasticsearch.DeleteAsync(
+    Elastic.DeleteAsync(
       DocumentPath<Measurement>.Id(id),
       s => s.Index(MeasurementIndexName));
 
   public DeleteResponse DeleteMeasurement(Id id) =>
-    Elasticsearch.Delete(
+    Elastic.Delete(
       DocumentPath<Measurement>.Id(id),
       s => s.Index(MeasurementIndexName));
 }

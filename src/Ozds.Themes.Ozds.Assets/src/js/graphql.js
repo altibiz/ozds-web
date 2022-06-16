@@ -1,43 +1,12 @@
-// TODO: move to Ozds.Modules.Ozds or something and use TypeScript
+// TODO: move to Ozds.Modules.Ozds or something and use TypeScript?
 // TODO: better error management
 // NOTE: requires luxon
 
-/**
- * @typedef {Window & GraphQL} GraphQLWindow
- */
-
-/**
- * @typedef {Object} GraphQL
- * @property {typeof getDashboardMeasurements}
- *   getDashboardMeasurements
- * @property {typeof getDashboardMeasurementsByOwner}
- *   getDashboardMeasurementsByOwner
- * @property {typeof getDashboardMeasurementsByOwnerUser}
- *   getDashboardMeasurementsByOwnerUser
- * @property {typeof normalizeDashboardMeasurements}
- *   normalizeDashboardMeasurements
- * @property {typeof normalizeMultiDashboardMeasurements}
- *   normalizeMultiDashboardMeasurements
- * @property {typeof deserializePeriod}
- *   deserializePeriod
- * @property {typeof serializePeriod}
- *   serializePeriod
- * @property {typeof deserializeDateTime}
- *   deserializeDateTime
- * @property {typeof serializeDateTime}
- *   serializeDateTime
- */
-
-/**
- * @param {string} deviceId
- * @param {Period} period
- * @returns {Promise<DashboardMeasurement[]>}
- */
-const getDashboardMeasurements = async (deviceId, period) => {
+const getDashboardMeasurementsByDevice = async (deviceId, period) => {
   const response = await query({
     query: gql`
       query ($deviceId: String!, $period: PeriodInput) {
-        dashboardMeasurements(deviceId: $deviceId, period: $period) {
+        dashboardMeasurementsByDevice(deviceId: $deviceId, period: $period) {
           timestamp
           deviceId
           data {
@@ -65,43 +34,35 @@ const getDashboardMeasurements = async (deviceId, period) => {
   });
 
   if (!response) {
-    throw new Error("Failed fetching");
+    throw new Error("Failed fetching ");
   }
 
-  return normalizeDashboardMeasurements(response.data.dashboardMeasurements);
+  return normalizeDashboardMeasurements(
+    response.data.dashboardMeasurementsByDevice,
+  );
 };
 
-/**
- * @param {string} ownerId
- * @param {Period} period
- * @returns {Promise<MultiDashboardMeasurements>}
- */
 const getDashboardMeasurementsByOwner = async (ownerId, period) => {
   const response = await query({
     query: gql`
       query ($ownerId: String!, $period: PeriodInput) {
         dashboardMeasurementsByOwner(ownerId: $ownerId, period: $period) {
-          deviceIds
-          measurements {
-            timestamp
-            data {
-              deviceId
-              data {
-                energy
-                highCostEnergy
-                lowCostEnergy
-                power
-                powerL1
-                powerL2
-                powerL3
-                currentL1
-                currentL2
-                currentL3
-                voltageL1
-                voltageL2
-                voltageL3
-              }
-            }
+          timestamp
+          deviceId
+          data {
+            energy
+            highCostEnergy
+            lowCostEnergy
+            power
+            powerL1
+            powerL2
+            powerL3
+            currentL1
+            currentL2
+            currentL3
+            voltageL1
+            voltageL2
+            voltageL3
           }
         }
       }
@@ -121,40 +82,30 @@ const getDashboardMeasurementsByOwner = async (ownerId, period) => {
   );
 };
 
-/**
- * @param {string} ownerUserId
- * @param {Period} period
- * @returns {Promise<MultiDashboardMeasurements>}
- */
 const getDashboardMeasurementsByOwnerUser = async (ownerUserId, period) => {
   const response = await query({
     query: gql`
       query ($ownerUserId: String!, $period: PeriodInput) {
-        dashboardMeasurementsByOnwerUser(
+        dashboardMeasurementsByOwnerUser(
           ownerUserId: $ownerUserId
           period: $period
         ) {
-          deviceIds
-          measurements {
-            timestamp
-            data {
-              deviceId
-              data {
-                energy
-                highCostEnergy
-                lowCostEnergy
-                power
-                powerL1
-                powerL2
-                powerL3
-                currentL1
-                currentL2
-                currentL3
-                voltageL1
-                voltageL2
-                voltageL3
-              }
-            }
+          timestamp
+          deviceId
+          data {
+            energy
+            highCostEnergy
+            lowCostEnergy
+            power
+            powerL1
+            powerL2
+            powerL3
+            currentL1
+            currentL2
+            currentL3
+            voltageL1
+            voltageL2
+            voltageL3
           }
         }
       }
@@ -170,28 +121,10 @@ const getDashboardMeasurementsByOwnerUser = async (ownerUserId, period) => {
   }
 
   return normalizeMultiDashboardMeasurements(
-    response.data.dashboardMeasurementsByOnwerUser,
+    response.data.dashboardMeasurementsByOwnerUser,
   );
 };
 
-/**
- * @param {any} multi
- * @returns {MultiDashboardMeasurements}
- */
-const normalizeMultiDashboardMeasurements = (multi) => ({
-  ...multi,
-  measurements: multi.measurements
-    .map((measurement) => ({
-      ...measurement,
-      timestamp: deserializeDateTime(measurement.timestamp),
-    }))
-    .sort((a, b) => compareDateTime(a.timestamp, b.timestamp)),
-});
-
-/**
- * @param {any} measurements
- * @returns {DashboardMeasurement[]}
- */
 const normalizeDashboardMeasurements = (measurements) =>
   measurements
     .map((measurement) => ({
@@ -200,90 +133,44 @@ const normalizeDashboardMeasurements = (measurements) =>
     }))
     .sort((a, b) => compareDateTime(a.timestamp, b.timestamp));
 
-/**
- * @param {SerializedPeriod} period
- * @returns {Period}
- */
+const normalizeMultiDashboardMeasurements = (measurements) => {
+  measurements = measurements.reduce((current, next) => {
+    next = {
+      ...next,
+      timestamp: deserializeDateTime(next.timestamp),
+    };
+
+    if (!current[next.deviceId]) {
+      current[next.deviceId] = [];
+    }
+
+    current[next.deviceId].push(next);
+    return current;
+  }, {});
+
+  Object.values(measurements).forEach((deviceMeasurements) =>
+    deviceMeasurements.sort((a, b) =>
+      compareDateTime(a.timestamp, b.timestamp),
+    ),
+  );
+
+  return measurements;
+};
+
 const deserializePeriod = (period) => ({
   from: deserializeDateTime(period.from),
   to: deserializeDateTime(period.to),
 });
 
-/**
- * @param {Period} period
- * @returns {SerializedPeriod}
- */
 const serializePeriod = (period) => ({
   from: serializeDateTime(period.from),
   to: serializeDateTime(period.to),
 });
 
-/**
- * @param {string} dateTime
- * @returns {DateTime}
- */
 const deserializeDateTime = (dateTime) =>
   luxon.DateTime.fromISO(dateTime, { zone: "utc" });
 
-/**
- * @param {DateTime} dateTime
- * @returns {string}
- */
 const serializeDateTime = (dateTime) => dateTime.toISO();
-
-/**
- * @typedef {Object} DashboardMeasurementData
- * @property {number} energy
- * @property {number} highCostEnergy
- * @property {number} lowCostEnergy
- * @property {number} power
- * @property {number} powerL1
- * @property {number} powerL2
- * @property {number} powerL3
- * @property {number} currentL1
- * @property {number} currentL2
- * @property {number} currentL3
- * @property {number} voltageL1
- * @property {number} voltageL2
- * @property {number} voltageL3
- */
-
-/**
- * @typedef {Object} DashboardMeasurement
- * @property {luxon.DateTime} timestamp
- * @property {string} deviceId
- * @property {DashboardMeasurementData} data
- */
-
-/**
- * @typedef {Object} DeviceDashboardMeasurementData
- * @property {string} deviceId
- * @property {DashboardMeasurementData} data
- */
-
-/**
- * @typedef {Object} MultiDashboardMeasurementData
- * @property {luxon.DateTime} timestamp
- * @property {DeviceDashboardMeasurementData[]} data
- */
-
-/**
- * @typedef {Object} MultiDashboardMeasurements
- * @property {string[]} deviceIds
- * @property {MultiDashboardMeasurementData[]} data
- */
-
-/**
- * @typedef {Object} Period
- * @property {luxon.DateTime} from
- * @property {luxon.DateTime} to
- */
-
-/**
- * @typedef {Object} SerializedPeriod
- * @property {string} from
- * @property {string} to
- */
 
 const query = async (body) => {
   try {
@@ -305,8 +192,11 @@ const query = async (body) => {
 // NOTE: https://stackoverflow.com/a/64855525/4348107
 const compareDateTime = (a, b) => a.toMillis() - b.toMillis();
 
+// NOTE: just for intellisense
+const gql = (strings) => strings[0];
+
 window.GraphQL = {
-  getDashboardMeasurements,
+  getDashboardMeasurementsByDevice,
   getDashboardMeasurementsByOwner,
   getDashboardMeasurementsByOwnerUser,
   normalizeDashboardMeasurements,
@@ -316,6 +206,3 @@ window.GraphQL = {
   deserializeDateTime,
   serializeDateTime,
 };
-
-// NOTE: just for intellisense
-const gql = (strings) => strings[0];

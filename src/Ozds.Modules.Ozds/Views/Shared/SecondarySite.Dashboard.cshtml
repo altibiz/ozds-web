@@ -6,71 +6,11 @@
 
 @model SecondarySiteType
 
+<partial name="DashboardButtons" />
+
 @{
   var now = DateTime.UtcNow;
 
-  var lastHour = string
-    .Format(
-      "{0}?from={1}&to={2}",
-      Context.Request.Path,
-      now.AddHours(-1).ToUtcIsoString(),
-      now.ToUtcIsoString());
-
-  var lastDay = string
-    .Format(
-      "{0}?from={1}&to={2}",
-      Context.Request.Path,
-      now.AddDays(-1).ToUtcIsoString(),
-      now.ToUtcIsoString());
-
-  var lastWeek = string
-    .Format(
-      "{0}?from={1}&to={2}",
-      Context.Request.Path,
-      now.AddDays(-7).ToUtcIsoString(),
-      now.ToUtcIsoString());
-
-  var lastMonth = string
-    .Format(
-      "{0}?from={1}&to={2}",
-      Context.Request.Path,
-      now.AddMonths(-1).ToUtcIsoString(),
-      now.ToUtcIsoString());
-}
-
-<!-- TODO: extract these into partial -->
-<div class="d-flex flex-column mb-5">
-  <h4>
-    @T["Get measurements for:"]
-  </h4>
-  <div class="d-flex flex-column flex-lg-row justify-content-around">
-    <a
-        href="@lastHour"
-        class="btn btn-primary m-2">
-      @T["Last hour"]
-    </a>
-
-    <a
-        href="@lastDay"
-        class="btn btn-primary m-2">
-      @T["Last day"]
-    </a>
-
-    <a
-        href="@lastWeek"
-        class="btn btn-primary m-2">
-      @T["Last week"]
-    </a>
-
-    <a
-        href="@lastMonth"
-        class="btn btn-primary m-2">
-      @T["Last month"]
-    </a>
-  </div>
-</div>
-
-@{
   var fromQuery = Context.Request.Query["from"].FirstOrDefault();
   var from =
     string.IsNullOrEmpty(fromQuery) ? now.AddMinutes(-60)
@@ -90,7 +30,7 @@
     };
 
   var measurements = await Provider
-    .GetDashboardMeasurementsAsync(
+    .GetDashboardMeasurementsByDeviceAsync(
       deviceId,
       period);
 

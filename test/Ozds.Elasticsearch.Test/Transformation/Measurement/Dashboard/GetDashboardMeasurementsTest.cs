@@ -14,7 +14,7 @@ public partial class ClientTest
     await SetupMeasurementsAsync(device, measurements);
 
     var dashboardMeasurements = await Client
-      .GetDashboardMeasurementsAsync(device.Id, period);
+      .GetDashboardMeasurementsByDeviceAsync(device.Id, period);
     Assert.Equal(measurements.Count(), dashboardMeasurements.Count());
   }
 
@@ -29,7 +29,7 @@ public partial class ClientTest
 
     Logger.LogDebug(period.ToString());
     var dashboardMeasurements = Client
-      .GetDashboardMeasurements(device.Id, period);
+      .GetDashboardMeasurementsByDevice(device.Id, period);
     Assert.Equal(measurements.Count(), dashboardMeasurements.Count());
   }
 }

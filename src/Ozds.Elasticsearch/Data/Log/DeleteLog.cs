@@ -17,25 +17,25 @@ public partial interface IElasticsearchClient
 public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<DeleteResponse> DeleteLoadLogAsync(Id id) =>
-    Elasticsearch.DeleteAsync(
+    Elastic.DeleteAsync(
       DocumentPath<LoadLog>.Id(id),
       s => s
         .Index(LogIndexName));
 
   public DeleteResponse DeleteLoadLog(Id id) =>
-    Elasticsearch.Delete(
+    Elastic.Delete(
       DocumentPath<LoadLog>.Id(id),
       s => s
         .Index(LogIndexName));
 
   public Task<DeleteResponse> DeleteMissingDataLogAsync(Id id) =>
-    Elasticsearch.DeleteAsync(
+    Elastic.DeleteAsync(
       DocumentPath<MissingDataLog>.Id(id),
       s => s
         .Index(LogIndexName));
 
   public DeleteResponse DeleteMissingDataLog(Id id) =>
-    Elasticsearch.Delete(
+    Elastic.Delete(
       DocumentPath<MissingDataLog>.Id(id),
       s => s
         .Index(LogIndexName));

@@ -21,7 +21,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       Id deviceId,
       string state,
       DateTime? dateRemoved = null) =>
-    Elasticsearch.UpdateAsync<Device, DeviceStateUpdatePartial>(
+    Elastic.UpdateAsync<Device, DeviceStateUpdatePartial>(
         deviceId,
         d => d
           .Doc(new DeviceStateUpdatePartial(state, dateRemoved))
@@ -31,7 +31,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       Id deviceId,
       string state,
       DateTime? dateRemoved = null) =>
-    Elasticsearch.Update<Device, DeviceStateUpdatePartial>(
+    Elastic.Update<Device, DeviceStateUpdatePartial>(
         deviceId,
         d => d
           .Doc(new DeviceStateUpdatePartial(state, dateRemoved))

@@ -12,12 +12,12 @@ public partial interface IElasticsearchClient
 public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<BulkResponse> DeleteDevicesAsync(IEnumerable<Id> deviceIds) =>
-    Elasticsearch.BulkAsync(s => s
+    Elastic.BulkAsync(s => s
       .DeleteMany<Device>(deviceIds.ToStrings())
       .Index(DeviceIndexName));
 
   public BulkResponse DeleteDevices(IEnumerable<Id> deviceIds) =>
-    Elasticsearch.Bulk(s => s
+    Elastic.Bulk(s => s
       .DeleteMany<Device>(deviceIds.ToStrings())
       .Index(DeviceIndexName));
 }

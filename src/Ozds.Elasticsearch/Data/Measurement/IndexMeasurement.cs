@@ -12,10 +12,10 @@ public partial interface IElasticsearchClient
 public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public IndexResponse IndexMeasurement(Measurement measurement) =>
-    Elasticsearch.Index(measurement, s => s
+    Elastic.Index(measurement, s => s
       .Index(MeasurementIndexName));
 
   public Task<IndexResponse> IndexMeasurementAsync(Measurement measurement) =>
-    Elasticsearch.IndexAsync(measurement, s => s
+    Elastic.IndexAsync(measurement, s => s
       .Index(MeasurementIndexName));
 }
