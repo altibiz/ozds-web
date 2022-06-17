@@ -19,14 +19,14 @@ public static partial class Tasks
       .WhenNonNullAsync(selector);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<TOut?> ThenWhenNonNull<TIn, TOut>(
+  public static async ValueTask<TOut?> ThenWhenNonNull<TIn, TOut>(
       this ValueTask<TIn?> @this,
       Func<TIn, TOut?> selector) =>
     (await @this)
       .WhenNonNull(selector);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<TOut?> ThenWhenNonNullAwait<TIn, TOut>(
+  public static async ValueTask<TOut?> ThenWhenNonNullAwait<TIn, TOut>(
       this ValueTask<TIn?> @this,
       Func<TIn, ValueTask<TOut?>> selector) =>
     await (await @this)

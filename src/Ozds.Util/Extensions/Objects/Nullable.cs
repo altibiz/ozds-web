@@ -10,22 +10,22 @@ public static partial class Objects
     @this;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<T?> Nullable<T>(
+  public static async Task<T?> NullableTask<T>(
       this Task<T> @this) =>
     await @this;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<T?> Nullable<T>(
+  public static async ValueTask<T?> NullableTask<T>(
       this ValueTask<T> @this) =>
     await @this;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static IEnumerable<T?> Nullable<T>(
+  public static IEnumerable<T?> NullableEnumerable<T>(
       this IEnumerable<T> @this) =>
     @this;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static IAsyncEnumerable<T?> Nullable<T>(
+  public static IAsyncEnumerable<T?> NullableEnumerable<T>(
       this IAsyncEnumerable<T> @this) =>
     @this;
 
@@ -35,22 +35,22 @@ public static partial class Objects
     @this!;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static Task<T> NonNull<T>(
+  public static Task<T> NonNullTask<T>(
       this Task<T?> @this) =>
     @this!;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static ValueTask<T> NonNull<T>(
+  public static ValueTask<T> NonNullTask<T>(
       this ValueTask<T?> @this) =>
     @this!;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static IEnumerable<T> NonNull<T>(
+  public static IEnumerable<T> NonNullEnumerable<T>(
       this IEnumerable<T?> @this) =>
     @this!;
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static IAsyncEnumerable<T> NonNull<T>(
+  public static IAsyncEnumerable<T> NonNullEnumerable<T>(
       this IAsyncEnumerable<T?> @this) =>
     @this!;
 }

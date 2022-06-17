@@ -680,9 +680,19 @@
     return setInterval(callback, timeout);
   }
 
+  const shouldUpdate = (model) =>
+    return GraphQL
+      .deserializeDateTime(model.variables.to)
+      .diff(GraphQL
+        .deserializeDateTime(model.variables.from),
+        'minutes') > 10;
+
   window.onload = () => {
     const modelString = '@Html.Raw(Json.Serialize(Model))';
     const model = JSON.parse(modelString);
+    if (!shouldUpdate(model)) {
+      return;
+    }
 
     const maxString = `{
       "power": @IDashboardMeasurementProvider.MaxPower,

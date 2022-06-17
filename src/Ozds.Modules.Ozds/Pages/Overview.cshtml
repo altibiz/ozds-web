@@ -47,7 +47,7 @@
 @{
   var contentItem = await Orchard
     .GetContentItemByIdAsync(contentItemId)
-    .Nullable();
+    .NullableTask();
 }
 
 @if (contentItem is null)

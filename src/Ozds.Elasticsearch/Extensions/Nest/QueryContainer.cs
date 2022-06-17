@@ -31,4 +31,32 @@ public static class QueryContainerExtensions
       string? ownerUserId) =>
     ownerUserId is null ? @this
     : @this.Term(f => f.DeviceData.OwnerUserId.Suffix("keyword"), ownerUserId);
+
+  public static QueryContainer OwnerIdTerm(
+      this QueryContainerDescriptor<Device> @this,
+      string? ownerId) =>
+    ownerId is null ? @this
+    : @this.Term(f => f.OwnerData.OwnerId.Suffix("keyword"), ownerId);
+
+  public static QueryContainer OwnerUserIdTerm(
+      this QueryContainerDescriptor<Device> @this,
+      string? ownerUserId) =>
+    ownerUserId is null ? @this
+    : @this.Term(f => f.OwnerData.OwnerUserId.Suffix("keyword"), ownerUserId);
+
+  public static QueryContainer SourceTerm(
+      this QueryContainerDescriptor<Device> @this,
+      string? source) =>
+    source is null ? @this
+    : @this.Term(f => f.Source.Suffix("keyword"), source);
+
+  public static QueryContainer Active(
+      this QueryContainerDescriptor<Device> @this) =>
+    @this.Term(t => t.StateData.State, DeviceState.Active);
+
+  public static QueryContainer All(
+      this QueryContainerDescriptor<Device> @this,
+      bool all) =>
+    all ? @this
+    : @this.Term(t => t.StateData.State, DeviceState.Active);
 }

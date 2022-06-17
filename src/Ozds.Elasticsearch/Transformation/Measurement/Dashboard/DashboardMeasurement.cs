@@ -49,4 +49,32 @@ public static class DashboardMeasurementExtensions
       VoltageL2 = @this.MeasurementData.voltageL2 ?? 0M,
       VoltageL3 = @this.MeasurementData.voltageL3 ?? 0M,
     };
+
+  public static DashboardMeasurement
+  ToDashboardMeasurement(this ExtractionMeasurement @this) =>
+    new DashboardMeasurement
+    {
+      Timestamp = @this.Timestamp,
+      DeviceId = Device.MakeId(@this.Source, @this.SourceDeviceId),
+      Data = @this.ToDashboardMeasurementData(),
+    };
+
+  public static DashboardMeasurementData
+  ToDashboardMeasurementData(this ExtractionMeasurement @this) =>
+    new DashboardMeasurementData
+    {
+      Energy = @this.Data.energyIn,
+      LowCostEnergy = @this.Data.energyIn_T2,
+      HighCostEnergy = @this.Data.energyIn_T1,
+      Power = @this.Data.powerIn,
+      PowerL1 = @this.Data.currentL1 ?? 0M,
+      PowerL2 = @this.Data.currentL2 ?? 0M,
+      PowerL3 = @this.Data.currentL3 ?? 0M,
+      CurrentL1 = @this.Data.currentL1 ?? 0M,
+      CurrentL2 = @this.Data.currentL2 ?? 0M,
+      CurrentL3 = @this.Data.currentL3 ?? 0M,
+      VoltageL1 = @this.Data.voltageL1 ?? 0M,
+      VoltageL2 = @this.Data.voltageL2 ?? 0M,
+      VoltageL3 = @this.Data.voltageL3 ?? 0M,
+    };
 }

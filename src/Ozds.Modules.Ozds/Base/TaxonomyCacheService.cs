@@ -41,7 +41,7 @@ public class TaxonomyCacheService
     Cache.ContainsKey((contentItemId, termId)) ?
       Cache.GetOrDefault((contentItemId, termId))
     : await Helper
-        .GetTaxonomyTermAsync(contentItemId, termId).Nullable()
+        .GetTaxonomyTermAsync(contentItemId, termId).NullableTask()
         .Then(item => item
           .WhenNonNull(item => Cache[(contentItemId, termId)] = item));
 

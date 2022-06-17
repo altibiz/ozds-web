@@ -11,8 +11,7 @@ public partial interface IElasticsearchClient : IDashboardMeasurementProvider { 
 public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public const int MaxMeasurementsPerResponse = 400;
-  public static readonly TimeSpan MaxPeriodSpanForShortPeriod =
-    TimeSpan.FromHours(1);
+  public static readonly TimeSpan MaxShortPeriodSpan = TimeSpan.FromHours(1);
   public static readonly TimeSpan DefaultInterval = TimeSpan.FromDays(30);
 
   public Task<IEnumerable<DashboardMeasurement>>
@@ -23,7 +22,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
     {
       (var longPeriod) when
           longPeriod is null ||
-          longPeriod.Span > MaxPeriodSpanForShortPeriod =>
+          longPeriod.Span > MaxShortPeriodSpan =>
         SearchAverageDashboardMeasurementsByDevicePerIntervalAsync(
             deviceId,
             longPeriod,
@@ -36,12 +35,22 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             })
           .Then(response => response
             .DashboardMeasurementsFromIntervalBuckets(deviceId)),
-      (var shortPeriod) =>
+      (Period shortPeriod) =>
         SearchMeasurementsByDeviceAsync(deviceId, shortPeriod)
-          .Then(response => response
-            .Sources()
+          .Then(response => response.Sources()
             .Select(measurement => measurement
-              .ToDashboardMeasurement())),
+              .ToDashboardMeasurement()))
+          .ThenAwait(measurements =>
+            GetCachedDeviceDashboardMeasurementsAsync(
+                deviceId,
+                CreateNearRealTimePeriod(
+                  measurements,
+                  shortPeriod))
+              .ToValueTask()
+              .Then(nearRealTimeMeasurements => measurements
+                .Concat(nearRealTimeMeasurements))),
+      // NOTE: it is covered but C# is complaining null is not covered
+      _ => Enumerable.Empty<DashboardMeasurement>().ToTask(),
     };
 
   public IEnumerable<DashboardMeasurement>
@@ -52,7 +61,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
     {
       (var longPeriod) when
           longPeriod is null ||
-          longPeriod.Span > MaxPeriodSpanForShortPeriod =>
+          longPeriod.Span > MaxShortPeriodSpan =>
         SearchAverageDashboardMeasurementsByDevicePerInterval(
             deviceId,
             longPeriod,
@@ -64,11 +73,19 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
               null => DefaultInterval
             })
           .DashboardMeasurementsFromIntervalBuckets(deviceId),
-      (var shortPeriod) =>
+      (Period shortPeriod) =>
         SearchMeasurementsByDevice(deviceId, shortPeriod)
           .Sources()
           .Select(measurement => measurement
-            .ToDashboardMeasurement()),
+            .ToDashboardMeasurement())
+          .Var(measurements => measurements
+          .Concat(GetCachedDeviceDashboardMeasurements(
+            deviceId,
+            CreateNearRealTimePeriod(
+              measurements,
+              shortPeriod)))),
+      // NOTE: it is covered but C# is complaining null is not covered
+      _ => Enumerable.Empty<DashboardMeasurement>(),
     };
 
   public Task<IEnumerable<DashboardMeasurement>>
@@ -79,7 +96,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
     {
       (var longPeriod) when
           longPeriod is null ||
-          longPeriod.Span > MaxPeriodSpanForShortPeriod =>
+          longPeriod.Span > MaxShortPeriodSpan =>
         SearchAverageDashboardMeasurementsByOwnerPerIntervalAsync(
             ownerId,
             longPeriod,
@@ -92,12 +109,23 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             })
           .Then(response => response
             .DashboardMeasurementsFromIntervalDeviceBuckets()),
-      (var shortPeriod) =>
+      (Period shortPeriod) =>
         SearchMeasurementsByOwnerAsync(ownerId, shortPeriod)
           .Then(response => response
             .Sources()
             .Select(measurement => measurement
-              .ToDashboardMeasurement())),
+              .ToDashboardMeasurement()))
+          .ThenAwait(measurements =>
+            GetCachedDeviceDashboardMeasurementsByOwnerAsync(
+                ownerId,
+                CreateNearRealTimePeriod(
+                  measurements,
+                  shortPeriod))
+              .ToValueTask()
+              .Then(nearRealTimeMeasurements => measurements
+                .Concat(nearRealTimeMeasurements))),
+      // NOTE: it is covered but C# is complaining null is not covered
+      _ => Enumerable.Empty<DashboardMeasurement>().ToTask(),
     };
 
   public IEnumerable<DashboardMeasurement>
@@ -108,7 +136,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
     {
       (var longPeriod) when
           longPeriod is null ||
-          longPeriod.Span > MaxPeriodSpanForShortPeriod =>
+          longPeriod.Span > MaxShortPeriodSpan =>
         SearchAverageDashboardMeasurementsByOwnerPerInterval(
             ownerId,
             longPeriod,
@@ -120,11 +148,19 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
               null => DefaultInterval
             })
           .DashboardMeasurementsFromIntervalDeviceBuckets(),
-      (var shortPeriod) =>
+      (Period shortPeriod) =>
         SearchMeasurementsByOwnerUser(ownerId, shortPeriod)
           .Sources()
           .Select(measurement => measurement
-            .ToDashboardMeasurement()),
+            .ToDashboardMeasurement())
+          .Var(measurements => measurements
+          .Concat(GetCachedDeviceDashboardMeasurementsByOwner(
+            ownerId,
+            CreateNearRealTimePeriod(
+              measurements,
+              shortPeriod)))),
+      // NOTE: it is covered but C# is complaining null is not covered
+      _ => Enumerable.Empty<DashboardMeasurement>(),
     };
 
   public Task<IEnumerable<DashboardMeasurement>>
@@ -135,7 +171,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
     {
       (var longPeriod) when
           longPeriod is null ||
-          longPeriod.Span > MaxPeriodSpanForShortPeriod =>
+          longPeriod.Span > MaxShortPeriodSpan =>
         SearchAverageDashboardMeasurementsByOwnerUserPerIntervalAsync(
             ownerUserId,
             longPeriod,
@@ -148,12 +184,23 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             })
           .Then(response => response
             .DashboardMeasurementsFromIntervalDeviceBuckets()),
-      (var shortPeriod) =>
+      (Period shortPeriod) =>
         SearchMeasurementsByOwnerUserAsync(ownerUserId, shortPeriod)
           .Then(response => response
             .Sources()
             .Select(measurement => measurement
-              .ToDashboardMeasurement())),
+              .ToDashboardMeasurement()))
+          .ThenAwait(measurements =>
+            GetCachedDeviceDashboardMeasurementsByOwnerUserAsync(
+                ownerUserId,
+                CreateNearRealTimePeriod(
+                  measurements,
+                  shortPeriod))
+              .ToValueTask()
+              .Then(nearRealTimeMeasurements => measurements
+                .Concat(nearRealTimeMeasurements))),
+      // NOTE: it is covered but C# is complaining null is not covered
+      _ => Enumerable.Empty<DashboardMeasurement>().ToTask(),
     };
 
   public IEnumerable<DashboardMeasurement>
@@ -164,7 +211,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
     {
       (var longPeriod) when
           longPeriod is null ||
-          longPeriod.Span > MaxPeriodSpanForShortPeriod =>
+          longPeriod.Span > MaxShortPeriodSpan =>
         SearchAverageDashboardMeasurementsByOwnerUserPerInterval(
             ownerUserId,
             longPeriod,
@@ -176,12 +223,124 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
               null => DefaultInterval
             })
           .DashboardMeasurementsFromIntervalDeviceBuckets(),
-      (var shortPeriod) =>
+      (Period shortPeriod) =>
         SearchMeasurementsByOwnerUser(ownerUserId, shortPeriod)
           .Sources()
           .Select(measurement => measurement
-            .ToDashboardMeasurement()),
+            .ToDashboardMeasurement())
+          .Var(measurements => measurements
+          .Concat(GetCachedDeviceDashboardMeasurementsByOwnerUser(
+            ownerUserId,
+            CreateNearRealTimePeriod(
+              measurements,
+              shortPeriod)))),
+      // NOTE: it is covered but C# is complaining null is not covered
+      _ => Enumerable.Empty<DashboardMeasurement>(),
     };
+}
+
+// TODO: decent sync versions
+public partial class ElasticsearchClient
+{
+  private Period
+  CreateNearRealTimePeriod(
+      IEnumerable<DashboardMeasurement> storedMeasurements,
+      Period requestedPeriod) =>
+    new Period
+    {
+      From = storedMeasurements
+        .MaxBy(measurement => measurement.Timestamp).Timestamp
+        .Var(timestamp =>
+          timestamp == default ? requestedPeriod.From
+          : timestamp),
+      To = requestedPeriod.To,
+    };
+
+  private Task<IEnumerable<DashboardMeasurement>>
+  GetCachedDeviceDashboardMeasurementsAsync(
+      string deviceId,
+      Period period) =>
+    GetCachedDeviceAsync(deviceId)
+      .ThenWhenNonNullAwait(device => Providers
+        .Find(provider => provider.Source == provider.Source)
+        .WhenNonNull(provider => provider
+          .GetMeasurementsAsync(
+            device.ToProvisionDevice(),
+            period)
+          .SelectMany(bucket => bucket
+            .Select(measurement => measurement
+              .ToDashboardMeasurement())
+            .ToAsyncEnumerable())
+          .AwaitValue()
+          .NullableTask()))
+      .ThenWhenNull(Enumerable.Empty<DashboardMeasurement>());
+
+  private IEnumerable<DashboardMeasurement>
+  GetCachedDeviceDashboardMeasurements(
+      string deviceId,
+      Period period) =>
+    GetCachedDeviceDashboardMeasurementsAsync(
+        deviceId,
+        period)
+      .Block();
+
+  private Task<IEnumerable<DashboardMeasurement>>
+  GetCachedDeviceDashboardMeasurementsByOwnerAsync(
+      string ownerId,
+      Period period) =>
+    GetCachedDevicesByOwnerAsync(ownerId)
+      .ThenAwait(devices => devices
+        .Select(device => Providers
+          .Find(provider => provider.Source == provider.Source)
+          .WhenNonNull(provider => provider
+            .GetMeasurementsAsync(
+              device.ToProvisionDevice(),
+              period)
+            .SelectMany(bucket => bucket
+              .Select(measurement => measurement
+                .ToDashboardMeasurement())
+              .ToAsyncEnumerable())
+            .AwaitValue()))
+        .AwaitValue()
+        .Then(Enumerables.Flatten));
+
+  private IEnumerable<DashboardMeasurement>
+  GetCachedDeviceDashboardMeasurementsByOwner(
+      string ownerId,
+      Period period) =>
+    GetCachedDeviceDashboardMeasurementsByOwnerAsync(
+        ownerId,
+        period)
+      .Block();
+
+  private Task<IEnumerable<DashboardMeasurement>>
+  GetCachedDeviceDashboardMeasurementsByOwnerUserAsync(
+      string ownerUserId,
+      Period period) =>
+    GetCachedDevicesByOwnerUserAsync(ownerUserId)
+      .ThenAwait(devices => devices
+        .Select(device => Providers
+          .Find(provider => provider.Source == provider.Source)
+          .WhenNonNull(provider => provider
+            .GetMeasurementsAsync(
+              device.ToProvisionDevice(),
+              period)
+            .SelectMany(bucket => bucket
+              .Select(measurement => measurement
+                .ToDashboardMeasurement())
+              .ToAsyncEnumerable())
+            .AwaitValue()))
+        .AwaitValue()
+        .Then(Enumerables.Flatten));
+
+  private IEnumerable<DashboardMeasurement>
+  GetCachedDeviceDashboardMeasurementsByOwnerUser(
+      string ownerUserId,
+      Period period) =>
+    GetCachedDeviceDashboardMeasurementsByOwnerUserAsync(
+        ownerUserId,
+        period)
+      .Block();
 }
 
 public partial class ElasticsearchClient

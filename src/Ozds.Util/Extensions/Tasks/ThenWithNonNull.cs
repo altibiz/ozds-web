@@ -11,7 +11,7 @@ public static partial class Tasks
     (await @this).WithNonNull(@this => action(@this));
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<T?> ThenWithNonNull<T>(
+  public static async ValueTask<T?> ThenWithNonNull<T>(
       this ValueTask<T?> @this,
       Action<T> action) =>
     (await @this).WithNonNull(@this => action(@this));
@@ -23,7 +23,7 @@ public static partial class Tasks
     await (await @this).WithNonNullAsync(@this => action(@this));
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<T?> ThenWithNonNullAwait<T>(
+  public static async ValueTask<T?> ThenWithNonNullAwait<T>(
       this ValueTask<T?> @this,
       Func<T, ValueTask> action) =>
     await (await @this).WithNonNullAsync(@this => action(@this));

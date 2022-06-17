@@ -29,25 +29,25 @@ public static partial class Tasks
     await (await @this).WhenNullAsync(@default);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<T> ThenWhenNull<T>(
+  public static async ValueTask<T> ThenWhenNull<T>(
       this ValueTask<T?> @this,
       T @default) =>
     (await @this).WhenNull(@default);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<T> ThenWhenNull<T>(
+  public static async ValueTask<T> ThenWhenNull<T>(
       this ValueTask<T?> @this,
       ValueTask<T> @default) =>
     await (await @this).WhenNullAsync(@default);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<T> ThenWhenNull<T>(
+  public static async ValueTask<T> ThenWhenNull<T>(
       this ValueTask<T?> @this,
       Func<T> @default) =>
     (await @this).WhenNull(@default);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<T> ThenWhenNullAwait<T>(
+  public static async ValueTask<T> ThenWhenNullAwait<T>(
       this ValueTask<T?> @this,
       Func<ValueTask<T>> @default) =>
     await (await @this).WhenNullAsync(@default);

@@ -14,7 +14,7 @@ public static partial class Tasks
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task After(
+  public static async ValueTask After(
       this ValueTask @this,
       Action @do)
   {
@@ -32,7 +32,7 @@ public static partial class Tasks
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task AfterAwait(
+  public static async ValueTask AfterAwait(
       this ValueTask @this,
       Func<ValueTask> @do)
   {
@@ -50,7 +50,7 @@ public static partial class Tasks
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<TOut> Then<TOut>(
+  public static async ValueTask<TOut> Then<TOut>(
       this ValueTask @this,
       Func<TOut> @do)
   {
@@ -68,7 +68,7 @@ public static partial class Tasks
   }
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<TOut> ThenAwait<TOut>(
+  public static async ValueTask<TOut> ThenAwait<TOut>(
       this ValueTask @this,
       Func<ValueTask<TOut>> @do)
   {
@@ -83,7 +83,7 @@ public static partial class Tasks
     @do(await @this);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<TOut> Then<TIn, TOut>(
+  public static async ValueTask<TOut> Then<TIn, TOut>(
       this ValueTask<TIn> @this,
       Func<TIn, TOut> @do) =>
     @do(await @this);
@@ -95,7 +95,7 @@ public static partial class Tasks
     await @do(await @this);
 
   [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static async Task<TOut> ThenAwait<TIn, TOut>(
+  public static async ValueTask<TOut> ThenAwait<TIn, TOut>(
       this ValueTask<TIn> @this,
       Func<TIn, ValueTask<TOut>> @do) =>
     await @do(await @this);
