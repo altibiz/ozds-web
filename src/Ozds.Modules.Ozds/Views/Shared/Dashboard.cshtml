@@ -1,8 +1,11 @@
+@using Microsoft.Extensions.Hosting
 @using Ozds.Elasticsearch
 @using Ozds.Extensions
 @using Ozds.Modules.Ozds
 
 @model InitialQuery<IEnumerable<DashboardMeasurement>>
+
+@inject IHostEnvironment Env
 
 @if (Model.Result.EmptyEnumerable())
 {
@@ -11,6 +14,22 @@
   </span>
   return;
 }
+
+<div class="d-flex flex-row justify-content-between">
+  <h5>
+    @T["Period"] :
+  </h5>
+  <div>
+    <span id="period-from-value">
+      @Model.Variables.Period.From.ToString()
+    </span>
+    <!-- TODO: something better for the dash here -->
+    <span>-</span>
+    <span id="period-to-value">
+      @Model.Variables.Period.To.ToString()
+    </span>
+  </div>
+</div>
 
 <div class="d-flex flex-column">
   <h5>
@@ -29,7 +48,7 @@
           <strong style="color: Red;">
             @T["Power"] (kW) :
           </strong>
-          <span>
+          <span id="power-value">
             @decimal.Round(Model.Result.Last().Data.Power, 2)
           </span>
           <span>
@@ -40,7 +59,7 @@
           <strong style="color: Blue;">
             @T["Energy"] (kWh) :
           </strong>
-          <span>
+          <span id="energy-value">
             @decimal.Round(Model.Result.Last().Data.Energy, 2)
           </span>
         </div>
@@ -72,7 +91,7 @@
           <strong style="color: Green;">
             @T["PowerL1"] (kW) :
           </strong>
-          <span>
+          <span id="powerL1-value">
             @decimal.Round(Model.Result.Last().Data.PowerL1, 2)
           </span>
           <span>
@@ -83,7 +102,7 @@
           <strong style="color: Orange;">
             @T["PowerL2"] (kW) :
           </strong>
-          <span>
+          <span id="powerL2-value">
             @decimal.Round(Model.Result.Last().Data.PowerL2, 2)
           </span>
           <span>
@@ -94,7 +113,7 @@
           <strong style="color: Cyan;">
             @T["PowerL3"] (kW) :
           </strong>
-          <span>
+          <span id="powerL3-value">
             @decimal.Round(Model.Result.Last().Data.PowerL3, 2)
           </span>
           <span>
@@ -129,7 +148,7 @@
           <strong style="color: Green;">
             @T["CurrentL1"] (A) :
           </strong>
-          <span>
+          <span id="currentL1-value">
             @decimal.Round(Model.Result.Last().Data.CurrentL1, 2)
           </span>
           <span>
@@ -140,7 +159,7 @@
           <strong style="color: Orange;">
             @T["CurrentL2"] (A) :
           </strong>
-          <span>
+          <span id="currentL2-value">
             @decimal.Round(Model.Result.Last().Data.CurrentL2, 2)
           </span>
           <span>
@@ -151,7 +170,7 @@
           <strong style="color: Cyan;">
             @T["CurrentL3"] (A) :
           </strong>
-          <span>
+          <span id="currentL3-value">
             @decimal.Round(Model.Result.Last().Data.CurrentL3, 2)
           </span>
           <span>
@@ -518,12 +537,6 @@
         }),
     })
 
-  const createDoughnut = (value, max) => [value, max - value];
-  const updateDoughnut = (doughnut, value) => {
-    doughnut[0] = value[0];
-    doughnut[1] = value[1];
-  }
-
   const updateCharts = (measurements, doughnuts, max, culture, charts) => {
     charts.measurements.push(...measurements);
     charts.cumulativeLines.update();
@@ -543,20 +556,93 @@
     return charts;
   };
 
-  const createDoughnuts = (measurement, max, culture) =>
+  const createDoughnut = (value, max) => [value, max - value];
+  const updateDoughnut = (doughnut, value) => {
+    doughnut[0] = value[0];
+    doughnut[1] = value[1];
+  };
+
+  const createDoughnuts = (last, max, culture) =>
     ({
-      energy: createDoughnut(measurement.data.energy, max.energy),
-      power: createDoughnut(measurement.data.power, max.power),
-      powerL1: createDoughnut(measurement.data.powerL1, max.power),
-      powerL2: createDoughnut(measurement.data.powerL2, max.power),
-      powerL3: createDoughnut(measurement.data.powerL3, max.power),
-      currentL1: createDoughnut(measurement.data.currentL1, max.current),
-      currentL2: createDoughnut(measurement.data.currentL2, max.current),
-      currentL3: createDoughnut(measurement.data.currentL3, max.current),
-      voltageL1: createDoughnut(measurement.data.voltageL1, max.voltage),
-      voltageL2: createDoughnut(measurement.data.voltageL2, max.voltage),
-      voltageL3: createDoughnut(measurement.data.voltageL3, max.voltage),
+      energy: createDoughnut(last.data.energy, max.energy),
+      power: createDoughnut(last.data.power, max.power),
+      powerL1: createDoughnut(last.data.powerL1, max.power),
+      powerL2: createDoughnut(last.data.powerL2, max.power),
+      powerL3: createDoughnut(last.data.powerL3, max.power),
+      currentL1: createDoughnut(last.data.currentL1, max.current),
+      currentL2: createDoughnut(last.data.currentL2, max.current),
+      currentL3: createDoughnut(last.data.currentL3, max.current),
+      voltageL1: createDoughnut(last.data.voltageL1, max.voltage),
+      voltageL2: createDoughnut(last.data.voltageL2, max.voltage),
+      voltageL3: createDoughnut(last.data.voltageL3, max.voltage),
     });
+
+  const createOrUpdateCharts = (measurements, period, max, culture, charts) =>
+    charts ?
+      updateCharts(
+        measurements,
+        createDoughnuts(last(measurements), max, culture),
+        max,
+        culture,
+        charts)
+    : createCharts(
+        measurements,
+        createDoughnuts(last(measurements), max, culture),
+        max,
+        culture);
+
+  const createValues = (last, period, max, culture) =>
+    ({
+      periodFrom: document.getElementById("period-from-value"),
+      periodTo: document.getElementById("period-to-value"),
+
+      energy: document.getElementById("energy-value"),
+      power: document.getElementById("power-value"),
+
+      powerL1: document.getElementById("powerL1-value"),
+      powerL2: document.getElementById("powerL2-value"),
+      powerL3: document.getElementById("powerL3-value"),
+
+      currentL1: document.getElementById("currentL1-value"),
+      currentL2: document.getElementById("currentL2-value"),
+      currentL3: document.getElementById("currentL3-value"),
+    });
+
+  const updateValues = (last, period, max, culture, values) => {
+    values.periodFrom.innerHTML = period.from
+      .toLocal(culture)
+      .toLocaleString(luxon.DateTime.DATETIME_SHORT_WITH_SECONDS);
+    values.periodTo.innerHTML = period.to
+      .toLocal(culture)
+      .toLocaleString(luxon.DateTime.DATETIME_SHORT_WITH_SECONDS);
+
+    values.energy.innerHTML = last.data.energy.toFixed(2).toString();
+    values.power.innerHTML = last.data.power.toFixed(2).toString();
+
+    values.powerL1.innerHTML = last.data.powerL1.toFixed(2).toString();
+    values.powerL2.innerHTML = last.data.powerL2.toFixed(2).toString();
+    values.powerL3.innerHTML = last.data.powerL3.toFixed(2).toString();
+
+    values.currentL1.innerHTML = last.data.currentL1.toFixed(2).toString();
+    values.currentL2.innerHTML = last.data.currentL2.toFixed(2).toString();
+    values.currentL3.innerHTML = last.data.currentL3.toFixed(2).toString();
+
+    return values;
+  };
+
+  const createOrUpdateValues = (measurements, period, max, culture, values) =>
+    values ?
+      updateValues(
+        last(measurements),
+        period,
+        max,
+        culture,
+        values)
+    : createValues(
+        last(measurements),
+        period,
+        max,
+        culture);
 
   const getMeasurements = async (model, period) =>
     period ?
@@ -579,34 +665,19 @@
         to: luxon.DateTime.now()
       };
 
-  const last = (array) => array[array.length - 1];
-  const createOrUpdateCharts = (measurements, max, culture, charts) =>
-    charts ?
-      updateCharts(
-        measurements,
-        createDoughnuts(last(measurements), max, culture),
-        max,
-        culture,
-        charts)
-    : createCharts(
-        measurements,
-        createDoughnuts(last(measurements), max, culture),
-        max,
-        culture);
+  const update = async ({model, period, max, culture, charts, values}) => {
+    const measurements = await getMeasurements(model, period);
 
-  const update = async ({model, max, culture, charts, period}) =>
-    ({
-      charts: createOrUpdateCharts(
-        await getMeasurements(model, period),
-        max,
-        culture,
-        charts),
+    return {
+      charts: createOrUpdateCharts(measurements, period, max, culture, charts),
+      values: createOrUpdateValues(measurements, period, max, culture, values),
       period: updatePeriod(model, period)
-    });
+    };
+  };
 
   const intervalNow = (callback, timeout) => {
     callback();
-    setInterval(callback, timeout);
+    return setInterval(callback, timeout);
   }
 
   window.onload = () => {
@@ -622,15 +693,35 @@
 
     const culture = '@Html.Raw(Orchard.CultureName())';
 
+    const paramsString = `@(Html.Raw(Json.Serialize(
+      new
+      {
+        IsDev = Env.IsDevelopment(),
+      })))`;
+    const params = JSON.parse(paramsString);
+    // TODO: tune this
+    const interval = params.isDev ? 1000 : 10000;
+
     let period = null;
     let charts = null;
+    let values = null;
     intervalNow(async () => {
-      const updated = await update({model, max, culture, charts, period});
+      const updated = await update(
+        {
+          model,
+          period,
+          max,
+          culture,
+          charts,
+          values
+        });
       period = updated.period;
       charts = updated.charts;
-      // TODO: tune this
-    }, 10000);
+      values = updated.values;
+    }, interval);
   }
+
+  const last = (array) => array[array.length - 1];
 </script>
 <script asp-name="ozdstheme-luxon" at="Head"></script>
 <script asp-name="ozdstheme-chart" at="Head"></script>
