@@ -15,23 +15,22 @@
   return;
 }
 
-<div class="d-flex flex-row justify-content-between">
+<div class="d-flex flex-column flex-lg-row justify-content-between mt-2">
   <h5>
-    @T["Period"] :
+    @T["Period"]
   </h5>
-  <div>
+  <div class="d-flex flex-column flex-md-row">
     <span id="period-from-value">
       @Model.Variables.Period.From.ToString()
     </span>
-    <!-- TODO: something better for the dash here -->
-    <span>-</span>
+    <span class="d-none d-md-block">&nbsp;-&nbsp;</span>
     <span id="period-to-value">
       @Model.Variables.Period.To.ToString()
     </span>
   </div>
 </div>
 
-<div class="d-flex flex-column">
+<div class="d-flex flex-column mt-5">
   <h5>
     @T["Cumulative"]
   </h5>
@@ -46,7 +45,7 @@
       <div style="margin-top: -50px;">
         <div>
           <strong style="color: Red;">
-            @T["Power"] (kW) :
+            @T["Power"] (kW)
           </strong>
           <span id="power-value">
             @decimal.Round(Model.Result.Last().Data.Power, 2)
@@ -57,7 +56,7 @@
         </div>
         <div>
           <strong style="color: Blue;">
-            @T["Energy"] (kWh) :
+            @T["Energy"] (kWh)
           </strong>
           <span id="energy-value">
             @decimal.Round(Model.Result.Last().Data.Energy, 2)
@@ -88,8 +87,8 @@
       </div>
       <div style="margin-top: -50px;">
         <div>
-          <strong style="color: Green;">
-            @T["PowerL1"] (kW) :
+          <strong style="color: Red;">
+            @T["PowerL1"] (kW)
           </strong>
           <span id="powerL1-value">
             @decimal.Round(Model.Result.Last().Data.PowerL1, 2)
@@ -99,8 +98,8 @@
           </span>
         </div>
         <div>
-          <strong style="color: Orange;">
-            @T["PowerL2"] (kW) :
+          <strong style="color: Blue;">
+            @T["PowerL2"] (kW)
           </strong>
           <span id="powerL2-value">
             @decimal.Round(Model.Result.Last().Data.PowerL2, 2)
@@ -110,8 +109,8 @@
           </span>
         </div>
         <div>
-          <strong style="color: Cyan;">
-            @T["PowerL3"] (kW) :
+          <strong style="color: Green;">
+            @T["PowerL3"] (kW)
           </strong>
           <span id="powerL3-value">
             @decimal.Round(Model.Result.Last().Data.PowerL3, 2)
@@ -145,8 +144,8 @@
       </div>
       <div style="margin-top: -50px;">
         <div>
-          <strong style="color: Green;">
-            @T["CurrentL1"] (A) :
+          <strong style="color: Red;">
+            @T["CurrentL1"] (A)
           </strong>
           <span id="currentL1-value">
             @decimal.Round(Model.Result.Last().Data.CurrentL1, 2)
@@ -156,8 +155,8 @@
           </span>
         </div>
         <div>
-          <strong style="color: Orange;">
-            @T["CurrentL2"] (A) :
+          <strong style="color: Blue;">
+            @T["CurrentL2"] (A)
           </strong>
           <span id="currentL2-value">
             @decimal.Round(Model.Result.Last().Data.CurrentL2, 2)
@@ -167,8 +166,8 @@
           </span>
         </div>
         <div>
-          <strong style="color: Cyan;">
-            @T["CurrentL3"] (A) :
+          <strong style="color: Green;">
+            @T["CurrentL3"] (A)
           </strong>
           <span id="currentL3-value">
             @decimal.Round(Model.Result.Last().Data.CurrentL3, 2)
@@ -305,8 +304,8 @@
                   yAxisKey: "data.powerL1"
                 },
                 yAxisID: "power",
-                borderColor: "Green",
-                backgroundColor: "Green",
+                borderColor: "Red",
+                backgroundColor: "Red",
               },
               {
                 label: '@T["PowerL2"].Value (kW)',
@@ -316,8 +315,8 @@
                   yAxisKey: "data.powerL2"
                 },
                 yAxisID: "power",
-                borderColor: "Orange",
-                backgroundColor: "Orange",
+                borderColor: "Blue",
+                backgroundColor: "Blue",
               },
               {
                 label: '@T["PowerL3"].Value (kW)',
@@ -327,8 +326,8 @@
                   yAxisKey: "data.powerL3"
                 },
                 yAxisID: "power",
-                borderColor: "Cyan",
-                backgroundColor: "Cyan",
+                borderColor: "Green",
+                backgroundColor: "Green",
               },
             ],
           },
@@ -359,17 +358,17 @@
               {
                 label: [ '@T["PowerL1"].Value (kW)', '' ],
                 data: doughnuts.powerL1,
-                backgroundColor: ["Green", "#DDDDDD"]
+                backgroundColor: ["Red", "#DDDDDD"]
               },
               {
                 label: [ '@T["PowerL2"].Value (kW)', '' ],
                 data: doughnuts.powerL2,
-                backgroundColor: ["Orange", "#DDDDDD"]
+                backgroundColor: ["Blue", "#DDDDDD"]
               },
               {
                 label: [ '@T["PowerL3"].Value (kW)', '' ],
                 data: doughnuts.powerL3,
-                backgroundColor: ["Cyan", "#DDDDDD"]
+                backgroundColor: ["Green", "#DDDDDD"]
               },
             ],
           },
@@ -397,8 +396,8 @@
                   yAxisKey: "data.currentL1"
                 },
                 yAxisID: "current",
-                borderColor: "Green",
-                backgroundColor: "Green",
+                borderColor: "Red",
+                backgroundColor: "Red",
               },
               {
                 label: '@T["CurrentL2"].Value (kW)',
@@ -408,8 +407,8 @@
                   yAxisKey: "data.currentL2"
                 },
                 yAxisID: "current",
-                borderColor: "Orange",
-                backgroundColor: "Orange",
+                borderColor: "Blue",
+                backgroundColor: "Blue",
                 yAxisID: "current",
               },
               {
@@ -420,8 +419,8 @@
                   yAxisKey: "data.currentL3"
                 },
                 yAxisID: "current",
-                borderColor: "Cyan",
-                backgroundColor: "Cyan",
+                borderColor: "Green",
+                backgroundColor: "Green",
                 yAxisID: "current",
               },
             ],
@@ -453,17 +452,17 @@
               {
                 label: [ '@T["CurrentL1"].Value (kW)', '' ],
                 data: doughnuts.currentL1,
-                backgroundColor: ["Green", "#DDDDDD"]
+                backgroundColor: ["Red", "#DDDDDD"]
               },
               {
                 label: [ '@T["CurrentL2"].Value (kW)', '' ],
                 data: doughnuts.currentL2,
-                backgroundColor: ["Orange", "#DDDDDD"]
+                backgroundColor: ["Blue", "#DDDDDD"]
               },
               {
                 label: [ '@T["CurrentL3"].Value (kW)', '' ],
                 data: doughnuts.currentL3,
-                backgroundColor: ["Cyan", "#DDDDDD"]
+                backgroundColor: ["Green", "#DDDDDD"]
               },
             ],
           },
@@ -491,8 +490,8 @@
                   yAxisKey: "data.voltageL1"
                 },
                 yAxisID: "voltage",
-                borderColor: "Green",
-                backgroundColor: "Green",
+                borderColor: "Red",
+                backgroundColor: "Red",
               },
               {
                 label: '@T["VoltageL2"].Value (V)',
@@ -502,8 +501,8 @@
                   yAxisKey: "data.voltageL2"
                 },
                 yAxisID: "voltage",
-                borderColor: "Orange",
-                backgroundColor: "Orange",
+                borderColor: "Blue",
+                backgroundColor: "Blue",
               },
               {
                 label: '@T["VoltageL3"].Value (V)',
@@ -513,8 +512,8 @@
                   yAxisKey: "data.voltageL3"
                 },
                 yAxisID: "voltage",
-                borderColor: "Cyan",
-                backgroundColor: "Cyan",
+                borderColor: "Green",
+                backgroundColor: "Green",
               },
             ],
           },
@@ -681,18 +680,15 @@
   }
 
   const shouldUpdate = (model) =>
-    return GraphQL
-      .deserializeDateTime(model.variables.to)
+    GraphQL
+      .deserializeDateTime(model.variables.period.to)
       .diff(GraphQL
-        .deserializeDateTime(model.variables.from),
-        'minutes') > 10;
+        .deserializeDateTime(model.variables.period.from),
+        'minutes').minutes <= 60;
 
   window.onload = () => {
     const modelString = '@Html.Raw(Json.Serialize(Model))';
     const model = JSON.parse(modelString);
-    if (!shouldUpdate(model)) {
-      return;
-    }
 
     const maxString = `{
       "power": @IDashboardMeasurementProvider.MaxPower,
@@ -710,14 +706,13 @@
       })))`;
     const params = JSON.parse(paramsString);
     // TODO: tune this
-    const interval = params.isDev ? 1000 : 10000;
+    const timeout = params.isDev ? 1000 : 10000;
 
     let period = null;
     let charts = null;
     let values = null;
-    intervalNow(async () => {
-      const updated = await update(
-        {
+    const callback = async () => {
+      const updated = await update({
           model,
           period,
           max,
@@ -728,7 +723,12 @@
       period = updated.period;
       charts = updated.charts;
       values = updated.values;
-    }, interval);
+    };
+    callback();
+
+    if (shouldUpdate(model)) {
+      setInterval(callback, timeout);
+    }
   }
 
   const last = (array) => array[array.length - 1];

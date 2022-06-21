@@ -6,7 +6,9 @@ namespace Ozds.Elasticsearch;
 
 // TODO: filter nulls
 
-public partial interface IElasticsearchClient : IDashboardMeasurementProvider { }
+public partial interface IElasticsearchClient : IDashboardMeasurementProvider
+{
+}
 
 public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
@@ -246,13 +248,14 @@ public partial class ElasticsearchClient
   CreateNearRealTimePeriod(
       IEnumerable<DashboardMeasurement> storedMeasurements,
       Period requestedPeriod) =>
-    new Period
+    storedMeasurements.EmptyEnumerable() ? requestedPeriod.ClonePeriod()
+    : new Period
     {
       From = storedMeasurements
-        .MaxBy(measurement => measurement.Timestamp).Timestamp
-        .Var(timestamp =>
-          timestamp == default ? requestedPeriod.From
-          : timestamp),
+          .MaxBy(measurement => measurement.Timestamp).Timestamp
+          .Var(timestamp =>
+            timestamp == default ? requestedPeriod.From
+            : timestamp),
       To = requestedPeriod.To,
     };
 
