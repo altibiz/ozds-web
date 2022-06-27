@@ -543,6 +543,9 @@
     charts.currentLines.update();
     charts.voltageLines.update();
 
+    if (!doughnuts) {
+      return charts;
+    }
     Object
       .keys(charts.doughnuts)
       .forEach(key => updateDoughnut(
@@ -562,19 +565,20 @@
   };
 
   const createDoughnuts = (last, max, culture) =>
-    ({
-      energy: createDoughnut(last.data.energy, max.energy),
-      power: createDoughnut(last.data.power, max.power),
-      powerL1: createDoughnut(last.data.powerL1, max.power),
-      powerL2: createDoughnut(last.data.powerL2, max.power),
-      powerL3: createDoughnut(last.data.powerL3, max.power),
-      currentL1: createDoughnut(last.data.currentL1, max.current),
-      currentL2: createDoughnut(last.data.currentL2, max.current),
-      currentL3: createDoughnut(last.data.currentL3, max.current),
-      voltageL1: createDoughnut(last.data.voltageL1, max.voltage),
-      voltageL2: createDoughnut(last.data.voltageL2, max.voltage),
-      voltageL3: createDoughnut(last.data.voltageL3, max.voltage),
-    });
+    !last ? null
+    : {
+        energy: createDoughnut(last.data.energy, max.energy),
+        power: createDoughnut(last.data.power, max.power),
+        powerL1: createDoughnut(last.data.powerL1, max.power),
+        powerL2: createDoughnut(last.data.powerL2, max.power),
+        powerL3: createDoughnut(last.data.powerL3, max.power),
+        currentL1: createDoughnut(last.data.currentL1, max.current),
+        currentL2: createDoughnut(last.data.currentL2, max.current),
+        currentL3: createDoughnut(last.data.currentL3, max.current),
+        voltageL1: createDoughnut(last.data.voltageL1, max.voltage),
+        voltageL2: createDoughnut(last.data.voltageL2, max.voltage),
+        voltageL3: createDoughnut(last.data.voltageL3, max.voltage),
+      };
 
   const createOrUpdateCharts = (measurements, period, max, culture, charts) =>
     charts ?
@@ -615,6 +619,9 @@
       .toLocal(culture)
       .toLocaleString(luxon.DateTime.DATETIME_SHORT_WITH_SECONDS);
 
+    if (!last) {
+      return values;
+    }
     values.energy.innerHTML = last.data.energy.toFixed(2).toString();
     values.power.innerHTML = last.data.power.toFixed(2).toString();
 

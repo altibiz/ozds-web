@@ -252,10 +252,10 @@ public partial class ElasticsearchClient
     : new Period
     {
       From = storedMeasurements
-          .MaxBy(measurement => measurement.Timestamp).Timestamp
-          .Var(timestamp =>
-            timestamp == default ? requestedPeriod.From
-            : timestamp),
+            .MaxBy(measurement => measurement.Timestamp).Timestamp
+            .Var(timestamp =>
+              timestamp == default ? requestedPeriod.From
+              : timestamp),
       To = requestedPeriod.To,
     };
 
@@ -265,7 +265,7 @@ public partial class ElasticsearchClient
       Period period) =>
     GetCachedDeviceAsync(deviceId)
       .ThenWhenNonNullAwait(device => Providers
-        .Find(provider => provider.Source == provider.Source)
+        .Find(provider => provider.Source == device.Source)
         .WhenNonNull(provider => provider
           .GetMeasurementsAsync(
             device.ToProvisionDevice(),
@@ -294,7 +294,7 @@ public partial class ElasticsearchClient
     GetCachedDevicesByOwnerAsync(ownerId)
       .ThenAwait(devices => devices
         .Select(device => Providers
-          .Find(provider => provider.Source == provider.Source)
+          .Find(provider => provider.Source == device.Source)
           .WhenNonNull(provider => provider
             .GetMeasurementsAsync(
               device.ToProvisionDevice(),
@@ -323,7 +323,7 @@ public partial class ElasticsearchClient
     GetCachedDevicesByOwnerUserAsync(ownerUserId)
       .ThenAwait(devices => devices
         .Select(device => Providers
-          .Find(provider => provider.Source == provider.Source)
+          .Find(provider => provider.Source == device.Source)
           .WhenNonNull(provider => provider
             .GetMeasurementsAsync(
               device.ToProvisionDevice(),
