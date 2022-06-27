@@ -17,11 +17,13 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       IEnumerable<Id> measurementIds) =>
     Elastic.Bulk(s => s
       .DeleteMany<Measurement>(measurementIds.ToStrings())
+      .RefreshInDevelopment(Env)
       .Index(MeasurementIndexName));
 
   public Task<BulkResponse> DeleteMeasurementsAsync(
       IEnumerable<Id> measurementIds) =>
     Elastic.BulkAsync(s => s
       .DeleteMany<Measurement>(measurementIds.ToStrings())
+      .RefreshInDevelopment(Env)
       .Index(MeasurementIndexName));
 }

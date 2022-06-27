@@ -129,8 +129,7 @@ public class Device : IEquatable<Device>, ICloneable
         int extractionOffsetInSeconds,
         int extractionRetries,
         int extractionTimeoutInSeconds,
-        int validationIntervalInSeconds,
-        DateTime? lastValidation = null)
+        int validationIntervalInSeconds)
     {
       MeasurementIntervalInSeconds = measurementIntervalInSeconds;
       ExtractionStart = extractionStart;
@@ -138,7 +137,6 @@ public class Device : IEquatable<Device>, ICloneable
       ExtractionRetries = extractionRetries;
       ExtractionTimeoutInSeconds = extractionTimeoutInSeconds;
       ValidationIntervalInSeconds = validationIntervalInSeconds;
-      LastValidation = lastValidation ?? DateTime.UtcNow;
     }
 
     [Number(NumberType.Integer, Name = "measurementInterval")]
@@ -158,9 +156,6 @@ public class Device : IEquatable<Device>, ICloneable
 
     [Number(NumberType.Integer, Name = "validationIntervalInSeconds")]
     public int ValidationIntervalInSeconds { get; init; }
-
-    [Date(Name = "lastValidation")]
-    public DateTime LastValidation { get; init; }
   }
 
   [ElasticsearchType(RelationName = "deviceStateData")]
@@ -228,9 +223,7 @@ public class Device : IEquatable<Device>, ICloneable
           extractionTimeoutInSeconds:
             MeasurementData.ExtractionTimeoutInSeconds,
           validationIntervalInSeconds:
-            MeasurementData.ValidationIntervalInSeconds,
-          lastValidation:
-            MeasurementData.LastValidation),
+            MeasurementData.ValidationIntervalInSeconds),
       state:
         new StateDataType(
           state: StateData.State.CloneString(),

@@ -20,23 +20,27 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
     Elastic
       .IndexAsync(log, s => s
         .OpType(OpType.Create)
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 
   public IndexResponse CreateLoadLog(LoadLog log) =>
     Elastic
       .Index(log, s => s
         .OpType(OpType.Create)
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 
   public Task<IndexResponse> CreateMissingDataLogAsync(MissingDataLog log) =>
     Elastic
       .IndexAsync(log, s => s
         .OpType(OpType.Create)
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 
   public IndexResponse CreateMissingDataLog(MissingDataLog log) =>
     Elastic
       .Index(log, s => s
         .OpType(OpType.Create)
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 }

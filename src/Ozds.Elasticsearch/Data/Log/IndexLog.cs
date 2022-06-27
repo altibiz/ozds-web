@@ -18,20 +18,24 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   public Task<IndexResponse> IndexLoadLogAsync(LoadLog log) =>
     Elastic
       .IndexAsync(log, s => s
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 
   public IndexResponse IndexLoadLog(LoadLog log) =>
     Elastic
       .Index(log, s => s
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 
   public Task<IndexResponse> IndexMissingDataLogAsync(MissingDataLog log) =>
     Elastic
       .IndexAsync(log, s => s
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 
   public IndexResponse IndexMissingDataLog(MissingDataLog log) =>
     Elastic
       .Index(log, s => s
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 }

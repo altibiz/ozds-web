@@ -14,8 +14,6 @@ public partial class ClientTest
       .Select(ExtractionDeviceExtensions.ToExtractionDevice);
     await SetupDevicesAsync(devices);
 
-    // NOTE: preparation for searching
-    Thread.Sleep(1000);
     foreach (var device in extractionDevices)
     {
       var now = DateTime.UtcNow;
@@ -50,8 +48,6 @@ public partial class ClientTest
       .Select(ExtractionDeviceExtensions.ToExtractionDevice);
     SetupDevices(devices);
 
-    // NOTE: preparation for searching
-    Thread.Sleep(1000);
     foreach (var device in extractionDevices)
     {
       var measurementsPerExtractionPlanItem = 20;
@@ -93,8 +89,6 @@ public partial class ClientTest
         To = now.AddMinutes(-5)
       };
 
-    // NOTE: preparation for searching
-    Thread.Sleep(1000);
     foreach (var device in extractionDevices)
     {
       var measurementsPerExtractionPlanItem = 20;
@@ -133,16 +127,16 @@ public partial class ClientTest
           To = missingDataNow.AddMinutes(-20)
         };
       Client.IndexMissingDataLog(
-        new MissingDataLog(
-          device.Id,
-          missingDataPeriod,
-          missingDataNextExtraction,
-          5,
-          false,
-          "Unknown error"));
+        new(
+          resource: device.Id,
+          period: missingDataPeriod,
+          nextExtraction: missingDataNextExtraction,
+          retries: 5,
+          shouldValidate: false,
+          error: new(
+            code: MissingDataLogErrorCode.Provider,
+            description: "Error fetching")));
 
-      // NOTE: preparation for searching
-      Thread.Sleep(1000);
       var measurementsPerExtractionPlanItem = 20;
       var now = DateTime.UtcNow;
       var period =

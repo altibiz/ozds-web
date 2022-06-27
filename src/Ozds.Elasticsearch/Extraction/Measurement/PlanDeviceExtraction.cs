@@ -22,7 +22,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
       await SearchExtractionMissingDataLogsAsync(
           device.Id,
           due: now,
-          retries: device.ExtractionRetries,
+          maxRetries: device.ExtractionRetries,
           period: period,
           size: missingDataExtractionPlanItemsLimit)
         .Then(response => response.Sources());
@@ -58,7 +58,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
       SearchExtractionMissingDataLogs(
           device.Id,
           due: now,
-          retries: device.ExtractionRetries,
+          maxRetries: device.ExtractionRetries,
           period: period,
           size: missingDataExtractionPlanItemsLimit)
         .Sources();
@@ -111,6 +111,10 @@ public partial class ElasticsearchClient : IElasticsearchClient
       }.LimitTo(TimeSpan
         .FromSeconds(loadExtractionSpanLimitInSeconds));
 
+    var shouldValidate =
+      loadLog?.LastValidation is null ? true
+      : now >= loadLog.LastValidation + device.ValidationInterval;
+
     return
       new ExtractionPlan
       {
@@ -118,16 +122,8 @@ public partial class ElasticsearchClient : IElasticsearchClient
         Period = optimizedPeriod,
         Items =
           missingDataLogs
-            .Select(missingDataLog =>
-              new ExtractionPlanItem
-              {
-                Period = missingDataLog.Period,
-                Retries = missingDataLog.Retries,
-                Timeout = device.ExtractionTimeout,
-                Due = missingDataLog.NextExtraction,
-                ShouldValidate = missingDataLog.ShouldValidate,
-                Error = missingDataLog.Error
-              })
+            .Select(missingDataLog => missingDataLog
+              .ToExtractionPlanItemFor(device))
             .Concat(optimizedPeriod
               .SplitAscending(
                 device.MeasurementInterval *
@@ -139,8 +135,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
                   Retries = 0,
                   Timeout = device.ExtractionTimeout,
                   Due = now,
-                  ShouldValidate =
-                    now >= device.LastValidation + device.ValidationInterval,
+                  ShouldValidate = shouldValidate,
                 }))
       };
   }

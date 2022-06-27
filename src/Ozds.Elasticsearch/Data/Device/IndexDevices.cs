@@ -17,6 +17,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
     Elastic
       .BulkAsync(s => s
         .IndexMany(devices)
+        .RefreshInDevelopment(Env)
         .Index(DeviceIndexName))
       .ThenWith(_ => CreateLoadLogsAsync(
         devices.Select(device =>
@@ -32,6 +33,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
     Elastic
       .Bulk(s => s
         .IndexMany(devices)
+        .RefreshInDevelopment(Env)
         .Index(DeviceIndexName))
       .With(_ => CreateLoadLogs(
         devices.Select(device =>

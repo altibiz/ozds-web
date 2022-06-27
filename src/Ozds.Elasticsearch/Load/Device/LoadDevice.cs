@@ -4,93 +4,79 @@ public partial interface IElasticsearchClient : IDeviceLoader { }
 
 public partial class ElasticsearchClient : IElasticsearchClient
 {
-  public Task LoadDeviceAsync(
-      string source,
-      string sourceDeviceId,
-      string phase,
-      DeviceSourceDeviceData? sourceDeviceData,
-      DeviceOwnerData owner,
-      DeviceMeasurementData measurement,
-      DeviceStateData state) =>
+  public Task LoadDeviceAsync(LoadDevice device) =>
     IndexDeviceAsync(
       new Device(
         source:
-          source,
+          device.source,
         sourceDeviceId:
-          sourceDeviceId,
+          device.sourceDeviceId,
         sourceDeviceData:
           new Device.SourceDeviceDataType
           {
-            OwnerId = sourceDeviceData?.ownerId
+            OwnerId = device.sourceDeviceData?.ownerId
           },
-        phase: phase,
+        phase: device.phase,
         owner:
           new Device.OwnerDataType(
-            @operator: owner.@operator,
-            centerId: owner.centerId,
-            centerUserId: owner.centerUserId,
-            ownerId: owner.ownerId,
-            ownerUserId: owner.ownerUserId),
+            @operator: device.owner.@operator,
+            centerId: device.owner.centerId,
+            centerUserId: device.owner.centerUserId,
+            ownerId: device.owner.ownerId,
+            ownerUserId: device.owner.ownerUserId),
         measurement:
           new Device.MeasurementDataType(
             measurementIntervalInSeconds:
-              measurement.measurementIntervalInSeconds,
+              device.measurement.measurementIntervalInSeconds,
             extractionStart:
-              measurement.extractionStart,
+              device.measurement.extractionStart,
             extractionOffsetInSeconds:
-              measurement.extractionOffsetInSeconds,
+              device.measurement.extractionOffsetInSeconds,
             extractionRetries:
-              measurement.extractionRetries,
+              device.measurement.extractionRetries,
             extractionTimeoutInSeconds:
-              measurement.extractionTimeoutInSeconds,
+              device.measurement.extractionTimeoutInSeconds,
             validationIntervalInSeconds:
-              measurement.validationIntervalInSeconds),
+              device.measurement.validationIntervalInSeconds),
         state:
           new Device.StateDataType(
-            state.state)));
+            device.state.state)));
 
-  public void LoadDevice(
-      string source,
-      string sourceDeviceId,
-      string phase,
-      DeviceSourceDeviceData? sourceDeviceData,
-      DeviceOwnerData owner,
-      DeviceMeasurementData measurement,
-      DeviceStateData state) =>
+  public void LoadDevice(LoadDevice device) =>
     IndexDevice(
       new Device(
         source:
-          source,
+          device.source,
         sourceDeviceId:
-          sourceDeviceId,
+          device.sourceDeviceId,
         sourceDeviceData:
           new Device.SourceDeviceDataType
           {
-            OwnerId = sourceDeviceData?.ownerId
+            OwnerId = device.sourceDeviceData?.ownerId
           },
-        phase: phase,
+        phase: device.phase,
         owner:
           new Device.OwnerDataType(
-            @operator: owner.@operator,
-            centerId: owner.centerId,
-            centerUserId: owner.centerUserId,
-            ownerId: owner.ownerId,
-            ownerUserId: owner.ownerUserId),
+            @operator: device.owner.@operator,
+            centerId: device.owner.centerId,
+            centerUserId: device.owner.centerUserId,
+            ownerId: device.owner.ownerId,
+            ownerUserId: device.owner.ownerUserId),
         measurement:
           new Device.MeasurementDataType(
             measurementIntervalInSeconds:
-              measurement.measurementIntervalInSeconds,
+              device.measurement.measurementIntervalInSeconds,
             extractionStart:
-              measurement.extractionStart,
+              device.measurement.extractionStart,
             extractionOffsetInSeconds:
-              measurement.extractionOffsetInSeconds,
+              device.measurement.extractionOffsetInSeconds,
             extractionRetries:
-              measurement.extractionRetries,
+              device.measurement.extractionRetries,
             extractionTimeoutInSeconds:
-              measurement.extractionTimeoutInSeconds,
+              device.measurement.extractionTimeoutInSeconds,
             validationIntervalInSeconds:
-              measurement.validationIntervalInSeconds),
+              device.measurement.validationIntervalInSeconds),
         state:
           new Device.StateDataType(
-            state.state)));
+            device.state.state)));
 }

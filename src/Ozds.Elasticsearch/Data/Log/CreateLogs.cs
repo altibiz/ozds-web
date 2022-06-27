@@ -24,6 +24,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
     Elastic
       .BulkAsync(s => s
         .CreateMany(logs)
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 
   public BulkResponse CreateLoadLogs(
@@ -31,6 +32,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
     Elastic
       .Bulk(s => s
         .CreateMany(logs)
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 
   public Task<BulkResponse> CreateMissingDataLogsAsync(
@@ -38,6 +40,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
     Elastic
       .BulkAsync(s => s
         .CreateMany(logs)
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 
   public BulkResponse CreateMissingDataLogs(
@@ -45,5 +48,6 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
     Elastic
       .Bulk(s => s
         .CreateMany(logs)
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 }

@@ -20,23 +20,27 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
     Elastic.DeleteAsync(
       DocumentPath<LoadLog>.Id(id),
       s => s
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 
   public DeleteResponse DeleteLoadLog(Id id) =>
     Elastic.Delete(
       DocumentPath<LoadLog>.Id(id),
       s => s
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 
   public Task<DeleteResponse> DeleteMissingDataLogAsync(Id id) =>
     Elastic.DeleteAsync(
       DocumentPath<MissingDataLog>.Id(id),
       s => s
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 
   public DeleteResponse DeleteMissingDataLog(Id id) =>
     Elastic.Delete(
       DocumentPath<MissingDataLog>.Id(id),
       s => s
+        .RefreshInDevelopment(Env)
         .Index(LogIndexName));
 }

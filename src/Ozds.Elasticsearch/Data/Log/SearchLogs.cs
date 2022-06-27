@@ -66,7 +66,7 @@ public partial interface IElasticsearchClient
   SearchExtractionMissingDataLogsAsync(
       string resource,
       DateTime due,
-      int retries,
+      int maxRetries,
       int? size = null,
       Period? period = null);
 
@@ -74,7 +74,7 @@ public partial interface IElasticsearchClient
   SearchExtractionMissingDataLogs(
       string resource,
       DateTime due,
-      int retries,
+      int maxRetries,
       int? size = null,
       Period? period = null);
 };
@@ -257,7 +257,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   SearchExtractionMissingDataLogs(
       string resource,
       DateTime due,
-      int retries,
+      int maxRetries,
       int? size = null,
       Period? period = null) =>
     Elastic.Search<MissingDataLog>(s => s
@@ -273,7 +273,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
           .LessThanOrEquals(due)) && q
         .Range(r => r
           .Field(f => f.Retries)
-          .LessThan(retries)) && q
+          .LessThan(maxRetries)) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
       .Size(size ?? IElasticsearchClient.MaxSize)
@@ -285,7 +285,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
   SearchExtractionMissingDataLogsAsync(
       string resource,
       DateTime due,
-      int retries,
+      int maxRetries,
       int? size = null,
       Period? period = null) =>
     Elastic.SearchAsync<MissingDataLog>(s => s
@@ -301,7 +301,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
           .LessThanOrEquals(due)) && q
         .Range(r => r
           .Field(f => f.Retries)
-          .LessThan(retries)) && q
+          .LessThan(maxRetries)) && q
         .Term(t => t.Resource, resource) && q
         .Term(t => t.LogType, MissingDataLog.Type))
       .Size(size ?? IElasticsearchClient.MaxSize)

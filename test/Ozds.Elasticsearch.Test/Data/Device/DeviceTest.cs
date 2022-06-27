@@ -108,9 +108,6 @@ public partial class ClientTest
     var indexedMeasurementIds =
       deviceIndexResponse.Items.Ids().ToStrings();
     Assert.Equal(deviceIds, indexedMeasurementIds);
-
-    // NOTE: preparation for search
-    Thread.Sleep(1000);
   }
 
   [Theory]
@@ -126,9 +123,6 @@ public partial class ClientTest
     var indexedMeasurementIds =
       deviceIndexResponse.Items.Ids().ToStrings();
     Assert.Equal(deviceIds, indexedMeasurementIds);
-
-    // NOTE: preparation for search
-    Thread.Sleep(1000);
   }
 
   [Theory]
@@ -146,9 +140,6 @@ public partial class ClientTest
 
     var gotDevice = deviceGetResponse.Source;
     Assert.Equal(device, gotDevice);
-
-    // NOTE: preparation for search
-    Thread.Sleep(1000);
   }
 
   [Theory]
@@ -166,8 +157,5 @@ public partial class ClientTest
 
     var gotDevice = deviceGetResponse.Source;
     Assert.Equal(device, gotDevice);
-
-    // NOTE: preparation for search
-    Thread.Sleep(1000);
   }
 }

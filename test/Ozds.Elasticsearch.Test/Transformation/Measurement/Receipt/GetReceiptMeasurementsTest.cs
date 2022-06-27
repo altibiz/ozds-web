@@ -1,11 +1,9 @@
 using Xunit;
-using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch.Test;
 
 public partial class ClientTest
 {
-  // TODO: test
   [Theory]
   [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
   public async Task GetReceiptMeasurementsAsyncTest(
@@ -13,11 +11,26 @@ public partial class ClientTest
       IEnumerable<Measurement> measurements,
       Period period)
   {
-    period.Unused();
     await SetupMeasurementsAsync(device, measurements);
+
+    var energyMeasurements = await Client
+      .GetEnergyMeasurementsAsync(device.Id, period);
+    Assert.Equal(
+      measurements.First().Timestamp,
+      energyMeasurements.Begin.Timestamp);
+    Assert.Equal(
+      measurements.Last().Timestamp,
+      energyMeasurements.End.Timestamp);
+
+    var powerMeasurement = await Client
+      .GetPowerMeasurementAsync(device.Id, period);
+    Assert.Equal(
+      measurements
+        .Select(measurement => measurement.MeasurementData.powerIn)
+        .Max(),
+      powerMeasurement.Power);
   }
 
-  // TODO: test
   [Theory]
   [MemberData(nameof(Data.GenerateMeasurements), MemberType = typeof(Data))]
   public void GetReceiptMeasurementsTest(
@@ -25,7 +38,23 @@ public partial class ClientTest
       IEnumerable<Measurement> measurements,
       Period period)
   {
-    period.Unused();
     SetupMeasurements(device, measurements);
+
+    var energyMeasurements = Client
+      .GetEnergyMeasurements(device.Id, period);
+    Assert.Equal(
+      measurements.First().Timestamp,
+      energyMeasurements.Begin.Timestamp);
+    Assert.Equal(
+      measurements.Last().Timestamp,
+      energyMeasurements.End.Timestamp);
+
+    var powerMeasurement = Client
+      .GetPowerMeasurement(device.Id, period);
+    Assert.Equal(
+      measurements
+        .Select(measurement => measurement.MeasurementData.powerIn)
+        .Max(),
+      powerMeasurement.Power);
   }
 }

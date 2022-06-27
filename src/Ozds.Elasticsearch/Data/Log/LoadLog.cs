@@ -14,10 +14,15 @@ public class LoadLog : IEquatable<LoadLog>, ICloneable
 
   public LoadLog(
       string resource,
-      Period period)
+      Period period,
+      DateTime? lastValidation = null)
   {
+    var now = DateTime.UtcNow;
+
     Resource = resource;
     Period = period;
+    LastValidation = lastValidation ?? now;
+
     Id = MakeId(Resource);
   }
 
@@ -29,6 +34,9 @@ public class LoadLog : IEquatable<LoadLog>, ICloneable
 
   [Object(Name = "period")]
   public Period Period { get; init; }
+
+  [Date(Name = "lastValidation")]
+  public DateTime LastValidation { get; init; }
 
   // NOTE: only for elasticsearch purposes
   [Keyword(Name = "type")]
@@ -47,11 +55,13 @@ public class LoadLog : IEquatable<LoadLog>, ICloneable
   public void Deconstruct(
       out string id,
       out string resource,
-      out Period period)
+      out Period period,
+      out DateTime lastValidation)
   {
     id = Id;
     resource = Resource;
     period = Period;
+    lastValidation = LastValidation;
   }
 
   public object Clone() => CloneLoadLog();
@@ -64,5 +74,6 @@ public class LoadLog : IEquatable<LoadLog>, ICloneable
         {
           From = Period.From,
           To = Period.To
-        });
+        },
+      lastValidation: LastValidation);
 };

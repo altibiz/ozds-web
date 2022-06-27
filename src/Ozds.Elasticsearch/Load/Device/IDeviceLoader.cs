@@ -1,16 +1,25 @@
 namespace Ozds.Elasticsearch;
 
-public readonly record struct DeviceSourceDeviceData
+public readonly record struct LoadDevice
+(string source,
+ string sourceDeviceId,
+ string phase,
+ LoadDeviceSourceDeviceData? sourceDeviceData,
+ LoadDeviceOwnerData owner,
+ LoadDeviceMeasurementData measurement,
+ LoadDeviceStateData state);
+
+public readonly record struct LoadDeviceSourceDeviceData
 (string? ownerId);
 
-public readonly record struct DeviceOwnerData
+public readonly record struct LoadDeviceOwnerData
 (string @operator,
  string centerId,
  string? centerUserId,
  string ownerId,
  string? ownerUserId);
 
-public readonly record struct DeviceMeasurementData
+public readonly record struct LoadDeviceMeasurementData
 (int measurementIntervalInSeconds,
  DateTime extractionStart,
  int extractionOffsetInSeconds,
@@ -18,26 +27,12 @@ public readonly record struct DeviceMeasurementData
  int extractionRetries,
  int validationIntervalInSeconds);
 
-public readonly record struct DeviceStateData
+public readonly record struct LoadDeviceStateData
 (string? state = null);
 
 public interface IDeviceLoader
 {
-  public Task LoadDeviceAsync(
-      string source,
-      string sourceDeviceId,
-      string phase,
-      DeviceSourceDeviceData? sourceDeviceData,
-      DeviceOwnerData owner,
-      DeviceMeasurementData measurement,
-      DeviceStateData state);
+  public Task LoadDeviceAsync(LoadDevice device);
 
-  public void LoadDevice(
-      string source,
-      string sourceDeviceId,
-      string phase,
-      DeviceSourceDeviceData? sourceDeviceData,
-      DeviceOwnerData owner,
-      DeviceMeasurementData measurement,
-      DeviceStateData state);
+  public void LoadDevice(LoadDevice device);
 }

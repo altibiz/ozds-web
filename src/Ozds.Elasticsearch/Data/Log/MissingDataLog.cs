@@ -3,6 +3,13 @@ using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch;
 
+public static class MissingDataLogErrorCode
+{
+  public const string Provider = "provider";
+  public const string Validation = "validation";
+  public const string Consistency = "consistency";
+}
+
 [ElasticsearchType(RelationName = "MissingDataLog", IdProperty = nameof(Id))]
 public class MissingDataLog : IEquatable<MissingDataLog>, ICloneable
 {
@@ -23,14 +30,14 @@ public class MissingDataLog : IEquatable<MissingDataLog>, ICloneable
       DateTime nextExtraction,
       int retries,
       bool shouldValidate,
-      string error)
+      ErrorDataType error)
   {
     Resource = resource;
     Period = period;
     NextExtraction = nextExtraction;
     Retries = retries;
     ShouldValidate = ShouldValidate;
-    Error = error;
+    ErrorData = error;
     Id = MakeId(Resource, Period);
   }
 
@@ -52,12 +59,30 @@ public class MissingDataLog : IEquatable<MissingDataLog>, ICloneable
   [Boolean(Name = "shouldValidate")]
   public bool ShouldValidate { get; init; }
 
-  [Text(Name = "error")]
-  public string Error { get; init; }
+  [Object(Name = "error")]
+  public ErrorDataType ErrorData { get; init; }
 
   // NOTE: only for elasticsearch purposes
   [Keyword(Name = "type")]
   public string LogType { get; init; } = Type;
+
+  [ElasticsearchType(RelationName = "deviceSourceDeviceData")]
+  public class ErrorDataType
+  {
+    public ErrorDataType(
+        string code,
+        string description)
+    {
+      Code = code;
+      Description = description;
+    }
+
+    [Keyword(Name = "code")]
+    public string Code { get; init; }
+
+    [Text(Name = "description")]
+    public string Description { get; init; }
+  }
 
   public override bool Equals(object? obj) =>
     Equals(obj as MissingDataLog);
@@ -93,5 +118,8 @@ public class MissingDataLog : IEquatable<MissingDataLog>, ICloneable
       nextExtraction: NextExtraction,
       retries: Retries,
       shouldValidate: ShouldValidate,
-      error: Error.CloneString());
+      error:
+        new ErrorDataType(
+          code: ErrorData.Code.CloneString(),
+          description: ErrorData.Description.CloneString()));
 };

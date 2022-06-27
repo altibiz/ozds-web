@@ -1,5 +1,4 @@
 using Xunit;
-using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch.Test;
 
@@ -19,15 +18,11 @@ public partial class ClientTest
     var indexedMeasurementIds = indexResponse.Items.Ids();
     AssertExtensions.ElementsEqual(deviceIds, indexedMeasurementIds);
 
-    // NOTE: ES needs some time to prepare for searching
-    System.Threading.Thread.Sleep(1000);
     var searchResponse = Client.SearchDevicesBySource(
       FakeMeasurementProvider.FakeSource);
-    Logger.LogDebug(searchResponse.DebugInformation);
     Assert.True(searchResponse.IsValid);
 
     var searchedDevices = searchResponse.Sources();
-    Logger.LogDebug(searchedDevices.ToJson());
     AssertExtensions.Superset(devices, searchedDevices);
 
     var deleteResponse = Client.DeleteDevices(deviceIds);
@@ -52,8 +47,6 @@ public partial class ClientTest
     var indexedMeasurementIds = indexResponse.Items.Ids();
     AssertExtensions.ElementsEqual(deviceIds, indexedMeasurementIds);
 
-    // NOTE: ES needs some time to prepare for searching
-    System.Threading.Thread.Sleep(1000);
     var searchResponse =
         await Client.SearchDevicesBySourceAsync(
             FakeMeasurementProvider.FakeSource);

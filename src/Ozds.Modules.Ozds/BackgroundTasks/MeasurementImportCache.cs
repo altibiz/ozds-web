@@ -5,23 +5,23 @@ using YesSql;
 
 namespace Ozds.Modules.Ozds;
 
-public class MeasurementImporterCache
+public class MeasurementImportCache
 {
-  public readonly record struct DeviceData
+  public readonly record struct Device
   (string Operator,
    string CenterId,
    string? CenterUserId,
    string OwnerId,
    string? OwnerUserId);
 
-  public Task<DeviceData?> GetDeviceData(string deviceId) =>
+  public Task<Device?> GetDeviceAsync(string deviceId) =>
     DeviceCache.GetOrAdd(
       deviceId,
       deviceId =>
-        new Lazy<Task<DeviceData?>>(
-          () => FetchData(deviceId))).Value;
+        new Lazy<Task<Device?>>(
+          () => FetchDevice(deviceId))).Value;
 
-  private async Task<DeviceData?> FetchData(string deviceId)
+  private async Task<Device?> FetchDevice(string deviceId)
   {
     using (var scope = Services.CreateAsyncScope())
     {
@@ -36,7 +36,7 @@ public class MeasurementImporterCache
       if (site is null) return default;
 
       return
-        new DeviceData
+        new Device
         {
           Operator = site.Site.Value.Data.OperatorName,
           CenterId = site.Site.Value.Data.CenterContentItemId,
@@ -47,7 +47,7 @@ public class MeasurementImporterCache
     }
   }
 
-  public MeasurementImporterCache(
+  public MeasurementImportCache(
       IServiceProvider services)
   {
     Services = services;
@@ -55,10 +55,6 @@ public class MeasurementImporterCache
 
   private IServiceProvider Services { get; }
 
-  // NOTE: https://stackoverflow.com/a/54118193/4348107
-  // TODO: test if this is good enough
-  private ConcurrentDictionary<string, Lazy<Task<DeviceData?>>>
-    DeviceCache
-  { get; } =
-    new ConcurrentDictionary<string, Lazy<Task<DeviceData?>>>();
+  private ConcurrentDictionary<string, Lazy<Task<Device?>>> DeviceCache
+  { get; } = new ConcurrentDictionary<string, Lazy<Task<Device?>>>();
 }

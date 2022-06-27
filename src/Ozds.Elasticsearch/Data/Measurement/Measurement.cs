@@ -87,7 +87,7 @@ public class Measurement : ICloneable, IEquatable<Measurement>
     public string? OwnerUserId { get; init; }
   }
 
-  // TODO: formalize
+  // TODO: formalize and optimize indexing
   [ElasticsearchType(RelationName = "measurementMeasurementData")]
   public class MeasurementDataType
   {

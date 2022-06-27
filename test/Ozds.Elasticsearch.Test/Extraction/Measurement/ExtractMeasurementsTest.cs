@@ -12,8 +12,6 @@ public partial class ClientTest
     var deviceIds = devices.Select(d => d.Id).ToList();
     SetupDevices(devices);
 
-    // NOTE: preparation for searching
-    Thread.Sleep(1000);
     var buckets = Client.ExtractMeasurements();
     Assert.NotEmpty(buckets);
     Assert.All(buckets, bucket =>
@@ -29,12 +27,8 @@ public partial class ClientTest
   {
     var deviceIds = devices.Select(d => d.Id).ToList();
     await SetupDevicesAsync(devices);
-    Logger.LogDebug(devices.ToJson());
 
-    // NOTE: preparation for searching
-    Thread.Sleep(1000);
     var buckets = await Client.ExtractMeasurementsAsync().Await();
-    Logger.LogDebug(buckets.ToJson());
     Assert.NotEmpty(buckets);
     Assert.All(buckets, bucket =>
       Assert.All(bucket, measurement =>
@@ -52,8 +46,6 @@ public partial class ClientTest
     var deviceIds = devices.Select(d => d.Id).ToList();
     await SetupDevicesAsync(devices);
 
-    // NOTE: preparation for searching
-    Thread.Sleep(1000);
     var buckets = await Client.ExtractMeasurementsAsync(period).Await();
     Assert.NotEmpty(buckets);
     Assert.All(buckets, bucket =>

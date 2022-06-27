@@ -15,7 +15,9 @@ public partial class ClientTest
 
     var dashboardMeasurements = await Client
       .GetDashboardMeasurementsByDeviceAsync(device.Id, period);
-    Assert.Equal(measurements.Count(), dashboardMeasurements.Count());
+    Assert.True(
+      measurements.Count() <=
+      dashboardMeasurements.Count());
   }
 
   [Theory]
@@ -30,6 +32,8 @@ public partial class ClientTest
     Logger.LogDebug(period.ToString());
     var dashboardMeasurements = Client
       .GetDashboardMeasurementsByDevice(device.Id, period);
-    Assert.Equal(measurements.Count(), dashboardMeasurements.Count());
+    Assert.True(
+      measurements.Count() <=
+      dashboardMeasurements.Count());
   }
 }

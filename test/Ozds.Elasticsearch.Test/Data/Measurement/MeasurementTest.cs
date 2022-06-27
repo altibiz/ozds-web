@@ -132,9 +132,6 @@ public partial class ClientTest
     var indexedMeasurementIds =
       measurementIndexResponse.Items.Ids().ToStrings();
     AssertExtensions.ElementsEqual(measurementIds, indexedMeasurementIds);
-
-    // NOTE: preparation for search
-    Thread.Sleep(1000);
   }
 
   [Theory]
@@ -157,9 +154,6 @@ public partial class ClientTest
     var indexedMeasurementIds =
       measurementIndexResponse.Items.Ids().ToStrings();
     AssertExtensions.ElementsEqual(measurementIds, indexedMeasurementIds);
-
-    // NOTE: preparation for search
-    Thread.Sleep(1000);
   }
 
   [Theory]
@@ -183,9 +177,6 @@ public partial class ClientTest
 
     var gotMeasurement = measurementGetResponse.Source;
     Assert.Equal(measurement, gotMeasurement);
-
-    // NOTE: preparation for search
-    Thread.Sleep(1000);
   }
 
   [Theory]
@@ -207,8 +198,5 @@ public partial class ClientTest
 
     var gotMeasurement = measurementGetResponse.Source;
     Assert.Equal(measurement, gotMeasurement);
-
-    // NOTE: preparation for search
-    Thread.Sleep(1000);
   }
 }

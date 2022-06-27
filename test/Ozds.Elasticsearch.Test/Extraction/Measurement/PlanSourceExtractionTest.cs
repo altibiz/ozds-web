@@ -15,8 +15,6 @@ public partial class ClientTest
       .Select(ExtractionDeviceExtensions.ToExtractionDevice);
     await SetupDevicesAsync(devices);
 
-    // NOTE: preparation for searching
-    Thread.Sleep(1000);
     var measurementsPerExtractionPlanItem = 20;
     var extractionPlans = await Client
       .PlanSourceExtractionAsync(
@@ -37,11 +35,11 @@ public partial class ClientTest
           To = now.Subtract(device.ExtractionOffset)
         };
       Assert.Equal(
-        extractionPlan.Items.Count(),
         Math.Ceiling(
           period.Span.TotalSeconds /
           (device.MeasurementInterval.TotalSeconds *
-          measurementsPerExtractionPlanItem)));
+          measurementsPerExtractionPlanItem)),
+        extractionPlan.Items.Count());
       Assert.All(
         extractionPlan.Items,
         item =>
@@ -63,8 +61,6 @@ public partial class ClientTest
       .Select(ExtractionDeviceExtensions.ToExtractionDevice);
     SetupDevices(devices);
 
-    // NOTE: preparation for searching
-    Thread.Sleep(1000);
     var measurementsPerExtractionPlanItem = 20;
     var extractionPlans = Client
       .PlanSourceExtraction(
@@ -85,11 +81,11 @@ public partial class ClientTest
           To = now.Subtract(device.ExtractionOffset)
         };
       Assert.Equal(
-        extractionPlan.Items.Count(),
         Math.Ceiling(
           period.Span.TotalSeconds /
           (device.MeasurementInterval.TotalSeconds *
-          measurementsPerExtractionPlanItem)));
+          measurementsPerExtractionPlanItem)),
+        extractionPlan.Items.Count());
       Assert.All(
         extractionPlan.Items,
         item =>
@@ -111,8 +107,6 @@ public partial class ClientTest
       .Select(ExtractionDeviceExtensions.ToExtractionDevice);
     SetupDevices(devices);
 
-    // NOTE: preparation for searching
-    Thread.Sleep(1000);
     var now = DateTime.UtcNow;
     var period =
       new Period
@@ -133,11 +127,11 @@ public partial class ClientTest
         .FirstOrDefault(device => device == extractionPlan.Device);
       Assert.NotEqual(default, device);
       Assert.Equal(
-        extractionPlan.Items.Count(),
         Math.Ceiling(
           period.Span.TotalSeconds /
           (device.MeasurementInterval.TotalSeconds *
-          measurementsPerExtractionPlanItem)));
+          measurementsPerExtractionPlanItem)),
+        extractionPlan.Items.Count());
       Assert.All(
         extractionPlan.Items,
         item =>

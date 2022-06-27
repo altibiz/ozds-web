@@ -48,41 +48,42 @@ public class SiteDeviceLoader : ContentHandlerBase
 
     await Loader
       .LoadDeviceAsync(
-        source: source,
-        sourceDeviceId: sourceDeviceId,
-        sourceDeviceData:
-          new DeviceSourceDeviceData
-          {
-            ownerId = site.Site.Value.SourceData.Data
-              .FirstOrDefault(data => data.Name == "OwnerId")?.Value,
-          },
-        phase: phase,
-        owner:
-          new DeviceOwnerData(
-            @operator: site.Site.Value.Data.OperatorName,
-            centerId: site.Site.Value.Data.CenterContentItemId,
-            centerUserId: site.Site.Value.Data.CenterUserId,
-            ownerId: site.Site.Value.Data.OwnerContentItemId,
-            ownerUserId: site.Site.Value.Data.OwnerUserId),
-        measurement:
-          new DeviceMeasurementData(
-            measurementIntervalInSeconds:
-              ((int)site.Site.Value.MeasurementIntervalInSeconds.Value!),
-            extractionStart:
-              site.Site.Value.ExtractionStart.Value!.Value,
-            extractionOffsetInSeconds:
-              ((int)site.Site.Value.ExtractionOffsetInSeconds.Value!),
-            extractionTimeoutInSeconds:
-              ((int)site.Site.Value.ExtractionTimeoutInSeconds.Value!),
-            extractionRetries:
-              ((int)site.Site.Value.ExtractionRetries.Value!),
-            validationIntervalInSeconds:
-              ((int)site.Site.Value.ValidationIntervalInSeconds.Value!)),
-        state:
-          new DeviceStateData(
-            state: status ?? SiteStatus
-              .GetElasticsearchStatus(site.Site.Value.Status)
-              .ThrowWhenNull()));
+        new LoadDevice(
+          source: source,
+          sourceDeviceId: sourceDeviceId,
+          sourceDeviceData:
+            new LoadDeviceSourceDeviceData
+            {
+              ownerId = site.Site.Value.SourceData.Data
+                .FirstOrDefault(data => data.Name == "OwnerId")?.Value,
+            },
+          phase: phase,
+          owner:
+            new LoadDeviceOwnerData(
+              @operator: site.Site.Value.Data.OperatorName,
+              centerId: site.Site.Value.Data.CenterContentItemId,
+              centerUserId: site.Site.Value.Data.CenterUserId,
+              ownerId: site.Site.Value.Data.OwnerContentItemId,
+              ownerUserId: site.Site.Value.Data.OwnerUserId),
+          measurement:
+            new LoadDeviceMeasurementData(
+              measurementIntervalInSeconds:
+                ((int)site.Site.Value.MeasurementIntervalInSeconds.Value!),
+              extractionStart:
+                site.Site.Value.ExtractionStart.Value!.Value,
+              extractionOffsetInSeconds:
+                ((int)site.Site.Value.ExtractionOffsetInSeconds.Value!),
+              extractionTimeoutInSeconds:
+                ((int)site.Site.Value.ExtractionTimeoutInSeconds.Value!),
+              extractionRetries:
+                ((int)site.Site.Value.ExtractionRetries.Value!),
+              validationIntervalInSeconds:
+                ((int)site.Site.Value.ValidationIntervalInSeconds.Value!)),
+          state:
+            new LoadDeviceStateData(
+              state: status ?? SiteStatus
+                .GetElasticsearchStatus(site.Site.Value.Status)
+                .ThrowWhenNull())));
 
     Logger.LogDebug(
       $"Indexed device {deviceId} for site {item.ContentItemId}");

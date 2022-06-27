@@ -15,8 +15,6 @@ public partial class ClientTest
       .Select(ExtractionDeviceExtensions.ToExtractionDevice);
     await SetupDevicesAsync(devices);
 
-    // NOTE: preparation for searching
-    Thread.Sleep(1000);
     foreach (var device in extractionDevices)
     {
       var now = DateTime.UtcNow;
@@ -36,10 +34,10 @@ public partial class ClientTest
       var extractionOutcome = Client
         .ExecuteExtractionPlanAsync(extractionPlan);
       var extractionOutcomeItems = await extractionOutcome.Items.Await();
-      Assert.Equal(extractionOutcome.Device, device);
+      Assert.Equal(device, extractionOutcome.Device);
       Assert.Equal(
-        extractionOutcomeItems.Select(item => item.Original),
-        extractionPlan.Items);
+        extractionPlan.Items,
+        extractionOutcomeItems.Select(item => item.Original));
       Assert.All(
         extractionOutcomeItems,
         item =>
@@ -65,8 +63,6 @@ public partial class ClientTest
       .Select(ExtractionDeviceExtensions.ToExtractionDevice);
     SetupDevices(devices);
 
-    // NOTE: preparation for searching
-    Thread.Sleep(1000);
     foreach (var device in extractionDevices)
     {
       var measurementsPerExtractionPlanItem = 20;
@@ -85,23 +81,10 @@ public partial class ClientTest
 
       var extractionOutcome = Client
         .ExecuteExtractionPlan(extractionPlan);
-      Logger.LogDebug(extractionOutcome.Items
-        .Select(item =>
-          new
-          {
-            Original = item.Original,
-            Next = item.Next,
-            Count = item.Bucket.Count(),
-            Interval = extractionOutcome.Device.MeasurementInterval,
-            CountInterval =
-              item.Bucket.Count() *
-              extractionOutcome.Device.MeasurementInterval
-          })
-        .ToJson());
       Assert.Equal(extractionOutcome.Device, device);
       Assert.Equal(
-        extractionOutcome.Items.Select(item => item.Original),
-        extractionPlan.Items);
+        extractionPlan.Items,
+        extractionOutcome.Items.Select(item => item.Original));
       Assert.All(
         extractionOutcome.Items,
         item =>
@@ -134,8 +117,6 @@ public partial class ClientTest
         To = now.AddMinutes(-5)
       };
 
-    // NOTE: preparation for searching
-    Thread.Sleep(1000);
     foreach (var device in extractionDevices)
     {
       var measurementsPerExtractionPlanItem = 20;
@@ -149,8 +130,8 @@ public partial class ClientTest
         .ExecuteExtractionPlan(extractionPlan);
       Assert.Equal(extractionOutcome.Device, device);
       Assert.Equal(
-        extractionOutcome.Items.Select(item => item.Original),
-        extractionPlan.Items);
+        extractionPlan.Items,
+        extractionOutcome.Items.Select(item => item.Original));
       Assert.All(
         extractionOutcome.Items,
         item =>
@@ -187,16 +168,16 @@ public partial class ClientTest
           To = missingDataNow.AddMinutes(-20)
         };
       Client.IndexMissingDataLog(
-        new MissingDataLog(
-          device.Id,
-          missingDataPeriod,
-          missingDataNextExtraction,
-          5,
-          false,
-          "Unknown error"));
+        new(
+          resource: device.Id,
+          period: missingDataPeriod,
+          nextExtraction: missingDataNextExtraction,
+          retries: 5,
+          shouldValidate: false,
+          error: new(
+            code: MissingDataLogErrorCode.Provider,
+            description: "Error fetching")));
 
-      // NOTE: preparation for searching
-      Thread.Sleep(1000);
       var measurementsPerExtractionPlanItem = 20;
       var now = DateTime.UtcNow;
       var period =
@@ -222,13 +203,13 @@ public partial class ClientTest
       var missingDataItem = extractionOutcomeItems
         .FirstOrDefault(item => item.Original.Due == missingDataNextExtraction);
       Assert.NotEqual(default, missingDataItem);
-      Assert.Equal(missingDataItem.Original.Period, missingDataPeriod);
+      Assert.Equal(missingDataPeriod, missingDataItem.Original.Period);
       Assert.Equal(5, missingDataItem.Original.Retries);
-      Assert.Equal(missingDataItem.Original.Timeout, device.ExtractionTimeout);
+      Assert.Equal(device.ExtractionTimeout, missingDataItem.Original.Timeout);
       Assert.Null(missingDataItem.Next);
 
       extractionOutcomeItems.Remove(missingDataItem);
-      Assert.Equal(extractionOutcome.Device, device);
+      Assert.Equal(device, extractionOutcome.Device);
       Assert.All(
         extractionOutcomeItems,
         item =>

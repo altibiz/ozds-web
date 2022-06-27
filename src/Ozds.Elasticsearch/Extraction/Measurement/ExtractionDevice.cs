@@ -10,8 +10,7 @@ public readonly record struct ExtractionDevice
  int ExtractionRetries,
  TimeSpan ExtractionOffset,
  TimeSpan ExtractionTimeout,
- TimeSpan ValidationInterval,
- DateTime LastValidation);
+ TimeSpan ValidationInterval);
 
 public readonly record struct ExtractionDeviceSourceData
 (string? OwnerId);
@@ -44,6 +43,5 @@ public static class ExtractionDeviceExtensions
       ValidationInterval =
         TimeSpan.FromSeconds(
           device.MeasurementData.ValidationIntervalInSeconds),
-      LastValidation = device.MeasurementData.LastValidation
     };
 }

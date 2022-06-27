@@ -33,7 +33,7 @@ public class Startup : OrchardCore.Modules.StartupBase
     // NOTE: preventing from being instantiated twice
     services.AddScoped<TenantActivatedEvent>();
     services.AddScoped<IModularTenantEvents, TenantActivatedEvent>(
-        s => s.GetRequiredService<TenantActivatedEvent>());
+      services => services.GetRequiredService<TenantActivatedEvent>());
     services.AddSingleton<ITenantActivationChecker, TenantActivationChecker>();
     services.AddScoped<IDataMigration, Migrations>();
 
@@ -58,8 +58,9 @@ public class Startup : OrchardCore.Modules.StartupBase
 
     services.AddScoped<TaxonomyCacheService>();
 
-    services.AddRecipeExecutionStep<FastImport>();
-    services.AddScoped<Importer>();
+    services.AddSingleton<FastImportQueue>();
+    services.AddScoped<FastImporter>();
+    services.AddRecipeExecutionStep<FastImportRecipeStep>();
     services.AddSingleton<IBackgroundTask, FastImportBackgroundTask>();
 
     services.AddRecipeExecutionStep<UserImport>();
@@ -75,21 +76,24 @@ public class Startup : OrchardCore.Modules.StartupBase
           CodeGenerationDisplayDriver>();
     }
 
-    services.AddContentField<TextField>()
-        .ForEditor<TextFieldDisplayDriver>(d => false)
-        .ForEditor<PartTextFieldDriver>(d => true);
-    services.AddContentField<NumericField>()
-        .ForEditor<NumericFieldDisplayDriver>(d => false)
-        .ForEditor<PartNumericFieldDriver>(d => true);
+    services
+      .AddContentField<TextField>()
+      .ForEditor<TextFieldDisplayDriver>(name => false)
+      .ForEditor<PartTextFieldDriver>(name => true);
+    services
+      .AddContentField<NumericField>()
+      .ForEditor<NumericFieldDisplayDriver>(name => false)
+      .ForEditor<PartNumericFieldDriver>(name => true);
 
-    services.AddContentField<TaxonomyField>()
-        .ForEditor<TaxonomyFieldTagsDisplayDriver>(d => false)
-        .ForEditor<TaxonomyFieldDisplayDriver>(d =>
-          !string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) &&
-          !string.Equals(d, "Disabled", StringComparison.OrdinalIgnoreCase))
-        .ForEditor<PartTaxonomyFieldTagsDriver>(d =>
-          string.Equals(d, "Tags", StringComparison.OrdinalIgnoreCase) ||
-          string.Equals(d, "Disabled", StringComparison.OrdinalIgnoreCase));
+    services
+      .AddContentField<TaxonomyField>()
+      .ForEditor<TaxonomyFieldTagsDisplayDriver>(name => false)
+      .ForEditor<TaxonomyFieldDisplayDriver>(name =>
+        !string.Equals(name, "Tags", StringComparison.OrdinalIgnoreCase) &&
+        !string.Equals(name, "Disabled", StringComparison.OrdinalIgnoreCase))
+      .ForEditor<PartTaxonomyFieldTagsDriver>(name =>
+        string.Equals(name, "Tags", StringComparison.OrdinalIgnoreCase) ||
+        string.Equals(name, "Disabled", StringComparison.OrdinalIgnoreCase));
 
     if (Env.IsDevelopment())
     {
@@ -139,10 +143,9 @@ public class Startup : OrchardCore.Modules.StartupBase
       AddElasticsearchClient(services);
     }
 
-    services.AddSingleton<MeasurementImporterCache>();
-    services.AddSingleton<MeasurementImporter>();
-    services.AddSingleton<IBackgroundTask, MeasurementImporter>(
-      services => services.GetRequiredService<MeasurementImporter>());
+    services.AddSingleton<MeasurementImportCache>();
+    services.AddScoped<MeasurementImporter>();
+    services.AddSingleton<IBackgroundTask, MeasurementImportBackgroundTask>();
 
     services.AddScoped<LocalizedRouteTransformer>();
 
@@ -189,17 +192,16 @@ public class Startup : OrchardCore.Modules.StartupBase
 
   private void AddElasticsearchClient(IServiceCollection services)
   {
-    // NOTE: this prevents the client from being instantiated multiple times
-    services.AddSingleton<Elasticsearch.ElasticsearchClient>();
+    services.AddSingleton<ElasticsearchClient>();
     services.AddSingleton<IDeviceLoader>(
-        s => s.GetRequiredService<Elasticsearch.ElasticsearchClient>());
+        s => s.GetRequiredService<ElasticsearchClient>());
     services.AddSingleton<IMeasurementExtractor>(
-        s => s.GetRequiredService<Elasticsearch.ElasticsearchClient>());
+        s => s.GetRequiredService<ElasticsearchClient>());
     services.AddSingleton<IMeasurementLoader>(
-        s => s.GetRequiredService<Elasticsearch.ElasticsearchClient>());
+        s => s.GetRequiredService<ElasticsearchClient>());
     services.AddSingleton<IReceiptMeasurementProvider>(
-        s => s.GetRequiredService<Elasticsearch.ElasticsearchClient>());
+        s => s.GetRequiredService<ElasticsearchClient>());
     services.AddSingleton<IDashboardMeasurementProvider>(
-        s => s.GetRequiredService<Elasticsearch.ElasticsearchClient>());
+        s => s.GetRequiredService<ElasticsearchClient>());
   }
 }

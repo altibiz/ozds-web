@@ -1,61 +1,87 @@
-using Microsoft.Extensions.DependencyInjection;
-using OrchardCore.BackgroundTasks;
+using Microsoft.Extensions.Logging;
 using Ozds.Elasticsearch;
 using Ozds.Extensions;
 
 namespace Ozds.Modules.Ozds;
 
 // FIX: Collection was modified; enumeration operation may not execute.
-public class MeasurementImporter : IBackgroundTask
+public class MeasurementImporter
 {
-  public Task DoWorkAsync(
-      IServiceProvider services,
-      CancellationToken token) =>
-    Import(services, token);
-
-  public async Task Import(
-    IServiceProvider services,
-    CancellationToken token,
-    Period? period = null)
+  public async Task ImportAsync(
+    Period? period = null,
+    CancellationToken? token = null)
   {
-    var extractor = services.GetRequiredService<IMeasurementExtractor>();
-    var loader = services.GetRequiredService<IMeasurementLoader>();
-    var cache = services.GetRequiredService<MeasurementImporterCache>();
-
-    // NOTE: https://stackoverflow.com/a/45769160/4348107
-    // NOTE: we don't want to cause any race conditions here
-    // TODO: optimize locking strategy per device
-    await semaphore.WaitAsync();
+    await Semaphore.WaitAsync();
     try
     {
-      // NOTE: each plan is for one device which is safe to parallelize
-      await Parallel.ForEachAsync(
-        extractor.PlanExtractionAsync(period),
-        token,
-        async (plan, token) => await loader
-          .LoadMeasurementsAsync(
-            extractor
-              .ExecuteExtractionPlanAsync(plan)
-              .EnrichAwait(async measurement => await cache
-                .GetDeviceData(
-                  Device.MakeId(
-                    measurement.Source,
-                    measurement.SourceDeviceId))
-                .Then(data =>
-                  data is null ? measurement.ToLoadMeasurement()
-                  : measurement
-                    .ToLoadMeasurement(
-                      data.Value.Operator,
-                      data.Value.CenterId,
-                      data.Value.CenterUserId,
-                      data.Value.OwnerId,
-                      data.Value.OwnerUserId)))));
+      var plans = Extractor.PlanExtractionAsync(period);
+
+      if (token is null)
+      {
+        await Parallel
+          .ForEachAsync(
+            plans,
+            (plan, token) => ImportPlanAsync(plan, token).ToValueTask());
+      }
+      else
+      {
+        await Parallel
+          .ForEachAsync(
+            plans,
+            token.Value,
+            (plan, token) => ImportPlanAsync(plan, token).ToValueTask());
+      }
     }
     finally
     {
-      semaphore.Release();
+      Semaphore.Release();
     }
   }
 
-  SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
+  public Task ImportPlanAsync(
+      ExtractionPlan plan,
+      CancellationToken? token = null) =>
+    Loader
+      .LoadMeasurementsAsync(Extractor
+        .ExecuteExtractionPlanAsync(plan)
+        .EnrichAwait(measurement => Cache
+          .GetDeviceAsync(Device
+            .MakeId(
+              measurement.Source,
+              measurement.SourceDeviceId))
+          .ToValueTask()
+          .Then(data =>
+            data switch
+            {
+              null => measurement.ToLoadMeasurement(),
+              var deviceData => measurement
+                .ToLoadMeasurement(
+                  deviceData.Value.Operator,
+                  deviceData.Value.CenterId,
+                  deviceData.Value.CenterUserId,
+                  deviceData.Value.OwnerId,
+                  deviceData.Value.OwnerUserId)
+            })));
+
+  public MeasurementImporter(
+      ILogger<MeasurementImporter> log,
+
+      IMeasurementExtractor extractor,
+      IMeasurementLoader loader,
+      MeasurementImportCache cache)
+  {
+    Log = log;
+
+    Extractor = extractor;
+    Loader = loader;
+    Cache = cache;
+  }
+
+  ILogger Log { get; }
+
+  IMeasurementExtractor Extractor { get; }
+  IMeasurementLoader Loader { get; }
+  MeasurementImportCache Cache { get; }
+
+  SemaphoreSlim Semaphore { get; } = new SemaphoreSlim(1, 1);
 }

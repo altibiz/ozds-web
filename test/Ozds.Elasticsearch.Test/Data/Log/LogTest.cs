@@ -3,17 +3,19 @@ namespace Ozds.Elasticsearch.Test
   public static partial class Data
   {
     public static readonly LoadLog LoadLog =
-      new LoadLog(
-          "Id",
-          new Period { });
+      new(
+        resource: "Id",
+        period: new());
 
     public static readonly MissingDataLog MissingDataLog =
-      new MissingDataLog(
-          "Id",
-          new Period { },
-          DateTime.UtcNow,
-          5,
-          false,
-          "");
+      new(
+        resource: "Id",
+        period: new(),
+        nextExtraction: DateTime.UtcNow,
+        retries: 5,
+        shouldValidate: false,
+        error: new(
+          code: MissingDataLogErrorCode.Provider,
+          description: "Error fetching"));
   }
 }

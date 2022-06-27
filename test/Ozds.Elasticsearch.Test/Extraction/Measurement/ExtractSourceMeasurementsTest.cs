@@ -12,12 +12,9 @@ public partial class ClientTest
     var deviceIds = devices.Select(d => d.Id);
     SetupDevices(devices);
 
-    // NOTE: preparation for searching
-    Thread.Sleep(1000);
     var buckets = Client
       .ExtractSourceMeasurements(
           FakeMeasurementProvider.FakeSource);
-    Logger.LogDebug(buckets.ToJson());
     Assert.NotEmpty(buckets);
     Assert.All(buckets, bucket =>
       Assert.All(bucket, measurement =>
@@ -34,13 +31,10 @@ public partial class ClientTest
     var deviceIds = devices.Select(d => d.Id);
     await SetupDevicesAsync(devices);
 
-    // NOTE: preparation for searching
-    Thread.Sleep(1000);
     var buckets = await Client
       .ExtractSourceMeasurementsAsync(
         FakeMeasurementProvider.FakeSource)
       .Await();
-    Logger.LogDebug(buckets.ToJson());
     Assert.NotEmpty(buckets);
     Assert.All(buckets, bucket =>
       Assert.All(bucket, measurement =>
@@ -58,13 +52,10 @@ public partial class ClientTest
     var deviceIds = devices.Select(d => d.Id);
     await SetupDevicesAsync(devices);
 
-    // NOTE: preparation for searching
-    Thread.Sleep(1000);
     var buckets = await Client
       .ExtractSourceMeasurementsAsync(
         FakeMeasurementProvider.FakeSource, period)
       .Await();
-    Logger.LogDebug(buckets.ToJson());
     Assert.NotEmpty(buckets);
     Assert.All(buckets, bucket =>
       Assert.All(bucket, measurement =>

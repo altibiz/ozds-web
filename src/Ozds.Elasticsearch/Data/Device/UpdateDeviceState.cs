@@ -25,6 +25,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
         deviceId,
         d => d
           .Doc(new DeviceStateUpdatePartial(state, dateRemoved))
+          .RefreshInDevelopment(Env)
           .Index(DeviceIndexName));
 
   public UpdateResponse<Device> UpdateDeviceState(
@@ -35,6 +36,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
         deviceId,
         d => d
           .Doc(new DeviceStateUpdatePartial(state, dateRemoved))
+          .RefreshInDevelopment(Env)
           .Index(DeviceIndexName));
 }
 

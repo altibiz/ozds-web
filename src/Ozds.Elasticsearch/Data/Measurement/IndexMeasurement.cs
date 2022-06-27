@@ -13,9 +13,11 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public IndexResponse IndexMeasurement(Measurement measurement) =>
     Elastic.Index(measurement, s => s
+      .RefreshInDevelopment(Env)
       .Index(MeasurementIndexName));
 
   public Task<IndexResponse> IndexMeasurementAsync(Measurement measurement) =>
     Elastic.IndexAsync(measurement, s => s
+      .RefreshInDevelopment(Env)
       .Index(MeasurementIndexName));
 }

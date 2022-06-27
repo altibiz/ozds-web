@@ -13,19 +13,19 @@ public partial class ClientTest
     Assert.True(indexResponse.IsValid);
 
     var indexedId = indexResponse.Id;
-    Assert.Equal(indexedId, measurement.Id);
+    Assert.Equal(measurement.Id, indexedId);
 
     var getResponse = Client.GetMeasurement(measurement.Id);
     Assert.True(getResponse.IsValid);
 
     var gotMeasurementId = getResponse.Source.Id;
-    Assert.Equal(gotMeasurementId, measurement.Id);
+    Assert.Equal(measurement.Id, gotMeasurementId);
 
     var deleteResponse = Client.DeleteMeasurement(measurement.Id);
     Assert.True(deleteResponse.IsValid);
 
     var deletedMeasurementId = deleteResponse.Id;
-    Assert.Equal(deletedMeasurementId, measurement.Id);
+    Assert.Equal(measurement.Id, deletedMeasurementId);
   }
 
   [Fact]
@@ -37,18 +37,18 @@ public partial class ClientTest
     Assert.True(indexResponse.IsValid);
 
     var indexedId = indexResponse.Id;
-    Assert.Equal(indexedId, measurement.Id.ToString());
+    Assert.Equal(measurement.Id, indexedId);
 
     var getResponse = await Client.GetMeasurementAsync(measurement.Id);
     Assert.True(getResponse.IsValid);
 
     var gotMeasurementId = getResponse.Source.Id;
-    Assert.Equal(gotMeasurementId, measurement.Id);
+    Assert.Equal(measurement.Id, gotMeasurementId);
 
     var deleteResponse = await Client.DeleteMeasurementAsync(measurement.Id);
     Assert.True(deleteResponse.IsValid);
 
     var deletedMeasurementId = deleteResponse.Id;
-    Assert.Equal(deletedMeasurementId, measurement.Id.ToString());
+    Assert.Equal(measurement.Id, deletedMeasurementId);
   }
 }

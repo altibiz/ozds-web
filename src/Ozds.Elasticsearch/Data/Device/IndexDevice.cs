@@ -13,7 +13,10 @@ public partial interface IElasticsearchClient
 public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<IndexResponse> IndexDeviceAsync(Device device) =>
-    Elastic.IndexAsync(device, s => s.Index(DeviceIndexName))
+    Elastic
+      .IndexAsync(device, s => s
+        .RefreshInDevelopment(Env)
+        .Index(DeviceIndexName))
       .ThenWith(_ => CreateLoadLogAsync(
         new LoadLog(
           device.Id,
@@ -24,7 +27,10 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
           })));
 
   public IndexResponse IndexDevice(Device device) =>
-    Elastic.Index(device, s => s.Index(DeviceIndexName))
+    Elastic
+      .Index(device, s => s
+        .RefreshInDevelopment(Env)
+        .Index(DeviceIndexName))
       .With(_ => CreateLoadLog(
         new LoadLog(
           device.Id,

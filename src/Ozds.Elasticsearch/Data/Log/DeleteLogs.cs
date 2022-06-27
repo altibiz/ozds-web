@@ -18,6 +18,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       // NOTE: you would have to pass the object type here but we don't want to
       // NOTE: write multiple functions just because of the type
       .DeleteMany(logIds.Select(id => new { Id = id }))
+      .RefreshInDevelopment(Env)
       .Index(LogIndexName));
 
   public BulkResponse
@@ -27,5 +28,6 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       // NOTE: you would have to pass the object type here but we don't want to
       // NOTE: write multiple functions just because of the type
       .DeleteMany(logIds.Select(id => new { Id = id }))
+      .RefreshInDevelopment(Env)
       .Index(LogIndexName));
 }

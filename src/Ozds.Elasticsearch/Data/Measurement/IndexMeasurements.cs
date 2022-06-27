@@ -17,11 +17,13 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
       IEnumerable<Measurement> measurements) =>
     Elastic.BulkAsync(s => s
       .IndexMany(measurements)
+      .RefreshInDevelopment(Env)
       .Index(MeasurementIndexName));
 
   public BulkResponse IndexMeasurements(
       IEnumerable<Measurement> measurements) =>
     Elastic.Bulk(s => s
       .IndexMany(measurements)
+      .RefreshInDevelopment(Env)
       .Index(MeasurementIndexName));
 }

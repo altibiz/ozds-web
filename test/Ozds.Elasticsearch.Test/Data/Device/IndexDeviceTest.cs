@@ -13,19 +13,19 @@ public partial class ClientTest
     Assert.True(indexResponse.IsValid);
 
     var indexedId = indexResponse.Id;
-    Assert.Equal(indexedId, device.Id);
+    Assert.Equal(device.Id, indexedId);
 
     var getResponse = Client.GetDevice(device.Id);
     Assert.True(getResponse.IsValid);
 
     var gotDeviceId = getResponse.Source.Id;
-    Assert.Equal(gotDeviceId, device.Id);
+    Assert.Equal(device.Id, gotDeviceId);
 
     var deleteResponse = Client.DeleteDevice(device.Id);
     Assert.True(deleteResponse.IsValid);
 
     var deletedDeviceId = deleteResponse.Id;
-    Assert.Equal(deletedDeviceId, device.Id);
+    Assert.Equal(device.Id, deletedDeviceId);
   }
 
   [Fact]
@@ -37,18 +37,18 @@ public partial class ClientTest
     Assert.True(indexResponse.IsValid);
 
     var indexedId = indexResponse.Id;
-    Assert.Equal(indexedId, device.Id.ToString());
+    Assert.Equal(device.Id, indexedId);
 
     var getResponse = await Client.GetDeviceAsync(device.Id);
     Assert.True(getResponse.IsValid);
 
     var gotDeviceId = getResponse.Source.Id;
-    Assert.Equal(gotDeviceId, device.Id);
+    Assert.Equal(device.Id, gotDeviceId);
 
     var deleteResponse = await Client.DeleteDeviceAsync(device.Id);
     Assert.True(deleteResponse.IsValid);
 
     var deletedDeviceId = deleteResponse.Id;
-    Assert.Equal(deletedDeviceId, device.Id.ToString());
+    Assert.Equal(device.Id, deletedDeviceId);
   }
 }

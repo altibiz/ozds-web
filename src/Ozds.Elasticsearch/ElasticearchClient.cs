@@ -14,7 +14,6 @@ public sealed partial class ElasticsearchClient :
   IElasticsearchClientPrototype,
   IElasticsearchClient
 {
-
   #region Constructors
   public ElasticsearchClient(
     IHostEnvironment env,
@@ -25,7 +24,7 @@ public sealed partial class ElasticsearchClient :
     Env = env;
     Logger = logger;
 
-    Elastic = CreateElasticClient(env, conf);
+    Elastic = CreateElasticClient(env, conf, this);
     var pingResponse = Elastic.Ping();
     if (!pingResponse.IsValid)
     {
@@ -42,18 +41,20 @@ public sealed partial class ElasticsearchClient :
           $"Ping response: {pingResponse}");
       }
     }
-    Logger.LogInformation($"Successfully connected to Elasticsearch");
+    Logger.LogInformation($"Connected to Elasticsearch");
 
     Providers = providers.ToList();
     if (Providers.Count > 0)
     {
       Logger.LogInformation(
-          "Registered " +
+        string.Format(
+          "Registered {0} {1}",
           string.Join(
             ", ",
             Providers
-              .Select(provider => provider.Source)) +
-          " providers");
+              .Select(provider => $"'{provider.Source}'")),
+          Providers.Count() > 1 ? "providers"
+          : "provider"));
     }
     else
     {
@@ -61,6 +62,8 @@ public sealed partial class ElasticsearchClient :
     }
 
     TryCreateIndices();
+
+    Ready = true;
   }
 
   public static bool Ping(
@@ -73,7 +76,8 @@ public sealed partial class ElasticsearchClient :
 
   private static IElasticClient CreateElasticClient(
       IHostEnvironment env,
-      IConfiguration conf)
+      IConfiguration conf,
+      ElasticsearchClient? client = null)
   {
     var section = conf
       .GetSection("Ozds")
@@ -88,17 +92,29 @@ public sealed partial class ElasticsearchClient :
 
     var settings = new ConnectionSettings(new Uri(serverUri));
 
+    settings = settings
+      .OnRequestCompleted(
+        call =>
+        {
+          if (client is { Ready: true })
+          {
+            client.Logger.LogDebug(call.DebugInformation);
+          }
+        });
+
     if (!string.IsNullOrWhiteSpace(apiKey))
     {
       if (!string.IsNullOrWhiteSpace(apiKeyId))
       {
-        settings = settings.ApiKeyAuthentication(
-          new ApiKeyAuthenticationCredentials(apiKeyId, apiKey));
+        settings = settings
+          .ApiKeyAuthentication(
+            new ApiKeyAuthenticationCredentials(apiKeyId, apiKey));
       }
       else
       {
-        settings = settings.ApiKeyAuthentication(
-          new ApiKeyAuthenticationCredentials(apiKey));
+        settings = settings
+          .ApiKeyAuthentication(
+            new ApiKeyAuthenticationCredentials(apiKey));
       }
     }
 
@@ -121,11 +137,9 @@ public sealed partial class ElasticsearchClient :
     if (env.IsDevelopment())
     {
       settings = settings
-        .PrettyJson(true);
+        .PrettyJson(true)
+        .DisableDirectStreaming();
     }
-
-    settings = settings
-      .DisableDirectStreaming();
 
     return new ElasticClient(settings);
   }
@@ -134,7 +148,17 @@ public sealed partial class ElasticsearchClient :
   #region Prototype
   public IElasticsearchClient ClonePrototype(string? indexSuffix = null)
   {
-    return new ElasticsearchClient(this, indexSuffix);
+    // NOTE: because the OnRequestCompleted lambda carries a reference to
+    // NOTE: the prototype
+    Ready = false;
+
+    var client = new ElasticsearchClient(this, indexSuffix);
+
+    // NOTE: because the OnRequestCompleted lambda carries a reference to
+    // NOTE: the prototype
+    Ready = true;
+
+    return client;
   }
 
   private ElasticsearchClient(ElasticsearchClient other, string? indexSuffix)
@@ -147,6 +171,8 @@ public sealed partial class ElasticsearchClient :
     Providers = other.Providers;
 
     IndexSuffix = indexSuffix ?? "";
+
+    Ready = true;
   }
   #endregion // Prototype
 
@@ -156,6 +182,8 @@ public sealed partial class ElasticsearchClient :
   private IElasticClient Elastic { get; init; }
 
   private List<IMeasurementProvider> Providers { get; }
+
+  private bool Ready = false;
 
   #region Index Suffix
   private string IndexSuffix
@@ -181,13 +209,14 @@ public sealed partial class ElasticsearchClient :
   private string _indexSuffix = "";
   #endregion // Index Suffix
 
-  #region Indices
+  #region indices
   private void TryReconstructIndices()
   {
     if (Env.IsDevelopment())
     {
       TryDeleteIndices();
     }
+
     TryCreateIndices();
   }
 
@@ -196,8 +225,10 @@ public sealed partial class ElasticsearchClient :
     Elastic.Indices.Delete(MeasurementIndexName);
     Elastic.Indices.Delete(DeviceIndexName);
     Elastic.Indices.Delete(LogIndexName);
+
     Logger.LogInformation(
-        $"Deleted Elasticsearch indices{ConsoleIndexSuffix}");
+      "Deleted Elasticsearch indices{ConsoleIndexSuffix}",
+      ConsoleIndexSuffix);
   }
 
   private void TryCreateIndices()
@@ -220,7 +251,8 @@ public sealed partial class ElasticsearchClient :
           .AutoMap<MissingDataLog>()));
 
     Logger.LogInformation(
-        $"Created Elasticsearch indices{ConsoleIndexSuffix}");
+      "Created Elasticsearch indices{ConsoleIndexSuffix}",
+      ConsoleIndexSuffix);
   }
   #endregion // Indices
 

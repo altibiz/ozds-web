@@ -85,7 +85,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
       IExtractionBucket<ExtractionMeasurement> bucket) =>
     ExtractionPlanItemCompleted(device, last, bucket) switch
     {
-      (string error) =>
+      (ExtractionPlanItemError error) =>
         new ExtractionPlanItem
         {
           Due = last.Due + (last.Timeout * Math.Pow(2, last.Retries)),
@@ -98,7 +98,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
       _ => null
     };
 
-  private static string? ExtractionPlanItemCompleted(
+  private static ExtractionPlanItemError? ExtractionPlanItemCompleted(
       ExtractionDevice device,
       ExtractionPlanItem item,
       IExtractionBucket<ExtractionMeasurement> bucket) =>
@@ -108,14 +108,19 @@ public partial class ElasticsearchClient : IElasticsearchClient
       (Period period,
       null,
       IEnumerable<ExtractionMeasurement> measurements) =>
-        ExtractedMeasurementsConsistent(device, period, measurements) ??
         (item.ShouldValidate ?
           ExtractedMeasurementsValid(device, period, measurements)
-          : null),
-      _ => bucket.Error
+          : null) ??
+          ExtractedMeasurementsConsistent(device, period, measurements),
+      (_,
+      string error,
+      _) =>
+        new ExtractionPlanItemError(
+          ExtractionPlanItemErrorCode.Provider,
+          error),
     };
 
-  private static string? ExtractedMeasurementsConsistent(
+  private static ExtractionPlanItemError? ExtractedMeasurementsConsistent(
       ExtractionDevice device,
       Period period,
       IEnumerable<ExtractionMeasurement> measurements)
@@ -128,14 +133,22 @@ public partial class ElasticsearchClient : IElasticsearchClient
 
     return
       got < expected ?
-        $"Measurements inconsistent because expected {expected} but got {got}"
+        new ExtractionPlanItemError(
+          ExtractionPlanItemErrorCode.Consistency,
+          string.Format(
+            "Measurements inconsistent because expected %s but got %s",
+            expected,
+            got))
       : null;
   }
 
-  private static string? ExtractedMeasurementsValid(
+  // TODO: better description
+  private static ExtractionPlanItemError? ExtractedMeasurementsValid(
       ExtractionDevice device,
       Period period,
       IEnumerable<ExtractionMeasurement> measurements) =>
     measurements.All(ExtractionMeasurementExtensions.Validate) ? null
-    : "Measurements invalid";
+    : new ExtractionPlanItemError(
+        ExtractionPlanItemErrorCode.Validation,
+        "Measurements invalid");
 }

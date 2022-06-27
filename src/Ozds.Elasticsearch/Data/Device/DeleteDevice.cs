@@ -12,12 +12,12 @@ public partial interface IElasticsearchClient
 public sealed partial class ElasticsearchClient : IElasticsearchClient
 {
   public Task<DeleteResponse> DeleteDeviceAsync(Id id) =>
-    Elastic.DeleteAsync(
-      DocumentPath<Device>.Id(id),
-      s => s.Index(DeviceIndexName));
+    Elastic.DeleteAsync(DocumentPath<Device>.Id(id), s => s
+      .RefreshInDevelopment(Env)
+      .Index(DeviceIndexName));
 
   public DeleteResponse DeleteDevice(Id id) =>
-    Elastic.Delete(
-      DocumentPath<Device>.Id(id),
-      s => s.Index(DeviceIndexName));
+    Elastic.Delete(DocumentPath<Device>.Id(id), s => s
+      .RefreshInDevelopment(Env)
+      .Index(DeviceIndexName));
 }
