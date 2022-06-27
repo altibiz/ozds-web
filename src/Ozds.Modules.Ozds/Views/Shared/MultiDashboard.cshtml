@@ -1,7 +1,10 @@
+@using Microsoft.Extensions.Hosting
 @using Ozds.Elasticsearch
 @using Ozds.Extensions
 
 @model InitialQuery<IEnumerable<DashboardMeasurement>>
+
+@inject IHostEnvironment Env
 
 @if (Model.Result.EmptyEnumerable())
 {
@@ -191,6 +194,13 @@
       period: updatePeriod(model, period)
     });
 
+  const shouldUpdate = (model) =>
+    GraphQL
+      .deserializeDateTime(model.variables.period.to)
+      .diff(GraphQL
+        .deserializeDateTime(model.variables.period.from),
+        'minutes').minutes <= 60;
+
   const intervalNow = (callback, timeout) => {
     callback();
     setInterval(callback, timeout);
@@ -209,14 +219,34 @@
 
     const culture = '@Html.Raw(Orchard.CultureName())';
 
+    const paramsString = `@(Html.Raw(Json.Serialize(
+      new
+      {
+        IsDev = Env.IsDevelopment(),
+      })))`;
+    const params = JSON.parse(paramsString);
+    // TODO: tune this
+    const timeout = params.isDev ? 1000 : 10000;
+
     let period = null;
     let charts = null;
-    intervalNow(async () => {
-      const updated = await update({model, max, culture, charts, period});
+    const callback = async () => {
+      const updated = await update({
+        model,
+        max,
+        culture,
+        charts,
+        period,
+      });
       period = updated.period;
       charts = updated.charts;
       // TODO: tune this
-    }, 10000);
+    };
+    callback();
+
+    if (shouldUpdate(model)) {
+      setInterval(callback, timeout);
+    }
   };
 </script>
 <script asp-name="ozdstheme-luxon" at="Head"></script>
