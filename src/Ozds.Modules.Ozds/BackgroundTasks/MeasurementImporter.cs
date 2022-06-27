@@ -6,9 +6,6 @@ using Ozds.Extensions;
 namespace Ozds.Modules.Ozds;
 
 // FIX: Collection was modified; enumeration operation may not execute.
-[BackgroundTask(
-  Schedule = "*/1 * * * *",
-  Description = "Imports measurements into Elasticsearch")]
 public class MeasurementImporter : IBackgroundTask
 {
   public Task DoWorkAsync(

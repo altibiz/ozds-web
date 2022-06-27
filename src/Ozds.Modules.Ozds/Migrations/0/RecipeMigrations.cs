@@ -20,7 +20,7 @@ public static partial class RecipeMigrations
       .ExecuteAuthSettings(migration)
       .ExecuteRoles(migration);
 
-  public static IRecipeMigrator ExecuteTestSettings(
+  public static IRecipeMigrator ExecuteDevSettings(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe
       .ExecuteAuthSettings(migration)
@@ -67,7 +67,7 @@ public static partial class RecipeMigrations
       .ExecuteSiteMeasurementSourceTaxonomy(migration)
       .ExecuteSiteStatusTaxonomy(migration);
 
-  public static IRecipeMigrator ExecuteTestTaxonomies(
+  public static IRecipeMigrator ExecuteDevTaxonomies(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe
       .ExecuteTariffModelTaxonomy(migration)
@@ -103,7 +103,12 @@ public static partial class RecipeMigrations
     recipe
       .ExecuteOperatorCatalogue(migration);
 
-  public static IRecipeMigrator ExecuteTestContent(
+  public static IRecipeMigrator ExecuteDemoContent(
+      this IRecipeMigrator recipe, IDataMigration migration) =>
+    recipe
+      .ExecuteOperatorCatalogue(migration);
+
+  public static IRecipeMigrator ExecuteDevContent(
       this IRecipeMigrator recipe, IDataMigration migration) =>
     recipe
       .ExecuteOperatorCatalogue(migration)

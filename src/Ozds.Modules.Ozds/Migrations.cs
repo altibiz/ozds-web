@@ -1,5 +1,4 @@
 using YesSql;
-using YesSql.Sql;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -21,8 +20,8 @@ public sealed class Migrations : DataMigration
     {
       Schema.CreateIndexMapTables();
       Schema.CreateIndexMapIndices();
-      Recipe.ExecuteTestSettings(this);
-      Recipe.ExecuteTestTaxonomies(this);
+      Recipe.ExecuteDevSettings(this);
+      Recipe.ExecuteDevTaxonomies(this);
       Content.AlterContent();
 
       if (Conf
@@ -31,14 +30,14 @@ public sealed class Migrations : DataMigration
             .GetSection("Ozds")
             .GetValue<object?>("IsDemo") is not null)
       {
-        Session.SaveData();
-        Recipe.ExecuteContent(this);
+        Session.SaveDemoData();
+        Recipe.ExecuteDemoContent(this);
         Recipe.Execute("Sensitive/demo.recipe.json", this);
       }
       else
       {
-        Session.SaveTestData();
-        Recipe.ExecuteTestContent(this);
+        Session.SaveDevData();
+        Recipe.ExecuteDevContent(this);
       }
     }
     else

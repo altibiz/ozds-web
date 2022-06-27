@@ -1,0 +1,14 @@
+{
+  "Settings": {
+    "Ozds.Modules.Ozds.MeasurementImporter": {
+      "Name": "Ozds.Modules.Ozds.MeasurementImporter",
+      "Enable": true,
+      "Schedule": "*/10 * * * *",
+      "Description": "Imports measurements into Elasticsearch",
+      "LockTimeout": 0,
+      "LockExpiration": 0,
+      "IsAtomic": false
+    }
+  },
+  "Identifier": "43bcr24rdya9n01a3rm5d4x5m5"
+}

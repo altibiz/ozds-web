@@ -1,4 +1,4 @@
-using System.Text.Json;
+using Newtonsoft.Json;
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.Extensions.Logging;
@@ -26,8 +26,8 @@ public static class ISessionExtensions
     File
       .OpenText(path)
       .Using(stream =>
-        JsonSerializer
-          .Deserialize(stream.ReadToEnd(), type)
+        JsonConvert
+          .DeserializeObject(stream.ReadToEnd(), type)
           .ThrowWhenNull()
           .WithNonNull(@object =>
             {
