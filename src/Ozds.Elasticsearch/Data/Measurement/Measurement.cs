@@ -25,11 +25,16 @@ public class Measurement : ICloneable, IEquatable<Measurement>
     Geo = geo;
     DeviceData = device;
     MeasurementData = measurement ?? new MeasurementDataType { };
-    Id = MakeId(DeviceData.DeviceId, Timestamp);
   }
 
   [Ignore]
-  public string Id { get; init; }
+  public string Id
+  {
+    get =>
+      MakeId(
+        DeviceData.DeviceId,
+        Timestamp);
+  }
 
   [Date(Name = "timestamp")]
   public DateTime Timestamp { get; init; }

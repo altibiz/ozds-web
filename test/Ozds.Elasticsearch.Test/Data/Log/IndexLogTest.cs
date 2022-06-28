@@ -1,7 +1,5 @@
 using Xunit;
 
-using Ozds.Extensions;
-
 namespace Ozds.Elasticsearch.Test;
 
 public partial class ClientTest
@@ -20,7 +18,7 @@ public partial class ClientTest
     var getResponse = Client.GetLoadLog(log.Id);
     Assert.True(getResponse.IsValid);
 
-    var gotLogId = getResponse.Source.WriteTitledJson("got").Id;
+    var gotLogId = getResponse.Source.Id;
     Assert.Equal(log.Id, gotLogId);
 
     var deleteResponse = Client.DeleteLoadLog(log.Id);
@@ -68,7 +66,7 @@ public partial class ClientTest
     var getResponse = Client.GetMissingDataLog(log.Id);
     Assert.True(getResponse.IsValid);
 
-    var gotLogId = getResponse.Source.WriteTitledJson("got").Id;
+    var gotLogId = getResponse.Source.Id;
     Assert.Equal(log.Id, gotLogId);
 
     var deleteResponse = Client.DeleteMissingDataLog(log.Id);

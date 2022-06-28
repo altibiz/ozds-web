@@ -51,12 +51,16 @@ public class Device : IEquatable<Device>, ICloneable
     MeasurementData = measurement;
 
     StateData = state ?? new StateDataType(DeviceState.Added);
-
-    Id = MakeId(Source, SourceDeviceId);
   }
 
   [Ignore]
-  public string Id { get; init; }
+  public string Id
+  {
+    get =>
+      MakeId(
+        Source,
+        SourceDeviceId);
+  }
 
   [Keyword(Name = "source")]
   public string Source { get; init; }

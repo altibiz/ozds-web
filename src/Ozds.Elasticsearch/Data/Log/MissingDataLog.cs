@@ -38,12 +38,16 @@ public class MissingDataLog : IEquatable<MissingDataLog>, ICloneable
     Retries = retries;
     ShouldValidate = ShouldValidate;
     ErrorData = error;
-
-    Id = MakeId(Resource, Period);
   }
 
   [Ignore]
-  public string Id { get; init; }
+  public string Id
+  {
+    get =>
+      MakeId(
+        Resource,
+        Period);
+  }
 
   [Keyword(Name = "resource")]
   public string Resource { get; init; }

@@ -24,12 +24,15 @@ public class LoadLog : IEquatable<LoadLog>, ICloneable
     Resource = resource;
     Period = period;
     LastValidation = lastValidation ?? now;
-
-    Id = MakeId(Resource);
   }
 
   [Ignore]
-  public string Id { get; init; }
+  public string Id
+  {
+    get =>
+      MakeId(
+        Resource);
+  }
 
   [Keyword(Name = "resource")]
   public string Resource { get; init; }
