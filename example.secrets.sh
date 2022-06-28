@@ -1,3 +1,6 @@
+# shellcheck disable=SC2034
+# shellcheck disable=SC2148
+
 export OrchardCore__OrchardCore_AutoSetup__Tenants__0__AdminEmail="";
 export OrchardCore__OrchardCore_AutoSetup__Tenants__0__AdminPassword="";
 export OrchardCore__OrchardCore_AutoSetup__Tenants__0__AdminUsername="";

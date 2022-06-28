@@ -321,8 +321,9 @@ dist
 # User
 # ============================================================================
 
-src/Ozds.Web/Localization
-is-cache
+src/Ozds.Web/Localization/
+is-cache/
 secrets.json
 secrets.sh
-Sensitive
+Sensitive/
+certs/

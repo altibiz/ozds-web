@@ -1,0 +1,35 @@
+elasticsearch:
+  hosts:
+    [
+      "https://elasticsearch01:9200",
+      "https://elasticsearch02:9200",
+      "https://elasticsearch03:9200",
+    ]
+  username: kibana_system
+  password: ${KIBANA_PASSWORD}
+  ssl:
+    certificateAuthorities: config/certs/ca/ca.crt
+
+server:
+  host: 0.0.0.0
+  name: kibana
+  ssl:
+    enabled: true
+    key: config/certs/kibana/kibana.key
+    certificate: config/certs/kibana/kibana.crt
+    certificateAuthorities: config/certs/ca/ca.crt
+
+# TODO: use bin/kibana-encryption-keys and not hardcoded randomly generated ones
+xpack:
+  security:
+    encryptionKey: 88dd07e5a745b8956194667f81e75ca8
+    # NOTE: embedding
+    sameSiteCookies: "None"
+  reporting:
+    encryptionKey: d53b935944ed6383c0eb2c9a058e9c6f
+    roles:
+      enabled: false
+    kibanaServer:
+      hostname: localhost
+  encryptedSavedObjects:
+    encryptionKey: c04eb700e9d44eabf4a68e0234dca802

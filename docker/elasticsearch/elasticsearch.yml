@@ -1,0 +1,44 @@
+network:
+  host: 0.0.0.0
+
+node:
+  name: ${NODE_NAME}
+
+cluster:
+  name: ${CLUSTER_NAME}
+  initial_master_nodes:
+    - elasticsearch01
+    - elasticsearch02
+    - elasticsearch03
+
+# TODO: use seed_provider file
+discovery:
+  seed_hosts:
+    - elasticsearch01
+    - elasticsearch02
+    - elasticsearch03
+
+# NOTE: this is because JVM locks up memory when GC hits
+bootstrap:
+  memory_lock: true
+
+xpack:
+  license:
+    self_generated:
+      type: ${ELASTIC_LICENSE}
+  security:
+    enabled: true
+    http:
+      ssl:
+        enabled: true
+        verification_mode: certificate
+        key: certs/${NODE_NAME}/${NODE_NAME}.key
+        certificate: certs/${NODE_NAME}/${NODE_NAME}.crt
+        certificate_authorities: certs/ca/ca.crt
+    transport:
+      ssl:
+        enabled: true
+        verification_mode: certificate
+        key: certs/${NODE_NAME}/${NODE_NAME}.key
+        certificate: certs/${NODE_NAME}/${NODE_NAME}.crt
+        certificate_authorities: certs/ca/ca.crt
