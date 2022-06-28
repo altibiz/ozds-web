@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference
       Include="Nest"
-      Version="7.17.0" />
+      Version="7.17.4" />
 
     <PackageReference
       Include="System.Data.SqlClient"

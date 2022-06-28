@@ -3,14 +3,16 @@ using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch;
 
-[ElasticsearchType(RelationName = "LoadLog", IdProperty = nameof(Id))]
+[ElasticsearchType(RelationName = "loadLog", IdProperty = nameof(Id))]
 public class LoadLog : IEquatable<LoadLog>, ICloneable
 {
   // NOTE: only for elasticsearch purposes
   public const string Type = "load";
 
-  public static string MakeId(string resource) =>
-    Strings.CombineIntoStringId("R", resource);
+  public static string MakeId(
+      string resource) =>
+    Strings.CombineIntoStringId(
+      "R", resource);
 
   public LoadLog(
       string resource,
@@ -69,11 +71,6 @@ public class LoadLog : IEquatable<LoadLog>, ICloneable
   public LoadLog CloneLoadLog() =>
     new LoadLog(
       resource: Resource.CloneString(),
-      period:
-        new Period
-        {
-          From = Period.From,
-          To = Period.To
-        },
+      period: Period.ClonePeriod(),
       lastValidation: LastValidation);
 };

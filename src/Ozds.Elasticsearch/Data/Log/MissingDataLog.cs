@@ -10,7 +10,7 @@ public static class MissingDataLogErrorCode
   public const string Consistency = "consistency";
 }
 
-[ElasticsearchType(RelationName = "MissingDataLog", IdProperty = nameof(Id))]
+[ElasticsearchType(RelationName = "missingDataLog", IdProperty = nameof(Id))]
 public class MissingDataLog : IEquatable<MissingDataLog>, ICloneable
 {
   // NOTE: only for elasticsearch purposes
@@ -38,6 +38,7 @@ public class MissingDataLog : IEquatable<MissingDataLog>, ICloneable
     Retries = retries;
     ShouldValidate = ShouldValidate;
     ErrorData = error;
+
     Id = MakeId(Resource, Period);
   }
 
@@ -109,12 +110,7 @@ public class MissingDataLog : IEquatable<MissingDataLog>, ICloneable
   public MissingDataLog CloneMissingDataLog() =>
     new MissingDataLog(
       resource: Resource.CloneString(),
-      period:
-        new Period
-        {
-          From = Period.From,
-          To = Period.To
-        },
+      period: Period.ClonePeriod(),
       nextExtraction: NextExtraction,
       retries: Retries,
       shouldValidate: ShouldValidate,
