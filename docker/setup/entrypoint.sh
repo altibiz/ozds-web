@@ -26,7 +26,7 @@ if [[ ! -f config/certs/ca.zip ]]; then
   openssl pkcs12 -export \
     -in config/certs/ca/ca.crt -inkey config/certs/ca/ca.key \
     -out config/certs/ca/ca.p12 \
-    -passout pass:$CA_PASSWORD;
+    -passout "pass:$CA_PASSWORD";
   echo "Created SSL Certificate Authority";
 fi;
 echo "SSL Certificate Authority is:";
@@ -69,10 +69,11 @@ do sleep 5; done;
 echo "Creating roles...";
 function create_role () {
   echo "Creating '$1' role...";
+  local response;
   # NOTE: false means the role already exists
-  until [[ $(echo $response | grep -E '{"created":(true|false)}}') ]]; 
+  until echo "$response" | grep -q -E '{"created":(true|false)}}';
   do
-    if [[ response ]]; then
+    if "$response"; then
       echo "\
 Failed creating role '$1'. \
 Got response '$response'. \
@@ -80,7 +81,7 @@ Trying again in 5 seconds...";
       sleep 5;
     fi;
 
-    local response=$(curl -s -X POST \
+    response=$(curl -s -X POST \
       --cacert config/certs/ca/ca.crt \
       -u "elastic:${ELASTIC_PASSWORD}" \
       -H "Content-Type: application/json" \
@@ -172,10 +173,11 @@ create_role debug_ozds '{
 echo "Creating users...";
 function create_user() {
   echo "Creating '$1' user...";
+  local response;
   # NOTE: false means the user already exists
-  until [[ $(echo $response | grep -E '{"created":(true|false)}') ]];
+  until echo "$response" | grep -q -E '{"created":(true|false)}';
   do
-    if [[ response ]]; then
+    if "$response"; then
       echo "\
 Failed creating user '$1'. \
 Got response '$response'. \
@@ -183,7 +185,7 @@ Trying again in 5 seconds...";
       sleep 5;
     fi;
 
-    local response=$(curl -s -X POST \
+    response=$(curl -s -X POST \
       --cacert config/certs/ca/ca.crt \
       -u "elastic:${ELASTIC_PASSWORD}" \
       -H "Content-Type: application/json" \
