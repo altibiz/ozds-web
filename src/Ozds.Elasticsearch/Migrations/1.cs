@@ -43,5 +43,10 @@ internal static partial class Migrations
           {
             Field = "lastValidation"
           }
+        })
+      .Migrate(
+        Index.Measurements,
+        new IProcessor[]
+        {
         });
 }

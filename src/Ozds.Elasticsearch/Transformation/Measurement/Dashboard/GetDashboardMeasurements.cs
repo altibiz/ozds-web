@@ -493,7 +493,7 @@ internal static class DashboardMeasurementNestExtensions
           .FixedInterval(interval)
           .Aggregations(a => a
             .Terms("measurementsByDeviceId", t => t
-              .Field(f => f.DeviceData.DeviceId.Suffix("keyword"))
+              .Field(f => f.DeviceData.DeviceId)
               .Aggregations(a => a.AverageDashboardMeasurement())))));
 
   public static SearchDescriptor<Measurement>
@@ -512,7 +512,7 @@ internal static class DashboardMeasurementNestExtensions
           .FixedInterval(interval)
           .Aggregations(a => a
             .Terms("measurementsByDeviceId", t => t
-              .Field(f => f.DeviceData.DeviceId.Suffix("keyword"))
+              .Field(f => f.DeviceData.DeviceId)
               .Aggregations(a => a.AverageDashboardMeasurement())))));
 
   public static AggregationContainerDescriptor<Measurement>

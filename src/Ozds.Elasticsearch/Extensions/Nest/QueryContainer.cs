@@ -18,37 +18,37 @@ public static class QueryContainerExtensions
       this QueryContainerDescriptor<Measurement> @this,
       string? deviceId) =>
     deviceId is null ? @this
-    : @this.Term(f => f.DeviceData.DeviceId.Suffix("keyword"), deviceId);
+    : @this.Term(f => f.DeviceData.DeviceId, deviceId);
 
   public static QueryContainer OwnerIdTerm(
       this QueryContainerDescriptor<Measurement> @this,
       string? ownerId) =>
     ownerId is null ? @this
-    : @this.Term(f => f.DeviceData.OwnerId.Suffix("keyword"), ownerId);
+    : @this.Term(f => f.DeviceData.OwnerId, ownerId);
 
   public static QueryContainer OwnerUserIdTerm(
       this QueryContainerDescriptor<Measurement> @this,
       string? ownerUserId) =>
     ownerUserId is null ? @this
-    : @this.Term(f => f.DeviceData.OwnerUserId.Suffix("keyword"), ownerUserId);
+    : @this.Term(f => f.DeviceData.OwnerUserId, ownerUserId);
 
   public static QueryContainer OwnerIdTerm(
       this QueryContainerDescriptor<Device> @this,
       string? ownerId) =>
     ownerId is null ? @this
-    : @this.Term(f => f.OwnerData.OwnerId.Suffix("keyword"), ownerId);
+    : @this.Term(f => f.OwnerData.OwnerId, ownerId);
 
   public static QueryContainer OwnerUserIdTerm(
       this QueryContainerDescriptor<Device> @this,
       string? ownerUserId) =>
     ownerUserId is null ? @this
-    : @this.Term(f => f.OwnerData.OwnerUserId.Suffix("keyword"), ownerUserId);
+    : @this.Term(f => f.OwnerData.OwnerUserId, ownerUserId);
 
   public static QueryContainer SourceTerm(
       this QueryContainerDescriptor<Device> @this,
       string? source) =>
     source is null ? @this
-    : @this.Term(f => f.Source.Suffix("keyword"), source);
+    : @this.Term(f => f.Source, source);
 
   public static QueryContainer Active(
       this QueryContainerDescriptor<Device> @this) =>

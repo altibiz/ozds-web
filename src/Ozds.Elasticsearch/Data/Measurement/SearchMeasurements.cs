@@ -173,7 +173,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
-        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))
+        .DeviceIdTerm(deviceId))
       .Index(MeasurementIndexName));
 
   public ISearchResponse<Measurement>
@@ -190,7 +190,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
-        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))
+        .DeviceIdTerm(deviceId))
       .Index(MeasurementIndexName));
 
   public Task<ISearchResponse<Measurement>>
@@ -207,7 +207,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
-        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))
+        .DeviceIdTerm(deviceId))
       .Sort(s => s.Descending(h => h.Timestamp))
       .Index(MeasurementIndexName));
 
@@ -225,7 +225,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
-        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))
+        .DeviceIdTerm(deviceId))
       .Sort(s => s.Descending(h => h.Timestamp))
       .Index(MeasurementIndexName));
 
@@ -243,7 +243,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
-        .Term(t => t.DeviceData.OwnerId.Suffix("keyword"), ownerId))
+        .OwnerIdTerm(ownerId))
       .Index(MeasurementIndexName));
 
   public ISearchResponse<Measurement>
@@ -260,7 +260,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
-        .Term(t => t.DeviceData.OwnerId.Suffix("keyword"), ownerId))
+        .OwnerIdTerm(ownerId))
       .Index(MeasurementIndexName));
 
   public Task<ISearchResponse<Measurement>>
@@ -277,7 +277,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
-        .Term(t => t.DeviceData.OwnerId.Suffix("keyword"), ownerId))
+        .OwnerIdTerm(ownerId))
       .Sort(s => s.Descending(h => h.Timestamp))
       .Index(MeasurementIndexName));
 
@@ -295,7 +295,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
-        .Term(t => t.DeviceData.OwnerId.Suffix("keyword"), ownerId))
+        .OwnerIdTerm(ownerId))
       .Sort(s => s.Descending(h => h.Timestamp))
       .Index(MeasurementIndexName));
 
@@ -313,7 +313,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
-        .Term(t => t.DeviceData.OwnerUserId.Suffix("keyword"), ownerUserId))
+        .OwnerUserIdTerm(ownerUserId))
       .Index(MeasurementIndexName));
 
   public ISearchResponse<Measurement>
@@ -330,7 +330,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
-        .Term(t => t.DeviceData.OwnerUserId.Suffix("keyword"), ownerUserId))
+        .OwnerUserIdTerm(ownerUserId))
       .Index(MeasurementIndexName));
 
   public Task<ISearchResponse<Measurement>>
@@ -347,7 +347,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
-        .Term(t => t.DeviceData.OwnerUserId.Suffix("keyword"), ownerUserId))
+        .OwnerUserIdTerm(ownerUserId))
       .Sort(s => s.Descending(h => h.Timestamp))
       .Index(MeasurementIndexName));
 
@@ -365,7 +365,7 @@ public sealed partial class ElasticsearchClient : IElasticsearchClient
             period?.From ?? DateTime.MinValue.ToUniversalTime())
           .LessThanOrEquals(
             period?.To ?? DateTime.MaxValue.ToUniversalTime())) && q
-        .Term(t => t.DeviceData.OwnerUserId.Suffix("keyword"), ownerUserId))
+        .OwnerUserIdTerm(ownerUserId))
       .Sort(s => s.Descending(h => h.Timestamp))
       .Index(MeasurementIndexName));
 }

@@ -112,7 +112,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
             DateTime.MinValue.ToUniversalTime())
           .LessThan(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))),
+        .Term(t => t.DeviceData.DeviceId, deviceId))),
      Elastic.SearchAsync<Measurement>(s => s
       .Size(1)
       .Index(MeasurementIndexName)
@@ -126,7 +126,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
             DateTime.MinValue.ToUniversalTime())
           .LessThan(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))))
+        .Term(t => t.DeviceData.DeviceId, deviceId))))
     .Await();
 
   private (
@@ -148,7 +148,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
             DateTime.MinValue.ToUniversalTime())
           .LessThan(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))),
+        .Term(t => t.DeviceData.DeviceId, deviceId))),
      Elastic.Search<Measurement>(s => s
       .Size(1)
       .Index(MeasurementIndexName)
@@ -162,7 +162,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
             DateTime.MinValue.ToUniversalTime())
           .LessThan(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))));
+        .Term(t => t.DeviceData.DeviceId, deviceId))));
 
   private ISearchResponse<Measurement>
   SearchMaxPowerPerFifteenMinutes(
@@ -179,7 +179,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
             DateTime.MinValue.ToUniversalTime())
           .LessThan(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))
+        .Term(t => t.DeviceData.DeviceId, deviceId))
       .Aggregations(a => a
         .DateHistogram("measurementsPerFifteenMinutes", h => h
           .Field(f => f.Timestamp)
@@ -205,7 +205,7 @@ public partial class ElasticsearchClient : IElasticsearchClient
             DateTime.MinValue.ToUniversalTime())
           .LessThan(
             period?.To ?? DateTime.UtcNow)) && q
-        .Term(t => t.DeviceData.DeviceId.Suffix("keyword"), deviceId))
+        .Term(t => t.DeviceData.DeviceId, deviceId))
       .Aggregations(a => a
         .DateHistogram("measurementsPerFifteenMinutes", h => h
           .Field(f => f.Timestamp)
