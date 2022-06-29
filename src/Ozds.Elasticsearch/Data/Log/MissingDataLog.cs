@@ -5,6 +5,7 @@ namespace Ozds.Elasticsearch;
 
 public static class MissingDataLogErrorCode
 {
+  public const string Unknown = "unknown";
   public const string Provider = "provider";
   public const string Validation = "validation";
   public const string Consistency = "consistency";
@@ -64,7 +65,7 @@ public class MissingDataLog : IEquatable<MissingDataLog>, ICloneable
   [Boolean(Name = "shouldValidate")]
   public bool ShouldValidate { get; init; }
 
-  [Object(Name = "error")]
+  [Object(Name = "exception")]
   public ErrorDataType ErrorData { get; init; }
 
   // NOTE: only for elasticsearch purposes
@@ -82,7 +83,7 @@ public class MissingDataLog : IEquatable<MissingDataLog>, ICloneable
       Description = description;
     }
 
-    [Keyword(Name = "code")]
+    [Keyword(Name = "code", NullValue = MissingDataLogErrorCode.Unknown)]
     public string Code { get; init; }
 
     [Text(Name = "description")]

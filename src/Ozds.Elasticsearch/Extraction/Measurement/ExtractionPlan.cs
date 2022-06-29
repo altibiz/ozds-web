@@ -19,6 +19,7 @@ public readonly record struct ExtractionPlanItemError
 
 public enum ExtractionPlanItemErrorCode
 {
+  Unknown = -1,
   Provider = 0,
   Validation = 1,
   Consistency = 2,
@@ -47,6 +48,8 @@ public static class ExtractionPlanItemExtensions
       this ExtractionPlanItemErrorCode extractionPlanItemErrorCode) =>
     extractionPlanItemErrorCode switch
     {
+      ExtractionPlanItemErrorCode.Unknown =>
+        MissingDataLogErrorCode.Unknown,
       ExtractionPlanItemErrorCode.Provider =>
         MissingDataLogErrorCode.Provider,
       ExtractionPlanItemErrorCode.Validation =>
@@ -74,6 +77,8 @@ public static class ExtractionPlanItemExtensions
       this string missingDataLogErrorCode) =>
     missingDataLogErrorCode switch
     {
+      MissingDataLogErrorCode.Unknown =>
+        ExtractionPlanItemErrorCode.Unknown,
       MissingDataLogErrorCode.Provider =>
         ExtractionPlanItemErrorCode.Provider,
       MissingDataLogErrorCode.Validation =>

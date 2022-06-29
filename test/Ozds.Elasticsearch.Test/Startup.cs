@@ -19,15 +19,24 @@ public class Startup
   {
     services.AddSingleton<IMeasurementProvider, FakeMeasurementProvider>();
 
+    services.AddSingleton<ElasticsearchMigratorAccessor>(
+      services => new ElasticsearchMigratorAccessor());
     services.AddSingleton<
       IElasticsearchClientPrototype,
       ElasticsearchClient>();
-    services.AddScoped<IElasticsearchClient>(s => s
+    services.AddScoped<IElasticsearchClient>(services => services
       .GetRequiredService<IElasticsearchClientPrototype>()
-      .ClonePrototype(s
-        .GetRequiredService<ITestOutputHelperAccessor>().Output
-        ?.GetTest()
-        ?.GetCorrespondingIndexName()));
+      .ClonePrototype(
+        new Indices(
+          isDev: services
+            .GetRequiredService<IHostEnvironment>()
+            .IsDevelopment(),
+          test: services
+            .GetRequiredService<ITestOutputHelperAccessor>().Output
+            ?.GetTest()
+            ?.GetSpecificTestIndexSuffix() ??
+              throw new InvalidOperationException(
+                "Lacking test output"))));
 
     services.AddSingleton<
       Elasticsearch.HelbOzds.IClient,

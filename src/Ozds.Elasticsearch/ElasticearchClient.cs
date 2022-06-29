@@ -7,7 +7,8 @@ namespace Ozds.Elasticsearch;
 
 public interface IElasticsearchClientPrototype
 {
-  public IElasticsearchClient ClonePrototype(string? indexSuffix = null);
+  public IElasticsearchClient ClonePrototype(
+      Indices? indices = null);
 }
 
 public sealed partial class ElasticsearchClient :
@@ -19,7 +20,9 @@ public sealed partial class ElasticsearchClient :
     IHostEnvironment env,
     ILogger<IElasticsearchClient> logger,
     IConfiguration conf,
-    IEnumerable<IMeasurementProvider> providers)
+
+    IEnumerable<IMeasurementProvider> providers,
+    ElasticsearchMigratorAccessor migratorAccessor)
   {
     Env = env;
     Logger = logger;
@@ -61,6 +64,18 @@ public sealed partial class ElasticsearchClient :
       Logger.LogInformation("No providers registered");
     }
 
+    MigratorAccessor = migratorAccessor;
+    if (MigratorAccessor.Migrator is null)
+    {
+      Indices = new(isDev: Env.IsDevelopment());
+    }
+    else
+    {
+      Indices = MigratorAccessor.Migrator.Migrate(Elastic);
+    }
+    Logger.LogInformation(
+      "Using {Indices}",
+      Indices);
     TryCreateIndices();
 
     Ready = true;
@@ -146,13 +161,14 @@ public sealed partial class ElasticsearchClient :
   #endregion // Constructors
 
   #region Prototype
-  public IElasticsearchClient ClonePrototype(string? indexSuffix = null)
+  public IElasticsearchClient ClonePrototype(
+      Indices? indices = null)
   {
     // NOTE: because the OnRequestCompleted lambda carries a reference to
     // NOTE: the prototype
     Ready = false;
 
-    var client = new ElasticsearchClient(this, indexSuffix);
+    var client = new ElasticsearchClient(this, indices);
 
     // NOTE: because the OnRequestCompleted lambda carries a reference to
     // NOTE: the prototype
@@ -161,7 +177,9 @@ public sealed partial class ElasticsearchClient :
     return client;
   }
 
-  private ElasticsearchClient(ElasticsearchClient other, string? indexSuffix)
+  private ElasticsearchClient(
+      ElasticsearchClient other,
+      Indices? indices)
   {
     Env = other.Env;
     Logger = other.Logger;
@@ -170,53 +188,52 @@ public sealed partial class ElasticsearchClient :
 
     Providers = other.Providers;
 
-    IndexSuffix = indexSuffix ?? "";
+    MigratorAccessor = other.MigratorAccessor;
+
+    Indices = indices ?? other.Indices;
+    Logger.LogInformation(
+      "Using {Indices}",
+      Indices);
+    TryReconstructIndices();
 
     Ready = true;
   }
   #endregion // Prototype
 
-  private IHostEnvironment Env { get; }
-  private ILogger Logger { get; }
+  private IHostEnvironment Env { get; init; }
+  private ILogger Logger { get; init; }
 
   private IElasticClient Elastic { get; init; }
 
-  private List<IMeasurementProvider> Providers { get; }
+  private List<IMeasurementProvider> Providers { get; init; }
+
+  private ElasticsearchMigratorAccessor
+  MigratorAccessor
+  { get; init; }
 
   private bool Ready = false;
 
-  #region Index Suffix
-  private string IndexSuffix
+  #region Indices
+  private Indices Indices { get; init; }
+
+  private string MeasurementIndexName
   {
-    get => _indexSuffix;
-    init
-    {
-      _indexSuffix =
-        string.IsNullOrWhiteSpace(value) ? ""
-        : value.StartsWith('.') ? value
-        : $".{value}";
-      TryReconstructIndices();
-    }
+    get => Indices.Measurements.Name;
   }
 
-  private string ConsoleIndexSuffix
+  private string DeviceIndexName
   {
-    get =>
-      string.IsNullOrWhiteSpace(IndexSuffix) ? ""
-      : $" '{IndexSuffix}'";
+    get => Indices.Devices.Name;
   }
 
-  private string _indexSuffix = "";
-  #endregion // Index Suffix
+  private string LogIndexName
+  {
+    get => Indices.Log.Name;
+  }
 
-  #region indices
   private void TryReconstructIndices()
   {
-    if (Env.IsDevelopment())
-    {
-      TryDeleteIndices();
-    }
-
+    TryDeleteIndices();
     TryCreateIndices();
   }
 
@@ -226,15 +243,13 @@ public sealed partial class ElasticsearchClient :
     Elastic.Indices.Delete(DeviceIndexName);
     Elastic.Indices.Delete(LogIndexName);
 
-    Logger.LogInformation(
-      "Deleted Elasticsearch indices{ConsoleIndexSuffix}",
-      ConsoleIndexSuffix);
+    Logger.LogInformation("Deleted Elasticsearch indices");
   }
 
   private void TryCreateIndices()
   {
     Elastic.Indices
-      .Create(DeviceIndexName, c => c
+      .Create(MeasurementIndexName, c => c
         .Map<Measurement>(m => m
           .AutoMap<Measurement>()));
 
@@ -250,32 +265,7 @@ public sealed partial class ElasticsearchClient :
         .Map<MissingDataLog>(m => m
           .AutoMap<MissingDataLog>()));
 
-    Logger.LogInformation(
-      "Created Elasticsearch indices{ConsoleIndexSuffix}",
-      ConsoleIndexSuffix);
+    Logger.LogInformation("Created Elasticsearch indices");
   }
   #endregion // Indices
-
-  // NOTE: please don't touch this
-  #region Index Names
-  private string MeasurementIndexName
-  {
-    get => $"{EnvIndexPrefix}measurements{IndexSuffix}";
-  }
-
-  private string DeviceIndexName
-  {
-    get => $"{EnvIndexPrefix}devices{IndexSuffix}";
-  }
-
-  private string LogIndexName
-  {
-    get => $"{EnvIndexPrefix}log{IndexSuffix}";
-  }
-
-  private string EnvIndexPrefix
-  {
-    get => Env.IsDevelopment() ? "ozds.debug." : "ozds.";
-  }
-  #endregion // Index Names
 }
