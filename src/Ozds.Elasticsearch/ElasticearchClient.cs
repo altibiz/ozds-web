@@ -248,22 +248,9 @@ public sealed partial class ElasticsearchClient :
 
   private void TryCreateIndices()
   {
-    Elastic.Indices
-      .Create(MeasurementIndexName, c => c
-        .Map<Measurement>(m => m
-          .AutoMap<Measurement>()));
-
-    Elastic.Indices
-      .Create(DeviceIndexName, c => c
-        .Map<Device>(m => m
-          .AutoMap<Device>()));
-
-    Elastic.Indices
-      .Create(LogIndexName, c => c
-        .Map<LoadLog>(m => m
-          .AutoMap<LoadLog>())
-        .Map<MissingDataLog>(m => m
-          .AutoMap<MissingDataLog>()));
+    Elastic.Indices.Create(MeasurementIndexName, Index.MeasurementsCreator);
+    Elastic.Indices.Create(DeviceIndexName, Index.DevicesCreator);
+    Elastic.Indices.Create(LogIndexName, Index.LogCreator);
 
     Logger.LogInformation("Created Elasticsearch indices");
   }

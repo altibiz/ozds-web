@@ -26,52 +26,70 @@ public class ElasticsearchMigrator : IElasticsearchMigrator
   public Task<Indices> MigrateAsync(IElasticClient client) =>
     DiscoverIndicesAsync(client, Env.IsDevelopment())
       .ThenAwait(oldIndices => DiscoverMigrations(typeof(Migrations))
-        .Select(migration => oldIndices
-          .Yield()
-          .Select(oldIndex =>
-            MigrateAsync(
-              client,
-              oldIndex,
-              migration.Version,
-              migration.Store))
+        .Var(migrations => migrations
+          .Select((migration, index) => oldIndices
+            .Yield()
+            .Select(oldIndex =>
+              MigrateAsync(
+                client,
+                oldIndex,
+                migration.Version,
+                migration.Store,
+                (index == migrations.Count() - 1) ?
+                  Index.GetCreator(oldIndex)
+                : null))
+            .AwaitValue()
+            .Then(IndexExtensions.Indices))
           .AwaitValue()
-          .Then(IndexExtensions.Indices))
-        .AwaitValue()
-        .Then(indices => indices
-          .LastOrDefault()));
+          .Then(indices => indices
+            .LastOrDefault())));
 
   public Indices Migrate(IElasticClient client) =>
     DiscoverIndices(client, Env.IsDevelopment())
       .Var(oldIndices => DiscoverMigrations(typeof(Migrations))
-        .Select(migration => oldIndices
-          .Yield()
-          .Select(oldIndex =>
-            Migrate(
-              client,
-              oldIndex,
-              migration.Version,
-              migration.Store))
-          .Var(IndexExtensions.Indices))
-        .Var(indices => indices
-          .LastOrDefault()));
+        .Var(migrations => migrations
+          .Select((migration, index) => oldIndices
+            .Yield()
+            .Select(oldIndex =>
+              Migrate(
+                client,
+                oldIndex,
+                migration.Version,
+                migration.Store,
+                (index == migrations.Count() - 1) ?
+                  Index.GetCreator(oldIndex)
+                : null))
+            .Var(IndexExtensions.Indices))
+          .Var(indices => indices
+            .LastOrDefault())));
 
   private async Task<Index> MigrateAsync(
       IElasticClient client,
       Index oldIndex,
       int newVersion,
       IMigrationStore store,
+      Func<CreateIndexDescriptor, ICreateIndexRequest>? creator = null,
       bool clean = false)
   {
-    if (oldIndex.Version < newVersion &&
+    if ((oldIndex.Version ?? 0) < newVersion &&
         store.Processors.TryGetValue(
           oldIndex.Base,
           out var indexProcessors))
     {
       var newIndex = oldIndex.WithVersion(newVersion);
+      Log.LogInformation(
+          "Migrating {OldIndex} to {NewIndex}",
+          oldIndex.Name,
+          newIndex.Name);
 
       await client.Ingest
         .PutPipelineAsync(new Id(newIndex.Name), p => p
           .Processors(indexProcessors));
+
+      if (creator is not null)
+      {
+        await client.Indices.CreateAsync(newIndex.Name, creator);
+      }
 
       await client
         .ReindexOnServerAsync(r => r
@@ -102,18 +120,28 @@ public class ElasticsearchMigrator : IElasticsearchMigrator
       Index oldIndex,
       int newVersion,
       IMigrationStore store,
+      Func<CreateIndexDescriptor, ICreateIndexRequest>? creator = null,
       bool clean = false)
   {
-    if (oldIndex.Version < newVersion &&
+    if ((oldIndex.Version ?? 0) < newVersion &&
         store.Processors.TryGetValue(
           oldIndex.Base,
           out var indexProcessors))
     {
       var newIndex = oldIndex.WithVersion(newVersion);
+      Log.LogInformation(
+          "Migrating {OldIndex} to {NewIndex}",
+          oldIndex.Name,
+          newIndex.Name);
 
       client.Ingest
         .PutPipeline(new Id(newIndex.Name), p => p
           .Processors(indexProcessors));
+
+      if (creator is not null)
+      {
+        client.Indices.Create(newIndex.Name, creator);
+      }
 
       client
         .ReindexOnServer(r => r
@@ -150,7 +178,7 @@ public class ElasticsearchMigrator : IElasticsearchMigrator
   private ILogger Log { get; }
   private IHostEnvironment Env { get; }
 
-  private static IEnumerable<(int Version, IMigrationStore Store)>
+  private IEnumerable<(int Version, IMigrationStore Store)>
   DiscoverMigrations(Type migrationType) =>
     migrationType
       .GetMethods(
@@ -167,9 +195,13 @@ public class ElasticsearchMigrator : IElasticsearchMigrator
             new[] { new MigrationStore().As<IMigrationStore>() })
           .As<IMigrationStore>()
           .WhenNonNull(store => (version, store))))
-      .OrderBy(versionAndStore => versionAndStore.version);
+      .OrderBy(versionAndStore => versionAndStore.version)
+      .With(migrations => Log
+        .LogDebug(
+          "Discovered {Migrations}",
+          migrations.Select(migration => migration.version)));
 
-  private static Task<Indices>
+  private Task<Indices>
   DiscoverIndicesAsync(
       IElasticClient client,
       bool isDev,
@@ -179,11 +211,17 @@ public class ElasticsearchMigrator : IElasticsearchMigrator
         .Index(Nest.Indices.Parse($"{Index.MakePrefix(isDev)}*")))
       .Then(indices =>
         new Indices(
-          indices.Records.Select(record => record.Index),
+          indices.Records
+            .Select(record => record.Index)
+            .Where(index => !Index.IsTest(index)),
           isDev,
-          version));
+          version))
+      .ThenWith(indices => Log
+        .LogDebug(
+          "Discovered {Indices}",
+          indices.Yield().Select(index => index.Name)));
 
-  private static Indices
+  private Indices
   DiscoverIndices(
       IElasticClient client,
       bool isDev,
@@ -193,7 +231,13 @@ public class ElasticsearchMigrator : IElasticsearchMigrator
         .Index(Nest.Indices.Parse($"{Index.MakePrefix(isDev)}*")))
       .Var(indices =>
         new Indices(
-          indices.Records.Select(record => record.Index),
+          indices.Records
+            .Select(record => record.Index)
+            .Where(index => !Index.IsTest(index)),
           isDev,
-          version));
+          version))
+      .With(indices => Log
+        .LogDebug(
+          "Discovered {Indices}",
+          indices.Yield().Select(index => index.Name)));
 }

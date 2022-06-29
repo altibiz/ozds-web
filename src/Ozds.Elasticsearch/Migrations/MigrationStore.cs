@@ -8,9 +8,8 @@ internal interface IMigrationStore
       string index,
       IEnumerable<IProcessor> processors);
 
-  public IReadOnlyDictionary<string, IReadOnlyCollection<IProcessor>>
-  Processors
-  { get; }
+  // TODO: readonly
+  public Dictionary<string, List<IProcessor>> Processors { get; }
 }
 
 internal class MigrationStore : IMigrationStore
@@ -31,15 +30,10 @@ internal class MigrationStore : IMigrationStore
     return this;
   }
 
-  public IReadOnlyDictionary<string, IReadOnlyCollection<IProcessor>>
-  Processors
+  public Dictionary<string, List<IProcessor>> Processors
   {
-    get =>
-      (IReadOnlyDictionary<string, IReadOnlyCollection<IProcessor>>)
-      Migrations;
+    get => Migrations;
   }
 
-  private Dictionary<string, List<IProcessor>>
-  Migrations
-  { get; } = new();
+  private Dictionary<string, List<IProcessor>> Migrations { get; } = new();
 }

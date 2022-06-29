@@ -1,3 +1,4 @@
+using Nest;
 using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch;
@@ -38,9 +39,9 @@ public readonly record struct Indices
       Measurements: indices
         .FirstOrDefault(index => index.Base == Index.Measurements),
       Devices: indices
-        .FirstOrDefault(index => index.Base == Index.Measurements),
+        .FirstOrDefault(index => index.Base == Index.Devices),
       Log: indices
-        .FirstOrDefault(index => index.Base == Index.Measurements))
+        .FirstOrDefault(index => index.Base == Index.Log))
   { }
 
   public Indices(
@@ -129,6 +130,33 @@ public readonly record struct Index
 
   public const int DefaultVersion = 0;
 
+  public static readonly Func<CreateIndexDescriptor, ICreateIndexRequest>
+  MeasurementsCreator = i => i
+    .Map<Measurement>(m => m
+      .AutoMap<Measurement>());
+
+  public static readonly Func<CreateIndexDescriptor, ICreateIndexRequest>
+  DevicesCreator = i => i
+    .Map<Device>(m => m
+      .AutoMap<Device>());
+
+  public static readonly Func<CreateIndexDescriptor, ICreateIndexRequest>
+  LogCreator = i => i
+    .Map<LoadLog>(m => m
+      .AutoMap<LoadLog>())
+    .Map<MissingDataLog>(m => m
+      .AutoMap<MissingDataLog>());
+
+  public static Func<CreateIndexDescriptor, ICreateIndexRequest>
+  GetCreator(Index index) =>
+    index.Base switch
+    {
+      Measurements => MeasurementsCreator,
+      Devices => DevicesCreator,
+      Log => LogCreator,
+      _ => throw new ArgumentException($"Wrong base index name {index}")
+    };
+
   public static string MakeName(
       string @base,
       bool isDev,
@@ -148,6 +176,10 @@ public readonly record struct Index
   public static string MakeVersion(
       int? version) =>
     version is null ? "" : $".v{version}";
+
+  public static bool IsTest(
+      string name) =>
+    name.Contains(TestSuffix);
 
   public Index(
       IEnumerable<string> indices,
@@ -193,13 +225,11 @@ public readonly record struct Index
   public Index WithVersion(
       int version) =>
     new Index(
-      Name:
-        Test is null ? MakeName(Base, IsDev, Version)
-        : MakeTestName(Base, IsDev, Test),
+      Name: MakeName(Base, IsDev, version),
       Base: Base,
       IsDev: IsDev,
       Version: version,
-      Test: Test);
+      Test: null);
 
   public static string ExtractLatest(
       IEnumerable<string> indices,
@@ -214,29 +244,29 @@ public readonly record struct Index
   public static string ExtractBase(
       string name) =>
     name
-      .RegexReplace(
-        $"^{BasePrefix}\\.(?:{DevPrefix}\\.)?(.*?)\\.", @"$1");
+      .RegexRemove($"^{BasePrefix}\\.(?:{DevPrefix}\\.)?")
+      .RegexReplace($"^([a-z]*)\\..*$", @"$1");
 
   public static bool ExtractIsDev(
       string name) =>
     !name
       .RegexReplace(
-        $"^{BasePrefix}\\.({DevPrefix}\\.)?", @"$1")
+        $"^{BasePrefix}\\.({DevPrefix}\\.)?.*$", @"$1")
       .Empty();
 
   public static string? ExtractTest(
       string name) =>
     name
       .RegexReplace(
-        $"{TestSuffix}\\.(.*)$", @"$1")
-      .Var(test => test
-        .Empty() ? null
+        $"^.*{TestSuffix}\\.([a-z\\.\\-]*)$", @"$1")
+      .Var(test =>
+        test == name ? null
         : test);
 
   public static int? ExtractVersion(
       string name) =>
     name
-      .RegexReplace(@"v([0-9]*)", @"$1")
+      .RegexReplace(@"^.*v([0-9]*).*$", @"$1")
       .TryParseInt();
 }
 
