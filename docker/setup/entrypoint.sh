@@ -93,7 +93,8 @@ Trying again in 5 seconds...";
 create_role write_ozds '{
   "cluster": [
     "monitor",
-    "manage_index_templates"
+    "manage_index_templates",
+    "manage_pipeline"
   ],
   "indices": [
     {

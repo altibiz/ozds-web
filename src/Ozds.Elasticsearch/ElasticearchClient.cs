@@ -2,6 +2,7 @@ using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using Nest;
 using Elasticsearch.Net;
+using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch;
 
@@ -71,22 +72,27 @@ public sealed partial class ElasticsearchClient :
     }
     else
     {
+      Console.WriteLine("here");
       Indices = MigratorAccessor.Migrator.Migrate(Elastic);
     }
-    Logger.LogInformation(
-      "Using {Indices}",
-      Indices);
+    Logger.LogInformation("Using {Indices}", Indices);
     TryCreateIndices();
+    TryMapIndices();
 
     Ready = true;
   }
 
   public static bool Ping(
     IHostEnvironment env,
-    IConfiguration conf)
+    IConfiguration conf,
+    ILogger log)
   {
     var client = CreateElasticClient(env, conf);
-    return client.Ping().IsValid;
+    var response = client.Ping();
+
+    log.LogDebug("Pinged Elastic\n{Response}", response.DebugInformation);
+
+    return response.IsValid;
   }
 
   private static IElasticClient CreateElasticClient(
@@ -105,17 +111,17 @@ public sealed partial class ElasticsearchClient :
     var apiKey = section.GetValue<string?>("apiKey");
     var apiKeyId = section.GetValue<string?>("apiKeyId");
 
-    var settings = new ConnectionSettings(new Uri(serverUri));
-
-    settings = settings
-      .OnRequestCompleted(
-        call =>
-        {
-          if (client is { Ready: true })
+    var settings =
+      new ConnectionSettings(new Uri(serverUri))
+        .OnRequestCompleted(
+          call =>
           {
-            client.Logger.LogDebug(call.DebugInformation);
-          }
-        });
+            if (client is { Ready: true })
+            {
+              client.Logger.LogDebug(call.DebugInformation);
+            }
+          })
+        .EnableApiVersioningHeader();
 
     if (!string.IsNullOrWhiteSpace(apiKey))
     {
@@ -152,7 +158,7 @@ public sealed partial class ElasticsearchClient :
     if (env.IsDevelopment())
     {
       settings = settings
-        .PrettyJson(true)
+        .PrettyJson()
         .DisableDirectStreaming();
     }
 
@@ -191,9 +197,7 @@ public sealed partial class ElasticsearchClient :
     MigratorAccessor = other.MigratorAccessor;
 
     Indices = indices ?? other.Indices;
-    Logger.LogInformation(
-      "Using {Indices}",
-      Indices);
+    Logger.LogInformation("Using {Indices}", Indices);
     TryReconstructIndices();
 
     Ready = true;
@@ -235,24 +239,37 @@ public sealed partial class ElasticsearchClient :
   {
     TryDeleteIndices();
     TryCreateIndices();
+    TryMapIndices();
   }
 
   private void TryDeleteIndices()
   {
-    Elastic.Indices.Delete(MeasurementIndexName);
-    Elastic.Indices.Delete(DeviceIndexName);
-    Elastic.Indices.Delete(LogIndexName);
+    Indices
+      .Yield()
+      .ForEach(index => Elastic.Indices.Delete(index.Name))
+      .Run();
 
     Logger.LogInformation("Deleted Elasticsearch indices");
   }
 
   private void TryCreateIndices()
   {
-    Elastic.Indices.Create(MeasurementIndexName, Index.MeasurementsCreator);
-    Elastic.Indices.Create(DeviceIndexName, Index.DevicesCreator);
-    Elastic.Indices.Create(LogIndexName, Index.LogCreator);
+    Indices
+      .Yield()
+      .ForEach(index => Index.CreatorFor[index.Base](Elastic, index))
+      .Run();
 
     Logger.LogInformation("Created Elasticsearch indices");
+  }
+
+  private void TryMapIndices()
+  {
+    Indices
+      .Yield()
+      .ForEach(index => Index.MapperFor[index.Base](Elastic, index))
+      .Run();
+
+    Logger.LogInformation("Mapped Elasticsearch indices");
   }
   #endregion // Indices
 }

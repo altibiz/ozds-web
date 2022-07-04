@@ -107,7 +107,7 @@ public class Startup : OrchardCore.Modules.StartupBase
 
       // NOTE: if a developer starts elasticsearch it would be better to work
       // NOTE: with that than fakes
-      if (Elasticsearch.ElasticsearchClient.Ping(Env, Conf))
+      if (Elasticsearch.ElasticsearchClient.Ping(Env, Conf, Logger))
       {
         AddElasticsearchClient(services);
       }
@@ -195,7 +195,7 @@ public class Startup : OrchardCore.Modules.StartupBase
     services.AddSingleton<IElasticsearchMigrator, ElasticsearchMigrator>();
     services.AddSingleton<ElasticsearchMigratorAccessor>(
       services => new ElasticsearchMigratorAccessor(services
-        .GetRequiredService<IElasticsearchMigrator>()));
+        .GetService<IElasticsearchMigrator>()));
     services.AddSingleton<ElasticsearchClient>();
     services.AddSingleton<IDeviceLoader>(
         s => s.GetRequiredService<ElasticsearchClient>());

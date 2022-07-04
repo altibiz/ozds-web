@@ -130,31 +130,144 @@ public readonly record struct Index
 
   public const int DefaultVersion = 0;
 
-  public static readonly Func<CreateIndexDescriptor, ICreateIndexRequest>
-  MeasurementsCreator = i => i
-    .Map<Measurement>(m => m
-      .AutoMap<Measurement>());
-
-  public static readonly Func<CreateIndexDescriptor, ICreateIndexRequest>
-  DevicesCreator = i => i
-    .Map<Device>(m => m
-      .AutoMap<Device>());
-
-  public static readonly Func<CreateIndexDescriptor, ICreateIndexRequest>
-  LogCreator = i => i
-    .Map<LoadLog>(m => m
-      .AutoMap<LoadLog>())
-    .Map<MissingDataLog>(m => m
-      .AutoMap<MissingDataLog>());
-
-  public static Func<CreateIndexDescriptor, ICreateIndexRequest>
-  GetCreator(Index index) =>
-    index.Base switch
+  public static readonly
+  IReadOnlyDictionary<string, Func<
+      IElasticClient, Index, Task<CreateIndexResponse>>>
+  AsyncCreatorFor =
+    new Dictionary<string, Func<
+      IElasticClient, Index, Task<CreateIndexResponse>>>
     {
-      Measurements => MeasurementsCreator,
-      Devices => DevicesCreator,
-      Log => LogCreator,
-      _ => throw new ArgumentException($"Wrong base index name {index}")
+      {
+        Measurements,
+        (client, index) => client.Indices
+          .CreateAsync(index.Name, i => i
+            .Map<Measurement>(m => m
+              .AutoMap<Measurement>()))
+      },
+      {
+        Devices,
+        (client, index) => client.Indices
+          .CreateAsync(index.Name, i => i
+            .Map<Device>(m => m
+              .AutoMap<Device>()))
+      },
+      {
+        Log,
+        (client, index) => client.Indices
+          .CreateAsync(index.Name, i => i
+            .Map<MissingDataLog>(m => m
+              .AutoMap<MissingDataLog>())
+            .Map<LoadLog>(m => m
+              .AutoMap<LoadLog>()))
+      }
+    };
+
+  public static readonly
+  IReadOnlyDictionary<string, Func<
+      IElasticClient, Index, CreateIndexResponse>>
+  CreatorFor =
+    new Dictionary<string, Func<
+      IElasticClient, Index, CreateIndexResponse>>
+    {
+      {
+        Measurements,
+        (client, index) => client.Indices
+          .Create(index.Name, i => i
+            .Map<Measurement>(m => m
+              .AutoMap<Measurement>()))
+      },
+      {
+        Devices,
+        (client, index) => client.Indices
+          .Create(index.Name, i => i
+            .Map<Device>(m => m
+              .AutoMap<Device>()))
+      },
+      {
+        Log,
+        (client, index) => client.Indices
+          .Create(index.Name, i => i
+            .Map<MissingDataLog>(m => m
+              .AutoMap<MissingDataLog>())
+            .Map<LoadLog>(m => m
+              .AutoMap<LoadLog>()))
+      }
+    };
+
+  public static readonly
+  IReadOnlyDictionary<string, Func<
+      IElasticClient, Index, Task<PutMappingResponse>>>
+  AsyncMapperFor =
+    new Dictionary<string, Func<
+      IElasticClient, Index, Task<PutMappingResponse>>>
+    {
+      {
+        Measurements,
+        async (client, index) =>
+          await client.Indices
+            .PutMappingAsync<Measurement>(m => m
+              .Index(index.Name)
+              .AutoMap())
+      },
+      {
+        Devices,
+        async (client, index) =>
+          await client.Indices
+            .PutMappingAsync<Device>(m => m
+              .Index(index.Name)
+              .AutoMap())
+      },
+      {
+        Log,
+        async (client, index) =>
+          await client.Indices
+            .PutMappingAsync<LoadLog>(m => m
+              .Index(index.Name)
+              .AutoMap()) is { IsValid : false } response ?
+          response
+        : await client.Indices
+            .PutMappingAsync<MissingDataLog>(m => m
+              .Index(index.Name)
+              .AutoMap())
+      }
+    };
+
+  public static readonly
+  IReadOnlyDictionary<string, Func<
+      IElasticClient, Index, PutMappingResponse>>
+  MapperFor =
+    new Dictionary<string, Func<
+      IElasticClient, Index, PutMappingResponse>>
+    {
+      {
+        Measurements,
+        (client, index) =>
+          client.Indices
+            .PutMapping<Measurement>(m => m
+              .Index(index.Name)
+              .AutoMap())
+      },
+      {
+        Devices,
+        (client, index) =>
+          client.Indices
+            .PutMapping<Device>(m => m
+              .Index(index.Name)
+              .AutoMap())
+      },
+      {
+        Log,
+        (client, index) =>
+          client.Indices
+            .PutMapping<LoadLog>(m => m
+              .Index(index.Name)
+              .AutoMap()) is { IsValid : false } response ?
+          response
+        : client.Indices
+            .PutMapping<MissingDataLog>(m => m
+              .Index(index.Name)
+              .AutoMap())
+      }
     };
 
   public static string MakeName(
@@ -244,30 +357,30 @@ public readonly record struct Index
   public static string ExtractBase(
       string name) =>
     name
+      // NOTE: separate because the capture pushes the dev prefix out
       .RegexRemove($"^{BasePrefix}\\.(?:{DevPrefix}\\.)?")
       .RegexReplace($"^([a-z]*)\\..*$", @"$1");
 
   public static bool ExtractIsDev(
       string name) =>
     !name
-      .RegexReplace(
-        $"^{BasePrefix}\\.({DevPrefix}\\.)?.*$", @"$1")
+      .RegexReplace($"^{BasePrefix}\\.({DevPrefix}\\.)?.*$", @"$1")
       .Empty();
-
-  public static string? ExtractTest(
-      string name) =>
-    name
-      .RegexReplace(
-        $"^.*{TestSuffix}\\.([a-z\\.\\-]*)$", @"$1")
-      .Var(test =>
-        test == name ? null
-        : test);
 
   public static int? ExtractVersion(
       string name) =>
     name
       .RegexReplace(@"^.*v([0-9]*).*$", @"$1")
       .TryParseInt();
+
+  public static string? ExtractTest(
+      string name) =>
+    name
+      .RegexReplace($"^.*{TestSuffix}\\.([a-z\\.\\-]*)$", @"$1")
+      .Var(test =>
+          test == name ?
+          null
+        : test);
 }
 
 public static class IndexExtensions
