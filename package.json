@@ -52,7 +52,7 @@
   },
   "packageManager": "yarn@3.2.0",
   "workspaces": [
-    "src/Ozds.Themes.Ozds.Assets"
+    "src/Ozds.Assets"
   ],
   "dependenciesMeta": {
     "bootstrap@5.0.1": {

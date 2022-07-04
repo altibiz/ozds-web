@@ -1,9 +1,13 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+#!/usr/bin/env sh
 
-HUSKY_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")";
+HUSKY_DIR="$(realpath "$(dirname "$0")")";
 ROOT_DIR="$(dirname "$HUSKY_DIR")";
+SCRIPTS_DIR="$ROOT_DIR/scripts";
 
-"$ROOT_DIR/scripts/format.sh";
-"$ROOT_DIR/scripts/build.sh";
+# shellcheck disable=SC1091
+. "$HUSKY_DIR/_/husky.sh"
+
+"$SCRIPTS_DIR/format.sh";
+"$SCRIPTS_DIR/build.sh";
+
 git add "$ROOT_DIR";

@@ -17,7 +17,7 @@ const destPath = upath.resolve(
 );
 const bootstrapIncludePath = upath.resolve(
   upath.dirname(__filename),
-  "../../../.yarn/unplugged/bootstrap-virtual-43b2c55e14/node_modules",
+  "../../../.yarn/unplugged/bootstrap-virtual-2de1d66c31/node_modules",
 );
 
 module.exports = function renderSCSS() {
