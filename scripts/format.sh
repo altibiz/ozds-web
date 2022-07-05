@@ -1,13 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 export NODE_OPTIONS="--no-warnings";
 
-echo -e "
-[OZDS] Formatting with 'yarn'...
-";
+printf "\n[OZDS] Formatting with 'yarn'...\n";
 yarn format;
 
-echo -e "
-[OZDS] Formatting with 'dotnet'...
-";
-dotnet format whitespace;
+# printf "\n[OZDS] Formatting with 'dotnet'...\n";
+# dotnet format whitespace;

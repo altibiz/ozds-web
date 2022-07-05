@@ -6,7 +6,7 @@
     "watch": "yarn wait-on http://localhost:3000 && yarn build && yarn gulp watch",
     "start": "yarn concurrently -n ozds-themes-ozds-assets,gulp-watch -c blue.bold,red.bold \"yarn workspace ozds-themes-ozds-assets start\" \"yarn watch\"",
     "debug": "yarn concurrently -n ozds-themes-ozds-assets,gulp-watch -c blue.bold,red.bold \"yarn workspace ozds-themes-ozds-assets debug\" \"yarn watch\"",
-    "format": "yarn prettier --write --ignore-path .gitignore ./**/*.{js,ts,css,scss,graphql,yml,json,md,pug}",
+    "format": "yarn prettier --write --ignore-path .gitignore ./**/*.{js,ts,css,scss,graphql,yml,json,md}",
     "lint": ""
   },
   "devDependencies": {

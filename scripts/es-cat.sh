@@ -1,18 +1,18 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")";
+SCRIPT_DIR="$(dirname "$(realpath "$0")")";
 ROOT_DIR="$(dirname "$SCRIPT_DIR")";
 
-if [[ ! -f "$ROOT_DIR/certs/ca/ca.crt" ]]; then
-  echo "Make sure that a CA exists at 'certs/ca/ca.crt'";
+if [ ! -f "$ROOT_DIR/certs/ca/ca.crt" ]; then
+  printf "Make sure that a CA exists at 'certs/ca/ca.crt'";
   exit 1;
 fi;
 
-if [[ ! -f "$ROOT_DIR/.env" ]]; then
-  echo "Please update your '.env' file";
+if [ ! -f "$ROOT_DIR/.env" ]; then
+  printf "Please update your '.env' file";
   exit 1;
 fi;
-source .env;
+. "$ROOT_DIR/.env";
 
 curl -s \
   --cacert certs/ca/ca.crt \

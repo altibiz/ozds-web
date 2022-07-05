@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")";
+SCRIPT_DIR="$(dirname "$(realpath "$0")")";
 ROOT_DIR="$(dirname "$SCRIPT_DIR")";
 
 export ASPNETCORE_ENVIRONMENT=Development;
@@ -10,14 +10,10 @@ export ORCHARD_APP_DATA="$ROOT_DIR/App_Data";
 export NODE_OPTIONS="--no-warnings";
 export NODE_ENV="development";
 
-echo -e "
-[OZDS] Building with 'yarn'...
-";
+printf "\n[OZDS] Building with 'yarn'...\n";
 yarn --cwd "$ROOT_DIR" build;
 
-echo -e "
-[OZDS] Running with 'dotnet' in development...
-";
+printf "\n[OZDS] Running with 'dotnet' in development...\n";
 dotnet \
   run \
   --configuration Debug \

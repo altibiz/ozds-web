@@ -1,45 +1,45 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-if [[ ! $CA_PASSWORD ]]; then
-  echo "CA_PASSWORD environment variable missing";
+if [ ! "$CA_PASSWORD" ]; then
+  printf "CA_PASSWORD environment variable missing\n";
   exit 1;
 fi;
 
-if [[ ! $ELASTIC_PASSWORD ]]; then
-  echo "ELASTIC_PASSWORD environment variable missing";
+if [ ! "$ELASTIC_PASSWORD" ]; then
+  printf "ELASTIC_PASSWORD environment variable missing\n";
   exit 1;
 fi;
 
-if [[ ! $KIBANA_PASSWORD ]]; then
-  echo "KIBANA_PASSWORD environment variable missing";
+if [ ! "$KIBANA_PASSWORD" ]; then
+  printf "KIBANA_PASSWORD environment variable missing\n";
   exit 1;
 fi;
 
-if [[ ! $WEB_PASSWORD ]]; then
-  echo "WEB_PASSWORD environment variable missing";
+if [ ! "$WEB_PASSWORD" ]; then
+  printf "WEB_PASSWORD environment variable missing\n";
   exit 1;
 fi;
 
-if [[ ! -f config/certs/ca.zip ]]; then
+if [ ! -f config/certs/ca.zip ]; then
   elasticsearch-certutil ca --silent --pem --out config/certs/ca.zip;
   unzip config/certs/ca.zip -d config/certs;
   openssl pkcs12 -export \
     -in config/certs/ca/ca.crt -inkey config/certs/ca/ca.key \
     -out config/certs/ca/ca.p12 \
     -passout "pass:$CA_PASSWORD";
-  echo "Created SSL Certificate Authority";
+  printf "Created SSL Certificate Authority\n";
 fi;
-echo "SSL Certificate Authority is:";
-echo -e "$(cat config/certs/ca/ca.crt)";
+printf "SSL Certificate Authority is:\n";
+cat config/certs/ca/ca.crt;
 
-if [[ -f config/certs/ca.zip && ! -f config/certs/certs.zip ]]; then
+if [ -f config/certs/ca.zip ] && [ ! -f config/certs/certs.zip ]; then
   elasticsearch-certutil cert --silent --pem \
     --in config/instances.yml \
     --ca-cert config/certs/ca/ca.crt \
     --ca-key config/certs/ca/ca.key \
     --out config/certs/certs.zip;
   unzip config/certs/certs.zip -d config/certs;
-  echo "Created SSL Certificates";
+  printf "Created SSL Certificates\n";
 fi;
 
 chown -R root:root config/certs;
@@ -47,16 +47,16 @@ find . -type d -exec chmod 755 '{}' +;
 find . -type f -exec chmod 640 '{}' +;
 chmod 644 config/certs/ca/ca.crt;
 chmod 644 config/certs/ca/ca.p12;
-echo "Set SSL Certificate file permissions";
+printf "Set SSL Certificate file permissions\n";
 
-echo "Waiting for Elasticsearch availability...";
+printf "Waiting for Elasticsearch availability...\n";
 until curl -s \
   --cacert config/certs/ca/ca.crt \
   https://elasticsearch01:9200 | \
   grep -q "missing authentication credentials";
 do sleep 1; done;
 
-echo "Setting kibana_system password...";
+printf "Setting kibana_system password...\n";
 until curl -s -X POST \
   --cacert config/certs/ca/ca.crt \
   -u "elastic:${ELASTIC_PASSWORD}" \
@@ -66,22 +66,19 @@ until curl -s -X POST \
   grep -q "^{}";
 do sleep 5; done;
 
-echo "Creating roles...";
-function create_role () {
-  echo "Creating '$1' role...";
-  local response;
-  # NOTE: false means the role already exists
-  until echo "$response" | grep -q -E '{"created":(true|false)}}';
-  do
-    if "$response"; then
-      echo "\
-Failed creating role '$1'. \
-Got response '$response'. \
-Trying again in 5 seconds...";
+printf "Creating roles...\n";
+create_role () {
+  printf "Creating '%s' role...\n" "$1";
+
+  until echo "$role_response" | grep -q -E '{"created":(true|false)}}'; do
+    if [ "$role_response" ]; then
+      printf "Failed creating role '%s'." "$1";
+      printf "Got response '%s'." "$role_response";
+      printf "Trying again in 5 seconds...\n";
       sleep 5;
     fi;
 
-    response=$(curl -s -X POST \
+    role_response=$(curl -s -X POST \
       --cacert config/certs/ca/ca.crt \
       -u "elastic:${ELASTIC_PASSWORD}" \
       -H "Content-Type: application/json" \
@@ -171,22 +168,19 @@ create_role debug_ozds '{
   }
 }';
 
-echo "Creating users...";
-function create_user() {
-  echo "Creating '$1' user...";
-  local response;
-  # NOTE: false means the user already exists
-  until echo "$response" | grep -q -E '{"created":(true|false)}';
-  do
-    if "$response"; then
-      echo "\
-Failed creating user '$1'. \
-Got response '$response'. \
-Trying again in 5 seconds...";
+printf "Creating users...\n";
+create_user() {
+  printf "Creating '%s' user...\n" "$1";
+
+  until echo "$user_response" | grep -q -E '{"created":(true|false)}'; do
+    if [ "$user_response" ]; then
+      printf "Failed creating user '%s'." "$1";
+      printf "Got response '%s'." "$user_response";
+      printf "Trying again in 5 seconds...\n";
       sleep 5;
     fi;
 
-    response=$(curl -s -X POST \
+    user_response=$(curl -s -X POST \
       --cacert config/certs/ca/ca.crt \
       -u "elastic:${ELASTIC_PASSWORD}" \
       -H "Content-Type: application/json" \
@@ -195,17 +189,86 @@ Trying again in 5 seconds...";
   done;
 };
 
-create_user web "{
-  \"username\": \"web\",
-  \"password\": \"${WEB_PASSWORD}\",
-  \"roles\": [
-    \"read_ozds\",
-    \"write_ozds\",
-    \"debug_ozds\"
+create_user web "$(printf '{
+  "username": "web",
+  "password": "%s",
+  "roles": [
+    "read_ozds",
+    "write_ozds",
+    "debug_ozds"
   ],
-  \"full_name\": null,
-  \"email\": null,
-  \"enabled\": true
-}";
+  "full_name": null,
+  "email": null,
+  "enabled": true
+}' "$WEB_PASSWORD")";
 
-echo "Setup done!";
+printf "Creating snapshot repos...\n";
+create_snapshot_repo () {
+  printf "Creating '%s' snapshot repo...\n" "$1";
+
+  if [ ! -d "/mnt/snapshots/$1" ]; then
+    mkdir "/mnt/snapshots/$1";
+    chown 1000:0 "/mnt/snapshots/$1";
+  fi;
+
+  until echo "$repo_response" | grep -q -E '{"acknowledged":true}'; do
+    if [ "$repo_response" ]; then
+      printf "Failed creating snapshot repo '%s'." "$1";
+      printf "Got response '%s'." "$repo_response";
+      printf "Trying again in 5 seconds...\n";
+      sleep 5;
+    fi;
+
+    repo_response=$(curl -s -X PUT \
+      --cacert config/certs/ca/ca.crt \
+      -u "elastic:${ELASTIC_PASSWORD}" \
+      -H "Content-Type: application/json" \
+      "https://elasticsearch01:9200/_snapshot/$1?verify=true" \
+      -d "$(printf '{
+        "type": "fs",
+        "settings": {
+          "location": "%s"
+        }
+      }' "$1")");
+  done;
+};
+
+create_snapshot_repo "dev";
+
+printf "Creating SLM policies...\n";
+create_slm_policy () {
+  printf "Creating '%s' SLM policy...\n" "$1";
+
+  until echo "$slm_response" | grep -q -E '{"acknowledged":true}'; do
+    if [ "$slm_response" ]; then
+      printf "Failed creating SLM policy '%s'." "$1";
+      printf "Got response '%s'." "$slm_response";
+      printf "Trying again in 5 seconds...\n";
+      sleep 5;
+    fi;
+
+    slm_response=$(curl -s -X PUT \
+      --cacert config/certs/ca/ca.crt \
+      -u "elastic:${ELASTIC_PASSWORD}" \
+      -H "Content-Type: application/json" \
+      "https://elasticsearch01:9200/_slm/policy/$1" \
+      -d "$2");
+  done;
+};
+
+create_slm_policy "dev-snapshots" '{
+  "name": "<dev-snapshot-{now/d}>",
+  "schedule": "0 0 0 * * ?",
+  "repository": "dev",
+  "config": {
+    "include_global_state": false,
+    "indices": "ozds.*"
+  },
+  "retention": {
+    "expire_after": "30d",
+    "min_count": 5,
+    "max_count": 30
+  }
+}';
+
+printf "Setup done!";

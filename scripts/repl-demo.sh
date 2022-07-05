@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")";
+SCRIPT_DIR="$(dirname "$(realpath "$0")")";
 
 export Ozds__Modules__Ozds__IsDemo=1;
 

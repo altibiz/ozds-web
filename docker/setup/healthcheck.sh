@@ -1,7 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-function check_instance_certificate() {
-  if [[ ! -f "config/certs/$1/$1.crt" ]]; then
+check_instance_certificate() {
+  if [ ! -f "config/certs/$1/$1.crt" ]; then
     echo "Failed creating certificate for instance $1.";
     exit 1;
   fi;

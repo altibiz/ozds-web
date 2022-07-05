@@ -42,3 +42,7 @@ xpack:
         key: certs/${NODE_NAME}/${NODE_NAME}.key
         certificate: certs/${NODE_NAME}/${NODE_NAME}.crt
         certificate_authorities: certs/ca/ca.crt
+
+path:
+  repo:
+    - /mnt/snapshots

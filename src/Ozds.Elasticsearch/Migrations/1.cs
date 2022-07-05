@@ -8,7 +8,7 @@ internal static partial class Migrations
       this IMigrationStore store) =>
     store
       .Migrate(
-        Index.Log,
+        "log",
         new IProcessor[]
         {
           new SetProcessor
@@ -36,7 +36,7 @@ internal static partial class Migrations
           }
         })
       .Migrate(
-        Index.Devices,
+        "devices",
         new IProcessor[]
         {
           new RemoveProcessor
@@ -44,5 +44,6 @@ internal static partial class Migrations
             Field = "lastValidation"
           }
         })
-      .Migrate(Index.Measurements);
+      .Migrate(
+        "measurements");
 }

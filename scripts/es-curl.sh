@@ -14,11 +14,10 @@ if [ ! -f "$ROOT_DIR/.env" ]; then
 fi;
 . "$ROOT_DIR/.env";
 
-curl -s \
+curl -s -X "$1" \
   --cacert certs/ca/ca.crt \
   -u "elastic:${ELASTIC_PASSWORD}" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -X "POST" \
-  "https://localhost:9200/_ingest/pipeline/_simulate?pretty=true" \
-  -d "$1"
+  "https://localhost:9200/$2" \
+  -d "$3"

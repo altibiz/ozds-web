@@ -4,6 +4,12 @@ namespace Ozds.Elasticsearch;
 
 public class FakeMeasurementExtractor : IMeasurementExtractor
 {
+  public Task<bool>
+  CheckReadyAsync() => true.ToTask();
+
+  public bool
+  CheckReady() => true;
+
   public AsyncMeasurementExtraction
   ExecuteExtractionPlanAsync(ExtractionPlan plan) =>
     new AsyncMeasurementExtraction

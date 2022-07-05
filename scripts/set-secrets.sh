@@ -1,18 +1,16 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")";
+SCRIPT_DIR="$(dirname "$(realpath "$0")")";
 ROOT_DIR="$(dirname "$SCRIPT_DIR")";
 SECRETS_PATH="$ROOT_DIR/secrets.json";
 
-if [[ ! -f "$SECRETS_PATH" ]]; then
+if [ ! -f "$SECRETS_PATH" ]; then
   echo "[OZDS] Could not find secrets.json"
   exit 1;
 fi;
-secrets="$(cat "$SECRETS_PATH")"
+secrets="$(cat "$SECRETS_PATH")";
 
-echo -e "
-[OZDS] Setting secrets...
-";
+printf "\n[OZDS] Setting secrets...\n";
 for project in \
     "$ROOT_DIR/test/Ozds.Elasticsearch.Test/Ozds.Elasticsearch.Test.csproj" \
     "$ROOT_DIR/src/Ozds.Web/Ozds.Web.csproj" \

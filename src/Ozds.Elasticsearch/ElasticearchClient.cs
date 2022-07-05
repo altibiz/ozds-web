@@ -6,14 +6,19 @@ using Ozds.Extensions;
 
 namespace Ozds.Elasticsearch;
 
-public interface IElasticsearchClientPrototype
+public interface IElasticsearchTestClientPrototype
 {
-  public IElasticsearchClient ClonePrototype(
-      Indices? indices = null);
+  public IElasticsearchClient MakeTestClient(IIndices? indices = null);
+}
+
+public partial interface IElasticsearchClient
+{
+  // TODO: from NEST?
+  public const int MaxSize = 10000;
 }
 
 public sealed partial class ElasticsearchClient :
-  IElasticsearchClientPrototype,
+  IElasticsearchTestClientPrototype,
   IElasticsearchClient
 {
   #region Constructors
@@ -22,8 +27,10 @@ public sealed partial class ElasticsearchClient :
     ILogger<IElasticsearchClient> logger,
     IConfiguration conf,
 
+    IIndexNamer namer,
+    IIndexMapper mapper,
     IEnumerable<IMeasurementProvider> providers,
-    ElasticsearchMigratorAccessor migratorAccessor)
+    IElasticsearchMigratorAccessor migratorAccessor)
   {
     Env = env;
     Logger = logger;
@@ -65,21 +72,24 @@ public sealed partial class ElasticsearchClient :
       Logger.LogInformation("No providers registered");
     }
 
+    Namer = namer;
+    Mapper = mapper;
+
     MigratorAccessor = migratorAccessor;
     if (MigratorAccessor.Migrator is null)
     {
-      Indices = new(isDev: Env.IsDevelopment());
+      Indices = Namer.MakeIndices();
     }
     else
     {
-      Console.WriteLine("here");
       Indices = MigratorAccessor.Migrator.Migrate(Elastic);
     }
-    Logger.LogInformation("Using {Indices}", Indices);
+    NamedIndices = Indices.GetNamed();
+    Logger.LogInformation("Using {Indices}", NamedIndices);
     TryCreateIndices();
     TryMapIndices();
 
-    Ready = true;
+    ShouldLog = true;
   }
 
   public static bool Ping(
@@ -116,7 +126,7 @@ public sealed partial class ElasticsearchClient :
         .OnRequestCompleted(
           call =>
           {
-            if (client is { Ready: true })
+            if (client is { ShouldLog: true or false })
             {
               client.Logger.LogDebug(call.DebugInformation);
             }
@@ -164,28 +174,28 @@ public sealed partial class ElasticsearchClient :
 
     return new ElasticClient(settings);
   }
-  #endregion // Constructors
+  #endregion Constructors
 
   #region Prototype
-  public IElasticsearchClient ClonePrototype(
-      Indices? indices = null)
+  public IElasticsearchClient MakeTestClient(
+      IIndices? indices = null)
   {
     // NOTE: because the OnRequestCompleted lambda carries a reference to
     // NOTE: the prototype
-    Ready = false;
+    ShouldLog = false;
 
     var client = new ElasticsearchClient(this, indices);
 
     // NOTE: because the OnRequestCompleted lambda carries a reference to
     // NOTE: the prototype
-    Ready = true;
+    ShouldLog = true;
 
     return client;
   }
 
   private ElasticsearchClient(
       ElasticsearchClient other,
-      Indices? indices)
+      IIndices? indices)
   {
     Env = other.Env;
     Logger = other.Logger;
@@ -194,16 +204,21 @@ public sealed partial class ElasticsearchClient :
 
     Providers = other.Providers;
 
+    Namer = other.Namer;
+    Mapper = other.Mapper;
+
     MigratorAccessor = other.MigratorAccessor;
 
     Indices = indices ?? other.Indices;
-    Logger.LogInformation("Using {Indices}", Indices);
+    NamedIndices = Indices.GetNamed();
+    Logger.LogInformation("Using {Indices}", NamedIndices);
     TryReconstructIndices();
 
-    Ready = true;
+    ShouldLog = true;
   }
-  #endregion // Prototype
+  #endregion Prototype
 
+  #region Members
   private IHostEnvironment Env { get; init; }
   private ILogger Logger { get; init; }
 
@@ -211,28 +226,31 @@ public sealed partial class ElasticsearchClient :
 
   private List<IMeasurementProvider> Providers { get; init; }
 
-  private ElasticsearchMigratorAccessor
-  MigratorAccessor
-  { get; init; }
+  private IIndexNamer Namer { get; init; }
+  private IIndexMapper Mapper { get; init; }
 
-  private bool Ready = false;
+  private IElasticsearchMigratorAccessor MigratorAccessor { get; init; }
+
+  private IIndices Indices { get; init; }
+  private INamedIndices NamedIndices { get; init; }
+
+  private bool ShouldLog = false;
+  #endregion Members
 
   #region Indices
-  private Indices Indices { get; init; }
-
   private string MeasurementIndexName
   {
-    get => Indices.Measurements.Name;
+    get => NamedIndices.Measurements.Name;
   }
 
   private string DeviceIndexName
   {
-    get => Indices.Devices.Name;
+    get => NamedIndices.Devices.Name;
   }
 
   private string LogIndexName
   {
-    get => Indices.Log.Name;
+    get => NamedIndices.Log.Name;
   }
 
   private void TryReconstructIndices()
@@ -245,8 +263,7 @@ public sealed partial class ElasticsearchClient :
   private void TryDeleteIndices()
   {
     Indices
-      .Yield()
-      .ForEach(index => Elastic.Indices.Delete(index.Name))
+      .ForEach(index => Mapper.DeleterFor[index.Base](Elastic, index))
       .Run();
 
     Logger.LogInformation("Deleted Elasticsearch indices");
@@ -255,8 +272,7 @@ public sealed partial class ElasticsearchClient :
   private void TryCreateIndices()
   {
     Indices
-      .Yield()
-      .ForEach(index => Index.CreatorFor[index.Base](Elastic, index))
+      .ForEach(index => Mapper.CreatorFor[index.Base](Elastic, index))
       .Run();
 
     Logger.LogInformation("Created Elasticsearch indices");
@@ -265,11 +281,10 @@ public sealed partial class ElasticsearchClient :
   private void TryMapIndices()
   {
     Indices
-      .Yield()
-      .ForEach(index => Index.MapperFor[index.Base](Elastic, index))
+      .ForEach(index => Mapper.MapperFor[index.Base](Elastic, index))
       .Run();
 
     Logger.LogInformation("Mapped Elasticsearch indices");
   }
-  #endregion // Indices
+  #endregion Indices
 }

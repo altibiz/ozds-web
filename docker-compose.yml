@@ -8,6 +8,7 @@ services:
       - ./certs:/usr/share/elasticsearch/config/certs
       - ./docker/setup/instances.yml:/usr/share/elasticsearch/config/instances.yml
       - ./docker/setup/:/opt/src/docker
+      - ./snapshots:/mnt/snapshots
     environment:
       - CA_PASSWORD=${CA_PASSWORD}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
@@ -30,6 +31,7 @@ services:
       - elasticsearch01_data:/usr/share/elasticsearch/data
       - ./docker/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./docker/elasticsearch/:/opt/src/docker
+      - ./snapshots:/mnt/snapshots
     environment:
       - CLUSTER_NAME=${CLUSTER_NAME}
       - NODE_NAME=elasticsearch01
@@ -58,6 +60,7 @@ services:
       - elasticsearch02_data:/usr/share/elasticsearch/data
       - ./docker/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./docker/elasticsearch/:/opt/src/docker
+      - ./snapshots:/mnt/snapshots
     environment:
       - CLUSTER_NAME=${CLUSTER_NAME}
       - NODE_NAME=elasticsearch02
@@ -84,6 +87,7 @@ services:
       - elasticsearch03_data:/usr/share/elasticsearch/data
       - ./docker/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./docker/elasticsearch/:/opt/src/docker
+      - ./snapshots:/mnt/snapshots
     environment:
       - CLUSTER_NAME=${CLUSTER_NAME}
       - NODE_NAME=elasticsearch03
@@ -116,6 +120,7 @@ services:
       - kibana_data:/usr/share/kibana/data
       - ./docker/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
       - ./docker/kibana/:/opt/src/docker
+      - ./snapshots:/usr/share/kibana/snapshots
     ports:
       - ${KIBANA_PORT}:5601
     mem_limit: ${MEMORY_LIMIT}

@@ -14,6 +14,13 @@ public class MeasurementImporter
     await Semaphore.WaitAsync();
     try
     {
+      if (await Extractor.CheckReadyAsync() is false)
+      {
+        Log.LogInformation(
+          "Stopping measurement import because extractor is not ready");
+        return;
+      }
+
       var plans = Extractor.PlanExtractionAsync(period);
 
       if (token is null)
@@ -41,27 +48,28 @@ public class MeasurementImporter
   public Task ImportPlanAsync(
       ExtractionPlan plan,
       CancellationToken? token = null) =>
-    Loader
-      .LoadMeasurementsAsync(Extractor
-        .ExecuteExtractionPlanAsync(plan)
-        .EnrichAwait(measurement => Cache
-          .GetDeviceAsync(Device
-            .MakeId(
-              measurement.Source,
-              measurement.SourceDeviceId))
-          .ToValueTask()
-          .Then(data =>
-            data switch
-            {
-              null => measurement.ToLoadMeasurement(),
-              var deviceData => measurement
-                .ToLoadMeasurement(
-                  deviceData.Value.Operator,
-                  deviceData.Value.CenterId,
-                  deviceData.Value.CenterUserId,
-                  deviceData.Value.OwnerId,
-                  deviceData.Value.OwnerUserId)
-            })));
+    Extractor
+      .ExecuteExtractionPlanAsync(plan)
+      .EnrichAwait(measurement => Cache
+        .GetDeviceAsync(Device
+          .MakeId(
+            measurement.Source,
+            measurement.SourceDeviceId))
+        .ToValueTask()
+        .Then(device =>
+          device switch
+          {
+            null => measurement
+              .ToLoadMeasurement(),
+            not null => measurement
+              .ToLoadMeasurement(
+                device.Value.Operator,
+                device.Value.CenterId,
+                device.Value.CenterUserId,
+                device.Value.OwnerId,
+                device.Value.OwnerUserId)
+          }))
+      .Var(Loader.LoadMeasurementsAsync);
 
   public MeasurementImporter(
       ILogger<MeasurementImporter> log,

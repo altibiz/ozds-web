@@ -17,26 +17,34 @@ public class Startup
 
   public void ConfigureServices(IServiceCollection services)
   {
-    services.AddSingleton<IMeasurementProvider, FakeMeasurementProvider>();
-
-    services.AddSingleton<ElasticsearchMigratorAccessor>(
-      services => new ElasticsearchMigratorAccessor());
     services.AddSingleton<
-      IElasticsearchClientPrototype,
-      ElasticsearchClient>();
+        IMeasurementProvider,
+        FakeMeasurementProvider>();
+
+    services.AddSingleton<
+        IIndexNamer,
+        IndexNamer>();
+    services.AddSingleton<
+        IIndexMapper,
+        IndexMapper>();
+
+    services.AddSingleton<
+        IElasticsearchMigratorAccessor,
+        ElasticsearchMigratorAccessor>();
+
+    services.AddSingleton<
+        IElasticsearchTestClientPrototype,
+        ElasticsearchClient>();
     services.AddScoped<IElasticsearchClient>(services => services
-      .GetRequiredService<IElasticsearchClientPrototype>()
-      .ClonePrototype(
-        new Indices(
-          isDev: services
-            .GetRequiredService<IHostEnvironment>()
-            .IsDevelopment(),
-          test: services
-            .GetRequiredService<ITestOutputHelperAccessor>().Output
-            ?.GetTest()
-            ?.GetSpecificTestIndexSuffix() ??
-              throw new InvalidOperationException(
-                "Lacking test output"))));
+      .GetRequiredService<IElasticsearchTestClientPrototype>()
+      .MakeTestClient(services
+        .GetRequiredService<IIndexNamer>()
+        .MakeTestIndices(services
+          .GetRequiredService<ITestOutputHelperAccessor>().Output
+          .GetTest()
+          .GetIndexSuffix() ??
+            throw new InvalidOperationException(
+              "Cannot get test index suffix"))));
 
     services.AddSingleton<
       Elasticsearch.HelbOzds.IClient,

@@ -2,19 +2,22 @@ namespace Ozds.Elasticsearch;
 
 public interface IMeasurementExtractor
 {
+  public Task<bool>
+  CheckReadyAsync();
+
+  public bool
+  CheckReady();
+
   public AsyncMeasurementExtraction
   ExecuteExtractionPlanAsync(ExtractionPlan plan);
 
   public MeasurementExtraction
   ExecuteExtractionPlan(ExtractionPlan plan);
 
-  // TODO: tweak
-  public const int DefaultMeasurementsPerExtractionPlanItem =
-    100;
-  public const int DefaultMissingDataExtractionPlanItemsLimit =
-    20;
-  public const int DefaultLoadExtractionSpanLimitInSeconds =
-    7200; // NOTE: two hours
+  public const int DefaultMeasurementsPerExtractionPlanItem = 100;
+  public const int DefaultMissingDataExtractionPlanItemsLimit = 20;
+  // NOTE: two hours
+  public const int DefaultLoadExtractionSpanLimitInSeconds = 7200;
 
   public IAsyncEnumerable<ExtractionPlan>
   PlanExtractionAsync(

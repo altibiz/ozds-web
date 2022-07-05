@@ -14,11 +14,16 @@ if [ ! -f "$ROOT_DIR/.env" ]; then
 fi;
 . "$ROOT_DIR/.env";
 
-curl -s \
+curl -s -X PUT \
   --cacert certs/ca/ca.crt \
   -u "elastic:${ELASTIC_PASSWORD}" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -X "POST" \
-  "https://localhost:9200/_ingest/pipeline/_simulate?pretty=true" \
-  -d "$1"
+  "$(printf \
+    "https://localhost:9200/_snapshot/dev/%s-%s?wait_for_completion=true" \
+    "$1" \
+    "$(date '+%Y-%m-%d-%H-%M-%S')")" \
+  -d '{
+    "include_global_state": false,
+    "indices": "ozds.*"
+  }';

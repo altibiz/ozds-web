@@ -192,11 +192,24 @@ public class Startup : OrchardCore.Modules.StartupBase
 
   private void AddElasticsearchClient(IServiceCollection services)
   {
-    services.AddSingleton<IElasticsearchMigrator, ElasticsearchMigrator>();
-    services.AddSingleton<ElasticsearchMigratorAccessor>(
+    services.AddSingleton<
+        IIndexNamer,
+        IndexNamer>();
+    services.AddSingleton<
+        IIndexMapper,
+        IndexMapper>();
+
+    services.AddSingleton<
+        IElasticsearchMigrator,
+        ElasticsearchMigrator>();
+    services.AddSingleton<
+        IElasticsearchMigratorAccessor,
+        ElasticsearchMigratorAccessor>(
       services => new ElasticsearchMigratorAccessor(services
         .GetService<IElasticsearchMigrator>()));
+
     services.AddSingleton<ElasticsearchClient>();
+
     services.AddSingleton<IDeviceLoader>(
         s => s.GetRequiredService<ElasticsearchClient>());
     services.AddSingleton<IMeasurementExtractor>(

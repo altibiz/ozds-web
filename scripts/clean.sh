@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-echo -e "
-[OZDS] Cleaning artifacts...
-";
+# shellcheck disable=SC2068
+
+printf "\n[OZDS] Cleaning artifacts...\n";
 git clean -Xd \
   -e '!.husky/' \
   -e '!.husky/_/' \
