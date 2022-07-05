@@ -21,11 +21,11 @@
   </h5>
   <div class="d-flex flex-column flex-md-row">
     <span id="period-from-value">
-      @Model.Variables.Period.From.ToString()
+      @Model.Variables.Period.From.ToLocalTime().ToString()
     </span>
     <span class="d-none d-md-block">&nbsp;-&nbsp;</span>
     <span id="period-to-value">
-      @Model.Variables.Period.To.ToString()
+      @Model.Variables.Period.To.ToLocalTime().ToString()
     </span>
   </div>
 </div>
@@ -612,11 +612,9 @@
     });
 
   const updateValues = (last, period, max, culture, values) => {
-    values.periodFrom.innerHTML = period.from
-      .toLocal(culture)
-      .toLocaleString(luxon.DateTime.DATETIME_SHORT_WITH_SECONDS);
     values.periodTo.innerHTML = period.to
-      .toLocal(culture)
+      .toLocal()
+      .setLocale(culture)
       .toLocaleString(luxon.DateTime.DATETIME_SHORT_WITH_SECONDS);
 
     if (!last) {
@@ -664,11 +662,11 @@
     period ?
       {
         from: period.to,
-        to: luxon.DateTime.now()
+        to: luxon.DateTime.utc()
       }
     : {
         from: GraphQL.deserializeDateTime(model.variables.period.to),
-        to: luxon.DateTime.now()
+        to: luxon.DateTime.utc()
       };
 
   const update = async ({model, period, max, culture, charts, values}) => {
@@ -713,7 +711,7 @@
       })))`;
     const params = JSON.parse(paramsString);
     // TODO: tune this
-    const timeout = params.isDev ? 1000 : 10000;
+    const timeout = params.isDev ? 5000 : 10000;
 
     let period = null;
     let charts = null;
@@ -736,7 +734,7 @@
     if (shouldUpdate(model)) {
       setInterval(callback, timeout);
     }
-  }
+  };
 
   const last = (array) => array[array.length - 1];
 </script>

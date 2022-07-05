@@ -1,7 +1,3 @@
-// TODO: move to Ozds.Modules.Ozds or something and use TypeScript?
-// TODO: better error management
-// NOTE: requires luxon
-
 const getDashboardMeasurementsByDevice = async (deviceId, period) => {
   const response = await query({
     query: gql`
@@ -174,8 +170,7 @@ const serializeDateTime = (dateTime) => dateTime.toISO();
 
 const query = async (body) => {
   try {
-    // TODO: correct endpoint
-    const response = await fetch("https://localhost:5001/graphql", {
+    const response = await fetch("/graphql", {
       method: "POST",
       body: JSON.stringify(body),
       headers: {

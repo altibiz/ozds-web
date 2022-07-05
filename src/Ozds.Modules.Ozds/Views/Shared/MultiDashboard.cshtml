@@ -14,6 +14,21 @@
   return;
 }
 
+<div class="d-flex flex-column flex-lg-row justify-content-between mt-2">
+  <h5>
+    @T["Period"]
+  </h5>
+  <div class="d-flex flex-column flex-md-row">
+    <span id="period-from-value">
+      @Model.Variables.Period.From.ToLocalTime().ToString()
+    </span>
+    <span class="d-none d-md-block">&nbsp;-&nbsp;</span>
+    <span id="period-to-value">
+      @Model.Variables.Period.To.ToLocalTime().ToString()
+    </span>
+  </div>
+</div>
+
 <div class="d-flex flex-column mb-5" style="height: 400px;">
   <h5>
     @(T["Energy"].Value)
@@ -43,7 +58,7 @@
 </div>
 
 <script at="Foot">
-  const createCharts = (measurements, rainbow, max, culture) =>
+  const createCharts = (measurements, period, max, culture, rainbow) =>
     ({
       measurements,
       energyLines: new Chart(
@@ -92,7 +107,7 @@
               .entries(measurements)
               .map(([deviceId, deviceMeasurements], index) =>
                 ({
-                  label: `@T["Energy of"].Value ${deviceId} (kW)`,
+                  label: `@T["Power of"].Value ${deviceId} (kW)`,
                   data: deviceMeasurements,
                   parsing: {
                     xAxisKey: "timestamp",
@@ -121,7 +136,7 @@
         }),
     })
 
-  const updateCharts = (measurements, max, culture, charts) => {
+  const updateCharts = (measurements, period, max, culture, charts) => {
     Object
       .entries(charts.measurements)
       .forEach(([deviceId, deviceMeasurements]) =>
@@ -133,7 +148,7 @@
     return charts;
   };
 
-  const createRainbow = (measurements, max, culture) =>
+  const createRainbow = (measurements, period, max, culture) =>
     [
       "Red",
       "Green",
@@ -142,6 +157,50 @@
       "Yellow",
       "Magenta"
     ];
+
+  const createOrUpdateCharts = (measurements, period, max, culture, charts) =>
+    charts ?
+      updateCharts(
+        measurements,
+        period,
+        max,
+        culture,
+        charts)
+    : createCharts(
+        measurements,
+        period,
+        max,
+        culture,
+        createRainbow(measurements, max, culture));
+
+  const createValues = (last, period, max, culture) =>
+    ({
+      periodFrom: document.getElementById("period-from-value"),
+      periodTo: document.getElementById("period-to-value"),
+    });
+
+  const updateValues = (last, period, max, culture, values) => {
+    values.periodTo.innerHTML = period.to
+      .toLocal()
+      .setLocale(culture)
+      .toLocaleString(luxon.DateTime.DATETIME_SHORT_WITH_SECONDS);
+
+    return values;
+  };
+
+  const createOrUpdateValues = (measurements, period, max, culture, values) =>
+    values ?
+      updateValues(
+        last(measurements),
+        period,
+        max,
+        culture,
+        values)
+    : createValues(
+        last(measurements),
+        period,
+        max,
+        culture);
 
   const getMeasurements = async (model, period) =>
     period ?
@@ -164,35 +223,22 @@
     period ?
       {
         from: period.to,
-        to: luxon.DateTime.now()
+        to: luxon.DateTime.utc()
       }
     : {
         from: GraphQL.deserializeDateTime(model.variables.period.to),
-        to: luxon.DateTime.now()
+        to: luxon.DateTime.utc()
       };
 
-  const createOrUpdateCharts = (measurements, max, culture, charts) =>
-    charts ?
-      updateCharts(
-        measurements,
-        max,
-        culture,
-        charts)
-    : createCharts(
-        measurements,
-        createRainbow(measurements, max, culture),
-        max,
-        culture);
+  const update = async ({model, period, max, culture, charts, values}) => {
+    const measurements = await getMeasurements(model, period);
 
-  const update = async ({model, max, culture, charts, period}) =>
-    ({
-      charts: createOrUpdateCharts(
-        await getMeasurements(model, period),
-        max,
-        culture,
-        charts),
+    return {
+      charts: createOrUpdateCharts(measurements, period, max, culture, charts),
+      values: createOrUpdateValues(measurements, period, max, culture, values),
       period: updatePeriod(model, period)
-    });
+    };
+  };
 
   const shouldUpdate = (model) =>
     GraphQL
@@ -226,21 +272,23 @@
       })))`;
     const params = JSON.parse(paramsString);
     // TODO: tune this
-    const timeout = params.isDev ? 1000 : 10000;
+    const timeout = params.isDev ? 5000 : 10000;
 
     let period = null;
     let charts = null;
+    let values = null;
     const callback = async () => {
       const updated = await update({
-        model,
-        max,
-        culture,
-        charts,
-        period,
-      });
+          model,
+          period,
+          max,
+          culture,
+          charts,
+          values,
+        });
       period = updated.period;
       charts = updated.charts;
-      // TODO: tune this
+      values = updated.values;
     };
     callback();
 
@@ -248,6 +296,8 @@
       setInterval(callback, timeout);
     }
   };
+
+  const last = (array) => array[array.length - 1];
 </script>
 <script asp-name="ozdstheme-luxon" at="Head"></script>
 <script asp-name="ozdstheme-chart" at="Head"></script>

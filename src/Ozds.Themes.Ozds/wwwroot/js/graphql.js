@@ -17,9 +17,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-// TODO: move to Ozds.Modules.Ozds or something and use TypeScript?
-// TODO: better error management
-// NOTE: requires luxon
 var getDashboardMeasurementsByDevice = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(deviceId, period) {
     var response;
@@ -210,7 +207,7 @@ var query = /*#__PURE__*/function () {
           case 0:
             _context4.prev = 0;
             _context4.next = 3;
-            return fetch("https://localhost:5001/graphql", {
+            return fetch("/graphql", {
               method: "POST",
               body: JSON.stringify(body),
               headers: {
