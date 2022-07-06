@@ -29,7 +29,9 @@ public static class SessionMigrations
   public static ISession SaveData(
       this ISession session) =>
     session
-      .SaveBackgroundTasksSettings();
+      // TODO: fix paths in production?
+      // .SaveBackgroundTasksSettings()
+      ;
 
   public static ISession SaveDemoData(
       this ISession session) =>

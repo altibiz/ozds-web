@@ -3,7 +3,9 @@ using OrchardCore.BackgroundTasks;
 
 namespace Ozds.Modules.Ozds;
 
-// FIX: Collection was modified; enumeration operation may not execute.
+[BackgroundTask(
+  Schedule = "*/5 * * * *",
+  Description = "Measurement import background task.")]
 public class MeasurementImportBackgroundTask : IBackgroundTask
 {
   public Task DoWorkAsync(

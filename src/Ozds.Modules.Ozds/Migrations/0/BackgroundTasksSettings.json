@@ -3,7 +3,7 @@
     "Ozds.Modules.Ozds.MeasurementImporter": {
       "Name": "Ozds.Modules.Ozds.MeasurementImporter",
       "Enable": true,
-      "Schedule": "*/10 * * * *",
+      "Schedule": "*/5 * * * *",
       "Description": "Imports measurements into Elasticsearch",
       "LockTimeout": 0,
       "LockExpiration": 0,
