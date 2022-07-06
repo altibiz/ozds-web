@@ -7,7 +7,6 @@ export OrchardCore__OrchardCore_AutoSetup__Tenants__0__AdminUsername="";
 export OrchardCore__OrchardCore_AutoSetup__Tenants__0__DatabaseConnectionString="",
 export OrchardCore__OrchardCore_AutoSetup__Tenants__0__DatabaseProvider="";
 export OrchardCore__OrchardCore_AutoSetup__Tenants__0__DatabaseTablePrefix="";
-export OrchardCore__OrchardCore_AutoSetup__Tenants__0__RecipeName="";
 export Ozds__Elasticsearch__Client__serverUri="";
 export Ozds__Elasticsearch__Client__caPath="";
 export Ozds__Elasticsearch__Client__apiKeyId="";
