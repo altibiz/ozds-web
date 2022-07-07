@@ -19,11 +19,9 @@ server:
     certificate: config/certs/kibana/kibana.crt
     certificateAuthorities: config/certs/ca/ca.crt
 
-# TODO: use bin/kibana-encryption-keys and not hardcoded randomly generated ones
 xpack:
   security:
     encryptionKey: 88dd07e5a745b8956194667f81e75ca8
-    # NOTE: embedding
     sameSiteCookies: "None"
   reporting:
     encryptionKey: d53b935944ed6383c0eb2c9a058e9c6f

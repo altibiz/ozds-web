@@ -6,7 +6,7 @@ curl_result=$(curl -s \
 
 if "$(echo "$curl_result" | \
       grep -q 'missing authentication credentials')"; then
-  echo "Credentials missing.";
+  printf "Credentials missing.\n";
   exit 1;
 fi;
 

@@ -6,7 +6,7 @@ curl_result=$(curl -s -I \
 
 if "$(echo "$curl_result" | \
       grep -q "HTTP/1.1 302 Found")"; then
-  echo "Failed connecting to server.";
+  printf "Failed connecting to server.\n";
   exit 1;
 fi;
 

@@ -233,7 +233,7 @@ create_snapshot_repo () {
   done;
 };
 
-create_snapshot_repo "dev";
+create_snapshot_repo dev;
 
 printf "Creating SLM policies...\n";
 create_slm_policy () {
@@ -256,7 +256,7 @@ create_slm_policy () {
   done;
 };
 
-create_slm_policy "dev-snapshots" '{
+create_slm_policy dev-snapshots '{
   "name": "<dev-snapshot-{now/d}>",
   "schedule": "0 0 0 * * ?",
   "repository": "dev",
