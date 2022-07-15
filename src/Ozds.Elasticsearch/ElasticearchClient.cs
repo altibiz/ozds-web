@@ -126,7 +126,7 @@ public sealed partial class ElasticsearchClient :
         .OnRequestCompleted(
           call =>
           {
-            if (client is { ShouldLog: true or false })
+            if (client is { ShouldLog: true })
             {
               client.Logger.LogDebug(call.DebugInformation);
             }

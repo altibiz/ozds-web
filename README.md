@@ -16,7 +16,6 @@ consumption in the system.
 
 - [`bash`](https://www.gnu.org/software/bash/)
 - [`dotnet@6.0.202`](https://dotnet.microsoft.com/en-us/)
-- [`node@17.9.0`](https://nodejs.org/en/)
 - [`yarn@3.2.0`](https://yarnpkg.com/)
 
 ## Development
@@ -27,16 +26,16 @@ pushing changes.
 
 To start the development process locally, follow these steps:
 
-1. Run the [prepare script](scripts/prepare) to setup `git hooks`, install
+1. Run the [prepare script](scripts/prepare.sh) to setup `git hooks`, install
    dependencies and generate the [`secrets.json` file](secrets.json), and
    [`secrets.sh` file](secrets.sh).
 2. Populate the generated [`secrets.json` file](secrets.json) and
    [`secrets.sh` file](secrets.sh).
-3. Run the [set-secrets script](scripts/set-secrets) to set
+3. Run the [set-secrets script](scripts/set-secrets.sh) to set
    `dotnet user-secrets`. You can run the
-   [list-secrets script](scripts/list-secrets) to make sure that your secrets
-   are properly stored.
-4. Run the [watch-debug script](scripts/watch-debug) to start
+   [list-secrets script](scripts/list-secrets.sh) to make sure that your
+   secrets are properly stored.
+4. Run the [watch-debug script](scripts/watch-debug.sh) to start
    [the development server](https://localhost:5001),
    [the browser-sync server](http://localhost:3000), and to start file
    watchers for hot reload. Open [the site](https://localhost:5001) if it
@@ -44,7 +43,7 @@ To start the development process locally, follow these steps:
 
 ### Test users
 
-NOTE: this section is outdated and the users don't exist
+<!-- NOTE: this section is outdated and the users don't exist -->
 
 Two test users are added in the development environment to make testing
 easier.
