@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
-SCRIPT_DIR="$(dirname "$(realpath "$0")")";
-ROOT_DIR="$(dirname "$SCRIPT_DIR")";
+SCRIPTS="$(dirname "$(realpath "$0")")";
+ROOT="$(dirname "$SCRIPTS")";
 
 export NODE_OPTIONS="--no-warnings";
 
@@ -11,17 +11,7 @@ yarn install;
 printf "\n[OZDS] Installing dependencies with 'dotnet'...\n";
 dotnet restore;
 
-printf "\n[OZDS] Setting up git hooks with 'husky'...\n";
-if [ ! "$CI" ]; then
+if [ ! "$CI" ] && [ ! -f "$ROOT/.husky/_/husky.sh" ]; then
+  printf "\n[OZDS] Setting up git hooks with 'husky'...\n";
   yarn husky install;
-fi;
-
-printf "\n[OZDS] Generating 'secrets.json'...\n";
-if [ ! -f "$ROOT_DIR/secrets.json" ]; then
-  cp "$ROOT_DIR/example.secrets.json" "$ROOT_DIR/secrets.json"
-fi;
-
-printf "\n[OZDS] Generating 'secrets.sh'...\n";
-if [ ! -f "$ROOT_DIR/secrets.sh" ]; then
-  cp "$ROOT_DIR/example.secrets.sh" "$ROOT_DIR/secrets.sh"
 fi;
