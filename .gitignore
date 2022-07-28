@@ -321,10 +321,13 @@ dist
 # User
 # ============================================================================
 
+# Generated
 src/Ozds.Web/Localization/
 is-cache/
+certs/
+snapshots/
+
+# Secrets
 secrets.json
 secrets.sh
 Sensitive/
-certs/
-snapshots/
