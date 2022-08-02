@@ -5,7 +5,7 @@ ROOT="$(dirname "$SCRIPTS")";
 
 export NODE_OPTIONS="--no-warnings";
 
-printf "\n[OZDS] Installing dependencies with 'yarn'...\n";
+printf "[OZDS] Installing dependencies with 'yarn'...\n";
 yarn install;
 
 printf "\n[OZDS] Installing dependencies with 'dotnet'...\n";

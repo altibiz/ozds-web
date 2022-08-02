@@ -206,7 +206,7 @@ public class Startup : OrchardCore.Modules.StartupBase
         IElasticsearchMigratorAccessor,
         ElasticsearchMigratorAccessor>(
       services => new ElasticsearchMigratorAccessor(services
-        .GetService<IElasticsearchMigrator>()));
+        .GetRequiredService<IElasticsearchMigrator>()));
 
     services.AddSingleton<ElasticsearchClient>();
 

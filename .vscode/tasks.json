@@ -36,6 +36,22 @@
                 "${workspaceFolder}/src/Ozds.Web/Ozds.Web.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "clean_app_data",
+            "command": "rm",
+            "type": "process",
+            "args": [
+              "-rf",
+              "${workspaceFolder}/App_Data"
+            ]
+        },
+        {
+            "label": "repl",
+            "dependsOn": [
+              "clean_app_data",
+              "build"
+            ]
         }
     ]
 }

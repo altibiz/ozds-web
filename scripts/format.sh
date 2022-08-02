@@ -2,7 +2,7 @@
 
 export NODE_OPTIONS="--no-warnings";
 
-printf "\n[OZDS] Formatting with 'yarn'...\n";
+printf "[OZDS] Formatting with 'yarn'...\n";
 yarn format;
 
 # printf "\n[OZDS] Formatting with 'dotnet'...\n";

@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC2068
 
-printf "\n[OZDS] Cleaning artifacts...\n";
+printf "[OZDS] Cleaning artifacts...\n";
 git clean -Xd \
   \
   -e '!.husky/' \

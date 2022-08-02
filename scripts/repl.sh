@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 
-SCRIPT_DIR="$(dirname "$(realpath "$0")")";
+SCRIPTS="$(dirname "$(realpath "$0")")";
 
-"$SCRIPT_DIR/clean.sh" -f;
+"$SCRIPTS/clean-web.sh";
 # NOTE: build before because the dotnet watcher needs to realize there are
 # NOTE: files to be watched in wwwroot
-"$SCRIPT_DIR/build.sh";
-"$SCRIPT_DIR/watch-debug.sh";
+"$SCRIPTS/build.sh";
+"$SCRIPTS/debug.sh";

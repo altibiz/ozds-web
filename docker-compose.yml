@@ -5,10 +5,10 @@ services:
     image: elasticsearch:${ELASTIC_VERSION}
     user: root
     volumes:
-      - ./certs:/usr/share/elasticsearch/config/certs
+      - ./docker/certs:/usr/share/elasticsearch/config/certs
+      - ./docker/snapshots:/mnt/snapshots
       - ./docker/setup/instances.yml:/usr/share/elasticsearch/config/instances.yml
       - ./docker/setup/:/opt/src/docker
-      - ./snapshots:/mnt/snapshots
     environment:
       - CA_PASSWORD=${CA_PASSWORD}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
@@ -21,20 +21,20 @@ services:
       retries: 120
       test: /opt/src/docker/healthcheck.sh
 
-  elasticsearch01:
+  elasticsearch:
     depends_on:
       setup:
         condition: service_healthy
     image: elasticsearch:${ELASTIC_VERSION}
     volumes:
-      - ./certs:/usr/share/elasticsearch/config/certs
-      - elasticsearch01_data:/usr/share/elasticsearch/data
+      - ./docker/certs:/usr/share/elasticsearch/config/certs
+      - ./docker/snapshots:/mnt/snapshots
+      - elasticsearch_data:/usr/share/elasticsearch/data
       - ./docker/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./docker/elasticsearch/:/opt/src/docker
-      - ./snapshots:/mnt/snapshots
     environment:
       - CLUSTER_NAME=${CLUSTER_NAME}
-      - NODE_NAME=elasticsearch01
+      - NODE_NAME=elasticsearch
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTIC_LICENSE=${ELASTIC_LICENSE}
     mem_limit: ${MEMORY_LIMIT}
@@ -50,77 +50,19 @@ services:
       retries: 120
       test: /opt/src/docker/healthcheck.sh
 
-  elasticsearch02:
-    depends_on:
-      setup:
-        condition: service_healthy
-    image: elasticsearch:${ELASTIC_VERSION}
-    volumes:
-      - ./certs:/usr/share/elasticsearch/config/certs
-      - elasticsearch02_data:/usr/share/elasticsearch/data
-      - ./docker/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      - ./docker/elasticsearch/:/opt/src/docker
-      - ./snapshots:/mnt/snapshots
-    environment:
-      - CLUSTER_NAME=${CLUSTER_NAME}
-      - NODE_NAME=elasticsearch02
-      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-      - ELASTIC_LICENSE=${ELASTIC_LICENSE}
-    mem_limit: ${MEMORY_LIMIT}
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    healthcheck:
-      timeout: 5s
-      interval: 1s
-      retries: 120
-      test: /opt/src/docker/healthcheck.sh
-
-  elasticsearch03:
-    depends_on:
-      setup:
-        condition: service_healthy
-    image: elasticsearch:${ELASTIC_VERSION}
-    volumes:
-      - ./certs:/usr/share/elasticsearch/config/certs
-      - elasticsearch03_data:/usr/share/elasticsearch/data
-      - ./docker/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      - ./docker/elasticsearch/:/opt/src/docker
-      - ./snapshots:/mnt/snapshots
-    environment:
-      - CLUSTER_NAME=${CLUSTER_NAME}
-      - NODE_NAME=elasticsearch03
-      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-      - ELASTIC_LICENSE=${ELASTIC_LICENSE}
-    mem_limit: ${MEMORY_LIMIT}
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    healthcheck:
-      timeout: 5s
-      interval: 1s
-      retries: 120
-      test: /opt/src/docker/healthcheck.sh
-
   kibana:
     depends_on:
-      elasticsearch01:
-        condition: service_healthy
-      elasticsearch02:
-        condition: service_healthy
-      elasticsearch03:
+      elasticsearch:
         condition: service_healthy
       setup:
         condition: service_completed_successfully
     image: kibana:${ELASTIC_VERSION}
     volumes:
-      - ./certs:/usr/share/kibana/config/certs
+      - ./docker/certs:/usr/share/kibana/config/certs
+      - ./docker/snapshots:/usr/share/kibana/snapshots
       - kibana_data:/usr/share/kibana/data
       - ./docker/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
       - ./docker/kibana/:/opt/src/docker
-      - ./snapshots:/usr/share/kibana/snapshots
     ports:
       - ${KIBANA_PORT}:5601
     mem_limit: ${MEMORY_LIMIT}
@@ -133,11 +75,7 @@ services:
       test: /opt/src/docker/healthcheck.sh
 
 volumes:
-  elasticsearch01_data:
-    driver: local
-  elasticsearch02_data:
-    driver: local
-  elasticsearch03_data:
+  elasticsearch_data:
     driver: local
   kibana_data:
     driver: local

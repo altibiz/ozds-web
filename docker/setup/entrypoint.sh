@@ -52,7 +52,7 @@ printf "Set SSL Certificate file permissions\n";
 printf "Waiting for Elasticsearch availability...\n";
 until curl -s \
   --cacert config/certs/ca/ca.crt \
-  https://elasticsearch01:9200 | \
+  https://elasticsearch:9200 | \
   grep -q "missing authentication credentials";
 do sleep 1; done;
 
@@ -61,7 +61,7 @@ until curl -s -X POST \
   --cacert config/certs/ca/ca.crt \
   -u "elastic:${ELASTIC_PASSWORD}" \
   -H "Content-Type: application/json" \
-  "https://elasticsearch01:9200/_security/user/kibana_system/_password" \
+  "https://elasticsearch:9200/_security/user/kibana_system/_password" \
   -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | \
   grep -q "^{}";
 do sleep 5; done;
@@ -82,7 +82,7 @@ create_role () {
       --cacert config/certs/ca/ca.crt \
       -u "elastic:${ELASTIC_PASSWORD}" \
       -H "Content-Type: application/json" \
-      "https://elasticsearch01:9200/_security/role/$1" \
+      "https://elasticsearch:9200/_security/role/$1" \
       -d "$2");
   done;
 };
@@ -184,7 +184,7 @@ create_user() {
       --cacert config/certs/ca/ca.crt \
       -u "elastic:${ELASTIC_PASSWORD}" \
       -H "Content-Type: application/json" \
-      "https://elasticsearch01:9200/_security/user/$1" \
+      "https://elasticsearch:9200/_security/user/$1" \
       -d "$2");
   done;
 };
@@ -223,7 +223,7 @@ create_snapshot_repo () {
       --cacert config/certs/ca/ca.crt \
       -u "elastic:${ELASTIC_PASSWORD}" \
       -H "Content-Type: application/json" \
-      "https://elasticsearch01:9200/_snapshot/$1?verify=true" \
+      "https://elasticsearch:9200/_snapshot/$1?verify=true" \
       -d "$(printf '{
         "type": "fs",
         "settings": {
@@ -251,7 +251,7 @@ create_slm_policy () {
       --cacert config/certs/ca/ca.crt \
       -u "elastic:${ELASTIC_PASSWORD}" \
       -H "Content-Type: application/json" \
-      "https://elasticsearch01:9200/_slm/policy/$1" \
+      "https://elasticsearch:9200/_slm/policy/$1" \
       -d "$2");
   done;
 };

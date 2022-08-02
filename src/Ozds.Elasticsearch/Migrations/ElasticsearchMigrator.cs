@@ -17,7 +17,11 @@ public class ElasticsearchMigrator : IElasticsearchMigrator
               (Old: oldIndex,
                New: Namer.WithVersion(oldIndex, migration.Version)))
             .Select(indices =>
-                index == (migrations.Count() - 1) ?
+                didMigrate ?
+                  (indices.Old.Version ?? 0) >= indices.New.Version ?
+                  indices.Old.ToTask()
+                : indices.New.ToTask()
+              : index == (migrations.Count() - 1) ?
                 MigrateAsync(
                   client: client,
                   oldIndex: indices.Old,
@@ -37,7 +41,8 @@ public class ElasticsearchMigrator : IElasticsearchMigrator
           .AwaitValue()
           .Then(indices => indices
             .LastOrDefault(Namer
-              .MakeIndices()))));
+              .MakeIndices()))))
+          .ThenWith(_ => didMigrate = true);
 
   public IIndices
   Migrate(
@@ -51,7 +56,11 @@ public class ElasticsearchMigrator : IElasticsearchMigrator
               (Old: oldIndex,
                New: Namer.WithVersion(oldIndex, migration.Version)))
             .Select(indices =>
-                index == (migrations.Count() - 1) ?
+                didMigrate ?
+                  (indices.Old.Version ?? 0) >= indices.New.Version ?
+                  indices.Old
+                : indices.New
+              : index == (migrations.Count() - 1) ?
                 Migrate(
                   client: client,
                   oldIndex: indices.Old,
@@ -69,7 +78,8 @@ public class ElasticsearchMigrator : IElasticsearchMigrator
             .Var(Namer.MakeIndices))
           .Var(indices => indices
             .LastOrDefault(Namer
-              .MakeIndices()))));
+              .MakeIndices()))))
+          .With(_ => didMigrate = true);
 
   private async Task<IIndex> MigrateAsync(
       IElasticClient client,
@@ -333,4 +343,7 @@ public class ElasticsearchMigrator : IElasticsearchMigrator
 
   private IIndexNamer Namer { get; }
   private IIndexMapper Mapper { get; }
+
+  // NOTE: could be started many times, so to avoid errors
+  private static bool didMigrate = false;
 }

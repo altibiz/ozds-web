@@ -2,21 +2,21 @@
 
 #shellcheck disable=SC1090
 
-SCRIPT_DIR="$(dirname "$(realpath "$0")")";
-ROOT_DIR="$(dirname "$SCRIPT_DIR")";
-CONTENT_ROOT="$ROOT_DIR/artifacts";
-SECRETS_SH="$ROOT_DIR/secrets.sh";
+SCRIPTS="$(dirname "$(realpath "$0")")";
+ROOT="$(dirname "$SCRIPTS")";
+CONTENT_ROOT="$ROOT/artifacts";
+SECRETS_SH="$ROOT/secrets.sh";
 WD=$(pwd);
 
 export ASPNETCORE_ENVIRONMENT=Production;
 export DOTNET_ENVIRONMENT=Production;
-export ORCHARD_APP_DATA="$ROOT_DIR/App_Data";
+export ORCHARD_APP_DATA="$ROOT/App_Data";
 
 export NODE_OPTIONS="--no-warnings";
 export NODE_ENV="production";
 
-printf "\n[OZDS] Building with 'yarn'...\n";
-yarn --cwd "$ROOT_DIR" build;
+printf "[OZDS] Building with 'yarn'...\n";
+yarn --cwd "$ROOT" build;
 
 printf "\n[OZDS] Publishing with 'dotnet'...\n";
 dotnet \

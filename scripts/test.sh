@@ -3,7 +3,7 @@
 export ASPNETCORE_ENVIRONMENT=Development;
 export DOTNET_ENVIRONMENT=Development;
 
-printf "\n[OZDS] Tesing with 'dotnet' in development...\n";
+printf "[OZDS] Tesing with 'dotnet' in development...\n";
 if [ "$1" ]; then
   dotnet test \
     --configuration Debug \

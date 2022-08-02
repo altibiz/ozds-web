@@ -1,20 +1,20 @@
 #!/usr/bin/env sh
 
-SCRIPT_DIR="$(dirname "$(realpath "$0")")";
-ROOT_DIR="$(dirname "$SCRIPT_DIR")";
+SCRIPTS="$(dirname "$(realpath "$0")")";
+ROOT="$(dirname "$SCRIPTS")";
 
-if [ ! -f "$ROOT_DIR/certs/ca/ca.crt" ]; then
-  printf "Make sure that a CA exists at 'certs/ca/ca.crt'";
+if [ ! -f "$ROOT/docker/certs/ca/ca.crt" ]; then
+  printf "Make sure that a CA exists at 'certs/ca/ca.crt'\n";
   exit 1;
 fi;
 
-if [ ! -f "$ROOT_DIR/.env" ]; then
-  printf "Please update your '.env' file";
+if [ ! -f "$ROOT/.env" ]; then
+  printf "Please update your '.env' file\n";
   exit 1;
 fi;
-. "$ROOT_DIR/.env";
+. "$ROOT/.env";
 
 curl -s \
-  --cacert certs/ca/ca.crt \
+  --cacert "$ROOT/docker/certs/ca/ca.crt" \
   -u "elastic:${ELASTIC_PASSWORD}" \
   "https://localhost:5601/api/features"
