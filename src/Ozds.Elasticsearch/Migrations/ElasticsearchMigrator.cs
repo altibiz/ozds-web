@@ -294,6 +294,10 @@ public class ElasticsearchMigrator : IElasticsearchMigrator
     client.Cat
       .IndicesAsync(i => i
         .Index(Nest.Indices.Parse($"{Namer.MakePrefix()}*")))
+      .ThenWith(indices => Log
+        .LogDebug(
+          "Got indices {indices}",
+          indices.Records.Select(index => index.Index)))
       .Then(indices => Namer
         .MakeIndices(
           indices.Records
@@ -313,6 +317,10 @@ public class ElasticsearchMigrator : IElasticsearchMigrator
     client.Cat
       .Indices(i => i
         .Index(Nest.Indices.Parse($"{Namer.MakePrefix()}*")))
+      .With(indices => Log
+        .LogDebug(
+          "Got indices {indices}",
+          indices.Records.Select(index => index.Index)))
       .Var(indices => Namer
         .MakeIndices(
           indices.Records

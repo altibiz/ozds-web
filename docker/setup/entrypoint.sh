@@ -70,6 +70,7 @@ printf "Creating roles...\n";
 create_role () {
   printf "Creating '%s' role...\n" "$1";
 
+  role_response=""
   until echo "$role_response" | grep -q -E '{"created":(true|false)}}'; do
     if [ "$role_response" ]; then
       printf "Failed creating role '%s'." "$1";
@@ -126,7 +127,8 @@ create_role read_ozds '{
         "ozds*"
       ],
       "privileges": [
-        "read"
+        "read",
+        "view_index_metadata"
       ],
       "field_security": {
         "grant": [
@@ -172,6 +174,7 @@ printf "Creating users...\n";
 create_user() {
   printf "Creating '%s' user...\n" "$1";
 
+  user_response=""
   until echo "$user_response" | grep -q -E '{"created":(true|false)}'; do
     if [ "$user_response" ]; then
       printf "Failed creating user '%s'." "$1";
@@ -211,6 +214,7 @@ create_snapshot_repo () {
     chown 1000:0 "/mnt/snapshots/$1";
   fi;
 
+  repo_response=""
   until echo "$repo_response" | grep -q -E '{"acknowledged":true}'; do
     if [ "$repo_response" ]; then
       printf "Failed creating snapshot repo '%s'." "$1";
@@ -239,6 +243,7 @@ printf "Creating SLM policies...\n";
 create_slm_policy () {
   printf "Creating '%s' SLM policy...\n" "$1";
 
+  slm_response=""
   until echo "$slm_response" | grep -q -E '{"acknowledged":true}'; do
     if [ "$slm_response" ]; then
       printf "Failed creating SLM policy '%s'." "$1";
