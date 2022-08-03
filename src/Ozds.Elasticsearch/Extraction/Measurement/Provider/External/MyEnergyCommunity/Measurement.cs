@@ -21,6 +21,11 @@ public class Measurement
     public decimal energyIn_T2 { get; init; } = default;
     public decimal powerIn { get; init; } = default;
 
+    public decimal energyOut { get; init; } = default;
+    public decimal energyOut_T1 { get; init; } = default;
+    public decimal energyOut_T2 { get; init; } = default;
+    public decimal powerOut { get; init; } = default;
+
     public string? dongleId { get; init; } = default;
     public string? meterIdent { get; init; } = default;
     public string? meterSerial { get; init; } = default;
@@ -41,13 +46,9 @@ public class Measurement
     public decimal? currentL1 { get; init; } = default;
     public decimal? currentL2 { get; init; } = default;
     public decimal? currentL3 { get; init; } = default;
-    public decimal? energyOut { get; init; } = default;
-    public decimal? energyOut_T1 { get; init; } = default;
-    public decimal? energyOut_T2 { get; init; } = default;
     public decimal? powerInL1 { get; init; } = default;
     public decimal? powerInL2 { get; init; } = default;
     public decimal? powerInL3 { get; init; } = default;
-    public decimal? powerOut { get; init; } = default;
     public decimal? powerOutL1 { get; init; } = default;
     public decimal? powerOutL2 { get; init; } = default;
     public decimal? powerOutL3 { get; init; } = default;

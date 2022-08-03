@@ -37,6 +37,7 @@ services:
       - NODE_NAME=elasticsearch
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTIC_LICENSE=${ELASTIC_LICENSE}
+      - REINDEX_WHITELIST=${REINDEX_WHITELIST}
     mem_limit: ${MEMORY_LIMIT}
     ports:
       - ${ELASTICSEARCH_PORT}:9200

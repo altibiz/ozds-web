@@ -42,3 +42,7 @@ xpack:
 path:
   repo:
     - /mnt/snapshots
+
+reindex:
+  remote:
+    whitelist: ${REINDEX_WHITELIST}
