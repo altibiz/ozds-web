@@ -7,9 +7,7 @@ check_instance_certificate() {
   fi;
 };
 
-check_instance_certificate "elasticsearch01";
-check_instance_certificate "elasticsearch02";
-check_instance_certificate "elasticsearch03";
+check_instance_certificate "elasticsearch";
 check_instance_certificate "kibana";
 
 exit 0;

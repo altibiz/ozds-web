@@ -7,18 +7,12 @@ node:
 cluster:
   name: ${CLUSTER_NAME}
   initial_master_nodes:
-    - elasticsearch01
-    - elasticsearch02
-    - elasticsearch03
+    - elasticsearch
 
-# TODO: use seed_provider file
 discovery:
   seed_hosts:
-    - elasticsearch01
-    - elasticsearch02
-    - elasticsearch03
+    - elasticsearch
 
-# NOTE: this is because JVM locks up memory when GC hits
 bootstrap:
   memory_lock: true
 
@@ -46,3 +40,7 @@ xpack:
 path:
   repo:
     - /mnt/snapshots
+
+reindex:
+  remote:
+    whitelist: ${ELASTIC_REINDEX_WHITELIST}

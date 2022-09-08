@@ -15,8 +15,8 @@ if [ ! "$KIBANA_PASSWORD" ]; then
   exit 1;
 fi;
 
-if [ ! "$WEB_PASSWORD" ]; then
-  printf "WEB_PASSWORD environment variable missing\n";
+if [ ! "$APP_PASSWORD" ]; then
+  printf "APP_PASSWORD environment variable missing\n";
   exit 1;
 fi;
 
@@ -50,14 +50,14 @@ chmod 644 config/certs/ca/ca.p12;
 printf "Set SSL Certificate file permissions\n";
 
 printf "Waiting for Elasticsearch availability...\n";
-until curl -s \
+until ! curl -s \
   --cacert config/certs/ca/ca.crt \
   https://elasticsearch01:9200 | \
   grep -q "missing authentication credentials";
 do sleep 1; done;
 
 printf "Setting kibana_system password...\n";
-until curl -s -X POST \
+until ! curl -s -X POST \
   --cacert config/certs/ca/ca.crt \
   -u "elastic:${ELASTIC_PASSWORD}" \
   -H "Content-Type: application/json" \
@@ -70,7 +70,7 @@ printf "Creating roles...\n";
 create_role () {
   printf "Creating '%s' role...\n" "$1";
 
-  until echo "$role_response" | grep -q -E '{"created":(true|false)}}'; do
+  until ! echo "$role_response" | grep -q -E '{"created":(true|false)}}'; do
     if [ "$role_response" ]; then
       printf "Failed creating role '%s'." "$1";
       printf "Got response '%s'." "$role_response";
@@ -172,7 +172,7 @@ printf "Creating users...\n";
 create_user() {
   printf "Creating '%s' user...\n" "$1";
 
-  until echo "$user_response" | grep -q -E '{"created":(true|false)}'; do
+  until ! echo "$user_response" | grep -q -E '{"created":(true|false)}'; do
     if [ "$user_response" ]; then
       printf "Failed creating user '%s'." "$1";
       printf "Got response '%s'." "$user_response";
@@ -189,8 +189,8 @@ create_user() {
   done;
 };
 
-create_user web "$(printf '{
-  "username": "web",
+create_user app "$(printf '{
+  "username": "app",
   "password": "%s",
   "roles": [
     "read_ozds",
@@ -200,7 +200,7 @@ create_user web "$(printf '{
   "full_name": null,
   "email": null,
   "enabled": true
-}' "$WEB_PASSWORD")";
+}' "$APP_PASSWORD")";
 
 printf "Creating snapshot repos...\n";
 create_snapshot_repo () {
@@ -211,7 +211,7 @@ create_snapshot_repo () {
     chown 1000:0 "/mnt/snapshots/$1";
   fi;
 
-  until echo "$repo_response" | grep -q -E '{"acknowledged":true}'; do
+  until ! echo "$repo_response" | grep -q -E '{"acknowledged":true}'; do
     if [ "$repo_response" ]; then
       printf "Failed creating snapshot repo '%s'." "$1";
       printf "Got response '%s'." "$repo_response";
@@ -239,7 +239,7 @@ printf "Creating SLM policies...\n";
 create_slm_policy () {
   printf "Creating '%s' SLM policy...\n" "$1";
 
-  until echo "$slm_response" | grep -q -E '{"acknowledged":true}'; do
+  until ! echo "$slm_response" | grep -q -E '{"acknowledged":true}'; do
     if [ "$slm_response" ]; then
       printf "Failed creating SLM policy '%s'." "$1";
       printf "Got response '%s'." "$slm_response";
