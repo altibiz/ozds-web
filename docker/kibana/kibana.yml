@@ -1,9 +1,7 @@
 elasticsearch:
   hosts:
     [
-      "https://elasticsearch01:9200",
-      "https://elasticsearch02:9200",
-      "https://elasticsearch03:9200",
+      "https://elasticsearch:9200",
     ]
   username: kibana_system
   password: ${KIBANA_PASSWORD}
