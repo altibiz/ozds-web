@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Options;
 using OrchardCore.Data.Migration;
 using OrchardCore.Navigation;
 using OrchardCore.BackgroundTasks;
@@ -20,9 +21,12 @@ using OrchardCore.Taxonomies.Drivers;
 using OrchardCore.Recipes;
 using OrchardCore.Data;
 using OrchardCore.Modules;
+using OrchardCore.Mvc.Core.Utilities;
+using OrchardCore.Admin;
 using Ozds.Modules.Ozds.PartFieldSettings;
 using Ozds.Modules.Ozds.Base;
 using Ozds.Elasticsearch;
+
 
 namespace Ozds.Modules.Ozds;
 
@@ -31,6 +35,7 @@ public class Startup : OrchardCore.Modules.StartupBase
   public override void ConfigureServices(IServiceCollection services)
   {
     // NOTE: preventing from being instantiated twice
+    services.AddHttpClient();
     services.AddScoped<TenantActivatedEvent>();
     services.AddScoped<IModularTenantEvents, TenantActivatedEvent>(
       services => services.GetRequiredService<TenantActivatedEvent>());
@@ -174,21 +179,41 @@ public class Startup : OrchardCore.Modules.StartupBase
         {
           Roles = "Administrator,User"
         }));
+
+    var mediaImportControllerName =
+       typeof(MediaImportController).ControllerName();
+
+    routes.MapAreaControllerRoute(
+        name: "MediaImportIndex",
+        areaName: "Ozds.Modules.Ozds",
+        pattern: AdminOptions.Value.AdminUrlPrefix + "/MediaImport/Index",
+        defaults: new
+        {
+          controller = mediaImportControllerName,
+          action = nameof(MediaImportController.Index)
+        }
+    );
   }
 
   public Startup(
       IWebHostEnvironment env,
       ILogger<Startup> logger,
-      IConfiguration conf)
+      IConfiguration conf,
+
+      IOptions<AdminOptions> adminOptions)
   {
     Env = env;
     Logger = logger;
     Conf = conf;
+
+    AdminOptions = adminOptions;
   }
 
   private IWebHostEnvironment Env { get; }
   private ILogger<Startup> Logger { get; }
   private IConfiguration Conf { get; }
+
+  private IOptions<AdminOptions> AdminOptions { get; }
 
   private void AddElasticsearchClient(IServiceCollection services)
   {

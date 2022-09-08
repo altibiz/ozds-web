@@ -121,6 +121,17 @@ public class AdminMenu : INavigationProvider
                       {
                         area = "OrchardCore.Contents",
                         contentTypeId = "Taxonomy"
+                      }))
+                .Add(
+                  S["Media Import"],
+                  S["Media Import"].PrefixPosition(),
+                  child => child
+                    .Action(
+                      "Index",
+                      "MediaImport",
+                      new
+                      {
+                        area = "Ozds.Modules.Ozds"
                       })));
         }
 

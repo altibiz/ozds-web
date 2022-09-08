@@ -1,0 +1,21 @@
+@using Ozds.Modules.Ozds
+
+@model MediaImportModel
+
+<form asp-action="Index" method="post">
+  <label for="urls">@T["URLs"]</label>
+  @Html.TextAreaFor(model => model.Urls, new { @class = "form-control", id = "urls" })
+  <button asp-action="Import" class="btn btn-sm btn-light form-control">
+    @T["Import"]
+  </button>
+</form>
+
+@if (Model.Paths is not null)
+{
+  @foreach (var path in Model.Paths)
+  {
+    <p>
+      @path
+    </p>
+  }
+}
