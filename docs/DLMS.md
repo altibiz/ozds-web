@@ -9,6 +9,8 @@ DLMS/COSEM provides just that.
 
 [Webinar](https://www.youtube.com/watch?v=ku0Cvu9OzT0).
 
+[Tester](https://kalkitech.com/products/dlms-software/dlms-million-meter-simulator/).
+
 ## Libraries
 
 The main problem is that there is not a lot of software support for DLMS and the
