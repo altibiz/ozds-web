@@ -21,3 +21,19 @@ The objective of DLMS/COSEM is to specify a standard for a business domain
 oriented interface object model for metering devices and systems, as well as
 services to access the objects. Communication profiles to transport the messages
 through various communication media are also specified.
+
+The term "metering devices" is an abstraction; consequently "metering device"
+may be any type of device for which this abstraction is suitable.
+
+### Communication model
+
+DLMS/COSEM uses the concepts of the Open Systems Interconnection (OSI) model
+to model information exchange between meters and data collection systems.
+
+Each DLMS/COSEM client and each server – a COSEM logical device – is bound to a
+Service Access Point (SAP). The SAPs reside in the supporting layer of the
+DLMS/COSEM AL. Depending on the communication profile the SAP may be a
+TCP-UDP/IP wrapper address, an upper HDLC address, an LLC address etc.
+
+System titles are like MAC adresses for physical devices. Companion
+specifications may use a different schema for these.
