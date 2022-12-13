@@ -10,21 +10,23 @@ MQTT today is used in a wide variety of industries, such as automotive,
 manufacturing, telecommunications, oil and gas, etc.
 
 Features of MQTT are:
- - bidirectional communication
- - lightweight and efficient
- - scales to millions of things
- - reliable message delivery
- - support for unreliable networks
- - security enabled
+
+- bidirectional communication
+- lightweight and efficient
+- scales to millions of things
+- reliable message delivery
+- support for unreliable networks
+- security enabled
 
 This could be useful for a number of reasons:
- - there are no DLMS libraries that are not GPL licensed (Gurux.DLMS) which
-   means that we cannot create closed source solutions using just DLMS
- - MQTT provides a more robust solution (proxying) to the overall problem of 
-   unreliable networks for communicating with measurement devices
- - there is a lot more software support for MQTT solutions
- - MQTT could be used for proxying devices that don't use DLMS as
-   a communication protocol
+
+- there are no DLMS libraries that are not GPL licensed (Gurux.DLMS) which
+  means that we cannot create closed source solutions using just DLMS
+- MQTT provides a more robust solution (proxying) to the overall problem of
+  unreliable networks for communicating with measurement devices
+- there is a lot more software support for MQTT solutions
+- MQTT could be used for proxying devices that don't use DLMS as
+  a communication protocol
 
 ## MQTT Publish/Subscribe Architecture
 
@@ -35,7 +37,7 @@ This could be useful for a number of reasons:
 ### MQTTnet
 
 [MQTTnet](https://github.com/dotnet/MQTTnet) is a high performance .NET library
-for MQTT based communication. It provides a MQTT client and a MQTT server 
+for MQTT based communication. It provides a MQTT client and a MQTT server
 (broker) and supports the MQTT protocol up to version 5. It is compatible with
 mostly any supported .NET Framework version and CPU architecture.
 

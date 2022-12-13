@@ -1,8 +1,5 @@
 elasticsearch:
-  hosts:
-    [
-      "https://elasticsearch:9200",
-    ]
+  hosts: ["https://elasticsearch:9200"]
   username: kibana_system
   password: ${KIBANA_PASSWORD}
   ssl:

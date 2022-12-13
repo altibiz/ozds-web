@@ -6,8 +6,9 @@ The DLMS/COSEM specification specifies an interface model and communication
 protocols for data exchange with metering equipment.
 
 The DLMS/COSEM specification follows a three-step approach:
-  - Step 1, Modelling: This covers the interface model of metering equipment and
-    rules for data identification;
+
+- Step 1, Modelling: This covers the interface model of metering equipment and
+  rules for data identification;
   - Step 2, Messaging: This covers the services for mapping the interface model
     to protocol data units (APDU) and the encoding of this APDUs.
   - Step 3, Transporting: This covers the transportation of the messages through
@@ -46,14 +47,15 @@ a couple of ways of doing this specified in the book.
 ### Connection oriented operation
 
 A communication session consists of three phases:
-  - first, an application level connection, called AA (Application Association),
-    is established between a client and a server AE (Application Entity).
-    Before initiating the establishment of an AA, the peer PhLs of the client
-    and server side protocol stacks have to be connected. The intermediate
-    layers may have to be connected or not. Each layer, which needs to be
-    connected, may support one or more connections simultaneously;
-  - once the AA is established, message exchange can take place;
-  - at the end of the data exchange, the AA is released.
+
+- first, an application level connection, called AA (Application Association),
+  is established between a client and a server AE (Application Entity).
+  Before initiating the establishment of an AA, the peer PhLs of the client
+  and server side protocol stacks have to be connected. The intermediate
+  layers may have to be connected or not. Each layer, which needs to be
+  connected, may support one or more connections simultaneously;
+- once the AA is established, message exchange can take place;
+- at the end of the data exchange, the AA is released.
 
 For the purposes of very simple devices, one-way communicating devices,
 and for multicasting and broadcasting pre-established AAs are also allowed.
@@ -65,12 +67,13 @@ Only client requests can establish an AA.
 
 A confirmed AA is proposed by the client and accepted by the server provided
 that:
-  - the user of the client is known by the server;
-  - the application context proposed by the client is acceptable for the server;
-  - the authentication mechanism proposed by the client is acceptable for
-    the server and the authentication is successful;
-  - the elements of the xDLMS context can be successfully negotiated between
-    the client and the server.
+
+- the user of the client is known by the server;
+- the application context proposed by the client is acceptable for the server;
+- the authentication mechanism proposed by the client is acceptable for
+  the server and the authentication is successful;
+- the elements of the xDLMS context can be successfully negotiated between
+  the client and the server.
 
 Unconfirmed AAs are useful for sending broadcast messages.
 
@@ -87,11 +90,12 @@ objects are specified in DLMS UA 1000-1.
 #### Application context
 
 The application context determines:
-  - the set of Application Service Elements (ASEs) present in the AL;
-  - the referencing style of COSEM object attributes and methods: short name
-    (SN) referencing or logical name (LN) referencing;
-  - the transfer syntax;
-  - whether ciphering is used or not.
+
+- the set of Application Service Elements (ASEs) present in the AL;
+- the referencing style of COSEM object attributes and methods: short name
+  (SN) referencing or logical name (LN) referencing;
+- the transfer syntax;
+- whether ciphering is used or not.
 
 Application contexts are identified by names.
 
@@ -126,22 +130,23 @@ attributes and methods within an AA. The set of access rights depend on the
 role of the client and is pre-configured in the server. See also the complete
 Green Book.
 
-
 #### Messaging patterns
 
 In confirmed AAs:
-  - the client can send confirmed service requests and the server responds:
-    pull operation;
-  - the client can send unconfirmed service requests. The server does not
-    respond;
-  - the server can send unsolicited service requests to the client:
-    push operation. NOTE: The unsolicited services may be InformationReport
-    (with SN referencing), EventNotification (with LN referencing) or
-    DataNotification (used both with SN and LN referencing).
+
+- the client can send confirmed service requests and the server responds:
+  pull operation;
+- the client can send unconfirmed service requests. The server does not
+  respond;
+- the server can send unsolicited service requests to the client:
+  push operation. NOTE: The unsolicited services may be InformationReport
+  (with SN referencing), EventNotification (with LN referencing) or
+  DataNotification (used both with SN and LN referencing).
 
 In unconfirmed AAs:
-  - only the client can initiate service requests and only unconfirmed ones.
-    The server cannot respond and it cannot initiate service requests.
+
+- only the client can initiate service requests and only unconfirmed ones.
+  The server cannot respond and it cannot initiate service requests.
 
 #### Data exchange between third parties and DLMS/COSEM servers
 
@@ -174,7 +179,7 @@ objects.
 #### Model of DLMS/COSEM servers
 
 The following uses the
-[HDLC]( https://en.wikipedia.org/wiki/High-Level_Data_Link_Control) protocol as
+[HDLC](https://en.wikipedia.org/wiki/High-Level_Data_Link_Control) protocol as
 an example.
 
 The DLMS/COSEM AL is supported by the HDLC based data link layer. Its main
@@ -201,14 +206,15 @@ the APDU. This is necessary due the streaming nature of TCP.
 
 The model of the client – obviously – is very similar to the model of the
 servers:
-  - in this particular model, the DLMS/COSEM AL is supported either by the HDLC
-    based data link layer or the DLMS/COSEM TL, meaning that the AL uses the
-    services of one or the other as determined by the APs. In other words, the
-    APDUs are received from or sent through the appropriate supporting layer,
-    which in turn use the services of its supporting layer respectively;
-  - unlike on the server side, the addressing provided by the HDLC layer has a
-    single level only, that of the Service Access Points (SAP) of each
-    Application Process (AP).
+
+- in this particular model, the DLMS/COSEM AL is supported either by the HDLC
+  based data link layer or the DLMS/COSEM TL, meaning that the AL uses the
+  services of one or the other as determined by the APs. In other words, the
+  APDUs are received from or sent through the appropriate supporting layer,
+  which in turn use the services of its supporting layer respectively;
+- unlike on the server side, the addressing provided by the HDLC layer has a
+  single level only, that of the Service Access Points (SAP) of each
+  Application Process (AP).
 
 As explained, client APs and server APs are identified by their SAPs.
 Therefore, an AA between a client and a server side AP can be identified by a

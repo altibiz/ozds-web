@@ -19,7 +19,7 @@ probably create an in-house implementation of the protocol based on existing
 implementations and connect bridge it to MQTT which is more supported and
 robust.
 
-### Gurux.DLMS.Net 
+### Gurux.DLMS.Net
 
 [Gurux.DLMS.Net](https://github.com/Gurux/Gurux.DLMS.Net) library is a
 high-performance .NET component that helps you to read you DLMS/COSEM
@@ -44,4 +44,3 @@ electricity metering data exchange by International Electrotechnical Commission.
 
 The IEC 62056 standards are the international standard versions of the
 DLMS/COSEM specification.
-
